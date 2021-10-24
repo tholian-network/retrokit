@@ -1,0 +1,403 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WebKitURIResponse: WebKitGTK Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="WebKitURIRequest.html" title="WebKitURIRequest">
+<link rel="next" href="WebKitWindowProperties.html" title="WebKitWindowProperties">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#WebKitURIResponse.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#WebKitURIResponse.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_properties">  <span class="dim">|</span> 
+                  <a href="#WebKitURIResponse.properties" class="shortcut">Properties</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="WebKitURIRequest.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="WebKitWindowProperties.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="WebKitURIResponse"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="WebKitURIResponse.top_of_page"></a>WebKitURIResponse</span></h2>
+<p>WebKitURIResponse — Represents a URI response</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="WebKitURIResponse.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitURIResponse.html#webkit-uri-response-get-uri" title="webkit_uri_response_get_uri ()">webkit_uri_response_get_uri</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitURIResponse.html#webkit-uri-response-get-status-code" title="webkit_uri_response_get_status_code ()">webkit_uri_response_get_status_code</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitURIResponse.html#webkit-uri-response-get-content-length" title="webkit_uri_response_get_content_length ()">webkit_uri_response_get_content_length</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitURIResponse.html#webkit-uri-response-get-mime-type" title="webkit_uri_response_get_mime_type ()">webkit_uri_response_get_mime_type</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitURIResponse.html#webkit-uri-response-get-suggested-filename" title="webkit_uri_response_get_suggested_filename ()">webkit_uri_response_get_suggested_filename</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../libsoup-2.4/SoupMessageHeaders.html#SoupMessageHeaders"><span class="returnvalue">SoupMessageHeaders</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitURIResponse.html#webkit-uri-response-get-http-headers" title="webkit_uri_response_get_http_headers ()">webkit_uri_response_get_http_headers</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitURIResponse.properties"></a><h2>Properties</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="properties_type">
+<col width="300px" class="properties_name">
+<col width="200px" class="properties_flags">
+</colgroup>
+<tbody>
+<tr>
+<td class="property_type"><a href="../glib/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a></td>
+<td class="property_name"><a class="link" href="WebKitURIResponse.html#WebKitURIResponse--content-length" title="The “content-length” property">content-length</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="../libsoup-2.4/SoupMessageHeaders.html#SoupMessageHeaders"><span class="type">SoupMessageHeaders</span></a> *</td>
+<td class="property_name"><a class="link" href="WebKitURIResponse.html#WebKitURIResponse--http-headers" title="The “http-headers” property">http-headers</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="WebKitURIResponse.html#WebKitURIResponse--mime-type" title="The “mime-type” property">mime-type</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type"><a href="../glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a></td>
+<td class="property_name"><a class="link" href="WebKitURIResponse.html#WebKitURIResponse--status-code" title="The “status-code” property">status-code</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="WebKitURIResponse.html#WebKitURIResponse--suggested-filename" title="The “suggested-filename” property">suggested-filename</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="WebKitURIResponse.html#WebKitURIResponse--uri" title="The “uri” property">uri</a></td>
+<td class="property_flags">Read</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitURIResponse.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody><tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="WebKitURIResponse.html#WebKitURIResponse-struct" title="struct WebKitURIResponse">WebKitURIResponse</a></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitURIResponse.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> WebKitURIResponse
+</pre>
+</div>
+<div class="refsect1">
+<a name="WebKitURIResponse.description"></a><h2>Description</h2>
+<p>A <a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a> contains information such as the URI, the
+status code, the content length, the mime type, the HTTP status or
+the suggested filename.</p>
+</div>
+<div class="refsect1">
+<a name="WebKitURIResponse.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="webkit-uri-response-get-uri"></a><h3>webkit_uri_response_get_uri ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_uri_response_get_uri (<em class="parameter"><code><a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a> *response</code></em>);</pre>
+<div class="refsect3">
+<a name="webkit-uri-response-get-uri.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>response</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-uri-response-get-uri.returns"></a><h4>Returns</h4>
+<p> the uri of the <a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-uri-response-get-status-code"></a><h3>webkit_uri_response_get_status_code ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+webkit_uri_response_get_status_code (<em class="parameter"><code><a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a> *response</code></em>);</pre>
+<p>Get the status code of the <a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a> as returned by
+the server. It will normally be a <span class="type">SoupKnownStatusCode</span>, for
+example <a href="../libsoup-3.0/SoupStatus.html#SOUP-STATUS-OK:CAPS"><code class="literal">SOUP_STATUS_OK</code></a>, though the server can respond with any
+unsigned integer.</p>
+<div class="refsect3">
+<a name="webkit-uri-response-get-status-code.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>response</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-uri-response-get-status-code.returns"></a><h4>Returns</h4>
+<p> the status code of <em class="parameter"><code>response</code></em>
+</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-uri-response-get-content-length"></a><h3>webkit_uri_response_get_content_length ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>
+webkit_uri_response_get_content_length
+                               (<em class="parameter"><code><a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a> *response</code></em>);</pre>
+<p>Get the expected content length of the <a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a>. It can
+be 0 if the server provided an incorrect or missing Content-Length.</p>
+<div class="refsect3">
+<a name="webkit-uri-response-get-content-length.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>response</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-uri-response-get-content-length.returns"></a><h4>Returns</h4>
+<p> the expected content length of <em class="parameter"><code>response</code></em>
+.</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-uri-response-get-mime-type"></a><h3>webkit_uri_response_get_mime_type ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_uri_response_get_mime_type (<em class="parameter"><code><a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a> *response</code></em>);</pre>
+<div class="refsect3">
+<a name="webkit-uri-response-get-mime-type.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>response</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-uri-response-get-mime-type.returns"></a><h4>Returns</h4>
+<p> the MIME type of the <a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-uri-response-get-suggested-filename"></a><h3>webkit_uri_response_get_suggested_filename ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_uri_response_get_suggested_filename
+                               (<em class="parameter"><code><a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a> *response</code></em>);</pre>
+<p>Get the suggested filename for <em class="parameter"><code>response</code></em>
+, as specified by
+the 'Content-Disposition' HTTP header, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if it's not
+present.</p>
+<div class="refsect3">
+<a name="webkit-uri-response-get-suggested-filename.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>response</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-uri-response-get-suggested-filename.returns"></a><h4>Returns</h4>
+<p>the suggested filename or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if
+the 'Content-Disposition' HTTP header is not present. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-uri-response-get-http-headers"></a><h3>webkit_uri_response_get_http_headers ()</h3>
+<pre class="programlisting"><a href="../libsoup-2.4/SoupMessageHeaders.html#SoupMessageHeaders"><span class="returnvalue">SoupMessageHeaders</span></a> *
+webkit_uri_response_get_http_headers (<em class="parameter"><code><a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a> *response</code></em>);</pre>
+<p>Get the HTTP headers of a <a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a> as a <a href="../libsoup-2.4/SoupMessageHeaders.html#SoupMessageHeaders"><span class="type">SoupMessageHeaders</span></a>.</p>
+<div class="refsect3">
+<a name="webkit-uri-response-get-http-headers.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>response</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-uri-response-get-http-headers.returns"></a><h4>Returns</h4>
+<p>a <a href="../libsoup-2.4/SoupMessageHeaders.html#SoupMessageHeaders"><span class="type">SoupMessageHeaders</span></a> with the HTTP headers of <em class="parameter"><code>response</code></em>
+or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>response</code></em>
+is not an HTTP response. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-6.html#api-index-2.6">2.6</a></p>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitURIResponse.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="WebKitURIResponse-struct"></a><h3>struct WebKitURIResponse</h3>
+<pre class="programlisting">struct WebKitURIResponse;</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitURIResponse.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="WebKitURIResponse--content-length"></a><h3>The <code class="literal">“content-length”</code> property</h3>
+<pre class="programlisting">  “content-length”           <a href="../glib/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a></pre>
+<p>The expected content length of the response.</p>
+<p>Owner: WebKitURIResponse</p>
+<p>Flags: Read</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitURIResponse--http-headers"></a><h3>The <code class="literal">“http-headers”</code> property</h3>
+<pre class="programlisting">  “http-headers”             <a href="../libsoup-2.4/SoupMessageHeaders.html#SoupMessageHeaders"><span class="type">SoupMessageHeaders</span></a> *</pre>
+<p>The HTTP headers of the response, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the response is not an HTTP response.</p>
+<p>Owner: WebKitURIResponse</p>
+<p>Flags: Read</p>
+<p class="since">Since: <a class="link" href="api-index-2-6.html#api-index-2.6">2.6</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitURIResponse--mime-type"></a><h3>The <code class="literal">“mime-type”</code> property</h3>
+<pre class="programlisting">  “mime-type”                <span class="type">char</span> *</pre>
+<p>The MIME type of the response.</p>
+<p>Owner: WebKitURIResponse</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitURIResponse--status-code"></a><h3>The <code class="literal">“status-code”</code> property</h3>
+<pre class="programlisting">  “status-code”              <a href="../glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a></pre>
+<p>The status code of the response as returned by the server.</p>
+<p>Owner: WebKitURIResponse</p>
+<p>Flags: Read</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitURIResponse--suggested-filename"></a><h3>The <code class="literal">“suggested-filename”</code> property</h3>
+<pre class="programlisting">  “suggested-filename”       <span class="type">char</span> *</pre>
+<p>The suggested filename for the URI response.</p>
+<p>Owner: WebKitURIResponse</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitURIResponse--uri"></a><h3>The <code class="literal">“uri”</code> property</h3>
+<pre class="programlisting">  “uri”                      <span class="type">char</span> *</pre>
+<p>The URI for which the response was made.</p>
+<p>Owner: WebKitURIResponse</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

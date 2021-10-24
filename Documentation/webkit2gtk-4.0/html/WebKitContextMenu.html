@@ -1,0 +1,690 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WebKitContextMenu: WebKitGTK Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="webkit2gtk-4.0-WebKitVersion.html" title="WebKitVersion">
+<link rel="next" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#WebKitContextMenu.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#WebKitContextMenu.object-hierarchy" class="shortcut">Object Hierarchy</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="webkit2gtk-4.0-WebKitVersion.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="WebKitContextMenuItem.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="WebKitContextMenu"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="WebKitContextMenu.top_of_page"></a>WebKitContextMenu</span></h2>
+<p>WebKitContextMenu — Represents the context menu in a <a class="link" href="WebKitWebView.html" title="The main frame document title of this #WebKitWebView. If the title has not been received yet, it will be %NULL."><span class="type">WebKitWebView</span></a></p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="WebKitContextMenu.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="returnvalue">WebKitContextMenu</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitContextMenu.html#webkit-context-menu-new" title="webkit_context_menu_new ()">webkit_context_menu_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="returnvalue">WebKitContextMenu</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitContextMenu.html#webkit-context-menu-new-with-items" title="webkit_context_menu_new_with_items ()">webkit_context_menu_new_with_items</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitContextMenu.html#webkit-context-menu-prepend" title="webkit_context_menu_prepend ()">webkit_context_menu_prepend</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitContextMenu.html#webkit-context-menu-append" title="webkit_context_menu_append ()">webkit_context_menu_append</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitContextMenu.html#webkit-context-menu-insert" title="webkit_context_menu_insert ()">webkit_context_menu_insert</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitContextMenu.html#webkit-context-menu-move-item" title="webkit_context_menu_move_item ()">webkit_context_menu_move_item</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitContextMenu.html#webkit-context-menu-get-items" title="webkit_context_menu_get_items ()">webkit_context_menu_get_items</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitContextMenu.html#webkit-context-menu-get-n-items" title="webkit_context_menu_get_n_items ()">webkit_context_menu_get_n_items</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="returnvalue">WebKitContextMenuItem</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitContextMenu.html#webkit-context-menu-first" title="webkit_context_menu_first ()">webkit_context_menu_first</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="returnvalue">WebKitContextMenuItem</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitContextMenu.html#webkit-context-menu-last" title="webkit_context_menu_last ()">webkit_context_menu_last</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="returnvalue">WebKitContextMenuItem</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitContextMenu.html#webkit-context-menu-get-item-at-position" title="webkit_context_menu_get_item_at_position ()">webkit_context_menu_get_item_at_position</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitContextMenu.html#webkit-context-menu-remove" title="webkit_context_menu_remove ()">webkit_context_menu_remove</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitContextMenu.html#webkit-context-menu-remove-all" title="webkit_context_menu_remove_all ()">webkit_context_menu_remove_all</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitContextMenu.html#webkit-context-menu-set-user-data" title="webkit_context_menu_set_user_data ()">webkit_context_menu_set_user_data</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-GVariant.html#GVariant"><span class="returnvalue">GVariant</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitContextMenu.html#webkit-context-menu-get-user-data" title="webkit_context_menu_get_user_data ()">webkit_context_menu_get_user_data</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitContextMenu.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody><tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="WebKitContextMenu.html#WebKitContextMenu-struct" title="WebKitContextMenu">WebKitContextMenu</a></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitContextMenu.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> WebKitContextMenu
+</pre>
+</div>
+<div class="refsect1">
+<a name="WebKitContextMenu.description"></a><h2>Description</h2>
+<p><a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> represents a context menu containing
+<a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="type">WebKitContextMenuItem</span></a>s in a <a class="link" href="WebKitWebView.html" title="The main frame document title of this #WebKitWebView. If the title has not been received yet, it will be %NULL."><span class="type">WebKitWebView</span></a>.</p>
+<p>When a <a class="link" href="WebKitWebView.html" title="The main frame document title of this #WebKitWebView. If the title has not been received yet, it will be %NULL."><span class="type">WebKitWebView</span></a> is about to display the context menu, it
+emits the <a class="link" href="WebKitWebView.html#WebKitWebView-context-menu" title="The “context-menu” signal"><span class="type">“context-menu”</span></a> signal, which has the
+<a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> as an argument. You can modify it, adding new
+submenus that you can create with <a class="link" href="WebKitContextMenu.html#webkit-context-menu-new" title="webkit_context_menu_new ()"><code class="function">webkit_context_menu_new()</code></a>, adding
+new <a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="type">WebKitContextMenuItem</span></a>s with
+<a class="link" href="WebKitContextMenu.html#webkit-context-menu-prepend" title="webkit_context_menu_prepend ()"><code class="function">webkit_context_menu_prepend()</code></a>, <a class="link" href="WebKitContextMenu.html#webkit-context-menu-append" title="webkit_context_menu_append ()"><code class="function">webkit_context_menu_append()</code></a> or
+<a class="link" href="WebKitContextMenu.html#webkit-context-menu-insert" title="webkit_context_menu_insert ()"><code class="function">webkit_context_menu_insert()</code></a>, maybe after having removed the
+existing ones with <a class="link" href="WebKitContextMenu.html#webkit-context-menu-remove-all" title="webkit_context_menu_remove_all ()"><code class="function">webkit_context_menu_remove_all()</code></a>.</p>
+</div>
+<div class="refsect1">
+<a name="WebKitContextMenu.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="webkit-context-menu-new"></a><h3>webkit_context_menu_new ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="returnvalue">WebKitContextMenu</span></a> *
+webkit_context_menu_new (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>Creates a new <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> object to be used as a submenu of an existing
+<a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a>. The context menu of a <a class="link" href="WebKitWebView.html" title="The main frame document title of this #WebKitWebView. If the title has not been received yet, it will be %NULL."><span class="type">WebKitWebView</span></a> is created by the view
+and passed as an argument of <a class="link" href="WebKitWebView.html#WebKitWebView-context-menu" title="The “context-menu” signal"><span class="type">“context-menu”</span></a> signal.
+To add items to the menu use <a class="link" href="WebKitContextMenu.html#webkit-context-menu-prepend" title="webkit_context_menu_prepend ()"><code class="function">webkit_context_menu_prepend()</code></a>,
+<a class="link" href="WebKitContextMenu.html#webkit-context-menu-append" title="webkit_context_menu_append ()"><code class="function">webkit_context_menu_append()</code></a> or <a class="link" href="WebKitContextMenu.html#webkit-context-menu-insert" title="webkit_context_menu_insert ()"><code class="function">webkit_context_menu_insert()</code></a>.
+See also <a class="link" href="WebKitContextMenu.html#webkit-context-menu-new-with-items" title="webkit_context_menu_new_with_items ()"><code class="function">webkit_context_menu_new_with_items()</code></a> to create a <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> with
+a list of initial items.</p>
+<div class="refsect3">
+<a name="webkit-context-menu-new.returns"></a><h4>Returns</h4>
+<p> The newly created <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> object</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-context-menu-new-with-items"></a><h3>webkit_context_menu_new_with_items ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="returnvalue">WebKitContextMenu</span></a> *
+webkit_context_menu_new_with_items (<em class="parameter"><code><a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *items</code></em>);</pre>
+<p>Creates a new <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> object to be used as a submenu of an existing
+<a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> with the given initial items.
+See also <a class="link" href="WebKitContextMenu.html#webkit-context-menu-new" title="webkit_context_menu_new ()"><code class="function">webkit_context_menu_new()</code></a></p>
+<div class="refsect3">
+<a name="webkit-context-menu-new-with-items.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>items</p></td>
+<td class="parameter_description"><p>a <a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of <a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="type">WebKitContextMenuItem</span></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> WebKitContextMenuItem]</span></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-context-menu-new-with-items.returns"></a><h4>Returns</h4>
+<p> The newly created <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> object</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-context-menu-prepend"></a><h3>webkit_context_menu_prepend ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_context_menu_prepend (<em class="parameter"><code><a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> *menu</code></em>,
+                             <em class="parameter"><code><a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="type">WebKitContextMenuItem</span></a> *item</code></em>);</pre>
+<p>Adds <em class="parameter"><code>item</code></em>
+ at the beginning of the <em class="parameter"><code>menu</code></em>
+.</p>
+<div class="refsect3">
+<a name="webkit-context-menu-prepend.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>menu</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>item</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="type">WebKitContextMenuItem</span></a> to add</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-context-menu-append"></a><h3>webkit_context_menu_append ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_context_menu_append (<em class="parameter"><code><a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> *menu</code></em>,
+                            <em class="parameter"><code><a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="type">WebKitContextMenuItem</span></a> *item</code></em>);</pre>
+<p>Adds <em class="parameter"><code>item</code></em>
+ at the end of the <em class="parameter"><code>menu</code></em>
+.</p>
+<div class="refsect3">
+<a name="webkit-context-menu-append.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>menu</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>item</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="type">WebKitContextMenuItem</span></a> to add</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-context-menu-insert"></a><h3>webkit_context_menu_insert ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_context_menu_insert (<em class="parameter"><code><a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> *menu</code></em>,
+                            <em class="parameter"><code><a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="type">WebKitContextMenuItem</span></a> *item</code></em>,
+                            <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> position</code></em>);</pre>
+<p>Inserts <em class="parameter"><code>item</code></em>
+ into the <em class="parameter"><code>menu</code></em>
+ at the given position.
+If <em class="parameter"><code>position</code></em>
+ is negative, or is larger than the number of items
+in the <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a>, the item is added on to the end of
+the <em class="parameter"><code>menu</code></em>
+. The first position is 0.</p>
+<div class="refsect3">
+<a name="webkit-context-menu-insert.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>menu</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>item</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="type">WebKitContextMenuItem</span></a> to add</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>position</p></td>
+<td class="parameter_description"><p>the position to insert the item</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-context-menu-move-item"></a><h3>webkit_context_menu_move_item ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_context_menu_move_item (<em class="parameter"><code><a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> *menu</code></em>,
+                               <em class="parameter"><code><a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="type">WebKitContextMenuItem</span></a> *item</code></em>,
+                               <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gint"><span class="type">gint</span></a> position</code></em>);</pre>
+<p>Moves <em class="parameter"><code>item</code></em>
+ to the given position in the <em class="parameter"><code>menu</code></em>
+.
+If <em class="parameter"><code>position</code></em>
+ is negative, or is larger than the number of items
+in the <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a>, the item is added on to the end of
+the <em class="parameter"><code>menu</code></em>
+.
+The first position is 0.</p>
+<div class="refsect3">
+<a name="webkit-context-menu-move-item.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>menu</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>item</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="type">WebKitContextMenuItem</span></a> to add</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>position</p></td>
+<td class="parameter_description"><p>the new position to move the item</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-context-menu-get-items"></a><h3>webkit_context_menu_get_items ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *
+webkit_context_menu_get_items (<em class="parameter"><code><a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> *menu</code></em>);</pre>
+<p>Returns the item list of <em class="parameter"><code>menu</code></em>
+.</p>
+<div class="refsect3">
+<a name="webkit-context-menu-get-items.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>menu</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-context-menu-get-items.returns"></a><h4>Returns</h4>
+<p>a <a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of
+<a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="type">WebKitContextMenuItem</span></a>s. </p>
+<p><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> WebKitContextMenuItem][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-context-menu-get-n-items"></a><h3>webkit_context_menu_get_n_items ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+webkit_context_menu_get_n_items (<em class="parameter"><code><a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> *menu</code></em>);</pre>
+<p>Gets the length of the <em class="parameter"><code>menu</code></em>
+.</p>
+<div class="refsect3">
+<a name="webkit-context-menu-get-n-items.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>menu</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-context-menu-get-n-items.returns"></a><h4>Returns</h4>
+<p> the number of <a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="type">WebKitContextMenuItem</span></a>s in <em class="parameter"><code>menu</code></em>
+</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-context-menu-first"></a><h3>webkit_context_menu_first ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="returnvalue">WebKitContextMenuItem</span></a> *
+webkit_context_menu_first (<em class="parameter"><code><a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> *menu</code></em>);</pre>
+<p>Gets the first item in the <em class="parameter"><code>menu</code></em>
+.</p>
+<div class="refsect3">
+<a name="webkit-context-menu-first.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>menu</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-context-menu-first.returns"></a><h4>Returns</h4>
+<p>the first <a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="type">WebKitContextMenuItem</span></a> of <em class="parameter"><code>menu</code></em>
+,
+or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> is empty. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-context-menu-last"></a><h3>webkit_context_menu_last ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="returnvalue">WebKitContextMenuItem</span></a> *
+webkit_context_menu_last (<em class="parameter"><code><a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> *menu</code></em>);</pre>
+<p>Gets the last item in the <em class="parameter"><code>menu</code></em>
+.</p>
+<div class="refsect3">
+<a name="webkit-context-menu-last.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>menu</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-context-menu-last.returns"></a><h4>Returns</h4>
+<p>the last <a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="type">WebKitContextMenuItem</span></a> of <em class="parameter"><code>menu</code></em>
+,
+or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> is empty. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-context-menu-get-item-at-position"></a><h3>webkit_context_menu_get_item_at_position ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="returnvalue">WebKitContextMenuItem</span></a> *
+webkit_context_menu_get_item_at_position
+                               (<em class="parameter"><code><a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> *menu</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> position</code></em>);</pre>
+<p>Gets the item at the given position in the <em class="parameter"><code>menu</code></em>
+.</p>
+<div class="refsect3">
+<a name="webkit-context-menu-get-item-at-position.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>menu</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>position</p></td>
+<td class="parameter_description"><p>the position of the item, counting from 0</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-context-menu-get-item-at-position.returns"></a><h4>Returns</h4>
+<p>the <a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="type">WebKitContextMenuItem</span></a> at position <em class="parameter"><code>position</code></em>
+in <em class="parameter"><code>menu</code></em>
+,
+or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the position is off the end of the <em class="parameter"><code>menu</code></em>
+. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-context-menu-remove"></a><h3>webkit_context_menu_remove ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_context_menu_remove (<em class="parameter"><code><a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> *menu</code></em>,
+                            <em class="parameter"><code><a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="type">WebKitContextMenuItem</span></a> *item</code></em>);</pre>
+<p>Removes <em class="parameter"><code>item</code></em>
+ from the <em class="parameter"><code>menu</code></em>
+.
+See also <a class="link" href="WebKitContextMenu.html#webkit-context-menu-remove-all" title="webkit_context_menu_remove_all ()"><code class="function">webkit_context_menu_remove_all()</code></a> to remove all items.</p>
+<div class="refsect3">
+<a name="webkit-context-menu-remove.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>menu</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>item</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitContextMenuItem.html" title="WebKitContextMenuItem"><span class="type">WebKitContextMenuItem</span></a> to remove</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-context-menu-remove-all"></a><h3>webkit_context_menu_remove_all ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_context_menu_remove_all (<em class="parameter"><code><a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> *menu</code></em>);</pre>
+<p>Removes all items of the <em class="parameter"><code>menu</code></em>
+.</p>
+<div class="refsect3">
+<a name="webkit-context-menu-remove-all.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>menu</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-context-menu-set-user-data"></a><h3>webkit_context_menu_set_user_data ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_context_menu_set_user_data (<em class="parameter"><code><a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> *menu</code></em>,
+                                   <em class="parameter"><code><a href="../glib/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *user_data</code></em>);</pre>
+<p>Sets user data to <em class="parameter"><code>menu</code></em>
+.
+This function can be used from a Web Process extension to set user data
+that can be retrieved from the UI Process using <a class="link" href="WebKitContextMenu.html#webkit-context-menu-get-user-data" title="webkit_context_menu_get_user_data ()"><code class="function">webkit_context_menu_get_user_data()</code></a>.
+If the <em class="parameter"><code>user_data</code></em>
+ <a href="../glib/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> is floating, it is consumed.</p>
+<div class="refsect3">
+<a name="webkit-context-menu-set-user-data.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>menu</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>a <a href="../glib/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-8.html#api-index-2.8">2.8</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-context-menu-get-user-data"></a><h3>webkit_context_menu_get_user_data ()</h3>
+<pre class="programlisting"><a href="../glib/glib-GVariant.html#GVariant"><span class="returnvalue">GVariant</span></a> *
+webkit_context_menu_get_user_data (<em class="parameter"><code><a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a> *menu</code></em>);</pre>
+<p>Gets the user data of <em class="parameter"><code>menu</code></em>
+.
+This function can be used from the UI Process to get user data previously set
+from the Web Process with <a class="link" href="WebKitContextMenu.html#webkit-context-menu-set-user-data" title="webkit_context_menu_set_user_data ()"><code class="function">webkit_context_menu_set_user_data()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-context-menu-get-user-data.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>menu</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-context-menu-get-user-data.returns"></a><h4>Returns</h4>
+<p>the user data of <em class="parameter"><code>menu</code></em>
+, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>menu</code></em>
+doesn't have user data. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-8.html#api-index-2.8">2.8</a></p>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitContextMenu.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="WebKitContextMenu-struct"></a><h3>WebKitContextMenu</h3>
+<pre class="programlisting">typedef struct _WebKitContextMenu WebKitContextMenu;</pre>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WebKitPlugin: WebKitGTK Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="WebKitCookieManager.html" title="WebKitCookieManager">
+<link rel="next" href="WebKitWebInspector.html" title="WebKitWebInspector">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#WebKitPlugin.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#WebKitPlugin.object-hierarchy" class="shortcut">Object Hierarchy</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="WebKitCookieManager.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="WebKitWebInspector.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="WebKitPlugin"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="WebKitPlugin.top_of_page"></a>WebKitPlugin</span></h2>
+<p>WebKitPlugin — Represents a plugin, enabling fine-grained control</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="WebKitPlugin.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitPlugin.html#webkit-plugin-get-name" title="webkit_plugin_get_name ()">webkit_plugin_get_name</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitPlugin.html#webkit-plugin-get-description" title="webkit_plugin_get_description ()">webkit_plugin_get_description</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitPlugin.html#webkit-plugin-get-path" title="webkit_plugin_get_path ()">webkit_plugin_get_path</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitPlugin.html#webkit-plugin-get-mime-info-list" title="webkit_plugin_get_mime_info_list ()">webkit_plugin_get_mime_info_list</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitPlugin.html#WebKitMimeInfo"><span class="returnvalue">WebKitMimeInfo</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitPlugin.html#webkit-mime-info-ref" title="webkit_mime_info_ref ()">webkit_mime_info_ref</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitPlugin.html#webkit-mime-info-unref" title="webkit_mime_info_unref ()">webkit_mime_info_unref</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitPlugin.html#webkit-mime-info-get-mime-type" title="webkit_mime_info_get_mime_type ()">webkit_mime_info_get_mime_type</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitPlugin.html#webkit-mime-info-get-description" title="webkit_mime_info_get_description ()">webkit_mime_info_get_description</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> * const *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitPlugin.html#webkit-mime-info-get-extensions" title="webkit_mime_info_get_extensions ()">webkit_mime_info_get_extensions</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<a name="WebKitMimeInfo"></a><div class="refsect1">
+<a name="WebKitPlugin.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="WebKitPlugin.html#WebKitPlugin-struct" title="struct WebKitPlugin">WebKitPlugin</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="WebKitPlugin.html#WebKitMimeInfo-struct" title="WebKitMimeInfo">WebKitMimeInfo</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitPlugin.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-Boxed-Types.html">GBoxed</a>
+    <span class="lineart">╰──</span> WebKitMimeInfo
+    <a href="../gobject/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> WebKitPlugin
+</pre>
+</div>
+<div class="refsect1">
+<a name="WebKitPlugin.description"></a><h2>Description</h2>
+<p>This object represents a single plugin, found while scanning the
+various platform plugin directories. This object can be used to get
+more information about a plugin, and enable/disable it, allowing
+fine-grained control of plugins. The list of available plugins can
+be obtained from the <a class="link" href="WebKitWebContext.html" title="WebKitWebContext"><span class="type">WebKitWebContext</span></a>, with
+<a class="link" href="WebKitWebContext.html#webkit-web-context-get-plugins" title="webkit_web_context_get_plugins ()"><code class="function">webkit_web_context_get_plugins()</code></a>.</p>
+</div>
+<div class="refsect1">
+<a name="WebKitPlugin.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="webkit-plugin-get-name"></a><h3>webkit_plugin_get_name ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_plugin_get_name (<em class="parameter"><code><a class="link" href="WebKitPlugin.html" title="WebKitPlugin"><span class="type">WebKitPlugin</span></a> *plugin</code></em>);</pre>
+<div class="warning"><p><code class="literal">webkit_plugin_get_name</code> has been deprecated since version 2.32 and should not be used in newly-written code.</p></div>
+<div class="refsect3">
+<a name="webkit-plugin-get-name.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>plugin</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitPlugin.html" title="WebKitPlugin"><span class="type">WebKitPlugin</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-plugin-get-name.returns"></a><h4>Returns</h4>
+<p> the name of the plugin.</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-plugin-get-description"></a><h3>webkit_plugin_get_description ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_plugin_get_description (<em class="parameter"><code><a class="link" href="WebKitPlugin.html" title="WebKitPlugin"><span class="type">WebKitPlugin</span></a> *plugin</code></em>);</pre>
+<div class="warning"><p><code class="literal">webkit_plugin_get_description</code> has been deprecated since version 2.32 and should not be used in newly-written code.</p></div>
+<div class="refsect3">
+<a name="webkit-plugin-get-description.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>plugin</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitPlugin.html" title="WebKitPlugin"><span class="type">WebKitPlugin</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-plugin-get-description.returns"></a><h4>Returns</h4>
+<p> the description of the plugin.</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-plugin-get-path"></a><h3>webkit_plugin_get_path ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_plugin_get_path (<em class="parameter"><code><a class="link" href="WebKitPlugin.html" title="WebKitPlugin"><span class="type">WebKitPlugin</span></a> *plugin</code></em>);</pre>
+<div class="warning"><p><code class="literal">webkit_plugin_get_path</code> has been deprecated since version 2.32 and should not be used in newly-written code.</p></div>
+<div class="refsect3">
+<a name="webkit-plugin-get-path.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>plugin</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitPlugin.html" title="WebKitPlugin"><span class="type">WebKitPlugin</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-plugin-get-path.returns"></a><h4>Returns</h4>
+<p> the absolute path where the plugin is installed.</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-plugin-get-mime-info-list"></a><h3>webkit_plugin_get_mime_info_list ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *
+webkit_plugin_get_mime_info_list (<em class="parameter"><code><a class="link" href="WebKitPlugin.html" title="WebKitPlugin"><span class="type">WebKitPlugin</span></a> *plugin</code></em>);</pre>
+<div class="warning"><p><code class="literal">webkit_plugin_get_mime_info_list</code> has been deprecated since version 2.32 and should not be used in newly-written code.</p></div>
+<p>Get information about MIME types handled by the plugin,
+as a list of <a class="link" href="WebKitPlugin.html#WebKitMimeInfo"><span class="type">WebKitMimeInfo</span></a>.</p>
+<div class="refsect3">
+<a name="webkit-plugin-get-mime-info-list.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>plugin</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitPlugin.html" title="WebKitPlugin"><span class="type">WebKitPlugin</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-plugin-get-mime-info-list.returns"></a><h4>Returns</h4>
+<p>a <a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of <a class="link" href="WebKitPlugin.html#WebKitMimeInfo"><span class="type">WebKitMimeInfo</span></a>. </p>
+<p><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> WebKitMimeInfo][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-mime-info-ref"></a><h3>webkit_mime_info_ref ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitPlugin.html#WebKitMimeInfo"><span class="returnvalue">WebKitMimeInfo</span></a> *
+webkit_mime_info_ref (<em class="parameter"><code><a class="link" href="WebKitPlugin.html#WebKitMimeInfo"><span class="type">WebKitMimeInfo</span></a> *info</code></em>);</pre>
+<div class="warning"><p><code class="literal">webkit_mime_info_ref</code> has been deprecated since version 2.32 and should not be used in newly-written code.</p></div>
+<p>Atomically increments the reference count of <em class="parameter"><code>info</code></em>
+ by one. This
+function is MT-safe and may be called from any thread.</p>
+<div class="refsect3">
+<a name="webkit-mime-info-ref.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>info</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitPlugin.html#WebKitMimeInfo"><span class="type">WebKitMimeInfo</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-mime-info-ref.returns"></a><h4>Returns</h4>
+<p> The passed in <a class="link" href="WebKitPlugin.html#WebKitMimeInfo"><span class="type">WebKitMimeInfo</span></a></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-mime-info-unref"></a><h3>webkit_mime_info_unref ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_mime_info_unref (<em class="parameter"><code><a class="link" href="WebKitPlugin.html#WebKitMimeInfo"><span class="type">WebKitMimeInfo</span></a> *info</code></em>);</pre>
+<div class="warning"><p><code class="literal">webkit_mime_info_unref</code> has been deprecated since version 2.32 and should not be used in newly-written code.</p></div>
+<p>Atomically decrements the reference count of <em class="parameter"><code>info</code></em>
+ by one. If the
+reference count drops to 0, all memory allocated by the <a class="link" href="WebKitPlugin.html#WebKitMimeInfo"><span class="type">WebKitMimeInfo</span></a> is
+released. This function is MT-safe and may be called from any
+thread.</p>
+<div class="refsect3">
+<a name="webkit-mime-info-unref.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>info</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitPlugin.html#WebKitMimeInfo"><span class="type">WebKitMimeInfo</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-mime-info-get-mime-type"></a><h3>webkit_mime_info_get_mime_type ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_mime_info_get_mime_type (<em class="parameter"><code><a class="link" href="WebKitPlugin.html#WebKitMimeInfo"><span class="type">WebKitMimeInfo</span></a> *info</code></em>);</pre>
+<div class="warning"><p><code class="literal">webkit_mime_info_get_mime_type</code> has been deprecated since version 2.32 and should not be used in newly-written code.</p></div>
+<div class="refsect3">
+<a name="webkit-mime-info-get-mime-type.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>info</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitPlugin.html#WebKitMimeInfo"><span class="type">WebKitMimeInfo</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-mime-info-get-mime-type.returns"></a><h4>Returns</h4>
+<p> the MIME type of <em class="parameter"><code>info</code></em>
+</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-mime-info-get-description"></a><h3>webkit_mime_info_get_description ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_mime_info_get_description (<em class="parameter"><code><a class="link" href="WebKitPlugin.html#WebKitMimeInfo"><span class="type">WebKitMimeInfo</span></a> *info</code></em>);</pre>
+<div class="warning"><p><code class="literal">webkit_mime_info_get_description</code> has been deprecated since version 2.32 and should not be used in newly-written code.</p></div>
+<div class="refsect3">
+<a name="webkit-mime-info-get-description.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>info</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitPlugin.html#WebKitMimeInfo"><span class="type">WebKitMimeInfo</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-mime-info-get-description.returns"></a><h4>Returns</h4>
+<p> the description of the MIME type of <em class="parameter"><code>info</code></em>
+</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-mime-info-get-extensions"></a><h3>webkit_mime_info_get_extensions ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> * const *
+webkit_mime_info_get_extensions (<em class="parameter"><code><a class="link" href="WebKitPlugin.html#WebKitMimeInfo"><span class="type">WebKitMimeInfo</span></a> *info</code></em>);</pre>
+<div class="warning"><p><code class="literal">webkit_mime_info_get_extensions</code> has been deprecated since version 2.32 and should not be used in newly-written code.</p></div>
+<p>Get the list of file extensions associated to the
+MIME type of <em class="parameter"><code>info</code></em>
+</p>
+<div class="refsect3">
+<a name="webkit-mime-info-get-extensions.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>info</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitPlugin.html#WebKitMimeInfo"><span class="type">WebKitMimeInfo</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-mime-info-get-extensions.returns"></a><h4>Returns</h4>
+<p>a
+<a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>-terminated array of strings. </p>
+<p><span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> zero-terminated=1][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitPlugin.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="WebKitPlugin-struct"></a><h3>struct WebKitPlugin</h3>
+<pre class="programlisting">struct WebKitPlugin;</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitMimeInfo-struct"></a><h3>WebKitMimeInfo</h3>
+<pre class="programlisting">typedef struct _WebKitMimeInfo WebKitMimeInfo;</pre>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

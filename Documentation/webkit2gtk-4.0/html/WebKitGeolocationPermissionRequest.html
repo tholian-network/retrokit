@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WebKitGeolocationPermissionRequest: WebKitGTK Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="WebKitPermissionRequest.html" title="WebKitPermissionRequest">
+<link rel="next" href="WebKitInstallMissingMediaPluginsPermissionRequest.html" title="WebKitInstallMissingMediaPluginsPermissionRequest">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#WebKitGeolocationPermissionRequest.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#WebKitGeolocationPermissionRequest.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_interfaces">  <span class="dim">|</span> 
+                  <a href="#WebKitGeolocationPermissionRequest.implemented-interfaces" class="shortcut">Implemented Interfaces</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="WebKitPermissionRequest.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="WebKitInstallMissingMediaPluginsPermissionRequest.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="WebKitGeolocationPermissionRequest"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="WebKitGeolocationPermissionRequest.top_of_page"></a>WebKitGeolocationPermissionRequest</span></h2>
+<p>WebKitGeolocationPermissionRequest — A permission request for sharing user's location</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="WebKitGeolocationPermissionRequest.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody><tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="WebKitGeolocationPermissionRequest.html#WebKitGeolocationPermissionRequest-struct" title="struct WebKitGeolocationPermissionRequest">WebKitGeolocationPermissionRequest</a></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitGeolocationPermissionRequest.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> WebKitGeolocationPermissionRequest
+</pre>
+</div>
+<div class="refsect1">
+<a name="WebKitGeolocationPermissionRequest.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
+<p>
+WebKitGeolocationPermissionRequest implements
+ <a class="link" href="WebKitPermissionRequest.html" title="WebKitPermissionRequest">WebKitPermissionRequest</a>.</p>
+</div>
+<div class="refsect1">
+<a name="WebKitGeolocationPermissionRequest.description"></a><h2>Description</h2>
+<p>WebKitGeolocationPermissionRequest represents a request for
+permission to decide whether WebKit should provide the user's
+location to a website when requested through the Geolocation API.</p>
+<p>When a WebKitGeolocationPermissionRequest is not handled by the user,
+it is denied by default.</p>
+<p>When embedding web views in your application, you *must* configure an
+application identifier to allow web content to use geolocation services.
+The identifier *must* match the name of the <code class="literal">.desktop</code> file which describes
+the application, sans the suffix.</p>
+<p>If your application uses <a href="../gio/GApplication.html#GApplication-struct"><span class="type">GApplication</span></a> (or any subclass like
+<a href="../gtk3/GtkApplication.html#GtkApplication-struct"><span class="type">GtkApplication</span></a>), WebKit will automatically use the identifier returned by
+<a href="../gio/GApplication.html#g-application-get-application-id"><code class="function">g_application_get_application_id()</code></a>. This is the recommended approach for
+enabling geolocation in applications.</p>
+<p>If an identifier cannot be obtained through <a href="../gio/GApplication.html#GApplication-struct"><span class="type">GApplication</span></a>, the value
+returned by <a href="../glib/glib-Miscellaneous-Utility-Functions.html#g-get-prgname"><code class="function">g_get_prgname()</code></a> will be used instead as a fallback. For
+programs which cannot use <a href="../gio/GApplication.html#GApplication-struct"><span class="type">GApplication</span></a>, calling <a href="../glib/glib-Miscellaneous-Utility-Functions.html#g-set-prgname"><code class="function">g_set_prgname()</code></a> early
+during initialization is needed when the name of the executable on disk
+does not match the name of a valid <code class="literal">.desktop</code> file.</p>
+</div>
+<div class="refsect1">
+<a name="WebKitGeolocationPermissionRequest.functions_details"></a><h2>Functions</h2>
+<p></p>
+</div>
+<div class="refsect1">
+<a name="WebKitGeolocationPermissionRequest.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="WebKitGeolocationPermissionRequest-struct"></a><h3>struct WebKitGeolocationPermissionRequest</h3>
+<pre class="programlisting">struct WebKitGeolocationPermissionRequest;</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitGeolocationPermissionRequest.see-also"></a><h2>See Also</h2>
+<p><a class="link" href="WebKitPermissionRequest.html" title="WebKitPermissionRequest"><span class="type">WebKitPermissionRequest</span></a>, <a class="link" href="WebKitWebView.html" title="The main frame document title of this #WebKitWebView. If the title has not been received yet, it will be %NULL."><span class="type">WebKitWebView</span></a></p>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

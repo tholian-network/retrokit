@@ -1,0 +1,329 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WebKitNetworkProxySettings: WebKitGTK Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="WebKitWebsiteData.html" title="WebKitWebsiteData">
+<link rel="next" href="WebKitAutomationSession.html" title="WebKitAutomationSession">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#WebKitNetworkProxySettings.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#WebKitNetworkProxySettings.object-hierarchy" class="shortcut">Object Hierarchy</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="WebKitWebsiteData.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="WebKitAutomationSession.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="WebKitNetworkProxySettings"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="WebKitNetworkProxySettings.top_of_page"></a>WebKitNetworkProxySettings</span></h2>
+<p>WebKitNetworkProxySettings — Network Proxy Settings</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="WebKitNetworkProxySettings.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitNetworkProxySettings.html" title="WebKitNetworkProxySettings"><span class="returnvalue">WebKitNetworkProxySettings</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitNetworkProxySettings.html#webkit-network-proxy-settings-new" title="webkit_network_proxy_settings_new ()">webkit_network_proxy_settings_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitNetworkProxySettings.html" title="WebKitNetworkProxySettings"><span class="returnvalue">WebKitNetworkProxySettings</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitNetworkProxySettings.html#webkit-network-proxy-settings-copy" title="webkit_network_proxy_settings_copy ()">webkit_network_proxy_settings_copy</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitNetworkProxySettings.html#webkit-network-proxy-settings-free" title="webkit_network_proxy_settings_free ()">webkit_network_proxy_settings_free</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitNetworkProxySettings.html#webkit-network-proxy-settings-add-proxy-for-scheme" title="webkit_network_proxy_settings_add_proxy_for_scheme ()">webkit_network_proxy_settings_add_proxy_for_scheme</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitNetworkProxySettings.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="WebKitNetworkProxySettings.html#WebKitNetworkProxySettings-struct" title="WebKitNetworkProxySettings">WebKitNetworkProxySettings</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">enum</td>
+<td class="function_name"><a class="link" href="WebKitNetworkProxySettings.html#WebKitNetworkProxyMode" title="enum WebKitNetworkProxyMode">WebKitNetworkProxyMode</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitNetworkProxySettings.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-Boxed-Types.html">GBoxed</a>
+    <span class="lineart">╰──</span> WebKitNetworkProxySettings
+</pre>
+</div>
+<div class="refsect1">
+<a name="WebKitNetworkProxySettings.description"></a><h2>Description</h2>
+<p>WebKitNetworkProxySettings can be used to provide a custom proxy configuration
+to a <a class="link" href="WebKitWebContext.html" title="WebKitWebContext"><span class="type">WebKitWebContext</span></a>. You need to call <a class="link" href="WebKitWebContext.html#webkit-web-context-set-network-proxy-settings" title="webkit_web_context_set_network_proxy_settings ()"><code class="function">webkit_web_context_set_network_proxy_settings()</code></a>
+with <a class="link" href="WebKitNetworkProxySettings.html#WEBKIT-NETWORK-PROXY-MODE-CUSTOM:CAPS"><code class="literal">WEBKIT_NETWORK_PROXY_MODE_CUSTOM</code></a> and a WebKitNetworkProxySettings.</p>
+</div>
+<div class="refsect1">
+<a name="WebKitNetworkProxySettings.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="webkit-network-proxy-settings-new"></a><h3>webkit_network_proxy_settings_new ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitNetworkProxySettings.html" title="WebKitNetworkProxySettings"><span class="returnvalue">WebKitNetworkProxySettings</span></a> *
+webkit_network_proxy_settings_new (<em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *default_proxy_uri</code></em>,
+                                   <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> * const *ignore_hosts</code></em>);</pre>
+<p>Create a new <a class="link" href="WebKitNetworkProxySettings.html" title="WebKitNetworkProxySettings"><span class="type">WebKitNetworkProxySettings</span></a> with the given <em class="parameter"><code>default_proxy_uri</code></em>
+ and <em class="parameter"><code>ignore_hosts</code></em>
+.</p>
+<p>The default proxy URI will be used for any URI that doesn't match <em class="parameter"><code>ignore_hosts</code></em>
+, and doesn't match any
+of the schemes added with <a class="link" href="WebKitNetworkProxySettings.html#webkit-network-proxy-settings-add-proxy-for-scheme" title="webkit_network_proxy_settings_add_proxy_for_scheme ()"><code class="function">webkit_network_proxy_settings_add_proxy_for_scheme()</code></a>.
+If <em class="parameter"><code>default_proxy_uri</code></em>
+ starts with "socks://", it will be treated as referring to all three of the
+socks5, socks4a, and socks4 proxy types.</p>
+<p><em class="parameter"><code>ignore_hosts</code></em>
+ is a list of hostnames and IP addresses that the resolver should allow direct connections to.
+Entries can be in one of 4 formats:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>
+A hostname, such as "example.com", ".example.com", or "*.example.com", any of which match "example.com" or
+any subdomain of it.
+</p></li>
+<li class="listitem"><p>
+An IPv4 or IPv6 address, such as "192.168.1.1", which matches only that address.
+</p></li>
+<li class="listitem"><p>
+A hostname or IP address followed by a port, such as "example.com:80", which matches whatever the hostname or IP
+address would match, but only for URLs with the (explicitly) indicated port. In the case of an IPv6 address, the address
+part must appear in brackets: "[::1]:443"
+</p></li>
+<li class="listitem"><p>
+An IP address range, given by a base address and prefix length, such as "fe80::/10", which matches any address in that range.
+</p></li>
+</ul></div>
+<p>Note that when dealing with Unicode hostnames, the matching is done against the ASCII form of the name.
+Also note that hostname exclusions apply only to connections made to hosts identified by name, and IP address exclusions apply only
+to connections made to hosts identified by address. That is, if example.com has an address of 192.168.1.1, and <em class="parameter"><code>ignore_hosts</code></em>
+
+contains only "192.168.1.1", then a connection to "example.com" will use the proxy, and a connection to 192.168.1.1" will not.</p>
+<div class="refsect3">
+<a name="webkit-network-proxy-settings-new.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>default_proxy_uri</p></td>
+<td class="parameter_description"><p>the default proxy URI to use, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>ignore_hosts</p></td>
+<td class="parameter_description"><p>an optional list of hosts/IP addresses to not use a proxy for. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> zero-terminated=1]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-network-proxy-settings-new.returns"></a><h4>Returns</h4>
+<p>A new <a class="link" href="WebKitNetworkProxySettings.html" title="WebKitNetworkProxySettings"><span class="type">WebKitNetworkProxySettings</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-network-proxy-settings-copy"></a><h3>webkit_network_proxy_settings_copy ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitNetworkProxySettings.html" title="WebKitNetworkProxySettings"><span class="returnvalue">WebKitNetworkProxySettings</span></a> *
+webkit_network_proxy_settings_copy (<em class="parameter"><code><a class="link" href="WebKitNetworkProxySettings.html" title="WebKitNetworkProxySettings"><span class="type">WebKitNetworkProxySettings</span></a> *proxy_settings</code></em>);</pre>
+<p>Make a copy of the <a class="link" href="WebKitNetworkProxySettings.html" title="WebKitNetworkProxySettings"><span class="type">WebKitNetworkProxySettings</span></a>.</p>
+<div class="refsect3">
+<a name="webkit-network-proxy-settings-copy.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>proxy_settings</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitNetworkProxySettings.html" title="WebKitNetworkProxySettings"><span class="type">WebKitNetworkProxySettings</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-network-proxy-settings-copy.returns"></a><h4>Returns</h4>
+<p>A copy of passed in <a class="link" href="WebKitNetworkProxySettings.html" title="WebKitNetworkProxySettings"><span class="type">WebKitNetworkProxySettings</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-network-proxy-settings-free"></a><h3>webkit_network_proxy_settings_free ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_network_proxy_settings_free (<em class="parameter"><code><a class="link" href="WebKitNetworkProxySettings.html" title="WebKitNetworkProxySettings"><span class="type">WebKitNetworkProxySettings</span></a> *proxy_settings</code></em>);</pre>
+<p>Free the <a class="link" href="WebKitNetworkProxySettings.html" title="WebKitNetworkProxySettings"><span class="type">WebKitNetworkProxySettings</span></a>.</p>
+<div class="refsect3">
+<a name="webkit-network-proxy-settings-free.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>proxy_settings</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitNetworkProxySettings.html" title="WebKitNetworkProxySettings"><span class="type">WebKitNetworkProxySettings</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-network-proxy-settings-add-proxy-for-scheme"></a><h3>webkit_network_proxy_settings_add_proxy_for_scheme ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_network_proxy_settings_add_proxy_for_scheme
+                               (<em class="parameter"><code><a class="link" href="WebKitNetworkProxySettings.html" title="WebKitNetworkProxySettings"><span class="type">WebKitNetworkProxySettings</span></a> *proxy_settings</code></em>,
+                                <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *scheme</code></em>,
+                                <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *proxy_uri</code></em>);</pre>
+<p>Adds a URI-scheme-specific proxy. URIs whose scheme matches <em class="parameter"><code>uri_scheme</code></em>
+ will be proxied via <em class="parameter"><code>proxy_uri</code></em>
+.
+As with the default proxy URI, if <em class="parameter"><code>proxy_uri</code></em>
+ starts with "socks://", it will be treated as referring to
+all three of the socks5, socks4a, and socks4 proxy types.</p>
+<div class="refsect3">
+<a name="webkit-network-proxy-settings-add-proxy-for-scheme.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>proxy_settings</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitNetworkProxySettings.html" title="WebKitNetworkProxySettings"><span class="type">WebKitNetworkProxySettings</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>scheme</p></td>
+<td class="parameter_description"><p>the URI scheme to add a proxy for</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>proxy_uri</p></td>
+<td class="parameter_description"><p>the proxy URI to use for <em class="parameter"><code>uri_scheme</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitNetworkProxySettings.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="WebKitNetworkProxySettings-struct"></a><h3>WebKitNetworkProxySettings</h3>
+<pre class="programlisting">typedef struct _WebKitNetworkProxySettings WebKitNetworkProxySettings;</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitNetworkProxyMode"></a><h3>enum WebKitNetworkProxyMode</h3>
+<p>Enum values used to set the network proxy mode.</p>
+<div class="refsect3">
+<a name="WebKitNetworkProxyMode.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="300px" class="enum_members_name">
+<col class="enum_members_description">
+<col width="200px" class="enum_members_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="enum_member_name"><p><a name="WEBKIT-NETWORK-PROXY-MODE-DEFAULT:CAPS"></a>WEBKIT_NETWORK_PROXY_MODE_DEFAULT</p></td>
+<td class="enum_member_description">
+<p>Use the default proxy of the system.</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="WEBKIT-NETWORK-PROXY-MODE-NO-PROXY:CAPS"></a>WEBKIT_NETWORK_PROXY_MODE_NO_PROXY</p></td>
+<td class="enum_member_description">
+<p>Do not use any proxy.</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="WEBKIT-NETWORK-PROXY-MODE-CUSTOM:CAPS"></a>WEBKIT_NETWORK_PROXY_MODE_CUSTOM</p></td>
+<td class="enum_member_description">
+<p>Use custom proxy settings.</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitNetworkProxySettings.see-also"></a><h2>See Also</h2>
+<p><a class="link" href="WebKitWebContext.html" title="WebKitWebContext"><span class="type">WebKitWebContext</span></a></p>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

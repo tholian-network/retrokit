@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WebKitFormSubmissionRequest: WebKitGTK Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="WebKitOptionMenuItem.html" title="WebKitOptionMenuItem">
+<link rel="next" href="WebKitSecurityManager.html" title="WebKitSecurityManager">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#WebKitFormSubmissionRequest.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#WebKitFormSubmissionRequest.object-hierarchy" class="shortcut">Object Hierarchy</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="WebKitOptionMenuItem.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="WebKitSecurityManager.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="WebKitFormSubmissionRequest"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="WebKitFormSubmissionRequest.top_of_page"></a>WebKitFormSubmissionRequest</span></h2>
+<p>WebKitFormSubmissionRequest — Represents a form submission request</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="WebKitFormSubmissionRequest.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitFormSubmissionRequest.html#webkit-form-submission-request-get-text-fields" title="webkit_form_submission_request_get_text_fields ()">webkit_form_submission_request_get_text_fields</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitFormSubmissionRequest.html#webkit-form-submission-request-list-text-fields" title="webkit_form_submission_request_list_text_fields ()">webkit_form_submission_request_list_text_fields</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitFormSubmissionRequest.html#webkit-form-submission-request-submit" title="webkit_form_submission_request_submit ()">webkit_form_submission_request_submit</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitFormSubmissionRequest.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody><tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="WebKitFormSubmissionRequest.html#WebKitFormSubmissionRequest-struct" title="struct WebKitFormSubmissionRequest">WebKitFormSubmissionRequest</a></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitFormSubmissionRequest.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> WebKitFormSubmissionRequest
+</pre>
+</div>
+<div class="refsect1">
+<a name="WebKitFormSubmissionRequest.description"></a><h2>Description</h2>
+<p>When a form is about to be submitted in a <a class="link" href="WebKitWebView.html" title="The main frame document title of this #WebKitWebView. If the title has not been received yet, it will be %NULL."><span class="type">WebKitWebView</span></a>, the
+<a class="link" href="WebKitWebView.html#WebKitWebView-submit-form" title="The “submit-form” signal"><span class="type">“submit-form”</span></a> signal is emitted. Its request argument
+contains information about the text fields of the form, that are
+typically used to store login information, returned as lists by
+<a class="link" href="WebKitFormSubmissionRequest.html#webkit-form-submission-request-list-text-fields" title="webkit_form_submission_request_list_text_fields ()"><code class="function">webkit_form_submission_request_list_text_fields()</code></a>. You can submit the
+form with <a class="link" href="WebKitFormSubmissionRequest.html#webkit-form-submission-request-submit" title="webkit_form_submission_request_submit ()"><code class="function">webkit_form_submission_request_submit()</code></a>.</p>
+</div>
+<div class="refsect1">
+<a name="WebKitFormSubmissionRequest.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="webkit-form-submission-request-get-text-fields"></a><h3>webkit_form_submission_request_get_text_fields ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *
+webkit_form_submission_request_get_text_fields
+                               (<em class="parameter"><code><a class="link" href="WebKitFormSubmissionRequest.html" title="WebKitFormSubmissionRequest"><span class="type">WebKitFormSubmissionRequest</span></a> *request</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_form_submission_request_get_text_fields</code> has been deprecated since version 2.20. and should not be used in newly-written code.</p>
+<p>Use <a class="link" href="WebKitFormSubmissionRequest.html#webkit-form-submission-request-list-text-fields" title="webkit_form_submission_request_list_text_fields ()"><code class="function">webkit_form_submission_request_list_text_fields()</code></a> instead.</p>
+</div>
+<p>Get a <a href="../glib/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> with the values of the text fields contained in the form
+associated to <em class="parameter"><code>request</code></em>
+. Note that fields will be missing if the form
+contains multiple text input elements with the same name, so this
+function does not reliably return all text fields.</p>
+<div class="refsect3">
+<a name="webkit-form-submission-request-get-text-fields.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>request</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitFormSubmissionRequest.html" title="WebKitFormSubmissionRequest"><span class="type">WebKitFormSubmissionRequest</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-form-submission-request-get-text-fields.returns"></a><h4>Returns</h4>
+<p>a <a href="../glib/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> with the form
+text fields, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the form doesn't contain text fields. </p>
+<p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-form-submission-request-list-text-fields"></a><h3>webkit_form_submission_request_list_text_fields ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+webkit_form_submission_request_list_text_fields
+                               (<em class="parameter"><code><a class="link" href="WebKitFormSubmissionRequest.html" title="WebKitFormSubmissionRequest"><span class="type">WebKitFormSubmissionRequest</span></a> *request</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Pointer-Arrays.html#GPtrArray"><span class="type">GPtrArray</span></a> **field_names</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Pointer-Arrays.html#GPtrArray"><span class="type">GPtrArray</span></a> **field_values</code></em>);</pre>
+<p>Get lists with the names and values of the text fields contained in
+the form associated to <em class="parameter"><code>request</code></em>
+. Note that names and values may be
+<a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</p>
+<p>If this function returns <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a>, then both <em class="parameter"><code>field_names</code></em>
+ and
+<em class="parameter"><code>field_values</code></em>
+ will be empty.</p>
+<div class="refsect3">
+<a name="webkit-form-submission-request-list-text-fields.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>request</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitFormSubmissionRequest.html" title="WebKitFormSubmissionRequest"><span class="type">WebKitFormSubmissionRequest</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>field_names</p></td>
+<td class="parameter_description"><p>names of the text fields in the form. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL may be passed instead of a pointer to a location."><span class="acronym">optional</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>field_values</p></td>
+<td class="parameter_description"><p>values of the text fields in the form. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL may be passed instead of a pointer to a location."><span class="acronym">optional</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-form-submission-request-list-text-fields.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the form contains text fields, or <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-20.html#api-index-2.20">2.20</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-form-submission-request-submit"></a><h3>webkit_form_submission_request_submit ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_form_submission_request_submit (<em class="parameter"><code><a class="link" href="WebKitFormSubmissionRequest.html" title="WebKitFormSubmissionRequest"><span class="type">WebKitFormSubmissionRequest</span></a> *request</code></em>);</pre>
+<p>Continue the form submission.</p>
+<div class="refsect3">
+<a name="webkit-form-submission-request-submit.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>request</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitFormSubmissionRequest.html" title="WebKitFormSubmissionRequest"><span class="type">WebKitFormSubmissionRequest</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitFormSubmissionRequest.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="WebKitFormSubmissionRequest-struct"></a><h3>struct WebKitFormSubmissionRequest</h3>
+<pre class="programlisting">struct WebKitFormSubmissionRequest;</pre>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

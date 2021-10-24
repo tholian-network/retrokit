@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Class Overview: WebKitGTK Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="up" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="prev" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="next" href="WebKitWebContext.html" title="WebKitWebContext">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts"></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><img src="up-insensitive.png" width="16" height="16" border="0"></td>
+<td><a accesskey="p" href="index.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="WebKitWebContext.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="chapter">
+<div class="titlepage"><div><div><h1 class="title">
+<a name="id-1.2"></a>Class Overview</h1></div></div></div>
+<div class="toc"><dl class="toc">
+<dt>
+<span class="refentrytitle"><a href="WebKitWebContext.html">WebKitWebContext</a></span><span class="refpurpose"> — Manages aspects common to all <span class="type">WebKitWebView</span>s</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitWebView.html">The main frame document title of this #WebKitWebView. If
+the title has not been received yet, it will be %NULL.</a></span><span class="refpurpose"> — The central class of the WPE WebKit and WebKitGTK APIs</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitAuthenticationRequest.html">WebKitAuthenticationRequest</a></span><span class="refpurpose"> — Represents an authentication request</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitBackForwardList.html">WebKitBackForwardList</a></span><span class="refpurpose"> — List of visited pages</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitBackForwardListItem.html">WebKitBackForwardListItem</a></span><span class="refpurpose"> — One item of the <span class="type">WebKitBackForwardList</span></span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitSettings.html">WebKitSettings</a></span><span class="refpurpose"> — Control the behaviour of a <span class="type">WebKitWebView</span></span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitURIRequest.html">WebKitURIRequest</a></span><span class="refpurpose"> — Represents a URI request</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitURIResponse.html">WebKitURIResponse</a></span><span class="refpurpose"> — Represents a URI response</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitWindowProperties.html">WebKitWindowProperties</a></span><span class="refpurpose"> — Window properties of a <span class="type">WebKitWebView</span></span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitDownload.html">WebKitDownload</a></span><span class="refpurpose"> — Object used to communicate with the application when downloading</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitPermissionRequest.html">WebKitPermissionRequest</a></span><span class="refpurpose"> — A permission request</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitGeolocationPermissionRequest.html">WebKitGeolocationPermissionRequest</a></span><span class="refpurpose"> — A permission request for sharing user's location</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitInstallMissingMediaPluginsPermissionRequest.html">WebKitInstallMissingMediaPluginsPermissionRequest</a></span><span class="refpurpose"> — A permission request for installing missing media plugins</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitMediaKeySystemPermissionRequest.html">WebKitMediaKeySystemPermissionRequest</a></span><span class="refpurpose"> — A permission request for using an EME Content Decryption Module</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitNavigationAction.html">WebKitNavigationAction</a></span><span class="refpurpose"></span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitUserMediaPermissionRequest.html">WebKitUserMediaPermissionRequest</a></span><span class="refpurpose"> — A permission request for accessing user's audio/video devices.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitDeviceInfoPermissionRequest.html">WebKitDeviceInfoPermissionRequest</a></span><span class="refpurpose"> — A permission request for accessing user's audio/video devices.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitPolicyDecision.html">WebKitPolicyDecision</a></span><span class="refpurpose"> — A pending policy decision</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitNavigationPolicyDecision.html">WebKitNavigationPolicyDecision</a></span><span class="refpurpose"> — A policy decision for navigation actions</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitResponsePolicyDecision.html">WebKitResponsePolicyDecision</a></span><span class="refpurpose"> — A policy decision for resource responses</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitHitTestResult.html">WebKitHitTestResult</a></span><span class="refpurpose"> — Result of a Hit Test</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitEditorState.html">WebKitEditorState</a></span><span class="refpurpose"> — Web editor state</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="webkit2gtk-4.0-The-title-of-the-custom-widget..html">The title of the custom widget.</a></span><span class="refpurpose"> — Allows to embed a custom widget in print dialog</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitPrintOperation.html">WebKitPrintOperation</a></span><span class="refpurpose"> — Controls a print operation</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitWebResource.html">WebKitWebResource</a></span><span class="refpurpose"> — Represents a resource at the end of a URI</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="webkit2gtk-4.0-WebKitError.html">WebKitError</a></span><span class="refpurpose"> — Categorized WebKit errors</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitFaviconDatabase.html">WebKitFaviconDatabase</a></span><span class="refpurpose"> — A WebKit favicon database</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitColorChooserRequest.html">WebKitColorChooserRequest</a></span><span class="refpurpose"> — A request to open a color chooser</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitFileChooserRequest.html">WebKitFileChooserRequest</a></span><span class="refpurpose"> — A request to open a file chooser</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitFindController.html">WebKitFindController</a></span><span class="refpurpose"> — Controls text search in a <span class="type">WebKitWebView</span></span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitCookieManager.html">WebKitCookieManager</a></span><span class="refpurpose"> — Defines how to handle cookies in a <span class="type">WebKitWebContext</span></span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitPlugin.html">WebKitPlugin</a></span><span class="refpurpose"> — Represents a plugin, enabling fine-grained control</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitWebInspector.html">WebKitWebInspector</a></span><span class="refpurpose"> — Access to the WebKit inspector</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitURISchemeRequest.html">WebKitURISchemeRequest</a></span><span class="refpurpose"> — Represents a URI scheme request</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="webkit2gtk-4.0-WebKitVersion.html">WebKitVersion</a></span><span class="refpurpose"> — Provides the WebKit version</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitContextMenu.html">WebKitContextMenu</a></span><span class="refpurpose"> — Represents the context menu in a <span class="type">WebKitWebView</span></span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitContextMenuItem.html">WebKitContextMenuItem</a></span><span class="refpurpose"> — One item of the <span class="type">WebKitContextMenu</span></span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitOptionMenu.html">WebKitOptionMenu</a></span><span class="refpurpose"></span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitOptionMenuItem.html">WebKitOptionMenuItem</a></span><span class="refpurpose"> — One item of the <span class="type">WebKitOptionMenu</span></span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitFormSubmissionRequest.html">WebKitFormSubmissionRequest</a></span><span class="refpurpose"> — Represents a form submission request</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitSecurityManager.html">WebKitSecurityManager</a></span><span class="refpurpose"> — Controls security settings in a <span class="type">WebKitWebContext</span></span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitUserContentFilterStore.html">WebKitUserContentFilterStore</a></span><span class="refpurpose"> — Handles storage of user content filters on disk.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitUserContentManager.html">WebKitUserContentManager</a></span><span class="refpurpose"> — Manages user-defined content which affects web pages.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="webkit2gtk-4.0-WebKitUserContent.html">User content</a></span><span class="refpurpose"> — Defines user content types which affect web pages.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="webkit2gtk-4.0-The-title-for-the-notification..html">The title for the notification.</a></span><span class="refpurpose"> — Object used to hold information about a notification that should be shown to the user.</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitNotificationPermissionRequest.html">WebKitNotificationPermissionRequest</a></span><span class="refpurpose"> — A permission request for displaying web notifications</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitSecurityOrigin.html">WebKitSecurityOrigin</a></span><span class="refpurpose"> — A security boundary for websites</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitWebsiteDataManager.html">WebKitWebsiteDataManager</a></span><span class="refpurpose"> — Website data manager</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitWebsiteData.html">WebKitWebsiteData</a></span><span class="refpurpose"> — Website data</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitNetworkProxySettings.html">WebKitNetworkProxySettings</a></span><span class="refpurpose"> — Network Proxy Settings</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitAutomationSession.html">WebKitAutomationSession</a></span><span class="refpurpose"> — Automation Session</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitApplicationInfo.html">WebKitApplicationInfo</a></span><span class="refpurpose"></span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="webkit2gtk-4.0-Geolocation-manager.html">Geolocation manager</a></span><span class="refpurpose"> — WebKitGeolocationManager</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitUserMessage.html">WebKitUserMessage</a></span><span class="refpurpose"> — A user message</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitPointerLockPermissionRequest.html">WebKitPointerLockPermissionRequest</a></span><span class="refpurpose"> — A permission request for locking the pointer</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitInputMethodContext.html">WebKitInputMethodContext</a></span><span class="refpurpose"> — Base class for input method contexts</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="WebKitWebsiteDataAccessPermissionRequest.html">WebKitWebsiteDataAccessPermissionRequest</a></span><span class="refpurpose"> — A permission request for accessing website data from third-party domains</span>
+</dt>
+</dl></div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

@@ -1,0 +1,771 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WebKitUserContentFilterStore: WebKitGTK Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="WebKitSecurityManager.html" title="WebKitSecurityManager">
+<link rel="next" href="WebKitUserContentManager.html" title="WebKitUserContentManager">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#WebKitUserContentFilterStore.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#WebKitUserContentFilterStore.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_properties">  <span class="dim">|</span> 
+                  <a href="#WebKitUserContentFilterStore.properties" class="shortcut">Properties</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="WebKitSecurityManager.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="WebKitUserContentManager.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="WebKitUserContentFilterStore"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="WebKitUserContentFilterStore.top_of_page"></a>WebKitUserContentFilterStore</span></h2>
+<p>WebKitUserContentFilterStore — Handles storage of user content filters on disk.</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="WebKitUserContentFilterStore.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="returnvalue">WebKitUserContentFilterStore</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-new" title="webkit_user_content_filter_store_new ()">webkit_user_content_filter_store_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-get-path" title="webkit_user_content_filter_store_get_path ()">webkit_user_content_filter_store_get_path</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-save" title="webkit_user_content_filter_store_save ()">webkit_user_content_filter_store_save</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserContentFilter"><span class="returnvalue">WebKitUserContentFilter</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-save-finish" title="webkit_user_content_filter_store_save_finish ()">webkit_user_content_filter_store_save_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-save-from-file" title="webkit_user_content_filter_store_save_from_file ()">webkit_user_content_filter_store_save_from_file</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserContentFilter"><span class="returnvalue">WebKitUserContentFilter</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-save-from-file-finish" title="webkit_user_content_filter_store_save_from_file_finish ()">webkit_user_content_filter_store_save_from_file_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-load" title="webkit_user_content_filter_store_load ()">webkit_user_content_filter_store_load</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserContentFilter"><span class="returnvalue">WebKitUserContentFilter</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-load-finish" title="webkit_user_content_filter_store_load_finish ()">webkit_user_content_filter_store_load_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-remove" title="webkit_user_content_filter_store_remove ()">webkit_user_content_filter_store_remove</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-remove-finish" title="webkit_user_content_filter_store_remove_finish ()">webkit_user_content_filter_store_remove_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-fetch-identifiers" title="webkit_user_content_filter_store_fetch_identifiers ()">webkit_user_content_filter_store_fetch_identifiers</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-fetch-identifiers-finish" title="webkit_user_content_filter_store_fetch_identifiers_finish ()">webkit_user_content_filter_store_fetch_identifiers_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitUserContentFilterStore.properties"></a><h2>Properties</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="properties_type">
+<col width="300px" class="properties_name">
+<col width="200px" class="properties_flags">
+</colgroup>
+<tbody><tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="WebKitUserContentFilterStore.html#WebKitUserContentFilterStore--path" title="The “path” property">path</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitUserContentFilterStore.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody><tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="WebKitUserContentFilterStore.html#WebKitUserContentFilterStore-struct" title="struct WebKitUserContentFilterStore">WebKitUserContentFilterStore</a></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitUserContentFilterStore.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> WebKitUserContentFilterStore
+</pre>
+</div>
+<div class="refsect1">
+<a name="WebKitUserContentFilterStore.description"></a><h2>Description</h2>
+<p>The WebKitUserContentFilterStore provides the means to import and save
+<a class="ulink" href="https://webkit.org/blog/3476/content-blockers-first-look/" target="_top">JSON rule sets</a>,
+which can be loaded later in an efficient manner. Once filters are stored,
+the <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserContentFilter"><span class="type">WebKitUserContentFilter</span></a> objects which represent them can be added to
+a <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> with <a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-add-filter" title="webkit_user_content_manager_add_filter ()"><code class="function">webkit_user_content_manager_add_filter()</code></a>.</p>
+<p>JSON rule sets are imported using <a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-save" title="webkit_user_content_filter_store_save ()"><code class="function">webkit_user_content_filter_store_save()</code></a> and stored
+on disk in an implementation defined format. The contents of a filter store must be
+managed using the <a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a>: a list of all the stored filters
+can be obtained with <a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-fetch-identifiers" title="webkit_user_content_filter_store_fetch_identifiers ()"><code class="function">webkit_user_content_filter_store_fetch_identifiers()</code></a>,
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-load" title="webkit_user_content_filter_store_load ()"><code class="function">webkit_user_content_filter_store_load()</code></a> can be used to retrieve a previously saved
+filter, and removed from the store with <a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-remove" title="webkit_user_content_filter_store_remove ()"><code class="function">webkit_user_content_filter_store_remove()</code></a>.</p>
+</div>
+<div class="refsect1">
+<a name="WebKitUserContentFilterStore.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="webkit-user-content-filter-store-new"></a><h3>webkit_user_content_filter_store_new ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="returnvalue">WebKitUserContentFilterStore</span></a> *
+webkit_user_content_filter_store_new (<em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *storage_path</code></em>);</pre>
+<p>Create a new <a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a> to manipulate filters stored at <em class="parameter"><code>storage_path</code></em>
+.
+The path must point to a local filesystem, and will be created if needed.</p>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-new.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>storage_path</p></td>
+<td class="parameter_description"><p>path where data for filters will be stored on disk</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-new.returns"></a><h4>Returns</h4>
+<p>a newly created <a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-24.html#api-index-2.24">2.24</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-filter-store-get-path"></a><h3>webkit_user_content_filter_store_get_path ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_user_content_filter_store_get_path
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a> *store</code></em>);</pre>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-get-path.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>store</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-get-path.returns"></a><h4>Returns</h4>
+<p>The storage path for user content filters. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-24.html#api-index-2.24">2.24</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-filter-store-save"></a><h3>webkit_user_content_filter_store_save ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_user_content_filter_store_save (<em class="parameter"><code><a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a> *store</code></em>,
+                                       <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *identifier</code></em>,
+                                       <em class="parameter"><code><a href="../glib/glib-Byte-Arrays.html#GBytes"><span class="type">GBytes</span></a> *source</code></em>,
+                                       <em class="parameter"><code><a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                       <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                       <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Asynchronously save a content filter from a source rule set in the
+<a class="ulink" href="https://webkit.org/blog/3476/content-blockers-first-look/" target="_top">WebKit content extesions JSON format</a>.</p>
+<p>The <em class="parameter"><code>identifier</code></em>
+ can be used afterwards to refer to the filter when using
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-remove" title="webkit_user_content_filter_store_remove ()"><code class="function">webkit_user_content_filter_store_remove()</code></a> and <a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-load" title="webkit_user_content_filter_store_load ()"><code class="function">webkit_user_content_filter_store_load()</code></a>.
+When the <em class="parameter"><code>identifier</code></em>
+ has been used in the past, the new filter source will replace
+the one saved beforehand for the same identifier.</p>
+<p>When the operation is finished, <em class="parameter"><code>callback</code></em>
+ will be invoked, which then can use
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-save-finish" title="webkit_user_content_filter_store_save_finish ()"><code class="function">webkit_user_content_filter_store_save_finish()</code></a> to obtain the resulting filter.</p>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-save.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>store</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>identifier</p></td>
+<td class="parameter_description"><p>a string used to identify the saved filter</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>source</p></td>
+<td class="parameter_description"><p><a href="../glib/glib-Byte-Arrays.html#GBytes"><span class="type">GBytes</span></a> containing the rule set in JSON format</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when saving is completed. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to the callback function. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-24.html#api-index-2.24">2.24</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-filter-store-save-finish"></a><h3>webkit_user_content_filter_store_save_finish ()</h3>
+<pre class="programlisting"><a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserContentFilter"><span class="returnvalue">WebKitUserContentFilter</span></a> *
+webkit_user_content_filter_store_save_finish
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a> *store</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *result</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Finishes an asynchronous filter save previously started with
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-save" title="webkit_user_content_filter_store_save ()"><code class="function">webkit_user_content_filter_store_save()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-save-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>store</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>result</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>return location for error or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-save-finish.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserContentFilter"><span class="type">WebKitUserContentFilter</span></a>, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if saving failed. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-24.html#api-index-2.24">2.24</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-filter-store-save-from-file"></a><h3>webkit_user_content_filter_store_save_from_file ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_user_content_filter_store_save_from_file
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a> *store</code></em>,
+                                <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *identifier</code></em>,
+                                <em class="parameter"><code><a href="../gio/GFile.html#GFile-struct"><span class="type">GFile</span></a> *file</code></em>,
+                                <em class="parameter"><code><a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Asynchronously save a content filter from the contents of a file, which must be
+native to the platform, as checked by <a href="../gio/GFile.html#g-file-is-native"><code class="function">g_file_is_native()</code></a>. See
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-save" title="webkit_user_content_filter_store_save ()"><code class="function">webkit_user_content_filter_store_save()</code></a> for more details.</p>
+<p>When the operation is finished, <em class="parameter"><code>callback</code></em>
+ will be invoked, which then can use
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-save-finish" title="webkit_user_content_filter_store_save_finish ()"><code class="function">webkit_user_content_filter_store_save_finish()</code></a> to obtain the resulting filter.</p>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-save-from-file.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>store</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>identifier</p></td>
+<td class="parameter_description"><p>a string used to identify the saved filter</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>file</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GFile.html#GFile-struct"><span class="type">GFile</span></a> containing the rule set in JSON format</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when saving is completed. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to the callback function. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-24.html#api-index-2.24">2.24</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-filter-store-save-from-file-finish"></a><h3>webkit_user_content_filter_store_save_from_file_finish ()</h3>
+<pre class="programlisting"><a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserContentFilter"><span class="returnvalue">WebKitUserContentFilter</span></a> *
+webkit_user_content_filter_store_save_from_file_finish
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a> *store</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *result</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Finishes and asynchronous filter save previously started with
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-save-from-file" title="webkit_user_content_filter_store_save_from_file ()"><code class="function">webkit_user_content_filter_store_save_from_file()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-save-from-file-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>store</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>result</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>return location for error or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-save-from-file-finish.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserContentFilter"><span class="type">WebKitUserContentFilter</span></a>, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if saving failed. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-24.html#api-index-2.24">2.24</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-filter-store-load"></a><h3>webkit_user_content_filter_store_load ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_user_content_filter_store_load (<em class="parameter"><code><a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a> *store</code></em>,
+                                       <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *identifier</code></em>,
+                                       <em class="parameter"><code><a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                       <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                       <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Asynchronously load a content filter given its <em class="parameter"><code>identifier</code></em>
+. The filter must have been
+previously stored using <a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-save" title="webkit_user_content_filter_store_save ()"><code class="function">webkit_user_content_filter_store_save()</code></a>.</p>
+<p>When the operation is finished, <em class="parameter"><code>callback</code></em>
+ will be invoked, which then can use
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-load-finish" title="webkit_user_content_filter_store_load_finish ()"><code class="function">webkit_user_content_filter_store_load_finish()</code></a> to obtain the resulting filter.</p>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-load.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>store</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>identifier</p></td>
+<td class="parameter_description"><p>a filter identifier</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the load is completed. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to the callback function. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-24.html#api-index-2.24">2.24</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-filter-store-load-finish"></a><h3>webkit_user_content_filter_store_load_finish ()</h3>
+<pre class="programlisting"><a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserContentFilter"><span class="returnvalue">WebKitUserContentFilter</span></a> *
+webkit_user_content_filter_store_load_finish
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a> *store</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *result</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Finishes an asynchronous filter load previously started with
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-load" title="webkit_user_content_filter_store_load ()"><code class="function">webkit_user_content_filter_store_load()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-load-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>store</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>result</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>return location for error or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-load-finish.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserContentFilter"><span class="type">WebKitUserContentFilter</span></a>, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the load failed. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-24.html#api-index-2.24">2.24</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-filter-store-remove"></a><h3>webkit_user_content_filter_store_remove ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_user_content_filter_store_remove
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a> *store</code></em>,
+                                <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *identifier</code></em>,
+                                <em class="parameter"><code><a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Asynchronously remove a content filter given its <em class="parameter"><code>identifier</code></em>
+.</p>
+<p>When the operation is finished, <em class="parameter"><code>callback</code></em>
+ will be invoked, which then can use
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-remove-finish" title="webkit_user_content_filter_store_remove_finish ()"><code class="function">webkit_user_content_filter_store_remove_finish()</code></a> to check whether the removal was
+successful.</p>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-remove.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>store</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>identifier</p></td>
+<td class="parameter_description"><p>a filter identifier</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the removal is completed. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to the callback function. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-24.html#api-index-2.24">2.24</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-filter-store-remove-finish"></a><h3>webkit_user_content_filter_store_remove_finish ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+webkit_user_content_filter_store_remove_finish
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a> *store</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *result</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Finishes an asynchronous filter removal previously started with
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-remove" title="webkit_user_content_filter_store_remove ()"><code class="function">webkit_user_content_filter_store_remove()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-remove-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>store</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>result</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>return location for error or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-remove-finish.returns"></a><h4>Returns</h4>
+<p> whether the removal was successful</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-24.html#api-index-2.24">2.24</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-filter-store-fetch-identifiers"></a><h3>webkit_user_content_filter_store_fetch_identifiers ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_user_content_filter_store_fetch_identifiers
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a> *store</code></em>,
+                                <em class="parameter"><code><a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Asynchronously retrieve a list of the identifiers for all the stored filters.</p>
+<p>When the operation is finished, <em class="parameter"><code>callback</code></em>
+ will be invoked, which then can use
+<a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-fetch-identifiers-finish" title="webkit_user_content_filter_store_fetch_identifiers_finish ()"><code class="function">webkit_user_content_filter_store_fetch_identifiers_finish()</code></a> to obtain the list of
+filter identifiers.</p>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-fetch-identifiers.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>store</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the removal is completed. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to the callback function. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-24.html#api-index-2.24">2.24</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-filter-store-fetch-identifiers-finish"></a><h3>webkit_user_content_filter_store_fetch_identifiers_finish ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **
+webkit_user_content_filter_store_fetch_identifiers_finish
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a> *store</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *result</code></em>);</pre>
+<p>Finishes an asynchronous fetch of the list of identifiers for the stored filters previously
+started with <a class="link" href="WebKitUserContentFilterStore.html#webkit-user-content-filter-store-fetch-identifiers" title="webkit_user_content_filter_store_fetch_identifiers ()"><code class="function">webkit_user_content_filter_store_fetch_identifiers()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-fetch-identifiers-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>store</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>result</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-user-content-filter-store-fetch-identifiers-finish.returns"></a><h4>Returns</h4>
+<p>a <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>-terminated list of filter identifiers. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>][<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> zero-terminated=1][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-24.html#api-index-2.24">2.24</a></p>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitUserContentFilterStore.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="WebKitUserContentFilterStore-struct"></a><h3>struct WebKitUserContentFilterStore</h3>
+<pre class="programlisting">struct WebKitUserContentFilterStore;</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitUserContentFilterStore.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="WebKitUserContentFilterStore--path"></a><h3>The <code class="literal">“path”</code> property</h3>
+<pre class="programlisting">  “path”                     <span class="type">char</span> *</pre>
+<p>The directory used for filter storage. This path is used as the base
+directory where user content filters are stored on disk.</p>
+<p>Owner: WebKitUserContentFilterStore</p>
+<p>Flags: Read / Write / Construct Only</p>
+<p>Default value: NULL</p>
+<p class="since">Since: <a class="link" href="api-index-2-24.html#api-index-2.24">2.24</a></p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

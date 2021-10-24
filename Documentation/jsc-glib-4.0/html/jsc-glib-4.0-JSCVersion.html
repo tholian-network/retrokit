@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JSCVersion: JavaScriptCore GLib Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="JavaScriptCore GLib Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="jsc-glib-4.0-JSCOptions.html" title="JSCOptions">
+<link rel="next" href="index-all.html" title="Index">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#jsc-glib-4.0-JSCVersion.description" class="shortcut">Description</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="jsc-glib-4.0-JSCOptions.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="index-all.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="jsc-glib-4.0-JSCVersion"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="jsc-glib-4.0-JSCVersion.top_of_page"></a>JSCVersion</span></h2>
+<p>JSCVersion — Provides the JavaScriptCore version</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="jsc-glib-4.0-JSCVersion.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="jsc-glib-4.0-JSCVersion.html#jsc-get-major-version" title="jsc_get_major_version ()">jsc_get_major_version</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="jsc-glib-4.0-JSCVersion.html#jsc-get-minor-version" title="jsc_get_minor_version ()">jsc_get_minor_version</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="jsc-glib-4.0-JSCVersion.html#jsc-get-micro-version" title="jsc_get_micro_version ()">jsc_get_micro_version</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name">
+<a class="link" href="jsc-glib-4.0-JSCVersion.html#JSC-CHECK-VERSION:CAPS" title="JSC_CHECK_VERSION()">JSC_CHECK_VERSION</a><span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="jsc-glib-4.0-JSCVersion.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="jsc-glib-4.0-JSCVersion.html#JSC-MAJOR-VERSION:CAPS" title="JSC_MAJOR_VERSION">JSC_MAJOR_VERSION</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="jsc-glib-4.0-JSCVersion.html#JSC-MINOR-VERSION:CAPS" title="JSC_MINOR_VERSION">JSC_MINOR_VERSION</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="jsc-glib-4.0-JSCVersion.html#JSC-MICRO-VERSION:CAPS" title="JSC_MICRO_VERSION">JSC_MICRO_VERSION</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="jsc-glib-4.0-JSCVersion.description"></a><h2>Description</h2>
+<p>Provides convenience functions returning JavaScriptCore's major, minor and
+micro versions of the JavaScriptCore library your code is running
+against. This is not necessarily the same as the
+<a class="link" href="jsc-glib-4.0-JSCVersion.html#JSC-MAJOR-VERSION:CAPS" title="JSC_MAJOR_VERSION"><span class="type">JSC_MAJOR_VERSION</span></a>, <a class="link" href="jsc-glib-4.0-JSCVersion.html#JSC-MINOR-VERSION:CAPS" title="JSC_MINOR_VERSION"><span class="type">JSC_MINOR_VERSION</span></a> or
+<a class="link" href="jsc-glib-4.0-JSCVersion.html#JSC-MICRO-VERSION:CAPS" title="JSC_MICRO_VERSION"><span class="type">JSC_MICRO_VERSION</span></a>, which represent the version of the JavaScriptCore
+headers included when compiling the code.</p>
+</div>
+<div class="refsect1">
+<a name="jsc-glib-4.0-JSCVersion.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="jsc-get-major-version"></a><h3>jsc_get_major_version ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+jsc_get_major_version (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>Returns the major version number of the JavaScriptCore library.
+(e.g. in JavaScriptCore version 1.8.3 this is 1.)</p>
+<p>This function is in the library, so it represents the JavaScriptCore library
+your code is running against. Contrast with the <a class="link" href="jsc-glib-4.0-JSCVersion.html#JSC-MAJOR-VERSION:CAPS" title="JSC_MAJOR_VERSION"><span class="type">JSC_MAJOR_VERSION</span></a>
+macro, which represents the major version of the JavaScriptCore headers you
+have included when compiling your code.</p>
+<div class="refsect3">
+<a name="jsc-get-major-version.returns"></a><h4>Returns</h4>
+<p> the major version number of the JavaScriptCore library</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-get-minor-version"></a><h3>jsc_get_minor_version ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+jsc_get_minor_version (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>Returns the minor version number of the JavaScriptCore library.
+(e.g. in JavaScriptCore version 1.8.3 this is 8.)</p>
+<p>This function is in the library, so it represents the JavaScriptCore library
+your code is running against. Contrast with the <a class="link" href="jsc-glib-4.0-JSCVersion.html#JSC-MINOR-VERSION:CAPS" title="JSC_MINOR_VERSION"><span class="type">JSC_MINOR_VERSION</span></a>
+macro, which represents the minor version of the JavaScriptCore headers you
+have included when compiling your code.</p>
+<div class="refsect3">
+<a name="jsc-get-minor-version.returns"></a><h4>Returns</h4>
+<p> the minor version number of the JavaScriptCore library</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-get-micro-version"></a><h3>jsc_get_micro_version ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+jsc_get_micro_version (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>Returns the micro version number of the JavaScriptCore library.
+(e.g. in JavaScriptCore version 1.8.3 this is 3.)</p>
+<p>This function is in the library, so it represents the JavaScriptCore library
+your code is running against. Contrast with the <a class="link" href="jsc-glib-4.0-JSCVersion.html#JSC-MICRO-VERSION:CAPS" title="JSC_MICRO_VERSION"><span class="type">JSC_MICRO_VERSION</span></a>
+macro, which represents the micro version of the JavaScriptCore headers you
+have included when compiling your code.</p>
+<div class="refsect3">
+<a name="jsc-get-micro-version.returns"></a><h4>Returns</h4>
+<p> the micro version number of the JavaScriptCore library</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="JSC-CHECK-VERSION:CAPS"></a><h3>JSC_CHECK_VERSION()</h3>
+<pre class="programlisting">#define             JSC_CHECK_VERSION(major, minor, micro)</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="jsc-glib-4.0-JSCVersion.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="JSC-MAJOR-VERSION:CAPS"></a><h3>JSC_MAJOR_VERSION</h3>
+<pre class="programlisting">#define JSC_MAJOR_VERSION (2)
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="JSC-MINOR-VERSION:CAPS"></a><h3>JSC_MINOR_VERSION</h3>
+<pre class="programlisting">#define JSC_MINOR_VERSION (34)
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="JSC-MICRO-VERSION:CAPS"></a><h3>JSC_MICRO_VERSION</h3>
+<pre class="programlisting">#define JSC_MICRO_VERSION (1)
+</pre>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

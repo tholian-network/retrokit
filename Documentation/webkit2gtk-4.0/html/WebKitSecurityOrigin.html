@@ -1,0 +1,443 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WebKitSecurityOrigin: WebKitGTK Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="WebKitNotificationPermissionRequest.html" title="WebKitNotificationPermissionRequest">
+<link rel="next" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#WebKitSecurityOrigin.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#WebKitSecurityOrigin.object-hierarchy" class="shortcut">Object Hierarchy</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="WebKitNotificationPermissionRequest.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="WebKitWebsiteDataManager.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="WebKitSecurityOrigin"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="WebKitSecurityOrigin.top_of_page"></a>WebKitSecurityOrigin</span></h2>
+<p>WebKitSecurityOrigin — A security boundary for websites</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="WebKitSecurityOrigin.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="returnvalue">WebKitSecurityOrigin</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitSecurityOrigin.html#webkit-security-origin-new" title="webkit_security_origin_new ()">webkit_security_origin_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="returnvalue">WebKitSecurityOrigin</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitSecurityOrigin.html#webkit-security-origin-new-for-uri" title="webkit_security_origin_new_for_uri ()">webkit_security_origin_new_for_uri</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="returnvalue">WebKitSecurityOrigin</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitSecurityOrigin.html#webkit-security-origin-ref" title="webkit_security_origin_ref ()">webkit_security_origin_ref</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitSecurityOrigin.html#webkit-security-origin-unref" title="webkit_security_origin_unref ()">webkit_security_origin_unref</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitSecurityOrigin.html#webkit-security-origin-get-protocol" title="webkit_security_origin_get_protocol ()">webkit_security_origin_get_protocol</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitSecurityOrigin.html#webkit-security-origin-get-host" title="webkit_security_origin_get_host ()">webkit_security_origin_get_host</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#guint16"><span class="returnvalue">guint16</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitSecurityOrigin.html#webkit-security-origin-get-port" title="webkit_security_origin_get_port ()">webkit_security_origin_get_port</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitSecurityOrigin.html#webkit-security-origin-is-opaque" title="webkit_security_origin_is_opaque ()">webkit_security_origin_is_opaque</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitSecurityOrigin.html#webkit-security-origin-to-string" title="webkit_security_origin_to_string ()">webkit_security_origin_to_string</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitSecurityOrigin.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody><tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="WebKitSecurityOrigin.html#WebKitSecurityOrigin-struct" title="WebKitSecurityOrigin">WebKitSecurityOrigin</a></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitSecurityOrigin.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-Boxed-Types.html">GBoxed</a>
+    <span class="lineart">╰──</span> WebKitSecurityOrigin
+</pre>
+</div>
+<div class="refsect1">
+<a name="WebKitSecurityOrigin.description"></a><h2>Description</h2>
+<p><a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a> is a representation of a security domain
+defined by websites. A security origin consists of a protocol, a
+hostname, and an optional port number.</p>
+<p>Resources with the same security origin can generally access each
+other for client-side scripting or database access. When comparing
+origins, beware that if both protocol and host are <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, the origins
+should not be treated as equal.</p>
+</div>
+<div class="refsect1">
+<a name="WebKitSecurityOrigin.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="webkit-security-origin-new"></a><h3>webkit_security_origin_new ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="returnvalue">WebKitSecurityOrigin</span></a> *
+webkit_security_origin_new (<em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *protocol</code></em>,
+                            <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *host</code></em>,
+                            <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#guint16"><span class="type">guint16</span></a> port</code></em>);</pre>
+<p>Create a new security origin from the provided protocol, host and
+port.</p>
+<div class="refsect3">
+<a name="webkit-security-origin-new.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>protocol</p></td>
+<td class="parameter_description"><p>The protocol for the new origin</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>host</p></td>
+<td class="parameter_description"><p>The host for the new origin</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>port</p></td>
+<td class="parameter_description"><p>The port number for the new origin, or 0 to indicate the
+default port for <em class="parameter"><code>protocol</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-security-origin-new.returns"></a><h4>Returns</h4>
+<p>A <a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-security-origin-new-for-uri"></a><h3>webkit_security_origin_new_for_uri ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="returnvalue">WebKitSecurityOrigin</span></a> *
+webkit_security_origin_new_for_uri (<em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *uri</code></em>);</pre>
+<p>Create a new security origin from the provided URI. Components of
+<em class="parameter"><code>uri</code></em>
+ other than protocol, host, and port do not affect the created
+<a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a>.</p>
+<div class="refsect3">
+<a name="webkit-security-origin-new-for-uri.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>uri</p></td>
+<td class="parameter_description"><p>The URI for the new origin</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-security-origin-new-for-uri.returns"></a><h4>Returns</h4>
+<p>A <a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-security-origin-ref"></a><h3>webkit_security_origin_ref ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="returnvalue">WebKitSecurityOrigin</span></a> *
+webkit_security_origin_ref (<em class="parameter"><code><a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a> *origin</code></em>);</pre>
+<p>Atomically increments the reference count of <em class="parameter"><code>origin</code></em>
+ by one.
+This function is MT-safe and may be called from any thread.</p>
+<div class="refsect3">
+<a name="webkit-security-origin-ref.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>origin</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-security-origin-ref.returns"></a><h4>Returns</h4>
+<p> The passed <a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-security-origin-unref"></a><h3>webkit_security_origin_unref ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_security_origin_unref (<em class="parameter"><code><a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a> *origin</code></em>);</pre>
+<p>Atomically decrements the reference count of <em class="parameter"><code>origin</code></em>
+ by one.
+If the reference count drops to 0, all memory allocated by
+<a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a> is released. This function is MT-safe and may be
+called from any thread.</p>
+<div class="refsect3">
+<a name="webkit-security-origin-unref.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>origin</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-security-origin-get-protocol"></a><h3>webkit_security_origin_get_protocol ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_security_origin_get_protocol (<em class="parameter"><code><a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a> *origin</code></em>);</pre>
+<p>Gets the protocol of <em class="parameter"><code>origin</code></em>
+.</p>
+<div class="refsect3">
+<a name="webkit-security-origin-get-protocol.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>origin</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-security-origin-get-protocol.returns"></a><h4>Returns</h4>
+<p>The protocol of the <a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a>. </p>
+<p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-security-origin-get-host"></a><h3>webkit_security_origin_get_host ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_security_origin_get_host (<em class="parameter"><code><a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a> *origin</code></em>);</pre>
+<p>Gets the hostname of <em class="parameter"><code>origin</code></em>
+. It is reasonable for this to be <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+if its protocol does not require a host component.</p>
+<div class="refsect3">
+<a name="webkit-security-origin-get-host.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>origin</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-security-origin-get-host.returns"></a><h4>Returns</h4>
+<p>The host of the <a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a>. </p>
+<p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-security-origin-get-port"></a><h3>webkit_security_origin_get_port ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#guint16"><span class="returnvalue">guint16</span></a>
+webkit_security_origin_get_port (<em class="parameter"><code><a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a> *origin</code></em>);</pre>
+<p>Gets the port of <em class="parameter"><code>origin</code></em>
+. This function will always return 0 if the
+port is the default port for the given protocol. For example,
+http://example.com has the same security origin as
+http://example.com:80, and this function will return 0 for a
+<a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a> constructed from either URI.</p>
+<div class="refsect3">
+<a name="webkit-security-origin-get-port.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>origin</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-security-origin-get-port.returns"></a><h4>Returns</h4>
+<p> The port of the <a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a>.</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-security-origin-is-opaque"></a><h3>webkit_security_origin_is_opaque ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+webkit_security_origin_is_opaque (<em class="parameter"><code><a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a> *origin</code></em>);</pre>
+<div class="warning"><p><code class="literal">webkit_security_origin_is_opaque</code> has been deprecated since version 2.32 and should not be used in newly-written code.</p></div>
+<p>This function returns <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a>. <a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a> is now a simple
+wrapper around a &lt;protocol, host, port&gt; triplet, and no longer
+represents an origin as defined by web standards that may be opaque.</p>
+<div class="refsect3">
+<a name="webkit-security-origin-is-opaque.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>origin</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-security-origin-is-opaque.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-security-origin-to-string"></a><h3>webkit_security_origin_to_string ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_security_origin_to_string (<em class="parameter"><code><a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a> *origin</code></em>);</pre>
+<p>Gets a string representation of <em class="parameter"><code>origin</code></em>
+. The string representation
+is a valid URI with only protocol, host, and port components, or
+<a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-security-origin-to-string.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>origin</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin"><span class="type">WebKitSecurityOrigin</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-security-origin-to-string.returns"></a><h4>Returns</h4>
+<p>a URI representing <em class="parameter"><code>origin</code></em>
+. </p>
+<p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitSecurityOrigin.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="WebKitSecurityOrigin-struct"></a><h3>WebKitSecurityOrigin</h3>
+<pre class="programlisting">typedef struct _WebKitSecurityOrigin WebKitSecurityOrigin;</pre>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

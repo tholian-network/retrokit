@@ -1,0 +1,960 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WebKitCookieManager: WebKitGTK Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="WebKitFindController.html" title="WebKitFindController">
+<link rel="next" href="WebKitPlugin.html" title="WebKitPlugin">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#WebKitCookieManager.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#WebKitCookieManager.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_signals">  <span class="dim">|</span> 
+                  <a href="#WebKitCookieManager.signals" class="shortcut">Signals</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="WebKitFindController.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="WebKitPlugin.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="WebKitCookieManager"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="WebKitCookieManager.top_of_page"></a>WebKitCookieManager</span></h2>
+<p>WebKitCookieManager — Defines how to handle cookies in a <a class="link" href="WebKitWebContext.html" title="WebKitWebContext"><span class="type">WebKitWebContext</span></a></p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="WebKitCookieManager.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-set-persistent-storage" title="webkit_cookie_manager_set_persistent_storage ()">webkit_cookie_manager_set_persistent_storage</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-set-accept-policy" title="webkit_cookie_manager_set_accept_policy ()">webkit_cookie_manager_set_accept_policy</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-get-accept-policy" title="webkit_cookie_manager_get_accept_policy ()">webkit_cookie_manager_get_accept_policy</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitCookieManager.html#WebKitCookieAcceptPolicy" title="enum WebKitCookieAcceptPolicy"><span class="returnvalue">WebKitCookieAcceptPolicy</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-get-accept-policy-finish" title="webkit_cookie_manager_get_accept_policy_finish ()">webkit_cookie_manager_get_accept_policy_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-get-domains-with-cookies" title="webkit_cookie_manager_get_domains_with_cookies ()">webkit_cookie_manager_get_domains_with_cookies</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **
+</td>
+<td class="function_name">
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-get-domains-with-cookies-finish" title="webkit_cookie_manager_get_domains_with_cookies_finish ()">webkit_cookie_manager_get_domains_with_cookies_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-add-cookie" title="webkit_cookie_manager_add_cookie ()">webkit_cookie_manager_add_cookie</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-add-cookie-finish" title="webkit_cookie_manager_add_cookie_finish ()">webkit_cookie_manager_add_cookie_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-get-cookies" title="webkit_cookie_manager_get_cookies ()">webkit_cookie_manager_get_cookies</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-get-cookies-finish" title="webkit_cookie_manager_get_cookies_finish ()">webkit_cookie_manager_get_cookies_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-delete-cookie" title="webkit_cookie_manager_delete_cookie ()">webkit_cookie_manager_delete_cookie</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-delete-cookie-finish" title="webkit_cookie_manager_delete_cookie_finish ()">webkit_cookie_manager_delete_cookie_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-delete-cookies-for-domain" title="webkit_cookie_manager_delete_cookies_for_domain ()">webkit_cookie_manager_delete_cookies_for_domain</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-delete-all-cookies" title="webkit_cookie_manager_delete_all_cookies ()">webkit_cookie_manager_delete_all_cookies</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitCookieManager.signals"></a><h2>Signals</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="signal_proto_type">
+<col width="300px" class="signal_proto_name">
+<col width="200px" class="signal_proto_flags">
+</colgroup>
+<tbody><tr>
+<td class="signal_type"><span class="returnvalue">void</span></td>
+<td class="signal_name"><a class="link" href="WebKitCookieManager.html#WebKitCookieManager-changed" title="The “changed” signal">changed</a></td>
+<td class="signal_flags"><a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitCookieManager.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="WebKitCookieManager.html#WebKitCookieManager-struct" title="struct WebKitCookieManager">WebKitCookieManager</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">enum</td>
+<td class="function_name"><a class="link" href="WebKitCookieManager.html#WebKitCookiePersistentStorage" title="enum WebKitCookiePersistentStorage">WebKitCookiePersistentStorage</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">enum</td>
+<td class="function_name"><a class="link" href="WebKitCookieManager.html#WebKitCookieAcceptPolicy" title="enum WebKitCookieAcceptPolicy">WebKitCookieAcceptPolicy</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitCookieManager.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> WebKitCookieManager
+</pre>
+</div>
+<div class="refsect1">
+<a name="WebKitCookieManager.description"></a><h2>Description</h2>
+<p>The WebKitCookieManager defines how to set up and handle cookies.
+You can get it from a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> with
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-cookie-manager" title="webkit_website_data_manager_get_cookie_manager ()"><code class="function">webkit_website_data_manager_get_cookie_manager()</code></a>, and use it to set where to
+store cookies with <a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-set-persistent-storage" title="webkit_cookie_manager_set_persistent_storage ()"><code class="function">webkit_cookie_manager_set_persistent_storage()</code></a>,
+or to set the acceptance policy, with <a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-get-accept-policy" title="webkit_cookie_manager_get_accept_policy ()"><code class="function">webkit_cookie_manager_get_accept_policy()</code></a>.</p>
+</div>
+<div class="refsect1">
+<a name="WebKitCookieManager.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="webkit-cookie-manager-set-persistent-storage"></a><h3>webkit_cookie_manager_set_persistent_storage ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_cookie_manager_set_persistent_storage
+                               (<em class="parameter"><code><a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a> *cookie_manager</code></em>,
+                                <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename</code></em>,
+                                <em class="parameter"><code><a class="link" href="WebKitCookieManager.html#WebKitCookiePersistentStorage" title="enum WebKitCookiePersistentStorage"><span class="type">WebKitCookiePersistentStorage</span></a> storage</code></em>);</pre>
+<p>Set the <em class="parameter"><code>filename</code></em>
+ where non-session cookies are stored persistently using
+<em class="parameter"><code>storage</code></em>
+ as the format to read/write the cookies.
+Cookies are initially read from <em class="parameter"><code>filename</code></em>
+ to create an initial set of cookies.
+Then, non-session cookies will be written to <em class="parameter"><code>filename</code></em>
+ when the WebKitCookieManager::changed
+signal is emitted.
+By default, <em class="parameter"><code>cookie_manager</code></em>
+ doesn't store the cookies persistently, so you need to call this
+method to keep cookies saved across sessions.</p>
+<p>This method should never be called on a <a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a> associated to an ephemeral <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a>.</p>
+<div class="refsect3">
+<a name="webkit-cookie-manager-set-persistent-storage.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>cookie_manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>filename</p></td>
+<td class="parameter_description"><p>the filename to read to/write from</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>storage</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitCookieManager.html#WebKitCookiePersistentStorage" title="enum WebKitCookiePersistentStorage"><span class="type">WebKitCookiePersistentStorage</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-cookie-manager-set-accept-policy"></a><h3>webkit_cookie_manager_set_accept_policy ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_cookie_manager_set_accept_policy
+                               (<em class="parameter"><code><a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a> *cookie_manager</code></em>,
+                                <em class="parameter"><code><a class="link" href="WebKitCookieManager.html#WebKitCookieAcceptPolicy" title="enum WebKitCookieAcceptPolicy"><span class="type">WebKitCookieAcceptPolicy</span></a> policy</code></em>);</pre>
+<p>Set the cookie acceptance policy of <em class="parameter"><code>cookie_manager</code></em>
+ as <em class="parameter"><code>policy</code></em>
+.
+Note that ITP has its own way to handle third-party cookies, so when it's enabled,
+and <em class="parameter"><code>policy</code></em>
+ is set to <a class="link" href="WebKitCookieManager.html#WEBKIT-COOKIE-POLICY-ACCEPT-NO-THIRD-PARTY:CAPS"><code class="literal">WEBKIT_COOKIE_POLICY_ACCEPT_NO_THIRD_PARTY</code></a>, <a class="link" href="WebKitCookieManager.html#WEBKIT-COOKIE-POLICY-ACCEPT-ALWAYS:CAPS"><code class="literal">WEBKIT_COOKIE_POLICY_ACCEPT_ALWAYS</code></a>
+will be used instead. Once disabled, the policy will be set back to <a class="link" href="WebKitCookieManager.html#WEBKIT-COOKIE-POLICY-ACCEPT-NO-THIRD-PARTY:CAPS"><code class="literal">WEBKIT_COOKIE_POLICY_ACCEPT_NO_THIRD_PARTY</code></a>.
+See also <a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-set-itp-enabled" title="webkit_website_data_manager_set_itp_enabled ()"><code class="function">webkit_website_data_manager_set_itp_enabled()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-cookie-manager-set-accept-policy.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>cookie_manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>policy</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitCookieManager.html#WebKitCookieAcceptPolicy" title="enum WebKitCookieAcceptPolicy"><span class="type">WebKitCookieAcceptPolicy</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-cookie-manager-get-accept-policy"></a><h3>webkit_cookie_manager_get_accept_policy ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_cookie_manager_get_accept_policy
+                               (<em class="parameter"><code><a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a> *cookie_manager</code></em>,
+                                <em class="parameter"><code><a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Asynchronously get the cookie acceptance policy of <em class="parameter"><code>cookie_manager</code></em>
+.
+Note that when policy was set to <a class="link" href="WebKitCookieManager.html#WEBKIT-COOKIE-POLICY-ACCEPT-NO-THIRD-PARTY:CAPS"><code class="literal">WEBKIT_COOKIE_POLICY_ACCEPT_NO_THIRD_PARTY</code></a> and
+ITP is enabled, this will return <a class="link" href="WebKitCookieManager.html#WEBKIT-COOKIE-POLICY-ACCEPT-ALWAYS:CAPS"><code class="literal">WEBKIT_COOKIE_POLICY_ACCEPT_ALWAYS</code></a>.
+See also <a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-set-itp-enabled" title="webkit_website_data_manager_set_itp_enabled ()"><code class="function">webkit_website_data_manager_set_itp_enabled()</code></a>.</p>
+<p>When the operation is finished, <em class="parameter"><code>callback</code></em>
+ will be called. You can then call
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-get-accept-policy-finish" title="webkit_cookie_manager_get_accept_policy_finish ()"><code class="function">webkit_cookie_manager_get_accept_policy_finish()</code></a> to get the result of the operation.</p>
+<div class="refsect3">
+<a name="webkit-cookie-manager-get-accept-policy.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>cookie_manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to callback function. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-cookie-manager-get-accept-policy-finish"></a><h3>webkit_cookie_manager_get_accept_policy_finish ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitCookieManager.html#WebKitCookieAcceptPolicy" title="enum WebKitCookieAcceptPolicy"><span class="returnvalue">WebKitCookieAcceptPolicy</span></a>
+webkit_cookie_manager_get_accept_policy_finish
+                               (<em class="parameter"><code><a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a> *cookie_manager</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *result</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Finish an asynchronous operation started with <a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-get-accept-policy" title="webkit_cookie_manager_get_accept_policy ()"><code class="function">webkit_cookie_manager_get_accept_policy()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-cookie-manager-get-accept-policy-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>cookie_manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>result</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>return location for error or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-cookie-manager-get-accept-policy-finish.returns"></a><h4>Returns</h4>
+<p> the cookie acceptance policy of <em class="parameter"><code>cookie_manager</code></em>
+as a <a class="link" href="WebKitCookieManager.html#WebKitCookieAcceptPolicy" title="enum WebKitCookieAcceptPolicy"><span class="type">WebKitCookieAcceptPolicy</span></a>.</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-cookie-manager-get-domains-with-cookies"></a><h3>webkit_cookie_manager_get_domains_with_cookies ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_cookie_manager_get_domains_with_cookies
+                               (<em class="parameter"><code><a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a> *cookie_manager</code></em>,
+                                <em class="parameter"><code><a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_cookie_manager_get_domains_with_cookies</code> has been deprecated since version 2.16 and should not be used in newly-written code.</p>
+<p>Use <a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-fetch" title="webkit_website_data_manager_fetch ()"><code class="function">webkit_website_data_manager_fetch()</code></a> instead.</p>
+</div>
+<p>Asynchronously get the list of domains for which <em class="parameter"><code>cookie_manager</code></em>
+ contains cookies.</p>
+<p>When the operation is finished, <em class="parameter"><code>callback</code></em>
+ will be called. You can then call
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-get-domains-with-cookies-finish" title="webkit_cookie_manager_get_domains_with_cookies_finish ()"><code class="function">webkit_cookie_manager_get_domains_with_cookies_finish()</code></a> to get the result of the operation.</p>
+<div class="refsect3">
+<a name="webkit-cookie-manager-get-domains-with-cookies.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>cookie_manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to callback function. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-cookie-manager-get-domains-with-cookies-finish"></a><h3>webkit_cookie_manager_get_domains_with_cookies_finish ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **
+webkit_cookie_manager_get_domains_with_cookies_finish
+                               (<em class="parameter"><code><a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a> *cookie_manager</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *result</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_cookie_manager_get_domains_with_cookies_finish</code> has been deprecated since version 2.16 and should not be used in newly-written code.</p>
+<p>Use <a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-fetch-finish" title="webkit_website_data_manager_fetch_finish ()"><code class="function">webkit_website_data_manager_fetch_finish()</code></a> instead.</p>
+</div>
+<p>Finish an asynchronous operation started with <a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-get-domains-with-cookies" title="webkit_cookie_manager_get_domains_with_cookies ()"><code class="function">webkit_cookie_manager_get_domains_with_cookies()</code></a>.
+The return value is a <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> terminated list of strings which should
+be released with <a href="../glib/glib-String-Utility-Functions.html#g-strfreev"><code class="function">g_strfreev()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-cookie-manager-get-domains-with-cookies-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>cookie_manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>result</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>return location for error or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-cookie-manager-get-domains-with-cookies-finish.returns"></a><h4>Returns</h4>
+<p>A <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> terminated array of domain names
+or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> in case of error. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>][<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> zero-terminated=1]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-cookie-manager-add-cookie"></a><h3>webkit_cookie_manager_add_cookie ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_cookie_manager_add_cookie (<em class="parameter"><code><a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a> *cookie_manager</code></em>,
+                                  <em class="parameter"><code><a href="../libsoup-3.0/SoupCookie.html#SoupCookie-struct"><span class="type">SoupCookie</span></a> *cookie</code></em>,
+                                  <em class="parameter"><code><a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                  <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                  <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Asynchronously add a <a href="../libsoup-3.0/SoupCookie.html#SoupCookie-struct"><span class="type">SoupCookie</span></a> to the underlying storage.</p>
+<p>When the operation is finished, <em class="parameter"><code>callback</code></em>
+ will be called. You can then call
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-add-cookie-finish" title="webkit_cookie_manager_add_cookie_finish ()"><code class="function">webkit_cookie_manager_add_cookie_finish()</code></a> to get the result of the operation.</p>
+<div class="refsect3">
+<a name="webkit-cookie-manager-add-cookie.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>cookie_manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cookie</p></td>
+<td class="parameter_description"><p>the <a href="../libsoup-3.0/SoupCookie.html#SoupCookie-struct"><span class="type">SoupCookie</span></a> to be added</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to callback function. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-20.html#api-index-2.20">2.20</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-cookie-manager-add-cookie-finish"></a><h3>webkit_cookie_manager_add_cookie_finish ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+webkit_cookie_manager_add_cookie_finish
+                               (<em class="parameter"><code><a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a> *cookie_manager</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *result</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Finish an asynchronous operation started with <a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-add-cookie" title="webkit_cookie_manager_add_cookie ()"><code class="function">webkit_cookie_manager_add_cookie()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-cookie-manager-add-cookie-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>cookie_manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>result</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>return location for error or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-cookie-manager-add-cookie-finish.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the cookie was added or <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> in case of error.</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-20.html#api-index-2.20">2.20</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-cookie-manager-get-cookies"></a><h3>webkit_cookie_manager_get_cookies ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_cookie_manager_get_cookies (<em class="parameter"><code><a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a> *cookie_manager</code></em>,
+                                   <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *uri</code></em>,
+                                   <em class="parameter"><code><a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                   <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                   <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Asynchronously get a list of <a href="../libsoup-3.0/SoupCookie.html#SoupCookie-struct"><span class="type">SoupCookie</span></a> from <em class="parameter"><code>cookie_manager</code></em>
+ associated with <em class="parameter"><code>uri</code></em>
+, which
+must be either an HTTP or an HTTPS URL.</p>
+<p>When the operation is finished, <em class="parameter"><code>callback</code></em>
+ will be called. You can then call
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-get-cookies-finish" title="webkit_cookie_manager_get_cookies_finish ()"><code class="function">webkit_cookie_manager_get_cookies_finish()</code></a> to get the result of the operation.</p>
+<div class="refsect3">
+<a name="webkit-cookie-manager-get-cookies.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>cookie_manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>uri</p></td>
+<td class="parameter_description"><p>the URI associated to the cookies to be retrieved</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to callback function. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-20.html#api-index-2.20">2.20</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-cookie-manager-get-cookies-finish"></a><h3>webkit_cookie_manager_get_cookies_finish ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *
+webkit_cookie_manager_get_cookies_finish
+                               (<em class="parameter"><code><a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a> *cookie_manager</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *result</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Finish an asynchronous operation started with <a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-get-cookies" title="webkit_cookie_manager_get_cookies ()"><code class="function">webkit_cookie_manager_get_cookies()</code></a>.
+The return value is a <a href="../glib/glib-Singly-Linked-Lists.html#GSList"><span class="type">GSList</span></a> of <a href="../libsoup-3.0/SoupCookie.html#SoupCookie-struct"><span class="type">SoupCookie</span></a> instances which should be released
+with <a href="../glib/glib-Doubly-Linked-Lists.html#g-list-free-full"><code class="function">g_list_free_full()</code></a> and <a href="../libsoup-3.0/SoupCookie.html#soup-cookie-free"><code class="function">soup_cookie_free()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-cookie-manager-get-cookies-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>cookie_manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>result</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>return location for error or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-cookie-manager-get-cookies-finish.returns"></a><h4>Returns</h4>
+<p>A <a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of <a href="../libsoup-3.0/SoupCookie.html#SoupCookie-struct"><span class="type">SoupCookie</span></a> instances. </p>
+<p><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> SoupCookie][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-20.html#api-index-2.20">2.20</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-cookie-manager-delete-cookie"></a><h3>webkit_cookie_manager_delete_cookie ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_cookie_manager_delete_cookie (<em class="parameter"><code><a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a> *cookie_manager</code></em>,
+                                     <em class="parameter"><code><a href="../libsoup-3.0/SoupCookie.html#SoupCookie-struct"><span class="type">SoupCookie</span></a> *cookie</code></em>,
+                                     <em class="parameter"><code><a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                     <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                     <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Asynchronously delete a <a href="../libsoup-3.0/SoupCookie.html#SoupCookie-struct"><span class="type">SoupCookie</span></a> from the current session.</p>
+<p>When the operation is finished, <em class="parameter"><code>callback</code></em>
+ will be called. You can then call
+<a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-delete-cookie-finish" title="webkit_cookie_manager_delete_cookie_finish ()"><code class="function">webkit_cookie_manager_delete_cookie_finish()</code></a> to get the result of the operation.</p>
+<div class="refsect3">
+<a name="webkit-cookie-manager-delete-cookie.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>cookie_manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cookie</p></td>
+<td class="parameter_description"><p>the <a href="../libsoup-3.0/SoupCookie.html#SoupCookie-struct"><span class="type">SoupCookie</span></a> to be deleted</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to callback function. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-20.html#api-index-2.20">2.20</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-cookie-manager-delete-cookie-finish"></a><h3>webkit_cookie_manager_delete_cookie_finish ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+webkit_cookie_manager_delete_cookie_finish
+                               (<em class="parameter"><code><a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a> *cookie_manager</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *result</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Finish an asynchronous operation started with <a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-delete-cookie" title="webkit_cookie_manager_delete_cookie ()"><code class="function">webkit_cookie_manager_delete_cookie()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-cookie-manager-delete-cookie-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>cookie_manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>result</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>return location for error or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-cookie-manager-delete-cookie-finish.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the cookie was deleted or <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> in case of error.</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-20.html#api-index-2.20">2.20</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-cookie-manager-delete-cookies-for-domain"></a><h3>webkit_cookie_manager_delete_cookies_for_domain ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_cookie_manager_delete_cookies_for_domain
+                               (<em class="parameter"><code><a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a> *cookie_manager</code></em>,
+                                <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *domain</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_cookie_manager_delete_cookies_for_domain</code> has been deprecated since version 2.16 and should not be used in newly-written code.</p>
+<p>Use <a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-remove" title="webkit_website_data_manager_remove ()"><code class="function">webkit_website_data_manager_remove()</code></a> instead.</p>
+</div>
+<p>Remove all cookies of <em class="parameter"><code>cookie_manager</code></em>
+ for the given <em class="parameter"><code>domain</code></em>
+.</p>
+<div class="refsect3">
+<a name="webkit-cookie-manager-delete-cookies-for-domain.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>cookie_manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>domain</p></td>
+<td class="parameter_description"><p>a domain name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-cookie-manager-delete-all-cookies"></a><h3>webkit_cookie_manager_delete_all_cookies ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_cookie_manager_delete_all_cookies
+                               (<em class="parameter"><code><a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a> *cookie_manager</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_cookie_manager_delete_all_cookies</code> has been deprecated since version 2.16 and should not be used in newly-written code.</p>
+<p>Use <a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-clear" title="webkit_website_data_manager_clear ()"><code class="function">webkit_website_data_manager_clear()</code></a> instead.</p>
+</div>
+<p>Delete all cookies of <em class="parameter"><code>cookie_manager</code></em>
+</p>
+<div class="refsect3">
+<a name="webkit-cookie-manager-delete-all-cookies.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>cookie_manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitCookieManager.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="WebKitCookieManager-struct"></a><h3>struct WebKitCookieManager</h3>
+<pre class="programlisting">struct WebKitCookieManager;</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitCookiePersistentStorage"></a><h3>enum WebKitCookiePersistentStorage</h3>
+<p>Enum values used to denote the cookie persistent storage types.</p>
+<div class="refsect3">
+<a name="WebKitCookiePersistentStorage.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="300px" class="enum_members_name">
+<col class="enum_members_description">
+<col width="200px" class="enum_members_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="enum_member_name"><p><a name="WEBKIT-COOKIE-PERSISTENT-STORAGE-TEXT:CAPS"></a>WEBKIT_COOKIE_PERSISTENT_STORAGE_TEXT</p></td>
+<td class="enum_member_description">
+<p>Cookies are stored in a text
+file in the Mozilla "cookies.txt" format.</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="WEBKIT-COOKIE-PERSISTENT-STORAGE-SQLITE:CAPS"></a>WEBKIT_COOKIE_PERSISTENT_STORAGE_SQLITE</p></td>
+<td class="enum_member_description">
+<p>Cookies are stored in a SQLite
+file in the current Mozilla format.</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitCookieAcceptPolicy"></a><h3>enum WebKitCookieAcceptPolicy</h3>
+<p>Enum values used to denote the cookie acceptance policies.</p>
+<div class="refsect3">
+<a name="WebKitCookieAcceptPolicy.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="300px" class="enum_members_name">
+<col class="enum_members_description">
+<col width="200px" class="enum_members_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="enum_member_name"><p><a name="WEBKIT-COOKIE-POLICY-ACCEPT-ALWAYS:CAPS"></a>WEBKIT_COOKIE_POLICY_ACCEPT_ALWAYS</p></td>
+<td class="enum_member_description">
+<p>Accept all cookies unconditionally.</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="WEBKIT-COOKIE-POLICY-ACCEPT-NEVER:CAPS"></a>WEBKIT_COOKIE_POLICY_ACCEPT_NEVER</p></td>
+<td class="enum_member_description">
+<p>Reject all cookies unconditionally.</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="WEBKIT-COOKIE-POLICY-ACCEPT-NO-THIRD-PARTY:CAPS"></a>WEBKIT_COOKIE_POLICY_ACCEPT_NO_THIRD_PARTY</p></td>
+<td class="enum_member_description">
+<p>Accept only cookies set by the main document loaded.</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitCookieManager.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="WebKitCookieManager-changed"></a><h3>The <code class="literal">“changed”</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+user_function (<a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a> *cookie_manager,
+               <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>             user_data)</pre>
+<p>This signal is emitted when cookies are added, removed or modified.</p>
+<div class="refsect3">
+<a name="WebKitCookieManager-changed.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>cookie_manager</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data set when the signal handler was connected.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>Flags: <a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

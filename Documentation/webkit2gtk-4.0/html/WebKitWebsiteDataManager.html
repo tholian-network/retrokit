@@ -1,0 +1,2078 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WebKitWebsiteDataManager: WebKitGTK Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="WebKitSecurityOrigin.html" title="WebKitSecurityOrigin">
+<link rel="next" href="WebKitWebsiteData.html" title="WebKitWebsiteData">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#WebKitWebsiteDataManager.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#WebKitWebsiteDataManager.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_properties">  <span class="dim">|</span> 
+                  <a href="#WebKitWebsiteDataManager.properties" class="shortcut">Properties</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="WebKitSecurityOrigin.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="WebKitWebsiteData.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="WebKitWebsiteDataManager"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="WebKitWebsiteDataManager.top_of_page"></a>WebKitWebsiteDataManager</span></h2>
+<p>WebKitWebsiteDataManager — Website data manager</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="WebKitWebsiteDataManager.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="returnvalue">WebKitWebsiteDataManager</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-new" title="webkit_website_data_manager_new ()">webkit_website_data_manager_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="returnvalue">WebKitWebsiteDataManager</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-new-ephemeral" title="webkit_website_data_manager_new_ephemeral ()">webkit_website_data_manager_new_ephemeral</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-is-ephemeral" title="webkit_website_data_manager_is_ephemeral ()">webkit_website_data_manager_is_ephemeral</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-base-data-directory" title="webkit_website_data_manager_get_base_data_directory ()">webkit_website_data_manager_get_base_data_directory</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-base-cache-directory" title="webkit_website_data_manager_get_base_cache_directory ()">webkit_website_data_manager_get_base_cache_directory</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-local-storage-directory" title="webkit_website_data_manager_get_local_storage_directory ()">webkit_website_data_manager_get_local_storage_directory</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-disk-cache-directory" title="webkit_website_data_manager_get_disk_cache_directory ()">webkit_website_data_manager_get_disk_cache_directory</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-offline-application-cache-directory" title="webkit_website_data_manager_get_offline_application_cache_directory ()">webkit_website_data_manager_get_offline_application_cache_directory</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-indexeddb-directory" title="webkit_website_data_manager_get_indexeddb_directory ()">webkit_website_data_manager_get_indexeddb_directory</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-websql-directory" title="webkit_website_data_manager_get_websql_directory ()">webkit_website_data_manager_get_websql_directory</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-hsts-cache-directory" title="webkit_website_data_manager_get_hsts_cache_directory ()">webkit_website_data_manager_get_hsts_cache_directory</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-itp-directory" title="webkit_website_data_manager_get_itp_directory ()">webkit_website_data_manager_get_itp_directory</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-service-worker-registrations-directory" title="webkit_website_data_manager_get_service_worker_registrations_directory ()">webkit_website_data_manager_get_service_worker_registrations_directory</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-dom-cache-directory" title="webkit_website_data_manager_get_dom_cache_directory ()">webkit_website_data_manager_get_dom_cache_directory</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="returnvalue">WebKitCookieManager</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-cookie-manager" title="webkit_website_data_manager_get_cookie_manager ()">webkit_website_data_manager_get_cookie_manager</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-set-itp-enabled" title="webkit_website_data_manager_set_itp_enabled ()">webkit_website_data_manager_set_itp_enabled</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-itp-enabled" title="webkit_website_data_manager_get_itp_enabled ()">webkit_website_data_manager_get_itp_enabled</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-set-persistent-credential-storage-enabled" title="webkit_website_data_manager_set_persistent_credential_storage_enabled ()">webkit_website_data_manager_set_persistent_credential_storage_enabled</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-persistent-credential-storage-enabled" title="webkit_website_data_manager_get_persistent_credential_storage_enabled ()">webkit_website_data_manager_get_persistent_credential_storage_enabled</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-set-tls-errors-policy" title="webkit_website_data_manager_set_tls_errors_policy ()">webkit_website_data_manager_set_tls_errors_policy</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitWebsiteDataManager.html#WebKitTLSErrorsPolicy" title="enum WebKitTLSErrorsPolicy"><span class="returnvalue">WebKitTLSErrorsPolicy</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-tls-errors-policy" title="webkit_website_data_manager_get_tls_errors_policy ()">webkit_website_data_manager_get_tls_errors_policy</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-set-network-proxy-settings" title="webkit_website_data_manager_set_network_proxy_settings ()">webkit_website_data_manager_set_network_proxy_settings</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-fetch" title="webkit_website_data_manager_fetch ()">webkit_website_data_manager_fetch</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-fetch-finish" title="webkit_website_data_manager_fetch_finish ()">webkit_website_data_manager_fetch_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-remove" title="webkit_website_data_manager_remove ()">webkit_website_data_manager_remove</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-remove-finish" title="webkit_website_data_manager_remove_finish ()">webkit_website_data_manager_remove_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-clear" title="webkit_website_data_manager_clear ()">webkit_website_data_manager_clear</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-clear-finish" title="webkit_website_data_manager_clear_finish ()">webkit_website_data_manager_clear_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-set-memory-pressure-settings" title="webkit_website_data_manager_set_memory_pressure_settings ()">webkit_website_data_manager_set_memory_pressure_settings</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitWebsiteDataManager.html#WebKitITPFirstParty"><span class="returnvalue">WebKitITPFirstParty</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-itp-first-party-ref" title="webkit_itp_first_party_ref ()">webkit_itp_first_party_ref</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-itp-first-party-unref" title="webkit_itp_first_party_unref ()">webkit_itp_first_party_unref</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <span class="returnvalue">char</span> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-itp-first-party-get-domain" title="webkit_itp_first_party_get_domain ()">webkit_itp_first_party_get_domain</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-itp-first-party-get-website-data-access-allowed" title="webkit_itp_first_party_get_website_data_access_allowed ()">webkit_itp_first_party_get_website_data_access_allowed</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-GDateTime.html#GDateTime"><span class="returnvalue">GDateTime</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-itp-first-party-get-last-update-time" title="webkit_itp_first_party_get_last_update_time ()">webkit_itp_first_party_get_last_update_time</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="returnvalue">WebKitITPThirdParty</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-itp-third-party-ref" title="webkit_itp_third_party_ref ()">webkit_itp_third_party_ref</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-itp-third-party-unref" title="webkit_itp_third_party_unref ()">webkit_itp_third_party_unref</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <span class="returnvalue">char</span> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-itp-third-party-get-domain" title="webkit_itp_third_party_get_domain ()">webkit_itp_third_party_get_domain</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-itp-third-party-get-first-parties" title="webkit_itp_third_party_get_first_parties ()">webkit_itp_third_party_get_first_parties</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-itp-summary" title="webkit_website_data_manager_get_itp_summary ()">webkit_website_data_manager_get_itp_summary</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-itp-summary-finish" title="webkit_website_data_manager_get_itp_summary_finish ()">webkit_website_data_manager_get_itp_summary_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebsiteDataManager.properties"></a><h2>Properties</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="properties_type">
+<col width="300px" class="properties_name">
+<col width="200px" class="properties_flags">
+</colgroup>
+<tbody>
+<tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--base-cache-directory" title="The “base-cache-directory” property">base-cache-directory</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--base-data-directory" title="The “base-data-directory” property">base-data-directory</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--disk-cache-directory" title="The “disk-cache-directory” property">disk-cache-directory</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--dom-cache-directory" title="The “dom-cache-directory” property">dom-cache-directory</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--hsts-cache-directory" title="The “hsts-cache-directory” property">hsts-cache-directory</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--indexeddb-directory" title="The “indexeddb-directory” property">indexeddb-directory</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr>
+<tr>
+<td class="property_type"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></td>
+<td class="property_name"><a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--is-ephemeral" title="The “is-ephemeral” property">is-ephemeral</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--itp-directory" title="The “itp-directory” property">itp-directory</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--local-storage-directory" title="The “local-storage-directory” property">local-storage-directory</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--offline-application-cache-directory" title="The “offline-application-cache-directory” property">offline-application-cache-directory</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--service-worker-registrations-directory" title="The “service-worker-registrations-directory” property">service-worker-registrations-directory</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--websql-directory" title="The “websql-directory” property">websql-directory</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<a name="WebKitITPFirstParty"></a><a name="WebKitITPThirdParty"></a><div class="refsect1">
+<a name="WebKitWebsiteDataManager.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager-struct" title="struct WebKitWebsiteDataManager">WebKitWebsiteDataManager</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">enum</td>
+<td class="function_name"><a class="link" href="WebKitWebsiteDataManager.html#WebKitTLSErrorsPolicy" title="enum WebKitTLSErrorsPolicy">WebKitTLSErrorsPolicy</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="WebKitWebsiteDataManager.html#WebKitITPFirstParty-struct" title="WebKitITPFirstParty">WebKitITPFirstParty</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty-struct" title="WebKitITPThirdParty">WebKitITPThirdParty</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebsiteDataManager.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-Boxed-Types.html">GBoxed</a>
+    <span class="lineart">├──</span> WebKitITPFirstParty
+    <span class="lineart">╰──</span> WebKitITPThirdParty
+    <a href="../gobject/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> WebKitWebsiteDataManager
+</pre>
+</div>
+<div class="refsect1">
+<a name="WebKitWebsiteDataManager.description"></a><h2>Description</h2>
+<p>WebKitWebsiteDataManager allows you to manage the data that websites
+can store in the client file system like databases or caches.
+You can use WebKitWebsiteDataManager to configure the local directories
+where the Website data will be stored, by creating a new manager with
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-new" title="webkit_website_data_manager_new ()"><code class="function">webkit_website_data_manager_new()</code></a> passing the values you want to set.
+You can set all the possible configuration values or only some of them,
+a default value will be used automatically for the configuration options
+not provided. <a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--base-data-directory" title="The “base-data-directory” property"><span class="type">“base-data-directory”</span></a> and
+<a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--base-cache-directory" title="The “base-cache-directory” property"><span class="type">“base-cache-directory”</span></a> are two special properties
+that can be used to set a common base directory for all Website data and
+caches. It's possible to provide both, a base directory and a specific value,
+but in that case, the specific value takes precedence over the base directory.
+The newly created WebKitWebsiteDataManager must be passed as a construct property
+to a <a class="link" href="WebKitWebContext.html" title="WebKitWebContext"><span class="type">WebKitWebContext</span></a>, you can use <a class="link" href="WebKitWebContext.html#webkit-web-context-new-with-website-data-manager" title="webkit_web_context_new_with_website_data_manager ()"><code class="function">webkit_web_context_new_with_website_data_manager()</code></a>
+to create a new <a class="link" href="WebKitWebContext.html" title="WebKitWebContext"><span class="type">WebKitWebContext</span></a> with a WebKitWebsiteDataManager.
+In case you don't want to set any specific configuration, you don't need to create
+a WebKitWebsiteDataManager, the <a class="link" href="WebKitWebContext.html" title="WebKitWebContext"><span class="type">WebKitWebContext</span></a> will create a WebKitWebsiteDataManager
+with the default configuration. To get the WebKitWebsiteDataManager of a <a class="link" href="WebKitWebContext.html" title="WebKitWebContext"><span class="type">WebKitWebContext</span></a>
+you can use <a class="link" href="WebKitWebContext.html#webkit-web-context-get-website-data-manager" title="webkit_web_context_get_website_data_manager ()"><code class="function">webkit_web_context_get_website_data_manager()</code></a>.</p>
+<p>A WebKitWebsiteDataManager can also be ephemeral and then all the directories configuration
+is not needed because website data will never persist. You can create an ephemeral WebKitWebsiteDataManager
+with <a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-new-ephemeral" title="webkit_website_data_manager_new_ephemeral ()"><code class="function">webkit_website_data_manager_new_ephemeral()</code></a>. Then you can pass an ephemeral WebKitWebsiteDataManager to
+a <a class="link" href="WebKitWebContext.html" title="WebKitWebContext"><span class="type">WebKitWebContext</span></a> to make it ephemeral or use <a class="link" href="WebKitWebContext.html#webkit-web-context-new-ephemeral" title="webkit_web_context_new_ephemeral ()"><code class="function">webkit_web_context_new_ephemeral()</code></a> and the WebKitWebsiteDataManager
+will be automatically created by the <a class="link" href="WebKitWebContext.html" title="WebKitWebContext"><span class="type">WebKitWebContext</span></a>.</p>
+<p>WebKitWebsiteDataManager can also be used to fetch websites data, remove data
+stored by particular websites, or clear data for all websites modified since a given
+period of time.</p>
+</div>
+<div class="refsect1">
+<a name="WebKitWebsiteDataManager.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="webkit-website-data-manager-new"></a><h3>webkit_website_data_manager_new ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="returnvalue">WebKitWebsiteDataManager</span></a> *
+webkit_website_data_manager_new (<em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *first_option_name</code></em>,
+                                 <em class="parameter"><code>...</code></em>);</pre>
+<p>Creates a new <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> with the given options. It must
+be passed as construction parameter of a <a class="link" href="WebKitWebContext.html" title="WebKitWebContext"><span class="type">WebKitWebContext</span></a>.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-new.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>first_option_name</p></td>
+<td class="parameter_description"><p>name of the first option to set</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>...</p></td>
+<td class="parameter_description"><p>value of first option, followed by more options, <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>-terminated</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-new.returns"></a><h4>Returns</h4>
+<p>the newly created <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-10.html#api-index-2.10">2.10</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-new-ephemeral"></a><h3>webkit_website_data_manager_new_ephemeral ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="returnvalue">WebKitWebsiteDataManager</span></a> *
+webkit_website_data_manager_new_ephemeral
+                               (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>Creates an ephemeral <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a>. See <a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--is-ephemeral" title="The “is-ephemeral” property"><span class="type">“is-ephemeral”</span></a> for more details.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-new-ephemeral.returns"></a><h4>Returns</h4>
+<p>a new ephemeral <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-is-ephemeral"></a><h3>webkit_website_data_manager_is_ephemeral ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+webkit_website_data_manager_is_ephemeral
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>);</pre>
+<p>Get whether a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> is ephemeral. See <a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--is-ephemeral" title="The “is-ephemeral” property"><span class="type">“is-ephemeral”</span></a> for more details.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-is-ephemeral.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-is-ephemeral.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>manager</code></em>
+is ephemeral or <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-get-base-data-directory"></a><h3>webkit_website_data_manager_get_base_data_directory ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_website_data_manager_get_base_data_directory
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>);</pre>
+<p>Get the <a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--base-data-directory" title="The “base-data-directory” property"><span class="type">“base-data-directory”</span></a> property.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-base-data-directory.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-base-data-directory.returns"></a><h4>Returns</h4>
+<p>the base directory for Website data, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if
+<a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--base-data-directory" title="The “base-data-directory” property"><span class="type">“base-data-directory”</span></a> was not provided or <em class="parameter"><code>manager</code></em>
+is ephemeral. </p>
+<p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-10.html#api-index-2.10">2.10</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-get-base-cache-directory"></a><h3>webkit_website_data_manager_get_base_cache_directory ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_website_data_manager_get_base_cache_directory
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>);</pre>
+<p>Get the <a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--base-cache-directory" title="The “base-cache-directory” property"><span class="type">“base-cache-directory”</span></a> property.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-base-cache-directory.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-base-cache-directory.returns"></a><h4>Returns</h4>
+<p>the base directory for Website cache, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if
+<a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--base-cache-directory" title="The “base-cache-directory” property"><span class="type">“base-cache-directory”</span></a> was not provided or <em class="parameter"><code>manager</code></em>
+is ephemeral. </p>
+<p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-10.html#api-index-2.10">2.10</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-get-local-storage-directory"></a><h3>webkit_website_data_manager_get_local_storage_directory ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_website_data_manager_get_local_storage_directory
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>);</pre>
+<p>Get the <a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--local-storage-directory" title="The “local-storage-directory” property"><span class="type">“local-storage-directory”</span></a> property.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-local-storage-directory.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-local-storage-directory.returns"></a><h4>Returns</h4>
+<p>the directory where local storage data is stored or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>manager</code></em>
+is ephemeral. </p>
+<p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-10.html#api-index-2.10">2.10</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-get-disk-cache-directory"></a><h3>webkit_website_data_manager_get_disk_cache_directory ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_website_data_manager_get_disk_cache_directory
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>);</pre>
+<p>Get the <a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--disk-cache-directory" title="The “disk-cache-directory” property"><span class="type">“disk-cache-directory”</span></a> property.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-disk-cache-directory.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-disk-cache-directory.returns"></a><h4>Returns</h4>
+<p>the directory where HTTP disk cache is stored or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>manager</code></em>
+is ephemeral. </p>
+<p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-10.html#api-index-2.10">2.10</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-get-offline-application-cache-directory"></a><h3>webkit_website_data_manager_get_offline_application_cache_directory ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_website_data_manager_get_offline_application_cache_directory
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>);</pre>
+<p>Get the <a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--offline-application-cache-directory" title="The “offline-application-cache-directory” property"><span class="type">“offline-application-cache-directory”</span></a> property.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-offline-application-cache-directory.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-offline-application-cache-directory.returns"></a><h4>Returns</h4>
+<p>the directory where offline web application cache is stored or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>manager</code></em>
+is ephemeral. </p>
+<p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-10.html#api-index-2.10">2.10</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-get-indexeddb-directory"></a><h3>webkit_website_data_manager_get_indexeddb_directory ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_website_data_manager_get_indexeddb_directory
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>);</pre>
+<p>Get the <a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--indexeddb-directory" title="The “indexeddb-directory” property"><span class="type">“indexeddb-directory”</span></a> property.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-indexeddb-directory.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-indexeddb-directory.returns"></a><h4>Returns</h4>
+<p>the directory where IndexedDB databases are stored or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>manager</code></em>
+is ephemeral. </p>
+<p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-10.html#api-index-2.10">2.10</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-get-websql-directory"></a><h3>webkit_website_data_manager_get_websql_directory ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_website_data_manager_get_websql_directory
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_website_data_manager_get_websql_directory</code> has been deprecated since version 2.24. and should not be used in newly-written code.</p>
+<p>WebSQL is no longer supported. Use IndexedDB instead.</p>
+</div>
+<p>Get the <a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--websql-directory" title="The “websql-directory” property"><span class="type">“websql-directory”</span></a> property.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-websql-directory.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-websql-directory.returns"></a><h4>Returns</h4>
+<p>the directory where WebSQL databases are stored or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>manager</code></em>
+is ephemeral. </p>
+<p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-10.html#api-index-2.10">2.10</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-get-hsts-cache-directory"></a><h3>webkit_website_data_manager_get_hsts_cache_directory ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_website_data_manager_get_hsts_cache_directory
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>);</pre>
+<p>Get the <a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--hsts-cache-directory" title="The “hsts-cache-directory” property"><span class="type">“hsts-cache-directory”</span></a> property.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-hsts-cache-directory.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-hsts-cache-directory.returns"></a><h4>Returns</h4>
+<p>the directory where the HSTS cache is stored or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>manager</code></em>
+is ephemeral. </p>
+<p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-26.html#api-index-2.26">2.26</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-get-itp-directory"></a><h3>webkit_website_data_manager_get_itp_directory ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_website_data_manager_get_itp_directory
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>);</pre>
+<p>Get the <a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--itp-directory" title="The “itp-directory” property"><span class="type">“itp-directory”</span></a> property.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-itp-directory.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-itp-directory.returns"></a><h4>Returns</h4>
+<p>the directory where Intelligent Tracking Prevention data is stored or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>manager</code></em>
+is ephemeral. </p>
+<p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-get-service-worker-registrations-directory"></a><h3>webkit_website_data_manager_get_service_worker_registrations_directory ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_website_data_manager_get_service_worker_registrations_directory
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>);</pre>
+<p>Get the <a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--service-worker-registrations-directory" title="The “service-worker-registrations-directory” property"><span class="type">“service-worker-registrations-directory”</span></a> property.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-service-worker-registrations-directory.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-service-worker-registrations-directory.returns"></a><h4>Returns</h4>
+<p>the directory where service worker registrations are stored or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>manager</code></em>
+is ephemeral. </p>
+<p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-get-dom-cache-directory"></a><h3>webkit_website_data_manager_get_dom_cache_directory ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_website_data_manager_get_dom_cache_directory
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>);</pre>
+<p>Get the <a class="link" href="WebKitWebsiteDataManager.html#WebKitWebsiteDataManager--dom-cache-directory" title="The “dom-cache-directory” property"><span class="type">“dom-cache-directory”</span></a> property.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-dom-cache-directory.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-dom-cache-directory.returns"></a><h4>Returns</h4>
+<p>the directory where DOM cache is stored or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>manager</code></em>
+is ephemeral. </p>
+<p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-get-cookie-manager"></a><h3>webkit_website_data_manager_get_cookie_manager ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="returnvalue">WebKitCookieManager</span></a> *
+webkit_website_data_manager_get_cookie_manager
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>);</pre>
+<p>Get the <a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a> of <em class="parameter"><code>manager</code></em>
+.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-cookie-manager.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-cookie-manager.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="WebKitCookieManager.html" title="WebKitCookieManager"><span class="type">WebKitCookieManager</span></a>. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-set-itp-enabled"></a><h3>webkit_website_data_manager_set_itp_enabled ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_website_data_manager_set_itp_enabled
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> enabled</code></em>);</pre>
+<p>Enable or disable Intelligent Tracking Prevention (ITP). When ITP is enabled resource load statistics
+are collected and used to decide whether to allow or block third-party cookies and prevent user tracking.
+Note that while ITP is enabled the accept policy <a class="link" href="WebKitCookieManager.html#WEBKIT-COOKIE-POLICY-ACCEPT-NO-THIRD-PARTY:CAPS"><code class="literal">WEBKIT_COOKIE_POLICY_ACCEPT_NO_THIRD_PARTY</code></a> is ignored and
+<a class="link" href="WebKitCookieManager.html#WEBKIT-COOKIE-POLICY-ACCEPT-ALWAYS:CAPS"><code class="literal">WEBKIT_COOKIE_POLICY_ACCEPT_ALWAYS</code></a> is used instead. See also <a class="link" href="WebKitCookieManager.html#webkit-cookie-manager-set-accept-policy" title="webkit_cookie_manager_set_accept_policy ()"><code class="function">webkit_cookie_manager_set_accept_policy()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-set-itp-enabled.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>enabled</p></td>
+<td class="parameter_description"><p>value to set</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-get-itp-enabled"></a><h3>webkit_website_data_manager_get_itp_enabled ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+webkit_website_data_manager_get_itp_enabled
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>);</pre>
+<p>Get whether Intelligent Tracking Prevention (ITP) is enabled or not.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-itp-enabled.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-itp-enabled.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if ITP is enabled, or <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-set-persistent-credential-storage-enabled"></a><h3>webkit_website_data_manager_set_persistent_credential_storage_enabled ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_website_data_manager_set_persistent_credential_storage_enabled
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> enabled</code></em>);</pre>
+<p>Enable or disable persistent credential storage. When enabled, which is the default for
+non-ephemeral sessions, the network process will try to read and write HTTP authentiacation
+credentials from persistent storage.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-set-persistent-credential-storage-enabled.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>enabled</p></td>
+<td class="parameter_description"><p>value to set</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-get-persistent-credential-storage-enabled"></a><h3>webkit_website_data_manager_get_persistent_credential_storage_enabled ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+webkit_website_data_manager_get_persistent_credential_storage_enabled
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>);</pre>
+<p>Get whether persistent credential storage is enabled or not.
+See also <a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-set-persistent-credential-storage-enabled" title="webkit_website_data_manager_set_persistent_credential_storage_enabled ()"><code class="function">webkit_website_data_manager_set_persistent_credential_storage_enabled()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-persistent-credential-storage-enabled.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-persistent-credential-storage-enabled.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if persistent credential storage is enabled, or <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-set-tls-errors-policy"></a><h3>webkit_website_data_manager_set_tls_errors_policy ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_website_data_manager_set_tls_errors_policy
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html#WebKitTLSErrorsPolicy" title="enum WebKitTLSErrorsPolicy"><span class="type">WebKitTLSErrorsPolicy</span></a> policy</code></em>);</pre>
+<p>Set the TLS errors policy of <em class="parameter"><code>manager</code></em>
+ as <em class="parameter"><code>policy</code></em>
+</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-set-tls-errors-policy.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>policy</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html#WebKitTLSErrorsPolicy" title="enum WebKitTLSErrorsPolicy"><span class="type">WebKitTLSErrorsPolicy</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 2.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-get-tls-errors-policy"></a><h3>webkit_website_data_manager_get_tls_errors_policy ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitWebsiteDataManager.html#WebKitTLSErrorsPolicy" title="enum WebKitTLSErrorsPolicy"><span class="returnvalue">WebKitTLSErrorsPolicy</span></a>
+webkit_website_data_manager_get_tls_errors_policy
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>);</pre>
+<p>Get the TLS errors policy of <em class="parameter"><code>manager</code></em>
+</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-tls-errors-policy.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-tls-errors-policy.returns"></a><h4>Returns</h4>
+<p> a <a class="link" href="WebKitWebsiteDataManager.html#WebKitTLSErrorsPolicy" title="enum WebKitTLSErrorsPolicy"><span class="type">WebKitTLSErrorsPolicy</span></a></p>
+</div>
+<p class="since">Since: 2.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-set-network-proxy-settings"></a><h3>webkit_website_data_manager_set_network_proxy_settings ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_website_data_manager_set_network_proxy_settings
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code><a class="link" href="WebKitNetworkProxySettings.html#WebKitNetworkProxyMode" title="enum WebKitNetworkProxyMode"><span class="type">WebKitNetworkProxyMode</span></a> proxy_mode</code></em>,
+                                <em class="parameter"><code><a class="link" href="WebKitNetworkProxySettings.html" title="WebKitNetworkProxySettings"><span class="type">WebKitNetworkProxySettings</span></a> *proxy_settings</code></em>);</pre>
+<p>Set the network proxy settings to be used by connections started in <em class="parameter"><code>manager</code></em>
+ session.
+By default <a class="link" href="WebKitNetworkProxySettings.html#WEBKIT-NETWORK-PROXY-MODE-DEFAULT:CAPS"><code class="literal">WEBKIT_NETWORK_PROXY_MODE_DEFAULT</code></a> is used, which means that the
+system settings will be used (<a href="../gio/GProxyResolver.html#g-proxy-resolver-get-default"><code class="function">g_proxy_resolver_get_default()</code></a>).
+If you want to override the system default settings, you can either use
+<a class="link" href="WebKitNetworkProxySettings.html#WEBKIT-NETWORK-PROXY-MODE-NO-PROXY:CAPS"><code class="literal">WEBKIT_NETWORK_PROXY_MODE_NO_PROXY</code></a> to make sure no proxies are used at all,
+or <a class="link" href="WebKitNetworkProxySettings.html#WEBKIT-NETWORK-PROXY-MODE-CUSTOM:CAPS"><code class="literal">WEBKIT_NETWORK_PROXY_MODE_CUSTOM</code></a> to provide your own proxy settings.
+When <em class="parameter"><code>proxy_mode</code></em>
+ is <a class="link" href="WebKitNetworkProxySettings.html#WEBKIT-NETWORK-PROXY-MODE-CUSTOM:CAPS"><code class="literal">WEBKIT_NETWORK_PROXY_MODE_CUSTOM</code></a> <em class="parameter"><code>proxy_settings</code></em>
+ must be
+a valid <a class="link" href="WebKitNetworkProxySettings.html" title="WebKitNetworkProxySettings"><span class="type">WebKitNetworkProxySettings</span></a>; otherwise, <em class="parameter"><code>proxy_settings</code></em>
+ must be <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-set-network-proxy-settings.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>proxy_mode</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitNetworkProxySettings.html#WebKitNetworkProxyMode" title="enum WebKitNetworkProxyMode"><span class="type">WebKitNetworkProxyMode</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>proxy_settings</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitNetworkProxySettings.html" title="WebKitNetworkProxySettings"><span class="type">WebKitNetworkProxySettings</span></a>, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 2.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-fetch"></a><h3>webkit_website_data_manager_fetch ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_website_data_manager_fetch (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>,
+                                   <em class="parameter"><code><a class="link" href="WebKitWebsiteData.html#WebKitWebsiteDataTypes" title="enum WebKitWebsiteDataTypes"><span class="type">WebKitWebsiteDataTypes</span></a> types</code></em>,
+                                   <em class="parameter"><code><a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                   <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                   <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Asynchronously get the list of <a class="link" href="WebKitWebsiteData.html" title="WebKitWebsiteData"><span class="type">WebKitWebsiteData</span></a> for the given <em class="parameter"><code>types</code></em>
+.</p>
+<p>When the operation is finished, <em class="parameter"><code>callback</code></em>
+ will be called. You can then call
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-fetch-finish" title="webkit_website_data_manager_fetch_finish ()"><code class="function">webkit_website_data_manager_fetch_finish()</code></a> to get the result of the operation.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-fetch.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>types</p></td>
+<td class="parameter_description"><p><a class="link" href="WebKitWebsiteData.html#WebKitWebsiteDataTypes" title="enum WebKitWebsiteDataTypes"><span class="type">WebKitWebsiteDataTypes</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to callback function. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-fetch-finish"></a><h3>webkit_website_data_manager_fetch_finish ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *
+webkit_website_data_manager_fetch_finish
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *result</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Finish an asynchronous operation started with <a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-fetch" title="webkit_website_data_manager_fetch ()"><code class="function">webkit_website_data_manager_fetch()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-fetch-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>result</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>return location for error or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-fetch-finish.returns"></a><h4>Returns</h4>
+<p>a <a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of <a class="link" href="WebKitWebsiteData.html" title="WebKitWebsiteData"><span class="type">WebKitWebsiteData</span></a>. You must free the <a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> with
+<a href="../glib/glib-Doubly-Linked-Lists.html#g-list-free"><code class="function">g_list_free()</code></a> and unref the <a class="link" href="WebKitWebsiteData.html" title="WebKitWebsiteData"><span class="type">WebKitWebsiteData</span></a>s with <a class="link" href="WebKitWebsiteData.html#webkit-website-data-unref" title="webkit_website_data_unref ()"><code class="function">webkit_website_data_unref()</code></a> when you're done with them. </p>
+<p><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> WebKitWebsiteData][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-remove"></a><h3>webkit_website_data_manager_remove ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_website_data_manager_remove (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>,
+                                    <em class="parameter"><code><a class="link" href="WebKitWebsiteData.html#WebKitWebsiteDataTypes" title="enum WebKitWebsiteDataTypes"><span class="type">WebKitWebsiteDataTypes</span></a> types</code></em>,
+                                    <em class="parameter"><code><a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *website_data</code></em>,
+                                    <em class="parameter"><code><a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                    <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                    <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Asynchronously removes the website data of the for the given <em class="parameter"><code>types</code></em>
+ for websites in the given <em class="parameter"><code>website_data</code></em>
+ list.
+Use <a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-clear" title="webkit_website_data_manager_clear ()"><code class="function">webkit_website_data_manager_clear()</code></a> if you want to remove the website data for all sites.</p>
+<p>When the operation is finished, <em class="parameter"><code>callback</code></em>
+ will be called. You can then call
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-remove-finish" title="webkit_website_data_manager_remove_finish ()"><code class="function">webkit_website_data_manager_remove_finish()</code></a> to get the result of the operation.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-remove.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>types</p></td>
+<td class="parameter_description"><p><a class="link" href="WebKitWebsiteData.html#WebKitWebsiteDataTypes" title="enum WebKitWebsiteDataTypes"><span class="type">WebKitWebsiteDataTypes</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>website_data</p></td>
+<td class="parameter_description"><p>a <a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of <a class="link" href="WebKitWebsiteData.html" title="WebKitWebsiteData"><span class="type">WebKitWebsiteData</span></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> WebKitWebsiteData]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to callback function. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-remove-finish"></a><h3>webkit_website_data_manager_remove_finish ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+webkit_website_data_manager_remove_finish
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *result</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Finish an asynchronous operation started with <a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-remove" title="webkit_website_data_manager_remove ()"><code class="function">webkit_website_data_manager_remove()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-remove-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>result</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>return location for error or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-remove-finish.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if website data resources were successfully removed, or <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-clear"></a><h3>webkit_website_data_manager_clear ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_website_data_manager_clear (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>,
+                                   <em class="parameter"><code><a class="link" href="WebKitWebsiteData.html#WebKitWebsiteDataTypes" title="enum WebKitWebsiteDataTypes"><span class="type">WebKitWebsiteDataTypes</span></a> types</code></em>,
+                                   <em class="parameter"><code><a href="../glib/glib-GDateTime.html#GTimeSpan"><span class="type">GTimeSpan</span></a> timespan</code></em>,
+                                   <em class="parameter"><code><a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                   <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                   <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Asynchronously clear the website data of the given <em class="parameter"><code>types</code></em>
+ modified in the past <em class="parameter"><code>timespan</code></em>
+.
+If <em class="parameter"><code>timespan</code></em>
+ is 0, all website data will be removed.</p>
+<p>When the operation is finished, <em class="parameter"><code>callback</code></em>
+ will be called. You can then call
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-clear-finish" title="webkit_website_data_manager_clear_finish ()"><code class="function">webkit_website_data_manager_clear_finish()</code></a> to get the result of the operation.</p>
+<p>Due to implementation limitations, this function does not currently delete
+any stored cookies if <em class="parameter"><code>timespan</code></em>
+ is nonzero. This behavior may change in the
+future.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-clear.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>types</p></td>
+<td class="parameter_description"><p><a class="link" href="WebKitWebsiteData.html#WebKitWebsiteDataTypes" title="enum WebKitWebsiteDataTypes"><span class="type">WebKitWebsiteDataTypes</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>timespan</p></td>
+<td class="parameter_description"><p>a <a href="../glib/glib-GDateTime.html#GTimeSpan"><span class="type">GTimeSpan</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to callback function. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-clear-finish"></a><h3>webkit_website_data_manager_clear_finish ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+webkit_website_data_manager_clear_finish
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *result</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Finish an asynchronous operation started with <a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-clear" title="webkit_website_data_manager_clear ()"><code class="function">webkit_website_data_manager_clear()</code></a></p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-clear-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>result</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>return location for error or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-clear-finish.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if website data was successfully cleared, or <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-set-memory-pressure-settings"></a><h3>webkit_website_data_manager_set_memory_pressure_settings ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_website_data_manager_set_memory_pressure_settings
+                               (<em class="parameter"><code><span class="type">WebKitMemoryPressureSettings</span> *settings</code></em>);</pre>
+<p>Sets <em class="parameter"><code>settings</code></em>
+ as the <span class="type">WebKitMemoryPressureSettings</span> to be used by all the network
+processes created by any instance of <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> after this function
+is called.</p>
+<p>Be sure to call this function before creating any <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a>, as network
+processes of existing instances are not guaranteed to receive the passed settings.</p>
+<p>The periodic check for used memory is disabled by default on network processes. This will
+be enabled only if custom settings have been set using this function. After that, in order
+to remove the custom settings and disable the periodic check, this function must be called
+passing <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> as the value of <em class="parameter"><code>settings</code></em>
+.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-set-memory-pressure-settings.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>settings</p></td>
+<td class="parameter_description"><p>a WebKitMemoryPressureSettings.</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<p class="since">Since: 2.34</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-itp-first-party-ref"></a><h3>webkit_itp_first_party_ref ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitWebsiteDataManager.html#WebKitITPFirstParty"><span class="returnvalue">WebKitITPFirstParty</span></a> *
+webkit_itp_first_party_ref (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html#WebKitITPFirstParty"><span class="type">WebKitITPFirstParty</span></a> *itp_first_party</code></em>);</pre>
+<p>Atomically increments the reference count of <em class="parameter"><code>itp_first_party</code></em>
+ by one.
+This function is MT-safe and may be called from any thread.</p>
+<div class="refsect3">
+<a name="webkit-itp-first-party-ref.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>itp_first_party</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPFirstParty"><span class="type">WebKitITPFirstParty</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-itp-first-party-ref.returns"></a><h4>Returns</h4>
+<p> The passed <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPFirstParty"><span class="type">WebKitITPFirstParty</span></a></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-itp-first-party-unref"></a><h3>webkit_itp_first_party_unref ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_itp_first_party_unref (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html#WebKitITPFirstParty"><span class="type">WebKitITPFirstParty</span></a> *itp_first_party</code></em>);</pre>
+<p>Atomically decrements the reference count of <em class="parameter"><code>itp_first_party</code></em>
+ by one.
+If the reference count drops to 0, all memory allocated by
+<a class="link" href="WebKitWebsiteDataManager.html#WebKitITPFirstParty"><span class="type">WebKitITPFirstParty</span></a> is released. This function is MT-safe and may be
+called from any thread.</p>
+<div class="refsect3">
+<a name="webkit-itp-first-party-unref.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>itp_first_party</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPFirstParty"><span class="type">WebKitITPFirstParty</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-itp-first-party-get-domain"></a><h3>webkit_itp_first_party_get_domain ()</h3>
+<pre class="programlisting">const <span class="returnvalue">char</span> *
+webkit_itp_first_party_get_domain (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html#WebKitITPFirstParty"><span class="type">WebKitITPFirstParty</span></a> *itp_first_party</code></em>);</pre>
+<p>Get the domain name of <em class="parameter"><code>itp_first_party</code></em>
+</p>
+<div class="refsect3">
+<a name="webkit-itp-first-party-get-domain.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>itp_first_party</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPFirstParty"><span class="type">WebKitITPFirstParty</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-itp-first-party-get-domain.returns"></a><h4>Returns</h4>
+<p> the domain name</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-itp-first-party-get-website-data-access-allowed"></a><h3>webkit_itp_first_party_get_website_data_access_allowed ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+webkit_itp_first_party_get_website_data_access_allowed
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html#WebKitITPFirstParty"><span class="type">WebKitITPFirstParty</span></a> *itp_first_party</code></em>);</pre>
+<p>Get whether <em class="parameter"><code>itp_first_party</code></em>
+ has granted website data access to its <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="type">WebKitITPThirdParty</span></a>.
+Each <em class="parameter"><code>WebKitITPFirstParty</code></em>
+ is created by <a class="link" href="WebKitWebsiteDataManager.html#webkit-itp-third-party-get-first-parties" title="webkit_itp_third_party_get_first_parties ()"><code class="function">webkit_itp_third_party_get_first_parties()</code></a> and
+therefore corresponds to exactly one <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="type">WebKitITPThirdParty</span></a>.</p>
+<div class="refsect3">
+<a name="webkit-itp-first-party-get-website-data-access-allowed.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>itp_first_party</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPFirstParty"><span class="type">WebKitITPFirstParty</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-itp-first-party-get-website-data-access-allowed.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if website data access has been granted, or <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-itp-first-party-get-last-update-time"></a><h3>webkit_itp_first_party_get_last_update_time ()</h3>
+<pre class="programlisting"><a href="../glib/glib-GDateTime.html#GDateTime"><span class="returnvalue">GDateTime</span></a> *
+webkit_itp_first_party_get_last_update_time
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html#WebKitITPFirstParty"><span class="type">WebKitITPFirstParty</span></a> *itp_first_party</code></em>);</pre>
+<p>Get the last time a <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="type">WebKitITPThirdParty</span></a> has been seen under <em class="parameter"><code>itp_first_party</code></em>
+.
+Each <em class="parameter"><code>WebKitITPFirstParty</code></em>
+ is created by <a class="link" href="WebKitWebsiteDataManager.html#webkit-itp-third-party-get-first-parties" title="webkit_itp_third_party_get_first_parties ()"><code class="function">webkit_itp_third_party_get_first_parties()</code></a> and
+therefore corresponds to exactly one <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="type">WebKitITPThirdParty</span></a>.</p>
+<div class="refsect3">
+<a name="webkit-itp-first-party-get-last-update-time.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>itp_first_party</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPFirstParty"><span class="type">WebKitITPFirstParty</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-itp-first-party-get-last-update-time.returns"></a><h4>Returns</h4>
+<p>the last update time as a <a href="../glib/glib-GDateTime.html#GDateTime"><span class="type">GDateTime</span></a>. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-itp-third-party-ref"></a><h3>webkit_itp_third_party_ref ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="returnvalue">WebKitITPThirdParty</span></a> *
+webkit_itp_third_party_ref (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="type">WebKitITPThirdParty</span></a> *itp_third_party</code></em>);</pre>
+<p>Atomically increments the reference count of <em class="parameter"><code>itp_third_party</code></em>
+ by one.
+This function is MT-safe and may be called from any thread.</p>
+<div class="refsect3">
+<a name="webkit-itp-third-party-ref.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>itp_third_party</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="type">WebKitITPThirdParty</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-itp-third-party-ref.returns"></a><h4>Returns</h4>
+<p> The passed <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="type">WebKitITPThirdParty</span></a></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-itp-third-party-unref"></a><h3>webkit_itp_third_party_unref ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_itp_third_party_unref (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="type">WebKitITPThirdParty</span></a> *itp_third_party</code></em>);</pre>
+<p>Atomically decrements the reference count of <em class="parameter"><code>itp_third_party</code></em>
+ by one.
+If the reference count drops to 0, all memory allocated by
+<a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="type">WebKitITPThirdParty</span></a> is released. This function is MT-safe and may be
+called from any thread.</p>
+<div class="refsect3">
+<a name="webkit-itp-third-party-unref.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>itp_third_party</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="type">WebKitITPThirdParty</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-itp-third-party-get-domain"></a><h3>webkit_itp_third_party_get_domain ()</h3>
+<pre class="programlisting">const <span class="returnvalue">char</span> *
+webkit_itp_third_party_get_domain (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="type">WebKitITPThirdParty</span></a> *itp_third_party</code></em>);</pre>
+<p>Get the domain name of <em class="parameter"><code>itp_third_party</code></em>
+</p>
+<div class="refsect3">
+<a name="webkit-itp-third-party-get-domain.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>itp_third_party</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="type">WebKitITPThirdParty</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-itp-third-party-get-domain.returns"></a><h4>Returns</h4>
+<p> the domain name</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-itp-third-party-get-first-parties"></a><h3>webkit_itp_third_party_get_first_parties ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *
+webkit_itp_third_party_get_first_parties
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="type">WebKitITPThirdParty</span></a> *itp_third_party</code></em>);</pre>
+<p>Get the list of <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPFirstParty"><span class="type">WebKitITPFirstParty</span></a> under which <em class="parameter"><code>itp_third_party</code></em>
+ has been seen.</p>
+<div class="refsect3">
+<a name="webkit-itp-third-party-get-first-parties.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>itp_third_party</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="type">WebKitITPThirdParty</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-itp-third-party-get-first-parties.returns"></a><h4>Returns</h4>
+<p>a <a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPFirstParty"><span class="type">WebKitITPFirstParty</span></a>. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> WebKitITPFirstParty]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-get-itp-summary"></a><h3>webkit_website_data_manager_get_itp_summary ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_website_data_manager_get_itp_summary
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code><a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Asynchronously get the list of <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="type">WebKitITPThirdParty</span></a> seen for <em class="parameter"><code>manager</code></em>
+. Every <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="type">WebKitITPThirdParty</span></a>
+contains the list of <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPFirstParty"><span class="type">WebKitITPFirstParty</span></a> under which it has been seen.</p>
+<p>When the operation is finished, <em class="parameter"><code>callback</code></em>
+ will be called. You can then call
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-itp-summary-finish" title="webkit_website_data_manager_get_itp_summary_finish ()"><code class="function">webkit_website_data_manager_get_itp_summary_finish()</code></a> to get the result of the operation.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-itp-summary.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to callback function. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-manager-get-itp-summary-finish"></a><h3>webkit_website_data_manager_get_itp_summary_finish ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *
+webkit_website_data_manager_get_itp_summary_finish
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *result</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Finish an asynchronous operation started with <a class="link" href="WebKitWebsiteDataManager.html#webkit-website-data-manager-get-itp-summary" title="webkit_website_data_manager_get_itp_summary ()"><code class="function">webkit_website_data_manager_get_itp_summary()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-itp-summary-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>result</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>return location for error or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-manager-get-itp-summary-finish.returns"></a><h4>Returns</h4>
+<p>a <a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="type">WebKitITPThirdParty</span></a>.
+You must free the <a href="../glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> with <a href="../glib/glib-Doubly-Linked-Lists.html#g-list-free"><code class="function">g_list_free()</code></a> and unref the <a class="link" href="WebKitWebsiteDataManager.html#WebKitITPThirdParty"><span class="type">WebKitITPThirdParty</span></a>s with
+<a class="link" href="WebKitWebsiteDataManager.html#webkit-itp-third-party-unref" title="webkit_itp_third_party_unref ()"><code class="function">webkit_itp_third_party_unref()</code></a> when you're done with them. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> WebKitITPThirdParty]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebsiteDataManager.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="WebKitWebsiteDataManager-struct"></a><h3>struct WebKitWebsiteDataManager</h3>
+<pre class="programlisting">struct WebKitWebsiteDataManager;</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitTLSErrorsPolicy"></a><h3>enum WebKitTLSErrorsPolicy</h3>
+<p>Enum values used to denote the TLS errors policy.</p>
+<div class="refsect3">
+<a name="WebKitTLSErrorsPolicy.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="300px" class="enum_members_name">
+<col class="enum_members_description">
+<col width="200px" class="enum_members_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="enum_member_name"><p><a name="WEBKIT-TLS-ERRORS-POLICY-IGNORE:CAPS"></a>WEBKIT_TLS_ERRORS_POLICY_IGNORE</p></td>
+<td class="enum_member_description">
+<p>Ignore TLS errors.</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="WEBKIT-TLS-ERRORS-POLICY-FAIL:CAPS"></a>WEBKIT_TLS_ERRORS_POLICY_FAIL</p></td>
+<td class="enum_member_description">
+<p>TLS errors will emit
+<a class="link" href="WebKitWebView.html#WebKitWebView-load-failed-with-tls-errors" title="The “load-failed-with-tls-errors” signal"><span class="type">“load-failed-with-tls-errors”</span></a> and, if the signal is handled,
+finish the load. In case the signal is not handled,
+<a class="link" href="WebKitWebView.html#WebKitWebView-load-failed" title="The “load-failed” signal"><span class="type">“load-failed”</span></a> is emitted before the load finishes.</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitITPFirstParty-struct"></a><h3>WebKitITPFirstParty</h3>
+<pre class="programlisting">typedef struct _WebKitITPFirstParty WebKitITPFirstParty;</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitITPThirdParty-struct"></a><h3>WebKitITPThirdParty</h3>
+<pre class="programlisting">typedef struct _WebKitITPThirdParty WebKitITPThirdParty;</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebsiteDataManager.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="WebKitWebsiteDataManager--base-cache-directory"></a><h3>The <code class="literal">“base-cache-directory”</code> property</h3>
+<pre class="programlisting">  “base-cache-directory”     <span class="type">char</span> *</pre>
+<p>The base directory for Website cache. This is used as a base directory
+for any Website cache when no specific cache directory has been provided.</p>
+<p>Owner: WebKitWebsiteDataManager</p>
+<p>Flags: Read / Write / Construct Only</p>
+<p>Default value: NULL</p>
+<p class="since">Since: <a class="link" href="api-index-2-10.html#api-index-2.10">2.10</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebsiteDataManager--base-data-directory"></a><h3>The <code class="literal">“base-data-directory”</code> property</h3>
+<pre class="programlisting">  “base-data-directory”      <span class="type">char</span> *</pre>
+<p>The base directory for Website data. This is used as a base directory
+for any Website data when no specific data directory has been provided.</p>
+<p>Owner: WebKitWebsiteDataManager</p>
+<p>Flags: Read / Write / Construct Only</p>
+<p>Default value: NULL</p>
+<p class="since">Since: <a class="link" href="api-index-2-10.html#api-index-2.10">2.10</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebsiteDataManager--disk-cache-directory"></a><h3>The <code class="literal">“disk-cache-directory”</code> property</h3>
+<pre class="programlisting">  “disk-cache-directory”     <span class="type">char</span> *</pre>
+<p>The directory where HTTP disk cache will be stored.</p>
+<p>Owner: WebKitWebsiteDataManager</p>
+<p>Flags: Read / Write / Construct Only</p>
+<p>Default value: NULL</p>
+<p class="since">Since: <a class="link" href="api-index-2-10.html#api-index-2.10">2.10</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebsiteDataManager--dom-cache-directory"></a><h3>The <code class="literal">“dom-cache-directory”</code> property</h3>
+<pre class="programlisting">  “dom-cache-directory”      <span class="type">char</span> *</pre>
+<p>The directory where DOM cache will be stored.</p>
+<p>Owner: WebKitWebsiteDataManager</p>
+<p>Flags: Read / Write / Construct Only</p>
+<p>Default value: NULL</p>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebsiteDataManager--hsts-cache-directory"></a><h3>The <code class="literal">“hsts-cache-directory”</code> property</h3>
+<pre class="programlisting">  “hsts-cache-directory”     <span class="type">char</span> *</pre>
+<p>The directory where the HTTP Strict-Transport-Security (HSTS) cache will be stored.</p>
+<p>Owner: WebKitWebsiteDataManager</p>
+<p>Flags: Read / Write / Construct Only</p>
+<p>Default value: NULL</p>
+<p class="since">Since: <a class="link" href="api-index-2-26.html#api-index-2.26">2.26</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebsiteDataManager--indexeddb-directory"></a><h3>The <code class="literal">“indexeddb-directory”</code> property</h3>
+<pre class="programlisting">  “indexeddb-directory”      <span class="type">char</span> *</pre>
+<p>The directory where IndexedDB databases will be stored.</p>
+<p>Owner: WebKitWebsiteDataManager</p>
+<p>Flags: Read / Write / Construct Only</p>
+<p>Default value: NULL</p>
+<p class="since">Since: <a class="link" href="api-index-2-10.html#api-index-2.10">2.10</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebsiteDataManager--is-ephemeral"></a><h3>The <code class="literal">“is-ephemeral”</code> property</h3>
+<pre class="programlisting">  “is-ephemeral”             <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></pre>
+<p>Whether the <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> is ephemeral. An ephemeral <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a>
+handles all websites data as non-persistent, and nothing will be written to the client
+storage. Note that if you create an ephemeral <a class="link" href="WebKitWebsiteDataManager.html" title="WebKitWebsiteDataManager"><span class="type">WebKitWebsiteDataManager</span></a> all other construction
+parameters to configure data directories will be ignored.</p>
+<p>Owner: WebKitWebsiteDataManager</p>
+<p>Flags: Read / Write / Construct Only</p>
+<p>Default value: FALSE</p>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebsiteDataManager--itp-directory"></a><h3>The <code class="literal">“itp-directory”</code> property</h3>
+<pre class="programlisting">  “itp-directory”            <span class="type">char</span> *</pre>
+<p>The directory where Intelligent Tracking Prevention (ITP) data will be stored.</p>
+<p>Owner: WebKitWebsiteDataManager</p>
+<p>Flags: Read / Write / Construct Only</p>
+<p>Default value: NULL</p>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebsiteDataManager--local-storage-directory"></a><h3>The <code class="literal">“local-storage-directory”</code> property</h3>
+<pre class="programlisting">  “local-storage-directory”  <span class="type">char</span> *</pre>
+<p>The directory where local storage data will be stored.</p>
+<p>Owner: WebKitWebsiteDataManager</p>
+<p>Flags: Read / Write / Construct Only</p>
+<p>Default value: NULL</p>
+<p class="since">Since: <a class="link" href="api-index-2-10.html#api-index-2.10">2.10</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebsiteDataManager--offline-application-cache-directory"></a><h3>The <code class="literal">“offline-application-cache-directory”</code> property</h3>
+<pre class="programlisting">  “offline-application-cache-directory” <span class="type">char</span> *</pre>
+<p>The directory where offline web application cache will be stored.</p>
+<p>Owner: WebKitWebsiteDataManager</p>
+<p>Flags: Read / Write / Construct Only</p>
+<p>Default value: NULL</p>
+<p class="since">Since: <a class="link" href="api-index-2-10.html#api-index-2.10">2.10</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebsiteDataManager--service-worker-registrations-directory"></a><h3>The <code class="literal">“service-worker-registrations-directory”</code> property</h3>
+<pre class="programlisting">  “service-worker-registrations-directory” <span class="type">char</span> *</pre>
+<p>The directory where service workers registrations will be stored.</p>
+<p>Owner: WebKitWebsiteDataManager</p>
+<p>Flags: Read / Write / Construct Only</p>
+<p>Default value: NULL</p>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebsiteDataManager--websql-directory"></a><h3>The <code class="literal">“websql-directory”</code> property</h3>
+<pre class="programlisting">  “websql-directory”         <span class="type">char</span> *</pre>
+<p>The directory where WebSQL databases will be stored.</p>
+<div class="warning">
+<p><code class="literal">WebKitWebsiteDataManager:websql-directory</code> has been deprecated since version 2.24. and should not be used in newly-written code.</p>
+<p>WebSQL is no longer supported. Use IndexedDB instead.</p>
+</div>
+<p>Owner: WebKitWebsiteDataManager</p>
+<p>Flags: Read / Write / Construct Only</p>
+<p>Default value: NULL</p>
+<p class="since">Since: <a class="link" href="api-index-2-10.html#api-index-2.10">2.10</a></p>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebsiteDataManager.see-also"></a><h2>See Also</h2>
+<p><a class="link" href="WebKitWebContext.html" title="WebKitWebContext"><span class="type">WebKitWebContext</span></a>, <a class="link" href="WebKitWebsiteData.html" title="WebKitWebsiteData"><span class="type">WebKitWebsiteData</span></a></p>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

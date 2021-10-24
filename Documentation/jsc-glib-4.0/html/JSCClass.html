@@ -1,0 +1,1205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JSCClass: JavaScriptCore GLib Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="JavaScriptCore GLib Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="JSCException.html" title="JSCException">
+<link rel="next" href="jsc-glib-4.0-JSCOptions.html" title="JSCOptions">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#JSCClass.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#JSCClass.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_properties">  <span class="dim">|</span> 
+                  <a href="#JSCClass.properties" class="shortcut">Properties</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="JSCException.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="jsc-glib-4.0-JSCOptions.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="JSCClass"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="JSCClass.top_of_page"></a>JSCClass</span></h2>
+<p>JSCClass — JavaScript custom class</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="JSCClass.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCValue.html" title="JSCValue"><span class="returnvalue">JSCValue</span></a> *
+</td>
+<td class="function_name">
+<span class="c_punctuation">(</span><a class="link" href="JSCClass.html#JSCClassGetPropertyFunction" title="JSCClassGetPropertyFunction ()">*JSCClassGetPropertyFunction</a><span class="c_punctuation">)</span> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<span class="c_punctuation">(</span><a class="link" href="JSCClass.html#JSCClassSetPropertyFunction" title="JSCClassSetPropertyFunction ()">*JSCClassSetPropertyFunction</a><span class="c_punctuation">)</span> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<span class="c_punctuation">(</span><a class="link" href="JSCClass.html#JSCClassHasPropertyFunction" title="JSCClassHasPropertyFunction ()">*JSCClassHasPropertyFunction</a><span class="c_punctuation">)</span> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<span class="c_punctuation">(</span><a class="link" href="JSCClass.html#JSCClassDeletePropertyFunction" title="JSCClassDeletePropertyFunction ()">*JSCClassDeletePropertyFunction</a><span class="c_punctuation">)</span> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **
+</td>
+<td class="function_name">
+<span class="c_punctuation">(</span><a class="link" href="JSCClass.html#JSCClassEnumeratePropertiesFunction" title="JSCClassEnumeratePropertiesFunction ()">*JSCClassEnumeratePropertiesFunction</a><span class="c_punctuation">)</span> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <span class="returnvalue">char</span> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCClass.html#jsc-class-get-name" title="jsc_class_get_name ()">jsc_class_get_name</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCClass.html" title="JSCClass"><span class="returnvalue">JSCClass</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCClass.html#jsc-class-get-parent" title="jsc_class_get_parent ()">jsc_class_get_parent</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCValue.html" title="JSCValue"><span class="returnvalue">JSCValue</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCClass.html#jsc-class-add-constructor" title="jsc_class_add_constructor ()">jsc_class_add_constructor</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCValue.html" title="JSCValue"><span class="returnvalue">JSCValue</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCClass.html#jsc-class-add-constructorv" title="jsc_class_add_constructorv ()">jsc_class_add_constructorv</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCValue.html" title="JSCValue"><span class="returnvalue">JSCValue</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCClass.html#jsc-class-add-constructor-variadic" title="jsc_class_add_constructor_variadic ()">jsc_class_add_constructor_variadic</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="JSCClass.html#jsc-class-add-method" title="jsc_class_add_method ()">jsc_class_add_method</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="JSCClass.html#jsc-class-add-methodv" title="jsc_class_add_methodv ()">jsc_class_add_methodv</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="JSCClass.html#jsc-class-add-method-variadic" title="jsc_class_add_method_variadic ()">jsc_class_add_method_variadic</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="JSCClass.html#jsc-class-add-property" title="jsc_class_add_property ()">jsc_class_add_property</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="JSCClass.properties"></a><h2>Properties</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="properties_type">
+<col width="300px" class="properties_name">
+<col width="200px" class="properties_flags">
+</colgroup>
+<tbody>
+<tr>
+<td class="property_type">
+<a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *</td>
+<td class="property_name"><a class="link" href="JSCClass.html#JSCClass--context" title="The “context” property">context</a></td>
+<td class="property_flags">Write / Construct Only</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="JSCClass.html#JSCClass--name" title="The “name” property">name</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr>
+<tr>
+<td class="property_type">
+<a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> *</td>
+<td class="property_name"><a class="link" href="JSCClass.html#JSCClass--parent" title="The “parent” property">parent</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="JSCClass.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="JSCClass.html#JSCClass-struct" title="JSCClass">JSCClass</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="JSCClass.html#JSCClassVTable" title="JSCClassVTable">JSCClassVTable</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="JSCClass.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> JSCClass
+</pre>
+</div>
+<div class="refsect1">
+<a name="JSCClass.description"></a><h2>Description</h2>
+<p>A JSSClass represents a custom JavaScript class registered by the user in a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a>.
+It allows to create new JavaScripts objects whose instances are created by the user using
+this API.
+It's possible to add constructors, properties and methods for a JSSClass by providing
+<a href="../gobject/gobject-Closures.html#GCallback"><span class="type">GCallback</span></a>s to implement them.</p>
+</div>
+<div class="refsect1">
+<a name="JSCClass.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="JSCClassGetPropertyFunction"></a><h3>JSCClassGetPropertyFunction ()</h3>
+<pre class="programlisting"><a class="link" href="JSCValue.html" title="JSCValue"><span class="returnvalue">JSCValue</span></a> *
+<span class="c_punctuation">(</span>*JSCClassGetPropertyFunction<span class="c_punctuation">)</span> (<em class="parameter"><code><a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> *jsc_class</code></em>,
+                                <em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> instance</code></em>,
+                                <em class="parameter"><code>const <span class="type">char</span> *name</code></em>);</pre>
+<p>The type of get_property in <a class="link" href="JSCClass.html#JSCClassVTable" title="JSCClassVTable"><span class="type">JSCClassVTable</span></a>. This is only required when you need to handle
+external properties not added to the prototype.</p>
+<div class="refsect3">
+<a name="JSCClassGetPropertyFunction.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>jsc_class</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>instance</p></td>
+<td class="parameter_description"><p>the <em class="parameter"><code>jsc_class</code></em>
+instance</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the property name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="JSCClassGetPropertyFunction.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to forward the request to
+the parent class or prototype chain. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>][<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="JSCClassSetPropertyFunction"></a><h3>JSCClassSetPropertyFunction ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+<span class="c_punctuation">(</span>*JSCClassSetPropertyFunction<span class="c_punctuation">)</span> (<em class="parameter"><code><a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> *jsc_class</code></em>,
+                                <em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> instance</code></em>,
+                                <em class="parameter"><code>const <span class="type">char</span> *name</code></em>,
+                                <em class="parameter"><code><a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a> *value</code></em>);</pre>
+<p>The type of set_property in <a class="link" href="JSCClass.html#JSCClassVTable" title="JSCClassVTable"><span class="type">JSCClassVTable</span></a>. This is only required when you need to handle
+external properties not added to the prototype.</p>
+<div class="refsect3">
+<a name="JSCClassSetPropertyFunction.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>jsc_class</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>instance</p></td>
+<td class="parameter_description"><p>the <em class="parameter"><code>jsc_class</code></em>
+instance</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the property name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>value</p></td>
+<td class="parameter_description"><p>the <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a> to set</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="JSCClassSetPropertyFunction.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if handled or <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> to forward the request to the parent class or prototype chain.</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="JSCClassHasPropertyFunction"></a><h3>JSCClassHasPropertyFunction ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+<span class="c_punctuation">(</span>*JSCClassHasPropertyFunction<span class="c_punctuation">)</span> (<em class="parameter"><code><a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> *jsc_class</code></em>,
+                                <em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> instance</code></em>,
+                                <em class="parameter"><code>const <span class="type">char</span> *name</code></em>);</pre>
+<p>The type of has_property in <a class="link" href="JSCClass.html#JSCClassVTable" title="JSCClassVTable"><span class="type">JSCClassVTable</span></a>. This is only required when you need to handle
+external properties not added to the prototype.</p>
+<div class="refsect3">
+<a name="JSCClassHasPropertyFunction.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>jsc_class</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>instance</p></td>
+<td class="parameter_description"><p>the <em class="parameter"><code>jsc_class</code></em>
+instance</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the property name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="JSCClassHasPropertyFunction.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>instance</code></em>
+has a property with <em class="parameter"><code>name</code></em>
+or <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> to forward the request
+to the parent class or prototype chain.</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="JSCClassDeletePropertyFunction"></a><h3>JSCClassDeletePropertyFunction ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+<span class="c_punctuation">(</span>*JSCClassDeletePropertyFunction<span class="c_punctuation">)</span> (<em class="parameter"><code><a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> *jsc_class</code></em>,
+                                   <em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                                   <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> instance</code></em>,
+                                   <em class="parameter"><code>const <span class="type">char</span> *name</code></em>);</pre>
+<p>The type of delete_property in <a class="link" href="JSCClass.html#JSCClassVTable" title="JSCClassVTable"><span class="type">JSCClassVTable</span></a>. This is only required when you need to handle
+external properties not added to the prototype.</p>
+<div class="refsect3">
+<a name="JSCClassDeletePropertyFunction.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>jsc_class</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>instance</p></td>
+<td class="parameter_description"><p>the <em class="parameter"><code>jsc_class</code></em>
+instance</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the property name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="JSCClassDeletePropertyFunction.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if handled or <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> to to forward the request to the parent class or prototype chain.</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="JSCClassEnumeratePropertiesFunction"></a><h3>JSCClassEnumeratePropertiesFunction ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **
+<span class="c_punctuation">(</span>*JSCClassEnumeratePropertiesFunction<span class="c_punctuation">)</span>
+                               (<em class="parameter"><code><a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> *jsc_class</code></em>,
+                                <em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> instance</code></em>);</pre>
+<p>The type of enumerate_properties in <a class="link" href="JSCClass.html#JSCClassVTable" title="JSCClassVTable"><span class="type">JSCClassVTable</span></a>. This is only required when you need to handle
+external properties not added to the prototype.</p>
+<div class="refsect3">
+<a name="JSCClassEnumeratePropertiesFunction.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>jsc_class</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>instance</p></td>
+<td class="parameter_description"><p>the <em class="parameter"><code>jsc_class</code></em>
+instance</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="JSCClassEnumeratePropertiesFunction.returns"></a><h4>Returns</h4>
+<p>a <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>-terminated array of strings
+containing the property names, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>instance</code></em>
+doesn't have enumerable properties. </p>
+<p><span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> zero-terminated=1][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>][<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-class-get-name"></a><h3>jsc_class_get_name ()</h3>
+<pre class="programlisting">const <span class="returnvalue">char</span> *
+jsc_class_get_name (<em class="parameter"><code><a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> *jsc_class</code></em>);</pre>
+<p>Get the class name of <em class="parameter"><code>jsc_class</code></em>
+</p>
+<div class="refsect3">
+<a name="jsc-class-get-name.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>jsc_class</p></td>
+<td class="parameter_description"><p>a <em class="parameter"><code>JSCClass</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-class-get-name.returns"></a><h4>Returns</h4>
+<p>the name of <em class="parameter"><code>jsc_class</code></em>
+. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-class-get-parent"></a><h3>jsc_class_get_parent ()</h3>
+<pre class="programlisting"><a class="link" href="JSCClass.html" title="JSCClass"><span class="returnvalue">JSCClass</span></a> *
+jsc_class_get_parent (<em class="parameter"><code><a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> *jsc_class</code></em>);</pre>
+<p>Get the parent class of <em class="parameter"><code>jsc_class</code></em>
+</p>
+<div class="refsect3">
+<a name="jsc-class-get-parent.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>jsc_class</p></td>
+<td class="parameter_description"><p>a <em class="parameter"><code>JSCClass</code></em>
+</p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-class-get-parent.returns"></a><h4>Returns</h4>
+<p>the parent class of <em class="parameter"><code>jsc_class</code></em>
+. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-class-add-constructor"></a><h3>jsc_class_add_constructor ()</h3>
+<pre class="programlisting"><a class="link" href="JSCValue.html" title="JSCValue"><span class="returnvalue">JSCValue</span></a> *
+jsc_class_add_constructor (<em class="parameter"><code><a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> *jsc_class</code></em>,
+                           <em class="parameter"><code>const <span class="type">char</span> *name</code></em>,
+                           <em class="parameter"><code><a href="../gobject/gobject-Closures.html#GCallback"><span class="type">GCallback</span></a> callback</code></em>,
+                           <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
+                           <em class="parameter"><code><a href="../glib/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy_notify</code></em>,
+                           <em class="parameter"><code><a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> return_type</code></em>,
+                           <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> n_params</code></em>,
+                           <em class="parameter"><code>...</code></em>);</pre>
+<p>Add a constructor to <em class="parameter"><code>jsc_class</code></em>
+. If <em class="parameter"><code>name</code></em>
+ is <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, the class name will be used. When <code class="function">new</code>
+is used with the constructor or <a class="link" href="JSCValue.html#jsc-value-constructor-call" title="jsc_value_constructor_call ()"><code class="function">jsc_value_constructor_call()</code></a> is called, <em class="parameter"><code>callback</code></em>
+ is invoked receiving the
+parameters and <em class="parameter"><code>user_data</code></em>
+ as the last parameter. When the constructor object is cleared in the <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> context,
+<em class="parameter"><code>destroy_notify</code></em>
+ is called with <em class="parameter"><code>user_data</code></em>
+ as parameter.</p>
+<p>This function creates the constructor, which needs to be added to an object as a property to be able to use it. Use
+<a class="link" href="JSCContext.html#jsc-context-set-value" title="jsc_context_set_value ()"><code class="function">jsc_context_set_value()</code></a> to make the constructor available in the global object.</p>
+<p>Note that the value returned by <em class="parameter"><code>callback</code></em>
+ is adopted by <em class="parameter"><code>jsc_class</code></em>
+, and the <a href="../glib/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> passed to
+<a class="link" href="JSCContext.html#jsc-context-register-class" title="jsc_context_register_class ()"><code class="function">jsc_context_register_class()</code></a> is responsible for disposing of it.</p>
+<p><span class="annotation">[<acronym title="Exposed in C code, not necessarily available in other languages."><span class="acronym">skip</span></acronym>]</span></p>
+<div class="refsect3">
+<a name="jsc-class-add-constructor.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>jsc_class</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the constructor name or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gobject/gobject-Closures.html#GCallback"><span class="type">GCallback</span></a> to be called to create an instance of <em class="parameter"><code>jsc_class</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data to pass to <em class="parameter"><code>callback</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>destroy_notify</p></td>
+<td class="parameter_description"><p>destroy notifier for <em class="parameter"><code>user_data</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>return_type</p></td>
+<td class="parameter_description"><p>the <a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> of the constructor return value</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>n_params</p></td>
+<td class="parameter_description"><p>the number of parameter types to follow or 0 if constructor doesn't receive parameters.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>...</p></td>
+<td class="parameter_description"><p>a list of <a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a>s, one for each parameter.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-class-add-constructor.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a> representing the class constructor. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-class-add-constructorv"></a><h3>jsc_class_add_constructorv ()</h3>
+<pre class="programlisting"><a class="link" href="JSCValue.html" title="JSCValue"><span class="returnvalue">JSCValue</span></a> *
+jsc_class_add_constructorv (<em class="parameter"><code><a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> *jsc_class</code></em>,
+                            <em class="parameter"><code>const <span class="type">char</span> *name</code></em>,
+                            <em class="parameter"><code><a href="../gobject/gobject-Closures.html#GCallback"><span class="type">GCallback</span></a> callback</code></em>,
+                            <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
+                            <em class="parameter"><code><a href="../glib/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy_notify</code></em>,
+                            <em class="parameter"><code><a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> return_type</code></em>,
+                            <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> n_parameters</code></em>,
+                            <em class="parameter"><code><a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> *parameter_types</code></em>);</pre>
+<p>Add a constructor to <em class="parameter"><code>jsc_class</code></em>
+. If <em class="parameter"><code>name</code></em>
+ is <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, the class name will be used. When <code class="function">new</code>
+is used with the constructor or <a class="link" href="JSCValue.html#jsc-value-constructor-call" title="jsc_value_constructor_call ()"><code class="function">jsc_value_constructor_call()</code></a> is called, <em class="parameter"><code>callback</code></em>
+ is invoked receiving the
+parameters and <em class="parameter"><code>user_data</code></em>
+ as the last parameter. When the constructor object is cleared in the <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> context,
+<em class="parameter"><code>destroy_notify</code></em>
+ is called with <em class="parameter"><code>user_data</code></em>
+ as parameter.</p>
+<p>This function creates the constructor, which needs to be added to an object as a property to be able to use it. Use
+<a class="link" href="JSCContext.html#jsc-context-set-value" title="jsc_context_set_value ()"><code class="function">jsc_context_set_value()</code></a> to make the constructor available in the global object.</p>
+<p>Note that the value returned by <em class="parameter"><code>callback</code></em>
+ is adopted by <em class="parameter"><code>jsc_class</code></em>
+, and the <a href="../glib/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> passed to
+<a class="link" href="JSCContext.html#jsc-context-register-class" title="jsc_context_register_class ()"><code class="function">jsc_context_register_class()</code></a> is responsible for disposing of it.</p>
+<p><span class="annotation">[<acronym title="Rename the original symbol's name to SYMBOL."><span class="acronym">rename-to</span></acronym> jsc_class_add_constructor]</span></p>
+<div class="refsect3">
+<a name="jsc-class-add-constructorv.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>jsc_class</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the constructor name or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gobject/gobject-Closures.html#GCallback"><span class="type">GCallback</span></a> to be called to create an instance of <em class="parameter"><code>jsc_class</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data to pass to <em class="parameter"><code>callback</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>destroy_notify</p></td>
+<td class="parameter_description"><p>destroy notifier for <em class="parameter"><code>user_data</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>return_type</p></td>
+<td class="parameter_description"><p>the <a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> of the constructor return value</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>n_parameters</p></td>
+<td class="parameter_description"><p>the number of parameters</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>parameter_types</p></td>
+<td class="parameter_description"><p>a list of <a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a>s, one for each parameter, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>][<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> length=n_parameters][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> GType]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-class-add-constructorv.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a> representing the class constructor. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-class-add-constructor-variadic"></a><h3>jsc_class_add_constructor_variadic ()</h3>
+<pre class="programlisting"><a class="link" href="JSCValue.html" title="JSCValue"><span class="returnvalue">JSCValue</span></a> *
+jsc_class_add_constructor_variadic (<em class="parameter"><code><a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> *jsc_class</code></em>,
+                                    <em class="parameter"><code>const <span class="type">char</span> *name</code></em>,
+                                    <em class="parameter"><code><a href="../gobject/gobject-Closures.html#GCallback"><span class="type">GCallback</span></a> callback</code></em>,
+                                    <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
+                                    <em class="parameter"><code><a href="../glib/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy_notify</code></em>,
+                                    <em class="parameter"><code><a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> return_type</code></em>);</pre>
+<p>Add a constructor to <em class="parameter"><code>jsc_class</code></em>
+. If <em class="parameter"><code>name</code></em>
+ is <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, the class name will be used. When <code class="function">new</code>
+is used with the constructor or <a class="link" href="JSCValue.html#jsc-value-constructor-call" title="jsc_value_constructor_call ()"><code class="function">jsc_value_constructor_call()</code></a> is called, <em class="parameter"><code>callback</code></em>
+ is invoked receiving
+a <a href="../glib/glib-Pointer-Arrays.html#GPtrArray"><span class="type">GPtrArray</span></a> of <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a>s as arguments and <em class="parameter"><code>user_data</code></em>
+ as the last parameter. When the constructor object
+is cleared in the <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> context, <em class="parameter"><code>destroy_notify</code></em>
+ is called with <em class="parameter"><code>user_data</code></em>
+ as parameter.</p>
+<p>This function creates the constructor, which needs to be added to an object as a property to be able to use it. Use
+<a class="link" href="JSCContext.html#jsc-context-set-value" title="jsc_context_set_value ()"><code class="function">jsc_context_set_value()</code></a> to make the constructor available in the global object.</p>
+<p>Note that the value returned by <em class="parameter"><code>callback</code></em>
+ is adopted by <em class="parameter"><code>jsc_class</code></em>
+, and the <a href="../glib/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> passed to
+<a class="link" href="JSCContext.html#jsc-context-register-class" title="jsc_context_register_class ()"><code class="function">jsc_context_register_class()</code></a> is responsible for disposing of it.</p>
+<div class="refsect3">
+<a name="jsc-class-add-constructor-variadic.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>jsc_class</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the constructor name or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gobject/gobject-Closures.html#GCallback"><span class="type">GCallback</span></a> to be called to create an instance of <em class="parameter"><code>jsc_class</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data to pass to <em class="parameter"><code>callback</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>destroy_notify</p></td>
+<td class="parameter_description"><p>destroy notifier for <em class="parameter"><code>user_data</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>return_type</p></td>
+<td class="parameter_description"><p>the <a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> of the constructor return value</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-class-add-constructor-variadic.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a> representing the class constructor. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-class-add-method"></a><h3>jsc_class_add_method ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+jsc_class_add_method (<em class="parameter"><code><a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> *jsc_class</code></em>,
+                      <em class="parameter"><code>const <span class="type">char</span> *name</code></em>,
+                      <em class="parameter"><code><a href="../gobject/gobject-Closures.html#GCallback"><span class="type">GCallback</span></a> callback</code></em>,
+                      <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
+                      <em class="parameter"><code><a href="../glib/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy_notify</code></em>,
+                      <em class="parameter"><code><a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> return_type</code></em>,
+                      <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> n_params</code></em>,
+                      <em class="parameter"><code>...</code></em>);</pre>
+<p>Add method with <em class="parameter"><code>name</code></em>
+ to <em class="parameter"><code>jsc_class</code></em>
+. When the method is called by JavaScript or <a class="link" href="JSCValue.html#jsc-value-object-invoke-method" title="jsc_value_object_invoke_method ()"><code class="function">jsc_value_object_invoke_method()</code></a>,
+<em class="parameter"><code>callback</code></em>
+ is called receiving the class instance as first parameter, followed by the method parameters and then
+<em class="parameter"><code>user_data</code></em>
+ as last parameter. When the method is cleared in the <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> context, <em class="parameter"><code>destroy_notify</code></em>
+ is called with
+<em class="parameter"><code>user_data</code></em>
+ as parameter.</p>
+<p>Note that the value returned by <em class="parameter"><code>callback</code></em>
+ must be transfer full. In case of non-refcounted boxed types, you should use
+<a href="../gobject/gobject-Type-Information.html#G-TYPE-POINTER:CAPS"><code class="literal">G_TYPE_POINTER</code></a> instead of the actual boxed <a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> to ensure that the instance owned by <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> is used.
+If you really want to return a new copy of the boxed type, use <span class="type">JSC_TYPE_VALUE</span> and return a <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a> created
+with <a class="link" href="JSCValue.html#jsc-value-new-object" title="jsc_value_new_object ()"><code class="function">jsc_value_new_object()</code></a> that receives the copy as the instance parameter.</p>
+<p><span class="annotation">[<acronym title="Exposed in C code, not necessarily available in other languages."><span class="acronym">skip</span></acronym>]</span></p>
+<div class="refsect3">
+<a name="jsc-class-add-method.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>jsc_class</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the method name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gobject/gobject-Closures.html#GCallback"><span class="type">GCallback</span></a> to be called to invoke method <em class="parameter"><code>name</code></em>
+of <em class="parameter"><code>jsc_class</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data to pass to <em class="parameter"><code>callback</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>destroy_notify</p></td>
+<td class="parameter_description"><p>destroy notifier for <em class="parameter"><code>user_data</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>return_type</p></td>
+<td class="parameter_description"><p>the <a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> of the method return value, or <a href="../gobject/gobject-Type-Information.html#G-TYPE-NONE:CAPS"><code class="literal">G_TYPE_NONE</code></a> if the method is void.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>n_params</p></td>
+<td class="parameter_description"><p>the number of parameter types to follow or 0 if the method doesn't receive parameters.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>...</p></td>
+<td class="parameter_description"><p>a list of <a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a>s, one for each parameter.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-class-add-methodv"></a><h3>jsc_class_add_methodv ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+jsc_class_add_methodv (<em class="parameter"><code><a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> *jsc_class</code></em>,
+                       <em class="parameter"><code>const <span class="type">char</span> *name</code></em>,
+                       <em class="parameter"><code><a href="../gobject/gobject-Closures.html#GCallback"><span class="type">GCallback</span></a> callback</code></em>,
+                       <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
+                       <em class="parameter"><code><a href="../glib/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy_notify</code></em>,
+                       <em class="parameter"><code><a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> return_type</code></em>,
+                       <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> n_parameters</code></em>,
+                       <em class="parameter"><code><a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> *parameter_types</code></em>);</pre>
+<p>Add method with <em class="parameter"><code>name</code></em>
+ to <em class="parameter"><code>jsc_class</code></em>
+. When the method is called by JavaScript or <a class="link" href="JSCValue.html#jsc-value-object-invoke-method" title="jsc_value_object_invoke_method ()"><code class="function">jsc_value_object_invoke_method()</code></a>,
+<em class="parameter"><code>callback</code></em>
+ is called receiving the class instance as first parameter, followed by the method parameters and then
+<em class="parameter"><code>user_data</code></em>
+ as last parameter. When the method is cleared in the <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> context, <em class="parameter"><code>destroy_notify</code></em>
+ is called with
+<em class="parameter"><code>user_data</code></em>
+ as parameter.</p>
+<p>Note that the value returned by <em class="parameter"><code>callback</code></em>
+ must be transfer full. In case of non-refcounted boxed types, you should use
+<a href="../gobject/gobject-Type-Information.html#G-TYPE-POINTER:CAPS"><code class="literal">G_TYPE_POINTER</code></a> instead of the actual boxed <a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> to ensure that the instance owned by <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> is used.
+If you really want to return a new copy of the boxed type, use <span class="type">JSC_TYPE_VALUE</span> and return a <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a> created
+with <a class="link" href="JSCValue.html#jsc-value-new-object" title="jsc_value_new_object ()"><code class="function">jsc_value_new_object()</code></a> that receives the copy as the instance parameter.</p>
+<p><span class="annotation">[<acronym title="Rename the original symbol's name to SYMBOL."><span class="acronym">rename-to</span></acronym> jsc_class_add_method]</span></p>
+<div class="refsect3">
+<a name="jsc-class-add-methodv.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>jsc_class</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the method name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gobject/gobject-Closures.html#GCallback"><span class="type">GCallback</span></a> to be called to invoke method <em class="parameter"><code>name</code></em>
+of <em class="parameter"><code>jsc_class</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data to pass to <em class="parameter"><code>callback</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>destroy_notify</p></td>
+<td class="parameter_description"><p>destroy notifier for <em class="parameter"><code>user_data</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>return_type</p></td>
+<td class="parameter_description"><p>the <a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> of the method return value, or <a href="../gobject/gobject-Type-Information.html#G-TYPE-NONE:CAPS"><code class="literal">G_TYPE_NONE</code></a> if the method is void.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>n_parameters</p></td>
+<td class="parameter_description"><p>the number of parameter types to follow or 0 if the method doesn't receive parameters.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>parameter_types</p></td>
+<td class="parameter_description"><p>a list of <a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a>s, one for each parameter, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>][<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> length=n_parameters][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> GType]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-class-add-method-variadic"></a><h3>jsc_class_add_method_variadic ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+jsc_class_add_method_variadic (<em class="parameter"><code><a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> *jsc_class</code></em>,
+                               <em class="parameter"><code>const <span class="type">char</span> *name</code></em>,
+                               <em class="parameter"><code><a href="../gobject/gobject-Closures.html#GCallback"><span class="type">GCallback</span></a> callback</code></em>,
+                               <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
+                               <em class="parameter"><code><a href="../glib/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy_notify</code></em>,
+                               <em class="parameter"><code><a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> return_type</code></em>);</pre>
+<p>Add method with <em class="parameter"><code>name</code></em>
+ to <em class="parameter"><code>jsc_class</code></em>
+. When the method is called by JavaScript or <a class="link" href="JSCValue.html#jsc-value-object-invoke-method" title="jsc_value_object_invoke_method ()"><code class="function">jsc_value_object_invoke_method()</code></a>,
+<em class="parameter"><code>callback</code></em>
+ is called receiving the class instance as first parameter, followed by a <a href="../glib/glib-Pointer-Arrays.html#GPtrArray"><span class="type">GPtrArray</span></a> of <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a>s
+with the method arguments and then <em class="parameter"><code>user_data</code></em>
+ as last parameter. When the method is cleared in the <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> context,
+<em class="parameter"><code>destroy_notify</code></em>
+ is called with <em class="parameter"><code>user_data</code></em>
+ as parameter.</p>
+<p>Note that the value returned by <em class="parameter"><code>callback</code></em>
+ must be transfer full. In case of non-refcounted boxed types, you should use
+<a href="../gobject/gobject-Type-Information.html#G-TYPE-POINTER:CAPS"><code class="literal">G_TYPE_POINTER</code></a> instead of the actual boxed <a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> to ensure that the instance owned by <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> is used.
+If you really want to return a new copy of the boxed type, use <span class="type">JSC_TYPE_VALUE</span> and return a <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a> created
+with <a class="link" href="JSCValue.html#jsc-value-new-object" title="jsc_value_new_object ()"><code class="function">jsc_value_new_object()</code></a> that receives the copy as the instance parameter.</p>
+<div class="refsect3">
+<a name="jsc-class-add-method-variadic.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>jsc_class</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the method name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>a <a href="../gobject/gobject-Closures.html#GCallback"><span class="type">GCallback</span></a> to be called to invoke method <em class="parameter"><code>name</code></em>
+of <em class="parameter"><code>jsc_class</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data to pass to <em class="parameter"><code>callback</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>destroy_notify</p></td>
+<td class="parameter_description"><p>destroy notifier for <em class="parameter"><code>user_data</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>return_type</p></td>
+<td class="parameter_description"><p>the <a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> of the method return value, or <a href="../gobject/gobject-Type-Information.html#G-TYPE-NONE:CAPS"><code class="literal">G_TYPE_NONE</code></a> if the method is void.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-class-add-property"></a><h3>jsc_class_add_property ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+jsc_class_add_property (<em class="parameter"><code><a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> *jsc_class</code></em>,
+                        <em class="parameter"><code>const <span class="type">char</span> *name</code></em>,
+                        <em class="parameter"><code><a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> property_type</code></em>,
+                        <em class="parameter"><code><a href="../gobject/gobject-Closures.html#GCallback"><span class="type">GCallback</span></a> getter</code></em>,
+                        <em class="parameter"><code><a href="../gobject/gobject-Closures.html#GCallback"><span class="type">GCallback</span></a> setter</code></em>,
+                        <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
+                        <em class="parameter"><code><a href="../glib/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy_notify</code></em>);</pre>
+<p>Add a property with <em class="parameter"><code>name</code></em>
+ to <em class="parameter"><code>jsc_class</code></em>
+. When the property value needs to be getted, <em class="parameter"><code>getter</code></em>
+ is called
+receiving the the class instance as first parameter and <em class="parameter"><code>user_data</code></em>
+ as last parameter. When the property
+value needs to be set, <em class="parameter"><code>setter</code></em>
+ is called receiving the the class instance as first parameter, followed
+by the value to be set and then <em class="parameter"><code>user_data</code></em>
+ as the last parameter. When the property is cleared in the
+<a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> context, <em class="parameter"><code>destroy_notify</code></em>
+ is called with <em class="parameter"><code>user_data</code></em>
+ as parameter.</p>
+<p>Note that the value returned by <em class="parameter"><code>getter</code></em>
+ must be transfer full. In case of non-refcounted boxed types, you should use
+<a href="../gobject/gobject-Type-Information.html#G-TYPE-POINTER:CAPS"><code class="literal">G_TYPE_POINTER</code></a> instead of the actual boxed <a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> to ensure that the instance owned by <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> is used.
+If you really want to return a new copy of the boxed type, use <span class="type">JSC_TYPE_VALUE</span> and return a <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a> created
+with <a class="link" href="JSCValue.html#jsc-value-new-object" title="jsc_value_new_object ()"><code class="function">jsc_value_new_object()</code></a> that receives the copy as the instance parameter.</p>
+<div class="refsect3">
+<a name="jsc-class-add-property.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>jsc_class</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the property name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>property_type</p></td>
+<td class="parameter_description"><p>the <a href="../gobject/gobject-Type-Information.html#GType"><span class="type">GType</span></a> of the property value</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>getter</p></td>
+<td class="parameter_description"><p>a <a href="../gobject/gobject-Closures.html#GCallback"><span class="type">GCallback</span></a> to be called to get the property value. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>][<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>setter</p></td>
+<td class="parameter_description"><p>a <a href="../gobject/gobject-Closures.html#GCallback"><span class="type">GCallback</span></a> to be called to set the property value. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>][<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data to pass to <em class="parameter"><code>getter</code></em>
+and <em class="parameter"><code>setter</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>destroy_notify</p></td>
+<td class="parameter_description"><p>destroy notifier for <em class="parameter"><code>user_data</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="refsect1">
+<a name="JSCClass.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="JSCClass-struct"></a><h3>JSCClass</h3>
+<pre class="programlisting">typedef struct _JSCClass JSCClass;</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="JSCClassVTable"></a><h3>JSCClassVTable</h3>
+<pre class="programlisting">typedef struct {
+    JSCClassGetPropertyFunction get_property;
+    JSCClassSetPropertyFunction set_property;
+    JSCClassHasPropertyFunction has_property;
+    JSCClassDeletePropertyFunction delete_property;
+    JSCClassEnumeratePropertiesFunction enumerate_properties;
+} JSCClassVTable;
+</pre>
+<p>Virtual table for a JSCClass. This can be optionally used when registering a <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> in a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a>
+to provide a custom implementation for the class. All virtual functions are optional and can be set to
+<a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to fallback to the default implementation.</p>
+<div class="refsect3">
+<a name="JSCClassVTable.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="300px" class="struct_members_name">
+<col class="struct_members_description">
+<col width="200px" class="struct_members_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="struct_member_name"><p><a class="link" href="JSCClass.html#JSCClassGetPropertyFunction" title="JSCClassGetPropertyFunction ()"><span class="type">JSCClassGetPropertyFunction</span></a> <em class="structfield"><code><a name="JSCClassVTable.get-property"></a>get_property</code></em>;</p></td>
+<td class="struct_member_description"><p>a <a class="link" href="JSCClass.html#JSCClassGetPropertyFunction" title="JSCClassGetPropertyFunction ()"><span class="type">JSCClassGetPropertyFunction</span></a> for getting a property.</p></td>
+<td class="struct_member_annotations"> </td>
+</tr>
+<tr>
+<td class="struct_member_name"><p><a class="link" href="JSCClass.html#JSCClassSetPropertyFunction" title="JSCClassSetPropertyFunction ()"><span class="type">JSCClassSetPropertyFunction</span></a> <em class="structfield"><code><a name="JSCClassVTable.set-property"></a>set_property</code></em>;</p></td>
+<td class="struct_member_description"><p>a <a class="link" href="JSCClass.html#JSCClassSetPropertyFunction" title="JSCClassSetPropertyFunction ()"><span class="type">JSCClassSetPropertyFunction</span></a> for setting a property.</p></td>
+<td class="struct_member_annotations"> </td>
+</tr>
+<tr>
+<td class="struct_member_name"><p><a class="link" href="JSCClass.html#JSCClassHasPropertyFunction" title="JSCClassHasPropertyFunction ()"><span class="type">JSCClassHasPropertyFunction</span></a> <em class="structfield"><code><a name="JSCClassVTable.has-property"></a>has_property</code></em>;</p></td>
+<td class="struct_member_description"><p>a <a class="link" href="JSCClass.html#JSCClassHasPropertyFunction" title="JSCClassHasPropertyFunction ()"><span class="type">JSCClassHasPropertyFunction</span></a> for querying a property.</p></td>
+<td class="struct_member_annotations"> </td>
+</tr>
+<tr>
+<td class="struct_member_name"><p><a class="link" href="JSCClass.html#JSCClassDeletePropertyFunction" title="JSCClassDeletePropertyFunction ()"><span class="type">JSCClassDeletePropertyFunction</span></a> <em class="structfield"><code><a name="JSCClassVTable.delete-property"></a>delete_property</code></em>;</p></td>
+<td class="struct_member_description"><p>a <a class="link" href="JSCClass.html#JSCClassDeletePropertyFunction" title="JSCClassDeletePropertyFunction ()"><span class="type">JSCClassDeletePropertyFunction</span></a> for deleting a property.</p></td>
+<td class="struct_member_annotations"> </td>
+</tr>
+<tr>
+<td class="struct_member_name"><p><a class="link" href="JSCClass.html#JSCClassEnumeratePropertiesFunction" title="JSCClassEnumeratePropertiesFunction ()"><span class="type">JSCClassEnumeratePropertiesFunction</span></a> <em class="structfield"><code><a name="JSCClassVTable.enumerate-properties"></a>enumerate_properties</code></em>;</p></td>
+<td class="struct_member_description"><p>a <a class="link" href="JSCClass.html#JSCClassEnumeratePropertiesFunction" title="JSCClassEnumeratePropertiesFunction ()"><span class="type">JSCClassEnumeratePropertiesFunction</span></a> for enumerating properties.</p></td>
+<td class="struct_member_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="refsect1">
+<a name="JSCClass.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="JSCClass--context"></a><h3>The <code class="literal">“context”</code> property</h3>
+<pre class="programlisting">  “context”                  <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *</pre>
+<p>The <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> in which the class was registered.</p>
+<p>Owner: JSCClass</p>
+<p>Flags: Write / Construct Only</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="JSCClass--name"></a><h3>The <code class="literal">“name”</code> property</h3>
+<pre class="programlisting">  “name”                     <span class="type">char</span> *</pre>
+<p>The name of the class.</p>
+<p>Owner: JSCClass</p>
+<p>Flags: Read / Write / Construct Only</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="JSCClass--parent"></a><h3>The <code class="literal">“parent”</code> property</h3>
+<pre class="programlisting">  “parent”                   <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> *</pre>
+<p>The parent class or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> in case of final classes.</p>
+<p>Owner: JSCClass</p>
+<p>Flags: Read / Write / Construct Only</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="JSCClass.see-also"></a><h2>See Also</h2>
+<p>JSCContext</p>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

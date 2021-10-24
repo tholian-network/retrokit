@@ -1,0 +1,1095 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WebKitDOMEvent: WebKitDOMGTK+ Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="WebKitDOMGTK+ Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="WebKitDOMElement.html" title="WebKitDOMElement">
+<link rel="next" href="WebKitDOMKeyboardEvent.html" title="WebKitDOMKeyboardEvent">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#WebKitDOMEvent.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#WebKitDOMEvent.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_properties">  <span class="dim">|</span> 
+                  <a href="#WebKitDOMEvent.properties" class="shortcut">Properties</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="WebKitDOMElement.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="WebKitDOMKeyboardEvent.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="WebKitDOMEvent"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="WebKitDOMEvent.top_of_page"></a>WebKitDOMEvent</span></h2>
+<p>WebKitDOMEvent</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="WebKitDOMEvent.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitDOMEvent.html#webkit-dom-event-stop-propagation" title="webkit_dom_event_stop_propagation ()">webkit_dom_event_stop_propagation</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitDOMEvent.html#webkit-dom-event-prevent-default" title="webkit_dom_event_prevent_default ()">webkit_dom_event_prevent_default</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitDOMEvent.html#webkit-dom-event-init-event" title="webkit_dom_event_init_event ()">webkit_dom_event_init_event</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitDOMEvent.html#webkit-dom-event-get-event-type" title="webkit_dom_event_get_event_type ()">webkit_dom_event_get_event_type</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">WebKitDOMEventTarget</span> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitDOMEvent.html#webkit-dom-event-get-target" title="webkit_dom_event_get_target ()">webkit_dom_event_get_target</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">WebKitDOMEventTarget</span> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitDOMEvent.html#webkit-dom-event-get-current-target" title="webkit_dom_event_get_current_target ()">webkit_dom_event_get_current_target</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gushort"><span class="returnvalue">gushort</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitDOMEvent.html#webkit-dom-event-get-event-phase" title="webkit_dom_event_get_event_phase ()">webkit_dom_event_get_event_phase</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitDOMEvent.html#webkit-dom-event-get-bubbles" title="webkit_dom_event_get_bubbles ()">webkit_dom_event_get_bubbles</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitDOMEvent.html#webkit-dom-event-get-cancelable" title="webkit_dom_event_get_cancelable ()">webkit_dom_event_get_cancelable</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#guint32"><span class="returnvalue">guint32</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitDOMEvent.html#webkit-dom-event-get-time-stamp" title="webkit_dom_event_get_time_stamp ()">webkit_dom_event_get_time_stamp</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">WebKitDOMEventTarget</span> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitDOMEvent.html#webkit-dom-event-get-src-element" title="webkit_dom_event_get_src_element ()">webkit_dom_event_get_src_element</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitDOMEvent.html#webkit-dom-event-get-return-value" title="webkit_dom_event_get_return_value ()">webkit_dom_event_get_return_value</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitDOMEvent.html#webkit-dom-event-set-return-value" title="webkit_dom_event_set_return_value ()">webkit_dom_event_set_return_value</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitDOMEvent.html#webkit-dom-event-get-cancel-bubble" title="webkit_dom_event_get_cancel_bubble ()">webkit_dom_event_get_cancel_bubble</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitDOMEvent.html#webkit-dom-event-set-cancel-bubble" title="webkit_dom_event_set_cancel_bubble ()">webkit_dom_event_set_cancel_bubble</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitDOMEvent.properties"></a><h2>Properties</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="properties_type">
+<col width="300px" class="properties_name">
+<col width="200px" class="properties_flags">
+</colgroup>
+<tbody>
+<tr>
+<td class="property_type"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></td>
+<td class="property_name"><a class="link" href="WebKitDOMEvent.html#WebKitDOMEvent--bubbles" title="The “bubbles” property">bubbles</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></td>
+<td class="property_name"><a class="link" href="WebKitDOMEvent.html#WebKitDOMEvent--cancel-bubble" title="The “cancel-bubble” property">cancel-bubble</a></td>
+<td class="property_flags">Read / Write</td>
+</tr>
+<tr>
+<td class="property_type"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></td>
+<td class="property_name"><a class="link" href="WebKitDOMEvent.html#WebKitDOMEvent--cancelable" title="The “cancelable” property">cancelable</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">WebKitDOMEventTarget</span> *</td>
+<td class="property_name"><a class="link" href="WebKitDOMEvent.html#WebKitDOMEvent--current-target" title="The “current-target” property">current-target</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type"><a href="../glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a></td>
+<td class="property_name"><a class="link" href="WebKitDOMEvent.html#WebKitDOMEvent--event-phase" title="The “event-phase” property">event-phase</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></td>
+<td class="property_name"><a class="link" href="WebKitDOMEvent.html#WebKitDOMEvent--return-value" title="The “return-value” property">return-value</a></td>
+<td class="property_flags">Read / Write</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">WebKitDOMEventTarget</span> *</td>
+<td class="property_name"><a class="link" href="WebKitDOMEvent.html#WebKitDOMEvent--src-element" title="The “src-element” property">src-element</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">WebKitDOMEventTarget</span> *</td>
+<td class="property_name"><a class="link" href="WebKitDOMEvent.html#WebKitDOMEvent--target" title="The “target” property">target</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type"><a href="../glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a></td>
+<td class="property_name"><a class="link" href="WebKitDOMEvent.html#WebKitDOMEvent--time-stamp" title="The “time-stamp” property">time-stamp</a></td>
+<td class="property_flags">Read</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="WebKitDOMEvent.html#WebKitDOMEvent--type" title="The “type” property">type</a></td>
+<td class="property_flags">Read</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitDOMEvent.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WebKitDOMEvent-struct" title="struct WebKitDOMEvent">WebKitDOMEvent</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-NONE:CAPS" title="WEBKIT_DOM_EVENT_NONE">WEBKIT_DOM_EVENT_NONE</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-CAPTURING-PHASE:CAPS" title="WEBKIT_DOM_EVENT_CAPTURING_PHASE">WEBKIT_DOM_EVENT_CAPTURING_PHASE</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-AT-TARGET:CAPS" title="WEBKIT_DOM_EVENT_AT_TARGET">WEBKIT_DOM_EVENT_AT_TARGET</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-BUBBLING-PHASE:CAPS" title="WEBKIT_DOM_EVENT_BUBBLING_PHASE">WEBKIT_DOM_EVENT_BUBBLING_PHASE</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-MOUSEDOWN:CAPS" title="WEBKIT_DOM_EVENT_MOUSEDOWN">WEBKIT_DOM_EVENT_MOUSEDOWN</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-MOUSEUP:CAPS" title="WEBKIT_DOM_EVENT_MOUSEUP">WEBKIT_DOM_EVENT_MOUSEUP</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-MOUSEOVER:CAPS" title="WEBKIT_DOM_EVENT_MOUSEOVER">WEBKIT_DOM_EVENT_MOUSEOVER</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-MOUSEOUT:CAPS" title="WEBKIT_DOM_EVENT_MOUSEOUT">WEBKIT_DOM_EVENT_MOUSEOUT</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-MOUSEMOVE:CAPS" title="WEBKIT_DOM_EVENT_MOUSEMOVE">WEBKIT_DOM_EVENT_MOUSEMOVE</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-MOUSEDRAG:CAPS" title="WEBKIT_DOM_EVENT_MOUSEDRAG">WEBKIT_DOM_EVENT_MOUSEDRAG</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-CLICK:CAPS" title="WEBKIT_DOM_EVENT_CLICK">WEBKIT_DOM_EVENT_CLICK</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-DBLCLICK:CAPS" title="WEBKIT_DOM_EVENT_DBLCLICK">WEBKIT_DOM_EVENT_DBLCLICK</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-KEYDOWN:CAPS" title="WEBKIT_DOM_EVENT_KEYDOWN">WEBKIT_DOM_EVENT_KEYDOWN</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-KEYUP:CAPS" title="WEBKIT_DOM_EVENT_KEYUP">WEBKIT_DOM_EVENT_KEYUP</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-KEYPRESS:CAPS" title="WEBKIT_DOM_EVENT_KEYPRESS">WEBKIT_DOM_EVENT_KEYPRESS</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-DRAGDROP:CAPS" title="WEBKIT_DOM_EVENT_DRAGDROP">WEBKIT_DOM_EVENT_DRAGDROP</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-FOCUS:CAPS" title="WEBKIT_DOM_EVENT_FOCUS">WEBKIT_DOM_EVENT_FOCUS</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-BLUR:CAPS" title="WEBKIT_DOM_EVENT_BLUR">WEBKIT_DOM_EVENT_BLUR</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-SELECT:CAPS" title="WEBKIT_DOM_EVENT_SELECT">WEBKIT_DOM_EVENT_SELECT</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitDOMEvent.html#WEBKIT-DOM-EVENT-CHANGE:CAPS" title="WEBKIT_DOM_EVENT_CHANGE">WEBKIT_DOM_EVENT_CHANGE</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitDOMEvent.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> <a class="link" href="WebKitDOMObject.html" title="WebKitDOMObject">WebKitDOMObject</a>
+        <span class="lineart">╰──</span> WebKitDOMEvent
+            <span class="lineart">╰──</span> <a class="link" href="WebKitDOMUIEvent.html" title="WebKitDOMUIEvent">WebKitDOMUIEvent</a>
+</pre>
+</div>
+<div class="refsect1">
+<a name="WebKitDOMEvent.description"></a><h2>Description</h2>
+</div>
+<div class="refsect1">
+<a name="WebKitDOMEvent.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="webkit-dom-event-stop-propagation"></a><h3>webkit_dom_event_stop_propagation ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_dom_event_stop_propagation (<em class="parameter"><code><a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a> *self</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_dom_event_stop_propagation</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-stop-propagation.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>self</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-dom-event-prevent-default"></a><h3>webkit_dom_event_prevent_default ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_dom_event_prevent_default (<em class="parameter"><code><a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a> *self</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_dom_event_prevent_default</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-prevent-default.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>self</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-dom-event-init-event"></a><h3>webkit_dom_event_init_event ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_dom_event_init_event (<em class="parameter"><code><a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a> *self</code></em>,
+                             <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *eventTypeArg</code></em>,
+                             <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> canBubbleArg</code></em>,
+                             <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> cancelableArg</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_dom_event_init_event</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-init-event.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>self</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>eventTypeArg</p></td>
+<td class="parameter_description"><p>A <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>canBubbleArg</p></td>
+<td class="parameter_description"><p>A <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancelableArg</p></td>
+<td class="parameter_description"><p>A <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-dom-event-get-event-type"></a><h3>webkit_dom_event_get_event_type ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_dom_event_get_event_type (<em class="parameter"><code><a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a> *self</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_dom_event_get_event_type</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-event-type.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>self</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-event-type.returns"></a><h4>Returns</h4>
+<p> A <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-dom-event-get-target"></a><h3>webkit_dom_event_get_target ()</h3>
+<pre class="programlisting"><span class="returnvalue">WebKitDOMEventTarget</span> *
+webkit_dom_event_get_target (<em class="parameter"><code><a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a> *self</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_dom_event_get_target</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-target.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>self</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-target.returns"></a><h4>Returns</h4>
+<p>A <span class="type">WebKitDOMEventTarget</span>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-dom-event-get-current-target"></a><h3>webkit_dom_event_get_current_target ()</h3>
+<pre class="programlisting"><span class="returnvalue">WebKitDOMEventTarget</span> *
+webkit_dom_event_get_current_target (<em class="parameter"><code><a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a> *self</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_dom_event_get_current_target</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-current-target.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>self</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-current-target.returns"></a><h4>Returns</h4>
+<p>A <span class="type">WebKitDOMEventTarget</span>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-dom-event-get-event-phase"></a><h3>webkit_dom_event_get_event_phase ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gushort"><span class="returnvalue">gushort</span></a>
+webkit_dom_event_get_event_phase (<em class="parameter"><code><a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a> *self</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_dom_event_get_event_phase</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-event-phase.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>self</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-event-phase.returns"></a><h4>Returns</h4>
+<p> A <a href="../glib/glib-Basic-Types.html#gushort"><span class="type">gushort</span></a></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-dom-event-get-bubbles"></a><h3>webkit_dom_event_get_bubbles ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+webkit_dom_event_get_bubbles (<em class="parameter"><code><a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a> *self</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_dom_event_get_bubbles</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-bubbles.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>self</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-bubbles.returns"></a><h4>Returns</h4>
+<p> A <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-dom-event-get-cancelable"></a><h3>webkit_dom_event_get_cancelable ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+webkit_dom_event_get_cancelable (<em class="parameter"><code><a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a> *self</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_dom_event_get_cancelable</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-cancelable.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>self</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-cancelable.returns"></a><h4>Returns</h4>
+<p> A <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-dom-event-get-time-stamp"></a><h3>webkit_dom_event_get_time_stamp ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#guint32"><span class="returnvalue">guint32</span></a>
+webkit_dom_event_get_time_stamp (<em class="parameter"><code><a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a> *self</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_dom_event_get_time_stamp</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-time-stamp.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>self</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-time-stamp.returns"></a><h4>Returns</h4>
+<p> A <a href="../glib/glib-Basic-Types.html#guint32"><span class="type">guint32</span></a></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-dom-event-get-src-element"></a><h3>webkit_dom_event_get_src_element ()</h3>
+<pre class="programlisting"><span class="returnvalue">WebKitDOMEventTarget</span> *
+webkit_dom_event_get_src_element (<em class="parameter"><code><a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a> *self</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_dom_event_get_src_element</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-src-element.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>self</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-src-element.returns"></a><h4>Returns</h4>
+<p>A <span class="type">WebKitDOMEventTarget</span>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-dom-event-get-return-value"></a><h3>webkit_dom_event_get_return_value ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+webkit_dom_event_get_return_value (<em class="parameter"><code><a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a> *self</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_dom_event_get_return_value</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-return-value.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>self</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-return-value.returns"></a><h4>Returns</h4>
+<p> A <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-dom-event-set-return-value"></a><h3>webkit_dom_event_set_return_value ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_dom_event_set_return_value (<em class="parameter"><code><a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a> *self</code></em>,
+                                   <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> value</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_dom_event_set_return_value</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-set-return-value.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>self</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>value</p></td>
+<td class="parameter_description"><p>A <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-dom-event-get-cancel-bubble"></a><h3>webkit_dom_event_get_cancel_bubble ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+webkit_dom_event_get_cancel_bubble (<em class="parameter"><code><a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a> *self</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_dom_event_get_cancel_bubble</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-cancel-bubble.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>self</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-get-cancel-bubble.returns"></a><h4>Returns</h4>
+<p> A <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-dom-event-set-cancel-bubble"></a><h3>webkit_dom_event_set_cancel_bubble ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_dom_event_set_cancel_bubble (<em class="parameter"><code><a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a> *self</code></em>,
+                                    <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> value</code></em>);</pre>
+<div class="warning">
+<p><code class="literal">webkit_dom_event_set_cancel_bubble</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+<div class="refsect3">
+<a name="webkit-dom-event-set-cancel-bubble.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>self</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitDOMEvent.html" title="WebKitDOMEvent"><span class="type">WebKitDOMEvent</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>value</p></td>
+<td class="parameter_description"><p>A <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitDOMEvent.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="WebKitDOMEvent-struct"></a><h3>struct WebKitDOMEvent</h3>
+<pre class="programlisting">struct WebKitDOMEvent;</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-NONE:CAPS"></a><h3>WEBKIT_DOM_EVENT_NONE</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_NONE 0
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_NONE</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-CAPTURING-PHASE:CAPS"></a><h3>WEBKIT_DOM_EVENT_CAPTURING_PHASE</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_CAPTURING_PHASE 1
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_CAPTURING_PHASE</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-AT-TARGET:CAPS"></a><h3>WEBKIT_DOM_EVENT_AT_TARGET</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_AT_TARGET 2
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_AT_TARGET</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-BUBBLING-PHASE:CAPS"></a><h3>WEBKIT_DOM_EVENT_BUBBLING_PHASE</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_BUBBLING_PHASE 3
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_BUBBLING_PHASE</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-MOUSEDOWN:CAPS"></a><h3>WEBKIT_DOM_EVENT_MOUSEDOWN</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_MOUSEDOWN 1
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_MOUSEDOWN</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-MOUSEUP:CAPS"></a><h3>WEBKIT_DOM_EVENT_MOUSEUP</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_MOUSEUP 2
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_MOUSEUP</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-MOUSEOVER:CAPS"></a><h3>WEBKIT_DOM_EVENT_MOUSEOVER</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_MOUSEOVER 4
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_MOUSEOVER</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-MOUSEOUT:CAPS"></a><h3>WEBKIT_DOM_EVENT_MOUSEOUT</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_MOUSEOUT 8
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_MOUSEOUT</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-MOUSEMOVE:CAPS"></a><h3>WEBKIT_DOM_EVENT_MOUSEMOVE</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_MOUSEMOVE 16
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_MOUSEMOVE</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-MOUSEDRAG:CAPS"></a><h3>WEBKIT_DOM_EVENT_MOUSEDRAG</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_MOUSEDRAG 32
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_MOUSEDRAG</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-CLICK:CAPS"></a><h3>WEBKIT_DOM_EVENT_CLICK</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_CLICK 64
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_CLICK</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-DBLCLICK:CAPS"></a><h3>WEBKIT_DOM_EVENT_DBLCLICK</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_DBLCLICK 128
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_DBLCLICK</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-KEYDOWN:CAPS"></a><h3>WEBKIT_DOM_EVENT_KEYDOWN</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_KEYDOWN 256
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_KEYDOWN</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-KEYUP:CAPS"></a><h3>WEBKIT_DOM_EVENT_KEYUP</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_KEYUP 512
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_KEYUP</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-KEYPRESS:CAPS"></a><h3>WEBKIT_DOM_EVENT_KEYPRESS</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_KEYPRESS 1024
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_KEYPRESS</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-DRAGDROP:CAPS"></a><h3>WEBKIT_DOM_EVENT_DRAGDROP</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_DRAGDROP 2048
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_DRAGDROP</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-FOCUS:CAPS"></a><h3>WEBKIT_DOM_EVENT_FOCUS</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_FOCUS 4096
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_FOCUS</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-BLUR:CAPS"></a><h3>WEBKIT_DOM_EVENT_BLUR</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_BLUR 8192
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_BLUR</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-SELECT:CAPS"></a><h3>WEBKIT_DOM_EVENT_SELECT</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_SELECT 16384
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_SELECT</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-DOM-EVENT-CHANGE:CAPS"></a><h3>WEBKIT_DOM_EVENT_CHANGE</h3>
+<pre class="programlisting">#define WEBKIT_DOM_EVENT_CHANGE 32768
+</pre>
+<div class="warning">
+<p><code class="literal">WEBKIT_DOM_EVENT_CHANGE</code> has been deprecated since version 2.22 and should not be used in newly-written code.</p>
+<p>Use JavaScriptCore API instead</p>
+</div>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitDOMEvent.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="WebKitDOMEvent--bubbles"></a><h3>The <code class="literal">“bubbles”</code> property</h3>
+<pre class="programlisting">  “bubbles”                  <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></pre>
+<p>read-only gboolean Event:bubbles.</p>
+<p>Owner: WebKitDOMEvent</p>
+<p>Flags: Read</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitDOMEvent--cancel-bubble"></a><h3>The <code class="literal">“cancel-bubble”</code> property</h3>
+<pre class="programlisting">  “cancel-bubble”            <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></pre>
+<p>read-write gboolean Event:cancel-bubble.</p>
+<p>Owner: WebKitDOMEvent</p>
+<p>Flags: Read / Write</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitDOMEvent--cancelable"></a><h3>The <code class="literal">“cancelable”</code> property</h3>
+<pre class="programlisting">  “cancelable”               <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></pre>
+<p>read-only gboolean Event:cancelable.</p>
+<p>Owner: WebKitDOMEvent</p>
+<p>Flags: Read</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitDOMEvent--current-target"></a><h3>The <code class="literal">“current-target”</code> property</h3>
+<pre class="programlisting">  “current-target”           <span class="type">WebKitDOMEventTarget</span> *</pre>
+<p>read-only WebKitDOMEventTarget* Event:current-target.</p>
+<p>Owner: WebKitDOMEvent</p>
+<p>Flags: Read</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitDOMEvent--event-phase"></a><h3>The <code class="literal">“event-phase”</code> property</h3>
+<pre class="programlisting">  “event-phase”              <a href="../glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a></pre>
+<p>read-only gushort Event:event-phase.</p>
+<p>Owner: WebKitDOMEvent</p>
+<p>Flags: Read</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitDOMEvent--return-value"></a><h3>The <code class="literal">“return-value”</code> property</h3>
+<pre class="programlisting">  “return-value”             <a href="../glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a></pre>
+<p>read-write gboolean Event:return-value.</p>
+<p>Owner: WebKitDOMEvent</p>
+<p>Flags: Read / Write</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitDOMEvent--src-element"></a><h3>The <code class="literal">“src-element”</code> property</h3>
+<pre class="programlisting">  “src-element”              <span class="type">WebKitDOMEventTarget</span> *</pre>
+<p>read-only WebKitDOMEventTarget* Event:src-element.</p>
+<p>Owner: WebKitDOMEvent</p>
+<p>Flags: Read</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitDOMEvent--target"></a><h3>The <code class="literal">“target”</code> property</h3>
+<pre class="programlisting">  “target”                   <span class="type">WebKitDOMEventTarget</span> *</pre>
+<p>read-only WebKitDOMEventTarget* Event:target.</p>
+<p>Owner: WebKitDOMEvent</p>
+<p>Flags: Read</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitDOMEvent--time-stamp"></a><h3>The <code class="literal">“time-stamp”</code> property</h3>
+<pre class="programlisting">  “time-stamp”               <a href="../glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a></pre>
+<p>read-only guint32 Event:time-stamp.</p>
+<p>Owner: WebKitDOMEvent</p>
+<p>Flags: Read</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitDOMEvent--type"></a><h3>The <code class="literal">“type”</code> property</h3>
+<pre class="programlisting">  “type”                     <span class="type">char</span> *</pre>
+<p>read-only gchar* Event:type.</p>
+<p>Owner: WebKitDOMEvent</p>
+<p>Flags: Read</p>
+<p>Default value: ""</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

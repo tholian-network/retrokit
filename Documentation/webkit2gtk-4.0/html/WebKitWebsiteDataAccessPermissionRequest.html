@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WebKitWebsiteDataAccessPermissionRequest: WebKitGTK Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="WebKitInputMethodContext.html" title="WebKitInputMethodContext">
+<link rel="next" href="ch02.html" title="Web Extensions">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#WebKitWebsiteDataAccessPermissionRequest.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#WebKitWebsiteDataAccessPermissionRequest.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_interfaces">  <span class="dim">|</span> 
+                  <a href="#WebKitWebsiteDataAccessPermissionRequest.implemented-interfaces" class="shortcut">Implemented Interfaces</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="WebKitInputMethodContext.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="ch02.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="WebKitWebsiteDataAccessPermissionRequest"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="WebKitWebsiteDataAccessPermissionRequest.top_of_page"></a>WebKitWebsiteDataAccessPermissionRequest</span></h2>
+<p>WebKitWebsiteDataAccessPermissionRequest — A permission request for accessing website data from third-party domains</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="WebKitWebsiteDataAccessPermissionRequest.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">const <span class="returnvalue">char</span> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataAccessPermissionRequest.html#webkit-website-data-access-permission-request-get-requesting-domain" title="webkit_website_data_access_permission_request_get_requesting_domain ()">webkit_website_data_access_permission_request_get_requesting_domain</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <span class="returnvalue">char</span> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebsiteDataAccessPermissionRequest.html#webkit-website-data-access-permission-request-get-current-domain" title="webkit_website_data_access_permission_request_get_current_domain ()">webkit_website_data_access_permission_request_get_current_domain</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebsiteDataAccessPermissionRequest.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody><tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="WebKitWebsiteDataAccessPermissionRequest.html#WebKitWebsiteDataAccessPermissionRequest-struct" title="struct WebKitWebsiteDataAccessPermissionRequest">WebKitWebsiteDataAccessPermissionRequest</a></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebsiteDataAccessPermissionRequest.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> WebKitWebsiteDataAccessPermissionRequest
+</pre>
+</div>
+<div class="refsect1">
+<a name="WebKitWebsiteDataAccessPermissionRequest.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
+<p>
+WebKitWebsiteDataAccessPermissionRequest implements
+ <a class="link" href="WebKitPermissionRequest.html" title="WebKitPermissionRequest">WebKitPermissionRequest</a>.</p>
+</div>
+<div class="refsect1">
+<a name="WebKitWebsiteDataAccessPermissionRequest.description"></a><h2>Description</h2>
+<p>WebKitWebsiteDataAccessPermissionRequest represents a request for
+permission to allow a third-party domain access its cookies.</p>
+<p>When a WebKitWebsiteDataAccessPermissionRequest is not handled by the user,
+it is denied by default.</p>
+</div>
+<div class="refsect1">
+<a name="WebKitWebsiteDataAccessPermissionRequest.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="webkit-website-data-access-permission-request-get-requesting-domain"></a><h3>webkit_website_data_access_permission_request_get_requesting_domain ()</h3>
+<pre class="programlisting">const <span class="returnvalue">char</span> *
+webkit_website_data_access_permission_request_get_requesting_domain
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataAccessPermissionRequest.html" title="WebKitWebsiteDataAccessPermissionRequest"><span class="type">WebKitWebsiteDataAccessPermissionRequest</span></a> *request</code></em>);</pre>
+<p>Get the domain requesting permission to access its cookies while browsing the current domain.</p>
+<div class="refsect3">
+<a name="webkit-website-data-access-permission-request-get-requesting-domain.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>request</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataAccessPermissionRequest.html" title="WebKitWebsiteDataAccessPermissionRequest"><span class="type">WebKitWebsiteDataAccessPermissionRequest</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-access-permission-request-get-requesting-domain.returns"></a><h4>Returns</h4>
+<p> the requesting domain name</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-website-data-access-permission-request-get-current-domain"></a><h3>webkit_website_data_access_permission_request_get_current_domain ()</h3>
+<pre class="programlisting">const <span class="returnvalue">char</span> *
+webkit_website_data_access_permission_request_get_current_domain
+                               (<em class="parameter"><code><a class="link" href="WebKitWebsiteDataAccessPermissionRequest.html" title="WebKitWebsiteDataAccessPermissionRequest"><span class="type">WebKitWebsiteDataAccessPermissionRequest</span></a> *request</code></em>);</pre>
+<p>Get the current domain being browsed.</p>
+<div class="refsect3">
+<a name="webkit-website-data-access-permission-request-get-current-domain.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>request</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebsiteDataAccessPermissionRequest.html" title="WebKitWebsiteDataAccessPermissionRequest"><span class="type">WebKitWebsiteDataAccessPermissionRequest</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-website-data-access-permission-request-get-current-domain.returns"></a><h4>Returns</h4>
+<p> the current domain name</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-30.html#api-index-2.30">2.30</a></p>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebsiteDataAccessPermissionRequest.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="WebKitWebsiteDataAccessPermissionRequest-struct"></a><h3>struct WebKitWebsiteDataAccessPermissionRequest</h3>
+<pre class="programlisting">struct WebKitWebsiteDataAccessPermissionRequest;</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebsiteDataAccessPermissionRequest.see-also"></a><h2>See Also</h2>
+<p><a class="link" href="WebKitPermissionRequest.html" title="WebKitPermissionRequest"><span class="type">WebKitPermissionRequest</span></a>, <a class="link" href="WebKitWebView.html" title="The main frame document title of this #WebKitWebView. If the title has not been received yet, it will be %NULL."><span class="type">WebKitWebView</span></a></p>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<book xmlns="http://www.devhelp.net/book" title="JavaScriptCore GLib Reference Manual" link="index.html" author="" name="jsc-glib-4.0" version="2" language="c">
+  <chapters>
+    <sub name="Class Overview" link="ch01.html">
+      <sub name="JSCVirtualMachine" link="JSCVirtualMachine.html"/>
+      <sub name="JSCContext" link="JSCContext.html"/>
+      <sub name="JSCValue" link="JSCValue.html"/>
+      <sub name="JSCWeakValue" link="JSCWeakValue.html"/>
+      <sub name="JSCException" link="JSCException.html"/>
+      <sub name="JSCClass" link="JSCClass.html"/>
+      <sub name="JSCOptions" link="jsc-glib-4.0-JSCOptions.html"/>
+      <sub name="JSCVersion" link="jsc-glib-4.0-JSCVersion.html"/>
+    </sub>
+    <sub name="Index" link="index-all.html"/>
+    <sub name="Index of new symbols in 2.24" link="api-index-2-24.html"/>
+    <sub name="Index of new symbols in 2.28" link="api-index-2-28.html"/>
+    <sub name="Annotation Glossary" link="annotation-glossary.html"/>
+  </chapters>
+  <functions>
+    <keyword type="function" name="jsc_virtual_machine_new ()" link="JSCVirtualMachine.html#jsc-virtual-machine-new"/>
+    <keyword type="struct" name="struct JSCVirtualMachine" link="JSCVirtualMachine.html#JSCVirtualMachine-struct"/>
+    <keyword type="function" name="JSCExceptionHandler ()" link="JSCContext.html#JSCExceptionHandler"/>
+    <keyword type="function" name="jsc_context_new ()" link="JSCContext.html#jsc-context-new"/>
+    <keyword type="function" name="jsc_context_new_with_virtual_machine ()" link="JSCContext.html#jsc-context-new-with-virtual-machine"/>
+    <keyword type="function" name="jsc_context_get_virtual_machine ()" link="JSCContext.html#jsc-context-get-virtual-machine"/>
+    <keyword type="function" name="jsc_context_get_exception ()" link="JSCContext.html#jsc-context-get-exception"/>
+    <keyword type="function" name="jsc_context_throw ()" link="JSCContext.html#jsc-context-throw"/>
+    <keyword type="function" name="jsc_context_throw_printf ()" link="JSCContext.html#jsc-context-throw-printf"/>
+    <keyword type="function" name="jsc_context_throw_with_name ()" link="JSCContext.html#jsc-context-throw-with-name"/>
+    <keyword type="function" name="jsc_context_throw_with_name_printf ()" link="JSCContext.html#jsc-context-throw-with-name-printf"/>
+    <keyword type="function" name="jsc_context_throw_exception ()" link="JSCContext.html#jsc-context-throw-exception"/>
+    <keyword type="function" name="jsc_context_clear_exception ()" link="JSCContext.html#jsc-context-clear-exception"/>
+    <keyword type="function" name="jsc_context_push_exception_handler ()" link="JSCContext.html#jsc-context-push-exception-handler"/>
+    <keyword type="function" name="jsc_context_pop_exception_handler ()" link="JSCContext.html#jsc-context-pop-exception-handler"/>
+    <keyword type="function" name="jsc_context_get_current ()" link="JSCContext.html#jsc-context-get-current"/>
+    <keyword type="function" name="jsc_context_evaluate ()" link="JSCContext.html#jsc-context-evaluate"/>
+    <keyword type="function" name="jsc_context_evaluate_with_source_uri ()" link="JSCContext.html#jsc-context-evaluate-with-source-uri"/>
+    <keyword type="function" name="jsc_context_evaluate_in_object ()" link="JSCContext.html#jsc-context-evaluate-in-object"/>
+    <keyword type="function" name="jsc_context_check_syntax ()" link="JSCContext.html#jsc-context-check-syntax"/>
+    <keyword type="function" name="jsc_context_get_global_object ()" link="JSCContext.html#jsc-context-get-global-object"/>
+    <keyword type="function" name="jsc_context_set_value ()" link="JSCContext.html#jsc-context-set-value"/>
+    <keyword type="function" name="jsc_context_get_value ()" link="JSCContext.html#jsc-context-get-value"/>
+    <keyword type="function" name="jsc_context_register_class ()" link="JSCContext.html#jsc-context-register-class"/>
+    <keyword type="struct" name="JSCContext" link="JSCContext.html#JSCContext-struct"/>
+    <keyword type="enum" name="enum JSCCheckSyntaxMode" link="JSCContext.html#JSCCheckSyntaxMode"/>
+    <keyword type="enum" name="enum JSCCheckSyntaxResult" link="JSCContext.html#JSCCheckSyntaxResult"/>
+    <keyword type="property" name="The “virtual-machine” property" link="JSCContext.html#JSCContext--virtual-machine"/>
+    <keyword type="function" name="jsc_value_get_context ()" link="JSCValue.html#jsc-value-get-context"/>
+    <keyword type="function" name="jsc_value_new_undefined ()" link="JSCValue.html#jsc-value-new-undefined"/>
+    <keyword type="function" name="jsc_value_is_undefined ()" link="JSCValue.html#jsc-value-is-undefined"/>
+    <keyword type="function" name="jsc_value_new_null ()" link="JSCValue.html#jsc-value-new-null"/>
+    <keyword type="function" name="jsc_value_is_null ()" link="JSCValue.html#jsc-value-is-null"/>
+    <keyword type="function" name="jsc_value_new_number ()" link="JSCValue.html#jsc-value-new-number"/>
+    <keyword type="function" name="jsc_value_is_number ()" link="JSCValue.html#jsc-value-is-number"/>
+    <keyword type="function" name="jsc_value_to_double ()" link="JSCValue.html#jsc-value-to-double"/>
+    <keyword type="function" name="jsc_value_to_int32 ()" link="JSCValue.html#jsc-value-to-int32"/>
+    <keyword type="function" name="jsc_value_new_boolean ()" link="JSCValue.html#jsc-value-new-boolean"/>
+    <keyword type="function" name="jsc_value_is_boolean ()" link="JSCValue.html#jsc-value-is-boolean"/>
+    <keyword type="function" name="jsc_value_to_boolean ()" link="JSCValue.html#jsc-value-to-boolean"/>
+    <keyword type="function" name="jsc_value_new_string ()" link="JSCValue.html#jsc-value-new-string"/>
+    <keyword type="function" name="jsc_value_new_string_from_bytes ()" link="JSCValue.html#jsc-value-new-string-from-bytes"/>
+    <keyword type="function" name="jsc_value_is_string ()" link="JSCValue.html#jsc-value-is-string"/>
+    <keyword type="function" name="jsc_value_to_string ()" link="JSCValue.html#jsc-value-to-string"/>
+    <keyword type="function" name="jsc_value_to_string_as_bytes ()" link="JSCValue.html#jsc-value-to-string-as-bytes"/>
+    <keyword type="function" name="jsc_value_new_array ()" link="JSCValue.html#jsc-value-new-array"/>
+    <keyword type="function" name="jsc_value_new_array_from_garray ()" link="JSCValue.html#jsc-value-new-array-from-garray"/>
+    <keyword type="function" name="jsc_value_new_array_from_strv ()" link="JSCValue.html#jsc-value-new-array-from-strv"/>
+    <keyword type="function" name="jsc_value_is_array ()" link="JSCValue.html#jsc-value-is-array"/>
+    <keyword type="function" name="jsc_value_new_object ()" link="JSCValue.html#jsc-value-new-object"/>
+    <keyword type="function" name="jsc_value_is_object ()" link="JSCValue.html#jsc-value-is-object"/>
+    <keyword type="function" name="jsc_value_object_is_instance_of ()" link="JSCValue.html#jsc-value-object-is-instance-of"/>
+    <keyword type="function" name="jsc_value_object_set_property ()" link="JSCValue.html#jsc-value-object-set-property"/>
+    <keyword type="function" name="jsc_value_object_get_property ()" link="JSCValue.html#jsc-value-object-get-property"/>
+    <keyword type="function" name="jsc_value_object_set_property_at_index ()" link="JSCValue.html#jsc-value-object-set-property-at-index"/>
+    <keyword type="function" name="jsc_value_object_get_property_at_index ()" link="JSCValue.html#jsc-value-object-get-property-at-index"/>
+    <keyword type="function" name="jsc_value_object_has_property ()" link="JSCValue.html#jsc-value-object-has-property"/>
+    <keyword type="function" name="jsc_value_object_delete_property ()" link="JSCValue.html#jsc-value-object-delete-property"/>
+    <keyword type="function" name="jsc_value_object_enumerate_properties ()" link="JSCValue.html#jsc-value-object-enumerate-properties"/>
+    <keyword type="function" name="jsc_value_object_invoke_method ()" link="JSCValue.html#jsc-value-object-invoke-method"/>
+    <keyword type="function" name="jsc_value_object_invoke_methodv ()" link="JSCValue.html#jsc-value-object-invoke-methodv"/>
+    <keyword type="function" name="jsc_value_object_define_property_data ()" link="JSCValue.html#jsc-value-object-define-property-data"/>
+    <keyword type="function" name="jsc_value_object_define_property_accessor ()" link="JSCValue.html#jsc-value-object-define-property-accessor"/>
+    <keyword type="function" name="jsc_value_new_function ()" link="JSCValue.html#jsc-value-new-function"/>
+    <keyword type="function" name="jsc_value_new_functionv ()" link="JSCValue.html#jsc-value-new-functionv"/>
+    <keyword type="function" name="jsc_value_new_function_variadic ()" link="JSCValue.html#jsc-value-new-function-variadic"/>
+    <keyword type="function" name="jsc_value_is_function ()" link="JSCValue.html#jsc-value-is-function"/>
+    <keyword type="function" name="jsc_value_function_call ()" link="JSCValue.html#jsc-value-function-call"/>
+    <keyword type="function" name="jsc_value_function_callv ()" link="JSCValue.html#jsc-value-function-callv"/>
+    <keyword type="function" name="jsc_value_is_constructor ()" link="JSCValue.html#jsc-value-is-constructor"/>
+    <keyword type="function" name="jsc_value_constructor_call ()" link="JSCValue.html#jsc-value-constructor-call"/>
+    <keyword type="function" name="jsc_value_constructor_callv ()" link="JSCValue.html#jsc-value-constructor-callv"/>
+    <keyword type="function" name="jsc_value_new_from_json ()" link="JSCValue.html#jsc-value-new-from-json" since="2.28"/>
+    <keyword type="function" name="jsc_value_to_json ()" link="JSCValue.html#jsc-value-to-json" since="2.28"/>
+    <keyword type="struct" name="struct JSCValue" link="JSCValue.html#JSCValue-struct"/>
+    <keyword type="enum" name="enum JSCValuePropertyFlags" link="JSCValue.html#JSCValuePropertyFlags"/>
+    <keyword type="property" name="The “context” property" link="JSCValue.html#JSCValue--context"/>
+    <keyword type="function" name="jsc_weak_value_new ()" link="JSCWeakValue.html#jsc-weak-value-new"/>
+    <keyword type="function" name="jsc_weak_value_get_value ()" link="JSCWeakValue.html#jsc-weak-value-get-value"/>
+    <keyword type="struct" name="struct JSCWeakValue" link="JSCWeakValue.html#JSCWeakValue-struct"/>
+    <keyword type="property" name="The “value” property" link="JSCWeakValue.html#JSCWeakValue--value"/>
+    <keyword type="signal" name="The “cleared” signal" link="JSCWeakValue.html#JSCWeakValue-cleared"/>
+    <keyword type="function" name="jsc_exception_new ()" link="JSCException.html#jsc-exception-new"/>
+    <keyword type="function" name="jsc_exception_new_printf ()" link="JSCException.html#jsc-exception-new-printf"/>
+    <keyword type="function" name="jsc_exception_new_vprintf ()" link="JSCException.html#jsc-exception-new-vprintf"/>
+    <keyword type="function" name="jsc_exception_new_with_name ()" link="JSCException.html#jsc-exception-new-with-name"/>
+    <keyword type="function" name="jsc_exception_new_with_name_printf ()" link="JSCException.html#jsc-exception-new-with-name-printf"/>
+    <keyword type="function" name="jsc_exception_new_with_name_vprintf ()" link="JSCException.html#jsc-exception-new-with-name-vprintf"/>
+    <keyword type="function" name="jsc_exception_get_name ()" link="JSCException.html#jsc-exception-get-name"/>
+    <keyword type="function" name="jsc_exception_get_message ()" link="JSCException.html#jsc-exception-get-message"/>
+    <keyword type="function" name="jsc_exception_get_line_number ()" link="JSCException.html#jsc-exception-get-line-number"/>
+    <keyword type="function" name="jsc_exception_get_column_number ()" link="JSCException.html#jsc-exception-get-column-number"/>
+    <keyword type="function" name="jsc_exception_get_source_uri ()" link="JSCException.html#jsc-exception-get-source-uri"/>
+    <keyword type="function" name="jsc_exception_get_backtrace_string ()" link="JSCException.html#jsc-exception-get-backtrace-string"/>
+    <keyword type="function" name="jsc_exception_to_string ()" link="JSCException.html#jsc-exception-to-string"/>
+    <keyword type="function" name="jsc_exception_report ()" link="JSCException.html#jsc-exception-report"/>
+    <keyword type="struct" name="struct JSCException" link="JSCException.html#JSCException-struct"/>
+    <keyword type="function" name="JSCClassGetPropertyFunction ()" link="JSCClass.html#JSCClassGetPropertyFunction"/>
+    <keyword type="function" name="JSCClassSetPropertyFunction ()" link="JSCClass.html#JSCClassSetPropertyFunction"/>
+    <keyword type="function" name="JSCClassHasPropertyFunction ()" link="JSCClass.html#JSCClassHasPropertyFunction"/>
+    <keyword type="function" name="JSCClassDeletePropertyFunction ()" link="JSCClass.html#JSCClassDeletePropertyFunction"/>
+    <keyword type="function" name="JSCClassEnumeratePropertiesFunction ()" link="JSCClass.html#JSCClassEnumeratePropertiesFunction"/>
+    <keyword type="function" name="jsc_class_get_name ()" link="JSCClass.html#jsc-class-get-name"/>
+    <keyword type="function" name="jsc_class_get_parent ()" link="JSCClass.html#jsc-class-get-parent"/>
+    <keyword type="function" name="jsc_class_add_constructor ()" link="JSCClass.html#jsc-class-add-constructor"/>
+    <keyword type="function" name="jsc_class_add_constructorv ()" link="JSCClass.html#jsc-class-add-constructorv"/>
+    <keyword type="function" name="jsc_class_add_constructor_variadic ()" link="JSCClass.html#jsc-class-add-constructor-variadic"/>
+    <keyword type="function" name="jsc_class_add_method ()" link="JSCClass.html#jsc-class-add-method"/>
+    <keyword type="function" name="jsc_class_add_methodv ()" link="JSCClass.html#jsc-class-add-methodv"/>
+    <keyword type="function" name="jsc_class_add_method_variadic ()" link="JSCClass.html#jsc-class-add-method-variadic"/>
+    <keyword type="function" name="jsc_class_add_property ()" link="JSCClass.html#jsc-class-add-property"/>
+    <keyword type="struct" name="JSCClass" link="JSCClass.html#JSCClass-struct"/>
+    <keyword type="struct" name="JSCClassVTable" link="JSCClass.html#JSCClassVTable"/>
+    <keyword type="property" name="The “context” property" link="JSCClass.html#JSCClass--context"/>
+    <keyword type="property" name="The “name” property" link="JSCClass.html#JSCClass--name"/>
+    <keyword type="property" name="The “parent” property" link="JSCClass.html#JSCClass--parent"/>
+    <keyword type="function" name="jsc_options_set_boolean ()" link="jsc-glib-4.0-JSCOptions.html#jsc-options-set-boolean" since="2.24"/>
+    <keyword type="function" name="jsc_options_get_boolean ()" link="jsc-glib-4.0-JSCOptions.html#jsc-options-get-boolean" since="2.24"/>
+    <keyword type="function" name="jsc_options_set_int ()" link="jsc-glib-4.0-JSCOptions.html#jsc-options-set-int" since="2.24"/>
+    <keyword type="function" name="jsc_options_get_int ()" link="jsc-glib-4.0-JSCOptions.html#jsc-options-get-int" since="2.24"/>
+    <keyword type="function" name="jsc_options_set_uint ()" link="jsc-glib-4.0-JSCOptions.html#jsc-options-set-uint" since="2.24"/>
+    <keyword type="function" name="jsc_options_get_uint ()" link="jsc-glib-4.0-JSCOptions.html#jsc-options-get-uint" since="2.24"/>
+    <keyword type="function" name="jsc_options_set_size ()" link="jsc-glib-4.0-JSCOptions.html#jsc-options-set-size" since="2.24"/>
+    <keyword type="function" name="jsc_options_get_size ()" link="jsc-glib-4.0-JSCOptions.html#jsc-options-get-size" since="2.24"/>
+    <keyword type="function" name="jsc_options_set_double ()" link="jsc-glib-4.0-JSCOptions.html#jsc-options-set-double" since="2.24"/>
+    <keyword type="function" name="jsc_options_get_double ()" link="jsc-glib-4.0-JSCOptions.html#jsc-options-get-double" since="2.24"/>
+    <keyword type="function" name="jsc_options_set_string ()" link="jsc-glib-4.0-JSCOptions.html#jsc-options-set-string" since="2.24"/>
+    <keyword type="function" name="jsc_options_get_string ()" link="jsc-glib-4.0-JSCOptions.html#jsc-options-get-string" since="2.24"/>
+    <keyword type="function" name="jsc_options_set_range_string ()" link="jsc-glib-4.0-JSCOptions.html#jsc-options-set-range-string" since="2.24"/>
+    <keyword type="function" name="jsc_options_get_range_string ()" link="jsc-glib-4.0-JSCOptions.html#jsc-options-get-range-string" since="2.24"/>
+    <keyword type="function" name="JSCOptionsFunc ()" link="jsc-glib-4.0-JSCOptions.html#JSCOptionsFunc" since="2.24"/>
+    <keyword type="function" name="jsc_options_foreach ()" link="jsc-glib-4.0-JSCOptions.html#jsc-options-foreach" since="2.24"/>
+    <keyword type="function" name="jsc_options_get_option_group ()" link="jsc-glib-4.0-JSCOptions.html#jsc-options-get-option-group" since="2.24"/>
+    <keyword type="enum" name="enum JSCOptionType" link="jsc-glib-4.0-JSCOptions.html#JSCOptionType" since="2.24"/>
+    <keyword type="macro" name="JSC_OPTIONS_USE_JIT" link="jsc-glib-4.0-JSCOptions.html#JSC-OPTIONS-USE-JIT:CAPS" since="2.24"/>
+    <keyword type="macro" name="JSC_OPTIONS_USE_DFG" link="jsc-glib-4.0-JSCOptions.html#JSC-OPTIONS-USE-DFG:CAPS" since="2.24"/>
+    <keyword type="macro" name="JSC_OPTIONS_USE_FTL" link="jsc-glib-4.0-JSCOptions.html#JSC-OPTIONS-USE-FTL:CAPS" since="2.24"/>
+    <keyword type="macro" name="JSC_OPTIONS_USE_LLINT" link="jsc-glib-4.0-JSCOptions.html#JSC-OPTIONS-USE-LLINT:CAPS" since="2.24"/>
+    <keyword type="function" name="jsc_get_major_version ()" link="jsc-glib-4.0-JSCVersion.html#jsc-get-major-version"/>
+    <keyword type="function" name="jsc_get_minor_version ()" link="jsc-glib-4.0-JSCVersion.html#jsc-get-minor-version"/>
+    <keyword type="function" name="jsc_get_micro_version ()" link="jsc-glib-4.0-JSCVersion.html#jsc-get-micro-version"/>
+    <keyword type="macro" name="JSC_CHECK_VERSION()" link="jsc-glib-4.0-JSCVersion.html#JSC-CHECK-VERSION:CAPS"/>
+    <keyword type="macro" name="JSC_MAJOR_VERSION" link="jsc-glib-4.0-JSCVersion.html#JSC-MAJOR-VERSION:CAPS"/>
+    <keyword type="macro" name="JSC_MINOR_VERSION" link="jsc-glib-4.0-JSCVersion.html#JSC-MINOR-VERSION:CAPS"/>
+    <keyword type="macro" name="JSC_MICRO_VERSION" link="jsc-glib-4.0-JSCVersion.html#JSC-MICRO-VERSION:CAPS"/>
+    <keyword type="constant" name="JSC_CHECK_SYNTAX_MODE_SCRIPT" link="JSCContext.html#JSC-CHECK-SYNTAX-MODE-SCRIPT:CAPS"/>
+    <keyword type="constant" name="JSC_CHECK_SYNTAX_MODE_MODULE" link="JSCContext.html#JSC-CHECK-SYNTAX-MODE-MODULE:CAPS"/>
+    <keyword type="constant" name="JSC_CHECK_SYNTAX_RESULT_SUCCESS" link="JSCContext.html#JSC-CHECK-SYNTAX-RESULT-SUCCESS:CAPS"/>
+    <keyword type="constant" name="JSC_CHECK_SYNTAX_RESULT_RECOVERABLE_ERROR" link="JSCContext.html#JSC-CHECK-SYNTAX-RESULT-RECOVERABLE-ERROR:CAPS"/>
+    <keyword type="constant" name="JSC_CHECK_SYNTAX_RESULT_IRRECOVERABLE_ERROR" link="JSCContext.html#JSC-CHECK-SYNTAX-RESULT-IRRECOVERABLE-ERROR:CAPS"/>
+    <keyword type="constant" name="JSC_CHECK_SYNTAX_RESULT_UNTERMINATED_LITERAL_ERROR" link="JSCContext.html#JSC-CHECK-SYNTAX-RESULT-UNTERMINATED-LITERAL-ERROR:CAPS"/>
+    <keyword type="constant" name="JSC_CHECK_SYNTAX_RESULT_OUT_OF_MEMORY_ERROR" link="JSCContext.html#JSC-CHECK-SYNTAX-RESULT-OUT-OF-MEMORY-ERROR:CAPS"/>
+    <keyword type="constant" name="JSC_CHECK_SYNTAX_RESULT_STACK_OVERFLOW_ERROR" link="JSCContext.html#JSC-CHECK-SYNTAX-RESULT-STACK-OVERFLOW-ERROR:CAPS"/>
+    <keyword type="constant" name="JSC_VALUE_PROPERTY_CONFIGURABLE" link="JSCValue.html#JSC-VALUE-PROPERTY-CONFIGURABLE:CAPS"/>
+    <keyword type="constant" name="JSC_VALUE_PROPERTY_ENUMERABLE" link="JSCValue.html#JSC-VALUE-PROPERTY-ENUMERABLE:CAPS"/>
+    <keyword type="constant" name="JSC_VALUE_PROPERTY_WRITABLE" link="JSCValue.html#JSC-VALUE-PROPERTY-WRITABLE:CAPS"/>
+    <keyword type="constant" name="JSC_OPTION_BOOLEAN" link="jsc-glib-4.0-JSCOptions.html#JSC-OPTION-BOOLEAN:CAPS"/>
+    <keyword type="constant" name="JSC_OPTION_INT" link="jsc-glib-4.0-JSCOptions.html#JSC-OPTION-INT:CAPS"/>
+    <keyword type="constant" name="JSC_OPTION_UINT" link="jsc-glib-4.0-JSCOptions.html#JSC-OPTION-UINT:CAPS"/>
+    <keyword type="constant" name="JSC_OPTION_SIZE" link="jsc-glib-4.0-JSCOptions.html#JSC-OPTION-SIZE:CAPS"/>
+    <keyword type="constant" name="JSC_OPTION_DOUBLE" link="jsc-glib-4.0-JSCOptions.html#JSC-OPTION-DOUBLE:CAPS"/>
+    <keyword type="constant" name="JSC_OPTION_STRING" link="jsc-glib-4.0-JSCOptions.html#JSC-OPTION-STRING:CAPS"/>
+    <keyword type="constant" name="JSC_OPTION_RANGE_STRING" link="jsc-glib-4.0-JSCOptions.html#JSC-OPTION-RANGE-STRING:CAPS"/>
+    <keyword type="member" name="JSCClassVTable.get-property" link="JSCClass.html#JSCClassVTable.get-property"/>
+    <keyword type="member" name="JSCClassVTable.set-property" link="JSCClass.html#JSCClassVTable.set-property"/>
+    <keyword type="member" name="JSCClassVTable.has-property" link="JSCClass.html#JSCClassVTable.has-property"/>
+    <keyword type="member" name="JSCClassVTable.delete-property" link="JSCClass.html#JSCClassVTable.delete-property"/>
+    <keyword type="member" name="JSCClassVTable.enumerate-properties" link="JSCClass.html#JSCClassVTable.enumerate-properties"/>
+  </functions>
+</book>

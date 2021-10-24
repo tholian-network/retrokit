@@ -1,0 +1,455 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WebKitUserMessage: WebKitGTK Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="webkit2gtk-4.0-Geolocation-manager.html" title="Geolocation manager">
+<link rel="next" href="WebKitPointerLockPermissionRequest.html" title="WebKitPointerLockPermissionRequest">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#WebKitUserMessage.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#WebKitUserMessage.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_properties">  <span class="dim">|</span> 
+                  <a href="#WebKitUserMessage.properties" class="shortcut">Properties</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="webkit2gtk-4.0-Geolocation-manager.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="WebKitPointerLockPermissionRequest.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="WebKitUserMessage"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="WebKitUserMessage.top_of_page"></a>WebKitUserMessage</span></h2>
+<p>WebKitUserMessage — A user message</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="WebKitUserMessage.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="returnvalue">WebKitUserMessage</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserMessage.html#webkit-user-message-new" title="webkit_user_message_new ()">webkit_user_message_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="returnvalue">WebKitUserMessage</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserMessage.html#webkit-user-message-new-with-fd-list" title="webkit_user_message_new_with_fd_list ()">webkit_user_message_new_with_fd_list</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <span class="returnvalue">char</span> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserMessage.html#webkit-user-message-get-name" title="webkit_user_message_get_name ()">webkit_user_message_get_name</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-GVariant.html#GVariant"><span class="returnvalue">GVariant</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserMessage.html#webkit-user-message-get-parameters" title="webkit_user_message_get_parameters ()">webkit_user_message_get_parameters</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../gio/GUnixFDList.html#GUnixFDList-struct"><span class="returnvalue">GUnixFDList</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserMessage.html#webkit-user-message-get-fd-list" title="webkit_user_message_get_fd_list ()">webkit_user_message_get_fd_list</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserMessage.html#webkit-user-message-send-reply" title="webkit_user_message_send_reply ()">webkit_user_message_send_reply</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserMessage.html#webkit-user-message-error-quark" title="webkit_user_message_error_quark ()">webkit_user_message_error_quark</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitUserMessage.properties"></a><h2>Properties</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="properties_type">
+<col width="300px" class="properties_name">
+<col width="200px" class="properties_flags">
+</colgroup>
+<tbody>
+<tr>
+<td class="property_type">
+<a href="../gio/GUnixFDList.html#GUnixFDList-struct"><span class="type">GUnixFDList</span></a> *</td>
+<td class="property_name"><a class="link" href="WebKitUserMessage.html#WebKitUserMessage--fd-list" title="The “fd-list” property">fd-list</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr>
+<tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="WebKitUserMessage.html#WebKitUserMessage--name" title="The “name” property">name</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr>
+<tr>
+<td class="property_type">
+<a href="../glib/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *</td>
+<td class="property_name"><a class="link" href="WebKitUserMessage.html#WebKitUserMessage--parameters" title="The “parameters” property">parameters</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitUserMessage.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="WebKitUserMessage.html#WebKitUserMessage-struct" title="struct WebKitUserMessage">WebKitUserMessage</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="WebKitUserMessage.html#WEBKIT-USER-MESSAGE-ERROR:CAPS" title="WEBKIT_USER_MESSAGE_ERROR">WEBKIT_USER_MESSAGE_ERROR</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">enum</td>
+<td class="function_name"><a class="link" href="WebKitUserMessage.html#WebKitUserMessageError" title="enum WebKitUserMessageError">WebKitUserMessageError</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitUserMessage.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> <a href="../gobject/gobject-The-Base-Object-Type.html#GInitiallyUnowned">GInitiallyUnowned</a>
+        <span class="lineart">╰──</span> WebKitUserMessage
+</pre>
+</div>
+<div class="refsect1">
+<a name="WebKitUserMessage.description"></a><h2>Description</h2>
+<p>A WebKitUserMessage is a message that can be used for the communication between the UI process
+and web extensions. A WebKitUserMessage always has a name, and it can also include parameters and
+UNIX file descriptors. Messages can be sent from a <a class="link" href="WebKitWebContext.html" title="WebKitWebContext"><span class="type">WebKitWebContext</span></a> to all <a class="link" href="WebKitWebExtension.html" title="WebKitWebExtension"><span class="type">WebKitWebExtension</span></a>s,
+from a <a class="link" href="WebKitWebExtension.html" title="WebKitWebExtension"><span class="type">WebKitWebExtension</span></a> to its corresponding <a class="link" href="WebKitWebContext.html" title="WebKitWebContext"><span class="type">WebKitWebContext</span></a>, and from a <a class="link" href="WebKitWebView.html" title="The main frame document title of this #WebKitWebView. If the title has not been received yet, it will be %NULL."><span class="type">WebKitWebView</span></a> to its
+corresponding <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> (and vice versa). One to one messages can be replied to directly with
+<a class="link" href="WebKitUserMessage.html#webkit-user-message-send-reply" title="webkit_user_message_send_reply ()"><code class="function">webkit_user_message_send_reply()</code></a>.</p>
+</div>
+<div class="refsect1">
+<a name="WebKitUserMessage.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="webkit-user-message-new"></a><h3>webkit_user_message_new ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="returnvalue">WebKitUserMessage</span></a> *
+webkit_user_message_new (<em class="parameter"><code>const <span class="type">char</span> *name</code></em>,
+                         <em class="parameter"><code><a href="../glib/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *parameters</code></em>);</pre>
+<p>Create a new <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> with <em class="parameter"><code>name</code></em>
+.</p>
+<div class="refsect3">
+<a name="webkit-user-message-new.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the message name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>parameters</p></td>
+<td class="parameter_description"><p>the message parameters as a <a href="../glib/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a>, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-user-message-new.returns"></a><h4>Returns</h4>
+<p> the newly created <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> object.</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-28.html#api-index-2.28">2.28</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-message-new-with-fd-list"></a><h3>webkit_user_message_new_with_fd_list ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="returnvalue">WebKitUserMessage</span></a> *
+webkit_user_message_new_with_fd_list (<em class="parameter"><code>const <span class="type">char</span> *name</code></em>,
+                                      <em class="parameter"><code><a href="../glib/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *parameters</code></em>,
+                                      <em class="parameter"><code><a href="../gio/GUnixFDList.html#GUnixFDList-struct"><span class="type">GUnixFDList</span></a> *fd_list</code></em>);</pre>
+<p>Create a new <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> including also a list of UNIX file descriptors to be sent.</p>
+<div class="refsect3">
+<a name="webkit-user-message-new-with-fd-list.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the message name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>parameters</p></td>
+<td class="parameter_description"><p>the message parameters as a <a href="../glib/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>fd_list</p></td>
+<td class="parameter_description"><p>the message file descriptors. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-user-message-new-with-fd-list.returns"></a><h4>Returns</h4>
+<p> the newly created <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> object.</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-28.html#api-index-2.28">2.28</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-message-get-name"></a><h3>webkit_user_message_get_name ()</h3>
+<pre class="programlisting">const <span class="returnvalue">char</span> *
+webkit_user_message_get_name (<em class="parameter"><code><a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> *message</code></em>);</pre>
+<p>Get the <em class="parameter"><code>message</code></em>
+ name</p>
+<div class="refsect3">
+<a name="webkit-user-message-get-name.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>message</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-user-message-get-name.returns"></a><h4>Returns</h4>
+<p> the message name</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-28.html#api-index-2.28">2.28</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-message-get-parameters"></a><h3>webkit_user_message_get_parameters ()</h3>
+<pre class="programlisting"><a href="../glib/glib-GVariant.html#GVariant"><span class="returnvalue">GVariant</span></a> *
+webkit_user_message_get_parameters (<em class="parameter"><code><a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> *message</code></em>);</pre>
+<p>Get the <em class="parameter"><code>message</code></em>
+ parameters</p>
+<div class="refsect3">
+<a name="webkit-user-message-get-parameters.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>message</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-user-message-get-parameters.returns"></a><h4>Returns</h4>
+<p>the message parameters. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-28.html#api-index-2.28">2.28</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-message-get-fd-list"></a><h3>webkit_user_message_get_fd_list ()</h3>
+<pre class="programlisting"><a href="../gio/GUnixFDList.html#GUnixFDList-struct"><span class="returnvalue">GUnixFDList</span></a> *
+webkit_user_message_get_fd_list (<em class="parameter"><code><a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> *message</code></em>);</pre>
+<p>Get the <em class="parameter"><code>message</code></em>
+ list of file descritpor</p>
+<div class="refsect3">
+<a name="webkit-user-message-get-fd-list.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>message</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-user-message-get-fd-list.returns"></a><h4>Returns</h4>
+<p>the message list of file descriptors. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-28.html#api-index-2.28">2.28</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-message-send-reply"></a><h3>webkit_user_message_send_reply ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_user_message_send_reply (<em class="parameter"><code><a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> *message</code></em>,
+                                <em class="parameter"><code><a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> *reply</code></em>);</pre>
+<p>Send a reply to <em class="parameter"><code>message</code></em>
+. If <em class="parameter"><code>reply</code></em>
+ is floating, it's consumed.
+You can only send a reply to a <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> that has been
+received.</p>
+<div class="refsect3">
+<a name="webkit-user-message-send-reply.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>message</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>reply</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> to send as reply</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-28.html#api-index-2.28">2.28</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-message-error-quark"></a><h3>webkit_user_message_error_quark ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>
+webkit_user_message_error_quark (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitUserMessage.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="WebKitUserMessage-struct"></a><h3>struct WebKitUserMessage</h3>
+<pre class="programlisting">struct WebKitUserMessage;</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-USER-MESSAGE-ERROR:CAPS"></a><h3>WEBKIT_USER_MESSAGE_ERROR</h3>
+<pre class="programlisting">#define WEBKIT_USER_MESSAGE_ERROR webkit_user_message_error_quark ()
+</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitUserMessageError"></a><h3>enum WebKitUserMessageError</h3>
+<p>Enum values used to denote errors happening when sending user messages.</p>
+<div class="refsect3">
+<a name="WebKitUserMessageError.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="300px" class="enum_members_name">
+<col class="enum_members_description">
+<col width="200px" class="enum_members_annotations">
+</colgroup>
+<tbody><tr>
+<td class="enum_member_name"><p><a name="WEBKIT-USER-MESSAGE-UNHANDLED-MESSAGE:CAPS"></a>WEBKIT_USER_MESSAGE_UNHANDLED_MESSAGE</p></td>
+<td class="enum_member_description">
+<p>The message was not handled by the receiver.</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-28.html#api-index-2.28">2.28</a></p>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitUserMessage.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="WebKitUserMessage--fd-list"></a><h3>The <code class="literal">“fd-list”</code> property</h3>
+<pre class="programlisting">  “fd-list”                  <a href="../gio/GUnixFDList.html#GUnixFDList-struct"><span class="type">GUnixFDList</span></a> *</pre>
+<p>The UNIX file descriptors of the user message.</p>
+<p>Owner: WebKitUserMessage</p>
+<p>Flags: Read / Write / Construct Only</p>
+<p class="since">Since: <a class="link" href="api-index-2-28.html#api-index-2.28">2.28</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitUserMessage--name"></a><h3>The <code class="literal">“name”</code> property</h3>
+<pre class="programlisting">  “name”                     <span class="type">char</span> *</pre>
+<p>The name of the user message.</p>
+<p>Owner: WebKitUserMessage</p>
+<p>Flags: Read / Write / Construct Only</p>
+<p>Default value: NULL</p>
+<p class="since">Since: <a class="link" href="api-index-2-28.html#api-index-2.28">2.28</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitUserMessage--parameters"></a><h3>The <code class="literal">“parameters”</code> property</h3>
+<pre class="programlisting">  “parameters”               <a href="../glib/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *</pre>
+<p>The parameters of the user message as a <a href="../glib/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a>, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+if the message doesn't include parameters. Note that only complete types are
+allowed.</p>
+<p>Owner: WebKitUserMessage</p>
+<p>Flags: Read / Write / Construct Only</p>
+<p>Allowed values: GVariant&lt;*&gt;</p>
+<p>Default value: NULL</p>
+<p class="since">Since: <a class="link" href="api-index-2-28.html#api-index-2.28">2.28</a></p>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitUserMessage.see-also"></a><h2>See Also</h2>
+<p><a class="link" href="WebKitWebContext.html" title="WebKitWebContext"><span class="type">WebKitWebContext</span></a>, <a class="link" href="WebKitWebView.html" title="The main frame document title of this #WebKitWebView. If the title has not been received yet, it will be %NULL."><span class="type">WebKitWebView</span></a>, <a class="link" href="WebKitWebExtension.html" title="WebKitWebExtension"><span class="type">WebKitWebExtension</span></a>, <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a></p>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

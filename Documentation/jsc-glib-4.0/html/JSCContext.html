@@ -1,0 +1,1267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JSCContext: JavaScriptCore GLib Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="JavaScriptCore GLib Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="JSCVirtualMachine.html" title="JSCVirtualMachine">
+<link rel="next" href="JSCValue.html" title="JSCValue">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#JSCContext.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#JSCContext.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_properties">  <span class="dim">|</span> 
+                  <a href="#JSCContext.properties" class="shortcut">Properties</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="JSCVirtualMachine.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="JSCValue.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="JSCContext"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="JSCContext.top_of_page"></a>JSCContext</span></h2>
+<p>JSCContext — JavaScript execution context</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="JSCContext.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<span class="c_punctuation">(</span><a class="link" href="JSCContext.html#JSCExceptionHandler" title="JSCExceptionHandler ()">*JSCExceptionHandler</a><span class="c_punctuation">)</span> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCContext.html" title="JSCContext"><span class="returnvalue">JSCContext</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-new" title="jsc_context_new ()">jsc_context_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCContext.html" title="JSCContext"><span class="returnvalue">JSCContext</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-new-with-virtual-machine" title="jsc_context_new_with_virtual_machine ()">jsc_context_new_with_virtual_machine</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCVirtualMachine.html" title="JSCVirtualMachine"><span class="returnvalue">JSCVirtualMachine</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-get-virtual-machine" title="jsc_context_get_virtual_machine ()">jsc_context_get_virtual_machine</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCException.html" title="JSCException"><span class="returnvalue">JSCException</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-get-exception" title="jsc_context_get_exception ()">jsc_context_get_exception</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-throw" title="jsc_context_throw ()">jsc_context_throw</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-throw-printf" title="jsc_context_throw_printf ()">jsc_context_throw_printf</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-throw-with-name" title="jsc_context_throw_with_name ()">jsc_context_throw_with_name</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-throw-with-name-printf" title="jsc_context_throw_with_name_printf ()">jsc_context_throw_with_name_printf</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-throw-exception" title="jsc_context_throw_exception ()">jsc_context_throw_exception</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-clear-exception" title="jsc_context_clear_exception ()">jsc_context_clear_exception</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-push-exception-handler" title="jsc_context_push_exception_handler ()">jsc_context_push_exception_handler</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-pop-exception-handler" title="jsc_context_pop_exception_handler ()">jsc_context_pop_exception_handler</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCContext.html" title="JSCContext"><span class="returnvalue">JSCContext</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-get-current" title="jsc_context_get_current ()">jsc_context_get_current</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCValue.html" title="JSCValue"><span class="returnvalue">JSCValue</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-evaluate" title="jsc_context_evaluate ()">jsc_context_evaluate</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCValue.html" title="JSCValue"><span class="returnvalue">JSCValue</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-evaluate-with-source-uri" title="jsc_context_evaluate_with_source_uri ()">jsc_context_evaluate_with_source_uri</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCValue.html" title="JSCValue"><span class="returnvalue">JSCValue</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-evaluate-in-object" title="jsc_context_evaluate_in_object ()">jsc_context_evaluate_in_object</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCContext.html#JSCCheckSyntaxResult" title="enum JSCCheckSyntaxResult"><span class="returnvalue">JSCCheckSyntaxResult</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-check-syntax" title="jsc_context_check_syntax ()">jsc_context_check_syntax</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCValue.html" title="JSCValue"><span class="returnvalue">JSCValue</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-get-global-object" title="jsc_context_get_global_object ()">jsc_context_get_global_object</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-set-value" title="jsc_context_set_value ()">jsc_context_set_value</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCValue.html" title="JSCValue"><span class="returnvalue">JSCValue</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-get-value" title="jsc_context_get_value ()">jsc_context_get_value</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCClass.html" title="JSCClass"><span class="returnvalue">JSCClass</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCContext.html#jsc-context-register-class" title="jsc_context_register_class ()">jsc_context_register_class</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="JSCContext.properties"></a><h2>Properties</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="properties_type">
+<col width="300px" class="properties_name">
+<col width="200px" class="properties_flags">
+</colgroup>
+<tbody><tr>
+<td class="property_type">
+<a class="link" href="JSCVirtualMachine.html" title="JSCVirtualMachine"><span class="type">JSCVirtualMachine</span></a> *</td>
+<td class="property_name"><a class="link" href="JSCContext.html#JSCContext--virtual-machine" title="The “virtual-machine” property">virtual-machine</a></td>
+<td class="property_flags">Read / Write / Construct Only</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="JSCContext.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="JSCContext.html#JSCContext-struct" title="JSCContext">JSCContext</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">enum</td>
+<td class="function_name"><a class="link" href="JSCContext.html#JSCCheckSyntaxMode" title="enum JSCCheckSyntaxMode">JSCCheckSyntaxMode</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">enum</td>
+<td class="function_name"><a class="link" href="JSCContext.html#JSCCheckSyntaxResult" title="enum JSCCheckSyntaxResult">JSCCheckSyntaxResult</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="JSCContext.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> JSCContext
+</pre>
+</div>
+<div class="refsect1">
+<a name="JSCContext.description"></a><h2>Description</h2>
+<p>JSCContext represents a JavaScript execution context, where all operations
+take place and where the values will be associated.</p>
+<p>When a new context is created, a global object is allocated and the built-in JavaScript
+objects (Object, Function, String, Array) are populated. You can execute JavaScript in
+the context by using <a class="link" href="JSCContext.html#jsc-context-evaluate" title="jsc_context_evaluate ()"><code class="function">jsc_context_evaluate()</code></a> or <a class="link" href="JSCContext.html#jsc-context-evaluate-with-source-uri" title="jsc_context_evaluate_with_source_uri ()"><code class="function">jsc_context_evaluate_with_source_uri()</code></a>.
+It's also possible to register custom objects in the context with <a class="link" href="JSCContext.html#jsc-context-register-class" title="jsc_context_register_class ()"><code class="function">jsc_context_register_class()</code></a>.</p>
+</div>
+<div class="refsect1">
+<a name="JSCContext.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="JSCExceptionHandler"></a><h3>JSCExceptionHandler ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+<span class="c_punctuation">(</span>*JSCExceptionHandler<span class="c_punctuation">)</span> (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                        <em class="parameter"><code><a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> *exception</code></em>,
+                        <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Function used to handle JavaScript exceptions in a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a>.</p>
+<div class="refsect3">
+<a name="JSCExceptionHandler.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>exception</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-new"></a><h3>jsc_context_new ()</h3>
+<pre class="programlisting"><a class="link" href="JSCContext.html" title="JSCContext"><span class="returnvalue">JSCContext</span></a> *
+jsc_context_new (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>Create a new <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a>. The context is created in a new <a class="link" href="JSCVirtualMachine.html" title="JSCVirtualMachine"><span class="type">JSCVirtualMachine</span></a>.
+Use <a class="link" href="JSCContext.html#jsc-context-new-with-virtual-machine" title="jsc_context_new_with_virtual_machine ()"><code class="function">jsc_context_new_with_virtual_machine()</code></a> to create a new <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> in an
+existing <a class="link" href="JSCVirtualMachine.html" title="JSCVirtualMachine"><span class="type">JSCVirtualMachine</span></a>.</p>
+<div class="refsect3">
+<a name="jsc-context-new.returns"></a><h4>Returns</h4>
+<p>the newly created <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-new-with-virtual-machine"></a><h3>jsc_context_new_with_virtual_machine ()</h3>
+<pre class="programlisting"><a class="link" href="JSCContext.html" title="JSCContext"><span class="returnvalue">JSCContext</span></a> *
+jsc_context_new_with_virtual_machine (<em class="parameter"><code><a class="link" href="JSCVirtualMachine.html" title="JSCVirtualMachine"><span class="type">JSCVirtualMachine</span></a> *vm</code></em>);</pre>
+<p>Create a new <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> in <em class="parameter"><code>virtual_machine</code></em>
+.</p>
+<div class="refsect3">
+<a name="jsc-context-new-with-virtual-machine.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>vm</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCVirtualMachine.html" title="JSCVirtualMachine"><span class="type">JSCVirtualMachine</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-context-new-with-virtual-machine.returns"></a><h4>Returns</h4>
+<p>the newly created <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-get-virtual-machine"></a><h3>jsc_context_get_virtual_machine ()</h3>
+<pre class="programlisting"><a class="link" href="JSCVirtualMachine.html" title="JSCVirtualMachine"><span class="returnvalue">JSCVirtualMachine</span></a> *
+jsc_context_get_virtual_machine (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>);</pre>
+<p>Get the <a class="link" href="JSCVirtualMachine.html" title="JSCVirtualMachine"><span class="type">JSCVirtualMachine</span></a> where <em class="parameter"><code>context</code></em>
+ was created.</p>
+<div class="refsect3">
+<a name="jsc-context-get-virtual-machine.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-context-get-virtual-machine.returns"></a><h4>Returns</h4>
+<p>the <a class="link" href="JSCVirtualMachine.html" title="JSCVirtualMachine"><span class="type">JSCVirtualMachine</span></a> where the <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> was created. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-get-exception"></a><h3>jsc_context_get_exception ()</h3>
+<pre class="programlisting"><a class="link" href="JSCException.html" title="JSCException"><span class="returnvalue">JSCException</span></a> *
+jsc_context_get_exception (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>);</pre>
+<p>Get the last unhandled exception thrown in <em class="parameter"><code>context</code></em>
+ by API functions calls.</p>
+<div class="refsect3">
+<a name="jsc-context-get-exception.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-context-get-exception.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if there isn't any
+unhandled exception in the <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a>. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-throw"></a><h3>jsc_context_throw ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+jsc_context_throw (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                   <em class="parameter"><code>const <span class="type">char</span> *error_message</code></em>);</pre>
+<p>Throw an exception to <em class="parameter"><code>context</code></em>
+ using the given error message. The created <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a>
+can be retrieved with <a class="link" href="JSCContext.html#jsc-context-get-exception" title="jsc_context_get_exception ()"><code class="function">jsc_context_get_exception()</code></a>.</p>
+<div class="refsect3">
+<a name="jsc-context-throw.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error_message</p></td>
+<td class="parameter_description"><p>an error message</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-throw-printf"></a><h3>jsc_context_throw_printf ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+jsc_context_throw_printf (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                          <em class="parameter"><code>const <span class="type">char</span> *format</code></em>,
+                          <em class="parameter"><code>...</code></em>);</pre>
+<p>Throw an exception to <em class="parameter"><code>context</code></em>
+ using the given formatted string as error message.
+The created <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> can be retrieved with <a class="link" href="JSCContext.html#jsc-context-get-exception" title="jsc_context_get_exception ()"><code class="function">jsc_context_get_exception()</code></a>.</p>
+<div class="refsect3">
+<a name="jsc-context-throw-printf.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>format</p></td>
+<td class="parameter_description"><p>the string format</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>...</p></td>
+<td class="parameter_description"><p>the parameters to insert into the format string</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-throw-with-name"></a><h3>jsc_context_throw_with_name ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+jsc_context_throw_with_name (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                             <em class="parameter"><code>const <span class="type">char</span> *error_name</code></em>,
+                             <em class="parameter"><code>const <span class="type">char</span> *error_message</code></em>);</pre>
+<p>Throw an exception to <em class="parameter"><code>context</code></em>
+ using the given error name and message. The created <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a>
+can be retrieved with <a class="link" href="JSCContext.html#jsc-context-get-exception" title="jsc_context_get_exception ()"><code class="function">jsc_context_get_exception()</code></a>.</p>
+<div class="refsect3">
+<a name="jsc-context-throw-with-name.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error_name</p></td>
+<td class="parameter_description"><p>the error name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error_message</p></td>
+<td class="parameter_description"><p>an error message</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-throw-with-name-printf"></a><h3>jsc_context_throw_with_name_printf ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+jsc_context_throw_with_name_printf (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                                    <em class="parameter"><code>const <span class="type">char</span> *error_name</code></em>,
+                                    <em class="parameter"><code>const <span class="type">char</span> *format</code></em>,
+                                    <em class="parameter"><code>...</code></em>);</pre>
+<p>Throw an exception to <em class="parameter"><code>context</code></em>
+ using the given error name and the formatted string as error message.
+The created <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> can be retrieved with <a class="link" href="JSCContext.html#jsc-context-get-exception" title="jsc_context_get_exception ()"><code class="function">jsc_context_get_exception()</code></a>.</p>
+<div class="refsect3">
+<a name="jsc-context-throw-with-name-printf.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error_name</p></td>
+<td class="parameter_description"><p>the error name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>format</p></td>
+<td class="parameter_description"><p>the string format</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>...</p></td>
+<td class="parameter_description"><p>the parameters to insert into the format string</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-throw-exception"></a><h3>jsc_context_throw_exception ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+jsc_context_throw_exception (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                             <em class="parameter"><code><a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> *exception</code></em>);</pre>
+<p>Throw <em class="parameter"><code>exception</code></em>
+ to <em class="parameter"><code>context</code></em>
+.</p>
+<div class="refsect3">
+<a name="jsc-context-throw-exception.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>exception</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-clear-exception"></a><h3>jsc_context_clear_exception ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+jsc_context_clear_exception (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>);</pre>
+<p>Clear the uncaught exception in <em class="parameter"><code>context</code></em>
+ if any.</p>
+<div class="refsect3">
+<a name="jsc-context-clear-exception.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-push-exception-handler"></a><h3>jsc_context_push_exception_handler ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+jsc_context_push_exception_handler (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                                    <em class="parameter"><code><a class="link" href="JSCContext.html#JSCExceptionHandler" title="JSCExceptionHandler ()"><span class="type">JSCExceptionHandler</span></a> handler</code></em>,
+                                    <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
+                                    <em class="parameter"><code><a href="../glib/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy_notify</code></em>);</pre>
+<p>Push an exception handler in <em class="parameter"><code>context</code></em>
+. Whenever a JavaScript exception happens in
+the <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a>, the given <em class="parameter"><code>handler</code></em>
+ will be called. The default <a class="link" href="JSCContext.html#JSCExceptionHandler" title="JSCExceptionHandler ()"><span class="type">JSCExceptionHandler</span></a>
+simply calls <a class="link" href="JSCContext.html#jsc-context-throw-exception" title="jsc_context_throw_exception ()"><code class="function">jsc_context_throw_exception()</code></a> to throw the exception to the <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a>.
+If you don't want to catch the exception, but only get notified about it, call
+<a class="link" href="JSCContext.html#jsc-context-throw-exception" title="jsc_context_throw_exception ()"><code class="function">jsc_context_throw_exception()</code></a> in <em class="parameter"><code>handler</code></em>
+ like the default one does.
+The last exception handler pushed is the only one used by the <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a>, use
+<a class="link" href="JSCContext.html#jsc-context-pop-exception-handler" title="jsc_context_pop_exception_handler ()"><code class="function">jsc_context_pop_exception_handler()</code></a> to remove it and set the previous one. When <em class="parameter"><code>handler</code></em>
+
+is removed from the context, <em class="parameter"><code>destroy_notify</code></em>
+ i called with <em class="parameter"><code>user_data</code></em>
+ as parameter.</p>
+<div class="refsect3">
+<a name="jsc-context-push-exception-handler.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>handler</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html#JSCExceptionHandler" title="JSCExceptionHandler ()"><span class="type">JSCExceptionHandler</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data to pass to <em class="parameter"><code>handler</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>destroy_notify</p></td>
+<td class="parameter_description"><p>destroy notifier for <em class="parameter"><code>user_data</code></em>
+. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-pop-exception-handler"></a><h3>jsc_context_pop_exception_handler ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+jsc_context_pop_exception_handler (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>);</pre>
+<p>Remove the last <a class="link" href="JSCContext.html#JSCExceptionHandler" title="JSCExceptionHandler ()"><span class="type">JSCExceptionHandler</span></a> previously pushed to <em class="parameter"><code>context</code></em>
+ with
+<a class="link" href="JSCContext.html#jsc-context-push-exception-handler" title="jsc_context_push_exception_handler ()"><code class="function">jsc_context_push_exception_handler()</code></a>.</p>
+<div class="refsect3">
+<a name="jsc-context-pop-exception-handler.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-get-current"></a><h3>jsc_context_get_current ()</h3>
+<pre class="programlisting"><a class="link" href="JSCContext.html" title="JSCContext"><span class="returnvalue">JSCContext</span></a> *
+jsc_context_get_current (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>Get the <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> that is currently executing a function. This should only be
+called within a function or method callback, otherwise <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> will be returned.</p>
+<div class="refsect3">
+<a name="jsc-context-get-current.returns"></a><h4>Returns</h4>
+<p>the <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> that is currently executing. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-evaluate"></a><h3>jsc_context_evaluate ()</h3>
+<pre class="programlisting"><a class="link" href="JSCValue.html" title="JSCValue"><span class="returnvalue">JSCValue</span></a> *
+jsc_context_evaluate (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                      <em class="parameter"><code>const <span class="type">char</span> *code</code></em>,
+                      <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gssize"><span class="type">gssize</span></a> length</code></em>);</pre>
+<p>Evaluate <em class="parameter"><code>code</code></em>
+ in <em class="parameter"><code>context</code></em>
+.</p>
+<div class="refsect3">
+<a name="jsc-context-evaluate.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>code</p></td>
+<td class="parameter_description"><p>a JavaScript script to evaluate</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>length</p></td>
+<td class="parameter_description"><p>length of <em class="parameter"><code>code</code></em>
+, or -1 if <em class="parameter"><code>code</code></em>
+is a nul-terminated string</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-context-evaluate.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a> representing the last value generated by the script. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-evaluate-with-source-uri"></a><h3>jsc_context_evaluate_with_source_uri ()</h3>
+<pre class="programlisting"><a class="link" href="JSCValue.html" title="JSCValue"><span class="returnvalue">JSCValue</span></a> *
+jsc_context_evaluate_with_source_uri (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                                      <em class="parameter"><code>const <span class="type">char</span> *code</code></em>,
+                                      <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gssize"><span class="type">gssize</span></a> length</code></em>,
+                                      <em class="parameter"><code>const <span class="type">char</span> *uri</code></em>,
+                                      <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> line_number</code></em>);</pre>
+<p>Evaluate <em class="parameter"><code>code</code></em>
+ in <em class="parameter"><code>context</code></em>
+ using <em class="parameter"><code>uri</code></em>
+ as the source URI. The <em class="parameter"><code>line_number</code></em>
+ is the starting line number
+in <em class="parameter"><code>uri</code></em>
+; the value is one-based so the first line is 1. <em class="parameter"><code>uri</code></em>
+ and <em class="parameter"><code>line_number</code></em>
+ will be shown in exceptions and
+they don't affect the behavior of the script.</p>
+<div class="refsect3">
+<a name="jsc-context-evaluate-with-source-uri.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>code</p></td>
+<td class="parameter_description"><p>a JavaScript script to evaluate</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>length</p></td>
+<td class="parameter_description"><p>length of <em class="parameter"><code>code</code></em>
+, or -1 if <em class="parameter"><code>code</code></em>
+is a nul-terminated string</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>uri</p></td>
+<td class="parameter_description"><p>the source URI</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>line_number</p></td>
+<td class="parameter_description"><p>the starting line number</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-context-evaluate-with-source-uri.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a> representing the last value generated by the script. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-evaluate-in-object"></a><h3>jsc_context_evaluate_in_object ()</h3>
+<pre class="programlisting"><a class="link" href="JSCValue.html" title="JSCValue"><span class="returnvalue">JSCValue</span></a> *
+jsc_context_evaluate_in_object (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                                <em class="parameter"><code>const <span class="type">char</span> *code</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gssize"><span class="type">gssize</span></a> length</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> object_instance</code></em>,
+                                <em class="parameter"><code><a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> *object_class</code></em>,
+                                <em class="parameter"><code>const <span class="type">char</span> *uri</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> line_number</code></em>,
+                                <em class="parameter"><code><a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a> **object</code></em>);</pre>
+<p>Evaluate <em class="parameter"><code>code</code></em>
+ and create an new object where symbols defined in <em class="parameter"><code>code</code></em>
+ will be added as properties,
+instead of being added to <em class="parameter"><code>context</code></em>
+ global object. The new object is returned as <em class="parameter"><code>object</code></em>
+ parameter.
+Similar to how <a class="link" href="JSCValue.html#jsc-value-new-object" title="jsc_value_new_object ()"><code class="function">jsc_value_new_object()</code></a> works, if <em class="parameter"><code>object_instance</code></em>
+ is not <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> <em class="parameter"><code>object_class</code></em>
+ must be provided too.
+The <em class="parameter"><code>line_number</code></em>
+ is the starting line number in <em class="parameter"><code>uri</code></em>
+; the value is one-based so the first line is 1.
+<em class="parameter"><code>uri</code></em>
+ and <em class="parameter"><code>line_number</code></em>
+ will be shown in exceptions and they don't affect the behavior of the script.</p>
+<div class="refsect3">
+<a name="jsc-context-evaluate-in-object.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>code</p></td>
+<td class="parameter_description"><p>a JavaScript script to evaluate</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>length</p></td>
+<td class="parameter_description"><p>length of <em class="parameter"><code>code</code></em>
+, or -1 if <em class="parameter"><code>code</code></em>
+is a nul-terminated string</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>object_instance</p></td>
+<td class="parameter_description"><p>an object instance. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>object_class</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to use the default. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>uri</p></td>
+<td class="parameter_description"><p>the source URI</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>line_number</p></td>
+<td class="parameter_description"><p>the starting line number</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>object</p></td>
+<td class="parameter_description"><p>return location for a <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-context-evaluate-in-object.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a> representing the last value generated by the script. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-check-syntax"></a><h3>jsc_context_check_syntax ()</h3>
+<pre class="programlisting"><a class="link" href="JSCContext.html#JSCCheckSyntaxResult" title="enum JSCCheckSyntaxResult"><span class="returnvalue">JSCCheckSyntaxResult</span></a>
+jsc_context_check_syntax (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                          <em class="parameter"><code>const <span class="type">char</span> *code</code></em>,
+                          <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gssize"><span class="type">gssize</span></a> length</code></em>,
+                          <em class="parameter"><code><a class="link" href="JSCContext.html#JSCCheckSyntaxMode" title="enum JSCCheckSyntaxMode"><span class="type">JSCCheckSyntaxMode</span></a> mode</code></em>,
+                          <em class="parameter"><code>const <span class="type">char</span> *uri</code></em>,
+                          <em class="parameter"><code><span class="type">unsigned </span> line_number</code></em>,
+                          <em class="parameter"><code><a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> **exception</code></em>);</pre>
+<p>Check the given <em class="parameter"><code>code</code></em>
+ in <em class="parameter"><code>context</code></em>
+ for syntax errors. The <em class="parameter"><code>line_number</code></em>
+ is the starting line number in <em class="parameter"><code>uri</code></em>
+;
+the value is one-based so the first line is 1. <em class="parameter"><code>uri</code></em>
+ and <em class="parameter"><code>line_number</code></em>
+ are only used to fill the <em class="parameter"><code>exception</code></em>
+.
+In case of errors <em class="parameter"><code>exception</code></em>
+ will be set to a new <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> with the details. You can pass <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to
+<em class="parameter"><code>exception</code></em>
+ to ignore the error details.</p>
+<div class="refsect3">
+<a name="jsc-context-check-syntax.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>code</p></td>
+<td class="parameter_description"><p>a JavaScript script to check</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>length</p></td>
+<td class="parameter_description"><p>length of <em class="parameter"><code>code</code></em>
+, or -1 if <em class="parameter"><code>code</code></em>
+is a nul-terminated string</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>mode</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html#JSCCheckSyntaxMode" title="enum JSCCheckSyntaxMode"><span class="type">JSCCheckSyntaxMode</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>uri</p></td>
+<td class="parameter_description"><p>the source URI</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>line_number</p></td>
+<td class="parameter_description"><p>the starting line number</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>exception</p></td>
+<td class="parameter_description"><p>return location for a <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a>, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL may be passed instead of a pointer to a location."><span class="acronym">optional</span></acronym>][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-context-check-syntax.returns"></a><h4>Returns</h4>
+<p> a <a class="link" href="JSCContext.html#JSCCheckSyntaxResult" title="enum JSCCheckSyntaxResult"><span class="type">JSCCheckSyntaxResult</span></a></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-get-global-object"></a><h3>jsc_context_get_global_object ()</h3>
+<pre class="programlisting"><a class="link" href="JSCValue.html" title="JSCValue"><span class="returnvalue">JSCValue</span></a> *
+jsc_context_get_global_object (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>);</pre>
+<p>Get a <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a> referencing the <em class="parameter"><code>context</code></em>
+ global object</p>
+<div class="refsect3">
+<a name="jsc-context-get-global-object.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-context-get-global-object.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-set-value"></a><h3>jsc_context_set_value ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+jsc_context_set_value (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                       <em class="parameter"><code>const <span class="type">char</span> *name</code></em>,
+                       <em class="parameter"><code><a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a> *value</code></em>);</pre>
+<p>Set a property of <em class="parameter"><code>context</code></em>
+ global object with <em class="parameter"><code>name</code></em>
+ and <em class="parameter"><code>value</code></em>
+.</p>
+<div class="refsect3">
+<a name="jsc-context-set-value.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the value name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>value</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-get-value"></a><h3>jsc_context_get_value ()</h3>
+<pre class="programlisting"><a class="link" href="JSCValue.html" title="JSCValue"><span class="returnvalue">JSCValue</span></a> *
+jsc_context_get_value (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                       <em class="parameter"><code>const <span class="type">char</span> *name</code></em>);</pre>
+<p>Get a property of <em class="parameter"><code>context</code></em>
+ global object with <em class="parameter"><code>name</code></em>
+.</p>
+<div class="refsect3">
+<a name="jsc-context-get-value.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the value name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-context-get-value.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="JSCValue.html" title="JSCValue"><span class="type">JSCValue</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-context-register-class"></a><h3>jsc_context_register_class ()</h3>
+<pre class="programlisting"><a class="link" href="JSCClass.html" title="JSCClass"><span class="returnvalue">JSCClass</span></a> *
+jsc_context_register_class (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                            <em class="parameter"><code>const <span class="type">char</span> *name</code></em>,
+                            <em class="parameter"><code><a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> *parent_class</code></em>,
+                            <em class="parameter"><code><a class="link" href="JSCClass.html#JSCClassVTable" title="JSCClassVTable"><span class="type">JSCClassVTable</span></a> *vtable</code></em>,
+                            <em class="parameter"><code><a href="../glib/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy_notify</code></em>);</pre>
+<p>Register a custom class in <em class="parameter"><code>context</code></em>
+ using the given <em class="parameter"><code>name</code></em>
+. If the new class inherits from
+another <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a>, the parent should be passed as <em class="parameter"><code>parent_class</code></em>
+, otherwise <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> should be
+used. The optional <em class="parameter"><code>vtable</code></em>
+ parameter allows to provide a custom implementation for handling
+the class, for example, to handle external properties not added to the prototype.
+When an instance of the <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> is cleared in the context, <em class="parameter"><code>destroy_notify</code></em>
+ is called with
+the instance as parameter.</p>
+<div class="refsect3">
+<a name="jsc-context-register-class.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the class name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>parent_class</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>vtable</p></td>
+<td class="parameter_description"><p>an optional <a class="link" href="JSCClass.html#JSCClassVTable" title="JSCClassVTable"><span class="type">JSCClassVTable</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>destroy_notify</p></td>
+<td class="parameter_description"><p>a destroy notifier for class instances. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-context-register-class.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="JSCClass.html" title="JSCClass"><span class="type">JSCClass</span></a>. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+</div>
+</div>
+<div class="refsect1">
+<a name="JSCContext.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="JSCContext-struct"></a><h3>JSCContext</h3>
+<pre class="programlisting">typedef struct _JSCContext JSCContext;</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="JSCCheckSyntaxMode"></a><h3>enum JSCCheckSyntaxMode</h3>
+<p>Enum values to specify a mode to check for syntax errors in <a class="link" href="JSCContext.html#jsc-context-check-syntax" title="jsc_context_check_syntax ()"><code class="function">jsc_context_check_syntax()</code></a>.</p>
+<div class="refsect3">
+<a name="JSCCheckSyntaxMode.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="300px" class="enum_members_name">
+<col class="enum_members_description">
+<col width="200px" class="enum_members_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="enum_member_name"><p><a name="JSC-CHECK-SYNTAX-MODE-SCRIPT:CAPS"></a>JSC_CHECK_SYNTAX_MODE_SCRIPT</p></td>
+<td class="enum_member_description">
+<p>mode to check syntax of a script</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="JSC-CHECK-SYNTAX-MODE-MODULE:CAPS"></a>JSC_CHECK_SYNTAX_MODE_MODULE</p></td>
+<td class="enum_member_description">
+<p>mode to check syntax of a module</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="JSCCheckSyntaxResult"></a><h3>enum JSCCheckSyntaxResult</h3>
+<p>Enum values to specify the result of <a class="link" href="JSCContext.html#jsc-context-check-syntax" title="jsc_context_check_syntax ()"><code class="function">jsc_context_check_syntax()</code></a>.</p>
+<div class="refsect3">
+<a name="JSCCheckSyntaxResult.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="300px" class="enum_members_name">
+<col class="enum_members_description">
+<col width="200px" class="enum_members_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="enum_member_name"><p><a name="JSC-CHECK-SYNTAX-RESULT-SUCCESS:CAPS"></a>JSC_CHECK_SYNTAX_RESULT_SUCCESS</p></td>
+<td class="enum_member_description">
+<p>no errors</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="JSC-CHECK-SYNTAX-RESULT-RECOVERABLE-ERROR:CAPS"></a>JSC_CHECK_SYNTAX_RESULT_RECOVERABLE_ERROR</p></td>
+<td class="enum_member_description">
+<p>recoverable syntax error</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="JSC-CHECK-SYNTAX-RESULT-IRRECOVERABLE-ERROR:CAPS"></a>JSC_CHECK_SYNTAX_RESULT_IRRECOVERABLE_ERROR</p></td>
+<td class="enum_member_description">
+<p>irrecoverable syntax error</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="JSC-CHECK-SYNTAX-RESULT-UNTERMINATED-LITERAL-ERROR:CAPS"></a>JSC_CHECK_SYNTAX_RESULT_UNTERMINATED_LITERAL_ERROR</p></td>
+<td class="enum_member_description">
+<p>unterminated literal error</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="JSC-CHECK-SYNTAX-RESULT-OUT-OF-MEMORY-ERROR:CAPS"></a>JSC_CHECK_SYNTAX_RESULT_OUT_OF_MEMORY_ERROR</p></td>
+<td class="enum_member_description">
+<p>out of memory error</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="JSC-CHECK-SYNTAX-RESULT-STACK-OVERFLOW-ERROR:CAPS"></a>JSC_CHECK_SYNTAX_RESULT_STACK_OVERFLOW_ERROR</p></td>
+<td class="enum_member_description">
+<p>stack overflow error</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="refsect1">
+<a name="JSCContext.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="JSCContext--virtual-machine"></a><h3>The <code class="literal">“virtual-machine”</code> property</h3>
+<pre class="programlisting">  “virtual-machine”          <a class="link" href="JSCVirtualMachine.html" title="JSCVirtualMachine"><span class="type">JSCVirtualMachine</span></a> *</pre>
+<p>The <a class="link" href="JSCVirtualMachine.html" title="JSCVirtualMachine"><span class="type">JSCVirtualMachine</span></a> in which the context was created.</p>
+<p>Owner: JSCContext</p>
+<p>Flags: Read / Write / Construct Only</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

@@ -1,0 +1,689 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JSCException: JavaScriptCore GLib Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="JavaScriptCore GLib Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="JSCWeakValue.html" title="JSCWeakValue">
+<link rel="next" href="JSCClass.html" title="JSCClass">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#JSCException.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#JSCException.object-hierarchy" class="shortcut">Object Hierarchy</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="JSCWeakValue.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="JSCClass.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="JSCException"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="JSCException.top_of_page"></a>JSCException</span></h2>
+<p>JSCException — JavaScript exception</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="JSCException.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCException.html" title="JSCException"><span class="returnvalue">JSCException</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCException.html#jsc-exception-new" title="jsc_exception_new ()">jsc_exception_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCException.html" title="JSCException"><span class="returnvalue">JSCException</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCException.html#jsc-exception-new-printf" title="jsc_exception_new_printf ()">jsc_exception_new_printf</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCException.html" title="JSCException"><span class="returnvalue">JSCException</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCException.html#jsc-exception-new-vprintf" title="jsc_exception_new_vprintf ()">jsc_exception_new_vprintf</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCException.html" title="JSCException"><span class="returnvalue">JSCException</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCException.html#jsc-exception-new-with-name" title="jsc_exception_new_with_name ()">jsc_exception_new_with_name</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCException.html" title="JSCException"><span class="returnvalue">JSCException</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCException.html#jsc-exception-new-with-name-printf" title="jsc_exception_new_with_name_printf ()">jsc_exception_new_with_name_printf</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="JSCException.html" title="JSCException"><span class="returnvalue">JSCException</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCException.html#jsc-exception-new-with-name-vprintf" title="jsc_exception_new_with_name_vprintf ()">jsc_exception_new_with_name_vprintf</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <span class="returnvalue">char</span> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCException.html#jsc-exception-get-name" title="jsc_exception_get_name ()">jsc_exception_get_name</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <span class="returnvalue">char</span> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCException.html#jsc-exception-get-message" title="jsc_exception_get_message ()">jsc_exception_get_message</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="JSCException.html#jsc-exception-get-line-number" title="jsc_exception_get_line_number ()">jsc_exception_get_line_number</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="JSCException.html#jsc-exception-get-column-number" title="jsc_exception_get_column_number ()">jsc_exception_get_column_number</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <span class="returnvalue">char</span> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCException.html#jsc-exception-get-source-uri" title="jsc_exception_get_source_uri ()">jsc_exception_get_source_uri</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <span class="returnvalue">char</span> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCException.html#jsc-exception-get-backtrace-string" title="jsc_exception_get_backtrace_string ()">jsc_exception_get_backtrace_string</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">char</span> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCException.html#jsc-exception-to-string" title="jsc_exception_to_string ()">jsc_exception_to_string</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">char</span> *
+</td>
+<td class="function_name">
+<a class="link" href="JSCException.html#jsc-exception-report" title="jsc_exception_report ()">jsc_exception_report</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="JSCException.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody><tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="JSCException.html#JSCException-struct" title="struct JSCException">JSCException</a></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="JSCException.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> JSCException
+</pre>
+</div>
+<div class="refsect1">
+<a name="JSCException.description"></a><h2>Description</h2>
+<p>JSCException represents a JavaScript exception.</p>
+</div>
+<div class="refsect1">
+<a name="JSCException.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="jsc-exception-new"></a><h3>jsc_exception_new ()</h3>
+<pre class="programlisting"><a class="link" href="JSCException.html" title="JSCException"><span class="returnvalue">JSCException</span></a> *
+jsc_exception_new (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                   <em class="parameter"><code>const <span class="type">char</span> *message</code></em>);</pre>
+<p>Create a new <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> in <em class="parameter"><code>context</code></em>
+ with <em class="parameter"><code>message</code></em>
+.</p>
+<div class="refsect3">
+<a name="jsc-exception-new.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>message</p></td>
+<td class="parameter_description"><p>the error message</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-exception-new.returns"></a><h4>Returns</h4>
+<p>a new <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-exception-new-printf"></a><h3>jsc_exception_new_printf ()</h3>
+<pre class="programlisting"><a class="link" href="JSCException.html" title="JSCException"><span class="returnvalue">JSCException</span></a> *
+jsc_exception_new_printf (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                          <em class="parameter"><code>const <span class="type">char</span> *format</code></em>,
+                          <em class="parameter"><code>...</code></em>);</pre>
+<p>Create a new <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> in <em class="parameter"><code>context</code></em>
+ using a formatted string
+for the message.</p>
+<div class="refsect3">
+<a name="jsc-exception-new-printf.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>format</p></td>
+<td class="parameter_description"><p>the string format</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>...</p></td>
+<td class="parameter_description"><p>the parameters to insert into the format string</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-exception-new-printf.returns"></a><h4>Returns</h4>
+<p>a new <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-exception-new-vprintf"></a><h3>jsc_exception_new_vprintf ()</h3>
+<pre class="programlisting"><a class="link" href="JSCException.html" title="JSCException"><span class="returnvalue">JSCException</span></a> *
+jsc_exception_new_vprintf (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                           <em class="parameter"><code>const <span class="type">char</span> *format</code></em>,
+                           <em class="parameter"><code><span class="type">va_list</span> args</code></em>);</pre>
+<p>Create a new <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> in <em class="parameter"><code>context</code></em>
+ using a formatted string
+for the message. This is similar to <a class="link" href="JSCException.html#jsc-exception-new-printf" title="jsc_exception_new_printf ()"><code class="function">jsc_exception_new_printf()</code></a>
+except that the arguments to the format string are passed as a va_list.</p>
+<div class="refsect3">
+<a name="jsc-exception-new-vprintf.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>format</p></td>
+<td class="parameter_description"><p>the string format</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>args</p></td>
+<td class="parameter_description"><p>the parameters to insert into the format string</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-exception-new-vprintf.returns"></a><h4>Returns</h4>
+<p>a new <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-exception-new-with-name"></a><h3>jsc_exception_new_with_name ()</h3>
+<pre class="programlisting"><a class="link" href="JSCException.html" title="JSCException"><span class="returnvalue">JSCException</span></a> *
+jsc_exception_new_with_name (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                             <em class="parameter"><code>const <span class="type">char</span> *name</code></em>,
+                             <em class="parameter"><code>const <span class="type">char</span> *message</code></em>);</pre>
+<p>Create a new <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> in <em class="parameter"><code>context</code></em>
+ with <em class="parameter"><code>name</code></em>
+ and <em class="parameter"><code>message</code></em>
+.</p>
+<div class="refsect3">
+<a name="jsc-exception-new-with-name.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the error name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>message</p></td>
+<td class="parameter_description"><p>the error message</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-exception-new-with-name.returns"></a><h4>Returns</h4>
+<p>a new <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-exception-new-with-name-printf"></a><h3>jsc_exception_new_with_name_printf ()</h3>
+<pre class="programlisting"><a class="link" href="JSCException.html" title="JSCException"><span class="returnvalue">JSCException</span></a> *
+jsc_exception_new_with_name_printf (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                                    <em class="parameter"><code>const <span class="type">char</span> *name</code></em>,
+                                    <em class="parameter"><code>const <span class="type">char</span> *format</code></em>,
+                                    <em class="parameter"><code>...</code></em>);</pre>
+<p>Create a new <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> in <em class="parameter"><code>context</code></em>
+ with <em class="parameter"><code>name</code></em>
+ and using a formatted string
+for the message.</p>
+<div class="refsect3">
+<a name="jsc-exception-new-with-name-printf.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the error name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>format</p></td>
+<td class="parameter_description"><p>the string format</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>...</p></td>
+<td class="parameter_description"><p>the parameters to insert into the format string</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-exception-new-with-name-printf.returns"></a><h4>Returns</h4>
+<p>a new <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-exception-new-with-name-vprintf"></a><h3>jsc_exception_new_with_name_vprintf ()</h3>
+<pre class="programlisting"><a class="link" href="JSCException.html" title="JSCException"><span class="returnvalue">JSCException</span></a> *
+jsc_exception_new_with_name_vprintf (<em class="parameter"><code><a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a> *context</code></em>,
+                                     <em class="parameter"><code>const <span class="type">char</span> *name</code></em>,
+                                     <em class="parameter"><code>const <span class="type">char</span> *format</code></em>,
+                                     <em class="parameter"><code><span class="type">va_list</span> args</code></em>);</pre>
+<p>Create a new <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> in <em class="parameter"><code>context</code></em>
+ with <em class="parameter"><code>name</code></em>
+ and using a formatted string
+for the message. This is similar to <a class="link" href="JSCException.html#jsc-exception-new-with-name-printf" title="jsc_exception_new_with_name_printf ()"><code class="function">jsc_exception_new_with_name_printf()</code></a>
+except that the arguments to the format string are passed as a va_list.</p>
+<div class="refsect3">
+<a name="jsc-exception-new-with-name-vprintf.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>context</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCContext.html" title="JSCContext"><span class="type">JSCContext</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>the error name</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>format</p></td>
+<td class="parameter_description"><p>the string format</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>args</p></td>
+<td class="parameter_description"><p>the parameters to insert into the format string</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-exception-new-with-name-vprintf.returns"></a><h4>Returns</h4>
+<p>a new <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a>. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-exception-get-name"></a><h3>jsc_exception_get_name ()</h3>
+<pre class="programlisting">const <span class="returnvalue">char</span> *
+jsc_exception_get_name (<em class="parameter"><code><a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> *exception</code></em>);</pre>
+<p>Get the error name of <em class="parameter"><code>exception</code></em>
+</p>
+<div class="refsect3">
+<a name="jsc-exception-get-name.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>exception</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-exception-get-name.returns"></a><h4>Returns</h4>
+<p> the <em class="parameter"><code>exception</code></em>
+error name.</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-exception-get-message"></a><h3>jsc_exception_get_message ()</h3>
+<pre class="programlisting">const <span class="returnvalue">char</span> *
+jsc_exception_get_message (<em class="parameter"><code><a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> *exception</code></em>);</pre>
+<p>Get the error message of <em class="parameter"><code>exception</code></em>
+.</p>
+<div class="refsect3">
+<a name="jsc-exception-get-message.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>exception</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-exception-get-message.returns"></a><h4>Returns</h4>
+<p> the <em class="parameter"><code>exception</code></em>
+error message.</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-exception-get-line-number"></a><h3>jsc_exception_get_line_number ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+jsc_exception_get_line_number (<em class="parameter"><code><a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> *exception</code></em>);</pre>
+<p>Get the line number at which <em class="parameter"><code>exception</code></em>
+ happened.</p>
+<div class="refsect3">
+<a name="jsc-exception-get-line-number.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>exception</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-exception-get-line-number.returns"></a><h4>Returns</h4>
+<p> the line number of <em class="parameter"><code>exception</code></em>
+.</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-exception-get-column-number"></a><h3>jsc_exception_get_column_number ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+jsc_exception_get_column_number (<em class="parameter"><code><a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> *exception</code></em>);</pre>
+<p>Get the column number at which <em class="parameter"><code>exception</code></em>
+ happened.</p>
+<div class="refsect3">
+<a name="jsc-exception-get-column-number.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>exception</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-exception-get-column-number.returns"></a><h4>Returns</h4>
+<p> the column number of <em class="parameter"><code>exception</code></em>
+.</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-exception-get-source-uri"></a><h3>jsc_exception_get_source_uri ()</h3>
+<pre class="programlisting">const <span class="returnvalue">char</span> *
+jsc_exception_get_source_uri (<em class="parameter"><code><a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> *exception</code></em>);</pre>
+<p>Get the source URI of <em class="parameter"><code>exception</code></em>
+.</p>
+<div class="refsect3">
+<a name="jsc-exception-get-source-uri.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>exception</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-exception-get-source-uri.returns"></a><h4>Returns</h4>
+<p>the the source URI of <em class="parameter"><code>exception</code></em>
+, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p>
+<p><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-exception-get-backtrace-string"></a><h3>jsc_exception_get_backtrace_string ()</h3>
+<pre class="programlisting">const <span class="returnvalue">char</span> *
+jsc_exception_get_backtrace_string (<em class="parameter"><code><a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> *exception</code></em>);</pre>
+<p>Get a string with the exception backtrace.</p>
+<div class="refsect3">
+<a name="jsc-exception-get-backtrace-string.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>exception</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-exception-get-backtrace-string.returns"></a><h4>Returns</h4>
+<p>the exception backtrace string or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p>
+<p><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-exception-to-string"></a><h3>jsc_exception_to_string ()</h3>
+<pre class="programlisting"><span class="returnvalue">char</span> *
+jsc_exception_to_string (<em class="parameter"><code><a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> *exception</code></em>);</pre>
+<p>Get the string representation of <em class="parameter"><code>exception</code></em>
+ error.</p>
+<div class="refsect3">
+<a name="jsc-exception-to-string.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>exception</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-exception-to-string.returns"></a><h4>Returns</h4>
+<p>the string representation of <em class="parameter"><code>exception</code></em>
+. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="jsc-exception-report"></a><h3>jsc_exception_report ()</h3>
+<pre class="programlisting"><span class="returnvalue">char</span> *
+jsc_exception_report (<em class="parameter"><code><a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a> *exception</code></em>);</pre>
+<p>Return a report message of <em class="parameter"><code>exception</code></em>
+, containing all the possible details such us
+source URI, line, column and backtrace, and formatted to be printed.</p>
+<div class="refsect3">
+<a name="jsc-exception-report.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>exception</p></td>
+<td class="parameter_description"><p>a <a class="link" href="JSCException.html" title="JSCException"><span class="type">JSCException</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="jsc-exception-report.returns"></a><h4>Returns</h4>
+<p>a new string with the exception report. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+</div>
+</div>
+<div class="refsect1">
+<a name="JSCException.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="JSCException-struct"></a><h3>struct JSCException</h3>
+<pre class="programlisting">struct JSCException;</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="JSCException.see-also"></a><h2>See Also</h2>
+<p>JSCContext</p>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

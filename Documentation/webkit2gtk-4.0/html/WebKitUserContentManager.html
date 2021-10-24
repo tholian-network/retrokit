@@ -1,0 +1,780 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WebKitUserContentManager: WebKitGTK Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore">
+<link rel="next" href="webkit2gtk-4.0-WebKitUserContent.html" title="User content">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#WebKitUserContentManager.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#WebKitUserContentManager.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_signals">  <span class="dim">|</span> 
+                  <a href="#WebKitUserContentManager.signals" class="shortcut">Signals</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="WebKitUserContentFilterStore.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="webkit2gtk-4.0-WebKitUserContent.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="WebKitUserContentManager"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="WebKitUserContentManager.top_of_page"></a>WebKitUserContentManager</span></h2>
+<p>WebKitUserContentManager — Manages user-defined content which affects web pages.</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="WebKitUserContentManager.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="returnvalue">WebKitUserContentManager</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-new" title="webkit_user_content_manager_new ()">webkit_user_content_manager_new</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-add-style-sheet" title="webkit_user_content_manager_add_style_sheet ()">webkit_user_content_manager_add_style_sheet</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-remove-style-sheet" title="webkit_user_content_manager_remove_style_sheet ()">webkit_user_content_manager_remove_style_sheet</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-remove-all-style-sheets" title="webkit_user_content_manager_remove_all_style_sheets ()">webkit_user_content_manager_remove_all_style_sheets</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-add-script" title="webkit_user_content_manager_add_script ()">webkit_user_content_manager_add_script</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-remove-script" title="webkit_user_content_manager_remove_script ()">webkit_user_content_manager_remove_script</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-remove-all-scripts" title="webkit_user_content_manager_remove_all_scripts ()">webkit_user_content_manager_remove_all_scripts</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-register-script-message-handler" title="webkit_user_content_manager_register_script_message_handler ()">webkit_user_content_manager_register_script_message_handler</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-unregister-script-message-handler" title="webkit_user_content_manager_unregister_script_message_handler ()">webkit_user_content_manager_unregister_script_message_handler</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-register-script-message-handler-in-world" title="webkit_user_content_manager_register_script_message_handler_in_world ()">webkit_user_content_manager_register_script_message_handler_in_world</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-unregister-script-message-handler-in-world" title="webkit_user_content_manager_unregister_script_message_handler_in_world ()">webkit_user_content_manager_unregister_script_message_handler_in_world</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-add-filter" title="webkit_user_content_manager_add_filter ()">webkit_user_content_manager_add_filter</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-remove-filter" title="webkit_user_content_manager_remove_filter ()">webkit_user_content_manager_remove_filter</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-remove-filter-by-id" title="webkit_user_content_manager_remove_filter_by_id ()">webkit_user_content_manager_remove_filter_by_id</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-remove-all-filters" title="webkit_user_content_manager_remove_all_filters ()">webkit_user_content_manager_remove_all_filters</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitUserContentManager.signals"></a><h2>Signals</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="signal_proto_type">
+<col width="300px" class="signal_proto_name">
+<col width="200px" class="signal_proto_flags">
+</colgroup>
+<tbody><tr>
+<td class="signal_type"><span class="returnvalue">void</span></td>
+<td class="signal_name"><a class="link" href="WebKitUserContentManager.html#WebKitUserContentManager-script-message-received" title="The “script-message-received” signal">script-message-received</a></td>
+<td class="signal_flags"><a href="../gobject/gobject-Signals.html#G-SIGNAL-DETAILED:CAPS">Has Details</a></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitUserContentManager.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody><tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="WebKitUserContentManager.html#WebKitUserContentManager-struct" title="struct WebKitUserContentManager">WebKitUserContentManager</a></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitUserContentManager.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> WebKitUserContentManager
+</pre>
+</div>
+<div class="refsect1">
+<a name="WebKitUserContentManager.description"></a><h2>Description</h2>
+<p>Using a <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> user CSS style sheets can be set to
+be injected in the web pages loaded by a <a class="link" href="WebKitWebView.html" title="The main frame document title of this #WebKitWebView. If the title has not been received yet, it will be %NULL."><span class="type">WebKitWebView</span></a>, by
+<a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-add-style-sheet" title="webkit_user_content_manager_add_style_sheet ()"><code class="function">webkit_user_content_manager_add_style_sheet()</code></a>.</p>
+<p>To use a <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a>, it must be created using
+<a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-new" title="webkit_user_content_manager_new ()"><code class="function">webkit_user_content_manager_new()</code></a>, and then passed to
+<a class="link" href="WebKitWebView.html#webkit-web-view-new-with-user-content-manager" title="webkit_web_view_new_with_user_content_manager ()"><code class="function">webkit_web_view_new_with_user_content_manager()</code></a>. User style
+sheets can be created with <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#webkit-user-style-sheet-new" title="webkit_user_style_sheet_new ()"><code class="function">webkit_user_style_sheet_new()</code></a>.</p>
+<p>User style sheets can be added and removed at any time, but
+they will affect the web pages loaded afterwards.</p>
+</div>
+<div class="refsect1">
+<a name="WebKitUserContentManager.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="webkit-user-content-manager-new"></a><h3>webkit_user_content_manager_new ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="returnvalue">WebKitUserContentManager</span></a> *
+webkit_user_content_manager_new (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>Creates a new user content manager.</p>
+<div class="refsect3">
+<a name="webkit-user-content-manager-new.returns"></a><h4>Returns</h4>
+<p> A <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-6.html#api-index-2.6">2.6</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-manager-add-style-sheet"></a><h3>webkit_user_content_manager_add_style_sheet ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_user_content_manager_add_style_sheet
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code><a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserStyleSheet"><span class="type">WebKitUserStyleSheet</span></a> *stylesheet</code></em>);</pre>
+<p>Adds a <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserStyleSheet"><span class="type">WebKitUserStyleSheet</span></a> to the given <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a>.
+The same <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserStyleSheet"><span class="type">WebKitUserStyleSheet</span></a> can be reused with multiple
+<a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> instances.</p>
+<div class="refsect3">
+<a name="webkit-user-content-manager-add-style-sheet.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>stylesheet</p></td>
+<td class="parameter_description"><p>A <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserStyleSheet"><span class="type">WebKitUserStyleSheet</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-6.html#api-index-2.6">2.6</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-manager-remove-style-sheet"></a><h3>webkit_user_content_manager_remove_style_sheet ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_user_content_manager_remove_style_sheet
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code><a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserStyleSheet"><span class="type">WebKitUserStyleSheet</span></a> *stylesheet</code></em>);</pre>
+<p>Removes a <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserStyleSheet"><span class="type">WebKitUserStyleSheet</span></a> from the given <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a>.</p>
+<p>See also <a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-remove-all-style-sheets" title="webkit_user_content_manager_remove_all_style_sheets ()"><code class="function">webkit_user_content_manager_remove_all_style_sheets()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-user-content-manager-remove-style-sheet.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>stylesheet</p></td>
+<td class="parameter_description"><p>A <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserStyleSheet"><span class="type">WebKitUserStyleSheet</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 2.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-manager-remove-all-style-sheets"></a><h3>webkit_user_content_manager_remove_all_style_sheets ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_user_content_manager_remove_all_style_sheets
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> *manager</code></em>);</pre>
+<p>Removes all user style sheets from the given <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a>.</p>
+<div class="refsect3">
+<a name="webkit-user-content-manager-remove-all-style-sheets.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-6.html#api-index-2.6">2.6</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-manager-add-script"></a><h3>webkit_user_content_manager_add_script ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_user_content_manager_add_script
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code><a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserScript"><span class="type">WebKitUserScript</span></a> *script</code></em>);</pre>
+<p>Adds a <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserScript"><span class="type">WebKitUserScript</span></a> to the given <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a>.
+The same <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserScript"><span class="type">WebKitUserScript</span></a> can be reused with multiple
+<a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> instances.</p>
+<div class="refsect3">
+<a name="webkit-user-content-manager-add-script.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>script</p></td>
+<td class="parameter_description"><p>A <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserScript"><span class="type">WebKitUserScript</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-6.html#api-index-2.6">2.6</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-manager-remove-script"></a><h3>webkit_user_content_manager_remove_script ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_user_content_manager_remove_script
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code><a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserScript"><span class="type">WebKitUserScript</span></a> *script</code></em>);</pre>
+<p>Removes a <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserScript"><span class="type">WebKitUserScript</span></a> from the given <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a>.</p>
+<p>See also <a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-remove-all-scripts" title="webkit_user_content_manager_remove_all_scripts ()"><code class="function">webkit_user_content_manager_remove_all_scripts()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-user-content-manager-remove-script.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>script</p></td>
+<td class="parameter_description"><p>A <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserScript"><span class="type">WebKitUserScript</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: 2.32</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-manager-remove-all-scripts"></a><h3>webkit_user_content_manager_remove_all_scripts ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_user_content_manager_remove_all_scripts
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> *manager</code></em>);</pre>
+<p>Removes all user scripts from the given <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a></p>
+<p>See also <a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-remove-script" title="webkit_user_content_manager_remove_script ()"><code class="function">webkit_user_content_manager_remove_script()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-user-content-manager-remove-all-scripts.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-6.html#api-index-2.6">2.6</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-manager-register-script-message-handler"></a><h3>webkit_user_content_manager_register_script_message_handler ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+webkit_user_content_manager_register_script_message_handler
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>);</pre>
+<p>Registers a new user script message handler. After it is registered,
+scripts can use <code class="literal">window.webkit.messageHandlers.&amp;lt;name&amp;gt;.postMessage(value)</code>
+to send messages. Those messages are received by connecting handlers
+to the <a class="link" href="WebKitUserContentManager.html#WebKitUserContentManager-script-message-received" title="The “script-message-received” signal"><span class="type">“script-message-received”</span></a> signal. The
+handler name is used as the detail of the signal. To avoid race
+conditions between registering the handler name, and starting to
+receive the signals, it is recommended to connect to the signal
+*before* registering the handler name:</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="n">WebKitWebView</span> <span class="o">*</span><span class="n">view</span> <span class="o">=</span> <span class="n">webkit_web_view_new</span> <span class="p">();</span>
+<span class="n">WebKitUserContentManager</span> <span class="o">*</span><span class="n">manager</span> <span class="o">=</span> <span class="n">webkit_web_view_get_user_content_manager</span> <span class="p">();</span>
+<span class="n">g_signal_connect</span> <span class="p">(</span><span class="n">manager</span><span class="p">,</span> <span class="s">&quot;script-message-received::foobar&quot;</span><span class="p">,</span>
+                  <span class="n">G_CALLBACK</span> <span class="p">(</span><span class="n">handle_script_message</span><span class="p">),</span> <span class="nb">NULL</span><span class="p">);</span>
+<span class="n">webkit_user_content_manager_register_script_message_handler</span> <span class="p">(</span><span class="n">manager</span><span class="p">,</span> <span class="s">&quot;foobar&quot;</span><span class="p">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>Registering a script message handler will fail if the requested
+name has been already registered before.</p>
+<div class="refsect3">
+<a name="webkit-user-content-manager-register-script-message-handler.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>Name of the script message channel</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-user-content-manager-register-script-message-handler.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if message handler was registered successfully, or <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-8.html#api-index-2.8">2.8</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-manager-unregister-script-message-handler"></a><h3>webkit_user_content_manager_unregister_script_message_handler ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_user_content_manager_unregister_script_message_handler
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>);</pre>
+<p>Unregisters a previously registered message handler.</p>
+<p>Note that this does *not* disconnect handlers for the
+<a class="link" href="WebKitUserContentManager.html#WebKitUserContentManager-script-message-received" title="The “script-message-received” signal"><span class="type">“script-message-received”</span></a> signal;
+they will be kept connected, but the signal will not be emitted
+unless the handler name is registered again.</p>
+<p>See also <a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-register-script-message-handler" title="webkit_user_content_manager_register_script_message_handler ()"><code class="function">webkit_user_content_manager_register_script_message_handler()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-user-content-manager-unregister-script-message-handler.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>Name of the script message channel</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-8.html#api-index-2.8">2.8</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-manager-register-script-message-handler-in-world"></a><h3>webkit_user_content_manager_register_script_message_handler_in_world ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+webkit_user_content_manager_register_script_message_handler_in_world
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *world_name</code></em>);</pre>
+<p>Registers a new user script message handler in script world with name <em class="parameter"><code>world_name</code></em>
+.
+See <a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-register-script-message-handler" title="webkit_user_content_manager_register_script_message_handler ()"><code class="function">webkit_user_content_manager_register_script_message_handler()</code></a> for full description.</p>
+<p>Registering a script message handler will fail if the requested
+name has been already registered before.</p>
+<div class="refsect3">
+<a name="webkit-user-content-manager-register-script-message-handler-in-world.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>Name of the script message channel</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>world_name</p></td>
+<td class="parameter_description"><p>the name of a <a class="link" href="WebKitScriptWorld.html" title="WebKitScriptWorld"><span class="type">WebKitScriptWorld</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-user-content-manager-register-script-message-handler-in-world.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if message handler was registered successfully, or <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-22.html#api-index-2.22">2.22</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-manager-unregister-script-message-handler-in-world"></a><h3>webkit_user_content_manager_unregister_script_message_handler_in_world ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_user_content_manager_unregister_script_message_handler_in_world
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                <em class="parameter"><code>const <a href="../glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *world_name</code></em>);</pre>
+<p>Unregisters a previously registered message handler in script world with name <em class="parameter"><code>world_name</code></em>
+.</p>
+<p>Note that this does *not* disconnect handlers for the
+<a class="link" href="WebKitUserContentManager.html#WebKitUserContentManager-script-message-received" title="The “script-message-received” signal"><span class="type">“script-message-received”</span></a> signal;
+they will be kept connected, but the signal will not be emitted
+unless the handler name is registered again.</p>
+<p>See also <a class="link" href="WebKitUserContentManager.html#webkit-user-content-manager-register-script-message-handler-in-world" title="webkit_user_content_manager_register_script_message_handler_in_world ()"><code class="function">webkit_user_content_manager_register_script_message_handler_in_world()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-user-content-manager-unregister-script-message-handler-in-world.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>name</p></td>
+<td class="parameter_description"><p>Name of the script message channel</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>world_name</p></td>
+<td class="parameter_description"><p>the name of a <a class="link" href="WebKitScriptWorld.html" title="WebKitScriptWorld"><span class="type">WebKitScriptWorld</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-22.html#api-index-2.22">2.22</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-manager-add-filter"></a><h3>webkit_user_content_manager_add_filter ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_user_content_manager_add_filter
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code><a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserContentFilter"><span class="type">WebKitUserContentFilter</span></a> *filter</code></em>);</pre>
+<p>Adds a <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserContentFilter"><span class="type">WebKitUserContentFilter</span></a> to the given <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a>.
+The same <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserContentFilter"><span class="type">WebKitUserContentFilter</span></a> can be reused with multiple
+<a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> instances.</p>
+<p>Filters need to be saved and loaded from <a class="link" href="WebKitUserContentFilterStore.html" title="WebKitUserContentFilterStore"><span class="type">WebKitUserContentFilterStore</span></a>.</p>
+<div class="refsect3">
+<a name="webkit-user-content-manager-add-filter.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>filter</p></td>
+<td class="parameter_description"><p>A <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserContentFilter"><span class="type">WebKitUserContentFilter</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-24.html#api-index-2.24">2.24</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-manager-remove-filter"></a><h3>webkit_user_content_manager_remove_filter ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_user_content_manager_remove_filter
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code><a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserContentFilter"><span class="type">WebKitUserContentFilter</span></a> *filter</code></em>);</pre>
+<p>Removes a filter from the given <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a>.</p>
+<p>Since 2.24</p>
+<div class="refsect3">
+<a name="webkit-user-content-manager-remove-filter.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>filter</p></td>
+<td class="parameter_description"><p>A <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserContentFilter"><span class="type">WebKitUserContentFilter</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-manager-remove-filter-by-id"></a><h3>webkit_user_content_manager_remove_filter_by_id ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_user_content_manager_remove_filter_by_id
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> *manager</code></em>,
+                                <em class="parameter"><code>const <span class="type">char</span> *filter_id</code></em>);</pre>
+<p>Removes a filter from the given <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> given the
+identifier of a <a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#WebKitUserContentFilter"><span class="type">WebKitUserContentFilter</span></a> as returned by
+<a class="link" href="webkit2gtk-4.0-WebKitUserContent.html#webkit-user-content-filter-get-identifier" title="webkit_user_content_filter_get_identifier ()"><code class="function">webkit_user_content_filter_get_identifier()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-user-content-manager-remove-filter-by-id.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>filter_id</p></td>
+<td class="parameter_description"><p>Filter identifier</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-26.html#api-index-2.26">2.26</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-user-content-manager-remove-all-filters"></a><h3>webkit_user_content_manager_remove_all_filters ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_user_content_manager_remove_all_filters
+                               (<em class="parameter"><code><a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> *manager</code></em>);</pre>
+<p>Removes all content filters from the given <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a>.</p>
+<div class="refsect3">
+<a name="webkit-user-content-manager-remove-all-filters.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>A <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-24.html#api-index-2.24">2.24</a></p>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitUserContentManager.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="WebKitUserContentManager-struct"></a><h3>struct WebKitUserContentManager</h3>
+<pre class="programlisting">struct WebKitUserContentManager;</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitUserContentManager.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="WebKitUserContentManager-script-message-received"></a><h3>The <code class="literal">“script-message-received”</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+user_function (<a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a> *manager,
+               <a class="link" href="WebKitWebView.html#WebKitJavascriptResult"><span class="type">WebKitJavascriptResult</span></a>   *js_result,
+               <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>                  user_data)</pre>
+<p>This signal is emitted when JavaScript in a web view calls</p>
+<code class="code">window.webkit.messageHandlers.&lt;name&gt;.postMessage()</code>, after registering
+<code class="code">&lt;name&gt;</code> using
+<p>webkit_user_content_manager_register_script_message_handler()</p>
+<div class="refsect3">
+<a name="WebKitUserContentManager-script-message-received.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>manager</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitUserContentManager.html" title="WebKitUserContentManager"><span class="type">WebKitUserContentManager</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>js_result</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitWebView.html#WebKitJavascriptResult"><span class="type">WebKitJavascriptResult</span></a> holding the value received from the JavaScript world.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data set when the signal handler was connected.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>Flags: <a href="../gobject/gobject-Signals.html#G-SIGNAL-DETAILED:CAPS">Has Details</a></p>
+<p class="since">Since: <a class="link" href="api-index-2-8.html#api-index-2.8">2.8</a></p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

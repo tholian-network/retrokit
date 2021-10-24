@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WebKitVersion: WebKitGTK Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="up" href="ch01.html" title="Class Overview">
+<link rel="prev" href="WebKitURISchemeRequest.html" title="WebKitURISchemeRequest">
+<link rel="next" href="WebKitContextMenu.html" title="WebKitContextMenu">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#webkit2gtk-4.0-WebKitVersion.description" class="shortcut">Description</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="WebKitURISchemeRequest.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="WebKitContextMenu.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="webkit2gtk-4.0-WebKitVersion"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="webkit2gtk-4.0-WebKitVersion.top_of_page"></a>WebKitVersion</span></h2>
+<p>WebKitVersion — Provides the WebKit version</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="webkit2gtk-4.0-WebKitVersion.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="webkit2gtk-4.0-WebKitVersion.html#webkit-get-major-version" title="webkit_get_major_version ()">webkit_get_major_version</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="webkit2gtk-4.0-WebKitVersion.html#webkit-get-minor-version" title="webkit_get_minor_version ()">webkit_get_minor_version</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="webkit2gtk-4.0-WebKitVersion.html#webkit-get-micro-version" title="webkit_get_micro_version ()">webkit_get_micro_version</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name">
+<a class="link" href="webkit2gtk-4.0-WebKitVersion.html#WEBKIT-CHECK-VERSION:CAPS" title="WEBKIT_CHECK_VERSION()">WEBKIT_CHECK_VERSION</a><span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="webkit2gtk-4.0-WebKitVersion.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="webkit2gtk-4.0-WebKitVersion.html#WEBKIT-MAJOR-VERSION:CAPS" title="WEBKIT_MAJOR_VERSION">WEBKIT_MAJOR_VERSION</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="webkit2gtk-4.0-WebKitVersion.html#WEBKIT-MINOR-VERSION:CAPS" title="WEBKIT_MINOR_VERSION">WEBKIT_MINOR_VERSION</a></td>
+</tr>
+<tr>
+<td class="define_keyword">#define</td>
+<td class="function_name"><a class="link" href="webkit2gtk-4.0-WebKitVersion.html#WEBKIT-MICRO-VERSION:CAPS" title="WEBKIT_MICRO_VERSION">WEBKIT_MICRO_VERSION</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="webkit2gtk-4.0-WebKitVersion.description"></a><h2>Description</h2>
+<p>Provides convenience functions returning WebKit's major, minor and
+micro versions of the WebKit library your code is running
+against. This is not necessarily the same as the
+<a class="link" href="webkit2gtk-4.0-WebKitVersion.html#WEBKIT-MAJOR-VERSION:CAPS" title="WEBKIT_MAJOR_VERSION"><span class="type">WEBKIT_MAJOR_VERSION</span></a>, <a class="link" href="webkit2gtk-4.0-WebKitVersion.html#WEBKIT-MINOR-VERSION:CAPS" title="WEBKIT_MINOR_VERSION"><span class="type">WEBKIT_MINOR_VERSION</span></a> or
+<a class="link" href="webkit2gtk-4.0-WebKitVersion.html#WEBKIT-MICRO-VERSION:CAPS" title="WEBKIT_MICRO_VERSION"><span class="type">WEBKIT_MICRO_VERSION</span></a>, which represent the version of the WebKit
+headers included when compiling the code.</p>
+</div>
+<div class="refsect1">
+<a name="webkit2gtk-4.0-WebKitVersion.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="webkit-get-major-version"></a><h3>webkit_get_major_version ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+webkit_get_major_version (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>Returns the major version number of the WebKit library.
+(e.g. in WebKit version 1.8.3 this is 1.)</p>
+<p>This function is in the library, so it represents the WebKit library
+your code is running against. Contrast with the <a class="link" href="webkit2gtk-4.0-WebKitVersion.html#WEBKIT-MAJOR-VERSION:CAPS" title="WEBKIT_MAJOR_VERSION"><span class="type">WEBKIT_MAJOR_VERSION</span></a>
+macro, which represents the major version of the WebKit headers you
+have included when compiling your code.</p>
+<div class="refsect3">
+<a name="webkit-get-major-version.returns"></a><h4>Returns</h4>
+<p> the major version number of the WebKit library</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-get-minor-version"></a><h3>webkit_get_minor_version ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+webkit_get_minor_version (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>Returns the minor version number of the WebKit library.
+(e.g. in WebKit version 1.8.3 this is 8.)</p>
+<p>This function is in the library, so it represents the WebKit library
+your code is running against. Contrast with the <a class="link" href="webkit2gtk-4.0-WebKitVersion.html#WEBKIT-MINOR-VERSION:CAPS" title="WEBKIT_MINOR_VERSION"><span class="type">WEBKIT_MINOR_VERSION</span></a>
+macro, which represents the minor version of the WebKit headers you
+have included when compiling your code.</p>
+<div class="refsect3">
+<a name="webkit-get-minor-version.returns"></a><h4>Returns</h4>
+<p> the minor version number of the WebKit library</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-get-micro-version"></a><h3>webkit_get_micro_version ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>
+webkit_get_micro_version (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>Returns the micro version number of the WebKit library.
+(e.g. in WebKit version 1.8.3 this is 3.)</p>
+<p>This function is in the library, so it represents the WebKit library
+your code is running against. Contrast with the <a class="link" href="webkit2gtk-4.0-WebKitVersion.html#WEBKIT-MICRO-VERSION:CAPS" title="WEBKIT_MICRO_VERSION"><span class="type">WEBKIT_MICRO_VERSION</span></a>
+macro, which represents the micro version of the WebKit headers you
+have included when compiling your code.</p>
+<div class="refsect3">
+<a name="webkit-get-micro-version.returns"></a><h4>Returns</h4>
+<p> the micro version number of the WebKit library</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-CHECK-VERSION:CAPS"></a><h3>WEBKIT_CHECK_VERSION()</h3>
+<pre class="programlisting">#define             WEBKIT_CHECK_VERSION(major, minor, micro)</pre>
+<div class="refsect3">
+<a name="WEBKIT-CHECK-VERSION.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>major</p></td>
+<td class="parameter_description"><p>major version (e.g. 1 for version 1.2.5)</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>minor</p></td>
+<td class="parameter_description"><p>minor version (e.g. 2 for version 1.2.5)</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>micro</p></td>
+<td class="parameter_description"><p>micro version (e.g. 5 for version 1.2.5)</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="WEBKIT-CHECK-VERSION.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the version of the WebKit header files
+is the same as or newer than the passed-in version.</p>
+</div>
+</div>
+</div>
+<div class="refsect1">
+<a name="webkit2gtk-4.0-WebKitVersion.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="WEBKIT-MAJOR-VERSION:CAPS"></a><h3>WEBKIT_MAJOR_VERSION</h3>
+<pre class="programlisting">#define WEBKIT_MAJOR_VERSION (2)
+</pre>
+<p>Like <a class="link" href="webkit2gtk-4.0-WebKitVersion.html#webkit-get-major-version" title="webkit_get_major_version ()"><code class="function">webkit_get_major_version()</code></a>, but from the headers used at
+application compile time, rather than from the library linked
+against at application run time.</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-MINOR-VERSION:CAPS"></a><h3>WEBKIT_MINOR_VERSION</h3>
+<pre class="programlisting">#define WEBKIT_MINOR_VERSION (34)
+</pre>
+<p>Like <a class="link" href="webkit2gtk-4.0-WebKitVersion.html#webkit-get-minor-version" title="webkit_get_minor_version ()"><code class="function">webkit_get_minor_version()</code></a>, but from the headers used at
+application compile time, rather than from the library linked
+against at application run time.</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WEBKIT-MICRO-VERSION:CAPS"></a><h3>WEBKIT_MICRO_VERSION</h3>
+<pre class="programlisting">#define WEBKIT_MICRO_VERSION (1)
+</pre>
+<p>Like <a class="link" href="webkit2gtk-4.0-WebKitVersion.html#webkit-get-micro-version" title="webkit_get_micro_version ()"><code class="function">webkit_get_micro_version()</code></a>, but from the headers used at
+application compile time, rather than from the library linked
+against at application run time.</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

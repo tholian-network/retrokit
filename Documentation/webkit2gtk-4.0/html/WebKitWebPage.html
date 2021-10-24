@@ -1,0 +1,956 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WebKitWebPage: WebKitGTK Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="up" href="ch02.html" title="Web Extensions">
+<link rel="prev" href="WebKitWebExtension.html" title="WebKitWebExtension">
+<link rel="next" href="WebKitFrame.html" title="WebKitFrame">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#WebKitWebPage.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#WebKitWebPage.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_properties">  <span class="dim">|</span> 
+                  <a href="#WebKitWebPage.properties" class="shortcut">Properties</a></span><span id="nav_signals">  <span class="dim">|</span> 
+                  <a href="#WebKitWebPage.signals" class="shortcut">Signals</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch02.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="WebKitWebExtension.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="WebKitFrame.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="WebKitWebPage"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="WebKitWebPage.top_of_page"></a>WebKitWebPage</span></h2>
+<p>WebKitWebPage</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="WebKitWebPage.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<a href="../webkitdomgtk-4.0/WebKitDOMDocument.html#WebKitDOMDocument-struct"><span class="returnvalue">WebKitDOMDocument</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebPage.html#webkit-web-page-get-dom-document" title="webkit_web_page_get_dom_document ()">webkit_web_page_get_dom_document</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="../glib/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebPage.html#webkit-web-page-get-id" title="webkit_web_page_get_id ()">webkit_web_page_get_id</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebPage.html#webkit-web-page-get-uri" title="webkit_web_page_get_uri ()">webkit_web_page_get_uri</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitFrame.html" title="WebKitFrame"><span class="returnvalue">WebKitFrame</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebPage.html#webkit-web-page-get-main-frame" title="webkit_web_page_get_main_frame ()">webkit_web_page_get_main_frame</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitWebEditor.html" title="WebKitWebEditor"><span class="returnvalue">WebKitWebEditor</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebPage.html#webkit-web-page-get-editor" title="webkit_web_page_get_editor ()">webkit_web_page_get_editor</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebPage.html#webkit-web-page-send-message-to-view" title="webkit_web_page_send_message_to_view ()">webkit_web_page_send_message_to_view</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="returnvalue">WebKitUserMessage</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebPage.html#webkit-web-page-send-message-to-view-finish" title="webkit_web_page_send_message_to_view_finish ()">webkit_web_page_send_message_to_view_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebPage.properties"></a><h2>Properties</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="properties_type">
+<col width="300px" class="properties_name">
+<col width="200px" class="properties_flags">
+</colgroup>
+<tbody><tr>
+<td class="property_type">
+<span class="type">char</span> *</td>
+<td class="property_name"><a class="link" href="WebKitWebPage.html#WebKitWebPage--uri" title="The “uri” property">uri</a></td>
+<td class="property_flags">Read</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebPage.signals"></a><h2>Signals</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="signal_proto_type">
+<col width="300px" class="signal_proto_name">
+<col width="200px" class="signal_proto_flags">
+</colgroup>
+<tbody>
+<tr>
+<td class="signal_type"><span class="returnvalue">void</span></td>
+<td class="signal_name"><a class="link" href="WebKitWebPage.html#WebKitWebPage-console-message-sent" title="The “console-message-sent” signal">console-message-sent</a></td>
+<td class="signal_flags"><a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
+</tr>
+<tr>
+<td class="signal_type"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a></td>
+<td class="signal_name"><a class="link" href="WebKitWebPage.html#WebKitWebPage-context-menu" title="The “context-menu” signal">context-menu</a></td>
+<td class="signal_flags"><a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
+</tr>
+<tr>
+<td class="signal_type"><span class="returnvalue">void</span></td>
+<td class="signal_name"><a class="link" href="WebKitWebPage.html#WebKitWebPage-document-loaded" title="The “document-loaded” signal">document-loaded</a></td>
+<td class="signal_flags"><a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
+</tr>
+<tr>
+<td class="signal_type"><span class="returnvalue">void</span></td>
+<td class="signal_name"><a class="link" href="WebKitWebPage.html#WebKitWebPage-form-controls-associated" title="The “form-controls-associated” signal">form-controls-associated</a></td>
+<td class="signal_flags"><a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
+</tr>
+<tr>
+<td class="signal_type"><span class="returnvalue">void</span></td>
+<td class="signal_name"><a class="link" href="WebKitWebPage.html#WebKitWebPage-form-controls-associated-for-frame" title="The “form-controls-associated-for-frame” signal">form-controls-associated-for-frame</a></td>
+<td class="signal_flags"><a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
+</tr>
+<tr>
+<td class="signal_type"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a></td>
+<td class="signal_name"><a class="link" href="WebKitWebPage.html#WebKitWebPage-send-request" title="The “send-request” signal">send-request</a></td>
+<td class="signal_flags"><a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
+</tr>
+<tr>
+<td class="signal_type"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a></td>
+<td class="signal_name"><a class="link" href="WebKitWebPage.html#WebKitWebPage-user-message-received" title="The “user-message-received” signal">user-message-received</a></td>
+<td class="signal_flags"><a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
+</tr>
+<tr>
+<td class="signal_type"><span class="returnvalue">void</span></td>
+<td class="signal_name"><a class="link" href="WebKitWebPage.html#WebKitWebPage-will-submit-form" title="The “will-submit-form” signal">will-submit-form</a></td>
+<td class="signal_flags"><a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebPage.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="datatype_keyword"> </td>
+<td class="function_name"><a class="link" href="WebKitWebPage.html#WebKitWebPage-struct" title="WebKitWebPage">WebKitWebPage</a></td>
+</tr>
+<tr>
+<td class="datatype_keyword">enum</td>
+<td class="function_name"><a class="link" href="WebKitWebPage.html#WebKitFormSubmissionStep" title="enum WebKitFormSubmissionStep">WebKitFormSubmissionStep</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebPage.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-Enumeration-and-Flag-Types.html">GEnum</a>
+    <span class="lineart">╰──</span> WebKitFormSubmissionStep
+    <a href="../gobject/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> WebKitWebPage
+</pre>
+</div>
+<div class="refsect1">
+<a name="WebKitWebPage.description"></a><h2>Description</h2>
+</div>
+<div class="refsect1">
+<a name="WebKitWebPage.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="webkit-web-page-get-dom-document"></a><h3>webkit_web_page_get_dom_document ()</h3>
+<pre class="programlisting"><a href="../webkitdomgtk-4.0/WebKitDOMDocument.html#WebKitDOMDocument-struct"><span class="returnvalue">WebKitDOMDocument</span></a> *
+webkit_web_page_get_dom_document (<em class="parameter"><code><a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> *web_page</code></em>);</pre>
+<p>Get the <a href="../webkitdomgtk-4.0/WebKitDOMDocument.html#WebKitDOMDocument-struct"><span class="type">WebKitDOMDocument</span></a> currently loaded in <em class="parameter"><code>web_page</code></em>
+</p>
+<div class="refsect3">
+<a name="webkit-web-page-get-dom-document.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>web_page</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-web-page-get-dom-document.returns"></a><h4>Returns</h4>
+<p>the <a href="../webkitdomgtk-4.0/WebKitDOMDocument.html#WebKitDOMDocument-struct"><span class="type">WebKitDOMDocument</span></a> currently loaded, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+if no document is currently loaded. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-web-page-get-id"></a><h3>webkit_web_page_get_id ()</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>
+webkit_web_page_get_id (<em class="parameter"><code><a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> *web_page</code></em>);</pre>
+<p>Get the identifier of the <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a></p>
+<div class="refsect3">
+<a name="webkit-web-page-get-id.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>web_page</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-web-page-get-id.returns"></a><h4>Returns</h4>
+<p> the identifier of <em class="parameter"><code>web_page</code></em>
+</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-web-page-get-uri"></a><h3>webkit_web_page_get_uri ()</h3>
+<pre class="programlisting">const <a href="../glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
+webkit_web_page_get_uri (<em class="parameter"><code><a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> *web_page</code></em>);</pre>
+<p>Returns the current active URI of <em class="parameter"><code>web_page</code></em>
+.</p>
+<p>You can monitor the active URI by connecting to the notify::uri
+signal of <em class="parameter"><code>web_page</code></em>
+.</p>
+<div class="refsect3">
+<a name="webkit-web-page-get-uri.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>web_page</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-web-page-get-uri.returns"></a><h4>Returns</h4>
+<p> the current active URI of <em class="parameter"><code>web_view</code></em>
+or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if nothing has been
+loaded yet.</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-web-page-get-main-frame"></a><h3>webkit_web_page_get_main_frame ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitFrame.html" title="WebKitFrame"><span class="returnvalue">WebKitFrame</span></a> *
+webkit_web_page_get_main_frame (<em class="parameter"><code><a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> *web_page</code></em>);</pre>
+<p>Returns the main frame of a <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a>.</p>
+<div class="refsect3">
+<a name="webkit-web-page-get-main-frame.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>web_page</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-web-page-get-main-frame.returns"></a><h4>Returns</h4>
+<p>the <a class="link" href="WebKitFrame.html" title="WebKitFrame"><span class="type">WebKitFrame</span></a> that is the main frame of <em class="parameter"><code>web_page</code></em>
+. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-2.html#api-index-2.2">2.2</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-web-page-get-editor"></a><h3>webkit_web_page_get_editor ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitWebEditor.html" title="WebKitWebEditor"><span class="returnvalue">WebKitWebEditor</span></a> *
+webkit_web_page_get_editor (<em class="parameter"><code><a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> *web_page</code></em>);</pre>
+<p>Gets the <a class="link" href="WebKitWebEditor.html" title="WebKitWebEditor"><span class="type">WebKitWebEditor</span></a> of a <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a>.</p>
+<div class="refsect3">
+<a name="webkit-web-page-get-editor.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>web_page</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-web-page-get-editor.returns"></a><h4>Returns</h4>
+<p>the <a class="link" href="WebKitWebEditor.html" title="WebKitWebEditor"><span class="type">WebKitWebEditor</span></a>. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-10.html#api-index-2.10">2.10</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-web-page-send-message-to-view"></a><h3>webkit_web_page_send_message_to_view ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_web_page_send_message_to_view (<em class="parameter"><code><a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> *web_page</code></em>,
+                                      <em class="parameter"><code><a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> *message</code></em>,
+                                      <em class="parameter"><code><a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                      <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                      <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Send <em class="parameter"><code>message</code></em>
+ to the <a class="link" href="WebKitWebView.html" title="The main frame document title of this #WebKitWebView. If the title has not been received yet, it will be %NULL."><span class="type">WebKitWebView</span></a> corresponding to <em class="parameter"><code>web_page</code></em>
+. If <em class="parameter"><code>message</code></em>
+ is floating, it's consumed.</p>
+<p>If you don't expect any reply, or you simply want to ignore it, you can pass <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> as <em class="parameter"><code>callback</code></em>
+.
+When the operation is finished, <em class="parameter"><code>callback</code></em>
+ will be called. You can then call
+<a class="link" href="WebKitWebPage.html#webkit-web-page-send-message-to-view-finish" title="webkit_web_page_send_message_to_view_finish ()"><code class="function">webkit_web_page_send_message_to_view_finish()</code></a> to get the message reply.</p>
+<div class="refsect3">
+<a name="webkit-web-page-send-message-to-view.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>web_page</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>message</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>(nullable): A <a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to callback function. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-28.html#api-index-2.28">2.28</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-web-page-send-message-to-view-finish"></a><h3>webkit_web_page_send_message_to_view_finish ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="returnvalue">WebKitUserMessage</span></a> *
+webkit_web_page_send_message_to_view_finish
+                               (<em class="parameter"><code><a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> *web_page</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *result</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Finish an asynchronous operation started with <a class="link" href="WebKitWebPage.html#webkit-web-page-send-message-to-view" title="webkit_web_page_send_message_to_view ()"><code class="function">webkit_web_page_send_message_to_view()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-web-page-send-message-to-view-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>web_page</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>result</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>return location for error or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignor</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-web-page-send-message-to-view-finish.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> with the reply or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> in case of error. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-28.html#api-index-2.28">2.28</a></p>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebPage.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="WebKitWebPage-struct"></a><h3>WebKitWebPage</h3>
+<pre class="programlisting">typedef struct _WebKitWebPage WebKitWebPage;</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitFormSubmissionStep"></a><h3>enum WebKitFormSubmissionStep</h3>
+<p>Used to indicate a particular stage in form submission. See
+<a class="link" href="WebKitWebPage.html#WebKitWebPage-will-submit-form" title="The “will-submit-form” signal"><span class="type">“will-submit-form”</span></a>.</p>
+<div class="refsect3">
+<a name="WebKitFormSubmissionStep.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="300px" class="enum_members_name">
+<col class="enum_members_description">
+<col width="200px" class="enum_members_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="enum_member_name"><p><a name="WEBKIT-FORM-SUBMISSION-WILL-SEND-DOM-EVENT:CAPS"></a>WEBKIT_FORM_SUBMISSION_WILL_SEND_DOM_EVENT</p></td>
+<td class="enum_member_description">
+<p>indicates the form's
+DOM submit event is about to be emitted.</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+<tr>
+<td class="enum_member_name"><p><a name="WEBKIT-FORM-SUBMISSION-WILL-COMPLETE:CAPS"></a>WEBKIT_FORM_SUBMISSION_WILL_COMPLETE</p></td>
+<td class="enum_member_description">
+<p>indicates the form is about
+to be submitted.</p>
+</td>
+<td class="enum_member_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-20.html#api-index-2.20">2.20</a></p>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebPage.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="WebKitWebPage--uri"></a><h3>The <code class="literal">“uri”</code> property</h3>
+<pre class="programlisting">  “uri”                      <span class="type">char</span> *</pre>
+<p>The current active URI of the <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a>.</p>
+<p>Owner: WebKitWebPage</p>
+<p>Flags: Read</p>
+<p>Default value: NULL</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebPage.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="WebKitWebPage-console-message-sent"></a><h3>The <code class="literal">“console-message-sent”</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+user_function (<a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a>        *web_page,
+               <a class="link" href="WebKitConsoleMessage.html" title="WebKitConsoleMessage"><span class="type">WebKitConsoleMessage</span></a> *console_message,
+               <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>              user_data)</pre>
+<p>Emitted when a message is sent to the console. This can be a message
+produced by the use of JavaScript console API, a JavaScript exception,
+a security error or other errors, warnings, debug or log messages.
+The <em class="parameter"><code>console_message</code></em>
+ contains information of the message.</p>
+<div class="refsect3">
+<a name="WebKitWebPage-console-message-sent.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>web_page</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> on which the signal is emitted</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>console_message</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitConsoleMessage.html" title="WebKitConsoleMessage"><span class="type">WebKitConsoleMessage</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data set when the signal handler was connected.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>Flags: <a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
+<p class="since">Since: <a class="link" href="api-index-2-12.html#api-index-2.12">2.12</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebPage-context-menu"></a><h3>The <code class="literal">“context-menu”</code> signal</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+user_function (<a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a>          *web_page,
+               <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a>      *context_menu,
+               <a class="link" href="WebKitWebHitTestResult.html" title="WebKitWebHitTestResult"><span class="type">WebKitWebHitTestResult</span></a> *hit_test_result,
+               <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>                user_data)</pre>
+<p>Emitted before a context menu is displayed in the UI Process to
+give the application a chance to customize the proposed menu,
+build its own context menu or pass user data to the UI Process.
+This signal is useful when the information available in the UI Process
+is not enough to build or customize the context menu, for example, to
+add menu entries depending on the <a href="../webkitdomgtk-4.0/WebKitDOMNode.html#WebKitDOMNode-struct"><span class="type">WebKitDOMNode</span></a> at the coordinates of the
+<em class="parameter"><code>hit_test_result</code></em>
+. Otherwise, it's recommended to use <a class="link" href="WebKitWebView.html#WebKitWebView-context-menu" title="The “context-menu” signal"><span class="type">“context-menu”</span></a>
+signal instead.</p>
+<div class="refsect3">
+<a name="WebKitWebPage-context-menu.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>web_page</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> on which the signal is emitted</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>context_menu</p></td>
+<td class="parameter_description"><p>the proposed <a class="link" href="WebKitContextMenu.html" title="WebKitContextMenu"><span class="type">WebKitContextMenu</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>hit_test_result</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebHitTestResult.html" title="WebKitWebHitTestResult"><span class="type">WebKitWebHitTestResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data set when the signal handler was connected.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="WebKitWebPage-context-menu.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the proposed <em class="parameter"><code>context_menu</code></em>
+has been modified, or <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</p>
+</div>
+<p>Flags: <a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
+<p class="since">Since: <a class="link" href="api-index-2-8.html#api-index-2.8">2.8</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebPage-document-loaded"></a><h3>The <code class="literal">“document-loaded”</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+user_function (<a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> *web_page,
+               <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>       user_data)</pre>
+<p>This signal is emitted when the DOM document of a <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> has been
+loaded.</p>
+<p>You can wait for this signal to get the DOM document with
+<a class="link" href="WebKitWebPage.html#webkit-web-page-get-dom-document" title="webkit_web_page_get_dom_document ()"><code class="function">webkit_web_page_get_dom_document()</code></a>.</p>
+<div class="refsect3">
+<a name="WebKitWebPage-document-loaded.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>web_page</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> on which the signal is emitted</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data set when the signal handler was connected.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>Flags: <a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebPage-form-controls-associated"></a><h3>The <code class="literal">“form-controls-associated”</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+user_function (<a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> *web_page,
+               <a href="../glib/glib-Pointer-Arrays.html#GPtrArray"><span class="type">GPtrArray</span></a>     *elements,
+               <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>       user_data)</pre>
+<p>Emitted after form elements (or form associated elements) are associated to a particular web
+page. This is useful to implement form auto filling for web pages where form fields are added
+dynamically. This signal might be emitted multiple times for the same web page.</p>
+<p>Note that this signal could be also emitted when form controls are moved between forms. In
+that case, the <em class="parameter"><code>elements</code></em>
+ array carries the list of those elements which have moved.</p>
+<p>Clients should take a reference to the members of the <em class="parameter"><code>elements</code></em>
+ array if it is desired to
+keep them alive after the signal handler returns.</p>
+<div class="warning">
+<p><code class="literal">WebKitWebPage::form-controls-associated</code> has been deprecated since version 2.26 and should not be used in newly-written code.</p>
+<p>, use <a class="link" href="WebKitWebPage.html#WebKitWebPage-form-controls-associated-for-frame" title="The “form-controls-associated-for-frame” signal"><span class="type">“form-controls-associated-for-frame”</span></a> instead.</p>
+</div>
+<div class="refsect3">
+<a name="WebKitWebPage-form-controls-associated.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>web_page</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> on which the signal is emitted</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>elements</p></td>
+<td class="parameter_description"><p>a <a href="../glib/glib-Pointer-Arrays.html#GPtrArray"><span class="type">GPtrArray</span></a> of
+<a href="../webkitdomgtk-4.0/WebKitDOMElement.html#WebKitDOMElement-struct"><span class="type">WebKitDOMElement</span></a> with the list of forms in the page. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> WebKitDOMElement][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data set when the signal handler was connected.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>Flags: <a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
+<p class="since">Since: <a class="link" href="api-index-2-16.html#api-index-2.16">2.16</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebPage-form-controls-associated-for-frame"></a><h3>The <code class="literal">“form-controls-associated-for-frame”</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+user_function (<a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> *web_page,
+               <a href="../glib/glib-Pointer-Arrays.html#GPtrArray"><span class="type">GPtrArray</span></a>     *elements,
+               <a class="link" href="WebKitFrame.html" title="WebKitFrame"><span class="type">WebKitFrame</span></a>   *frame,
+               <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>       user_data)</pre>
+<p>Emitted after form elements (or form associated elements) are associated to a particular web
+page. This is useful to implement form auto filling for web pages where form fields are added
+dynamically. This signal might be emitted multiple times for the same web page.</p>
+<p>Note that this signal could be also emitted when form controls are moved between forms. In
+that case, the <em class="parameter"><code>elements</code></em>
+ array carries the list of those elements which have moved.</p>
+<p>Clients should take a reference to the members of the <em class="parameter"><code>elements</code></em>
+ array if it is desired to
+keep them alive after the signal handler returns.</p>
+<div class="refsect3">
+<a name="WebKitWebPage-form-controls-associated-for-frame.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>web_page</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> on which the signal is emitted</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>elements</p></td>
+<td class="parameter_description"><p>a <a href="../glib/glib-Pointer-Arrays.html#GPtrArray"><span class="type">GPtrArray</span></a> of
+<a href="../webkitdomgtk-4.0/WebKitDOMElement.html#WebKitDOMElement-struct"><span class="type">WebKitDOMElement</span></a> with the list of forms in the page. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> WebKitDOMElement][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>frame</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitFrame.html" title="WebKitFrame"><span class="type">WebKitFrame</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data set when the signal handler was connected.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>Flags: <a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
+<p class="since">Since: <a class="link" href="api-index-2-26.html#api-index-2.26">2.26</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebPage-send-request"></a><h3>The <code class="literal">“send-request”</code> signal</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+user_function (<a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a>     *web_page,
+               <a class="link" href="WebKitURIRequest.html" title="WebKitURIRequest"><span class="type">WebKitURIRequest</span></a>  *request,
+               <a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a> *redirected_response,
+               <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>           user_data)</pre>
+<p>This signal is emitted when <em class="parameter"><code>request</code></em>
+ is about to be sent to
+the server. This signal can be used to modify the <a class="link" href="WebKitURIRequest.html" title="WebKitURIRequest"><span class="type">WebKitURIRequest</span></a>
+that will be sent to the server. You can also cancel the resource load
+operation by connecting to this signal and returning <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>.</p>
+<p>In case of a server redirection this signal is
+emitted again with the <em class="parameter"><code>request</code></em>
+ argument containing the new
+request to be sent to the server due to the redirection and the
+<em class="parameter"><code>redirected_response</code></em>
+ parameter containing the response
+received by the server for the initial request.</p>
+<p>Modifications to the <a class="link" href="WebKitURIRequest.html" title="WebKitURIRequest"><span class="type">WebKitURIRequest</span></a> and its associated
+<a href="../libsoup-2.4/SoupMessageHeaders.html#SoupMessageHeaders"><span class="type">SoupMessageHeaders</span></a> will be taken into account when the request
+is sent over the network.</p>
+<div class="refsect3">
+<a name="WebKitWebPage-send-request.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>web_page</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> on which the signal is emitted</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>request</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitURIRequest.html" title="WebKitURIRequest"><span class="type">WebKitURIRequest</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>redirected_response</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitURIResponse.html" title="WebKitURIResponse"><span class="type">WebKitURIResponse</span></a>, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data set when the signal handler was connected.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="WebKitWebPage-send-request.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> to stop other handlers from being invoked for the event.
+<a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> to continue emission of the event.</p>
+</div>
+<p>Flags: <a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebPage-user-message-received"></a><h3>The <code class="literal">“user-message-received”</code> signal</h3>
+<pre class="programlisting"><a href="../glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+user_function (<a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a>     *web_page,
+               <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> *message,
+               <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>           user_data)</pre>
+<p>This signal is emitted when a <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> is received from the
+<a class="link" href="WebKitWebView.html" title="The main frame document title of this #WebKitWebView. If the title has not been received yet, it will be %NULL."><span class="type">WebKitWebView</span></a> corresponding to <em class="parameter"><code>web_page</code></em>
+. You can reply to the message
+using <a class="link" href="WebKitUserMessage.html#webkit-user-message-send-reply" title="webkit_user_message_send_reply ()"><code class="function">webkit_user_message_send_reply()</code></a>.</p>
+<p>You can handle the user message asynchronously by calling <a href="../gobject/gobject-The-Base-Object-Type.html#g-object-ref"><code class="function">g_object_ref()</code></a> on
+<em class="parameter"><code>message</code></em>
+ and returning <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>. If the last reference of <em class="parameter"><code>message</code></em>
+ is removed
+and the message has been replied, the operation in the <a class="link" href="WebKitWebView.html" title="The main frame document title of this #WebKitWebView. If the title has not been received yet, it will be %NULL."><span class="type">WebKitWebView</span></a> will
+finish with error <a class="link" href="WebKitUserMessage.html#WEBKIT-USER-MESSAGE-UNHANDLED-MESSAGE:CAPS"><code class="literal">WEBKIT_USER_MESSAGE_UNHANDLED_MESSAGE</code></a>.</p>
+<div class="refsect3">
+<a name="WebKitWebPage-user-message-received.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>web_page</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> on which the signal is emitted</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>message</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> received</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data set when the signal handler was connected.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="WebKitWebPage-user-message-received.returns"></a><h4>Returns</h4>
+<p> <a href="../glib/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the message was handled, or <a href="../glib/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</p>
+</div>
+<p>Flags: <a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
+<p class="since">Since: <a class="link" href="api-index-2-28.html#api-index-2.28">2.28</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebPage-will-submit-form"></a><h3>The <code class="literal">“will-submit-form”</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+user_function (<a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a>           *web_page,
+               <a href="../webkitdomgtk-4.0/WebKitDOMElement.html#WebKitDOMElement-struct"><span class="type">WebKitDOMElement</span></a>        *form,
+               <a class="link" href="WebKitWebPage.html#WebKitFormSubmissionStep" title="enum WebKitFormSubmissionStep"><span class="type">WebKitFormSubmissionStep</span></a> step,
+               <a class="link" href="WebKitFrame.html" title="WebKitFrame"><span class="type">WebKitFrame</span></a>             *source_frame,
+               <a class="link" href="WebKitFrame.html" title="WebKitFrame"><span class="type">WebKitFrame</span></a>             *target_frame,
+               <a href="../glib/glib-Pointer-Arrays.html#GPtrArray"><span class="type">GPtrArray</span></a>               *text_field_names,
+               <a href="../glib/glib-Pointer-Arrays.html#GPtrArray"><span class="type">GPtrArray</span></a>               *text_field_values,
+               <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>                 user_data)</pre>
+<p>This signal is emitted to indicate various points during form
+submission. <em class="parameter"><code>step</code></em>
+ indicates the current stage of form submission.</p>
+<p>If this signal is emitted with <a class="link" href="WebKitWebPage.html#WEBKIT-FORM-SUBMISSION-WILL-SEND-DOM-EVENT:CAPS"><code class="literal">WEBKIT_FORM_SUBMISSION_WILL_SEND_DOM_EVENT</code></a>,
+then the DOM submit event is about to be emitted. JavaScript code
+may rely on the submit event to detect that the user has clicked
+on a submit button, and to possibly cancel the form submission
+before <a class="link" href="WebKitWebPage.html#WEBKIT-FORM-SUBMISSION-WILL-COMPLETE:CAPS"><code class="literal">WEBKIT_FORM_SUBMISSION_WILL_COMPLETE</code></a>. However, beware
+that, for historical reasons, the submit event is not emitted at
+all if the form submission is triggered by JavaScript. For these
+reasons, <a class="link" href="WebKitWebPage.html#WEBKIT-FORM-SUBMISSION-WILL-SEND-DOM-EVENT:CAPS"><code class="literal">WEBKIT_FORM_SUBMISSION_WILL_SEND_DOM_EVENT</code></a> may not
+be used to reliably detect whether a form will be submitted.
+Instead, use it to detect if a user has clicked on a form's
+submit button even if JavaScript later cancels the form
+submission, or to read the values of the form's fields even if
+JavaScript later clears certain fields before submitting. This
+may be needed, for example, to implement a robust browser
+password manager, as some misguided websites may use such
+techniques to attempt to thwart password managers.</p>
+<p>If this signal is emitted with <a class="link" href="WebKitWebPage.html#WEBKIT-FORM-SUBMISSION-WILL-COMPLETE:CAPS"><code class="literal">WEBKIT_FORM_SUBMISSION_WILL_COMPLETE</code></a>,
+the form will imminently be submitted. It can no longer be
+cancelled. This event always occurs immediately before a form is
+submitted to its target, so use this event to reliably detect
+when a form is submitted. This event occurs after
+<a class="link" href="WebKitWebPage.html#WEBKIT-FORM-SUBMISSION-WILL-SEND-DOM-EVENT:CAPS"><code class="literal">WEBKIT_FORM_SUBMISSION_WILL_SEND_DOM_EVENT</code></a> if that event is
+emitted.</p>
+<div class="refsect3">
+<a name="WebKitWebPage-will-submit-form.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>web_page</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> on which the signal is emitted</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>form</p></td>
+<td class="parameter_description"><p>the <a href="../webkitdomgtk-4.0/WebKitDOMElement.html#WebKitDOMElement-struct"><span class="type">WebKitDOMElement</span></a> to be submitted, which will always correspond to an HTMLFormElement</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>step</p></td>
+<td class="parameter_description"><p>a <span class="type">WebKitFormSubmissionEventType</span> indicating the current
+stage of form submission</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>source_frame</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitFrame.html" title="WebKitFrame"><span class="type">WebKitFrame</span></a> containing the form to be
+submitted</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>target_frame</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitFrame.html" title="WebKitFrame"><span class="type">WebKitFrame</span></a> containing the form's target,
+which may be the same as <em class="parameter"><code>source_frame</code></em>
+if no target was specified</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>text_field_names</p></td>
+<td class="parameter_description"><p>names of
+the form's text fields. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>text_field_values</p></td>
+<td class="parameter_description"><p>values
+of the form's text fields. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data set when the signal handler was connected.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>Flags: <a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
+<p class="since">Since: <a class="link" href="api-index-2-20.html#api-index-2.20">2.20</a></p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>

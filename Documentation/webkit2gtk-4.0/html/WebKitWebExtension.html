@@ -1,0 +1,544 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>WebKitWebExtension: WebKitGTK Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="WebKitGTK Reference Manual">
+<link rel="up" href="ch02.html" title="Web Extensions">
+<link rel="prev" href="ch02.html" title="Web Extensions">
+<link rel="next" href="WebKitWebPage.html" title="WebKitWebPage">
+<meta name="generator" content="GTK-Doc V1.33.0 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
+<td width="100%" align="left" class="shortcuts">
+<a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
+                  <a href="#WebKitWebExtension.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#WebKitWebExtension.object-hierarchy" class="shortcut">Object Hierarchy</a></span><span id="nav_signals">  <span class="dim">|</span> 
+                  <a href="#WebKitWebExtension.signals" class="shortcut">Signals</a></span>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch02.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="ch02.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="WebKitWebPage.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="WebKitWebExtension"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="WebKitWebExtension.top_of_page"></a>WebKitWebExtension</span></h2>
+<p>WebKitWebExtension — Represents a WebExtension of the WebProcess</p>
+</td>
+<td class="gallery_image" valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="WebKitWebExtension.functions"></a><h2>Functions</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
+</colgroup>
+<tbody>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<span class="c_punctuation">(</span><a class="link" href="WebKitWebExtension.html#WebKitWebExtensionInitializeFunction" title="WebKitWebExtensionInitializeFunction ()">*WebKitWebExtensionInitializeFunction</a><span class="c_punctuation">)</span> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<span class="c_punctuation">(</span><a class="link" href="WebKitWebExtension.html#WebKitWebExtensionInitializeWithUserDataFunction" title="WebKitWebExtensionInitializeWithUserDataFunction ()">*WebKitWebExtensionInitializeWithUserDataFunction</a><span class="c_punctuation">)</span> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="returnvalue">WebKitWebPage</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebExtension.html#webkit-web-extension-get-page" title="webkit_web_extension_get_page ()">webkit_web_extension_get_page</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">void</span>
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebExtension.html#webkit-web-extension-send-message-to-context" title="webkit_web_extension_send_message_to_context ()">webkit_web_extension_send_message_to_context</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="returnvalue">WebKitUserMessage</span></a> *
+</td>
+<td class="function_name">
+<a class="link" href="WebKitWebExtension.html#webkit-web-extension-send-message-to-context-finish" title="webkit_web_extension_send_message_to_context_finish ()">webkit_web_extension_send_message_to_context_finish</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebExtension.signals"></a><h2>Signals</h2>
+<div class="informaltable"><table class="informaltable" border="0">
+<colgroup>
+<col width="150px" class="signal_proto_type">
+<col width="300px" class="signal_proto_name">
+<col width="200px" class="signal_proto_flags">
+</colgroup>
+<tbody>
+<tr>
+<td class="signal_type"><span class="returnvalue">void</span></td>
+<td class="signal_name"><a class="link" href="WebKitWebExtension.html#WebKitWebExtension-page-created" title="The “page-created” signal">page-created</a></td>
+<td class="signal_flags"><a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
+</tr>
+<tr>
+<td class="signal_type"><span class="returnvalue">void</span></td>
+<td class="signal_name"><a class="link" href="WebKitWebExtension.html#WebKitWebExtension-user-message-received" title="The “user-message-received” signal">user-message-received</a></td>
+<td class="signal_flags"><a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebExtension.other"></a><h2>Types and Values</h2>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
+</colgroup>
+<tbody><tr>
+<td class="datatype_keyword">struct</td>
+<td class="function_name"><a class="link" href="WebKitWebExtension.html#WebKitWebExtension-struct" title="struct WebKitWebExtension">WebKitWebExtension</a></td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebExtension.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    <a href="../gobject/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> WebKitWebExtension
+</pre>
+</div>
+<div class="refsect1">
+<a name="WebKitWebExtension.description"></a><h2>Description</h2>
+<p>WebKitWebExtension is a loadable module for the WebProcess. It allows you to execute code in the
+WebProcess and being able to use the DOM API, to change any request or to inject custom
+JavaScript code, for example.</p>
+<p>To create a WebKitWebExtension you should write a module with an initialization function that could
+be either <code class="function">webkit_web_extension_initialize()</code> with prototype <a class="link" href="WebKitWebExtension.html#WebKitWebExtensionInitializeFunction" title="WebKitWebExtensionInitializeFunction ()"><span class="type">WebKitWebExtensionInitializeFunction</span></a> or
+<code class="function">webkit_web_extension_initialize_with_user_data()</code> with prototype <a class="link" href="WebKitWebExtension.html#WebKitWebExtensionInitializeWithUserDataFunction" title="WebKitWebExtensionInitializeWithUserDataFunction ()"><span class="type">WebKitWebExtensionInitializeWithUserDataFunction</span></a>.
+This function has to be public and it has to use the <a href="../glib/glib-Dynamic-Loading-of-Modules.html#G-MODULE-EXPORT:CAPS"><span class="type">G_MODULE_EXPORT</span></a> macro. It is called when the
+web process is initialized.</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="k">static</span> <span class="kt">void</span>
+<span class="n">web_page_created_callback</span> <span class="p">(</span><span class="n">WebKitWebExtension</span> <span class="o">*</span><span class="n">extension</span><span class="p">,</span>
+                           <span class="n">WebKitWebPage</span>      <span class="o">*</span><span class="n">web_page</span><span class="p">,</span>
+                           <span class="n">gpointer</span>            <span class="n">user_data</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">g_print</span> <span class="p">(</span><span class="s">&quot;Page %d created for %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+             <span class="n">webkit_web_page_get_id</span> <span class="p">(</span><span class="n">web_page</span><span class="p">),</span>
+             <span class="n">webkit_web_page_get_uri</span> <span class="p">(</span><span class="n">web_page</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="n">G_MODULE_EXPORT</span> <span class="kt">void</span>
+<span class="n">webkit_web_extension_initialize</span> <span class="p">(</span><span class="n">WebKitWebExtension</span> <span class="o">*</span><span class="n">extension</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">g_signal_connect</span> <span class="p">(</span><span class="n">extension</span><span class="p">,</span> <span class="s">&quot;page-created&quot;</span><span class="p">,</span>
+                      <span class="n">G_CALLBACK</span> <span class="p">(</span><span class="n">web_page_created_callback</span><span class="p">),</span>
+                      <span class="nb">NULL</span><span class="p">);</span>
+<span class="p">}</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>The previous piece of code shows a trivial example of an extension that notifies when
+a <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> is created.</p>
+<p>WebKit has to know where it can find the created WebKitWebExtension. To do so you
+should use the <a class="link" href="WebKitWebContext.html#webkit-web-context-set-web-extensions-directory" title="webkit_web_context_set_web_extensions_directory ()"><code class="function">webkit_web_context_set_web_extensions_directory()</code></a> function. The signal
+<a class="link" href="WebKitWebContext.html#WebKitWebContext-initialize-web-extensions" title="The “initialize-web-extensions” signal"><span class="type">“initialize-web-extensions”</span></a> is the recommended place to call it.</p>
+<p>To provide the initialization data used by the <code class="function">webkit_web_extension_initialize_with_user_data()</code>
+function, you have to call <a class="link" href="WebKitWebContext.html#webkit-web-context-set-web-extensions-initialization-user-data" title="webkit_web_context_set_web_extensions_initialization_user_data ()"><code class="function">webkit_web_context_set_web_extensions_initialization_user_data()</code></a> with
+the desired data as parameter. You can see an example of this in the following piece of code:</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="cp">#define WEB_EXTENSIONS_DIRECTORY </span><span class="cm">/* ... */</span><span class="cp"></span>
+
+<span class="k">static</span> <span class="kt">void</span>
+<span class="n">initialize_web_extensions</span> <span class="p">(</span><span class="n">WebKitWebContext</span> <span class="o">*</span><span class="n">context</span><span class="p">,</span>
+                           <span class="n">gpointer</span>          <span class="n">user_data</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="cm">/* Web Extensions get a different ID for each Web Process */</span>
+  <span class="k">static</span> <span class="n">guint32</span> <span class="n">unique_id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="n">webkit_web_context_set_web_extensions_directory</span> <span class="p">(</span>
+     <span class="n">context</span><span class="p">,</span> <span class="n">WEB_EXTENSIONS_DIRECTORY</span><span class="p">);</span>
+  <span class="n">webkit_web_context_set_web_extensions_initialization_user_data</span> <span class="p">(</span>
+     <span class="n">context</span><span class="p">,</span> <span class="n">g_variant_new_uint32</span> <span class="p">(</span><span class="n">unique_id</span><span class="o">++</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span> <span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">g_signal_connect</span> <span class="p">(</span><span class="n">webkit_web_context_get_default</span> <span class="p">(),</span>
+                   <span class="s">&quot;initialize-web-extensions&quot;</span><span class="p">,</span>
+                    <span class="n">G_CALLBACK</span> <span class="p">(</span><span class="n">initialize_web_extensions</span><span class="p">),</span>
+                    <span class="nb">NULL</span><span class="p">);</span>
+
+  <span class="n">GtkWidget</span> <span class="o">*</span><span class="n">view</span> <span class="o">=</span> <span class="n">webkit_web_view_new</span> <span class="p">();</span>
+
+  <span class="cm">/* ... */</span>
+<span class="p">}</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+<div class="refsect1">
+<a name="WebKitWebExtension.functions_details"></a><h2>Functions</h2>
+<div class="refsect2">
+<a name="WebKitWebExtensionInitializeFunction"></a><h3>WebKitWebExtensionInitializeFunction ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+<span class="c_punctuation">(</span>*WebKitWebExtensionInitializeFunction<span class="c_punctuation">)</span>
+                               (<em class="parameter"><code><a class="link" href="WebKitWebExtension.html" title="WebKitWebExtension"><span class="type">WebKitWebExtension</span></a> *extension</code></em>);</pre>
+<p>Type definition for a function that will be called to initialize
+the web extension when the web process starts.</p>
+<div class="refsect3">
+<a name="WebKitWebExtensionInitializeFunction.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>extension</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebExtension.html" title="WebKitWebExtension"><span class="type">WebKitWebExtension</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebExtensionInitializeWithUserDataFunction"></a><h3>WebKitWebExtensionInitializeWithUserDataFunction ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+<span class="c_punctuation">(</span>*WebKitWebExtensionInitializeWithUserDataFunction<span class="c_punctuation">)</span>
+                               (<em class="parameter"><code><a class="link" href="WebKitWebExtension.html" title="WebKitWebExtension"><span class="type">WebKitWebExtension</span></a> *extension</code></em>,
+                                <em class="parameter"><code>const <a href="../glib/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *user_data</code></em>);</pre>
+<p>Type definition for a function that will be called to initialize
+the web extensions when the web process starts, and which receives
+as additional argument the user data set with
+<a class="link" href="WebKitWebContext.html#webkit-web-context-set-web-extensions-initialization-user-data" title="webkit_web_context_set_web_extensions_initialization_user_data ()"><code class="function">webkit_web_context_set_web_extensions_initialization_user_data()</code></a>.</p>
+<div class="refsect3">
+<a name="WebKitWebExtensionInitializeWithUserDataFunction.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>extension</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebExtension.html" title="WebKitWebExtension"><span class="type">WebKitWebExtension</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>a <a href="../glib/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-4.html#api-index-2.4">2.4</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-web-extension-get-page"></a><h3>webkit_web_extension_get_page ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="returnvalue">WebKitWebPage</span></a> *
+webkit_web_extension_get_page (<em class="parameter"><code><a class="link" href="WebKitWebExtension.html" title="WebKitWebExtension"><span class="type">WebKitWebExtension</span></a> *extension</code></em>,
+                               <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> page_id</code></em>);</pre>
+<p>Get the web page of the given <em class="parameter"><code>page_id</code></em>
+.</p>
+<div class="refsect3">
+<a name="webkit-web-extension-get-page.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>extension</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebExtension.html" title="WebKitWebExtension"><span class="type">WebKitWebExtension</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>page_id</p></td>
+<td class="parameter_description"><p>the identifier of the <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> to get</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-web-extension-get-page.returns"></a><h4>Returns</h4>
+<p>the <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> for the given <em class="parameter"><code>page_id</code></em>
+, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the
+identifier doesn't correspond to an existing web page. </p>
+<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-web-extension-send-message-to-context"></a><h3>webkit_web_extension_send_message_to_context ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+webkit_web_extension_send_message_to_context
+                               (<em class="parameter"><code><a class="link" href="WebKitWebExtension.html" title="WebKitWebExtension"><span class="type">WebKitWebExtension</span></a> *extension</code></em>,
+                                <em class="parameter"><code><a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> *message</code></em>,
+                                <em class="parameter"><code><a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>Send <em class="parameter"><code>message</code></em>
+ to the <a class="link" href="WebKitWebContext.html" title="WebKitWebContext"><span class="type">WebKitWebContext</span></a> corresponding to <em class="parameter"><code>extension</code></em>
+. If <em class="parameter"><code>message</code></em>
+ is floating, it's consumed.</p>
+<p>If you don't expect any reply, or you simply want to ignore it, you can pass <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> as <em class="parameter"><code>calback</code></em>
+.
+When the operation is finished, <em class="parameter"><code>callback</code></em>
+ will be called. You can then call
+<a class="link" href="WebKitWebExtension.html#webkit-web-extension-send-message-to-context-finish" title="webkit_web_extension_send_message_to_context_finish ()"><code class="function">webkit_web_extension_send_message_to_context_finish()</code></a> to get the message reply.</p>
+<div class="refsect3">
+<a name="webkit-web-extension-send-message-to-context.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>extension</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebExtension.html" title="WebKitWebExtension"><span class="type">WebKitWebExtension</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>message</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>cancellable</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignore. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL may be passed as the value in, out, in-out; or as a return value."><span class="acronym">nullable</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>callback</p></td>
+<td class="parameter_description"><p>(nullable): A <a href="../gio/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The callback is valid until first called."><span class="acronym">scope async</span></acronym>]</span></td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>the data to pass to callback function. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-28.html#api-index-2.28">2.28</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="webkit-web-extension-send-message-to-context-finish"></a><h3>webkit_web_extension_send_message_to_context_finish ()</h3>
+<pre class="programlisting"><a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="returnvalue">WebKitUserMessage</span></a> *
+webkit_web_extension_send_message_to_context_finish
+                               (<em class="parameter"><code><a class="link" href="WebKitWebExtension.html" title="WebKitWebExtension"><span class="type">WebKitWebExtension</span></a> *extension</code></em>,
+                                <em class="parameter"><code><a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *result</code></em>,
+                                <em class="parameter"><code><a href="../glib/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>Finish an asynchronous operation started with <a class="link" href="WebKitWebExtension.html#webkit-web-extension-send-message-to-context" title="webkit_web_extension_send_message_to_context ()"><code class="function">webkit_web_extension_send_message_to_context()</code></a>.</p>
+<div class="refsect3">
+<a name="webkit-web-extension-send-message-to-context-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>extension</p></td>
+<td class="parameter_description"><p>a <a class="link" href="WebKitWebExtension.html" title="WebKitWebExtension"><span class="type">WebKitWebExtension</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>result</p></td>
+<td class="parameter_description"><p>a <a href="../gio/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>error</p></td>
+<td class="parameter_description"><p>return location for error or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to ignor</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="webkit-web-extension-send-message-to-context-finish.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> with the reply or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> in case of error. </p>
+<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+</div>
+<p class="since">Since: <a class="link" href="api-index-2-28.html#api-index-2.28">2.28</a></p>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebExtension.other_details"></a><h2>Types and Values</h2>
+<div class="refsect2">
+<a name="WebKitWebExtension-struct"></a><h3>struct WebKitWebExtension</h3>
+<pre class="programlisting">struct WebKitWebExtension;</pre>
+</div>
+</div>
+<div class="refsect1">
+<a name="WebKitWebExtension.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="WebKitWebExtension-page-created"></a><h3>The <code class="literal">“page-created”</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+user_function (<a class="link" href="WebKitWebExtension.html" title="WebKitWebExtension"><span class="type">WebKitWebExtension</span></a> *extension,
+               <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a>      *web_page,
+               <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>            user_data)</pre>
+<p>This signal is emitted when a new <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> is created in
+the Web Process.</p>
+<div class="refsect3">
+<a name="WebKitWebExtension-page-created.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>extension</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitWebExtension.html" title="WebKitWebExtension"><span class="type">WebKitWebExtension</span></a> on which the signal is emitted</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>web_page</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitWebPage.html" title="WebKitWebPage"><span class="type">WebKitWebPage</span></a> created</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data set when the signal handler was connected.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>Flags: <a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="WebKitWebExtension-user-message-received"></a><h3>The <code class="literal">“user-message-received”</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>
+user_function (<a class="link" href="WebKitWebExtension.html" title="WebKitWebExtension"><span class="type">WebKitWebExtension</span></a> *extension,
+               <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a>  *message,
+               <a href="../glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>            user_data)</pre>
+<p>This signal is emitted when a <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> is received from the
+<a class="link" href="WebKitWebContext.html" title="WebKitWebContext"><span class="type">WebKitWebContext</span></a> corresponding to <em class="parameter"><code>extension</code></em>
+. Messages sent by <a class="link" href="WebKitWebContext.html" title="WebKitWebContext"><span class="type">WebKitWebContext</span></a>
+are always broadcasted to all <a class="link" href="WebKitWebExtension.html" title="WebKitWebExtension"><span class="type">WebKitWebExtension</span></a>s and they can't be
+replied to. Calling <a class="link" href="WebKitUserMessage.html#webkit-user-message-send-reply" title="webkit_user_message_send_reply ()"><code class="function">webkit_user_message_send_reply()</code></a> will do nothing.</p>
+<div class="refsect3">
+<a name="WebKitWebExtension-user-message-received.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>extension</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitWebExtension.html" title="WebKitWebExtension"><span class="type">WebKitWebExtension</span></a> on which the signal is emitted</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>message</p></td>
+<td class="parameter_description"><p>the <a class="link" href="WebKitUserMessage.html" title="WebKitUserMessage"><span class="type">WebKitUserMessage</span></a> received</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>user_data</p></td>
+<td class="parameter_description"><p>user data set when the signal handler was connected.</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>Flags: <a href="../gobject/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
+<p class="since">Since: <a class="link" href="api-index-2-28.html#api-index-2.28">2.28</a></p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>Generated by GTK-Doc V1.33.0</div>
+</body>
+</html>
