@@ -123,7 +123,6 @@ endif ()
 # without approval from a GTK reviewer. There must be strong reason to support
 # changing the value of the option.
 WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_DRAG_SUPPORT PUBLIC ON)
-WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_GAMEPAD PUBLIC ON)
 WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_SPELLCHECK PUBLIC ON)
 WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_TOUCH_EVENTS PUBLIC ON)
 WEBKIT_OPTION_DEFAULT_PORT_VALUE(ENABLE_WEB_CRYPTO PUBLIC ON)
@@ -283,14 +282,6 @@ if (USE_WPE_RENDERER)
     if (NOT WPEBACKEND_FDO_FOUND)
         message(FATAL_ERROR "WPEBackend-fdo is required for USE_WPE_RENDERER")
     endif ()
-endif ()
-
-if (ENABLE_GAMEPAD)
-    find_package(Manette 0.2.4)
-    if (NOT Manette_FOUND)
-        message(FATAL_ERROR "libmanette is required for ENABLE_GAMEPAD")
-    endif ()
-    SET_AND_EXPOSE_TO_BUILD(USE_MANETTE TRUE)
 endif ()
 
 if (ENABLE_XSLT)
