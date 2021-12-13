@@ -431,11 +431,6 @@ private:
 
     bool isSameSecurityOriginAsMainFrame() const;
 
-#if ENABLE(GAMEPAD)
-    void incrementGamepadEventListenerCount();
-    void decrementGamepadEventListenerCount();
-#endif
-
     bool m_shouldPrintWhenFinishedLoading { false };
     bool m_suspendedForDocumentSuspension { false };
     bool m_isSuspendingObservers { false };

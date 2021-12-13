@@ -97,7 +97,6 @@
 #include "WebFrameLoaderClient.h"
 #include "WebFullScreenManager.h"
 #include "WebFullScreenManagerMessages.h"
-#include "WebGamepadProvider.h"
 #include "WebGeolocationClient.h"
 #include "WebImage.h"
 #include "WebInspector.h"
@@ -6844,15 +6843,6 @@ void WebPage::setUserInterfaceLayoutDirection(uint32_t direction)
     m_userInterfaceLayoutDirection = static_cast<WebCore::UserInterfaceLayoutDirection>(direction);
     m_page->setUserInterfaceLayoutDirection(m_userInterfaceLayoutDirection);
 }
-
-#if ENABLE(GAMEPAD)
-
-void WebPage::gamepadActivity(const Vector<GamepadData>& gamepadDatas, EventMakesGamepadsVisible eventVisibilty)
-{
-    WebGamepadProvider::singleton().gamepadActivity(gamepadDatas, eventVisibilty);
-}
-
-#endif
 
 #if ENABLE(POINTER_LOCK)
 void WebPage::didAcquirePointerLock()

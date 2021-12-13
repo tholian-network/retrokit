@@ -437,22 +437,6 @@
         "category": "css"
     },
     {
-        "name": "Gamepad",
-        "status": {
-            "status": "Supported"
-        },
-        "url": "https://www.w3.org/TR/gamepad/",
-        "webkit-url": "https://webkit.org/b/134076",
-        "keywords": ["gamepad", "gaming", "games", "controller"],
-        "category": "webapps",
-        "description": "An interface for accessing and responding to game controller device state.",
-        "contact": {
-            "name": "Jonathan Davis",
-            "email": "web-evangelist@apple.com",
-            "twitter": "@jonathandavis"
-        }
-    },
-    {
         "name": "Geolocation API",
         "status": {
             "status": "Supported"

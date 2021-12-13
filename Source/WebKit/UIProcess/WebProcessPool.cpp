@@ -41,7 +41,6 @@
 #include "DownloadProxyMessages.h"
 #include "GPUProcessConnectionInfo.h"
 #include "GPUProcessConnectionParameters.h"
-#include "GamepadData.h"
 #include "HighPerformanceGraphicsUsageSampler.h"
 #include "LegacyGlobalSettings.h"
 #include "LogInitialization.h"
@@ -53,8 +52,6 @@
 #include "PluginProcessManager.h"
 #include "SandboxExtension.h"
 #include "TextChecker.h"
-#include "UIGamepad.h"
-#include "UIGamepadProvider.h"
 #include "WKContextPrivate.h"
 #include "WebAutomationSession.h"
 #include "WebBackForwardCache.h"
@@ -132,9 +129,6 @@
 
 #if PLATFORM(COCOA)
 #include "DefaultWebBrowserChecks.h"
-#include <WebCore/GameControllerGamepadProvider.h>
-#include <WebCore/HIDGamepadProvider.h>
-#include <WebCore/MultiGamepadProvider.h>
 #include <WebCore/PowerSourceNotifier.h>
 #include <WebCore/VersionChecks.h>
 #endif
@@ -293,11 +287,6 @@ WebProcessPool::~WebProcessPool()
 
 #ifndef NDEBUG
     processPoolCounter.decrement();
-#endif
-
-#if ENABLE(GAMEPAD)
-    if (!m_processesUsingGamepads.computesEmpty())
-        UIGamepadProvider::singleton().processPoolStoppedUsingGamepads(*this);
 #endif
 
     // Only remaining processes should be pre-warmed ones as other keep the process pool alive.
@@ -959,11 +948,6 @@ void WebProcessPool::disconnectProcess(WebProcessProxy& process)
 
     m_processes.removeFirst(process);
 
-#if ENABLE(GAMEPAD)
-    if (m_processesUsingGamepads.contains(process))
-        processStoppedUsingGamepads(process);
-#endif
-
     removeProcessFromOriginCacheSet(process);
 }
 
@@ -1575,91 +1559,6 @@ void WebProcessPool::handleSynchronousMessage(IPC::Connection& connection, const
     m_injectedBundleClient->didReceiveSynchronousMessageFromInjectedBundle(*this, messageName, webProcessProxy->transformHandlesToObjects(messageBody.object()).get(), [webProcessProxy = makeRef(*webProcessProxy), completionHandler = WTFMove(completionHandler)] (RefPtr<API::Object>&& returnData) mutable {
         completionHandler(UserData(webProcessProxy->transformObjectsToHandles(returnData.get())));
     });
-}
-
-#if ENABLE(GAMEPAD)
-
-void WebProcessPool::startedUsingGamepads(IPC::Connection& connection)
-{
-    auto* proxy = webProcessProxyFromConnection(connection, m_processes);
-    if (!proxy)
-        return;
-
-    bool wereAnyProcessesUsingGamepads = !m_processesUsingGamepads.computesEmpty();
-
-    ASSERT(!m_processesUsingGamepads.contains(*proxy));
-    m_processesUsingGamepads.add(proxy);
-
-    if (!wereAnyProcessesUsingGamepads)
-        UIGamepadProvider::singleton().processPoolStartedUsingGamepads(*this);
-
-    proxy->send(Messages::WebProcess::SetInitialGamepads(UIGamepadProvider::singleton().snapshotGamepads()), 0);
-}
-
-void WebProcessPool::stoppedUsingGamepads(IPC::Connection& connection)
-{
-    auto* proxy = webProcessProxyFromConnection(connection, m_processes);
-    if (!proxy)
-        return;
-
-    ASSERT(m_processesUsingGamepads.contains(*proxy));
-    processStoppedUsingGamepads(*proxy);
-}
-
-void WebProcessPool::processStoppedUsingGamepads(WebProcessProxy& process)
-{
-    bool wereAnyProcessesUsingGamepads = !m_processesUsingGamepads.computesEmpty();
-
-    ASSERT(m_processesUsingGamepads.contains(process));
-    m_processesUsingGamepads.remove(process);
-
-    if (wereAnyProcessesUsingGamepads && m_processesUsingGamepads.computesEmpty())
-        UIGamepadProvider::singleton().processPoolStoppedUsingGamepads(*this);
-}
-
-void WebProcessPool::gamepadConnected(const UIGamepad& gamepad, EventMakesGamepadsVisible eventVisibility)
-{
-    for (auto& process : m_processesUsingGamepads)
-        process.send(Messages::WebProcess::GamepadConnected(gamepad.gamepadData(), eventVisibility), 0);
-}
-
-void WebProcessPool::gamepadDisconnected(const UIGamepad& gamepad)
-{
-    for (auto& process : m_processesUsingGamepads)
-        process.send(Messages::WebProcess::GamepadDisconnected(gamepad.index()), 0);
-}
-
-#endif // ENABLE(GAMEPAD)
-
-size_t WebProcessPool::numberOfConnectedGamepadsForTesting(GamepadType gamepadType)
-{
-#if ENABLE(GAMEPAD)
-    switch (gamepadType) {
-    case GamepadType::All:
-        return UIGamepadProvider::singleton().numberOfConnectedGamepads();
-#if PLATFORM(MAC)
-    case GamepadType::HID:
-        return HIDGamepadProvider::singleton().numberOfConnectedGamepads();
-    case GamepadType::GameControllerFramework:
-        return GameControllerGamepadProvider::singleton().numberOfConnectedGamepads();
-#else
-    case GamepadType::HID:
-    case GamepadType::GameControllerFramework:
-        return 0;
-    default:
-        return 0;
-#endif
-    }
-#else
-    return 0;
-#endif
-}
-
-void WebProcessPool::setUsesOnlyHIDGamepadProviderForTesting(bool hidProviderOnly)
-{
-#if ENABLE(GAMEPAD) && HAVE(MULTIGAMEPADPROVIDER_SUPPORT)
-    MultiGamepadProvider::singleton().setUsesOnlyHIDGamepadProvider(hidProviderOnly);
-#endif
 }
 
 void WebProcessPool::setJavaScriptConfigurationFileEnabled(bool flag)

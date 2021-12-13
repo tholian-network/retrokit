@@ -24,10 +24,5 @@ messages -> WebProcessPool {
     HandleMessage(String messageName, WebKit::UserData messageBody) WantsConnection
     HandleSynchronousMessage(String messageName, WebKit::UserData messageBody) -> (WebKit::UserData returnData) Synchronous WantsConnection
 
-#if ENABLE(GAMEPAD)
-    StartedUsingGamepads() WantsConnection
-    StoppedUsingGamepads() WantsConnection
-#endif
-
     ReportWebContentCPUTime(Seconds cpuTime, uint64_t activityState)
 }

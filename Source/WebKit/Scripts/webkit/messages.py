@@ -696,7 +696,6 @@ def headers_for_type(type):
         'WebCore::DragHandlingMethod': ['<WebCore/DragActions.h>'],
         'WebCore::DragOperation': ['<WebCore/DragActions.h>'],
         'WebCore::DragSourceAction': ['<WebCore/DragActions.h>'],
-        'WebCore::EventMakesGamepadsVisible': ['<WebCore/GamepadProviderClient.h>'],
         'WebCore::ExceptionDetails': ['<WebCore/JSDOMExceptionHandling.h>'],
         'WebCore::FileChooserSettings': ['<WebCore/FileChooser.h>'],
         'WebCore::FirstPartyWebsiteDataRemovalMode': ['<WebCore/NetworkStorageSession.h>'],

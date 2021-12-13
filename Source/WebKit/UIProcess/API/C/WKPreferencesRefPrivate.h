@@ -367,10 +367,6 @@ WK_EXPORT void WKPreferencesSetImageControlsEnabled(WKPreferencesRef preferences
 WK_EXPORT bool WKPreferencesGetImageControlsEnabled(WKPreferencesRef preferencesRef);
 
 // Default to false.
-WK_EXPORT void WKPreferencesSetGamepadsEnabled(WKPreferencesRef preferencesRef, bool enabled);
-WK_EXPORT bool WKPreferencesGetGamepadsEnabled(WKPreferencesRef preferencesRef);
-
-// Default to false.
 WK_EXPORT void WKPreferencesSetHighlightAPIEnabled(WKPreferencesRef preferencesRef, bool enabled);
 WK_EXPORT bool WKPreferencesGetHighlightAPIEnabled(WKPreferencesRef preferencesRef);
 

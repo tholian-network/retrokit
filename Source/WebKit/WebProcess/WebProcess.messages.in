@@ -94,12 +94,6 @@ messages -> WebProcess LegacyReceiver NotRefCounted {
 
     BackgroundResponsivenessPing()
 
-#if ENABLE(GAMEPAD)
-    SetInitialGamepads(Vector<WebKit::GamepadData> gamepadDatas)
-    GamepadConnected(WebKit::GamepadData gamepadData, enum:bool WebCore::EventMakesGamepadsVisible eventVisibility)
-    GamepadDisconnected(unsigned index)
-#endif
-
 #if ENABLE(SERVICE_WORKER)
     EstablishWorkerContextConnectionToNetworkProcess(WebKit::PageGroupIdentifier pageGroupID, WebKit::WebPageProxyIdentifier webPageProxyID, WebCore::PageIdentifier pageID, struct WebKit::WebPreferencesStore store, WebCore::RegistrableDomain domain, struct WebKit::ServiceWorkerInitializationData initializationData) -> () Async
 #endif

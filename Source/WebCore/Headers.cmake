@@ -1191,11 +1191,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/encryptedmedia/CDMSessionType.h
     platform/encryptedmedia/CDMUtilities.h
 
-    platform/gamepad/GamepadProvider.h
-    platform/gamepad/GamepadProviderClient.h
-    platform/gamepad/PlatformGamepad.h
-    platform/gamepad/SharedGamepadValue.h
-
     platform/graphics/AlphaPremultiplication.h
     platform/graphics/ANGLEWebKitBridge.h
     platform/graphics/AnimationFrameRate.h
@@ -1686,9 +1681,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     svg/properties/SVGProperty.h
     svg/properties/SVGPropertyOwner.h
     svg/properties/SVGPropertyTraits.h
-
-    testing/MockGamepad.h
-    testing/MockGamepadProvider.h
 
     workers/ScriptBuffer.h
     workers/WorkerAnimationController.h

@@ -137,10 +137,6 @@
 #include "WebKitNamespace.h"
 #endif
 
-#if ENABLE(GAMEPAD)
-#include "GamepadManager.h"
-#endif
-
 #if ENABLE(GEOLOCATION)
 #include "NavigatorGeolocation.h"
 #endif
@@ -437,11 +433,6 @@ DOMWindow::~DOMWindow()
     removeAllUnloadEventListeners(this);
     removeAllBeforeUnloadEventListeners(this);
 
-#if ENABLE(GAMEPAD)
-    if (m_gamepadEventListenerCount)
-        GamepadManager::singleton().unregisterDOMWindow(this);
-#endif
-
     removeLanguageChangeObserver(this);
 }
 
@@ -503,24 +494,6 @@ void DOMWindow::willDetachDocumentFromFrame()
     JSDOMWindowBase::fireFrameClearedWatchpointsForWindow(this);
     InspectorInstrumentation::frameWindowDiscarded(*frame(), this);
 }
-
-#if ENABLE(GAMEPAD)
-
-void DOMWindow::incrementGamepadEventListenerCount()
-{
-    if (++m_gamepadEventListenerCount == 1)
-        GamepadManager::singleton().registerDOMWindow(this);
-}
-
-void DOMWindow::decrementGamepadEventListenerCount()
-{
-    ASSERT(m_gamepadEventListenerCount);
-
-    if (!--m_gamepadEventListenerCount)
-        GamepadManager::singleton().unregisterDOMWindow(this);
-}
-
-#endif
 
 void DOMWindow::registerObserver(Observer& observer)
 {
@@ -1987,10 +1960,6 @@ bool DOMWindow::addEventListener(const AtomString& eventType, Ref<EventListener>
     else if (eventNames().isGestureEventType(eventType))
         ++m_touchAndGestureEventListenerCount;
 #endif
-#if ENABLE(GAMEPAD)
-    else if (eventNames().isGamepadEventType(eventType))
-        incrementGamepadEventListenerCount();
-#endif
 #if ENABLE(DEVICE_ORIENTATION)
     else if (eventType == eventNames().deviceorientationEvent)
         startListeningForDeviceOrientationIfNecessary();
@@ -2230,10 +2199,6 @@ bool DOMWindow::removeEventListener(const AtomString& eventType, EventListener& 
         ASSERT(m_touchAndGestureEventListenerCount > 0);
         --m_touchAndGestureEventListenerCount;
     }
-#endif
-#if ENABLE(GAMEPAD)
-    else if (eventNames().isGamepadEventType(eventType))
-        decrementGamepadEventListenerCount();
 #endif
 #if ENABLE(DEVICE_ORIENTATION)
     else if (eventType == eventNames().deviceorientationEvent)

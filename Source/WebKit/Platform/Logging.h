@@ -54,7 +54,6 @@ extern "C" {
     M(DragAndDrop) \
     M(EME) \
     M(Fullscreen) \
-    M(Gamepad) \
     M(IPC) \
     M(ITPDebug) \
     M(IconDatabase) \

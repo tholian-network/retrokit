@@ -271,16 +271,6 @@ platform/cocoa/VideoFullscreenModelVideoElement.mm
 platform/cocoa/VideoToolboxSoftLink.cpp
 platform/cocoa/WebCoreAdditions.mm @no-unify
 platform/cocoa/WebCoreNSErrorExtras.mm
-platform/gamepad/cocoa/GameControllerGamepad.mm
-platform/gamepad/cocoa/GameControllerGamepadProvider.mm
-platform/gamepad/mac/Dualshock3HIDGamepad.cpp
-platform/gamepad/mac/GenericHIDGamepad.cpp
-platform/gamepad/mac/HIDGamepad.cpp
-platform/gamepad/mac/HIDGamepadElement.cpp
-platform/gamepad/mac/HIDGamepadProvider.mm
-platform/gamepad/mac/LogitechGamepad.cpp
-platform/gamepad/mac/MultiGamepadProvider.mm
-platform/gamepad/mac/StadiaHIDGamepad.cpp
 platform/graphics/MediaPlaybackTargetPicker.cpp
 platform/graphics/avfoundation/AVTrackPrivateAVFObjCImpl.mm @no-unify
 platform/graphics/avfoundation/AudioSourceProviderAVFObjC.mm @no-unify

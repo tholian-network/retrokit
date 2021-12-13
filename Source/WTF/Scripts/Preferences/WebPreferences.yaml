@@ -854,19 +854,6 @@ GStreamerEnabled:
     WebKit:
       default: true
 
-GamepadsEnabled:
-  type: bool
-  humanReadableName: "Gamepads"
-  humanReadableDescription: "Web Gamepad API support"
-  condition: ENABLE(GAMEPAD)
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      default: true
-    WebCore:
-      default: false
-
 HTTPEquivEnabled:
   type: bool
   webcoreName: httpEquivEnabled

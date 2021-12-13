@@ -8380,15 +8380,6 @@ void WebPageProxy::backForwardClear()
     m_backForwardList->clear();
 }
 
-#if ENABLE(GAMEPAD)
-
-void WebPageProxy::gamepadActivity(const Vector<GamepadData>& gamepadDatas, EventMakesGamepadsVisible eventVisibility)
-{
-    send(Messages::WebPage::GamepadActivity(gamepadDatas, eventVisibility));
-}
-
-#endif
-
 void WebPageProxy::didReceiveAuthenticationChallengeProxy(Ref<AuthenticationChallengeProxy>&& authenticationChallenge, NegotiatedLegacyTLS negotiatedLegacyTLS)
 {
     if (negotiatedLegacyTLS == NegotiatedLegacyTLS::Yes) {

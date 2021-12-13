@@ -61,7 +61,6 @@
 #include "WebCoreArgumentCoders.h"
 #include "WebFrame.h"
 #include "WebFrameNetworkingContext.h"
-#include "WebGamepadProvider.h"
 #include "WebGeolocationManager.h"
 #include "WebIDBConnectionToServer.h"
 #include "WebLoaderStrategy.h"
@@ -535,10 +534,6 @@ void WebProcess::initializeWebProcess(WebProcessCreationParameters&& parameters)
         RetainPtr<CFDataRef> auditData = adoptCF(CFDataCreate(nullptr, (const UInt8*)&*auditToken, sizeof(*auditToken)));
         Inspector::RemoteInspector::singleton().setParentProcessInformation(WebCore::presentingApplicationPID(), auditData);
     }
-#endif
-
-#if ENABLE(GAMEPAD)
-    GamepadProvider::singleton().setSharedProvider(WebGamepadProvider::singleton());
 #endif
 
 #if ENABLE(SERVICE_WORKER)
@@ -1024,25 +1019,6 @@ void WebProcess::setHasStylusDevice(bool hasStylusDevice)
 }
 
 #endif // HAVE(STYLUS_DEVICE_OBSERVATION)
-
-#if ENABLE(GAMEPAD)
-
-void WebProcess::setInitialGamepads(const Vector<WebKit::GamepadData>& gamepadDatas)
-{
-    WebGamepadProvider::singleton().setInitialGamepads(gamepadDatas);
-}
-
-void WebProcess::gamepadConnected(const GamepadData& gamepadData, WebCore::EventMakesGamepadsVisible eventVisibility)
-{
-    WebGamepadProvider::singleton().gamepadConnected(gamepadData, eventVisibility);
-}
-
-void WebProcess::gamepadDisconnected(unsigned index)
-{
-    WebGamepadProvider::singleton().gamepadDisconnected(index);
-}
-
-#endif
 
 void WebProcess::setJavaScriptGarbageCollectorTimerEnabled(bool flag)
 {

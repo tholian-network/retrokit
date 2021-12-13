@@ -277,8 +277,6 @@ Shared/Authentication/AuthenticationManager.cpp
 Shared/Databases/IndexedDB/IDBUtilities.cpp
 Shared/Databases/IndexedDB/WebIDBResult.cpp
 
-Shared/Gamepad/GamepadData.cpp
-
 // TODO: These files should be unified once GTK's PluginProcess2 is removed.
 Shared/Plugins/NPIdentifierData.cpp @no-unify
 Shared/Plugins/NPObjectMessageReceiver.cpp @no-unify
@@ -454,9 +452,6 @@ UIProcess/Automation/WebAutomationSession.cpp @no-unify
 UIProcess/Downloads/DownloadProxy.cpp
 UIProcess/Downloads/DownloadProxyMap.cpp
 
-UIProcess/Gamepad/UIGamepad.cpp
-UIProcess/Gamepad/UIGamepadProvider.cpp
-
 // TODO: This file should be "unified" once GTK's PluginProcess2 is removed.
 UIProcess/Launcher/ProcessLauncher.cpp @no-unify
 
@@ -539,9 +534,6 @@ WebProcess/EncryptedMedia/MediaKeySystemPermissionRequestManager.cpp
 WebProcess/FileAPI/BlobRegistryProxy.cpp
 
 WebProcess/FullScreen/WebFullScreenManager.cpp
-
-WebProcess/Gamepad/WebGamepad.cpp
-WebProcess/Gamepad/WebGamepadProvider.cpp
 
 WebProcess/Geolocation/GeolocationPermissionRequestManager.cpp
 WebProcess/Geolocation/WebGeolocationManager.cpp

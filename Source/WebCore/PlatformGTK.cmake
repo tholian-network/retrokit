@@ -141,15 +141,6 @@ if (ENABLE_WAYLAND_TARGET)
     )
 endif ()
 
-if (ENABLE_GAMEPAD)
-    list(APPEND WebCore_PRIVATE_FRAMEWORK_HEADERS
-        platform/gamepad/manette/ManetteGamepadProvider.h
-    )
-    list(APPEND WebCore_LIBRARIES
-        Manette::Manette
-    )
-endif ()
-
 if (ENABLE_BUBBLEWRAP_SANDBOX)
     list(APPEND WebCore_LIBRARIES Libseccomp::Libseccomp)
 endif ()

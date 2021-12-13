@@ -56,15 +56,8 @@ void initializeLogChannelsIfNecessary() TEST_SUPPORT_EXPORT;
 void setAllowsAnySSLCertificate(bool) TEST_SUPPORT_EXPORT;
 void setLinkedOnOrAfterEverythingForTesting() TEST_SUPPORT_EXPORT;
 
-void installMockGamepadProvider() TEST_SUPPORT_EXPORT;
-void connectMockGamepad(unsigned index) TEST_SUPPORT_EXPORT;
-void disconnectMockGamepad(unsigned index) TEST_SUPPORT_EXPORT;
-void setMockGamepadDetails(unsigned index, const WTF::String& gamepadID, const WTF::String& mapping, unsigned axisCount, unsigned buttonCount) TEST_SUPPORT_EXPORT;
-void setMockGamepadAxisValue(unsigned index, unsigned axisIndex, double value) TEST_SUPPORT_EXPORT;
-void setMockGamepadButtonValue(unsigned index, unsigned buttonIndex, double value) TEST_SUPPORT_EXPORT;
-
 void setupNewlyCreatedServiceWorker(uint64_t serviceWorkerIdentifier) TEST_SUPPORT_EXPORT;
-    
+
 void setAdditionalSupportedImageTypesForTesting(const WTF::String&) TEST_SUPPORT_EXPORT;
 
 #if ENABLE(JIT_OPERATION_VALIDATION)

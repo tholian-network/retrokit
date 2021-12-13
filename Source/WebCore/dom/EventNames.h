@@ -369,9 +369,6 @@ public:
     bool isGestureEventType(const AtomString& eventType) const;
     bool isTouchRelatedEventType(const AtomString& eventType, EventTarget&) const;
     bool isTouchScrollBlockingEventType(const AtomString& eventType) const;
-#if ENABLE(GAMEPAD)
-    bool isGamepadEventType(const AtomString& eventType) const;
-#endif
 
     std::array<std::reference_wrapper<const AtomString>, 13> touchRelatedEventNames() const;
     std::array<std::reference_wrapper<const AtomString>, 16> extendedTouchRelatedEventNames() const;
@@ -446,15 +443,5 @@ inline std::array<std::reference_wrapper<const AtomString>, 3> EventNames::gestu
 {
     return { { gesturestartEvent, gesturechangeEvent, gestureendEvent } };
 }
-
-#if ENABLE(GAMEPAD)
-
-inline bool EventNames::isGamepadEventType(const AtomString& eventType) const
-{
-    return eventType == gamepadconnectedEvent
-        || eventType == gamepaddisconnectedEvent;
-}
-
-#endif
 
 } // namespace WebCore

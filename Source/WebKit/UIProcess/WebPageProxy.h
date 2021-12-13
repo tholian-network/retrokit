@@ -261,7 +261,6 @@ class ValidationBubble;
 enum class AutoplayEvent : uint8_t;
 enum class CreateNewGroupForHighlight : bool;
 enum class DOMPasteAccessResponse : uint8_t;
-enum class EventMakesGamepadsVisible : bool;
 enum class LockBackForwardList : bool;
 enum class HasInsecureContent : bool;
 enum class HighlightRequestOriginatedInApp : bool;
@@ -335,7 +334,6 @@ namespace WebKit {
 
 class AudioSessionRoutingArbitratorProxy;
 class DrawingAreaProxy;
-class GamepadData;
 class MediaUsageManager;
 class NativeWebGestureEvent;
 class NativeWebKeyboardEvent;
@@ -1637,10 +1635,6 @@ public:
 #if HAVE(TOUCH_BAR)
     bool isTouchBarUpdateSupressedForHiddenContentEditable() const { return m_isTouchBarUpdateSupressedForHiddenContentEditable; }
     bool isNeverRichlyEditableForTouchBar() const { return m_isNeverRichlyEditableForTouchBar; }
-#endif
-
-#if ENABLE(GAMEPAD)
-    void gamepadActivity(const Vector<GamepadData>&, WebCore::EventMakesGamepadsVisible);
 #endif
 
     void isLoadingChanged() { activityStateDidChange(WebCore::ActivityState::IsLoading); }

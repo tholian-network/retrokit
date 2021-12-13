@@ -1446,16 +1446,6 @@ bool WKPreferencesGetImageControlsEnabled(WKPreferencesRef)
     return false;
 }
 
-void WKPreferencesSetGamepadsEnabled(WKPreferencesRef preferencesRef, bool enabled)
-{
-    toImpl(preferencesRef)->setGamepadsEnabled(enabled);
-}
-
-bool WKPreferencesGetGamepadsEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->gamepadsEnabled();
-}
-
 void WKPreferencesSetHighlightAPIEnabled(WKPreferencesRef preferencesRef, bool enabled)
 {
     toImpl(preferencesRef)->setHighlightAPIEnabled(enabled);

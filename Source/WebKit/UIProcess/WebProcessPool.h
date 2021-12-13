@@ -88,7 +88,6 @@ class PageConfiguration;
 
 namespace WebCore {
 class RegistrableDomain;
-enum class EventMakesGamepadsVisible : bool;
 struct MockMediaDevice;
 #if PLATFORM(COCOA)
 class PowerSourceNotifier;
@@ -99,7 +98,6 @@ namespace WebKit {
 
 class WebBackForwardCache;
 class HighPerformanceGraphicsUsageSampler;
-class UIGamepad;
 class PerActivityStateCPUUsageSampler;
 class SuspendedPageProxy;
 class WebAutomationSession;
@@ -336,14 +334,6 @@ public:
     void garbageCollectJavaScriptObjects();
     void setJavaScriptGarbageCollectorTimerEnabled(bool flag);
 
-    enum class GamepadType {
-        All,
-        HID,
-        GameControllerFramework,
-    };
-    size_t numberOfConnectedGamepadsForTesting(GamepadType);
-    void setUsesOnlyHIDGamepadProviderForTesting(bool);
-
 #if PLATFORM(COCOA)
     static bool omitPDFSupport();
 #endif
@@ -427,11 +417,6 @@ public:
 
     bool alwaysRunsAtBackgroundPriority() const { return m_alwaysRunsAtBackgroundPriority; }
     bool shouldTakeUIBackgroundAssertion() const { return m_shouldTakeUIBackgroundAssertion; }
-
-#if ENABLE(GAMEPAD)
-    void gamepadConnected(const UIGamepad&, WebCore::EventMakesGamepadsVisible);
-    void gamepadDisconnected(const UIGamepad&);
-#endif
 
 #if PLATFORM(COCOA)
     bool cookieStoragePartitioningEnabled() const { return m_cookieStoragePartitioningEnabled; }
@@ -530,13 +515,6 @@ private:
 
     void handleMessage(IPC::Connection&, const String& messageName, const UserData& messageBody);
     void handleSynchronousMessage(IPC::Connection&, const String& messageName, const UserData& messageBody, CompletionHandler<void(UserData&&)>&&);
-
-#if ENABLE(GAMEPAD)
-    void startedUsingGamepads(IPC::Connection&);
-    void stoppedUsingGamepads(IPC::Connection&);
-
-    void processStoppedUsingGamepads(WebProcessProxy&);
-#endif
 
     void updateProcessAssertions();
     void updateAudibleMediaAssertions();
@@ -719,10 +697,6 @@ private:
 
 #if ENABLE(CONTENT_EXTENSIONS)
     HashMap<String, String> m_encodedContentExtensions;
-#endif
-
-#if ENABLE(GAMEPAD)
-    WeakHashSet<WebProcessProxy> m_processesUsingGamepads;
 #endif
 
 #if PLATFORM(COCOA)

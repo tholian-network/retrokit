@@ -64,7 +64,6 @@ namespace WebCore {
     M(Frames) \
     M(FTP) \
     M(Fullscreen) \
-    M(Gamepad) \
     M(HID) \
     M(History) \
     M(IOSurface) \

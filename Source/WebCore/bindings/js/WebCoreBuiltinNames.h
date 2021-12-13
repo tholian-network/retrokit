@@ -102,9 +102,6 @@ namespace WebCore {
     macro(FileSystemDirectoryReader) \
     macro(FileSystemEntry) \
     macro(FileSystemFileEntry) \
-    macro(Gamepad) \
-    macro(GamepadButton) \
-    macro(GamepadEvent) \
     macro(HighlightRegister) \
     macro(Highlight) \
     macro(HTMLAttachmentElement) \

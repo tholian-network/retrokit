@@ -340,30 +340,6 @@ Modules/websockets/WebSocketExtensionParser.cpp
 Modules/websockets/WebSocketFrame.cpp
 Modules/websockets/WebSocketHandshake.cpp
 Modules/websockets/WorkerThreadableWebSocketChannel.cpp
-Modules/webxr/NavigatorWebXR.cpp @no-unify
-Modules/webxr/WebXRBoundedReferenceSpace.cpp @no-unify
-Modules/webxr/WebXRFrame.cpp @no-unify
-Modules/webxr/WebXRGamepad.cpp @no-unify
-Modules/webxr/WebXRInputSource.cpp @no-unify
-Modules/webxr/WebXRInputSourceArray.cpp @no-unify
-Modules/webxr/WebXRInputSpace.cpp @no-unify
-Modules/webxr/WebXRLayer.cpp @no-unify
-Modules/webxr/WebXROpaqueFramebuffer.cpp @no-unify
-Modules/webxr/WebXRPose.cpp @no-unify
-Modules/webxr/WebXRReferenceSpace.cpp @no-unify
-Modules/webxr/WebXRRenderState.cpp @no-unify
-Modules/webxr/WebXRRigidTransform.cpp @no-unify
-Modules/webxr/WebXRSession.cpp @no-unify
-Modules/webxr/WebXRSpace.cpp @no-unify
-Modules/webxr/WebXRSystem.cpp @no-unify
-Modules/webxr/WebXRView.cpp @no-unify
-Modules/webxr/WebXRViewerPose.cpp @no-unify
-Modules/webxr/WebXRViewport.cpp @no-unify
-Modules/webxr/WebXRWebGLLayer.cpp @no-unify
-Modules/webxr/XRInputSourceEvent.cpp @no-unify
-Modules/webxr/XRInputSourcesChangeEvent.cpp @no-unify
-Modules/webxr/XRReferenceSpaceEvent.cpp @no-unify
-Modules/webxr/XRSessionEvent.cpp @no-unify
 accessibility/AXImage.cpp
 accessibility/AXLogger.cpp
 accessibility/AXObjectCache.cpp
@@ -1875,9 +1851,6 @@ platform/encryptedmedia/CDMPrivate.cpp
 platform/encryptedmedia/CDMProxy.cpp
 platform/encryptedmedia/CDMUtilities.cpp
 platform/encryptedmedia/clearkey/CDMClearKey.cpp
-platform/gamepad/EmptyGamepadProvider.cpp
-platform/gamepad/GamepadConstants.cpp
-platform/gamepad/GamepadProvider.cpp
 platform/graphics/AlphaPremultiplication.cpp
 platform/graphics/AnimationFrameRate.cpp
 platform/graphics/BifurcatedGraphicsContext.cpp
@@ -2996,9 +2969,6 @@ JSFontFaceSet.cpp
 JSFormDataEvent.cpp
 JSGainNode.cpp
 JSGainOptions.cpp
-JSGamepad.cpp
-JSGamepadButton.cpp
-JSGamepadEvent.cpp
 JSGeolocation.cpp
 JSGeolocationCoordinates.cpp
 JSGeolocationPosition.cpp

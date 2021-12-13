@@ -867,12 +867,6 @@ $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSGainNode.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSGainNode.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSGainOptions.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSGainOptions.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSGamepad.cpp
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSGamepad.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSGamepadButton.cpp
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSGamepadButton.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSGamepadEvent.cpp
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSGamepadEvent.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSGeolocation.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSGeolocation.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSGeolocationCoordinates.cpp
@@ -1367,8 +1361,6 @@ $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSNavigator+Credentials.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSNavigator+Credentials.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSNavigator+EME.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSNavigator+EME.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSNavigator+Gamepad.cpp
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSNavigator+Gamepad.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSNavigator+Geolocation.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSNavigator+Geolocation.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSNavigator+IsLoggedIn.cpp
@@ -1397,8 +1389,6 @@ $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSNavigatorCredentials.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSNavigatorCredentials.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSNavigatorEME.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSNavigatorEME.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSNavigatorGamepad.cpp
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSNavigatorGamepad.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSNavigatorGeolocation.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSNavigatorGeolocation.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebCore/JSNavigatorID.cpp

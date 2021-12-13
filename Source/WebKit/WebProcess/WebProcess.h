@@ -97,8 +97,6 @@ class RegistrableDomain;
 class ResourceRequest;
 class UserGestureToken;
 
-enum class EventMakesGamepadsVisible : bool;
-
 struct BackForwardItemIdentifier;
 struct DisplayUpdate;
 struct MessagePortIdentifier;
@@ -117,7 +115,6 @@ namespace WebKit {
 
 class AudioMediaStreamTrackRendererInternalUnitManager;
 class EventDispatcher;
-class GamepadData;
 class GPUProcessConnection;
 class InjectedBundle;
 class LibWebRTCCodecs;
@@ -459,12 +456,6 @@ private:
     void setJavaScriptGarbageCollectorTimerEnabled(bool flag);
 
     void backgroundResponsivenessPing();
-
-#if ENABLE(GAMEPAD)
-    void setInitialGamepads(const Vector<GamepadData>&);
-    void gamepadConnected(const GamepadData&, WebCore::EventMakesGamepadsVisible);
-    void gamepadDisconnected(unsigned index);
-#endif
 
 #if ENABLE(SERVICE_WORKER)
     void establishWorkerContextConnectionToNetworkProcess(PageGroupIdentifier, WebPageProxyIdentifier, WebCore::PageIdentifier, const WebPreferencesStore&, WebCore::RegistrableDomain&&, ServiceWorkerInitializationData&&, CompletionHandler<void()>&&);

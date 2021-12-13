@@ -224,7 +224,6 @@ enum class CreateNewGroupForHighlight : bool;
 enum class DOMPasteAccessResponse : uint8_t;
 enum class DragApplicationFlags : uint8_t;
 enum class DragHandlingMethod : uint8_t;
-enum class EventMakesGamepadsVisible : bool;
 enum class HighlightRequestOriginatedInApp : bool;
 enum class SelectionDirection : uint8_t;
 enum class ShouldTreatAsContinuingLoad : uint8_t;
@@ -269,7 +268,6 @@ namespace WebKit {
 class DrawingArea;
 class FindController;
 class GPUProcessConnection;
-class GamepadData;
 class GeolocationPermissionRequestManager;
 class LayerHostingContext;
 class MediaDeviceSandboxExtensions;
@@ -1229,10 +1227,6 @@ public:
     WallTime loadCommitTime() const { return m_loadCommitTime; }
 #endif
 
-#if ENABLE(GAMEPAD)
-    void gamepadActivity(const Vector<GamepadData>&, WebCore::EventMakesGamepadsVisible);
-#endif
-    
 #if ENABLE(POINTER_LOCK)
     void didAcquirePointerLock();
     void didNotAcquirePointerLock();

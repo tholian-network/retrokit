@@ -544,10 +544,6 @@ GenerateSyntheticEditingCommand(enum:uint8_t WebKit::SyntheticEditingCommandType
     DidGetLoadDecisionForIcon(bool decision, WebKit::CallbackID loadIdentifier) -> (IPC::SharedBufferDataReference iconData) Async
     SetUseIconLoadingClient(bool useIconLoadingClient)
 
-#if ENABLE(GAMEPAD)
-    GamepadActivity(Vector<WebKit::GamepadData> gamepadDatas, enum:bool WebCore::EventMakesGamepadsVisible eventVisibility)
-#endif
-
     FrameBecameRemote(WebCore::FrameIdentifier frameID, struct WebCore::GlobalFrameIdentifier remoteFrameIdentifier, struct WebCore::GlobalWindowIdentifier remoteWindowIdentifier)
 
     RegisterURLSchemeHandler(uint64_t identifier, String scheme)
