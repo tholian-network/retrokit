@@ -72,7 +72,6 @@
 #include "WebPageInjectedBundleClient.h"
 #include "WebPageProxyIdentifier.h"
 #include "WebPageProxyMessagesReplies.h"
-#include "WebPaymentCoordinatorProxy.h"
 #include "WebPopupMenuProxy.h"
 #include "WebPreferences.h"
 #include "WebUndoStepID.h"
@@ -441,9 +440,6 @@ class WebPageProxy final : public API::ObjectImpl<API::Object::Type::Page>
 #endif
 #if ENABLE(WIRELESS_PLAYBACK_TARGET) && !PLATFORM(IOS_FAMILY)
     , public WebCore::WebMediaSessionManagerClient
-#endif
-#if ENABLE(APPLE_PAY)
-    , public WebPaymentCoordinatorProxy::Client
 #endif
     , public WebPopupMenuProxy::Client
     , public IPC::MessageReceiver
@@ -2467,24 +2463,6 @@ private:
     void logFrameNavigation(const WebFrameProxy&, const URL& pageURL, const WebCore::ResourceRequest&, const URL& redirectURL, bool wasPotentiallyInitiatedByUser);
 #endif
 
-    // WebPaymentCoordinatorProxy::Client
-#if ENABLE(APPLE_PAY)
-    IPC::Connection* paymentCoordinatorConnection(const WebPaymentCoordinatorProxy&) final;
-    const String& paymentCoordinatorBoundInterfaceIdentifier(const WebPaymentCoordinatorProxy&) final;
-    const String& paymentCoordinatorSourceApplicationBundleIdentifier(const WebPaymentCoordinatorProxy&) final;
-    const String& paymentCoordinatorSourceApplicationSecondaryIdentifier(const WebPaymentCoordinatorProxy&) final;
-    void paymentCoordinatorAddMessageReceiver(WebPaymentCoordinatorProxy&, IPC::ReceiverName, IPC::MessageReceiver&) final;
-    void paymentCoordinatorRemoveMessageReceiver(WebPaymentCoordinatorProxy&, IPC::ReceiverName) final;
-#endif
-#if ENABLE(APPLE_PAY) && PLATFORM(IOS_FAMILY)
-    UIViewController *paymentCoordinatorPresentingViewController(const WebPaymentCoordinatorProxy&) final;
-    const String& paymentCoordinatorCTDataConnectionServiceType(const WebPaymentCoordinatorProxy&) final;
-    std::unique_ptr<PaymentAuthorizationPresenter> paymentCoordinatorAuthorizationPresenter(WebPaymentCoordinatorProxy&, PKPaymentRequest *) final;
-#endif
-#if ENABLE(APPLE_PAY) && PLATFORM(MAC)
-    NSWindow *paymentCoordinatorPresentingWindow(const WebPaymentCoordinatorProxy&) final;
-#endif
-
 #if ENABLE(SPEECH_SYNTHESIS)
     void didStartSpeaking(WebCore::PlatformSpeechSynthesisUtterance&) final;
     void didFinishSpeaking(WebCore::PlatformSpeechSynthesisUtterance&) final;
@@ -2617,10 +2595,6 @@ private:
     bool m_useSystemAppearance { false };
 
     bool m_acceptsFirstMouse { false };
-#endif
-
-#if ENABLE(APPLE_PAY)
-    std::unique_ptr<WebPaymentCoordinatorProxy> m_paymentCoordinator;
 #endif
 
 #if USE(SYSTEM_PREVIEW)

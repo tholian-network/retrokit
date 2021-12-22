@@ -57,7 +57,6 @@ class FrameLoaderClient;
 class InspectorClient;
 class LibWebRTCProvider;
 class MediaRecorderProvider;
-class PaymentCoordinatorClient;
 class PerformanceLoggingClient;
 class PermissionController;
 class PluginInfoProvider;
@@ -89,9 +88,6 @@ public:
     Ref<SocketProvider> socketProvider;
     std::unique_ptr<DragClient> dragClient;
     InspectorClient* inspectorClient { nullptr };
-#if ENABLE(APPLE_PAY)
-    PaymentCoordinatorClient* paymentCoordinatorClient { nullptr };
-#endif
 
 #if ENABLE(WEB_AUTHN)
     std::unique_ptr<AuthenticatorCoordinatorClient> authenticatorCoordinatorClient;

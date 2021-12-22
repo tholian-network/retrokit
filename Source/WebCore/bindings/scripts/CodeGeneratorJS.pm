@@ -3850,8 +3850,7 @@ sub GetGnuMangledNameForInterface
 sub GetGnuVTableOffsetForType
 {
     my $typename = shift;
-    if ($typename eq "ApplePaySession"
-        || $typename eq "SVGAElement"
+    if ($typename eq "SVGAElement"
         || $typename eq "SVGCircleElement"
         || $typename eq "SVGClipPathElement"
         || $typename eq "SVGDefsElement"
@@ -7394,21 +7393,6 @@ sub SubstituteHeader
 {
     # Internal macOS SDKs up to 10.15 have non-suffixed headers in their WebKitAdditions, requiring the addition of the suffix to build successfully.
     my $include = shift;
-    if ($include eq "\"ApplePayInstallmentConfiguration.h\"") {
-        return "\"ApplePayInstallmentConfigurationWebCore.h\"";
-    }
-    if ($include eq "\"ApplePaySetupFeatureType.h\"") {
-        return "\"ApplePaySetupFeatureTypeWebCore.h\"";
-    }
-    if ($include eq "\"ApplePaySetupFeature.h\"") {
-        return "\"ApplePaySetupFeatureWebCore.h\"";
-    }
-    if ($include eq "\"ApplePaySetup.h\"") {
-        return "\"ApplePaySetupWebCore.h\"";
-    }
-    if ($include eq "\"PaymentInstallmentConfiguration.h\"") {
-        return "\"PaymentInstallmentConfigurationWebCore.h\"";
-    }
     return $include;
 }
 

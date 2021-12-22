@@ -363,7 +363,6 @@ function ios_family_process_webauthn_entitlements()
 function ios_family_process_network_entitlements()
 {
     plistbuddy Add :com.apple.multitasking.systemappassertions bool YES
-    plistbuddy Add :com.apple.payment.all-access bool YES
     plistbuddy Add :com.apple.private.accounts.bundleidspoofing bool YES
     plistbuddy Add :com.apple.private.dmd.policy bool YES
     plistbuddy Add :com.apple.private.memorystatus bool YES

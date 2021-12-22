@@ -285,12 +285,6 @@ private:
 
     bool shouldGetTextFromNode(AccessibilityTextUnderElementMode) const;
 
-#if ENABLE(APPLE_PAY)
-    bool isApplePayButton() const;
-    ApplePayButtonType applePayButtonType() const;
-    String applePayButtonDescription() const;
-#endif
-
     RenderObject* targetElementForActiveDescendant(const QualifiedName&, AccessibilityObject*) const;
     bool canHavePlainText() const;
     // Special handling of click point for links.

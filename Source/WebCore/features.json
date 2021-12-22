@@ -1235,16 +1235,6 @@
         "comment": "WebKit used to support MicroData. The feature never gained any traction and was eventually removed to clean up the codebase."
     },
     {
-        "name": "Payment Request",
-        "status": {
-            "status": "Supported"
-        },
-        "url": "https://www.w3.org/TR/payment-request/",
-        "webkit-url": "https://bugs.webkit.org/show_bug.cgi?id=174796",
-        "keywords": ["web payments", "payment request", "apple pay"],
-        "description": "An API for merchants to request payments from users."
-    },
-    {
         "name": "Picture element",
         "status": {
             "status": "Supported",
@@ -1468,24 +1458,6 @@
             "email": "jiewen_tan@apple.com",
             "twitter": "@alanwaketan"
         }
-    },
-    {
-        "name": "Web Bluetooth",
-        "status": {
-            "status": "Not Considering"
-        },
-        "url": "https://webbluetoothcg.github.io/web-bluetooth/",
-        "keywords": ["bluetooth", "security", "privacy"],
-        "description": "An API to discover and communicate with devices over the Bluetooth."
-    },
-    {
-        "name": "Web Bluetooth Scanning",
-        "status": {
-            "status": "Not Considering"
-        },
-        "url": "https://webbluetoothcg.github.io/web-bluetooth/",
-        "keywords": ["bluetooth", "privacy"],
-        "description": "An API to listen for Bluetooth Low Energy advertising packets."
     },
     {
         "name": "Web MIDI",

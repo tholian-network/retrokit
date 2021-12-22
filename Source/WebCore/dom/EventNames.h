@@ -34,12 +34,6 @@
 
 namespace WebCore {
 
-#if ENABLE(APPLE_PAY_COUPON_CODE)
-#define DOM_EVENT_NAME_APPLE_PAY_COUPON_CODE_CHANGED(macro) macro(couponcodechanged)
-#else
-#define DOM_EVENT_NAME_APPLE_PAY_COUPON_CODE_CHANGED(macro)
-#endif
-
 #define DOM_EVENT_NAMES_FOR_EACH(macro) \
     macro(DOMActivate) \
     macro(DOMCharacterDataModified) \
@@ -100,7 +94,6 @@ namespace WebCore {
     macro(controllerchange) \
     macro(coordinatorstatechange) \
     macro(copy) \
-    DOM_EVENT_NAME_APPLE_PAY_COUPON_CODE_CHANGED(macro) \
     macro(cuechange) \
     macro(cut) \
     macro(dataavailable) \
@@ -172,7 +165,6 @@ namespace WebCore {
     macro(loadstart) \
     macro(lostpointercapture) \
     macro(mark) \
-    macro(merchantvalidation) \
     macro(message) \
     macro(messageerror) \
     macro(mousedown) \
@@ -198,10 +190,6 @@ namespace WebCore {
     macro(pageshow) \
     macro(paste) \
     macro(pause) \
-    macro(payerdetailchange) \
-    macro(paymentauthorized) \
-    macro(paymentmethodchange) \
-    macro(paymentmethodselected) \
     macro(play) \
     macro(playing) \
     macro(pointerlockchange) \
@@ -291,7 +279,6 @@ namespace WebCore {
     macro(updateready) \
     macro(updatestart) \
     macro(upgradeneeded) \
-    macro(validatemerchant) \
     macro(versionchange) \
     macro(visibilitychange) \
     macro(volumechange) \

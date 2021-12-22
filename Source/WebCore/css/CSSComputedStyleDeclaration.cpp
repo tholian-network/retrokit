@@ -3867,13 +3867,6 @@ RefPtr<CSSValue> ComputedStyleExtractor::valueForPropertyInStyle(const RenderSty
             return cssValuePool.createValue(style.trailingWord());
 #endif
 
-#if ENABLE(APPLE_PAY)
-        case CSSPropertyApplePayButtonStyle:
-            return cssValuePool.createValue(style.applePayButtonStyle());
-        case CSSPropertyApplePayButtonType:
-            return cssValuePool.createValue(style.applePayButtonType());
-#endif
-
 #if ENABLE(DARK_MODE_CSS)
         case CSSPropertyColorScheme: {
             auto colorScheme = style.colorScheme();

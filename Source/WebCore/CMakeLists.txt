@@ -19,8 +19,6 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${WebCore_DERIVED_SOURCES_DIR}"
     "${WEBCORE_DIR}"
     "${WEBCORE_DIR}/Modules/airplay"
-    "${WEBCORE_DIR}/Modules/applepay"
-    "${WEBCORE_DIR}/Modules/applepay/paymentrequest"
     "${WEBCORE_DIR}/Modules/applicationmanifest"
     "${WEBCORE_DIR}/Modules/async-clipboard"
     "${WEBCORE_DIR}/Modules/beacon"
@@ -46,7 +44,6 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${WEBCORE_DIR}/Modules/model-element"
     "${WEBCORE_DIR}/Modules/navigatorcontentutils"
     "${WEBCORE_DIR}/Modules/notifications"
-    "${WEBCORE_DIR}/Modules/paymentrequest"
     "${WEBCORE_DIR}/Modules/permissions"
     "${WEBCORE_DIR}/Modules/pictureinpicture"
     "${WEBCORE_DIR}/Modules/plugins"
@@ -198,7 +195,6 @@ set(WebCore_IDL_INCLUDES
     Modules/mediastream
     Modules/model-element
     Modules/notifications
-    Modules/paymentrequest
     Modules/permissions
     Modules/speech
     Modules/streams
@@ -427,28 +423,6 @@ set(WebCore_NON_SVG_IDL_FILES
     Modules/notifications/Notification.idl
     Modules/notifications/NotificationPermission.idl
     Modules/notifications/NotificationPermissionCallback.idl
-
-    Modules/paymentrequest/AddressErrors.idl
-    Modules/paymentrequest/MerchantValidationEvent.idl
-    Modules/paymentrequest/PayerErrorFields.idl
-    Modules/paymentrequest/PaymentAddress.idl
-    Modules/paymentrequest/PaymentComplete.idl
-    Modules/paymentrequest/PaymentCurrencyAmount.idl
-    Modules/paymentrequest/PaymentDetailsBase.idl
-    Modules/paymentrequest/PaymentDetailsInit.idl
-    Modules/paymentrequest/PaymentDetailsModifier.idl
-    Modules/paymentrequest/PaymentDetailsUpdate.idl
-    Modules/paymentrequest/PaymentItem.idl
-    Modules/paymentrequest/PaymentMethodChangeEvent.idl
-    Modules/paymentrequest/PaymentMethodData.idl
-    Modules/paymentrequest/PaymentOptions.idl
-    Modules/paymentrequest/PaymentRequest.idl
-    Modules/paymentrequest/PaymentRequestUpdateEvent.idl
-    Modules/paymentrequest/PaymentRequestUpdateEventInit.idl
-    Modules/paymentrequest/PaymentResponse.idl
-    Modules/paymentrequest/PaymentShippingOption.idl
-    Modules/paymentrequest/PaymentShippingType.idl
-    Modules/paymentrequest/PaymentValidationErrors.idl
 
     Modules/permissions/Navigator+Permissions.idl
     Modules/permissions/PermissionDescriptor.idl

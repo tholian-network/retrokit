@@ -46,9 +46,6 @@ namespace WebCore {
     macro(AnimationEffect) \
     macro(AnimationPlaybackEvent) \
     macro(AnimationTimeline) \
-    macro(ApplePaySession) \
-    macro(ApplePaySetup) \
-    macro(ApplePaySetupFeature) \
     macro(AttachmentElement) \
     macro(Audio) \
     macro(AudioBufferSourceNode) \
@@ -148,7 +145,6 @@ namespace WebCore {
     macro(MediaSource) \
     macro(MediaStream) \
     macro(MediaStreamTrack) \
-    macro(MerchantValidationEvent) \
     macro(MockRTCRtpTransform) \
     macro(NavigatorCredentials) \
     macro(NavigatorMediaDevices) \
@@ -160,11 +156,6 @@ namespace WebCore {
     macro(OscillatorNode) \
     macro(PaintRenderingContext2D) \
     macro(PannerNode) \
-    macro(PaymentAddress) \
-    macro(PaymentMethodChangeEvent) \
-    macro(PaymentRequest) \
-    macro(PaymentRequestUpdateEvent) \
-    macro(PaymentResponse) \
     macro(PerformanceNavigationTiming) \
     macro(PictureInPictureWindow) \
     macro(SQLError) \

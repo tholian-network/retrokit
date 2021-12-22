@@ -76,10 +76,6 @@
 #include <WebCore/SameSiteInfo.h>
 #include <WebCore/SecurityPolicy.h>
 
-#if ENABLE(APPLE_PAY_REMOTE_UI)
-#include "WebPaymentCoordinatorProxyMessages.h"
-#endif
-
 #if ENABLE(LEGACY_CUSTOM_PROTOCOL_MANAGER)
 #include "LegacyCustomProtocolManager.h"
 #endif
@@ -264,11 +260,6 @@ void NetworkConnectionToWebProcess::didReceiveMessage(IPC::Connection& connectio
     }
 #endif
 
-#if ENABLE(APPLE_PAY_REMOTE_UI)
-    if (decoder.messageReceiverName() == Messages::WebPaymentCoordinatorProxy::messageReceiverName())
-        return paymentCoordinator().didReceiveMessage(connection, decoder);
-#endif
-
     WTFLogAlways("Unhandled network process message '%s'", description(decoder.messageName()));
     ASSERT_NOT_REACHED();
 }
@@ -341,11 +332,6 @@ bool NetworkConnectionToWebProcess::didReceiveSyncMessage(IPC::Connection& conne
     }
 #endif
 
-#if ENABLE(APPLE_PAY_REMOTE_UI)
-    if (decoder.messageReceiverName() == Messages::WebPaymentCoordinatorProxy::messageReceiverName())
-        return paymentCoordinator().didReceiveSyncMessage(connection, decoder, reply);
-#endif
-
     WTFLogAlways("Unhandled network process message '%s'", description(decoder.messageName()));
     ASSERT_NOT_REACHED();
     return false;
@@ -400,9 +386,6 @@ void NetworkConnectionToWebProcess::didClose(IPC::Connection& connection)
     unregisterSWConnection();
 #endif
 
-#if ENABLE(APPLE_PAY_REMOTE_UI)
-    m_paymentCoordinator = nullptr;
-#endif
 }
 
 void NetworkConnectionToWebProcess::didReceiveInvalidMessage(IPC::Connection&, IPC::MessageName messageName)

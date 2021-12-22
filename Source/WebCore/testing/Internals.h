@@ -90,7 +90,6 @@ class MemoryInfo;
 class MockCDMFactory;
 class MockContentFilterSettings;
 class MockPageOverlay;
-class MockPaymentCoordinator;
 class NodeList;
 class Page;
 class RTCPeerConnection;
@@ -806,9 +805,6 @@ public:
     void setQuickLookPassword(const String&);
 
     void setAsRunningUserScripts(Document&);
-#if ENABLE(APPLE_PAY)
-    void setApplePayIsActive(Document&);
-#endif
 
 #if ENABLE(WEBGL)
     enum class SimulatedWebGLContextEvent {
@@ -883,10 +879,6 @@ public:
     void hasServiceWorkerRegistration(const String& clientURL, HasRegistrationPromise&&);
     void terminateServiceWorker(ServiceWorker&, DOMPromiseDeferred<void>&&);
     void whenServiceWorkerIsTerminated(ServiceWorker&, DOMPromiseDeferred<void>&&);
-#endif
-
-#if ENABLE(APPLE_PAY)
-    MockPaymentCoordinator& mockPaymentCoordinator(Document&);
 #endif
 
     struct ImageOverlayText {

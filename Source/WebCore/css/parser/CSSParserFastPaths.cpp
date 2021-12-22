@@ -847,29 +847,6 @@ bool CSSParserFastPaths::isValidKeywordPropertyAndValue(CSSPropertyID propertyId
     case CSSPropertyAppleTrailingWord: // auto | -apple-partially-balanced
         return valueID == CSSValueAuto || valueID == CSSValueWebkitPartiallyBalanced;
 #endif
-#if ENABLE(APPLE_PAY)
-    case CSSPropertyApplePayButtonStyle: // white | white-outline | black
-        return valueID == CSSValueWhite || valueID == CSSValueWhiteOutline || valueID == CSSValueBlack;
-    case CSSPropertyApplePayButtonType: // plain | buy | set-up | donate | check-out | book | subscribe | reload | add-money | top-up | order | rent | support | contribute | tip
-        return (valueID == CSSValuePlain
-            || valueID == CSSValueBuy
-            || valueID == CSSValueSetUp
-            || valueID == CSSValueDonate
-            || valueID == CSSValueCheckOut
-            || valueID == CSSValueBook
-            || valueID == CSSValueSubscribe
-#if ENABLE(APPLE_PAY_NEW_BUTTON_TYPES)
-            || valueID == CSSValueReload
-            || valueID == CSSValueAddMoney
-            || valueID == CSSValueTopUp
-            || valueID == CSSValueOrder
-            || valueID == CSSValueRent
-            || valueID == CSSValueSupport
-            || valueID == CSSValueContribute
-            || valueID == CSSValueTip
-#endif
-        );
-#endif
     case CSSPropertyWebkitNbspMode: // normal | space
         return valueID == CSSValueNormal || valueID == CSSValueSpace;
     case CSSPropertyWebkitTextZoom:
@@ -1052,10 +1029,6 @@ bool CSSParserFastPaths::isKeywordPropertyID(CSSPropertyID propertyId)
     // Apple specific property. This will never be standardized and is purely to
     // support custom WebKit-based Apple applications.
     case CSSPropertyWebkitTouchCallout:
-#endif
-#if ENABLE(APPLE_PAY)
-    case CSSPropertyApplePayButtonStyle:
-    case CSSPropertyApplePayButtonType:
 #endif
 #if ENABLE(VARIATION_FONTS)
     case CSSPropertyFontOpticalSizing:

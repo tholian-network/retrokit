@@ -120,10 +120,6 @@
 #define ENABLE_AIRPLAY_PICKER 0
 #endif
 
-#if !defined(ENABLE_APPLE_PAY_REMOTE_UI)
-#define ENABLE_APPLE_PAY_REMOTE_UI 0
-#endif
-
 #if !defined(ENABLE_AUTOCORRECT)
 #define ENABLE_AUTOCORRECT 0
 #endif
@@ -283,14 +279,6 @@
 #endif
 #endif
 
-#if !defined(ENABLE_GAMEPAD)
-#define ENABLE_GAMEPAD 0
-#endif
-
-#if !defined(ENABLE_GEOLOCATION)
-#define ENABLE_GEOLOCATION 0
-#endif
-
 #if !defined(ENABLE_INPUT_TYPE_COLOR)
 #define ENABLE_INPUT_TYPE_COLOR 1
 #endif
@@ -424,10 +412,6 @@
 #if !defined(ENABLE_PAN_SCROLLING)
 #define ENABLE_PAN_SCROLLING 1
 #endif
-#endif
-
-#if !defined(ENABLE_PAYMENT_REQUEST)
-#define ENABLE_PAYMENT_REQUEST 0
 #endif
 
 #if !defined(ENABLE_PERIODIC_MEMORY_MONITOR)

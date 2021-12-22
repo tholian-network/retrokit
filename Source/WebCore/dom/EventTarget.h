@@ -66,7 +66,6 @@ public:
     virtual ScriptExecutionContext* scriptExecutionContext() const = 0;
 
     WEBCORE_EXPORT virtual bool isNode() const;
-    WEBCORE_EXPORT virtual bool isPaymentRequest() const;
 
     using AddEventListenerOptionsOrBoolean = Variant<AddEventListenerOptions, bool>;
     WEBCORE_EXPORT void addEventListenerForBindings(const AtomString& eventType, RefPtr<EventListener>&&, AddEventListenerOptionsOrBoolean&&);

@@ -252,10 +252,6 @@ void RenderTheme::adjustStyle(RenderStyle& style, const Element* element, const 
         return adjustMeterStyle(style, element);
     case CapsLockIndicatorPart:
         return adjustCapsLockIndicatorStyle(style, element);
-#if ENABLE(APPLE_PAY)
-    case ApplePayButtonPart:
-        return adjustApplePayButtonStyle(style, element);
-#endif
 #if ENABLE(ATTACHMENT_ELEMENT)
     case AttachmentPart:
     case BorderlessAttachmentPart:
@@ -427,10 +423,6 @@ bool RenderTheme::paint(const RenderBox& box, ControlStates& controlStates, cons
         return paintSearchFieldResultsButton(box, paintInfo, integralSnappedRect);
     case CapsLockIndicatorPart:
         return paintCapsLockIndicator(box, paintInfo, integralSnappedRect);
-#if ENABLE(APPLE_PAY)
-    case ApplePayButtonPart:
-        return paintApplePayButton(box, paintInfo, integralSnappedRect);
-#endif
 #if ENABLE(ATTACHMENT_ELEMENT)
     case AttachmentPart:
     case BorderlessAttachmentPart:

@@ -90,9 +90,6 @@ TextStream& operator<<(TextStream& ts, ControlPart controlPart)
     case ContinuousCapacityLevelIndicatorPart: ts << "continuous-capacity-level-indicator-part"; break;
     case DiscreteCapacityLevelIndicatorPart: ts << "discrete-capacity-level-indicator-part"; break;
     case RatingLevelIndicatorPart: ts << "rating-level-indicator-part"; break;
-#if ENABLE(APPLE_PAY)
-    case ApplePayButtonPart: ts << "apple-pay-button-part"; break;
-#endif
 #if ENABLE(INPUT_TYPE_COLOR)
     case ColorWellPart: ts << "color-well-part"; break;
 #endif

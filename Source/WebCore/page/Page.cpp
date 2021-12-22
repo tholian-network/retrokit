@@ -95,7 +95,6 @@
 #include "PageDebuggable.h"
 #include "PageGroup.h"
 #include "PageOverlayController.h"
-#include "PaymentCoordinator.h"
 #include "PerformanceLogging.h"
 #include "PerformanceLoggingClient.h"
 #include "PerformanceMonitor.h"
@@ -309,9 +308,6 @@ Page::Page(PageConfiguration&& pageConfiguration)
     , m_imageOverlayController(makeUnique<ImageOverlayController>(*this))
     , m_recentWheelEventDeltaFilter(WheelEventDeltaFilter::create())
     , m_pageOverlayController(makeUnique<PageOverlayController>(*this))
-#if ENABLE(APPLE_PAY)
-    , m_paymentCoordinator(makeUnique<PaymentCoordinator>(*pageConfiguration.paymentCoordinatorClient))
-#endif
 #if ENABLE(WEB_AUTHN)
     , m_authenticatorCoordinator(makeUniqueRef<AuthenticatorCoordinator>(WTFMove(pageConfiguration.authenticatorCoordinatorClient)))
 #endif
@@ -3436,13 +3432,6 @@ void Page::dispatchAfterPrintEvent()
 {
     dispatchPrintEvent(m_mainFrame, eventNames().afterprintEvent);
 }
-
-#if ENABLE(APPLE_PAY)
-void Page::setPaymentCoordinator(std::unique_ptr<PaymentCoordinator>&& paymentCoordinator)
-{
-    m_paymentCoordinator = WTFMove(paymentCoordinator);
-}
-#endif
 
 #if ENABLE(MEDIA_SESSION_COORDINATOR)
 void Page::setMediaSessionCoordinator(Ref<MediaSessionCoordinatorPrivate>&& mediaSessionCoordinator)

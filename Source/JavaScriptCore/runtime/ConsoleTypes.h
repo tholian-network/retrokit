@@ -45,7 +45,6 @@ enum class MessageSource : uint8_t {
     WebRTC,
     ITPDebug,
     PrivateClickMeasurement,
-    PaymentRequest,
     Other,
 };
 
@@ -96,7 +95,6 @@ template<> struct EnumTraits<JSC::MessageSource> {
         JSC::MessageSource::WebRTC,
         JSC::MessageSource::ITPDebug,
         JSC::MessageSource::PrivateClickMeasurement,
-        JSC::MessageSource::PaymentRequest,
         JSC::MessageSource::Other
     >;
 };

@@ -1726,26 +1726,6 @@ bool WKPreferencesGetAllowsPictureInPictureMediaPlayback(WKPreferencesRef prefer
     return toImpl(preferencesRef)->allowsPictureInPictureMediaPlayback();
 }
 
-WK_EXPORT bool WKPreferencesGetApplePayEnabled(WKPreferencesRef preferencesRef)
-{
-    return WebKit::toImpl(preferencesRef)->applePayEnabled();
-}
-
-void WKPreferencesSetApplePayEnabled(WKPreferencesRef preferencesRef, bool enabled)
-{
-    WebKit::toImpl(preferencesRef)->setApplePayEnabled(enabled);
-}
-
-bool WKPreferencesGetApplePayCapabilityDisclosureAllowed(WKPreferencesRef preferencesRef)
-{
-    return WebKit::toImpl(preferencesRef)->applePayCapabilityDisclosureAllowed();
-}
-
-void WKPreferencesSetApplePayCapabilityDisclosureAllowed(WKPreferencesRef preferencesRef, bool allowed)
-{
-    WebKit::toImpl(preferencesRef)->setApplePayCapabilityDisclosureAllowed(allowed);
-}
-
 void WKPreferencesSetLinkPreloadEnabled(WKPreferencesRef preferencesRef, bool flag)
 {
     toImpl(preferencesRef)->setLinkPreloadEnabled(flag);

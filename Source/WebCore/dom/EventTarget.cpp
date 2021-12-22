@@ -71,11 +71,6 @@ bool EventTarget::isNode() const
     return false;
 }
 
-bool EventTarget::isPaymentRequest() const
-{
-    return false;
-}
-
 bool EventTarget::addEventListener(const AtomString& eventType, Ref<EventListener>&& listener, const AddEventListenerOptions& options)
 {
 #if ASSERT_ENABLED

@@ -4934,7 +4934,6 @@
                 "continuous-capacity-level-indicator",
                 "discrete-capacity-level-indicator",
                 "rating-level-indicator",
-                "-apple-pay-button",
                 "textarea",
                 "attachment",
                 "caps-lock-indicator",
@@ -7558,18 +7557,6 @@
                 "status": "non-standard",
                 "comment": "Needed for feature-detecting the Safari browser. Implementation has no effect."
             }
-        },
-        "-apple-pay-button-style": {
-            "codegen-properties": {
-                "enable-if": "ENABLE_APPLE_PAY"
-            },
-            "status": "non-standard"
-        },
-        "-apple-pay-button-type": {
-            "codegen-properties": {
-                "enable-if": "ENABLE_APPLE_PAY"
-            },
-            "status": "non-standard"
         },
         "fill-color": {
             "codegen-properties": {

@@ -43,12 +43,10 @@ VPATH = \
     $(WebKit2)/Shared/Plugins \
     $(WebKit2)/Shared \
     $(WebKit2)/Shared/API/Cocoa \
-    $(WebKit2)/Shared/ApplePay \
     $(WebKit2)/Shared/Authentication \
     $(WebKit2)/Shared/mac \
     $(WebKit2)/WebAuthnProcess \
     $(WebKit2)/WebAuthnProcess/mac \
-    $(WebKit2)/WebProcess/ApplePay \
     $(WebKit2)/WebProcess/ApplicationCache \
     $(WebKit2)/WebProcess/Automation \
     $(WebKit2)/WebProcess/Cache \
@@ -139,7 +137,6 @@ MESSAGE_RECEIVERS = \
 	Shared/Plugins/NPObjectMessageReceiver \
 	Shared/AuxiliaryProcess \
 	Shared/API/Cocoa/RemoteObjectRegistry \
-	Shared/ApplePay/WebPaymentCoordinatorProxy \
 	Shared/Authentication/AuthenticationManager \
 	Shared/WebConnection \
 	UIProcess/WebFullScreenManagerProxy \
@@ -226,7 +223,6 @@ MESSAGE_RECEIVERS = \
 	WebProcess/cocoa/VideoFullscreenManager \
 	WebProcess/Automation/WebAutomationSessionProxy \
 	WebProcess/FullScreen/WebFullScreenManager \
-	WebProcess/ApplePay/WebPaymentCoordinator \
 	WebProcess/Notifications/WebNotificationManager \
 	WebProcess/WebPage/EventDispatcher \
 	WebProcess/WebPage/RemoteLayerTree/RemoteScrollingCoordinator \

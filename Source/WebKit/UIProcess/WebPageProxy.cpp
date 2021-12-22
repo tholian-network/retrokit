@@ -132,7 +132,6 @@
 #include "WebPageNetworkParameters.h"
 #include "WebPageProxyMessages.h"
 #include "WebPasteboardProxy.h"
-#include "WebPaymentCoordinatorProxy.h"
 #include "WebPopupItem.h"
 #include "WebPopupMenuProxy.h"
 #include "WebPreferences.h"
@@ -1021,11 +1020,6 @@ void WebPageProxy::didAttachToRunningProcess()
     m_videoFullscreenManager = VideoFullscreenManagerProxy::create(*this, *m_playbackSessionManager);
     if (m_videoFullscreenManager)
         m_videoFullscreenManager->setMockVideoPresentationModeEnabled(m_mockVideoPresentationModeEnabled);
-#endif
-
-#if ENABLE(APPLE_PAY)
-    ASSERT(!m_paymentCoordinator);
-    m_paymentCoordinator = makeUnique<WebPaymentCoordinatorProxy>(*this);
 #endif
 
 #if USE(SYSTEM_PREVIEW)
@@ -7872,10 +7866,6 @@ void WebPageProxy::resetState(ResetStateReason resetStateReason)
 
 #if ENABLE(WIRELESS_PLAYBACK_TARGET) && !PLATFORM(IOS_FAMILY)
     pageClient().mediaSessionManager().removeAllPlaybackTargetPickerClients(*this);
-#endif
-
-#if ENABLE(APPLE_PAY)
-    m_paymentCoordinator = nullptr;
 #endif
 
 #if USE(SYSTEM_PREVIEW)

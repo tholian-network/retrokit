@@ -93,7 +93,6 @@ $(PROJECT_DIR)/Scripts/webkit/messages.py
 $(PROJECT_DIR)/Scripts/webkit/model.py
 $(PROJECT_DIR)/Scripts/webkit/parser.py
 $(PROJECT_DIR)/Shared/API/Cocoa/RemoteObjectRegistry.messages.in
-$(PROJECT_DIR)/Shared/ApplePay/WebPaymentCoordinatorProxy.messages.in
 $(PROJECT_DIR)/Shared/Authentication/AuthenticationManager.messages.in
 $(PROJECT_DIR)/Shared/AuxiliaryProcess.messages.in
 $(PROJECT_DIR)/Shared/HTTPSUpgrade/HTTPSUpgradeList.txt
@@ -137,7 +136,6 @@ $(PROJECT_DIR)/UIProcess/mac/SecItemShimProxy.messages.in
 $(PROJECT_DIR)/WebAuthnProcess/WebAuthnConnectionToWebProcess.messages.in
 $(PROJECT_DIR)/WebAuthnProcess/WebAuthnProcess.messages.in
 $(PROJECT_DIR)/WebAuthnProcess/mac/com.apple.WebKit.WebAuthnProcess.sb.in
-$(PROJECT_DIR)/WebProcess/ApplePay/WebPaymentCoordinator.messages.in
 $(PROJECT_DIR)/WebProcess/Automation/WebAutomationSessionProxy.js
 $(PROJECT_DIR)/WebProcess/Automation/WebAutomationSessionProxy.messages.in
 $(PROJECT_DIR)/WebProcess/Cache/WebCacheStorageConnection.messages.in

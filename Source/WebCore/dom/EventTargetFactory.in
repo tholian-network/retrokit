@@ -3,7 +3,6 @@ factoryFunction=toJS
 useNamespaceAsSuffix=true
 
 AbortSignal
-ApplePaySession conditional=APPLE_PAY
 AudioNode conditional=WEB_AUDIO
 AudioTrackList conditional=VIDEO
 BaseAudioContext conditional=WEB_AUDIO
@@ -32,8 +31,6 @@ MessagePort
 Node
 Notification conditional=NOTIFICATIONS
 OffscreenCanvas conditional=OFFSCREEN_CANVAS
-PaymentRequest conditional=PAYMENT_REQUEST
-PaymentResponse conditional=PAYMENT_REQUEST
 Performance
 PermissionStatus
 PictureInPictureWindow conditional=PICTURE_IN_PICTURE_API

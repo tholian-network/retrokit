@@ -397,13 +397,6 @@ NeedsDeferKeyDownAndKeyPressTimersUntilNextEditingCommandQuirk:
     WebCore:
       default: false
 
-PaymentRequestEnabled:
-  type: bool
-  condition: ENABLE(PAYMENT_REQUEST)
-  defaultValue:
-    WebCore:
-      default: false
-
 PitchCorrectionAlgorithm:
   type: uint32_t
   refinedType: MediaPlayerEnums::PitchCorrectionAlgorithm

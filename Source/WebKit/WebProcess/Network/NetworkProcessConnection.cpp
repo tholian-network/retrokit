@@ -44,7 +44,6 @@
 #include "WebMDNSRegisterMessages.h"
 #include "WebPage.h"
 #include "WebPageMessages.h"
-#include "WebPaymentCoordinator.h"
 #include "WebProcess.h"
 #include "WebRTCMonitor.h"
 #include "WebRTCMonitorMessages.h"
@@ -66,10 +65,6 @@
 #include <WebCore/MessagePort.h>
 #include <WebCore/SharedBuffer.h>
 #include <pal/SessionID.h>
-
-#if ENABLE(APPLE_PAY_REMOTE_UI)
-#include "WebPaymentCoordinatorMessages.h"
-#endif
 
 namespace WebKit {
 using namespace WebCore;
@@ -168,14 +163,6 @@ void NetworkProcessConnection::didReceiveMessage(IPC::Connection& connection, IP
     }
 #endif
 
-#if ENABLE(APPLE_PAY_REMOTE_UI)
-    if (decoder.messageReceiverName() == Messages::WebPaymentCoordinator::messageReceiverName()) {
-        if (auto webPage = WebProcess::singleton().webPage(makeObjectIdentifier<PageIdentifierType>(decoder.destinationID())))
-            webPage->paymentCoordinator()->didReceiveMessage(connection, decoder);
-        return;
-    }
-#endif
-
     didReceiveNetworkProcessConnectionMessage(connection, decoder);
 }
 
@@ -186,14 +173,6 @@ bool NetworkProcessConnection::didReceiveSyncMessage(IPC::Connection& connection
         ASSERT(SWContextManager::singleton().connection());
         if (auto* contextManagerConnection = SWContextManager::singleton().connection())
             return static_cast<WebSWContextManagerConnection&>(*contextManagerConnection).didReceiveSyncMessage(connection, decoder, replyEncoder);
-        return false;
-    }
-#endif
-
-#if ENABLE(APPLE_PAY_REMOTE_UI)
-    if (decoder.messageReceiverName() == Messages::WebPaymentCoordinator::messageReceiverName()) {
-        if (auto webPage = WebProcess::singleton().webPage(makeObjectIdentifier<PageIdentifierType>(decoder.destinationID())))
-            return webPage->paymentCoordinator()->didReceiveSyncMessage(connection, decoder, replyEncoder);
         return false;
     }
 #endif

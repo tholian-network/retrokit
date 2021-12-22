@@ -127,7 +127,6 @@ class PageConsoleClient;
 class PageDebuggable;
 class PageGroup;
 class PageOverlayController;
-class PaymentCoordinator;
 class PerformanceLogging;
 class PerformanceLoggingClient;
 class PerformanceMonitor;
@@ -525,11 +524,6 @@ public:
     ScrollLatchingController& scrollLatchingController();
     ScrollLatchingController* scrollLatchingControllerIfExists();
 #endif // ENABLE(WHEEL_EVENT_LATCHING)
-
-#if ENABLE(APPLE_PAY)
-    PaymentCoordinator& paymentCoordinator() const { return *m_paymentCoordinator; }
-    WEBCORE_EXPORT void setPaymentCoordinator(std::unique_ptr<PaymentCoordinator>&&);
-#endif
 
 #if ENABLE(WEB_AUTHN)
     AuthenticatorCoordinator& authenticatorCoordinator() { return m_authenticatorCoordinator.get(); }
@@ -1156,10 +1150,6 @@ private:
 
     std::unique_ptr<WheelEventDeltaFilter> m_recentWheelEventDeltaFilter;
     std::unique_ptr<PageOverlayController> m_pageOverlayController;
-
-#if ENABLE(APPLE_PAY)
-    std::unique_ptr<PaymentCoordinator> m_paymentCoordinator;
-#endif
 
 #if ENABLE(WEB_AUTHN)
     UniqueRef<AuthenticatorCoordinator> m_authenticatorCoordinator;

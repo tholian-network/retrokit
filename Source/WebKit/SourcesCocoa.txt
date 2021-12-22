@@ -79,18 +79,14 @@ Platform/classifier/cocoa/ResourceLoadStatisticsClassifierCocoa.cpp
 Platform/classifier/ResourceLoadStatisticsClassifier.cpp
 
 Platform/cocoa/LayerHostingContext.mm
-Platform/cocoa/PaymentAuthorizationPresenter.mm
-Platform/cocoa/PaymentAuthorizationViewController.mm
 Platform/cocoa/SharedMemoryCocoa.cpp
 Platform/cocoa/TextRecognitionUtilities.mm
 Platform/cocoa/WKCrashReporter.mm
-Platform/cocoa/WKPaymentAuthorizationDelegate.mm
 Platform/cocoa/WebKitAdditions.mm @no-unify
 
 Platform/foundation/LoggingFoundation.mm
 
 Platform/ios/AccessibilityIOS.mm
-Platform/ios/PaymentAuthorizationController.mm
 
 Platform/IPC/cocoa/ConnectionCocoa.mm
 Platform/IPC/cocoa/MachMessage.cpp
@@ -133,13 +129,6 @@ Shared/API/Cocoa/RemoteObjectRegistry.mm
 Shared/API/Cocoa/WKBrowsingContextHandle.mm
 Shared/API/Cocoa/WKRemoteObject.mm
 Shared/API/Cocoa/WKRemoteObjectCoder.mm
-
-Shared/ApplePay/ApplePayPaymentSetupFeatures.mm
-Shared/ApplePay/PaymentSetupConfiguration.mm
-Shared/ApplePay/WebPaymentCoordinatorProxy.cpp
-Shared/ApplePay/cocoa/WebPaymentCoordinatorProxyCocoa.mm
-Shared/ApplePay/ios/WebPaymentCoordinatorProxyIOS.mm
-Shared/ApplePay/mac/WebPaymentCoordinatorProxyMac.mm
 
 Shared/APIWebArchive.mm
 Shared/APIWebArchiveResource.mm
@@ -590,10 +579,6 @@ WebAuthnProcess/ios/WebAuthnProcessIOS.mm
 WebAuthnProcess/mac/WebAuthnProcessMac.mm
 
 WebProcess/API/Cocoa/WKWebProcess.cpp
-
-WebProcess/ApplePay/WebPaymentCoordinator.cpp
-
-WebProcess/ApplePay/cocoa/WebPaymentCoordinatorCocoa.mm
 
 WebProcess/cocoa/PlaybackSessionManager.mm
 WebProcess/cocoa/RemoteCaptureSampleManager.cpp

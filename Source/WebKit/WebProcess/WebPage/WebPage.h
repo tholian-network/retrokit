@@ -303,7 +303,6 @@ class WebOpenPanelResultListener;
 class WebPageGroupProxy;
 class WebPageInspectorTargetController;
 class WebPageOverlay;
-class WebPaymentCoordinator;
 class WebPopupMenu;
 class WebRemoteObjectRegistry;
 class WebTouchEvent;
@@ -1323,10 +1322,6 @@ public:
 
     void startTextManipulations(Vector<WebCore::TextManipulationController::ExclusionRule>&&, CompletionHandler<void()>&&);
     void completeTextManipulation(const Vector<WebCore::TextManipulationController::ManipulationItem>&, CompletionHandler<void(bool allFailed, const Vector<WebCore::TextManipulationController::ManipulationFailure>&)>&&);
-
-#if ENABLE(APPLE_PAY)
-    WebPaymentCoordinator* paymentCoordinator();
-#endif
 
 #if ENABLE(PLATFORM_DRIVEN_TEXT_CHECKING)
     TextCheckingControllerProxy& textCheckingController() { return m_textCheckingControllerProxy.get(); }

@@ -840,11 +840,6 @@ public:
     TrailingWord trailingWord() const { return TrailingWord::Auto; }
 #endif
 
-#if ENABLE(APPLE_PAY)
-    ApplePayButtonStyle applePayButtonStyle() const { return static_cast<ApplePayButtonStyle>(m_rareNonInheritedData->applePayButtonStyle); }
-    ApplePayButtonType applePayButtonType() const { return static_cast<ApplePayButtonType>(m_rareNonInheritedData->applePayButtonType); }
-#endif
-
     MathStyle mathStyle() const { return static_cast<MathStyle>(m_rareInheritedData->mathStyle); }
 
 // attribute setter methods
@@ -1342,11 +1337,6 @@ public:
     void setTrailingWord(TrailingWord) { }
 #endif
 
-#if ENABLE(APPLE_PAY)
-    void setApplePayButtonStyle(ApplePayButtonStyle style) { SET_VAR(m_rareNonInheritedData, applePayButtonStyle, static_cast<unsigned>(style)); }
-    void setApplePayButtonType(ApplePayButtonType type) { SET_VAR(m_rareNonInheritedData, applePayButtonType, static_cast<unsigned>(type)); }
-#endif
-
 #if ENABLE(CSS_PAINTING_API)
     void addCustomPaintWatchProperty(const String& name);
 #endif
@@ -1729,11 +1719,6 @@ public:
 
 #if ENABLE(CSS_TRAILING_WORD)
     static TrailingWord initialTrailingWord() { return TrailingWord::Auto; }
-#endif
-
-#if ENABLE(APPLE_PAY)
-    static ApplePayButtonStyle initialApplePayButtonStyle() { return ApplePayButtonStyle::Black; }
-    static ApplePayButtonType initialApplePayButtonType() { return ApplePayButtonType::Plain; }
 #endif
 
     // The initial value is 'none' for grid tracks.

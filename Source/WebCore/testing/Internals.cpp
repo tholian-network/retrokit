@@ -312,11 +312,6 @@
 #include "MockPreviewLoaderClient.h"
 #endif
 
-#if ENABLE(APPLE_PAY)
-#include "MockPaymentCoordinator.h"
-#include "PaymentCoordinator.h"
-#endif
-
 #if ENABLE(WEBXR)
 #include "NavigatorWebXR.h"
 #include "WebXRSystem.h"
@@ -635,14 +630,6 @@ Internals::Internals(Document& document)
     }
 
     setConsoleMessageListener(nullptr);
-
-#if ENABLE(APPLE_PAY)
-    auto* frame = document.frame();
-    if (frame && frame->page() && frame->isMainFrame()) {
-        auto mockPaymentCoordinator = new MockPaymentCoordinator(*frame->page());
-        frame->page()->setPaymentCoordinator(makeUnique<PaymentCoordinator>(*mockPaymentCoordinator));
-    }
-#endif
 
 #if PLATFORM(COCOA) &&  ENABLE(WEB_AUDIO)
     AudioDestinationCocoa::createOverride = nullptr;
@@ -5238,13 +5225,6 @@ void Internals::setAsRunningUserScripts(Document& document)
     document.setAsRunningUserScripts();
 }
 
-#if ENABLE(APPLE_PAY)
-void Internals::setApplePayIsActive(Document& document)
-{
-    document.setApplePayIsActive();
-}
-#endif
-
 #if ENABLE(WEBGL)
 void Internals::simulateEventForWebGLContext(SimulatedWebGLContextEvent event, WebGLRenderingContext& context)
 {
@@ -5700,13 +5680,6 @@ void Internals::whenServiceWorkerIsTerminated(ServiceWorker& worker, DOMPromiseD
     return ServiceWorkerProvider::singleton().serviceWorkerConnection().whenServiceWorkerIsTerminatedForTesting(worker.identifier(), [promise = WTFMove(promise)]() mutable {
         promise.resolve();
     });
-}
-#endif
-
-#if ENABLE(APPLE_PAY)
-MockPaymentCoordinator& Internals::mockPaymentCoordinator(Document& document)
-{
-    return downcast<MockPaymentCoordinator>(document.frame()->page()->paymentCoordinator().client());
 }
 #endif
 

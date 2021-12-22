@@ -213,13 +213,8 @@ public:
     unsigned isolation : 1; // Isolation
 #endif
 
-#if ENABLE(APPLE_PAY)
-    unsigned applePayButtonStyle : 2;
-    unsigned applePayButtonType : 4;
-#endif
-
     unsigned objectFit : 3; // ObjectFit
-    
+
     unsigned breakBefore : 4; // BreakBetween
     unsigned breakAfter : 4;
     unsigned breakInside : 3; // BreakInside

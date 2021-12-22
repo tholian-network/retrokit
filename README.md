@@ -8,13 +8,15 @@ libraries to a minimum.
 
 # Planned Removals
 
-- [ ] Apple Pay API
-- [ ] Bluetooth API
+- [x] Apple Pay API (`APPLE_PAY`, `ApplePay*`)
+- [x] Bluetooth API
+- [x] Gamepad API
+- [x] Geolocation API (`ENABLE_GEOLOCATION`, `Geolocation*`, `Geoposition*`)
+- [x] Geoclue Library (`geoclue`)
+- [x] Payment Request API (`PAYMENT_REQUEST`, `Merchant*`, `Payer*`, `Payment*`, `Coupon*`)
+- [ ] PASSKIT Integration (`PASSKIT`)
 - [ ] Camera API
 - [ ] Microphone API
-- [x] Gamepad API
-- [x] Geolocation API
-- [x] Geoclue (geoclue) Library
 - [ ] Gyroscope API
 - [ ] Accelerometer API
 - [ ] Magnetometer API
@@ -43,6 +45,9 @@ libraries to a minimum.
 - [ ] Window Alert API
 - [ ] Speaker Selection API
 
+- [ ] CSS Filters API (`FILTERS_LEVEL_2`)
+
+- [ ] FTP Directory Support (`FTPDIR`)
 
 # Planned Removal of Compiler Flags
 

@@ -69,7 +69,6 @@
 #include "WebPage.h"
 #include "WebPageCreationParameters.h"
 #include "WebPageGroupProxy.h"
-#include "WebPaymentCoordinator.h"
 #include "WebPlatformStrategies.h"
 #include "WebPluginInfoProvider.h"
 #include "WebProcessCreationParameters.h"
@@ -1169,10 +1168,6 @@ void WebProcess::networkProcessConnectionClosed(NetworkProcessConnection* connec
 
     for (auto& page : m_pageMap.values()) {
         page->stopAllURLSchemeTasks();
-#if ENABLE(APPLE_PAY)
-        if (auto paymentCoordinator = page->paymentCoordinator())
-            paymentCoordinator->networkProcessConnectionClosed();
-#endif
     }
 }
 

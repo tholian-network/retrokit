@@ -90,9 +90,6 @@ enum ControlPart {
     ContinuousCapacityLevelIndicatorPart,
     DiscreteCapacityLevelIndicatorPart,
     RatingLevelIndicatorPart,
-#if ENABLE(APPLE_PAY)
-    ApplePayButtonPart,
-#endif
 #if ENABLE(INPUT_TYPE_COLOR)
     ColorWellPart,
 #endif

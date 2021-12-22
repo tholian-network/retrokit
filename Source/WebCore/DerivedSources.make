@@ -51,53 +51,6 @@ FEATURE_AND_PLATFORM_DEFINE_DEPENDENCIES = $(WebCore)/DerivedSources.make
 
 JS_BINDING_IDLS := \
     $(WebCore)/Modules/airplay/WebKitPlaybackTargetAvailabilityEvent.idl \
-    $(WebCore)/Modules/applepay/ApplePayCancelEvent.idl \
-    $(WebCore)/Modules/applepay/ApplePayContactField.idl \
-    $(WebCore)/Modules/applepay/ApplePayCouponCodeChangedEvent.idl \
-    $(WebCore)/Modules/applepay/ApplePayCouponCodeDetails.idl \
-    $(WebCore)/Modules/applepay/ApplePayCouponCodeUpdate.idl \
-    $(WebCore)/Modules/applepay/ApplePayDateComponents.idl \
-    $(WebCore)/Modules/applepay/ApplePayDateComponentsRange.idl \
-    $(WebCore)/Modules/applepay/ApplePayDetailsUpdateBase.idl \
-    $(WebCore)/Modules/applepay/ApplePayDetailsUpdateData.idl \
-    $(WebCore)/Modules/applepay/ApplePayError.idl \
-    $(WebCore)/Modules/applepay/ApplePayErrorCode.idl \
-    $(WebCore)/Modules/applepay/ApplePayErrorContactField.idl \
-    $(WebCore)/Modules/applepay/ApplePayInstallmentConfiguration.idl \
-    $(WebCore)/Modules/applepay/ApplePayInstallmentItem.idl \
-    $(WebCore)/Modules/applepay/ApplePayInstallmentItemType.idl \
-    $(WebCore)/Modules/applepay/ApplePayInstallmentRetailChannel.idl \
-    $(WebCore)/Modules/applepay/ApplePayLineItem.idl \
-    $(WebCore)/Modules/applepay/ApplePayMerchantCapability.idl \
-    $(WebCore)/Modules/applepay/ApplePayPayment.idl \
-    $(WebCore)/Modules/applepay/ApplePayPaymentAuthorizationResult.idl \
-    $(WebCore)/Modules/applepay/ApplePayPaymentAuthorizedEvent.idl \
-    $(WebCore)/Modules/applepay/ApplePayPaymentContact.idl \
-    $(WebCore)/Modules/applepay/ApplePayPaymentMethod.idl \
-    $(WebCore)/Modules/applepay/ApplePayPaymentMethodSelectedEvent.idl \
-    $(WebCore)/Modules/applepay/ApplePayPaymentMethodType.idl \
-    $(WebCore)/Modules/applepay/ApplePayPaymentMethodUpdate.idl \
-    $(WebCore)/Modules/applepay/ApplePayPaymentPass.idl \
-    $(WebCore)/Modules/applepay/ApplePayPaymentRequest.idl \
-    $(WebCore)/Modules/applepay/ApplePayPaymentTiming.idl \
-    $(WebCore)/Modules/applepay/ApplePayRecurringPaymentDateUnit.idl \
-    $(WebCore)/Modules/applepay/ApplePayRequestBase.idl \
-    $(WebCore)/Modules/applepay/ApplePaySession.idl \
-    $(WebCore)/Modules/applepay/ApplePaySessionError.idl \
-    $(WebCore)/Modules/applepay/ApplePaySetup.idl \
-    $(WebCore)/Modules/applepay/ApplePaySetupConfiguration.idl \
-    $(WebCore)/Modules/applepay/ApplePaySetupFeature.idl \
-    $(WebCore)/Modules/applepay/ApplePaySetupFeatureState.idl \
-    $(WebCore)/Modules/applepay/ApplePaySetupFeatureType.idl \
-    $(WebCore)/Modules/applepay/ApplePayShippingContactEditingMode.idl \
-    $(WebCore)/Modules/applepay/ApplePayShippingContactSelectedEvent.idl \
-    $(WebCore)/Modules/applepay/ApplePayShippingContactUpdate.idl \
-    $(WebCore)/Modules/applepay/ApplePayShippingMethod.idl \
-    $(WebCore)/Modules/applepay/ApplePayShippingMethodSelectedEvent.idl \
-    $(WebCore)/Modules/applepay/ApplePayShippingMethodUpdate.idl \
-    $(WebCore)/Modules/applepay/ApplePayValidateMerchantEvent.idl \
-    $(WebCore)/Modules/applepay/paymentrequest/ApplePayModifier.idl \
-    $(WebCore)/Modules/applepay/paymentrequest/ApplePayRequest.idl \
     $(WebCore)/Modules/async-clipboard/Clipboard.idl \
     $(WebCore)/Modules/async-clipboard/ClipboardItem.idl \
     $(WebCore)/Modules/async-clipboard/Navigator+Clipboard.idl \
@@ -291,27 +244,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/Modules/notifications/Notification.idl \
     $(WebCore)/Modules/notifications/NotificationPermission.idl \
     $(WebCore)/Modules/notifications/NotificationPermissionCallback.idl \
-    $(WebCore)/Modules/paymentrequest/AddressErrors.idl \
-    $(WebCore)/Modules/paymentrequest/MerchantValidationEvent.idl \
-    $(WebCore)/Modules/paymentrequest/PayerErrorFields.idl \
-    $(WebCore)/Modules/paymentrequest/PaymentAddress.idl \
-    $(WebCore)/Modules/paymentrequest/PaymentComplete.idl \
-    $(WebCore)/Modules/paymentrequest/PaymentCurrencyAmount.idl \
-    $(WebCore)/Modules/paymentrequest/PaymentDetailsBase.idl \
-    $(WebCore)/Modules/paymentrequest/PaymentDetailsInit.idl \
-    $(WebCore)/Modules/paymentrequest/PaymentDetailsModifier.idl \
-    $(WebCore)/Modules/paymentrequest/PaymentDetailsUpdate.idl \
-    $(WebCore)/Modules/paymentrequest/PaymentItem.idl \
-    $(WebCore)/Modules/paymentrequest/PaymentMethodChangeEvent.idl \
-    $(WebCore)/Modules/paymentrequest/PaymentMethodData.idl \
-    $(WebCore)/Modules/paymentrequest/PaymentOptions.idl \
-    $(WebCore)/Modules/paymentrequest/PaymentRequest.idl \
-    $(WebCore)/Modules/paymentrequest/PaymentRequestUpdateEvent.idl \
-    $(WebCore)/Modules/paymentrequest/PaymentRequestUpdateEventInit.idl \
-    $(WebCore)/Modules/paymentrequest/PaymentResponse.idl \
-    $(WebCore)/Modules/paymentrequest/PaymentShippingOption.idl \
-    $(WebCore)/Modules/paymentrequest/PaymentShippingType.idl \
-    $(WebCore)/Modules/paymentrequest/PaymentValidationErrors.idl \
     $(WebCore)/Modules/permissions/Navigator+Permissions.idl \
     $(WebCore)/Modules/permissions/PermissionDescriptor.idl \
     $(WebCore)/Modules/permissions/PermissionName.idl \
@@ -1186,10 +1118,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/testing/MockCDMFactory.idl \
     $(WebCore)/testing/MockContentFilterSettings.idl \
     $(WebCore)/testing/MockPageOverlay.idl \
-    $(WebCore)/testing/MockPaymentAddress.idl \
-    $(WebCore)/testing/MockPaymentContactFields.idl \
-    $(WebCore)/testing/MockPaymentCoordinator.idl \
-    $(WebCore)/testing/MockPaymentError.idl \
     $(WebCore)/testing/MockWebAuthenticationConfiguration.idl \
     $(WebCore)/testing/ServiceWorkerInternals.idl \
     $(WebCore)/testing/TypeConversions.idl \
@@ -1848,14 +1776,6 @@ $(IDL_INTERMEDIATE_PATTERNS) : $(PREPROCESS_IDLS_SCRIPTS) $(IDL_ATTRIBUTES_FILE)
 #   SDKROOT. However, there is also a version of the file in WebCore/dom. If
 #   the file can't be found in either of the first two locations, the version
 #   in WebCore/dom will be used.
-#
-# * Files such as ApplePaySetup.idl used to be provided externally in
-#   BUILT_PRODUCTS_DIR or SDKROOT, but are now "upstreamed" into
-#   WebCore/Modules/applepay. Because they were previously found in SDKROOT,
-#   building against old SDKs will cause the build system to be exposed to old,
-#   out-of-date versions of ApplePaySetup.idl. In these cases, we want to
-#   *ignore* the externally-provided versions and use the versions found in
-#   WebCore.
 #
 # To build the IDL files, we used to have a rule like the following:
 #

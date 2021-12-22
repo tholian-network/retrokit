@@ -40,7 +40,6 @@ namespace WebCore {
     M(Accessibility) \
     M(Animations) \
     M(AppHighlights) \
-    M(ApplePay) \
     M(Archives) \
     M(BackForwardCache) \
     M(Calc) \

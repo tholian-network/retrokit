@@ -8842,25 +8842,6 @@ bool Document::shouldIgnoreSyncXHRs() const
     return m_numberOfRejectedSyncXHRs > maxRejectedSyncXHRsPerEventLoopIteration;
 }
 
-#if ENABLE(APPLE_PAY)
-
-bool Document::isApplePayActive() const
-{
-    auto& top = topDocument();
-    return this == &top ? m_hasStartedApplePaySession : top.isApplePayActive();
-}
-
-void Document::setApplePayIsActive()
-{
-    auto& top = topDocument();
-    if (this == &top)
-        m_hasStartedApplePaySession = true;
-    else
-        top.setApplePayIsActive();
-}
-
-#endif
-
 MessagePortChannelProvider& Document::messagePortChannelProvider()
 {
     return MessagePortChannelProvider::singleton();

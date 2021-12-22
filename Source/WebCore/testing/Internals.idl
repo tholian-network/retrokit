@@ -847,7 +847,6 @@ enum AutoplayPolicy {
     undefined setQuickLookPassword(DOMString password);
 
     [CallWith=Document] undefined setAsRunningUserScripts();
-    [CallWith=Document, Conditional=APPLE_PAY] undefined setApplePayIsActive();
 
     undefined disableTileSizeUpdateDelay();
     undefined setSpeculativeTilingDelayDisabledForTesting(boolean disabled);
@@ -925,8 +924,6 @@ enum AutoplayPolicy {
     [Conditional=SERVICE_WORKER] Promise<boolean> hasServiceWorkerRegistration(DOMString scopeURL);
     [Conditional=SERVICE_WORKER] Promise<undefined> terminateServiceWorker(ServiceWorker worker);
     [Conditional=SERVICE_WORKER] Promise<undefined> whenServiceWorkerIsTerminated(ServiceWorker worker);
-
-    [CallWith=Document, Conditional=APPLE_PAY] readonly attribute MockPaymentCoordinator mockPaymentCoordinator;
 
     boolean isSystemPreviewLink(Element element);
     boolean isSystemPreviewImage(Element element);

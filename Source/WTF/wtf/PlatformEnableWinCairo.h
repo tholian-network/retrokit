@@ -51,6 +51,3 @@
 #define ENABLE_WEBGL 1
 #endif
 
-#if !defined(ENABLE_GEOLOCATION)
-#define ENABLE_GEOLOCATION 1
-#endif

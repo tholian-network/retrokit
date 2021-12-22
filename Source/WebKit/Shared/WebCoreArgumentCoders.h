@@ -45,10 +45,6 @@
 #include <WebCore/WorkerType.h>
 #include <wtf/EnumTraits.h>
 
-#if ENABLE(APPLE_PAY)
-#include <WebCore/PaymentHeaders.h>
-#endif
-
 #if USE(CURL)
 #include <WebCore/CurlProxySettings.h>
 #endif
@@ -127,7 +123,6 @@ class LayoutPoint;
 class LinearTimingFunction;
 class Notification;
 class PasteboardCustomData;
-class PaymentInstallmentConfiguration;
 class ProtectionSpace;
 class Region;
 class ResourceError;
@@ -675,59 +670,6 @@ template<> struct ArgumentCoder<WebCore::ResourceLoadStatistics> {
     static std::optional<WebCore::ResourceLoadStatistics> decode(Decoder&);
 };
 
-#if ENABLE(APPLE_PAY)
-
-template<> struct ArgumentCoder<WebCore::Payment> {
-    static void encode(Encoder&, const WebCore::Payment&);
-    static std::optional<WebCore::Payment> decode(Decoder&);
-};
-
-template<> struct ArgumentCoder<WebCore::PaymentAuthorizationResult> {
-    static void encode(Encoder&, const WebCore::PaymentAuthorizationResult&);
-    static std::optional<WebCore::PaymentAuthorizationResult> decode(Decoder&);
-};
-
-template<> struct ArgumentCoder<WebCore::PaymentContact> {
-    static void encode(Encoder&, const WebCore::PaymentContact&);
-    static std::optional<WebCore::PaymentContact> decode(Decoder&);
-};
-
-template<> struct ArgumentCoder<WebCore::PaymentMerchantSession> {
-    static void encode(Encoder&, const WebCore::PaymentMerchantSession&);
-    static std::optional<WebCore::PaymentMerchantSession> decode(Decoder&);
-};
-
-template<> struct ArgumentCoder<WebCore::PaymentMethod> {
-    static void encode(Encoder&, const WebCore::PaymentMethod&);
-    static std::optional<WebCore::PaymentMethod> decode(Decoder&);
-};
-
-template<> struct ArgumentCoder<WebCore::ApplePaySessionPaymentRequest> {
-    static void encode(Encoder&, const WebCore::ApplePaySessionPaymentRequest&);
-    static WARN_UNUSED_RETURN bool decode(Decoder&, WebCore::ApplePaySessionPaymentRequest&);
-};
-template<> struct ArgumentCoder<WebCore::ApplePaySessionPaymentRequest::ContactFields> {
-    static void encode(Encoder&, const WebCore::ApplePaySessionPaymentRequest::ContactFields&);
-    static WARN_UNUSED_RETURN bool decode(Decoder&, WebCore::ApplePaySessionPaymentRequest::ContactFields&);
-};
-
-template<> struct ArgumentCoder<WebCore::ApplePaySessionPaymentRequest::MerchantCapabilities> {
-    static void encode(Encoder&, const WebCore::ApplePaySessionPaymentRequest::MerchantCapabilities&);
-    static WARN_UNUSED_RETURN bool decode(Decoder&, WebCore::ApplePaySessionPaymentRequest::MerchantCapabilities&);
-};
-
-template<> struct ArgumentCoder<RefPtr<WebCore::ApplePayError>> {
-    static void encode(Encoder&, const RefPtr<WebCore::ApplePayError>&);
-    static std::optional<RefPtr<WebCore::ApplePayError>> decode(Decoder&);
-};
-
-template<> struct ArgumentCoder<WebCore::PaymentSessionError> {
-    static void encode(Encoder&, const WebCore::PaymentSessionError&);
-    static std::optional<WebCore::PaymentSessionError> decode(Decoder&);
-};
-
-#endif
-
 #if ENABLE(MEDIA_STREAM)
 template<> struct ArgumentCoder<WebCore::MediaConstraints> {
     static void encode(Encoder&, const WebCore::MediaConstraints&);
@@ -822,13 +764,6 @@ template<> struct ArgumentCoder<WebCore::DataDetectorElementInfo> {
 template<> struct ArgumentCoder<WebCore::CDMInstanceSession::Message> {
     static void encode(Encoder&, const WebCore::CDMInstanceSession::Message&);
     static std::optional<WebCore::CDMInstanceSession::Message> decode(Decoder&);
-};
-#endif
-
-#if HAVE(PASSKIT_INSTALLMENTS)
-template<> struct ArgumentCoder<WebCore::PaymentInstallmentConfiguration> {
-    static void encode(Encoder&, const WebCore::PaymentInstallmentConfiguration&);
-    static std::optional<WebCore::PaymentInstallmentConfiguration> decode(Decoder&);
 };
 #endif
 

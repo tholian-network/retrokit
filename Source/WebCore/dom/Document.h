@@ -1572,10 +1572,6 @@ public:
     WEBCORE_EXPORT bool isRunningUserScripts() const;
     WEBCORE_EXPORT void setAsRunningUserScripts();
     void setHasEvaluatedUserAgentScripts();
-#if ENABLE(APPLE_PAY)
-    WEBCORE_EXPORT bool isApplePayActive() const;
-    WEBCORE_EXPORT void setApplePayIsActive();
-#endif
 
     void frameWasDisconnectedFromOwner();
 
@@ -2195,9 +2191,6 @@ private:
     bool m_shouldPreventEnteringBackForwardCacheForTesting { false };
     bool m_hasLoadedThirdPartyScript { false };
     bool m_hasLoadedThirdPartyFrame { false };
-#if ENABLE(APPLE_PAY)
-    bool m_hasStartedApplePaySession { false };
-#endif
     bool m_hasVisuallyNonEmptyCustomContent { false };
 
     bool m_visibilityHiddenDueToDismissal { false };

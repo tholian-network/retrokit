@@ -62,7 +62,6 @@
 #include "NetworkStorageSession.h"
 #include "Page.h"
 #include "PageConfiguration.h"
-#include "PaymentCoordinatorClient.h"
 #include "PermissionController.h"
 #include "PluginInfoProvider.h"
 #include "ProgressTrackerClient.h"
@@ -404,30 +403,6 @@ class EmptyInspectorClient final : public InspectorClient {
     void highlight() final { }
     void hideHighlight() final { }
 };
-
-#if ENABLE(APPLE_PAY)
-
-class EmptyPaymentCoordinatorClient final : public PaymentCoordinatorClient {
-    std::optional<String> validatedPaymentNetwork(const String&) final { return std::nullopt; }
-    bool canMakePayments() final { return false; }
-    void canMakePaymentsWithActiveCard(const String&, const String&, CompletionHandler<void(bool)>&& completionHandler) final { callOnMainThread([completionHandler = WTFMove(completionHandler)]() mutable { completionHandler(false); }); }
-    void openPaymentSetup(const String&, const String&, CompletionHandler<void(bool)>&& completionHandler) final { callOnMainThread([completionHandler = WTFMove(completionHandler)]() mutable { completionHandler(false); }); }
-    bool showPaymentUI(const URL&, const Vector<URL>&, const ApplePaySessionPaymentRequest&) final { return false; }
-    void completeMerchantValidation(const PaymentMerchantSession&) final { }
-    void completeShippingMethodSelection(std::optional<ApplePayShippingMethodUpdate>&&) final { }
-    void completeShippingContactSelection(std::optional<ApplePayShippingContactUpdate>&&) final { }
-    void completePaymentMethodSelection(std::optional<ApplePayPaymentMethodUpdate>&&) final { }
-#if ENABLE(APPLE_PAY_COUPON_CODE)
-    void completeCouponCodeChange(std::optional<ApplePayCouponCodeUpdate>&&) final { }
-#endif
-    void completePaymentSession(std::optional<PaymentAuthorizationResult>&&) final { }
-    void cancelPaymentSession() final { }
-    void abortPaymentSession() final { }
-    void paymentCoordinatorDestroyed() final { }
-    bool supportsUnrestrictedApplePay() const final { return false; }
-};
-
-#endif
 
 class EmptyPluginInfoProvider final : public PluginInfoProvider {
     void refreshPlugins() final { };
@@ -1200,11 +1175,6 @@ PageConfiguration pageConfigurationWithEmptyClients(PAL::SessionID sessionID)
 
     static NeverDestroyed<EmptyChromeClient> dummyChromeClient;
     pageConfiguration.chromeClient = &dummyChromeClient.get();
-
-#if ENABLE(APPLE_PAY)
-    static NeverDestroyed<EmptyPaymentCoordinatorClient> dummyPaymentCoordinatorClient;
-    pageConfiguration.paymentCoordinatorClient = &dummyPaymentCoordinatorClient.get();
-#endif
 
 #if ENABLE(CONTEXT_MENUS)
     static NeverDestroyed<EmptyContextMenuClient> dummyContextMenuClient;

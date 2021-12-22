@@ -210,25 +210,6 @@ namespace WebCore {
     String AXMeterGaugeRegionSuboptimalText();
     String AXMeterGaugeRegionLessGoodText();
 #endif
-#if ENABLE(APPLE_PAY)
-    String AXApplePayPlainLabel();
-    String AXApplePayBuyLabel();
-    String AXApplePaySetupLabel();
-    String AXApplePayDonateLabel();
-    String AXApplePayCheckOutLabel();
-    String AXApplePayBookLabel();
-    String AXApplePaySubscribeLabel();
-#if ENABLE(APPLE_PAY_NEW_BUTTON_TYPES)
-    String AXApplePayReloadLabel();
-    String AXApplePayAddMoneyLabel();
-    String AXApplePayTopUpLabel();
-    String AXApplePayOrderLabel();
-    String AXApplePayRentLabel();
-    String AXApplePaySupportLabel();
-    String AXApplePayContributeLabel();
-    String AXApplePayTipLabel();
-#endif
-#endif
 
     String AXAutoFillCredentialsLabel();
     String AXAutoFillContactsLabel();

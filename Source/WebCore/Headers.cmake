@@ -1,16 +1,6 @@
 set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     Modules/airplay/PlaybackTargetClientContextIdentifier.h
 
-    Modules/applepay/ApplePaySessionPaymentRequest.h
-    Modules/applepay/Payment.h
-    Modules/applepay/PaymentAuthorizationStatus.h
-    Modules/applepay/PaymentContact.h
-    Modules/applepay/PaymentCoordinator.h
-    Modules/applepay/PaymentCoordinatorClient.h
-    Modules/applepay/PaymentHeaders.h
-    Modules/applepay/PaymentMerchantSession.h
-    Modules/applepay/PaymentMethod.h
-
     Modules/applicationmanifest/ApplicationManifest.h
     Modules/applicationmanifest/ApplicationManifestParser.h
 

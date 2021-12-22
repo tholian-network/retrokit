@@ -886,9 +886,6 @@ relevancy-level-indicator
 continuous-capacity-level-indicator
 discrete-capacity-level-indicator
 rating-level-indicator
-#if defined(ENABLE_APPLE_PAY) && ENABLE_APPLE_PAY
--apple-pay-button
-#endif
 #if defined(ENABLE_INPUT_TYPE_COLOR) && ENABLE_INPUT_TYPE_COLOR
 color-well
 #endif
@@ -1388,30 +1385,6 @@ balance
 #if defined(ENABLE_CSS_TRAILING_WORD) && ENABLE_CSS_TRAILING_WORD
 // -apple-trailing-word
 -webkit-partially-balanced
-#endif
-
-#if defined(ENABLE_APPLE_PAY) && ENABLE_APPLE_PAY
-// -apple-pay-button-style
-white-outline
-
-// -apple-pay-button-type
-plain
-buy
-set-up
-donate
-check-out
-book
-subscribe
-#if defined(ENABLE_APPLE_PAY_NEW_BUTTON_TYPES) && ENABLE_APPLE_PAY_NEW_BUTTON_TYPES
-reload
-add-money
-top-up
-order
-rent
-support
-contribute
-tip
-#endif
 #endif
 
 // font-synthesis

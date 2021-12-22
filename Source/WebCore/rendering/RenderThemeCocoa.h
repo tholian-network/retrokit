@@ -43,11 +43,6 @@ private:
 
     bool shouldHaveCapsLockIndicator(const HTMLInputElement&) const final;
 
-#if ENABLE(APPLE_PAY)
-    void adjustApplePayButtonStyle(RenderStyle&, const Element*) const override;
-    bool paintApplePayButton(const RenderObject&, const PaintInfo&, const IntRect&) override;
-#endif
-
     FontCascadeDescription& cachedSystemFontDescription(CSSValueID systemFontID) const override;
     void updateCachedSystemFontDescription(CSSValueID systemFontID, FontCascadeDescription&) const override;
 

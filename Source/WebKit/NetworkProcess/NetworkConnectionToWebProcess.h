@@ -37,7 +37,6 @@
 #include "PolicyDecision.h"
 #include "SandboxExtension.h"
 #include "WebPageProxyIdentifier.h"
-#include "WebPaymentCoordinatorProxy.h"
 #include "WebResourceLoadObserver.h"
 #include <JavaScriptCore/ConsoleTypes.h>
 #include <WebCore/FrameIdentifier.h>
@@ -95,9 +94,6 @@ struct DataKey;
 
 class NetworkConnectionToWebProcess
     : public RefCounted<NetworkConnectionToWebProcess>
-#if ENABLE(APPLE_PAY_REMOTE_UI)
-    , public WebPaymentCoordinatorProxy::Client
-#endif
 #if HAVE(COOKIE_CHANGE_LISTENER_API)
     , public WebCore::CookieChangeObserver
 #endif
@@ -350,21 +346,6 @@ private:
     void setResourceLoadSchedulingMode(WebCore::PageIdentifier, WebCore::LoadSchedulingMode);
     void prioritizeResourceLoads(Vector<ResourceLoadIdentifier>);
 
-#if ENABLE(APPLE_PAY_REMOTE_UI)
-    WebPaymentCoordinatorProxy& paymentCoordinator();
-
-    // WebPaymentCoordinatorProxy::Client
-    IPC::Connection* paymentCoordinatorConnection(const WebPaymentCoordinatorProxy&) final;
-    UIViewController *paymentCoordinatorPresentingViewController(const WebPaymentCoordinatorProxy&) final;
-    const String& paymentCoordinatorBoundInterfaceIdentifier(const WebPaymentCoordinatorProxy&) final;
-    const String& paymentCoordinatorCTDataConnectionServiceType(const WebPaymentCoordinatorProxy&) final;
-    const String& paymentCoordinatorSourceApplicationBundleIdentifier(const WebPaymentCoordinatorProxy&) final;
-    const String& paymentCoordinatorSourceApplicationSecondaryIdentifier(const WebPaymentCoordinatorProxy&) final;
-    std::unique_ptr<PaymentAuthorizationPresenter> paymentCoordinatorAuthorizationPresenter(WebPaymentCoordinatorProxy&, PKPaymentRequest *) final;
-    void paymentCoordinatorAddMessageReceiver(WebPaymentCoordinatorProxy&, IPC::ReceiverName, IPC::MessageReceiver&) final;
-    void paymentCoordinatorRemoveMessageReceiver(WebPaymentCoordinatorProxy&, IPC::ReceiverName) final;
-#endif
-
     Ref<IPC::Connection> m_connection;
     Ref<NetworkProcess> m_networkProcess;
     PAL::SessionID m_sessionID;
@@ -401,9 +382,6 @@ private:
     bool m_isRegisteredToRTCDataChannelProxy { false };
 #endif
 
-#if ENABLE(APPLE_PAY_REMOTE_UI)
-    std::unique_ptr<WebPaymentCoordinatorProxy> m_paymentCoordinator;
-#endif
     const WebCore::ProcessIdentifier m_webProcessIdentifier;
 
     HashSet<WebCore::MessagePortIdentifier> m_processEntangledPorts;
