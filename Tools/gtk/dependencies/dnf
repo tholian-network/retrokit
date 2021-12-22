@@ -7,7 +7,6 @@ PACKAGES+=(
     atk-devel
     cairo-devel
     enchant-devel
-    geoclue2-devel
     gettext-devel
     gobject-introspection-devel
     gtk3-devel

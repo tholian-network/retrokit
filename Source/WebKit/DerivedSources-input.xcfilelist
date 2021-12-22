@@ -125,7 +125,6 @@ $(PROJECT_DIR)/UIProcess/WebAuthentication/WebAuthenticatorCoordinatorProxy.mess
 $(PROJECT_DIR)/UIProcess/WebAuthentication/WebAuthnProcessProxy.messages.in
 $(PROJECT_DIR)/UIProcess/WebCookieManagerProxy.messages.in
 $(PROJECT_DIR)/UIProcess/WebFullScreenManagerProxy.messages.in
-$(PROJECT_DIR)/UIProcess/WebGeolocationManagerProxy.messages.in
 $(PROJECT_DIR)/UIProcess/WebPageProxy.messages.in
 $(PROJECT_DIR)/UIProcess/WebPasteboardProxy.messages.in
 $(PROJECT_DIR)/UIProcess/WebProcessPool.messages.in
@@ -163,7 +162,6 @@ $(PROJECT_DIR)/WebProcess/GPU/media/ios/RemoteMediaSessionHelper.messages.in
 $(PROJECT_DIR)/WebProcess/GPU/webrtc/LibWebRTCCodecs.messages.in
 $(PROJECT_DIR)/WebProcess/GPU/webrtc/LibWebRTCRemoteCodecs.messages.in
 $(PROJECT_DIR)/WebProcess/GPU/webrtc/SampleBufferDisplayLayer.messages.in
-$(PROJECT_DIR)/WebProcess/Geolocation/WebGeolocationManager.messages.in
 $(PROJECT_DIR)/WebProcess/Inspector/RemoteWebInspectorUI.messages.in
 $(PROJECT_DIR)/WebProcess/Inspector/WebInspector.messages.in
 $(PROJECT_DIR)/WebProcess/Inspector/WebInspectorInterruptDispatcher.messages.in

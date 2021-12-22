@@ -7,7 +7,6 @@ PACKAGES+=(
     atk
     enchant
     faad2
-    geoclue2
     gettext
     gnome-common
     gobject-introspection

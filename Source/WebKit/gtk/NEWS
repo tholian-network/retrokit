@@ -1361,7 +1361,6 @@ What's new in WebKitGTK+ 1.9.4?
   - Add support for window.showModalDialog in WebKit2 GTK+ API.
   - Add webkit_download_get_received_data_length to WebKit2 GTK+ API.
   - Add ContextMenu API to WebKit2 GTK+.
-  - Add Geolocation permission requests API to WebKit2 GTK.
   - Add API to get the library version to WebKit2 GTK+.
   - Add WebKitWebView::run-file-chooser signal to WebKit1 API.
   - Port the video sink to GStreamer 0.11 API.
@@ -1431,8 +1430,6 @@ WebKitGTK+ 1.9.1
 
 What's new in WebKitGTK+ 1.9.1?
 
-  - Geolocation support is built by default now. Use
-    --disable-geolocation during build to disable it.
   - LINGUAS environment variable is honored now.
   - Throttle DNS prefetching to avoid overloading the resolver.
   - Remove defunct WebInspector GSettings mapping.
@@ -1631,7 +1628,6 @@ What's new in WebKitGTK+ 1.7.1?
     nor italic.
   - Fix test rendering issues due to custom fonts which use synthetic
     oblique rendering.
-  - Support for client-based geolocation.
   - Add support for sending encoded blob data during network requests.
   - Use SOCK_SEQPACKET when available for sockets used to communicate
     processes in WebKit2.
@@ -2065,9 +2061,6 @@ What's new in WebKitGTK+ 1.1.90?
   - Reduce creation time for WebKitWebView widgets by reusing
     dictionary structs used for spell-checking instead of creating a
     new one for each instance.
-  - Implement WebKitWebView::geolocation-policy-decision-requested,
-    emitted when a frame inside the WebView wants to get its position
-    through geolocation.
   - Add WebKitWebSettings::enable-spatial-navigation to control
     whether Spatial Navigation is enabled or not. Spatial Navigation
     allows the user to move through the elements in a page using only

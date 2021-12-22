@@ -31,7 +31,6 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${WEBCORE_DIR}/Modules/encryptedmedia/legacy"
     "${WEBCORE_DIR}/Modules/entriesapi"
     "${WEBCORE_DIR}/Modules/fetch"
-    "${WEBCORE_DIR}/Modules/geolocation"
     "${WEBCORE_DIR}/Modules/highlight"
     "${WEBCORE_DIR}/Modules/indexeddb"
     "${WEBCORE_DIR}/Modules/indexeddb/client"
@@ -192,7 +191,6 @@ set(WebCore_IDL_INCLUDES
     Modules/encryptedmedia/legacy
     Modules/entriesapi
     Modules/fetch
-    Modules/geolocation
     Modules/highlight
     Modules/indexeddb
     Modules/mediacapabilities
@@ -280,15 +278,6 @@ set(WebCore_NON_SVG_IDL_FILES
     Modules/fetch/FetchRequestRedirect.idl
     Modules/fetch/FetchResponse.idl
     Modules/fetch/WindowOrWorkerGlobalScope+Fetch.idl
-
-    Modules/geolocation/Geolocation.idl
-    Modules/geolocation/GeolocationCoordinates.idl
-    Modules/geolocation/GeolocationPosition.idl
-    Modules/geolocation/GeolocationPositionError.idl
-    Modules/geolocation/Navigator+Geolocation.idl
-    Modules/geolocation/PositionCallback.idl
-    Modules/geolocation/PositionErrorCallback.idl
-    Modules/geolocation/PositionOptions.idl
 
     Modules/highlight/Highlight.idl
     Modules/highlight/HighlightRegister.idl

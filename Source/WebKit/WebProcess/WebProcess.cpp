@@ -61,7 +61,6 @@
 #include "WebCoreArgumentCoders.h"
 #include "WebFrame.h"
 #include "WebFrameNetworkingContext.h"
-#include "WebGeolocationManager.h"
 #include "WebIDBConnectionToServer.h"
 #include "WebLoaderStrategy.h"
 #include "WebMediaKeyStorageManager.h"
@@ -287,11 +286,6 @@ WebProcess::WebProcess()
 {
     // Initialize our platform strategies.
     WebPlatformStrategies::initialize();
-
-    // FIXME: This should moved to where WebProcess::initialize is called,
-    // so that ports have a chance to customize, and ifdefs in this file are
-    // limited.
-    addSupplement<WebGeolocationManager>();
 
 #if ENABLE(NOTIFICATIONS)
     addSupplement<WebNotificationManager>();
@@ -1452,16 +1446,6 @@ void WebProcess::pageActivityStateDidChange(PageIdentifier, OptionSet<WebCore::A
     if (changed & WebCore::ActivityState::IsVisible)
         updateCPUMonitorState(CPUMonitorUpdateReason::VisibilityHasChanged);
 }
-
-#if PLATFORM(IOS_FAMILY)
-void WebProcess::resetAllGeolocationPermissions()
-{
-    for (auto& page : m_pageMap.values()) {
-        if (Frame* mainFrame = page->mainFrame())
-            mainFrame->resetAllGeolocationPermission();
-    }
-}
-#endif
 
 void WebProcess::prepareToSuspend(bool isSuspensionImminent, CompletionHandler<void()>&& completionHandler)
 {

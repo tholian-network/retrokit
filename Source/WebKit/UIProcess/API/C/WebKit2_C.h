@@ -40,9 +40,6 @@
 #include <WebKit/WKFormSubmissionListener.h>
 #include <WebKit/WKFrame.h>
 #include <WebKit/WKFramePolicyListener.h>
-#include <WebKit/WKGeolocationManager.h>
-#include <WebKit/WKGeolocationPermissionRequest.h>
-#include <WebKit/WKGeolocationPosition.h>
 #include <WebKit/WKHitTestResult.h>
 #include <WebKit/WKMutableArray.h>
 #include <WebKit/WKMutableDictionary.h>

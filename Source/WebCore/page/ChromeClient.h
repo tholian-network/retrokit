@@ -102,7 +102,6 @@ class FileChooser;
 class FileIconLoader;
 class FloatRect;
 class Frame;
-class Geolocation;
 class GraphicsLayer;
 class GraphicsLayerFactory;
 class HTMLImageElement;

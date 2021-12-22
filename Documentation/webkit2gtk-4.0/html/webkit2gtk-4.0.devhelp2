@@ -13,7 +13,6 @@
       <sub name="WebKitWindowProperties" link="WebKitWindowProperties.html"/>
       <sub name="WebKitDownload" link="WebKitDownload.html"/>
       <sub name="WebKitPermissionRequest" link="WebKitPermissionRequest.html"/>
-      <sub name="WebKitGeolocationPermissionRequest" link="WebKitGeolocationPermissionRequest.html"/>
       <sub name="WebKitInstallMissingMediaPluginsPermissionRequest" link="WebKitInstallMissingMediaPluginsPermissionRequest.html"/>
       <sub name="WebKitMediaKeySystemPermissionRequest" link="WebKitMediaKeySystemPermissionRequest.html"/>
       <sub name="WebKitNavigationAction" link="WebKitNavigationAction.html"/>
@@ -54,7 +53,6 @@
       <sub name="WebKitNetworkProxySettings" link="WebKitNetworkProxySettings.html"/>
       <sub name="WebKitAutomationSession" link="WebKitAutomationSession.html"/>
       <sub name="WebKitApplicationInfo" link="WebKitApplicationInfo.html"/>
-      <sub name="Geolocation manager" link="webkit2gtk-4.0-Geolocation-manager.html"/>
       <sub name="WebKitUserMessage" link="WebKitUserMessage.html"/>
       <sub name="WebKitPointerLockPermissionRequest" link="WebKitPointerLockPermissionRequest.html"/>
       <sub name="WebKitInputMethodContext" link="WebKitInputMethodContext.html"/>
@@ -108,7 +106,6 @@
     <keyword type="function" name="webkit_web_context_set_network_proxy_settings ()" link="WebKitWebContext.html#webkit-web-context-set-network-proxy-settings" deprecated="2.32. Use webkit_website_data_manager_set_network_proxy_settings() instead." since="2.16"/>
     <keyword type="function" name="webkit_web_context_download_uri ()" link="WebKitWebContext.html#webkit-web-context-download-uri"/>
     <keyword type="function" name="webkit_web_context_get_cookie_manager ()" link="WebKitWebContext.html#webkit-web-context-get-cookie-manager"/>
-    <keyword type="function" name="webkit_web_context_get_geolocation_manager ()" link="WebKitWebContext.html#webkit-web-context-get-geolocation-manager" since="2.26"/>
     <keyword type="function" name="webkit_web_context_get_favicon_database ()" link="WebKitWebContext.html#webkit-web-context-get-favicon-database"/>
     <keyword type="function" name="webkit_web_context_set_favicon_database_directory ()" link="WebKitWebContext.html#webkit-web-context-set-favicon-database-directory"/>
     <keyword type="function" name="webkit_web_context_get_favicon_database_directory ()" link="WebKitWebContext.html#webkit-web-context-get-favicon-database-directory"/>
@@ -618,7 +615,6 @@
     <keyword type="function" name="webkit_permission_request_allow ()" link="WebKitPermissionRequest.html#webkit-permission-request-allow"/>
     <keyword type="function" name="webkit_permission_request_deny ()" link="WebKitPermissionRequest.html#webkit-permission-request-deny"/>
     <keyword type="struct" name="WebKitPermissionRequest" link="WebKitPermissionRequest.html#WebKitPermissionRequest-struct"/>
-    <keyword type="struct" name="struct WebKitGeolocationPermissionRequest" link="WebKitGeolocationPermissionRequest.html#WebKitGeolocationPermissionRequest-struct"/>
     <keyword type="function" name="webkit_install_missing_media_plugins_permission_request_get_description ()" link="WebKitInstallMissingMediaPluginsPermissionRequest.html#webkit-install-missing-media-plugins-permission-request-get-description" since="2.10"/>
     <keyword type="struct" name="struct WebKitInstallMissingMediaPluginsPermissionRequest" link="WebKitInstallMissingMediaPluginsPermissionRequest.html#WebKitInstallMissingMediaPluginsPermissionRequest-struct"/>
     <keyword type="function" name="webkit_media_key_system_permission_get_name ()" link="WebKitMediaKeySystemPermissionRequest.html#webkit-media-key-system-permission-get-name" since="2.32"/>
@@ -1077,22 +1073,6 @@
     <keyword type="function" name="webkit_application_info_set_version ()" link="WebKitApplicationInfo.html#webkit-application-info-set-version" since="2.18"/>
     <keyword type="function" name="webkit_application_info_get_version ()" link="WebKitApplicationInfo.html#webkit-application-info-get-version" since="2.18"/>
     <keyword type="struct" name="WebKitApplicationInfo" link="WebKitApplicationInfo.html#WebKitApplicationInfo-struct"/>
-    <keyword type="function" name="webkit_geolocation_manager_update_position ()" link="webkit2gtk-4.0-Geolocation-manager.html#webkit-geolocation-manager-update-position" since="2.26"/>
-    <keyword type="function" name="webkit_geolocation_manager_failed ()" link="webkit2gtk-4.0-Geolocation-manager.html#webkit-geolocation-manager-failed" since="2.26"/>
-    <keyword type="function" name="webkit_geolocation_manager_get_enable_high_accuracy ()" link="webkit2gtk-4.0-Geolocation-manager.html#webkit-geolocation-manager-get-enable-high-accuracy" since="2.26"/>
-    <keyword type="function" name="webkit_geolocation_position_new ()" link="webkit2gtk-4.0-Geolocation-manager.html#webkit-geolocation-position-new" since="2.26"/>
-    <keyword type="function" name="webkit_geolocation_position_copy ()" link="webkit2gtk-4.0-Geolocation-manager.html#webkit-geolocation-position-copy" since="2.26"/>
-    <keyword type="function" name="webkit_geolocation_position_free ()" link="webkit2gtk-4.0-Geolocation-manager.html#webkit-geolocation-position-free" since="2.26"/>
-    <keyword type="function" name="webkit_geolocation_position_set_timestamp ()" link="webkit2gtk-4.0-Geolocation-manager.html#webkit-geolocation-position-set-timestamp" since="2.26"/>
-    <keyword type="function" name="webkit_geolocation_position_set_altitude ()" link="webkit2gtk-4.0-Geolocation-manager.html#webkit-geolocation-position-set-altitude" since="2.26"/>
-    <keyword type="function" name="webkit_geolocation_position_set_altitude_accuracy ()" link="webkit2gtk-4.0-Geolocation-manager.html#webkit-geolocation-position-set-altitude-accuracy" since="2.26"/>
-    <keyword type="function" name="webkit_geolocation_position_set_heading ()" link="webkit2gtk-4.0-Geolocation-manager.html#webkit-geolocation-position-set-heading" since="2.26"/>
-    <keyword type="function" name="webkit_geolocation_position_set_speed ()" link="webkit2gtk-4.0-Geolocation-manager.html#webkit-geolocation-position-set-speed" since="2.26"/>
-    <keyword type="struct" name="struct WebKitGeolocationManager" link="webkit2gtk-4.0-Geolocation-manager.html#WebKitGeolocationManager-struct"/>
-    <keyword type="struct" name="WebKitGeolocationPosition" link="webkit2gtk-4.0-Geolocation-manager.html#WebKitGeolocationPosition-struct"/>
-    <keyword type="property" name="The “enable-high-accuracy” property" link="webkit2gtk-4.0-Geolocation-manager.html#WebKitGeolocationManager--enable-high-accuracy"/>
-    <keyword type="signal" name="The “start” signal" link="webkit2gtk-4.0-Geolocation-manager.html#WebKitGeolocationManager-start"/>
-    <keyword type="signal" name="The “stop” signal" link="webkit2gtk-4.0-Geolocation-manager.html#WebKitGeolocationManager-stop"/>
     <keyword type="function" name="webkit_user_message_new ()" link="WebKitUserMessage.html#webkit-user-message-new" since="2.28"/>
     <keyword type="function" name="webkit_user_message_new_with_fd_list ()" link="WebKitUserMessage.html#webkit-user-message-new-with-fd-list" since="2.28"/>
     <keyword type="function" name="webkit_user_message_get_name ()" link="WebKitUserMessage.html#webkit-user-message-get-name" since="2.28"/>

@@ -111,8 +111,6 @@ public:
     void setUsedLegacyTLS(bool used) { m_usedLegacyTLS = used; }
     const OptionSet<MixedContentType>& foundMixedContent() const { return m_mixedContentTypes; }
     void setFoundMixedContent(MixedContentType type) { m_mixedContentTypes.add(type); }
-    bool geolocationAccessed() const { return m_geolocationAccessed; }
-    void setGeolocationAccessed() { m_geolocationAccessed = true; }
     bool secureCookiesAccessed() const { return m_secureCookiesAccessed; }
     void setSecureCookiesAccessed() { m_secureCookiesAccessed = true; }
 
@@ -145,7 +143,6 @@ private:
     SandboxFlags m_sandboxFlags { SandboxNone };
     OptionSet<MixedContentType> m_mixedContentTypes;
     bool m_haveInitializedSecurityOrigin { false };
-    bool m_geolocationAccessed { false };
     bool m_secureCookiesAccessed { false };
     bool m_isStrictMixedContentMode { false };
     bool m_usedLegacyTLS { false };

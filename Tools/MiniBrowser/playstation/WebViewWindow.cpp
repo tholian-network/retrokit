@@ -183,7 +183,6 @@ WebViewWindow::WebViewWindow(WKPageConfigurationRef configuration, Client&& wind
         nullptr, // pageDidScroll
         nullptr, // exceededDatabaseQuota
         nullptr, // runOpenPanel
-        nullptr, // decidePolicyForGeolocationPermissionRequest
         nullptr, // headerHeight
         nullptr, // footerHeight
         nullptr, // drawHeader

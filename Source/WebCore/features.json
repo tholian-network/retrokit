@@ -437,14 +437,6 @@
         "category": "css"
     },
     {
-        "name": "Geolocation API",
-        "status": {
-            "status": "Supported"
-        },
-        "description": "An API that provides scripted access to geographical location information associated with the hosting device.",
-        "url": "https://www.w3.org/TR/geolocation-API/"
-    },
-    {
         "name": "Geometry Interfaces",
         "url": "https://drafts.fxtf.org/geometry/",
         "keywords": ["geometry", "dompointreadonly", "dompoint", "domrectreadonly", "domrect", "domquad", "dommatrixreadonly", "dommatrix"],

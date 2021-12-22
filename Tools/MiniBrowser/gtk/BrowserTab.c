@@ -299,10 +299,7 @@ static gboolean decidePermissionRequest(WebKitWebView *webView, WebKitPermission
     const gchar *title = NULL;
     gchar *text = NULL;
 
-    if (WEBKIT_IS_GEOLOCATION_PERMISSION_REQUEST(request)) {
-        title = "Geolocation request";
-        text = g_strdup("Allow geolocation request?");
-    } else if (WEBKIT_IS_NOTIFICATION_PERMISSION_REQUEST(request)) {
+    if (WEBKIT_IS_NOTIFICATION_PERMISSION_REQUEST(request)) {
         title = "Notification request";
         text = g_strdup("Allow notifications request?");
     } else if (WEBKIT_IS_USER_MEDIA_PERMISSION_REQUEST(request)) {

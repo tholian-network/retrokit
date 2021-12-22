@@ -37,18 +37,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     Modules/fetch/FetchLoader.h
     Modules/fetch/FetchLoaderClient.h
 
-    Modules/geolocation/Geolocation.h
-    Modules/geolocation/GeolocationClient.h
-    Modules/geolocation/GeolocationController.h
-    Modules/geolocation/GeolocationCoordinates.h
-    Modules/geolocation/GeolocationError.h
-    Modules/geolocation/GeolocationPosition.h
-    Modules/geolocation/GeolocationPositionData.h
-    Modules/geolocation/GeolocationPositionError.h
-    Modules/geolocation/PositionCallback.h
-    Modules/geolocation/PositionErrorCallback.h
-    Modules/geolocation/PositionOptions.h
-
     Modules/highlight/AppHighlight.h
     Modules/highlight/Highlight.h
     Modules/highlight/HighlightRegister.h

@@ -61,7 +61,6 @@
 #include "WebContextSupplement.h"
 #include "WebCookieManagerProxy.h"
 #include "WebCoreArgumentCoders.h"
-#include "WebGeolocationManagerProxy.h"
 #include "WebInspectorUtilities.h"
 #include "WebKit2Initialize.h"
 #include "WebMemorySampler.h"
@@ -238,7 +237,6 @@ WebProcessPool::WebProcessPool(API::ProcessPoolConfiguration& configuration)
     addMessageReceiver(Messages::WebProcessPool::messageReceiverName(), *this);
 
     // NOTE: These sub-objects must be initialized after m_messageReceiverMap..
-    addSupplement<WebGeolocationManagerProxy>();
     addSupplement<WebNotificationManagerProxy>();
 
     processPools().append(this);
@@ -943,8 +941,6 @@ void WebProcessPool::disconnectProcess(WebProcessProxy& process)
     if (process.isRunningServiceWorkers())
         removeFromServiceWorkerProcesses(process);
 #endif
-
-    static_cast<WebContextSupplement*>(supplement<WebGeolocationManagerProxy>())->processDidClose(&process);
 
     m_processes.removeFirst(process);
 

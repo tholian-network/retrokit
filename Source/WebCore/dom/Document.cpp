@@ -299,9 +299,7 @@
 #include "DeviceMotionController.h"
 #include "DeviceOrientationClientIOS.h"
 #include "DeviceOrientationController.h"
-#include "Geolocation.h"
 #include "Navigator.h"
-#include "NavigatorGeolocation.h"
 #endif
 
 #if ENABLE(IOS_GESTURE_EVENTS)

@@ -80,7 +80,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/WebProcess/EncryptedMedia"
     "${WEBKIT_DIR}/WebProcess/FileAPI"
     "${WEBKIT_DIR}/WebProcess/FullScreen"
-    "${WEBKIT_DIR}/WebProcess/Geolocation"
     "${WEBKIT_DIR}/WebProcess/GPU"
     "${WEBKIT_DIR}/WebProcess/GPU/graphics"
     "${WEBKIT_DIR}/WebProcess/GPU/media"
@@ -195,7 +194,6 @@ set(WebKit_MESSAGES_IN_FILES
     UIProcess/VisitedLinkStore
     UIProcess/WebCookieManagerProxy
     UIProcess/WebFullScreenManagerProxy
-    UIProcess/WebGeolocationManagerProxy
     UIProcess/WebPageProxy
     UIProcess/WebPasteboardProxy
     UIProcess/WebProcessPool
@@ -245,8 +243,6 @@ set(WebKit_MESSAGES_IN_FILES
     WebProcess/GPU/webrtc/AudioMediaStreamTrackRendererInternalUnitManager
     WebProcess/GPU/webrtc/LibWebRTCCodecs
     WebProcess/GPU/webrtc/SampleBufferDisplayLayer
-
-    WebProcess/Geolocation/WebGeolocationManager
 
     WebProcess/Inspector/RemoteWebInspectorUI
     WebProcess/Inspector/WebInspector

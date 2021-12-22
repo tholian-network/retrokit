@@ -263,7 +263,6 @@ if (ENABLE_WEBKIT)
         Tests/WebKit/ForceRepaint.cpp
         Tests/WebKit/FrameMIMETypeHTML.cpp
         Tests/WebKit/FrameMIMETypePNG.cpp
-        Tests/WebKit/Geolocation.cpp
         Tests/WebKit/GetInjectedBundleInitializationUserDataCallback.cpp
         Tests/WebKit/HitTestResultNodeHandle.cpp
         Tests/WebKit/InjectedBundleBasic.cpp

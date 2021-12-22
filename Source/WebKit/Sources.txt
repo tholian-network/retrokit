@@ -213,7 +213,6 @@ Shared/WebCoreArgumentCoders.cpp @no-unify
 Shared/WebErrors.cpp
 Shared/WebEvent.cpp @no-unify
 Shared/WebEventConversion.cpp
-Shared/WebGeolocationPosition.cpp
 Shared/WebHitTestResultData.cpp
 Shared/WebImage.cpp
 Shared/WebKeyboardEvent.cpp @no-unify
@@ -299,8 +298,6 @@ UIProcess/BackgroundProcessResponsivenessTimer.cpp
 UIProcess/DeviceIdHashSaltStorage.cpp
 UIProcess/DrawingAreaProxy.cpp
 UIProcess/FrameLoadState.cpp
-UIProcess/GeolocationPermissionRequestManagerProxy.cpp
-UIProcess/GeolocationPermissionRequestProxy.cpp
 UIProcess/LegacyGlobalSettings.cpp
 UIProcess/MediaKeySystemPermissionRequestManagerProxy.cpp
 UIProcess/MediaKeySystemPermissionRequestProxy.cpp
@@ -342,8 +339,6 @@ UIProcess/WebFormSubmissionListenerProxy.cpp
 UIProcess/WebFramePolicyListenerProxy.cpp
 UIProcess/WebFrameProxy.cpp
 UIProcess/WebFullScreenManagerProxy.cpp
-UIProcess/WebGeolocationManagerProxy.cpp
-UIProcess/WebGeolocationProvider.cpp
 UIProcess/WebNavigationState.cpp
 UIProcess/WebOpenPanelResultListenerProxy.cpp
 UIProcess/WebPageDiagnosticLoggingClient.cpp
@@ -401,9 +396,6 @@ UIProcess/API/C/WKFrame.cpp
 UIProcess/API/C/WKFrameHandleRef.cpp
 UIProcess/API/C/WKFrameInfoRef.cpp
 UIProcess/API/C/WKFramePolicyListener.cpp
-UIProcess/API/C/WKGeolocationManager.cpp
-UIProcess/API/C/WKGeolocationPermissionRequest.cpp
-UIProcess/API/C/WKGeolocationPosition.cpp
 UIProcess/API/C/WKHTTPCookieStoreRef.cpp
 UIProcess/API/C/WKHitTestResult.cpp
 UIProcess/API/C/WKIconDatabase.cpp
@@ -534,9 +526,6 @@ WebProcess/EncryptedMedia/MediaKeySystemPermissionRequestManager.cpp
 WebProcess/FileAPI/BlobRegistryProxy.cpp
 
 WebProcess/FullScreen/WebFullScreenManager.cpp
-
-WebProcess/Geolocation/GeolocationPermissionRequestManager.cpp
-WebProcess/Geolocation/WebGeolocationManager.cpp
 
 WebProcess/InjectedBundle/InjectedBundle.cpp
 WebProcess/InjectedBundle/InjectedBundleClient.cpp
@@ -686,7 +675,6 @@ WebProcess/WebCoreSupport/WebDiagnosticLoggingClient.cpp
 WebProcess/WebCoreSupport/WebDragClient.cpp
 WebProcess/WebCoreSupport/WebEditorClient.cpp
 WebProcess/WebCoreSupport/WebFrameLoaderClient.cpp
-WebProcess/WebCoreSupport/WebGeolocationClient.cpp
 WebProcess/WebCoreSupport/WebMediaKeySystemClient.cpp
 WebProcess/WebCoreSupport/WebMessagePortChannelProvider.cpp
 WebProcess/WebCoreSupport/WebNotificationClient.cpp

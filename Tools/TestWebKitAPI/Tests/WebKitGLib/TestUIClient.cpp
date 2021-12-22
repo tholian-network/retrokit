@@ -915,49 +915,6 @@ static void testWebViewMouseTarget(UIClientTest* test, gconstpointer)
 }
 #endif // PLATFORM(GTK)
 
-static void testWebViewGeolocationPermissionRequests(UIClientTest* test, gconstpointer)
-{
-    // Some versions of geoclue give a runtime warning because it tries
-    // to register the error quark twice. See https://bugs.webkit.org/show_bug.cgi?id=89858.
-    // Make warnings non-fatal for this test to make it pass.
-    Test::removeLogFatalFlag(G_LOG_LEVEL_WARNING);
-    test->showInWindow();
-    static const char* geolocationRequestHTML =
-        "<html>"
-        "  <script>"
-        "  function runTest()"
-        "  {"
-        "    navigator.geolocation.getCurrentPosition(function(p) { window.webkit.messageHandlers.permission.postMessage('OK'); },"
-        "                                             function(e) { window.webkit.messageHandlers.permission.postMessage(e.code.toString()); });"
-        "  }"
-        "  </script>"
-        "  <body onload='runTest();'></body>"
-        "</html>";
-
-    // Geolocation is not allowed from insecure connections like HTTP,
-    // PERMISSION_DENIED ('1') is returned in that case without even
-    // asking the API layer.
-    test->m_allowPermissionRequests = false;
-    test->loadHtml(geolocationRequestHTML, "http://foo.com/bar");
-    const gchar* result = test->waitUntilPermissionResultMessageReceived();
-    g_assert_cmpstr(result, ==, "1");
-
-    // Test denying a permission request. PERMISSION_DENIED ('1') is
-    // returned in this case.
-    test->m_allowPermissionRequests = false;
-    test->loadHtml(geolocationRequestHTML, "https://foo.com/bar");
-    result = test->waitUntilPermissionResultMessageReceived();
-    g_assert_cmpstr(result, ==, "1");
-
-    // Test allowing a permission request. Result should be different
-    // to PERMISSION_DENIED ('1').
-    test->m_allowPermissionRequests = true;
-    test->loadHtml(geolocationRequestHTML, "https://foo.com/bar");
-    result = test->waitUntilPermissionResultMessageReceived();
-    g_assert_cmpstr(result, !=, "1");
-    Test::addLogFatalFlag(G_LOG_LEVEL_WARNING);
-}
-
 #if ENABLE(ENCRYPTED_MEDIA)
 static void testWebViewMediaKeySystemPermissionRequests(UIClientTest* test, gconstpointer)
 {
@@ -1495,7 +1452,6 @@ void beforeAll()
 #if PLATFORM(GTK)
     UIClientTest::add("WebKitWebView", "mouse-target", testWebViewMouseTarget);
 #endif
-    UIClientTest::add("WebKitWebView", "geolocation-permission-requests", testWebViewGeolocationPermissionRequests);
 #if ENABLE(ENCRYPTED_MEDIA)
     UIClientTest::add("WebKitWebView", "mediaKeySystem-permission-requests", testWebViewMediaKeySystemPermissionRequests);
 #endif

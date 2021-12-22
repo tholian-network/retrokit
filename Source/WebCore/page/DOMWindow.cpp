@@ -137,10 +137,6 @@
 #include "WebKitNamespace.h"
 #endif
 
-#if ENABLE(GEOLOCATION)
-#include "NavigatorGeolocation.h"
-#endif
-
 #if ENABLE(POINTER_LOCK)
 #include "PointerLockController.h"
 #endif
@@ -2157,15 +2153,6 @@ void DOMWindow::decrementScrollEventListenersCount()
 }
 
 #endif
-
-void DOMWindow::resetAllGeolocationPermission()
-{
-    // FIXME: Can we remove the PLATFORM(IOS_FAMILY)-guard?
-#if ENABLE(GEOLOCATION) && PLATFORM(IOS_FAMILY)
-    if (m_navigator)
-        NavigatorGeolocation::from(*m_navigator)->resetAllGeolocationPermission();
-#endif
-}
 
 bool DOMWindow::removeEventListener(const AtomString& eventType, EventListener& listener, const EventListenerOptions& options)
 {

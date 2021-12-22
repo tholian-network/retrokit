@@ -487,7 +487,6 @@ WebPageProxy::WebPageProxy(PageClient& pageClient, WebProcessProxy& process, Ref
 #if ENABLE(FULLSCREEN_API)
     , m_fullscreenClient(makeUnique<API::FullscreenClient>())
 #endif
-    , m_geolocationPermissionRequestManager(*this)
 #if PLATFORM(IOS_FAMILY)
     , m_audibleActivityTimer(RunLoop::main(), this, &WebPageProxy::clearAudibleActivity)
 #endif
@@ -7839,10 +7838,6 @@ void WebPageProxy::resetState(ResetStateReason resetStateReason)
     m_touchAndPointerEventTracking.reset();
 #endif
 
-#if ENABLE(GEOLOCATION)
-    m_geolocationPermissionRequestManager.invalidateRequests();
-#endif
-
     setToolTip({ });
 
     m_mainFrameHasHorizontalScrollbar = false;
@@ -8459,38 +8454,6 @@ void WebPageProxy::reachedApplicationCacheOriginQuota(const String& originIdenti
 
     Ref<SecurityOrigin> securityOrigin = securityOriginData->securityOrigin();
     m_uiClient->reachedApplicationCacheOriginQuota(this, securityOrigin.get(), currentQuota, totalBytesNeeded, WTFMove(reply));
-}
-
-void WebPageProxy::requestGeolocationPermissionForFrame(GeolocationIdentifier geolocationID, FrameInfoData&& frameInfo)
-{
-    MESSAGE_CHECK(m_process, frameInfo.frameID);
-    auto* frame = m_process->webFrame(*frameInfo.frameID);
-    MESSAGE_CHECK(m_process, frame);
-
-    auto request = m_geolocationPermissionRequestManager.createRequest(geolocationID);
-    Function<void(bool)> completionHandler = [request = WTFMove(request)](bool allowed) {
-        if (allowed)
-            request->allow();
-        else
-            request->deny();
-    };
-
-    // FIXME: Once iOS migrates to the new WKUIDelegate SPI, clean this up
-    // and make it one UIClient call that calls the completionHandler with false
-    // if there is no delegate instead of returning the completionHandler
-    // for other code paths to try.
-    m_uiClient->decidePolicyForGeolocationPermissionRequest(*this, *frame, frameInfo, completionHandler);
-#if PLATFORM(IOS_FAMILY)
-    if (completionHandler)
-        pageClient().decidePolicyForGeolocationPermissionRequest(*frame, frameInfo, completionHandler);
-#endif
-    if (completionHandler)
-        completionHandler(false);
-}
-
-void WebPageProxy::revokeGeolocationAuthorizationToken(const String& authorizationToken)
-{
-    m_geolocationPermissionRequestManager.revokeAuthorizationToken(authorizationToken);
 }
 
 void WebPageProxy::requestPermission(const ClientOrigin&, const PermissionDescriptor&, CompletionHandler<void(PermissionState)>&& completionHandler)

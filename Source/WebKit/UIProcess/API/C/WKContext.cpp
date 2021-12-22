@@ -51,7 +51,6 @@
 
 // Supplements
 #include "WebCookieManagerProxy.h"
-#include "WebGeolocationManagerProxy.h"
 #include "WebNotificationManagerProxy.h"
 
 namespace API {
@@ -420,11 +419,6 @@ WKWebsiteDataStoreRef WKContextGetWebsiteDataStore(WKContextRef)
 WKApplicationCacheManagerRef WKContextGetApplicationCacheManager(WKContextRef context)
 {
     return reinterpret_cast<WKApplicationCacheManagerRef>(WKWebsiteDataStoreGetDefaultDataStore());
-}
-
-WKGeolocationManagerRef WKContextGetGeolocationManager(WKContextRef contextRef)
-{
-    return WebKit::toAPI(WebKit::toImpl(contextRef)->supplement<WebKit::WebGeolocationManagerProxy>());
 }
 
 WKIconDatabaseRef WKContextGetIconDatabase(WKContextRef)

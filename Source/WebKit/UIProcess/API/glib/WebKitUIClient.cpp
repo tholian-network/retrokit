@@ -25,7 +25,6 @@
 #include "NotificationPermissionRequest.h"
 #include "WebKitDeviceInfoPermissionRequestPrivate.h"
 #include "WebKitFileChooserRequestPrivate.h"
-#include "WebKitGeolocationPermissionRequestPrivate.h"
 #include "WebKitMediaKeySystemPermissionRequestPrivate.h"
 #include "WebKitNavigationActionPrivate.h"
 #include "WebKitNotificationPermissionRequestPrivate.h"
@@ -280,12 +279,6 @@ private:
         GRefPtr<WebKitFileChooserRequest> request = adoptGRef(webkitFileChooserRequestCreate(parameters, listener));
         webkitWebViewRunFileChooserRequest(m_webView, request.get());
         return true;
-    }
-
-    void decidePolicyForGeolocationPermissionRequest(WebPageProxy&, WebFrameProxy&, const WebKit::FrameInfoData&, Function<void(bool)>& completionHandler) final
-    {
-        GRefPtr<WebKitGeolocationPermissionRequest> geolocationPermissionRequest = adoptGRef(webkitGeolocationPermissionRequestCreate(GeolocationPermissionRequest::create(std::exchange(completionHandler, nullptr)).ptr()));
-        webkitWebViewMakePermissionRequest(m_webView, WEBKIT_PERMISSION_REQUEST(geolocationPermissionRequest.get()));
     }
 
     void decidePolicyForMediaKeySystemPermissionRequest(WebPageProxy&, API::SecurityOrigin&, const WTF::String& keySystem, CompletionHandler<void(bool)>&& completionHandler) final

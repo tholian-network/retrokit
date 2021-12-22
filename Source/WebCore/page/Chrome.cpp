@@ -36,7 +36,6 @@
 #include "Frame.h"
 #include "FrameLoaderClient.h"
 #include "FrameTree.h"
-#include "Geolocation.h"
 #include "HTMLFormElement.h"
 #include "HTMLInputElement.h"
 #include "HTMLNames.h"

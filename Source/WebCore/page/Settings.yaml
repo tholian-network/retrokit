@@ -229,12 +229,6 @@ FrameFlattening:
     WebCore:
       default: FrameFlattening::Disabled
 
-GeolocationFloorLevelEnabled:
-  type: bool
-  defaultValue:
-    WebCore:
-      default: true
-
 HTMLParserScriptingFlagPolicy:
   type: uint32_t
   refinedType: HTMLParserScriptingFlagPolicy

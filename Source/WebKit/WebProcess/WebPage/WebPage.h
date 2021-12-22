@@ -39,7 +39,6 @@
 #include "DrawingAreaInfo.h"
 #include "EditingRange.h"
 #include "FocusedElementInformation.h"
-#include "GeolocationIdentifier.h"
 #include "IdentifierTypes.h"
 #include "InjectedBundlePageContextMenuClient.h"
 #include "InjectedBundlePageFullScreenClient.h"
@@ -268,7 +267,6 @@ namespace WebKit {
 class DrawingArea;
 class FindController;
 class GPUProcessConnection;
-class GeolocationPermissionRequestManager;
 class LayerHostingContext;
 class MediaDeviceSandboxExtensions;
 class MediaKeySystemPermissionRequestManager;
@@ -689,10 +687,6 @@ public:
     static const WebEvent* currentEvent();
 
     FindController& findController() { return m_findController.get(); }
-
-#if ENABLE(GEOLOCATION)
-    GeolocationPermissionRequestManager& geolocationPermissionRequestManager() { return m_geolocationPermissionRequestManager.get(); }
-#endif
 
 #if PLATFORM(IOS_FAMILY)
     void savePageState(WebCore::HistoryItem&);
@@ -1757,8 +1751,6 @@ private:
     void extendSandboxForFilesFromOpenPanel(Vector<SandboxExtension::Handle>&&);
 #endif
 
-    void didReceiveGeolocationPermissionDecision(GeolocationIdentifier, const String& authorizationToken);
-
 #if ENABLE(MEDIA_STREAM)
     void userMediaAccessWasGranted(WebCore::UserMediaRequestIdentifier, WebCore::CaptureDevice&& audioDeviceUID, WebCore::CaptureDevice&& videoDeviceUID, String&& mediaDeviceIdentifierHashSalt, SandboxExtension::Handle&&, CompletionHandler<void()>&&);
     void userMediaAccessWasDenied(WebCore::UserMediaRequestIdentifier, uint64_t reason, String&& invalidConstraint);
@@ -2077,10 +2069,6 @@ private:
     RefPtr<NotificationPermissionRequestManager> m_notificationPermissionRequestManager;
 
     Ref<WebUserContentController> m_userContentController;
-
-#if ENABLE(GEOLOCATION)
-    UniqueRef<GeolocationPermissionRequestManager> m_geolocationPermissionRequestManager;
-#endif
 
 #if ENABLE(MEDIA_STREAM)
     UniqueRef<UserMediaPermissionRequestManager> m_userMediaPermissionRequestManager;

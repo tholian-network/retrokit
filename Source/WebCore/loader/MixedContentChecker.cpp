@@ -71,7 +71,7 @@ bool MixedContentChecker::canDisplayInsecureContent(Frame& frame, SecurityOrigin
     if (!isStrictMode && alwaysDisplayInNonStrictMode == AlwaysDisplayInNonStrictMode::Yes)
         return true;
 
-    bool allowed = !isStrictMode && (frame.settings().allowDisplayOfInsecureContent() || type == ContentType::ActiveCanWarn) && !frame.document()->geolocationAccessed();
+    bool allowed = !isStrictMode && (frame.settings().allowDisplayOfInsecureContent() || type == ContentType::ActiveCanWarn);
     logWarning(frame, allowed, "display", url);
 
     if (allowed) {
@@ -90,7 +90,7 @@ bool MixedContentChecker::canRunInsecureContent(Frame& frame, SecurityOrigin& se
     if (!frame.document()->contentSecurityPolicy()->allowRunningOrDisplayingInsecureContent(url))
         return false;
 
-    bool allowed = !frame.document()->isStrictMixedContentMode() && frame.settings().allowRunningOfInsecureContent() && !frame.document()->geolocationAccessed() && !frame.document()->secureCookiesAccessed();
+    bool allowed = !frame.document()->isStrictMixedContentMode() && frame.settings().allowRunningOfInsecureContent() && !frame.document()->secureCookiesAccessed();
     logWarning(frame, allowed, "run", url);
 
     if (allowed) {

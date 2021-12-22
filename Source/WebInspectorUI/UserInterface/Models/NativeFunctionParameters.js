@@ -855,13 +855,6 @@ WI.NativePrototypeFunctionParameters = {
         __proto__: null,
     },
 
-    Geolocation: {
-        clearWatch: "watchID",
-        getCurrentPosition: "successCallback, [errorCallback], [options]",
-        watchPosition: "successCallback, [errorCallback], [options]",
-        __proto__: null,
-    },
-
     HTMLAllCollection: {
         item: "[index]",
         namedItem: "name",

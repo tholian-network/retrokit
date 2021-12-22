@@ -377,8 +377,6 @@ public:
     DeviceMotionController* deviceMotionController() const;
 #endif
 
-    void resetAllGeolocationPermission();
-
 #if ENABLE(IOS_TOUCH_EVENTS) || ENABLE(IOS_GESTURE_EVENTS)
     bool hasTouchOrGestureEventListeners() const { return m_touchAndGestureEventListenerCount > 0; }
 #endif
@@ -465,10 +463,6 @@ private:
 
 #if ENABLE(IOS_TOUCH_EVENTS) || ENABLE(IOS_GESTURE_EVENTS)
     unsigned m_touchAndGestureEventListenerCount { 0 };
-#endif
-
-#if ENABLE(GAMEPAD)
-    unsigned m_gamepadEventListenerCount { 0 };
 #endif
 
     mutable RefPtr<Storage> m_sessionStorage;

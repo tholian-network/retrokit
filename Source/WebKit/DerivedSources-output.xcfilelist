@@ -415,12 +415,6 @@ $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebFullScreenManagerMessagesReplies
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebFullScreenManagerProxyMessageReceiver.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebFullScreenManagerProxyMessages.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebFullScreenManagerProxyMessagesReplies.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebGeolocationManagerMessageReceiver.cpp
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebGeolocationManagerMessages.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebGeolocationManagerMessagesReplies.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebGeolocationManagerProxyMessageReceiver.cpp
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebGeolocationManagerProxyMessages.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebGeolocationManagerProxyMessagesReplies.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebIDBConnectionToServerMessageReceiver.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebIDBConnectionToServerMessages.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebIDBConnectionToServerMessagesReplies.h

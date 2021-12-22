@@ -35,8 +35,6 @@
 #include "EditingRange.h"
 #include "EditorState.h"
 #include "FocusedElementInformation.h"
-#include "GeolocationIdentifier.h"
-#include "GeolocationPermissionRequestManagerProxy.h"
 #include "HiddenPageThrottlingAutoIncreasesCounter.h"
 #include "IdentifierTypes.h"
 #include "LayerTreeContext.h"
@@ -514,7 +512,6 @@ public:
     bool isSuspended() const { return m_isSuspended; }
 
     WebInspectorUIProxy* inspector() const;
-    GeolocationPermissionRequestManagerProxy& geolocationPermissionRequestManager() { return m_geolocationPermissionRequestManager; }
 
     void resourceLoadDidSendRequest(ResourceLoadInfo&&, WebCore::ResourceRequest&&);
     void resourceLoadDidPerformHTTPRedirection(ResourceLoadInfo&&, WebCore::ResourceResponse&&, WebCore::ResourceRequest&&);
@@ -2113,8 +2110,6 @@ private:
     void exceededDatabaseQuota(WebCore::FrameIdentifier, const String& originIdentifier, const String& databaseName, const String& displayName, uint64_t currentQuota, uint64_t currentOriginUsage, uint64_t currentDatabaseUsage, uint64_t expectedUsage, Messages::WebPageProxy::ExceededDatabaseQuotaDelayedReply&&);
     void reachedApplicationCacheOriginQuota(const String& originIdentifier, uint64_t currentQuota, uint64_t totalBytesNeeded, Messages::WebPageProxy::ReachedApplicationCacheOriginQuotaDelayedReply&&);
 
-    void requestGeolocationPermissionForFrame(GeolocationIdentifier, FrameInfoData&&);
-    void revokeGeolocationAuthorizationToken(const String& authorizationToken);
     void requestPermission(const WebCore::ClientOrigin&, const WebCore::PermissionDescriptor&, CompletionHandler<void(WebCore::PermissionState)>&&);
 
 #if PLATFORM(GTK) || PLATFORM(WPE)
@@ -2654,7 +2649,6 @@ private:
     RefPtr<API::HitTestResult> m_lastMouseMoveHitTestResult;
 
     RefPtr<WebOpenPanelResultListenerProxy> m_openPanelResultListener;
-    GeolocationPermissionRequestManagerProxy m_geolocationPermissionRequestManager;
 
 #if ENABLE(MEDIA_STREAM)
     std::unique_ptr<UserMediaPermissionRequestManagerProxy> m_userMediaPermissionRequestManager;

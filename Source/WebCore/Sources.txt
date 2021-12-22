@@ -58,11 +58,6 @@ Modules/fetch/FetchLoader.cpp
 Modules/fetch/FetchRequest.cpp
 Modules/fetch/FetchResponse.cpp
 Modules/fetch/WindowOrWorkerGlobalScopeFetch.cpp
-Modules/geolocation/GeoNotifier.cpp
-Modules/geolocation/Geolocation.cpp
-Modules/geolocation/GeolocationController.cpp
-Modules/geolocation/GeolocationCoordinates.cpp
-Modules/geolocation/NavigatorGeolocation.cpp
 Modules/highlight/AppHighlightRangeData.cpp
 Modules/highlight/AppHighlightStorage.cpp
 Modules/highlight/HighlightRegister.cpp
@@ -2032,7 +2027,6 @@ platform/mediastream/RealtimeVideoSource.cpp
 platform/mediastream/libwebrtc/LibWebRTCDTMFSenderBackend.cpp
 platform/mediastream/libwebrtc/LibWebRTCProvider.cpp
 platform/mock/DeviceOrientationClientMock.cpp
-platform/mock/GeolocationClientMock.cpp
 platform/mock/MediaEngineConfigurationFactoryMock.cpp
 platform/mock/MockRealtimeAudioSource.cpp
 platform/mock/MockRealtimeMediaSourceCenter.cpp
@@ -2969,10 +2963,6 @@ JSFontFaceSet.cpp
 JSFormDataEvent.cpp
 JSGainNode.cpp
 JSGainOptions.cpp
-JSGeolocation.cpp
-JSGeolocationCoordinates.cpp
-JSGeolocationPosition.cpp
-JSGeolocationPositionError.cpp
 JSGetAnimationsOptions.cpp
 JSHTMLAllCollection.cpp
 JSHTMLAnchorElement.cpp

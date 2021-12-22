@@ -9,13 +9,26 @@ libraries to a minimum.
 # Planned Removals
 
 - [ ] Apple Pay API
+- [ ] Bluetooth API
+- [ ] Camera API
+- [ ] Microphone API
 - [x] Gamepad API
-- [ ] Geolocation API
+- [x] Geolocation API
+- [x] Geoclue (geoclue) Library
+- [ ] Gyroscope API
+- [ ] Accelerometer API
+- [ ] Magnetometer API
+- [ ] Pointer Lock API
+- [ ] Display Capture API
 - [ ] Web Authn API
 - [ ] WebASM API
 - [ ] WebGL API
 - [ ] Web GPU API
-- [ ] Web VR/XR API
+- [ ] Web Midi API
+- [ ] Web NFC API
+- [ ] Web Notifications API
+- [ ] Web VR API
+- [ ] Web XR API
 - [ ] Canvas API
 - [ ] WebRTC API
 - [ ] Web Fonts
@@ -28,6 +41,7 @@ libraries to a minimum.
 - [ ] Service Worker API
 - [ ] Window Popup API
 - [ ] Window Alert API
+- [ ] Speaker Selection API
 
 
 # Planned Removal of Compiler Flags

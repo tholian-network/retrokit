@@ -54,9 +54,6 @@ set(WebKit_PUBLIC_FRAMEWORK_HEADERS
     UIProcess/API/C/WKFrameHandleRef.h
     UIProcess/API/C/WKFrameInfoRef.h
     UIProcess/API/C/WKFramePolicyListener.h
-    UIProcess/API/C/WKGeolocationManager.h
-    UIProcess/API/C/WKGeolocationPermissionRequest.h
-    UIProcess/API/C/WKGeolocationPosition.h
     UIProcess/API/C/WKHTTPCookieStoreRef.h
     UIProcess/API/C/WKHitTestResult.h
     UIProcess/API/C/WKIconDatabase.h

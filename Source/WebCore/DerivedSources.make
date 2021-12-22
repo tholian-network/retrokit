@@ -152,14 +152,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/Modules/fetch/FetchRequestRedirect.idl \
     $(WebCore)/Modules/fetch/FetchResponse.idl \
     $(WebCore)/Modules/fetch/WindowOrWorkerGlobalScope+Fetch.idl \
-    $(WebCore)/Modules/geolocation/Geolocation.idl \
-    $(WebCore)/Modules/geolocation/GeolocationCoordinates.idl \
-    $(WebCore)/Modules/geolocation/GeolocationPosition.idl \
-    $(WebCore)/Modules/geolocation/GeolocationPositionError.idl \
-    $(WebCore)/Modules/geolocation/Navigator+Geolocation.idl \
-    $(WebCore)/Modules/geolocation/PositionCallback.idl \
-    $(WebCore)/Modules/geolocation/PositionErrorCallback.idl \
-    $(WebCore)/Modules/geolocation/PositionOptions.idl \
     $(WebCore)/Modules/highlight/HighlightRegister.idl \
     $(WebCore)/Modules/highlight/Highlight.idl \
     $(WebCore)/Modules/indexeddb/IDBCursor.idl \

@@ -53,7 +53,6 @@ enum class MediaPermissionReason {
     CameraAndMicrophone,
     Microphone,
     DeviceOrientation,
-    Geolocation,
     SpeechRecognition
 };
 

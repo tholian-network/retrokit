@@ -254,11 +254,6 @@ public:
 
     virtual void toolTipChanged(const String&, const String&) = 0;
 
-#if PLATFORM(IOS_FAMILY)
-    // FIXME: Adopt the WKUIDelegatePrivate callback on iOS and remove this.
-    virtual void decidePolicyForGeolocationPermissionRequest(WebFrameProxy&, const FrameInfoData&, Function<void(bool)>&) = 0;
-#endif
-
     virtual void didStartProvisionalLoadForMainFrame() { };
     virtual void didFailProvisionalLoadForMainFrame() { };
     virtual void didCommitLoadForMainFrame(const String& mimeType, bool useCustomContentProvider) = 0;
