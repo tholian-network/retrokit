@@ -108,10 +108,6 @@
 #endif
 
 #if PLATFORM(MAC)
-#define USE_PASSKIT 1
-#endif
-
-#if PLATFORM(MAC)
 #define USE_PLUGIN_HOST_PROCESS 1
 #endif
 
@@ -155,10 +151,6 @@
 
 #if OS(DARWIN) && CPU(ARM64) && HAVE(REMAP_JIT)
 #define USE_EXECUTE_ONLY_JIT_WRITE_FUNCTION 1
-#endif
-
-#if PLATFORM(IOS)
-#define USE_PASSKIT 1
 #endif
 
 #if PLATFORM(IOS)

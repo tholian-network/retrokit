@@ -14,7 +14,7 @@ libraries to a minimum.
 - [x] Geolocation API (`ENABLE_GEOLOCATION`, `Geolocation*`, `Geoposition*`)
 - [x] Geoclue Library (`geoclue`)
 - [x] Payment Request API (`PAYMENT_REQUEST`, `Merchant*`, `Payer*`, `Payment*`, `Coupon*`)
-- [ ] PASSKIT Integration (`PASSKIT`)
+- [x] PASSKIT Integration (`PASSKIT`)
 - [ ] Camera API
 - [ ] Microphone API
 - [ ] Gyroscope API
