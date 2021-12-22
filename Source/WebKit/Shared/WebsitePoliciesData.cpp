@@ -37,9 +37,6 @@ void WebsitePoliciesData::encode(IPC::Encoder& encoder) const
 {
     encoder << contentBlockersEnabled;
     encoder << autoplayPolicy;
-#if ENABLE(DEVICE_ORIENTATION)
-    encoder << deviceOrientationAndMotionAccessState;
-#endif
     encoder << allowedAutoplayQuirks;
     encoder << customHeaderFields;
     encoder << popUpPolicy;
@@ -68,13 +65,6 @@ std::optional<WebsitePoliciesData> WebsitePoliciesData::decode(IPC::Decoder& dec
     if (!autoplayPolicy)
         return std::nullopt;
 
-#if ENABLE(DEVICE_ORIENTATION)
-    std::optional<WebCore::DeviceOrientationOrMotionPermissionState> deviceOrientationAndMotionAccessState;
-    decoder >> deviceOrientationAndMotionAccessState;
-    if (!deviceOrientationAndMotionAccessState)
-        return std::nullopt;
-#endif
-    
     std::optional<OptionSet<WebsiteAutoplayQuirk>> allowedAutoplayQuirks;
     decoder >> allowedAutoplayQuirks;
     if (!allowedAutoplayQuirks)
@@ -149,9 +139,6 @@ std::optional<WebsitePoliciesData> WebsitePoliciesData::decode(IPC::Decoder& dec
         WTFMove(*contentBlockersEnabled),
         WTFMove(*allowedAutoplayQuirks),
         WTFMove(*autoplayPolicy),
-#if ENABLE(DEVICE_ORIENTATION)
-        WTFMove(*deviceOrientationAndMotionAccessState),
-#endif
         WTFMove(*customHeaderFields),
         WTFMove(*popUpPolicy),
         WTFMove(*customUserAgent),
@@ -174,10 +161,6 @@ void WebsitePoliciesData::applyToDocumentLoader(WebsitePoliciesData&& websitePol
     documentLoader.setCustomUserAgent(websitePolicies.customUserAgent);
     documentLoader.setCustomUserAgentAsSiteSpecificQuirks(websitePolicies.customUserAgentAsSiteSpecificQuirks);
     documentLoader.setCustomNavigatorPlatform(websitePolicies.customNavigatorPlatform);
-
-#if ENABLE(DEVICE_ORIENTATION)
-    documentLoader.setDeviceOrientationAndMotionAccessState(websitePolicies.deviceOrientationAndMotionAccessState);
-#endif
 
     // Only setUserContentExtensionsEnabled if it hasn't already been disabled by reloading without content blockers.
     if (documentLoader.userContentExtensionsEnabled())

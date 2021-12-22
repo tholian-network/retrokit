@@ -202,16 +202,12 @@ class EmptyChromeClient : public ChromeClient {
     bool showDataDetectorsUIForElement(const Element&, const Event&) final { return false; }
 #endif // PLATFORM(IOS_FAMILY)
 
-#if ENABLE(ORIENTATION_EVENTS)
-    int deviceOrientation() const final { return 0; }
-#endif
-
 #if PLATFORM(IOS_FAMILY)
     bool isStopping() final { return false; }
 #endif
 
     void wheelEventHandlersChanged(bool) final { }
-    
+
     bool isEmptyChromeClient() const final { return true; }
 
     void didAssociateFormControls(const Vector<RefPtr<Element>>&, Frame&) final { }

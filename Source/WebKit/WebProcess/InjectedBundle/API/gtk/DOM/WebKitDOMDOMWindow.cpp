@@ -161,7 +161,6 @@ enum {
     DOM_WINDOW_PROP_TOP,
     DOM_WINDOW_PROP_DOCUMENT,
     DOM_WINDOW_PROP_DEVICE_PIXEL_RATIO,
-    DOM_WINDOW_PROP_ORIENTATION,
 };
 
 static void webkit_dom_dom_window_finalize(GObject* object)
@@ -279,9 +278,6 @@ static void webkit_dom_dom_window_get_property(GObject* object, guint propertyId
         break;
     case DOM_WINDOW_PROP_DEVICE_PIXEL_RATIO:
         g_value_set_double(value, webkit_dom_dom_window_get_device_pixel_ratio(self));
-        break;
-    case DOM_WINDOW_PROP_ORIENTATION:
-        g_value_set_long(value, webkit_dom_dom_window_get_orientation(self));
         break;
     default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, propertyId, pspec);
@@ -579,15 +575,6 @@ static void webkit_dom_dom_window_class_init(WebKitDOMDOMWindowClass* requestCla
             -G_MAXDOUBLE, G_MAXDOUBLE, 0,
             WEBKIT_PARAM_READABLE));
 
-    g_object_class_install_property(
-        gobjectClass,
-        DOM_WINDOW_PROP_ORIENTATION,
-        g_param_spec_long(
-            "orientation",
-            "DOMWindow:orientation",
-            "read-only glong DOMWindow:orientation",
-            G_MINLONG, G_MAXLONG, 0,
-            WEBKIT_PARAM_READABLE));
 }
 
 static void webkit_dom_dom_window_init(WebKitDOMDOMWindow* request)
@@ -1037,21 +1024,6 @@ gdouble webkit_dom_dom_window_get_device_pixel_ratio(WebKitDOMDOMWindow* self)
     WebCore::DOMWindow* item = WebKit::core(self);
     gdouble result = item->devicePixelRatio();
     return result;
-}
-
-glong webkit_dom_dom_window_get_orientation(WebKitDOMDOMWindow* self)
-{
-#if ENABLE(ORIENTATION_EVENTS)
-    WebCore::JSMainThreadNullState state;
-    g_return_val_if_fail(WEBKIT_DOM_IS_DOM_WINDOW(self), 0);
-    WebCore::DOMWindow* item = WebKit::core(self);
-    glong result = item->orientation();
-    return result;
-#else
-    UNUSED_PARAM(self);
-    WEBKIT_WARN_FEATURE_NOT_PRESENT("Orientation Events")
-    return static_cast<glong>(0);
-#endif /* ENABLE(ORIENTATION_EVENTS) */
 }
 
 gboolean webkit_dom_dom_window_webkit_message_handlers_post_message(WebKitDOMDOMWindow* window, const gchar* handlerName, const gchar* message)

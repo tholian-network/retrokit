@@ -40,9 +40,6 @@ Ref<WebsitePolicies> WebsitePolicies::copy() const
     policies->setContentBlockersEnabled(m_contentBlockersEnabled);
     policies->setAllowedAutoplayQuirks(m_allowedAutoplayQuirks);
     policies->setAutoplayPolicy(m_autoplayPolicy);
-#if ENABLE(DEVICE_ORIENTATION)
-    policies->setDeviceOrientationAndMotionAccessState(m_deviceOrientationAndMotionAccessState);
-#endif
     policies->setPopUpPolicy(m_popUpPolicy);
     policies->setWebsiteDataStore(m_websiteDataStore.get());
     policies->setCustomUserAgent(m_customUserAgent);
@@ -104,9 +101,6 @@ WebKit::WebsitePoliciesData WebsitePolicies::data()
         contentBlockersEnabled(),
         allowedAutoplayQuirks(),
         autoplayPolicy(),
-#if ENABLE(DEVICE_ORIENTATION)
-        deviceOrientationAndMotionAccessState(),
-#endif
         WTFMove(customHeaderFields),
         popUpPolicy(),
         m_customUserAgent,

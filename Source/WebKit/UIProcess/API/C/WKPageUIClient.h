@@ -132,7 +132,6 @@ typedef void (*WKDidLosePointerLockCallback)(WKPageRef page, const void* clientI
 typedef void (*WKHasVideoInPictureInPictureDidChangeCallback)(WKPageRef page, bool hasVideoInPictureInPicture, const void* clientInfo);
 typedef void (*WKDidExceedBackgroundResourceLimitWhileInForegroundCallback)(WKPageRef page, WKResourceLimit limit, const void* clientInfo);
 typedef void (*WKPageDidResignInputElementStrongPasswordAppearanceCallback)(WKPageRef page, WKTypeRef userData, const void *clientInfo);
-typedef bool (*WKPageShouldAllowDeviceOrientationAndMotionAccessCallback)(WKPageRef page, WKSecurityOriginRef securityOrigin, WKFrameInfoRef frame, const void *clientInfo);
 
 typedef void (*WKPageRunWebAuthenticationPanelCallback)();
 typedef void (*WKPageDecidePolicyForSpeechRecognitionPermissionRequestCallback)(WKPageRef page, WKSecurityOriginRef topOrigin, WKSpeechRecognitionPermissionCallbackRef callback);
@@ -1230,8 +1229,6 @@ typedef struct WKPageUIClientV13 {
     // Version 12.
     WKPageRequestStorageAccessConfirmCallback                           requestStorageAccessConfirm;
 
-    // Version 13.
-    WKPageShouldAllowDeviceOrientationAndMotionAccessCallback           shouldAllowDeviceOrientationAndMotionAccess;
 } WKPageUIClientV13;
 
 typedef struct WKPageUIClientV14 {
@@ -1334,9 +1331,6 @@ typedef struct WKPageUIClientV14 {
     WKPageRequestStorageAccessConfirmCallback                           requestStorageAccessConfirm;
 
     // Version 13.
-    WKPageShouldAllowDeviceOrientationAndMotionAccessCallback           shouldAllowDeviceOrientationAndMotionAccess;
-
-    // Version 14.
     WKPageRunWebAuthenticationPanelCallback                             runWebAuthenticationPanel;
 } WKPageUIClientV14;
 
@@ -1440,14 +1434,11 @@ typedef struct WKPageUIClientV15 {
     WKPageRequestStorageAccessConfirmCallback                           requestStorageAccessConfirm;
 
     // Version 13.
-    WKPageShouldAllowDeviceOrientationAndMotionAccessCallback           shouldAllowDeviceOrientationAndMotionAccess;
-
-    // Version 14.
     WKPageRunWebAuthenticationPanelCallback                             runWebAuthenticationPanel;
 
-    // Version 15.
+    // Version 14.
     WKPageDecidePolicyForSpeechRecognitionPermissionRequestCallback     decidePolicyForSpeechRecognitionPermissionRequest;
-    
+
 } WKPageUIClientV15;
 
 typedef struct WKPageUIClientV16 {
@@ -1550,15 +1541,12 @@ typedef struct WKPageUIClientV16 {
     WKPageRequestStorageAccessConfirmCallback                           requestStorageAccessConfirm;
 
     // Version 13.
-    WKPageShouldAllowDeviceOrientationAndMotionAccessCallback           shouldAllowDeviceOrientationAndMotionAccess;
-
-    // Version 14.
     WKPageRunWebAuthenticationPanelCallback                             runWebAuthenticationPanel;
 
-    // Version 15.
+    // Version 14.
     WKPageDecidePolicyForSpeechRecognitionPermissionRequestCallback     decidePolicyForSpeechRecognitionPermissionRequest;
 
-    // Version 16.
+    // Version 15.
     WKPageDecidePolicyForMediaKeySystemPermissionRequestCallback        decidePolicyForMediaKeySystemPermissionRequest;
 
 } WKPageUIClientV16;

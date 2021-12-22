@@ -3016,7 +3016,6 @@ webkit_dom_dom_window_get_parent
 webkit_dom_dom_window_get_top
 webkit_dom_dom_window_get_document
 webkit_dom_dom_window_get_device_pixel_ratio
-webkit_dom_dom_window_get_orientation
 webkit_dom_dom_window_webkit_message_handlers_post_message
 
 <SUBSECTION Standard>

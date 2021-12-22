@@ -90,7 +90,7 @@ CommandLineAPI.methods["getEventListeners"] = function(target) {
 
 function normalizeEventTypes(types) {
     if (types === undefined)
-        types = ["mouse", "key", "touch", "control", "abort", "blur", "change", "devicemotion", "deviceorientation", "error", "focus", "load", "reset", "resize", "scroll", "search", "select", "submit", "unload"];
+        types = ["mouse", "key", "touch", "control", "abort", "blur", "change", "error", "focus", "load", "reset", "resize", "scroll", "search", "select", "submit", "unload"];
     else if (typeof types === "string")
         types = [types];
 

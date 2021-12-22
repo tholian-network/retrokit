@@ -30,13 +30,9 @@
 namespace WebCore {
 
 enum class PermissionName : uint8_t {
-    Accelerometer,
     BackgroundFetch,
-    Bluetooth,
     Camera,
     DisplayCapture,
-    Gyroscope,
-    Magnetometer,
     Microphone,
     Midi,
     Nfc,
@@ -51,13 +47,9 @@ namespace WTF {
 template<> struct EnumTraits<WebCore::PermissionName> {
     using values = EnumValues<
         WebCore::PermissionName,
-        WebCore::PermissionName::Accelerometer,
         WebCore::PermissionName::BackgroundFetch,
-        WebCore::PermissionName::Bluetooth,
         WebCore::PermissionName::Camera,
         WebCore::PermissionName::DisplayCapture,
-        WebCore::PermissionName::Gyroscope,
-        WebCore::PermissionName::Magnetometer,
         WebCore::PermissionName::Microphone,
         WebCore::PermissionName::Midi,
         WebCore::PermissionName::Nfc,

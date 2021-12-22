@@ -100,8 +100,6 @@ namespace WebCore {
     macro(datachannel) \
     macro(dblclick) \
     macro(devicechange) \
-    macro(devicemotion) \
-    macro(deviceorientation) \
     macro(dischargingtimechange) \
     macro(disconnect) \
     macro(downloading) \
@@ -184,7 +182,6 @@ namespace WebCore {
     macro(offline) \
     macro(online) \
     macro(open) \
-    macro(orientationchange) \
     macro(overflowchanged) \
     macro(pagehide) \
     macro(pageshow) \

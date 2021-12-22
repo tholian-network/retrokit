@@ -279,12 +279,6 @@
 #include "AppHighlightStorage.h"
 #endif
 
-#if ENABLE(DEVICE_ORIENTATION)
-#include "DeviceMotionEvent.h"
-#include "DeviceOrientationAndMotionAccessController.h"
-#include "DeviceOrientationEvent.h"
-#endif
-
 #if ENABLE(FULLSCREEN_API)
 #include "RenderFullScreen.h"
 #endif
@@ -295,10 +289,6 @@
 #endif
 
 #if PLATFORM(IOS_FAMILY)
-#include "DeviceMotionClientIOS.h"
-#include "DeviceMotionController.h"
-#include "DeviceOrientationClientIOS.h"
-#include "DeviceOrientationController.h"
 #include "Navigator.h"
 #endif
 
@@ -581,17 +571,6 @@ auto Document::allDocuments() -> DocumentsMap::ValuesIteratorRange
     return allDocumentsMap().values();
 }
 
-static inline int currentOrientation(Frame* frame)
-{
-#if ENABLE(ORIENTATION_EVENTS)
-    if (frame)
-        return frame->orientation();
-#else
-    UNUSED_PARAM(frame);
-#endif
-    return 0;
-}
-
 static Ref<CachedResourceLoader> createCachedResourceLoader(Frame* frame)
 {
     if (frame) {
@@ -632,12 +611,6 @@ Document::Document(Frame* frame, const Settings& settings, const URL& url, Docum
     , m_intersectionObserversInitialUpdateTimer(*this, &Document::intersectionObserversInitialUpdateTimerFired)
 #endif
     , m_loadEventDelayTimer(*this, &Document::loadEventDelayTimerFired)
-#if PLATFORM(IOS_FAMILY) && ENABLE(DEVICE_ORIENTATION)
-    , m_deviceMotionClient(makeUnique<DeviceMotionClientIOS>(page() ? page()->deviceOrientationUpdateProvider() : nullptr))
-    , m_deviceMotionController(makeUnique<DeviceMotionController>(*m_deviceMotionClient))
-    , m_deviceOrientationClient(makeUnique<DeviceOrientationClientIOS>(page() ? page()->deviceOrientationUpdateProvider() : nullptr))
-    , m_deviceOrientationController(makeUnique<DeviceOrientationController>(*m_deviceOrientationClient))
-#endif
     , m_pendingTasksTimer(*this, &Document::pendingTasksTimerFired)
     , m_visualUpdatesSuppressionTimer(*this, &Document::visualUpdatesSuppressionTimerFired)
     , m_sharedObjectPoolClearTimer(*this, &Document::clearSharedObjectPool)
@@ -648,7 +621,6 @@ Document::Document(Frame* frame, const Settings& settings, const URL& url, Docum
     , m_socketProvider(page() ? &page()->socketProvider() : nullptr)
     , m_isSynthesized(constructionFlags & Synthesized)
     , m_isNonRenderedPlaceholder(constructionFlags & NonRenderedPlaceholder)
-    , m_orientationNotifier(currentOrientation(frame))
     , m_identifier(DocumentIdentifier::generate())
     , m_undoManager(UndoManager::create(*this))
     , m_editor(makeUniqueRef<Editor>(*this))
@@ -725,11 +697,6 @@ Document::~Document()
     ASSERT(!m_parentTreeScope);
     ASSERT(!m_disabledFieldsetElementsCount);
     ASSERT(m_inDocumentShadowRoots.isEmpty());
-
-#if ENABLE(DEVICE_ORIENTATION) && PLATFORM(IOS_FAMILY)
-    m_deviceMotionClient->deviceMotionControllerDestroyed();
-    m_deviceOrientationClient->deviceOrientationControllerDestroyed();
-#endif
 
     if (m_templateDocument)
         m_templateDocument->setTemplateDocumentHost(nullptr); // balanced in templateDocument().
@@ -2718,32 +2685,6 @@ void Document::removeAllEventListeners()
     m_wheelEventTargets = nullptr;
 }
 
-void Document::suspendDeviceMotionAndOrientationUpdates()
-{
-    if (m_areDeviceMotionAndOrientationUpdatesSuspended)
-        return;
-    m_areDeviceMotionAndOrientationUpdatesSuspended = true;
-#if ENABLE(DEVICE_ORIENTATION) && PLATFORM(IOS_FAMILY)
-    if (m_deviceMotionController)
-        m_deviceMotionController->suspendUpdates();
-    if (m_deviceOrientationController)
-        m_deviceOrientationController->suspendUpdates();
-#endif
-}
-
-void Document::resumeDeviceMotionAndOrientationUpdates()
-{
-    if (!m_areDeviceMotionAndOrientationUpdatesSuspended)
-        return;
-    m_areDeviceMotionAndOrientationUpdatesSuspended = false;
-#if ENABLE(DEVICE_ORIENTATION) && PLATFORM(IOS_FAMILY)
-    if (m_deviceMotionController)
-        m_deviceMotionController->resumeUpdates();
-    if (m_deviceOrientationController)
-        m_deviceOrientationController->resumeUpdates();
-#endif
-}
-
 void Document::suspendFontLoading()
 {
     m_fontLoader->suspendFontLoading();
@@ -2769,7 +2710,6 @@ void Document::suspendActiveDOMObjects(ReasonForSuspension why)
     if (m_documentTaskGroup)
         m_documentTaskGroup->suspend();
     ScriptExecutionContext::suspendActiveDOMObjects(why);
-    suspendDeviceMotionAndOrientationUpdates();
     platformSuspendOrStopActiveDOMObjects();
 }
 
@@ -2778,7 +2718,6 @@ void Document::resumeActiveDOMObjects(ReasonForSuspension why)
     if (m_documentTaskGroup)
         m_documentTaskGroup->resume();
     ScriptExecutionContext::resumeActiveDOMObjects(why);
-    resumeDeviceMotionAndOrientationUpdates();
     // FIXME: For iOS, do we need to add content change observers that were removed in Document::suspendActiveDOMObjects()?
 }
 
@@ -4024,12 +3963,6 @@ void Document::processFormatDetection(const String& features)
     });
 }
 
-void Document::processWebAppOrientations()
-{
-    if (Page* page = this->page())
-        page->chrome().client().webAppOrientationsUpdated();
-}
-
 #endif
 
 void Document::processReferrerPolicy(const String& policy, ReferrerPolicySource source)
@@ -5135,15 +5068,6 @@ ExceptionOr<Ref<Event>> Document::createEvent(const String& type)
         return Ref<Event> { TextEvent::createForBindings() }; // FIXME: HTML specification says this should create a CompositionEvent, not a TextEvent.
     if (equalLettersIgnoringASCIICase(type, "uievent") || equalLettersIgnoringASCIICase(type, "uievents"))
         return Ref<Event> { UIEvent::createForBindings() };
-
-    // FIXME: Consider including support for these event classes even when device orientation
-    // support is not enabled.
-#if ENABLE(DEVICE_ORIENTATION)
-    if (equalLettersIgnoringASCIICase(type, "devicemotionevent"))
-        return Ref<Event> { DeviceMotionEvent::createForBindings() };
-    if (equalLettersIgnoringASCIICase(type, "deviceorientationevent"))
-        return Ref<Event> { DeviceOrientationEvent::createForBindings() };
-#endif
 
 #if ENABLE(TOUCH_EVENTS)
     if (equalLettersIgnoringASCIICase(type, "touchevent"))
@@ -6766,26 +6690,6 @@ void Document::addDisplayChangedObserver(const DisplayChangedObserver& observer)
     m_displayChangedObservers.add(observer);
 }
 
-#if ENABLE(DEVICE_ORIENTATION) && PLATFORM(IOS_FAMILY)
-
-DeviceMotionController& Document::deviceMotionController() const
-{
-    return *m_deviceMotionController;
-}
-
-DeviceOrientationController& Document::deviceOrientationController() const
-{
-    return *m_deviceOrientationController;
-}
-
-void Document::simulateDeviceOrientationChange(double alpha, double beta, double gamma)
-{
-    auto orientation = DeviceOrientationData::create(alpha, beta, gamma, std::nullopt, std::nullopt);
-    deviceOrientationController().didChangeDeviceOrientation(orientation.ptr());
-}
-
-#endif
-
 #if ENABLE(POINTER_LOCK)
 
 void Document::exitPointerLock()
@@ -8194,13 +8098,6 @@ void Document::didRemoveInDocumentShadowRoot(ShadowRoot& shadowRoot)
     m_inDocumentShadowRoots.remove(&shadowRoot);
 }
 
-void Document::orientationChanged(int orientation)
-{
-    LOG(Events, "Document %p orientationChanged - orientation %d", this, orientation);
-    dispatchWindowEvent(Event::create(eventNames().orientationchangeEvent, Event::CanBubble::No, Event::IsCancelable::No));
-    m_orientationNotifier.orientationChanged(orientation);
-}
-
 #if ENABLE(MEDIA_STREAM)
 
 void Document::stopMediaCapture(MediaProducer::MediaCaptureKind kind)
@@ -8740,20 +8637,6 @@ void Document::identifiedElementWasRemovedFromDocument(Element& element)
 {
     m_identifiedElementsMap.remove(&element);
 }
-
-#if ENABLE(DEVICE_ORIENTATION)
-
-DeviceOrientationAndMotionAccessController& Document::deviceOrientationAndMotionAccessController()
-{
-    if (&topDocument() != this)
-        return topDocument().deviceOrientationAndMotionAccessController();
-
-    if (!m_deviceOrientationAndMotionAccessController)
-        m_deviceOrientationAndMotionAccessController = makeUnique<DeviceOrientationAndMotionAccessController>(*this);
-    return *m_deviceOrientationAndMotionAccessController;
-}
-
-#endif
 
 #if ENABLE(CSS_PAINTING_API)
 PaintWorklet& Document::ensurePaintWorklet()

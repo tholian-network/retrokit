@@ -60,7 +60,6 @@ class AudioStreamDescription;
 class FloatRect;
 class GraphicsContext;
 class MediaStreamPrivate;
-class OrientationNotifier;
 class PlatformAudioData;
 class RealtimeMediaSourceSettings;
 class RemoteVideoSample;
@@ -195,8 +194,6 @@ public:
     virtual bool isCaptureSource() const { return false; }
     virtual CaptureDevice::DeviceType deviceType() const { return CaptureDevice::DeviceType::Unknown; }
     virtual bool isVideoSource() const;
-
-    virtual void monitorOrientation(OrientationNotifier&) { }
 
     virtual void captureFailed();
 

@@ -45,7 +45,6 @@
 #include "GraphicsTypes.h"
 #include "MediaProducer.h"
 #include "MutationObserver.h"
-#include "OrientationNotifier.h"
 #include "PageIdentifier.h"
 #include "PlatformEvent.h"
 #include "PlaybackTargetClientContextIdentifier.h"
@@ -119,11 +118,6 @@ class DOMWindow;
 class DOMWrapperWorld;
 class Database;
 class DatabaseThread;
-class DeviceMotionClient;
-class DeviceMotionController;
-class DeviceOrientationAndMotionAccessController;
-class DeviceOrientationClient;
-class DeviceOrientationController;
 class DocumentFontLoader;
 class DocumentFragment;
 class DocumentLoader;
@@ -630,9 +624,6 @@ public:
 
     const Settings::Values& settingsValues() const final { return settings().values(); }
 
-    void suspendDeviceMotionAndOrientationUpdates();
-    void resumeDeviceMotionAndOrientationUpdates();
-
     void suspendFontLoading();
 
     RenderView* renderView() const { return m_renderView.get(); }
@@ -900,9 +891,6 @@ public:
 
 #if PLATFORM(IOS_FAMILY)
     void processFormatDetection(const String&);
-
-    // Called when <meta name="apple-mobile-web-app-orientations"> changes.
-    void processWebAppOrientations();
 #endif
 
 #if ENABLE(CONTENT_CHANGE_OBSERVER)
@@ -1202,16 +1190,6 @@ public:
 #include <WebKitAdditions/DocumentIOS.h>
 #endif
 
-#if ENABLE(DEVICE_ORIENTATION) && PLATFORM(IOS_FAMILY)
-    DeviceMotionController& deviceMotionController() const;
-    DeviceOrientationController& deviceOrientationController() const;
-    WEBCORE_EXPORT void simulateDeviceOrientationChange(double alpha, double beta, double gamma);
-#endif
-
-#if ENABLE(DEVICE_ORIENTATION)
-    DeviceOrientationAndMotionAccessController& deviceOrientationAndMotionAccessController();
-#endif
-
     WEBCORE_EXPORT double monotonicTimestamp() const;
     const DocumentEventTiming& eventTiming() const { return m_eventTiming; }
 
@@ -1475,9 +1453,6 @@ public:
     void detachFromCachedFrame(CachedFrameBase&);
 
     ConstantPropertyMap& constantProperties() const { return *m_constantPropertyMap; }
-
-    void orientationChanged(int orientation);
-    OrientationNotifier& orientationNotifier() { return m_orientationNotifier; }
 
     WEBCORE_EXPORT const AtomString& bgColor() const;
     WEBCORE_EXPORT void setBgColor(const String&);
@@ -1964,17 +1939,6 @@ private:
 
     std::unique_ptr<IdleCallbackController> m_idleCallbackController;
 
-#if ENABLE(DEVICE_ORIENTATION) && PLATFORM(IOS_FAMILY)
-    std::unique_ptr<DeviceMotionClient> m_deviceMotionClient;
-    std::unique_ptr<DeviceMotionController> m_deviceMotionController;
-    std::unique_ptr<DeviceOrientationClient> m_deviceOrientationClient;
-    std::unique_ptr<DeviceOrientationController> m_deviceOrientationController;
-#endif
-
-#if ENABLE(DEVICE_ORIENTATION)
-    std::unique_ptr<DeviceOrientationAndMotionAccessController> m_deviceOrientationAndMotionAccessController;
-#endif
-
     Timer m_pendingTasksTimer;
     Vector<Task> m_pendingTasks;
 
@@ -2126,7 +2090,6 @@ private:
     bool m_scheduledTasksAreSuspended { false };
     bool m_visualUpdatesAllowed { true };
 
-    bool m_areDeviceMotionAndOrientationUpdatesSuspended { false };
     bool m_userDidInteractWithPage { false };
 
     bool m_didEnqueueFirstContentfulPaint { false };
@@ -2155,7 +2118,6 @@ private:
 
     FocusTrigger m_latestFocusTrigger { FocusTrigger::Other };
 
-    OrientationNotifier m_orientationNotifier;
     mutable RefPtr<Logger> m_logger;
     RefPtr<StringCallback> m_consoleMessageListener;
 

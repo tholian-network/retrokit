@@ -155,7 +155,6 @@ MESSAGE_RECEIVERS = \
 	UIProcess/Network/CustomProtocols/LegacyCustomProtocolManagerProxy \
 	UIProcess/WebPageProxy \
 	UIProcess/VisitedLinkStore \
-	UIProcess/ios/WebDeviceOrientationUpdateProviderProxy \
 	UIProcess/ios/SmartMagnificationController \
 	UIProcess/mac/SecItemShimProxy \
 	UIProcess/Cocoa/PlaybackSessionManagerProxy \
@@ -211,7 +210,6 @@ MESSAGE_RECEIVERS = \
 	WebProcess/Network/webrtc/WebMDNSRegister \
 	WebProcess/Network/webrtc/WebRTCResolver \
 	WebProcess/WebCoreSupport/WebBroadcastChannelRegistry \
-	WebProcess/WebCoreSupport/WebDeviceOrientationUpdateProvider \
 	WebProcess/WebCoreSupport/WebSpeechRecognitionConnection \
 	WebProcess/Speech/SpeechRecognitionRealtimeMediaSourceManager \
 	WebProcess/Storage/WebSWContextManagerConnection \

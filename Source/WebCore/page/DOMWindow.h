@@ -87,11 +87,6 @@ class VisualViewport;
 class WebKitNamespace;
 class WebKitPoint;
 
-#if ENABLE(DEVICE_ORIENTATION)
-class DeviceMotionController;
-class DeviceOrientationController;
-#endif
-
 struct IdleRequestOptions;
 struct ImageBitmapOptions;
 struct WindowFeatures;
@@ -345,13 +340,6 @@ public:
     ExceptionOr<Ref<NodeList>> collectMatchingElementsInFlatTree(Node&, const String& selectors);
     ExceptionOr<RefPtr<Element>> matchingElementInFlatTree(Node&, const String& selectors);
 
-#if ENABLE(ORIENTATION_EVENTS)
-    // This is the interface orientation in degrees. Some examples are:
-    //  0 is straight up; -90 is when the device is rotated 90 clockwise;
-    //  90 is when rotated counter clockwise.
-    int orientation() const;
-#endif
-
     Performance& performance() const;
     WEBCORE_EXPORT ReducedResolutionSeconds nowTimestamp() const;
     void freezeNowTimestamp();
@@ -362,19 +350,6 @@ public:
     void incrementScrollEventListenersCount();
     void decrementScrollEventListenersCount();
     unsigned scrollEventListenerCount() const { return m_scrollEventListenerCount; }
-#endif
-
-#if ENABLE(DEVICE_ORIENTATION)
-    void startListeningForDeviceOrientationIfNecessary();
-    void stopListeningForDeviceOrientationIfNecessary();
-    void startListeningForDeviceMotionIfNecessary();
-    void stopListeningForDeviceMotionIfNecessary();
-
-    bool isAllowedToUseDeviceOrientation(String& message) const;
-    bool isAllowedToUseDeviceMotion(String& message) const;
-
-    DeviceOrientationController* deviceOrientationController() const;
-    DeviceMotionController* deviceMotionController() const;
 #endif
 
 #if ENABLE(IOS_TOUCH_EVENTS) || ENABLE(IOS_GESTURE_EVENTS)
@@ -420,12 +395,6 @@ private:
 
     static ExceptionOr<RefPtr<Frame>> createWindow(const String& urlString, const AtomString& frameName, const WindowFeatures&, DOMWindow& activeWindow, Frame& firstFrame, Frame& openerFrame, const WTF::Function<void(DOMWindow&)>& prepareDialogFunction = nullptr);
     bool isInsecureScriptAccess(DOMWindow& activeWindow, const String& urlString);
-
-#if ENABLE(DEVICE_ORIENTATION)
-    bool isAllowedToUseDeviceMotionOrOrientation(String& message) const;
-    bool hasPermissionToReceiveDeviceMotionOrOrientationEvents(String& message) const;
-    void failedToRegisterDeviceMotionEventListener();
-#endif
 
     bool isSameSecurityOriginAsMainFrame() const;
 

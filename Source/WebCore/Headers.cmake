@@ -424,9 +424,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     dom/DOMRectReadOnly.h
     dom/DOMTimeStamp.h
     dom/DataTransfer.h
-    dom/DeviceOrientationClient.h
-    dom/DeviceOrientationData.h
-    dom/DeviceOrientationOrMotionPermissionState.h
     dom/Document.h
     dom/DocumentEventTiming.h
     dom/DocumentFontLoader.h
@@ -1056,7 +1053,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/MediaUniqueIdentifier.h
     platform/NowPlayingManager.h
     platform/NotImplemented.h
-    platform/OrientationNotifier.h
     platform/PODInterval.h
     platform/PODIntervalTree.h
     platform/PODRedBlackTree.h
@@ -1415,7 +1411,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/mediastream/libwebrtc/LibWebRTCProvider.h
     platform/mediastream/libwebrtc/LibWebRTCSocketIdentifier.h
 
-    platform/mock/DeviceOrientationClientMock.h
     platform/mock/MediaPlaybackTargetMock.h
     platform/mock/MediaPlaybackTargetPickerMock.h
     platform/mock/MockMediaDevice.h

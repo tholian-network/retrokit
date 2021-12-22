@@ -617,28 +617,6 @@ DeviceHeight:
     WebCore:
       default: 0
 
-DeviceOrientationEventEnabled:
-  type: bool
-  condition: ENABLE(DEVICE_ORIENTATION)
-  defaultValue:
-    WebKitLegacy:
-      default: true
-    WebKit:
-      default: true
-    WebCore:
-      default: true
-
-DeviceOrientationPermissionAPIEnabled:
-  type: bool
-  condition: ENABLE(DEVICE_ORIENTATION)
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      default: false
-    WebCore:
-      default: false
-
 DeviceWidth:
   type: uint32_t
   defaultValue:

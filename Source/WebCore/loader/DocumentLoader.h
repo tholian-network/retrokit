@@ -34,7 +34,6 @@
 #include "ContentFilterClient.h"
 #include "ContentSecurityPolicyClient.h"
 #include "CrossOriginOpenerPolicy.h"
-#include "DeviceOrientationOrMotionPermissionState.h"
 #include "DocumentIdentifier.h"
 #include "DocumentLoadTiming.h"
 #include "DocumentWriter.h"
@@ -299,11 +298,6 @@ public:
 
     bool userContentExtensionsEnabled() const { return m_userContentExtensionsEnabled; }
     void setUserContentExtensionsEnabled(bool enabled) { m_userContentExtensionsEnabled = enabled; }
-
-#if ENABLE(DEVICE_ORIENTATION)
-    DeviceOrientationOrMotionPermissionState deviceOrientationAndMotionAccessState() const { return m_deviceOrientationAndMotionAccessState; }
-    void setDeviceOrientationAndMotionAccessState(DeviceOrientationOrMotionPermissionState state) { m_deviceOrientationAndMotionAccessState = state; }
-#endif
 
     AutoplayPolicy autoplayPolicy() const { return m_autoplayPolicy; }
     void setAutoplayPolicy(AutoplayPolicy policy) { m_autoplayPolicy = policy; }
@@ -647,9 +641,6 @@ private:
     bool m_idempotentModeAutosizingOnlyHonorsPercentages { false };
     String m_customNavigatorPlatform;
     bool m_userContentExtensionsEnabled { true };
-#if ENABLE(DEVICE_ORIENTATION)
-    DeviceOrientationOrMotionPermissionState m_deviceOrientationAndMotionAccessState { DeviceOrientationOrMotionPermissionState::Prompt };
-#endif
     AutoplayPolicy m_autoplayPolicy { AutoplayPolicy::Default };
     OptionSet<AutoplayQuirk> m_allowedAutoplayQuirks;
     PopUpPolicy m_popUpPolicy { PopUpPolicy::Default };

@@ -1968,7 +1968,6 @@
     <keyword type="function" name="webkit_dom_dom_window_get_top ()" link="WebKitDOMDOMWindow.html#webkit-dom-dom-window-get-top" deprecated="2.22: Use JavaScriptCore API instead" since="2.16"/>
     <keyword type="function" name="webkit_dom_dom_window_get_document ()" link="WebKitDOMDOMWindow.html#webkit-dom-dom-window-get-document" deprecated="2.22: Use JavaScriptCore API instead" since="2.16"/>
     <keyword type="function" name="webkit_dom_dom_window_get_device_pixel_ratio ()" link="WebKitDOMDOMWindow.html#webkit-dom-dom-window-get-device-pixel-ratio" deprecated="2.22: Use JavaScriptCore API instead" since="2.16"/>
-    <keyword type="function" name="webkit_dom_dom_window_get_orientation ()" link="WebKitDOMDOMWindow.html#webkit-dom-dom-window-get-orientation" deprecated="2.22: Use JavaScriptCore API instead" since="2.16"/>
     <keyword type="function" name="webkit_dom_dom_window_webkit_message_handlers_post_message ()" link="WebKitDOMDOMWindow.html#webkit-dom-dom-window-webkit-message-handlers-post-message" deprecated=""/>
     <keyword type="struct" name="struct WebKitDOMDOMWindow" link="WebKitDOMDOMWindow.html#WebKitDOMDOMWindow-struct"/>
     <keyword type="property" name="The “closed” property" link="WebKitDOMDOMWindow.html#WebKitDOMDOMWindow--closed"/>
@@ -1983,7 +1982,6 @@
     <keyword type="property" name="The “name” property" link="WebKitDOMDOMWindow.html#WebKitDOMDOMWindow--name"/>
     <keyword type="property" name="The “offscreen-buffering” property" link="WebKitDOMDOMWindow.html#WebKitDOMDOMWindow--offscreen-buffering"/>
     <keyword type="property" name="The “opener” property" link="WebKitDOMDOMWindow.html#WebKitDOMDOMWindow--opener"/>
-    <keyword type="property" name="The “orientation” property" link="WebKitDOMDOMWindow.html#WebKitDOMDOMWindow--orientation"/>
     <keyword type="property" name="The “outer-height” property" link="WebKitDOMDOMWindow.html#WebKitDOMDOMWindow--outer-height"/>
     <keyword type="property" name="The “outer-width” property" link="WebKitDOMDOMWindow.html#WebKitDOMDOMWindow--outer-width"/>
     <keyword type="property" name="The “page-x-offset” property" link="WebKitDOMDOMWindow.html#WebKitDOMDOMWindow--page-x-offset"/>

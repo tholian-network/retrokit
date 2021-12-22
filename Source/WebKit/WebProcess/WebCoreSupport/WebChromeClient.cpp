@@ -1434,15 +1434,6 @@ void WebChromeClient::requestStorageAccess(RegistrableDomain&& subFrameDomain, R
 }
 #endif
 
-#if ENABLE(DEVICE_ORIENTATION)
-void WebChromeClient::shouldAllowDeviceOrientationAndMotionAccess(Frame& frame, bool mayPrompt, CompletionHandler<void(DeviceOrientationOrMotionPermissionState)>&& callback)
-{
-    auto* webFrame = WebFrame::fromCoreFrame(frame);
-    ASSERT(webFrame);
-    m_page.shouldAllowDeviceOrientationAndMotionAccess(webFrame->frameID(), webFrame->info(), mayPrompt, WTFMove(callback));
-}
-#endif
-
 void WebChromeClient::configureLoggingChannel(const String& channelName, WTFLogChannelState state, WTFLogLevel level)
 {
     m_page.configureLoggingChannel(channelName, state, level);

@@ -607,9 +607,6 @@ void Internals::resetToConsistentState(Page& page)
 
 Internals::Internals(Document& document)
     : ContextDestructionObserver(&document)
-#if ENABLE(MEDIA_STREAM)
-    , m_orientationNotifier(0)
-#endif
 {
 #if ENABLE(VIDEO)
     if (document.page())
@@ -5361,15 +5358,6 @@ void Internals::setMockAudioTrackChannelNumber(MediaStreamTrack& track, unsigned
     if (!is<MockRealtimeAudioSource>(source))
         return;
     downcast<MockRealtimeAudioSource>(source).setChannelCount(channelNumber);
-}
-
-void Internals::setCameraMediaStreamTrackOrientation(MediaStreamTrack& track, int orientation)
-{
-    auto& source = track.source();
-    if (!source.isCaptureSource())
-        return;
-    m_orientationNotifier.orientationChanged(orientation);
-    source.monitorOrientation(m_orientationNotifier);
 }
 
 void Internals::stopObservingRealtimeMediaSource()

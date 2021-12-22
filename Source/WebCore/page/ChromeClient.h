@@ -26,7 +26,6 @@
 #include "ContactInfo.h"
 #include "Cursor.h"
 #include "DatabaseDetails.h"
-#include "DeviceOrientationOrMotionPermissionState.h"
 #include "DisabledAdaptations.h"
 #include "DisplayRefreshMonitor.h"
 #include "DocumentStorageAccess.h"
@@ -304,10 +303,6 @@ public:
     virtual bool showDataDetectorsUIForElement(const Element&, const Event&) = 0;
 #endif
 
-#if ENABLE(ORIENTATION_EVENTS)
-    virtual int deviceOrientation() const = 0;
-#endif
-
 #if ENABLE(INPUT_TYPE_COLOR)
     virtual std::unique_ptr<ColorChooser> createColorChooser(ColorChooserClient&, const Color&) = 0;
 #endif
@@ -551,10 +546,6 @@ public:
 #if ENABLE(RESOURCE_LOAD_STATISTICS)
     virtual void hasStorageAccess(RegistrableDomain&& /*subFrameDomain*/, RegistrableDomain&& /*topFrameDomain*/, Frame&, WTF::CompletionHandler<void(bool)>&& completionHandler) { completionHandler(false); }
     virtual void requestStorageAccess(RegistrableDomain&& subFrameDomain, RegistrableDomain&& topFrameDomain, Frame&, StorageAccessScope scope, WTF::CompletionHandler<void(RequestStorageAccessResult)>&& completionHandler) { completionHandler({ StorageAccessWasGranted::No, StorageAccessPromptWasShown::No, scope, WTFMove(topFrameDomain), WTFMove(subFrameDomain) }); }
-#endif
-
-#if ENABLE(DEVICE_ORIENTATION)
-    virtual void shouldAllowDeviceOrientationAndMotionAccess(Frame&, bool /* mayPrompt */, WTF::CompletionHandler<void(DeviceOrientationOrMotionPermissionState)>&& callback) { callback(DeviceOrientationOrMotionPermissionState::Denied); }
 #endif
 
     virtual void didInsertMenuElement(HTMLMenuElement&) { }

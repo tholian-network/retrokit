@@ -112,7 +112,6 @@ HTMLElement::EventHandlerNameMap HTMLBodyElement::createWindowEventHandlerNameMa
         &onmessageAttr.get(),
         &onofflineAttr.get(),
         &ononlineAttr.get(),
-        &onorientationchangeAttr.get(),
         &onpagehideAttr.get(),
         &onpageshowAttr.get(),
         &onpopstateAttr.get(),

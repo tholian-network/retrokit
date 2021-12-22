@@ -46,11 +46,6 @@
 #include "DOMStringList.h"
 #include "DOMTimer.h"
 #include "DOMTokenList.h"
-#include "DeviceMotionController.h"
-#include "DeviceMotionData.h"
-#include "DeviceMotionEvent.h"
-#include "DeviceOrientationAndMotionAccessController.h"
-#include "DeviceOrientationController.h"
 #include "Document.h"
 #include "DocumentLoader.h"
 #include "Editor.h"
@@ -595,19 +590,6 @@ ExceptionOr<RefPtr<Element>> DOMWindow::matchingElementInFlatTree(Node& scope, c
 
     return RefPtr<Element> { nullptr };
 }
-
-#if ENABLE(ORIENTATION_EVENTS)
-
-int DOMWindow::orientation() const
-{
-    auto* frame = this->frame();
-    if (!frame)
-        return 0;
-
-    return frame->orientation();
-}
-
-#endif
 
 Screen& DOMWindow::screen()
 {
@@ -1956,180 +1938,9 @@ bool DOMWindow::addEventListener(const AtomString& eventType, Ref<EventListener>
     else if (eventNames().isGestureEventType(eventType))
         ++m_touchAndGestureEventListenerCount;
 #endif
-#if ENABLE(DEVICE_ORIENTATION)
-    else if (eventType == eventNames().deviceorientationEvent)
-        startListeningForDeviceOrientationIfNecessary();
-    else if (eventType == eventNames().devicemotionEvent)
-        startListeningForDeviceMotionIfNecessary();
-#endif
 
     return true;
 }
-
-#if ENABLE(DEVICE_ORIENTATION)
-
-DeviceOrientationController* DOMWindow::deviceOrientationController() const
-{
-#if PLATFORM(IOS_FAMILY)
-    return document() ? &document()->deviceOrientationController() : nullptr;
-#else
-    return DeviceOrientationController::from(page());
-#endif
-}
-
-DeviceMotionController* DOMWindow::deviceMotionController() const
-{
-#if PLATFORM(IOS_FAMILY)
-    return document() ? &document()->deviceMotionController() : nullptr;
-#else
-    return DeviceMotionController::from(page());
-#endif
-}
-
-bool DOMWindow::isAllowedToUseDeviceMotionOrOrientation(String& message) const
-{
-    if (!frame() || !document() || !frame()->settings().deviceOrientationEventEnabled()) {
-        message = "API is disabled"_s;
-        return false;
-    }
-
-    if (!isSecureContext()) {
-        message = "Browsing context is not secure"_s;
-        return false;
-    }
-
-    return true;
-}
-
-bool DOMWindow::isAllowedToUseDeviceMotion(String& message) const
-{
-    if (!isAllowedToUseDeviceMotionOrOrientation(message))
-        return false;
-
-    if (!isFeaturePolicyAllowedByDocumentAndAllOwners(FeaturePolicy::Type::Gyroscope, *document(), LogFeaturePolicyFailure::No)
-        || !isFeaturePolicyAllowedByDocumentAndAllOwners(FeaturePolicy::Type::Accelerometer, *document(), LogFeaturePolicyFailure::No)) {
-        message = "Third-party iframes are not allowed access to device motion unless explicitly allowed via Feature-Policy (gyroscope & accelerometer)"_s;
-        return false;
-    }
-
-    return true;
-}
-
-bool DOMWindow::isAllowedToUseDeviceOrientation(String& message) const
-{
-    if (!isAllowedToUseDeviceMotionOrOrientation(message))
-        return false;
-
-    if (!isFeaturePolicyAllowedByDocumentAndAllOwners(FeaturePolicy::Type::Gyroscope, *document(), LogFeaturePolicyFailure::No)
-        || !isFeaturePolicyAllowedByDocumentAndAllOwners(FeaturePolicy::Type::Accelerometer, *document(), LogFeaturePolicyFailure::No)
-        || !isFeaturePolicyAllowedByDocumentAndAllOwners(FeaturePolicy::Type::Magnetometer, *document(), LogFeaturePolicyFailure::No)) {
-        message = "Third-party iframes are not allowed access to device orientation unless explicitly allowed via Feature-Policy (gyroscope & accelerometer & magnetometer)"_s;
-        return false;
-    }
-
-    return true;
-}
-
-bool DOMWindow::hasPermissionToReceiveDeviceMotionOrOrientationEvents(String& message) const
-{
-    if (frame()->settings().deviceOrientationPermissionAPIEnabled()) {
-        if (!page()) {
-            message = "No browsing context"_s;
-            return false;
-        }
-        auto accessState = document()->deviceOrientationAndMotionAccessController().accessState(*document());
-        switch (accessState) {
-        case DeviceOrientationOrMotionPermissionState::Denied:
-            message = "Permission to use the API was denied"_s;
-            return false;
-        case DeviceOrientationOrMotionPermissionState::Prompt:
-            message = "Permission to use the API was not yet requested"_s;
-            return false;
-        case DeviceOrientationOrMotionPermissionState::Granted:
-            break;
-        }
-    }
-
-    return true;
-}
-
-void DOMWindow::startListeningForDeviceOrientationIfNecessary()
-{
-    if (!hasEventListeners(eventNames().deviceorientationEvent))
-        return;
-
-    auto* deviceController = deviceOrientationController();
-    if (!deviceController || deviceController->hasDeviceEventListener(*this))
-        return;
-
-    String innerMessage;
-    if (!isAllowedToUseDeviceOrientation(innerMessage) || !hasPermissionToReceiveDeviceMotionOrOrientationEvents(innerMessage)) {
-        if (RefPtr document = this->document())
-            document->addConsoleMessage(MessageSource::JS, MessageLevel::Warning, makeString("No device orientation events will be fired, reason: ", innerMessage, "."));
-        return;
-    }
-
-    deviceController->addDeviceEventListener(*this);
-}
-
-void DOMWindow::stopListeningForDeviceOrientationIfNecessary()
-{
-    if (hasEventListeners(eventNames().deviceorientationEvent))
-        return;
-
-    if (auto* deviceController = deviceOrientationController())
-        deviceController->removeDeviceEventListener(*this);
-}
-
-void DOMWindow::startListeningForDeviceMotionIfNecessary()
-{
-    if (!hasEventListeners(eventNames().devicemotionEvent))
-        return;
-
-    auto* deviceController = deviceMotionController();
-    if (!deviceController || deviceController->hasDeviceEventListener(*this))
-        return;
-
-    String innerMessage;
-    if (!isAllowedToUseDeviceMotion(innerMessage) || !hasPermissionToReceiveDeviceMotionOrOrientationEvents(innerMessage)) {
-        failedToRegisterDeviceMotionEventListener();
-        if (RefPtr document = this->document())
-            document->addConsoleMessage(MessageSource::JS, MessageLevel::Warning, makeString("No device motion events will be fired, reason: ", innerMessage, "."));
-        return;
-    }
-
-    deviceController->addDeviceEventListener(*this);
-}
-
-void DOMWindow::stopListeningForDeviceMotionIfNecessary()
-{
-    if (hasEventListeners(eventNames().devicemotionEvent))
-        return;
-
-    if (auto* deviceController = deviceMotionController())
-        deviceController->removeDeviceEventListener(*this);
-}
-
-void DOMWindow::failedToRegisterDeviceMotionEventListener()
-{
-#if PLATFORM(IOS_FAMILY)
-    if (!isSameSecurityOriginAsMainFrame() || !isSecureContext())
-        return;
-
-    // FIXME: This is a quirk for chase.com on iPad (<rdar://problem/48423023>).
-    if (RegistrableDomain::uncheckedCreateFromRegistrableDomainString("chase.com"_s).matches(document()->url())) {
-        // Fire a fake DeviceMotionEvent with acceleration data to unblock the site's login flow.
-        document()->postTask([](auto& context) {
-            if (RefPtr window = downcast<Document>(context).domWindow()) {
-                auto acceleration = DeviceMotionData::Acceleration::create();
-                window->dispatchEvent(DeviceMotionEvent::create(eventNames().devicemotionEvent, DeviceMotionData::create(acceleration.copyRef(), acceleration.copyRef(), DeviceMotionData::RotationRate::create(), std::nullopt).ptr()));
-            }
-        });
-    }
-#endif // PLATFORM(IOS_FAMILY)
-}
-
-#endif // ENABLE(DEVICE_ORIENTATION)
 
 #if PLATFORM(IOS_FAMILY)
 
@@ -2186,12 +1997,6 @@ bool DOMWindow::removeEventListener(const AtomString& eventType, EventListener& 
         ASSERT(m_touchAndGestureEventListenerCount > 0);
         --m_touchAndGestureEventListenerCount;
     }
-#endif
-#if ENABLE(DEVICE_ORIENTATION)
-    else if (eventType == eventNames().deviceorientationEvent)
-        stopListeningForDeviceOrientationIfNecessary();
-    else if (eventType == eventNames().devicemotionEvent)
-        stopListeningForDeviceMotionIfNecessary();
 #endif
 
     return true;
@@ -2294,11 +2099,6 @@ void DOMWindow::dispatchEvent(Event& event, EventTarget* target)
 void DOMWindow::removeAllEventListeners()
 {
     EventTarget::removeAllEventListeners();
-
-#if ENABLE(DEVICE_ORIENTATION)
-        stopListeningForDeviceOrientationIfNecessary();
-        stopListeningForDeviceMotionIfNecessary();
-#endif
 
 #if PLATFORM(IOS_FAMILY)
     if (m_scrollEventListenerCount) {

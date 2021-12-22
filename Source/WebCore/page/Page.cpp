@@ -314,9 +314,6 @@ Page::Page(PageConfiguration&& pageConfiguration)
 #if ENABLE(APPLICATION_MANIFEST)
     , m_applicationManifest(pageConfiguration.applicationManifest)
 #endif
-#if ENABLE(DEVICE_ORIENTATION) && PLATFORM(IOS_FAMILY)
-    , m_deviceOrientationUpdateProvider(WTFMove(pageConfiguration.deviceOrientationUpdateProvider))
-#endif
     , m_corsDisablingPatterns(WTFMove(pageConfiguration.corsDisablingPatterns))
     , m_allowedNetworkHosts(WTFMove(pageConfiguration.allowedNetworkHosts))
     , m_loadsSubresources(pageConfiguration.loadsSubresources)
@@ -2391,12 +2388,6 @@ void Page::setIsVisibleInternal(bool isVisible)
 
         resumeScriptedAnimations();
 
-#if PLATFORM(IOS_FAMILY)
-        forEachDocument([] (Document& document) {
-            document.resumeDeviceMotionAndOrientationUpdates();
-        });
-#endif
-
         if (FrameView* view = mainFrame().view())
             view->show();
 
@@ -2432,12 +2423,6 @@ void Page::setIsVisibleInternal(bool isVisible)
             if (document.svgExtensions())
                 document.accessSVGExtensions().pauseAnimations();
         });
-
-#if PLATFORM(IOS_FAMILY)
-        forEachDocument([] (Document& document) {
-            document.suspendDeviceMotionAndOrientationUpdates();
-        });
-#endif
 
         suspendScriptedAnimations();
 

@@ -801,13 +801,6 @@ dom/DataTransferItem.cpp
 dom/DataTransferItemList.cpp
 dom/DatasetDOMStringMap.cpp
 dom/DecodedDataDocumentParser.cpp
-dom/DeviceMotionController.cpp
-dom/DeviceMotionData.cpp
-dom/DeviceMotionEvent.cpp
-dom/DeviceOrientationAndMotionAccessController.cpp
-dom/DeviceOrientationController.cpp
-dom/DeviceOrientationData.cpp
-dom/DeviceOrientationEvent.cpp
 dom/Document.cpp
 dom/DocumentFontLoader.cpp
 dom/DocumentFragment.cpp
@@ -2016,7 +2009,6 @@ platform/mediastream/RealtimeVideoCaptureSource.cpp
 platform/mediastream/RealtimeVideoSource.cpp
 platform/mediastream/libwebrtc/LibWebRTCDTMFSenderBackend.cpp
 platform/mediastream/libwebrtc/LibWebRTCProvider.cpp
-platform/mock/DeviceOrientationClientMock.cpp
 platform/mock/MediaEngineConfigurationFactoryMock.cpp
 platform/mock/MockRealtimeAudioSource.cpp
 platform/mock/MockRealtimeMediaSourceCenter.cpp
@@ -2879,9 +2871,6 @@ JSDeprecatedCSSOMRGBColor.cpp
 JSDeprecatedCSSOMRect.cpp
 JSDeprecatedCSSOMValue.cpp
 JSDeprecatedCSSOMValueList.cpp
-JSDeviceMotionEvent.cpp
-JSDeviceOrientationEvent.cpp
-JSDeviceOrientationOrMotionPermissionState.cpp
 JSDistanceModelType.cpp
 JSDocument.cpp
 JSDocumentAndElementEventHandlers.cpp

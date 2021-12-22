@@ -311,14 +311,6 @@ void MediaStreamPrivate::trackEnded(MediaStreamTrackPrivate& track)
     characteristicsChanged();
 }
 
-void MediaStreamPrivate::monitorOrientation(OrientationNotifier& notifier)
-{
-    for (auto& track : m_trackSet.values()) {
-        if (track->source().isCaptureSource() && track->type() == RealtimeMediaSource::Type::Video)
-            track->source().monitorOrientation(notifier);
-    }
-}
-
 #if !RELEASE_LOG_DISABLED
 WTFLogChannel& MediaStreamPrivate::logChannel() const
 {

@@ -730,9 +730,6 @@ set(WebCore_NON_SVG_IDL_FILES
     dom/DataTransfer.idl
     dom/DataTransferItem.idl
     dom/DataTransferItemList.idl
-    dom/DeviceMotionEvent.idl
-    dom/DeviceOrientationEvent.idl
-    dom/DeviceOrientationOrMotionPermissionState.idl
     dom/Document+CSSOMView.idl
     dom/Document+Fullscreen.idl
     dom/Document+HTML.idl
@@ -1012,8 +1009,6 @@ set(WebCore_NON_SVG_IDL_FILES
     page/DOMWindow+CSSOM.idl
     page/DOMWindow+CSSOMView.idl
     page/DOMWindow+Compat.idl
-    page/DOMWindow+DeviceMotion.idl
-    page/DOMWindow+DeviceOrientation.idl
     page/DOMWindow+RequestIdleCallback.idl
     page/DOMWindow+Selection.idl
     page/DOMWindow+VisualViewport.idl

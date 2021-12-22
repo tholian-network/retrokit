@@ -244,8 +244,6 @@ WI.ScriptTimelineRecord.EventType.displayName = function(eventType, details, inc
         nameMap.set("cuechange", "Cue Change");
         nameMap.set("datachannel", "Data Channel");
         nameMap.set("dblclick", "Double Click");
-        nameMap.set("devicemotion", "Device Motion");
-        nameMap.set("deviceorientation", "Device Orientation");
         nameMap.set("dischargingtimechange", "Discharging Time Change");
         nameMap.set("dragend", "Drag End");
         nameMap.set("dragenter", "Drag Enter");
@@ -287,7 +285,6 @@ WI.ScriptTimelineRecord.EventType.displayName = function(eventType, details, inc
         nameMap.set("negotiationneeded", "Negotiation Needed");
         nameMap.set("nomatch", "No Match");
         nameMap.set("noupdate", "No Update");
-        nameMap.set("orientationchange", "Orientation Change");
         nameMap.set("overflowchanged", "Overflow Changed");
         nameMap.set("pagehide", "Page Hide");
         nameMap.set("pageshow", "Page Show");

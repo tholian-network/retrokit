@@ -680,19 +680,6 @@ WEBKIT_DEPRECATED gdouble
 webkit_dom_dom_window_get_device_pixel_ratio(WebKitDOMDOMWindow* self);
 
 /**
- * webkit_dom_dom_window_get_orientation:
- * @self: A #WebKitDOMDOMWindow
- *
- * Returns: A #glong
- *
- * Since: 2.16
- *
- * Deprecated: 2.22: Use JavaScriptCore API instead
- */
-WEBKIT_DEPRECATED glong
-webkit_dom_dom_window_get_orientation(WebKitDOMDOMWindow* self);
-
-/**
  * webkit_dom_dom_window_post_user_message:
  * @window: A #WebKitDOMDOMWindow
  * @handler: Name of the user message handler.

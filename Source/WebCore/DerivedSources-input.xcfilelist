@@ -693,10 +693,6 @@ $(PROJECT_DIR)/dom/DOMStringMap.idl
 $(PROJECT_DIR)/dom/DataTransfer.idl
 $(PROJECT_DIR)/dom/DataTransferItem.idl
 $(PROJECT_DIR)/dom/DataTransferItemList.idl
-$(PROJECT_DIR)/dom/DeviceMotionEvent.idl
-$(PROJECT_DIR)/dom/DeviceOrientationEvent.idl
-$(PROJECT_DIR)/dom/DeviceOrientationOrMotionEvent.idl
-$(PROJECT_DIR)/dom/DeviceOrientationOrMotionPermissionState.idl
 $(PROJECT_DIR)/dom/Document+CSSOMView.idl
 $(PROJECT_DIR)/dom/Document+Fullscreen.idl
 $(PROJECT_DIR)/dom/Document+HTML.idl
@@ -1041,8 +1037,6 @@ $(PROJECT_DIR)/page/DOMSelection.idl
 $(PROJECT_DIR)/page/DOMWindow+CSSOM.idl
 $(PROJECT_DIR)/page/DOMWindow+CSSOMView.idl
 $(PROJECT_DIR)/page/DOMWindow+Compat.idl
-$(PROJECT_DIR)/page/DOMWindow+DeviceMotion.idl
-$(PROJECT_DIR)/page/DOMWindow+DeviceOrientation.idl
 $(PROJECT_DIR)/page/DOMWindow+RequestIdleCallback.idl
 $(PROJECT_DIR)/page/DOMWindow+Selection.idl
 $(PROJECT_DIR)/page/DOMWindow+VisualViewport.idl

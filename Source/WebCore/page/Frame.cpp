@@ -351,28 +351,6 @@ void Frame::invalidateContentEventRegionsIfNeeded(InvalidateContentEventRegionsR
         m_ownerElement->document().invalidateEventRegionsForFrame(*m_ownerElement);
 }
 
-#if ENABLE(ORIENTATION_EVENTS)
-void Frame::orientationChanged()
-{
-    Vector<Ref<Frame>> frames;
-    for (Frame* frame = this; frame; frame = frame->tree().traverseNext())
-        frames.append(*frame);
-
-    auto newOrientation = orientation();
-    for (auto& frame : frames) {
-        if (Document* document = frame->document())
-            document->orientationChanged(newOrientation);
-    }
-}
-
-int Frame::orientation() const
-{
-    if (m_page)
-        return m_page->chrome().client().deviceOrientation();
-    return 0;
-}
-#endif // ENABLE(ORIENTATION_EVENTS)
-
 static JSC::Yarr::RegularExpression createRegExpForLabels(const Vector<String>& labels)
 {
     // REVIEW- version of this call in FrameMac.mm caches based on the NSArray ptrs being

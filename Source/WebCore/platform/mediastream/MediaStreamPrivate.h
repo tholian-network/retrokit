@@ -49,7 +49,6 @@
 namespace WebCore {
 
 class MediaStream;
-class OrientationNotifier;
 
 class MediaStreamPrivate final
     : public MediaStreamTrackPrivate::Observer
@@ -101,8 +100,6 @@ public:
     bool muted() const;
 
     FloatSize intrinsicSize() const;
-
-    void monitorOrientation(OrientationNotifier&);
 
 #if !RELEASE_LOG_DISABLED
     const Logger& logger() const final { return m_logger; }

@@ -30,8 +30,6 @@
 #include "BackForwardController.h"
 #include "CachedPage.h"
 #include "DOMWindow.h"
-#include "DeviceMotionController.h"
-#include "DeviceOrientationController.h"
 #include "DiagnosticLoggingClient.h"
 #include "DiagnosticLoggingKeys.h"
 #include "Document.h"
@@ -209,18 +207,6 @@ static bool canCachePage(Page& page)
         logBackForwardCacheFailureDiagnosticMessage(diagnosticLoggingClient, DiagnosticLoggingKeys::isDisabledKey());
         isCacheable = false;
     }
-#if ENABLE(DEVICE_ORIENTATION) && !PLATFORM(IOS_FAMILY)
-    if (DeviceMotionController::isActiveAt(&page)) {
-        PCLOG("   -Page is using DeviceMotion");
-        logBackForwardCacheFailureDiagnosticMessage(diagnosticLoggingClient, DiagnosticLoggingKeys::deviceMotionKey());
-        isCacheable = false;
-    }
-    if (DeviceOrientationController::isActiveAt(&page)) {
-        PCLOG("   -Page is using DeviceOrientation");
-        logBackForwardCacheFailureDiagnosticMessage(diagnosticLoggingClient, DiagnosticLoggingKeys::deviceOrientationKey());
-        isCacheable = false;
-    }
-#endif
 
     FrameLoadType loadType = page.mainFrame().loader().loadType();
     switch (loadType) {

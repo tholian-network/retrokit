@@ -281,10 +281,6 @@
 #include <d3d11_1.h>
 #endif
 
-#if PLATFORM(IOS_FAMILY) && ENABLE(DEVICE_ORIENTATION)
-#include "WebDeviceOrientationUpdateProviderProxy.h"
-#endif
-
 #if ENABLE(DATA_DETECTION)
 #include "DataDetectionResult.h"
 #endif
@@ -1037,11 +1033,6 @@ void WebPageProxy::didAttachToRunningProcess()
 #if ENABLE(WEB_AUTHN)
     ASSERT(!m_credentialsMessenger);
     m_credentialsMessenger = makeUnique<WebAuthenticatorCoordinatorProxy>(*this);
-#endif
-
-#if PLATFORM(IOS_FAMILY) && ENABLE(DEVICE_ORIENTATION)
-    ASSERT(!m_webDeviceOrientationUpdateProviderProxy);
-    m_webDeviceOrientationUpdateProviderProxy = makeUnique<WebDeviceOrientationUpdateProviderProxy>(*this);
 #endif
 
 #if ENABLE(WEBXR) && !USE(OPENXR)
@@ -3444,17 +3435,6 @@ void WebPageProxy::receivedNavigationPolicyDecision(PolicyAction policyAction, A
             policies = API::WebsitePolicies::create();
         policies->setContentBlockersEnabled(false);
     }
-
-#if ENABLE(DEVICE_ORIENTATION)
-    if (navigation && (!policies || policies->deviceOrientationAndMotionAccessState() == WebCore::DeviceOrientationOrMotionPermissionState::Prompt)) {
-        auto deviceOrientationPermission = websiteDataStore->deviceOrientationAndMotionAccessController().cachedDeviceOrientationPermission(SecurityOriginData::fromURL(navigation->currentRequest().url()));
-        if (deviceOrientationPermission != WebCore::DeviceOrientationOrMotionPermissionState::Prompt) {
-            if (!policies)
-                policies = API::WebsitePolicies::create();
-            policies->setDeviceOrientationAndMotionAccessState(deviceOrientationPermission);
-        }
-    }
-#endif
 
 #if PLATFORM(COCOA)
     static const bool forceDownloadFromDownloadAttribute = false;
@@ -7880,10 +7860,6 @@ void WebPageProxy::resetState(ResetStateReason resetStateReason)
     m_credentialsMessenger = nullptr;
 #endif
 
-#if PLATFORM(IOS_FAMILY) && ENABLE(DEVICE_ORIENTATION)
-    m_webDeviceOrientationUpdateProviderProxy = nullptr;
-#endif
-
     for (auto& editCommand : std::exchange(m_editCommandSet, { }))
         editCommand->invalidate();
 
@@ -8181,7 +8157,6 @@ WebPageCreationParameters WebPageProxy::creationParameters(WebProcessProxy& proc
     parameters.textAutosizingWidth = textAutosizingWidth();
     parameters.mimeTypesWithCustomContentProviders = pageClient().mimeTypesWithCustomContentProviders();
     parameters.maximumUnobscuredSize = m_maximumUnobscuredSize;
-    parameters.deviceOrientation = m_deviceOrientation;
     parameters.keyboardIsAttached = isInHardwareKeyboardMode();
     parameters.canShowWhileLocked = m_configuration->canShowWhileLocked();
 #endif
@@ -8476,9 +8451,6 @@ void WebPageProxy::willStartCapture(const UserMediaPermissionRequestProxy& reque
     auto& gpuProcess = process().processPool().ensureGPUProcess();
     gpuProcess.updateCaptureAccess(request.requiresAudioCapture(), request.requiresVideoCapture(), request.requiresDisplayCapture(), m_process->coreProcessIdentifier(), WTFMove(callback));
     gpuProcess.updateCaptureOrigin(request.topLevelDocumentSecurityOrigin().data(), m_process->coreProcessIdentifier());
-#if PLATFORM(IOS_FAMILY)
-    gpuProcess.setOrientationForMediaCapture(m_deviceOrientation);
-#endif
 #else
     callback();
 #endif
@@ -8559,17 +8531,6 @@ void WebPageProxy::requestMediaKeySystemPermissionForFrame(MediaKeySystemRequest
     UNUSED_PARAM(keySystem);
 #endif
 }
-
-#if ENABLE(DEVICE_ORIENTATION)
-void WebPageProxy::shouldAllowDeviceOrientationAndMotionAccess(FrameIdentifier frameID, FrameInfoData&& frameInfo, bool mayPrompt, CompletionHandler<void(DeviceOrientationOrMotionPermissionState)>&& completionHandler)
-{
-    WebFrameProxy* frame = m_process->webFrame(frameID);
-    MESSAGE_CHECK(m_process, frame);
-
-    websiteDataStore().deviceOrientationAndMotionAccessController().shouldAllowAccess(*this, *frame, WTFMove(frameInfo), mayPrompt, WTFMove(completionHandler));
-}
-#endif
-
 
 #if ENABLE(IMAGE_ANALYSIS)
 
@@ -10330,11 +10291,6 @@ void WebPageProxy::willAcquireUniversalFileReadSandboxExtension(WebProcessProxy&
     process.willAcquireUniversalFileReadSandboxExtension();
 }
 
-void WebPageProxy::simulateDeviceOrientationChange(double alpha, double beta, double gamma)
-{
-    send(Messages::WebPage::SimulateDeviceOrientationChange(alpha, beta, gamma));
-}
-
 #if ENABLE(DATA_DETECTION)
 
 void WebPageProxy::detectDataInAllFrames(OptionSet<WebCore::DataDetectorType> types, CompletionHandler<void(const DataDetectionResult&)>&& completionHandler)
@@ -10629,18 +10585,6 @@ bool WebPageProxy::shouldForceForegroundPriorityForClientNavigation() const
 void WebPageProxy::getProcessDisplayName(CompletionHandler<void(String&&)>&& completionHandler)
 {
     sendWithAsyncReply(Messages::WebPage::GetProcessDisplayName(), WTFMove(completionHandler));
-}
-
-void WebPageProxy::setOrientationForMediaCapture(uint64_t orientation)
-{
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-    if (auto* proxy = m_process->userMediaCaptureManagerProxy())
-        proxy->setOrientation(orientation);
-
-    auto* gpuProcess = m_process->processPool().gpuProcess();
-    if (gpuProcess && preferences().captureVideoInGPUProcessEnabled())
-        gpuProcess->setOrientationForMediaCapture(orientation);
-#endif
 }
 
 #if ENABLE(RESOURCE_LOAD_STATISTICS)

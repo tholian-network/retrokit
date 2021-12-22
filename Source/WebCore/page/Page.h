@@ -71,10 +71,6 @@
 #include "MediaPlaybackTargetContext.h"
 #endif
 
-#if ENABLE(DEVICE_ORIENTATION) && PLATFORM(IOS_FAMILY)
-#include "DeviceOrientationUpdateProvider.h"
-#endif
-
 namespace JSC {
 class Debugger;
 }
@@ -837,10 +833,6 @@ public:
 
     WEBCORE_EXPORT Vector<Ref<Element>> editableElementsInRect(const FloatRect&) const;
 
-#if ENABLE(DEVICE_ORIENTATION) && PLATFORM(IOS_FAMILY)
-    DeviceOrientationUpdateProvider* deviceOrientationUpdateProvider() const { return m_deviceOrientationUpdateProvider.get(); }
-#endif
-
     WEBCORE_EXPORT void forEachDocument(const WTF::Function<void(Document&)>&) const;
     void forEachMediaElement(const WTF::Function<void(HTMLMediaElement&)>&);
 
@@ -1160,10 +1152,6 @@ private:
 #endif
 
     std::optional<ViewportArguments> m_overrideViewportArguments;
-
-#if ENABLE(DEVICE_ORIENTATION) && PLATFORM(IOS_FAMILY)
-    RefPtr<DeviceOrientationUpdateProvider> m_deviceOrientationUpdateProvider;
-#endif
 
 #if ENABLE(MEDIA_SESSION_COORDINATOR)
     RefPtr<MediaSessionCoordinatorPrivate> m_mediaSessionCoordinator;

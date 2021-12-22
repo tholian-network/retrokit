@@ -390,16 +390,6 @@
         "category": "html"
     },
     {
-        "name": "DeviceOrientation Events",
-        "status": {
-            "status": "Supported"
-        },
-        "description": "DOM events that provide information about the physical orientation and motion of a hosting device.",
-        "url": "https://w3c.github.io/deviceorientation/spec-source-orientation.html",
-        "keywords": ["device orientation", "devicemotion", "acceleration", "rotation"],
-        "comment": "compassHeading and compassAccuracy are only available on iOS devices"
-    },
-    {
         "name": "Encoding",
         "status": {
             "status": "Supported"

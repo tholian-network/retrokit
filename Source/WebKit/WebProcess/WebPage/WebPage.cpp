@@ -347,10 +347,6 @@
 #include <WebCore/AuthenticatorCoordinator.h>
 #endif
 
-#if PLATFORM(IOS_FAMILY) && ENABLE(DEVICE_ORIENTATION)
-#include "WebDeviceOrientationUpdateProvider.h"
-#endif
-
 #if ENABLE(GPU_PROCESS)
 #include "RemoteMediaPlayerManager.h"
 #if ENABLE(ENCRYPTED_MEDIA)
@@ -513,7 +509,6 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
     , m_screenSize(parameters.screenSize)
     , m_availableScreenSize(parameters.availableScreenSize)
     , m_overrideScreenSize(parameters.overrideScreenSize)
-    , m_deviceOrientation(parameters.deviceOrientation)
     , m_keyboardIsAttached(parameters.keyboardIsAttached)
     , m_canShowWhileLocked(parameters.canShowWhileLocked)
 #endif
@@ -603,10 +598,7 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
 #if ENABLE(APPLICATION_MANIFEST)
     pageConfiguration.applicationManifest = parameters.applicationManifest;
 #endif
-    
-#if PLATFORM(IOS_FAMILY) && ENABLE(DEVICE_ORIENTATION)
-    pageConfiguration.deviceOrientationUpdateProvider = WebDeviceOrientationUpdateProvider::create(*this);
-#endif
+
 
     m_corsDisablingPatterns = WTFMove(parameters.corsDisablingPatterns);
     if (!m_corsDisablingPatterns.isEmpty())
@@ -7047,13 +7039,6 @@ void WebPage::clearLoadedSubresourceDomains()
 
 #endif
 
-#if ENABLE(DEVICE_ORIENTATION)
-void WebPage::shouldAllowDeviceOrientationAndMotionAccess(FrameIdentifier frameID, FrameInfoData&& frameInfo, bool mayPrompt, CompletionHandler<void(DeviceOrientationOrMotionPermissionState)>&& completionHandler)
-{
-    sendWithAsyncReply(Messages::WebPageProxy::ShouldAllowDeviceOrientationAndMotionAccess(frameID, WTFMove(frameInfo), mayPrompt), WTFMove(completionHandler));
-}
-#endif
-    
 void WebPage::showShareSheet(ShareDataWithParsedURL& shareData, WTF::CompletionHandler<void(bool)>&& callback)
 {
     sendWithAsyncReply(Messages::WebPageProxy::ShowShareSheet(WTFMove(shareData)), WTFMove(callback));
@@ -7076,17 +7061,6 @@ WebCore::DOMPasteAccessResponse WebPage::requestDOMPasteAccess(const String& ori
 #endif
     sendSyncWithDelayedReply(Messages::WebPageProxy::RequestDOMPasteAccess(rectForElementAtInteractionLocation(), originIdentifier), Messages::WebPageProxy::RequestDOMPasteAccess::Reply(response));
     return response;
-}
-
-void WebPage::simulateDeviceOrientationChange(double alpha, double beta, double gamma)
-{
-#if ENABLE(DEVICE_ORIENTATION) && PLATFORM(IOS_FAMILY)
-    auto* frame = mainFrame();
-    if (!frame || !frame->document())
-        return;
-
-    frame->document()->simulateDeviceOrientationChange(alpha, beta, gamma);
-#endif
 }
 
 #if USE(SYSTEM_PREVIEW)

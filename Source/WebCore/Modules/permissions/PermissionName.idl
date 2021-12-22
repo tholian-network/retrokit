@@ -27,12 +27,9 @@
 
 enum PermissionName {
     // FIXME: update the list to match spec when new features are implemented.
-    "accelerometer",
     "background-fetch",
     "camera",
     "display-capture",
-    "gyroscope",
-    "magnetometer",
     "microphone",
     "midi",
     "nfc",

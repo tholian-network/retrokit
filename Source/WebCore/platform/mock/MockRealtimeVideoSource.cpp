@@ -163,10 +163,6 @@ const RealtimeMediaSourceSettings& MockRealtimeVideoSource::settings()
     }
     settings.setFrameRate(frameRate());
     auto size = this->size();
-    if (mockCamera()) {
-        if (m_deviceOrientation == MediaSample::VideoRotation::Left || m_deviceOrientation == MediaSample::VideoRotation::Right)
-            size = size.transposedSize();
-    }
     settings.setWidth(size.width());
     settings.setHeight(size.height());
     if (aspectRatio())
@@ -474,41 +470,6 @@ bool MockRealtimeVideoSource::mockDisplayType(CaptureDevice::DeviceType type) co
         return false;
 
     return WTF::get<MockDisplayProperties>(m_device.properties).type == type;
-}
-
-void MockRealtimeVideoSource::orientationChanged(int orientation)
-{
-    auto deviceOrientation = m_deviceOrientation;
-    switch (orientation) {
-    case 0:
-        m_deviceOrientation = MediaSample::VideoRotation::None;
-        break;
-    case 90:
-        m_deviceOrientation = MediaSample::VideoRotation::Right;
-        break;
-    case -90:
-        m_deviceOrientation = MediaSample::VideoRotation::Left;
-        break;
-    case 180:
-        m_deviceOrientation = MediaSample::VideoRotation::UpsideDown;
-        break;
-    default:
-        return;
-    }
-
-    if (deviceOrientation == m_deviceOrientation)
-        return;
-
-    notifySettingsDidChangeObservers({ RealtimeMediaSourceSettings::Flag::Width, RealtimeMediaSourceSettings::Flag::Height });
-}
-
-void MockRealtimeVideoSource::monitorOrientation(OrientationNotifier& notifier)
-{
-    if (!mockCamera())
-        return;
-
-    notifier.addObserver(*this);
-    orientationChanged(notifier.orientation());
 }
 
 } // namespace WebCore

@@ -799,16 +799,6 @@ WI.NativePrototypeFunctionParameters = {
         __proto__: null,
     },
 
-    DeviceMotionEvent: {
-        initDeviceMotionEvent: "[type], [bubbles], [cancelable], [acceleration], [accelerationIncludingGravity], [rotationRate], [interval]",
-        __proto__: null,
-    },
-
-    DeviceOrientationEvent: {
-        initDeviceOrientationEvent: "[type], [bubbles], [cancelable], [alpha], [beta], [gamma], [absolute]",
-        __proto__: null,
-    },
-
     DocumentFragment: {
         getElementById: "id",
         querySelector: "selectors",
