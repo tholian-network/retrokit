@@ -632,7 +632,6 @@ enum class Scheme {
     WS,
     WSS,
     File,
-    FTP,
     HTTP,
     HTTPS,
     NonSpecial
@@ -646,11 +645,6 @@ ALWAYS_INLINE static Scheme scheme(StringView scheme)
     switch (scheme[0]) {
     case 'f':
         switch (length) {
-        case 3:
-            if (scheme[1] == 't'
-                && scheme[2] == 'p')
-                return Scheme::FTP;
-            return Scheme::NonSpecial;
         case 4:
             if (scheme[1] == 'i'
                 && scheme[2] == 'l'
@@ -822,7 +816,6 @@ void URLParser::copyURLPartsUntil(const URL& base, URLPart part, const CodePoint
     case Scheme::File:
         m_urlIsFile = true;
         FALLTHROUGH;
-    case Scheme::FTP:
     case Scheme::HTTP:
     case Scheme::HTTPS:
         m_urlIsSpecial = true;
@@ -1211,14 +1204,6 @@ void URLParser::parse(const CharacterType* input, const unsigned length, const U
                 case Scheme::HTTPS:
                     m_url.m_protocolIsInHTTPFamily = true;
                     FALLTHROUGH;
-                case Scheme::FTP:
-                    m_urlIsSpecial = true;
-                    if (base.protocolIs(urlScheme))
-                        state = State::SpecialRelativeOrAuthority;
-                    else
-                        state = State::SpecialAuthoritySlashes;
-                    ++c;
-                    break;
                 case Scheme::NonSpecial:
                     nonUTF8QueryEncoding = nullptr;
                     auto maybeSlash = c;

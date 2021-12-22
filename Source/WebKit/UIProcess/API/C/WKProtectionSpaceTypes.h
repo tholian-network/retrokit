@@ -35,11 +35,8 @@ extern "C" {
 enum {
     kWKProtectionSpaceServerTypeHTTP = 1,
     kWKProtectionSpaceServerTypeHTTPS,
-    kWKProtectionSpaceServerTypeFTP,
-    kWKProtectionSpaceServerTypeFTPS,
     kWKProtectionSpaceProxyTypeHTTP,
     kWKProtectionSpaceProxyTypeHTTPS,
-    kWKProtectionSpaceProxyTypeFTP,
     kWKProtectionSpaceProxyTypeSOCKS,
 };
 typedef uint32_t WKProtectionSpaceServerType;

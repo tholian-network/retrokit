@@ -28,12 +28,14 @@ removed from the codebase, there's no way they can be exploited or bypassed.
 - [x] Gravity Sensor API
 - [x] Gyroscope Sensor API
 - [x] Magnetometer Sensor API
+- [x] FTP Directory Support (`FTPDIR`, `FTPDirectory*`, `unknownFileSizeText`)
 
 # Removed CSS APIs
 
 (TBD)
 
 # Planned Removals
+
 
 - [ ] Device Pixel Ratio API
 - [ ] Page Visibility API
@@ -70,7 +72,6 @@ removed from the codebase, there's no way they can be exploited or bypassed.
 - [ ] CSS Pointer Events API
 - [ ] CSS Filters API (`FILTERS_LEVEL_2`)
 
-- [ ] FTP Directory Support (`FTPDIR`)
 
 # Planned Removal of Compiler Flags
 

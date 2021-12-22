@@ -29,7 +29,6 @@
 #include "ContentType.h"
 #include "DocumentType.h"
 #include "Element.h"
-#include "FTPDirectoryDocument.h"
 #include "Frame.h"
 #include "FrameLoader.h"
 #include "FrameLoaderClient.h"
@@ -160,11 +159,6 @@ Ref<Document> DOMImplementation::createDocument(const String& contentType, Frame
     parameters.url = url;
     if (MediaPlayer::supportsType(parameters) != MediaPlayer::SupportsType::IsNotSupported)
         return MediaDocument::create(frame, settings, url);
-#endif
-
-#if ENABLE(FTPDIR)
-    if (equalLettersIgnoringASCIICase(contentType, "application/x-ftp-directory"))
-        return FTPDirectoryDocument::create(frame, settings, url);
 #endif
 
     if (frame && frame->loader().client().shouldAlwaysUsePluginDocument(contentType))

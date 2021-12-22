@@ -77,7 +77,6 @@ bool ProtectionSpaceBase::isProxy() const
 {
     return (m_serverType == ProtectionSpaceProxyHTTP ||
             m_serverType == ProtectionSpaceProxyHTTPS ||
-            m_serverType == ProtectionSpaceProxyFTP ||
             m_serverType == ProtectionSpaceProxySOCKS);
 }
 
@@ -94,9 +93,8 @@ ProtectionSpaceAuthenticationScheme ProtectionSpaceBase::authenticationScheme() 
 bool ProtectionSpaceBase::receivesCredentialSecurely() const
 {
     return (m_serverType == ProtectionSpaceServerHTTPS ||
-            m_serverType == ProtectionSpaceServerFTPS || 
-            m_serverType == ProtectionSpaceProxyHTTPS || 
-            m_authenticationScheme == ProtectionSpaceAuthenticationSchemeHTTPDigest); 
+            m_serverType == ProtectionSpaceProxyHTTPS ||
+            m_authenticationScheme == ProtectionSpaceAuthenticationSchemeHTTPDigest);
 }
 
 bool ProtectionSpaceBase::isPasswordBased() const

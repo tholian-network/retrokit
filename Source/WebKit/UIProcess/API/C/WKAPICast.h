@@ -291,16 +291,10 @@ inline WKProtectionSpaceServerType toAPI(WebCore::ProtectionSpaceServerType type
         return kWKProtectionSpaceServerTypeHTTP;
     case WebCore::ProtectionSpaceServerHTTPS:
         return kWKProtectionSpaceServerTypeHTTPS;
-    case WebCore::ProtectionSpaceServerFTP:
-        return kWKProtectionSpaceServerTypeFTP;
-    case WebCore::ProtectionSpaceServerFTPS:
-        return kWKProtectionSpaceServerTypeFTPS;
     case WebCore::ProtectionSpaceProxyHTTP:
         return kWKProtectionSpaceProxyTypeHTTP;
     case WebCore::ProtectionSpaceProxyHTTPS:
         return kWKProtectionSpaceProxyTypeHTTPS;
-    case WebCore::ProtectionSpaceProxyFTP:
-        return kWKProtectionSpaceProxyTypeFTP;
     case WebCore::ProtectionSpaceProxySOCKS:
         return kWKProtectionSpaceProxyTypeSOCKS;
     }

@@ -1044,7 +1044,6 @@ html/DateTimeLocalInputType.cpp
 html/DirectoryFileListCreator.cpp
 html/EmailInputType.cpp
 html/EnterKeyHint.cpp
-html/FTPDirectoryDocument.cpp
 html/FeaturePolicy.cpp
 html/FileInputType.cpp
 html/FormAssociatedElement.cpp
@@ -1464,7 +1463,6 @@ loader/DocumentLoader.cpp
 loader/DocumentThreadableLoader.cpp
 loader/DocumentWriter.cpp
 loader/EmptyClients.cpp
-loader/FTPDirectoryParser.cpp
 loader/FetchIdioms.cpp
 loader/FormState.cpp
 loader/FormSubmission.cpp

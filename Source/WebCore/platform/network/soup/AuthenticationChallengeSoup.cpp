@@ -41,8 +41,6 @@ static ProtectionSpaceServerType protectionSpaceServerTypeFromURL(const URL& url
         return isForProxy ? ProtectionSpaceProxyHTTPS : ProtectionSpaceServerHTTPS;
     if (url.protocolIs("http"))
         return isForProxy ? ProtectionSpaceProxyHTTP : ProtectionSpaceServerHTTP;
-    if (url.protocolIs("ftp"))
-        return isForProxy ? ProtectionSpaceProxyFTP : ProtectionSpaceServerFTP;
     return isForProxy ? ProtectionSpaceProxyHTTP : ProtectionSpaceServerHTTP;
 }
 

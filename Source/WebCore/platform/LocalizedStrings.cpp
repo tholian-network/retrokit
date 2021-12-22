@@ -755,11 +755,6 @@ String multipleFileUploadText(unsigned numberOfFiles)
     return formatLocalizedString(WEB_UI_STRING("%d files", "Label to describe the number of files selected in a file upload control that allows multiple files"), numberOfFiles);
 }
 
-String unknownFileSizeText()
-{
-    return WEB_UI_STRING_KEY("Unknown", "Unknown (filesize)", "Unknown filesize FTP directory listing item");
-}
-
 String imageTitle(const String& filename, const IntSize& size)
 {
 #if USE(CF)

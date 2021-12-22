@@ -720,16 +720,6 @@ ExtensibleSSOEnabled:
     WebKit:
       default: true
 
-FTPDirectoryTemplatePath:
-  type: String
-  defaultValue:
-    WebKitLegacy:
-      default: '""'
-    WebKit:
-      default: '""'
-    WebCore:
-      default: '""'
-
 FantasyFontFamily:
   type: String
   webKitLegacyPreferenceKey: WebKitFantasyFont
@@ -762,16 +752,6 @@ ForceCompositingMode:
   exposed: [ WebKit ]
   defaultValue:
     WebKit:
-      default: false
-
-ForceFTPDirectoryListings:
-  type: bool
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      default: false
-    WebCore:
       default: false
 
 ForceWebGLUsesLowPower:

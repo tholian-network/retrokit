@@ -117,12 +117,6 @@ HashSet<SecurityOriginData> CredentialStorage::originsWithCredentials() const
         case ProtectionSpaceServerHTTPS:
             protocol = "https"_s;
             break;
-        case ProtectionSpaceServerFTP:
-            protocol = "ftp"_s;
-            break;
-        case ProtectionSpaceServerFTPS:
-            protocol = "ftps"_s;
-            break;
         default:
             ASSERT_NOT_REACHED();
             continue;

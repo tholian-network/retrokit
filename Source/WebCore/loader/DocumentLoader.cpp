@@ -1037,14 +1037,6 @@ void DocumentLoader::responseReceived(const ResourceResponse& response, Completi
         return;
     }
 
-#if ENABLE(FTPDIR)
-    // Respect the hidden FTP Directory Listing pref so it can be tested even if the policy delegate might otherwise disallow it
-    if (m_frame->settings().forceFTPDirectoryListings() && m_response.mimeType() == "application/x-ftp-directory") {
-        continueAfterContentPolicy(PolicyAction::Use);
-        return;
-    }
-#endif
-
     if (!doCrossOriginOpenerHandlingOfResponse(response))
         return;
 

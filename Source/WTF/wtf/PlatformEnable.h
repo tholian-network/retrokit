@@ -261,10 +261,6 @@
 #define ENABLE_FILTERS_LEVEL_2 0
 #endif
 
-#if !defined(ENABLE_FTPDIR)
-#define ENABLE_FTPDIR 1
-#endif
-
 #if !defined(ENABLE_FULLSCREEN_API)
 #define ENABLE_FULLSCREEN_API 0
 #endif

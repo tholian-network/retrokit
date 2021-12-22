@@ -356,13 +356,6 @@ WebKitSecurityOrigin* webkit_authentication_request_get_security_origin(WebKitAu
     case ProtectionSpaceProxyHTTPS:
         protocol = "https"_s;
         break;
-    case ProtectionSpaceServerFTP:
-    case ProtectionSpaceProxyFTP:
-        protocol = "ftp"_s;
-        break;
-    case ProtectionSpaceServerFTPS:
-        protocol = "ftps"_s;
-        break;
     case ProtectionSpaceProxySOCKS:
         protocol = "socks"_s;
         break;

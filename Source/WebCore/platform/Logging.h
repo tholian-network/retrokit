@@ -61,7 +61,6 @@ namespace WebCore {
     M(Filters) \
     M(Fonts) \
     M(Frames) \
-    M(FTP) \
     M(Fullscreen) \
     M(HID) \
     M(History) \

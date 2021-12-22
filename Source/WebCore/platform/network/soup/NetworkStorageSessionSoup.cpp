@@ -97,10 +97,6 @@ static const char* schemeFromProtectionSpaceServerType(ProtectionSpaceServerType
     case ProtectionSpaceServerHTTPS:
     case ProtectionSpaceProxyHTTPS:
         return "https";
-    case ProtectionSpaceServerFTP:
-    case ProtectionSpaceProxyFTP:
-        return "ftp";
-    case ProtectionSpaceServerFTPS:
     case ProtectionSpaceProxySOCKS:
         break;
     }

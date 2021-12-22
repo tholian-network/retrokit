@@ -130,7 +130,7 @@ class Setting
       name[0..1].downcase + name[2..name.length]
     elsif name.start_with?("CSSOM", "HTTPS")
       name
-    elsif name.start_with?("CSS", "XSS", "FTP", "DOM", "DNS", "PDF", "ICE", "HDR")
+    elsif name.start_with?("CSS", "XSS", "DOM", "DNS", "PDF", "ICE", "HDR")
       name[0..2].downcase + name[3..name.length]
     elsif name.start_with?("HTTP", "HTML")
       name[0..3].downcase + name[4..name.length]

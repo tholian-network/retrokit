@@ -225,7 +225,6 @@ namespace WebCore {
     WEBCORE_EXPORT String pluginTooSmallText();
 
     WEBCORE_EXPORT String multipleFileUploadText(unsigned numberOfFiles);
-    String unknownFileSizeText();
 
 #if PLATFORM(WIN)
     String uploadFileText();

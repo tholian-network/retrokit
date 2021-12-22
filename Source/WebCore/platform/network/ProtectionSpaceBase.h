@@ -35,11 +35,8 @@ class ProtectionSpace;
 enum ProtectionSpaceServerType {
     ProtectionSpaceServerHTTP = 1,
     ProtectionSpaceServerHTTPS = 2,
-    ProtectionSpaceServerFTP = 3,
-    ProtectionSpaceServerFTPS = 4,
     ProtectionSpaceProxyHTTP = 5,
     ProtectionSpaceProxyHTTPS = 6,
-    ProtectionSpaceProxyFTP = 7,
     ProtectionSpaceProxySOCKS = 8
 };
 
@@ -124,11 +121,8 @@ template<> struct EnumTraits<WebCore::ProtectionSpaceServerType> {
         WebCore::ProtectionSpaceServerType,
         WebCore::ProtectionSpaceServerType::ProtectionSpaceServerHTTP,
         WebCore::ProtectionSpaceServerType::ProtectionSpaceServerHTTPS,
-        WebCore::ProtectionSpaceServerType::ProtectionSpaceServerFTP,
-        WebCore::ProtectionSpaceServerType::ProtectionSpaceServerFTPS,
         WebCore::ProtectionSpaceServerType::ProtectionSpaceProxyHTTP,
         WebCore::ProtectionSpaceServerType::ProtectionSpaceProxyHTTPS,
-        WebCore::ProtectionSpaceServerType::ProtectionSpaceProxyFTP,
         WebCore::ProtectionSpaceServerType::ProtectionSpaceProxySOCKS
     >;
 };
