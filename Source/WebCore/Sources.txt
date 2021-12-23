@@ -2661,7 +2661,6 @@ JSAbortController.cpp
 JSAbortSignal.cpp
 JSAbstractRange.cpp
 JSAbstractWorker.cpp
-JSAddressErrors.cpp
 JSAddEventListenerOptions.cpp
 JSAesCbcCfbParams.cpp
 JSAesCtrParams.cpp
@@ -3205,9 +3204,6 @@ JSPictureInPictureWindow.cpp
 JSPlaybackDirection.cpp
 JSPointerEvent.cpp
 JSPopStateEvent.cpp
-JSPositionCallback.cpp
-JSPositionErrorCallback.cpp
-JSPositionOptions.cpp
 JSPredefinedColorSpace.cpp
 JSProcessingInstruction.cpp
 JSProgressEvent.cpp
