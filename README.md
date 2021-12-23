@@ -13,7 +13,21 @@ As the APIs and their bindings/interfaces/native adapters are completely
 removed from the codebase, there's no way they can be exploited or bypassed.
 
 
-# Removed Web/ECMAScript APIs
+# Removed APIs
+
+These APIs have been removed, as they require either a proprietary service
+that is known to track you; or because they've been used in the past by libraries
+like fingerprint.js to track/identify you as a unique user.
+
+As fingerprinting libraries usually tries to identify hardware specifications,
+all Web APIs that expose the local hardware or network setup are removed as well.
+
+Some APIs are removed because they break User Experience in an annoying way
+for the end-user, and are regularly abused in order to block user interaction
+or in order to make the current website content interaction useless.
+
+
+# Removed ECMAScript APIs
 
 - [x] Apple Pay API (`APPLE_PAY`, `ApplePay*`)
 - [x] Bluetooth API
@@ -29,48 +43,49 @@ removed from the codebase, there's no way they can be exploited or bypassed.
 - [x] Gyroscope Sensor API
 - [x] Magnetometer Sensor API
 - [x] FTP Directory Support (`FTPDIR`, `FTPDirectory*`, `unknownFileSizeText`)
-
-# Removed CSS APIs
-
-(TBD)
-
-# Planned Removals
-
-
-- [ ] Device Pixel Ratio API
-- [ ] Page Visibility API
-- [ ] Pointer Events API
-- [ ] OrientationSensor API
-- [ ] Camera API
-- [ ] Microphone API
-- [ ] Pointer Lock API
-- [ ] Display Capture API
-- [ ] Media Capture API
-- [ ] Web Authn API
-- [ ] WebASM API
-- [ ] WebGL API
-- [ ] Web GPU API
-- [ ] Web Midi API
 - [ ] Web NFC API
-- [ ] Web Notifications API
-- [ ] Web VR API
-- [ ] Web XR API
-- [ ] Canvas API
-- [ ] WebRTC API
-- [ ] Web Fonts
-- [ ] History API
-- [ ] LocalStorage/SessionStorage API
-- [ ] Web SQLite Database API
-- [ ] Web Notifications API
 - [ ] Web Performance API
+- [ ] Web RTC API
+- [ ] Encrypted Media Support
+- [ ] Playstation Support
+- [ ] Web Storage API
+- [ ] Indexed Database API
+- [ ] Canvas API (`OFFSCREEN_CANVAS`, `Canvas*`, `DOMConvertWebGL`, `JSANGLEInstancedArray`, `CanvasActivityRecord`)
+- [ ] WebGL API (`WEBGL`, `WebGL*`, `JSANGLEInstancedArray`, `GraphicsContextGL*`, `HighPerformanceGraphicsUsageSampler`)
+- [ ] WebXR API (`WEBXR`, `WebXR*`, `XR*`)
+- [ ] GPU Process for WebGL (`GPU_PROCESS`)
+- [ ] WebGL via Metal (`WEBGL_COMPATIBLE_METAL`)
+- [ ] WebGPU API
+- [ ] Media Capture API
+- [ ] Screen Capture API (`getDisplayMedia`)
+- [ ] Media Stream API (`getUserMedia`)
+- [ ] Netscape Plugin Support
+- [ ] Page Visibility API
+- [ ] Pointer Lock API
+- [ ] Web Notifications API
+- [ ] Window Alert Method (`window.alert()`)
+- [ ] Window History Interface (`window.history`)
+- [ ] Window Popups (`window.open()`)
+- [ ] WASM / WebASM Support
+
+# Removed CSS Features
+
+- [ ] CSS Filters
+- [ ] CSS Pointer Events
+- [ ] Enforce CSS Web Fonts Caching
+- [ ] Device Pixel Ratio
+- [ ] Disallow `overflow:hidden`
+
+# Undecided
+
+These features are undecided whether they are useful or not, and
+while they aren't known to be used as a tracking mechanism right
+now they could be potentially be abused for fingerprinting in
+the future.
+
+- [ ] Web Midi API
 - [ ] Web Workers API
 - [ ] Service Worker API
-- [ ] Window Popup API
-- [ ] Window Alert API
-- [ ] Speaker Selection API
-
-- [ ] CSS Pointer Events API
-- [ ] CSS Filters API (`FILTERS_LEVEL_2`)
 
 
 # Planned Removal of Compiler Flags
