@@ -95,11 +95,6 @@
 #include <wtf/PlatformEnableWinCairo.h>
 #endif
 
-/* --------- PlayStation port --------- */
-#if PLATFORM(PLAYSTATION)
-#include <wtf/PlatformEnablePlayStation.h>
-#endif
-
 /* ---------  ENABLE macro defaults --------- */
 
 /* Do not use PLATFORM() tests in this section ! */
@@ -835,7 +830,7 @@
 #define ENABLE_INLINE_PATH_DATA 1
 #endif
 
-#if ((PLATFORM(COCOA) || PLATFORM(PLAYSTATION) || PLATFORM(WPE)) && ENABLE(ASYNC_SCROLLING)) || PLATFORM(GTK)
+#if ((PLATFORM(COCOA) || PLATFORM(WPE)) && ENABLE(ASYNC_SCROLLING)) || PLATFORM(GTK)
 #define ENABLE_KINETIC_SCROLLING 1
 #endif
 

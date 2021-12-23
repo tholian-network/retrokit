@@ -221,11 +221,6 @@ void NetworkStorageSession::grantCrossPageStorageAccess(const TopFrameDomain& to
     m_pairsGrantedCrossPageStorageAccess.ensure(topFrameDomain, [] { return HashSet<RegistrableDomain> { };
         }).iterator->value.add(resourceDomain);
 
-    // Some sites have quirks where multiple login domains require storage access.
-    if (auto additionalLoginDomain = findAdditionalLoginDomain(topFrameDomain, resourceDomain)) {
-        m_pairsGrantedCrossPageStorageAccess.ensure(topFrameDomain, [] { return HashSet<RegistrableDomain> { };
-            }).iterator->value.add(*additionalLoginDomain);
-    }
 }
 
 bool NetworkStorageSession::hasStorageAccess(const RegistrableDomain& resourceDomain, const RegistrableDomain& firstPartyDomain, std::optional<FrameIdentifier> frameID, PageIdentifier pageID) const
@@ -264,13 +259,9 @@ Vector<String> NetworkStorageSession::getAllStorageAccessEntries() const
     }
     return entries;
 }
-    
+
 void NetworkStorageSession::grantStorageAccess(const RegistrableDomain& resourceDomain, const RegistrableDomain& firstPartyDomain, std::optional<FrameIdentifier> frameID, PageIdentifier pageID)
 {
-    if (NetworkStorageSession::loginDomainMatchesRequestingDomain(firstPartyDomain, resourceDomain)) {
-        grantCrossPageStorageAccess(firstPartyDomain, resourceDomain);
-        return;
-    }
 
     if (!frameID) {
         if (firstPartyDomain.isEmpty())
@@ -379,54 +370,6 @@ std::optional<Seconds> NetworkStorageSession::clientSideCookieCap(const Registra
         return m_ageCapForClientSideCookiesShort;
 
     return m_ageCapForClientSideCookies;
-}
-
-const HashMap<RegistrableDomain, HashSet<RegistrableDomain>>& NetworkStorageSession::storageAccessQuirks()
-{
-    static NeverDestroyed<HashMap<RegistrableDomain, HashSet<RegistrableDomain>>> map = [] {
-        HashMap<RegistrableDomain, HashSet<RegistrableDomain>> map;
-        map.add(RegistrableDomain::uncheckedCreateFromRegistrableDomainString("microsoft.com"),
-            HashSet { RegistrableDomain::uncheckedCreateFromRegistrableDomainString("microsoftonline.com"_s) });
-        map.add(RegistrableDomain::uncheckedCreateFromRegistrableDomainString("live.com"),
-            HashSet { RegistrableDomain::uncheckedCreateFromRegistrableDomainString("skype.com"_s) });
-        map.add(RegistrableDomain::uncheckedCreateFromRegistrableDomainString("playstation.com"), HashSet {
-            RegistrableDomain::uncheckedCreateFromRegistrableDomainString("sonyentertainmentnetwork.com"_s),
-            RegistrableDomain::uncheckedCreateFromRegistrableDomainString("sony.com"_s) });
-        map.add(RegistrableDomain::uncheckedCreateFromRegistrableDomainString("bbc.co.uk"), HashSet {
-            RegistrableDomain::uncheckedCreateFromRegistrableDomainString("radioplayer.co.uk"_s) });
-        return map;
-    }();
-    return map.get();
-}
-
-bool NetworkStorageSession::loginDomainMatchesRequestingDomain(const TopFrameDomain& topFrameDomain, const SubResourceDomain& resourceDomain)
-{
-    auto loginDomains = WebCore::NetworkStorageSession::subResourceDomainsInNeedOfStorageAccessForFirstParty(topFrameDomain);
-    return loginDomains && loginDomains.value().contains(resourceDomain);
-}
-
-bool NetworkStorageSession::canRequestStorageAccessForLoginOrCompatibilityPurposesWithoutPriorUserInteraction(const SubResourceDomain& resourceDomain, const TopFrameDomain& topFrameDomain)
-{
-    return loginDomainMatchesRequestingDomain(topFrameDomain, resourceDomain);
-}
-
-std::optional<HashSet<RegistrableDomain>> NetworkStorageSession::subResourceDomainsInNeedOfStorageAccessForFirstParty(const RegistrableDomain& topFrameDomain)
-{
-    auto it = storageAccessQuirks().find(topFrameDomain);
-    if (it != storageAccessQuirks().end())
-        return it->value;
-    return std::nullopt;
-}
-
-std::optional<RegistrableDomain> NetworkStorageSession::findAdditionalLoginDomain(const TopFrameDomain& topDomain, const SubResourceDomain& subDomain)
-{
-    if (subDomain.string() == "sony.com"_s && topDomain.string() == "playstation.com"_s)
-        return RegistrableDomain::uncheckedCreateFromRegistrableDomainString("sonyentertainmentnetwork.com"_s);
-
-    if (subDomain.string() == "sonyentertainmentnetwork.com"_s && topDomain.string() == "playstation.com"_s)
-        return RegistrableDomain::uncheckedCreateFromRegistrableDomainString("sony.com"_s);
-
-    return std::nullopt;
 }
 
 #endif // ENABLE(RESOURCE_LOAD_STATISTICS)

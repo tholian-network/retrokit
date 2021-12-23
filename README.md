@@ -26,9 +26,15 @@ Some APIs are removed because they break User Experience in an annoying way
 for the end-user, and are regularly abused in order to block user interaction
 or in order to make the current website content interaction useless.
 
+# Removed Target Platforms
+
+- [x] Playstation Platform Support (`__SCE__`, `PLATFORM_PLAYSTATION`, `BPLATFORM_PLAYSTATION`, `PlayStation`, `playstation`, `sony`)
+- [ ] Apple Watch Platform Support (`TARGET_OS_WATCH`, `BOS_WATCHOS`, `BPLATFORM_WATCHOS`)
+- [ ] Apple TV Platform Support (`TARGET_OS_TV`, `BOS_APPLETV`, `BPLATFORM_APPLETV`)
 
 # Removed ECMAScript APIs
 
+- [x] Hardcoded Quirks and Hacks (`bbc.co.uk`, `microsoft.com`, `playstation.com`, `sony.com`, `sonyentertainment.com`)
 - [x] Apple Pay API (`APPLE_PAY`, `ApplePay*`)
 - [x] Bluetooth API
 - [x] Gamepad API
@@ -47,7 +53,6 @@ or in order to make the current website content interaction useless.
 - [ ] Web Performance API
 - [ ] Web RTC API
 - [ ] Encrypted Media Support
-- [ ] Playstation Support
 - [ ] Web Storage API
 - [ ] Indexed Database API
 - [ ] Canvas API (`OFFSCREEN_CANVAS`, `Canvas*`, `DOMConvertWebGL`, `JSANGLEInstancedArray`, `CanvasActivityRecord`)

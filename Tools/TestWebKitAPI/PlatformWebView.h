@@ -60,9 +60,6 @@ typedef WPEToolingBackends::HeadlessViewBackend *PlatformWindow;
 #elif PLATFORM(WIN)
 typedef WKViewRef PlatformWKView;
 typedef HWND PlatformWindow;
-#elif PLATFORM(PLAYSTATION)
-typedef WKViewRef PlatformWKView;
-typedef void* PlatformWindow;
 #endif
 typedef uint32_t WKEventModifiers;
 
@@ -89,7 +86,7 @@ public:
     void simulateAltKeyPress();
     void simulateRightClick(unsigned x, unsigned y);
     void simulateMouseMove(unsigned x, unsigned y, WKEventModifiers = 0);
-#if PLATFORM(MAC) || PLATFORM(PLAYSTATION)
+#if PLATFORM(MAC)
     void simulateButtonClick(WKEventMouseButton, unsigned x, unsigned y, WKEventModifiers);
 #endif
 

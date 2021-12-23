@@ -521,8 +521,4 @@ inline WKWebGLLoadPolicy toAPI(WebCore::WebGLLoadPolicy webGLLoadPolicy)
 #include "WKAPICastWin.h"
 #endif
 
-#if defined(__SCE__)
-#include "WKAPICastPlayStation.h"
-#endif
-
 #endif // WKAPICast_h

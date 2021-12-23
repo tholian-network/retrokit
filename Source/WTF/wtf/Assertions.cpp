@@ -311,7 +311,7 @@ void WTFPrintBacktrace(void** stack, int size)
     WTFPrintBacktraceWithPrefix(stack, size, "");
 }
 
-#if !defined(NDEBUG) || !(OS(DARWIN) || PLATFORM(PLAYSTATION))
+#if !defined(NDEBUG) || !(OS(DARWIN))
 void WTFCrash()
 {
     WTFReportBacktrace();
@@ -335,7 +335,7 @@ void WTFCrash()
 {
     CRASH();
 }
-#endif // !defined(NDEBUG) || !(OS(DARWIN) || PLATFORM(PLAYSTATION))
+#endif // !defined(NDEBUG) || !(OS(DARWIN))
 
 void WTFCrashWithSecurityImplication()
 {
@@ -618,7 +618,7 @@ void WTFReleaseLogStackTrace(WTFLogChannel* channel)
 
 } // extern "C"
 
-#if (OS(DARWIN) || PLATFORM(PLAYSTATION)) && (CPU(X86_64) || CPU(ARM64))
+#if OS(DARWIN) && (CPU(X86_64) || CPU(ARM64))
 #if CPU(X86_64)
 
 #define CRASH_INST "int3"
@@ -729,7 +729,7 @@ void WTFCrashWithInfoImpl(int, const char*, const char*, int, uint64_t, uint64_t
 void WTFCrashWithInfoImpl(int, const char*, const char*, int, uint64_t, uint64_t) { CRASH(); }
 void WTFCrashWithInfoImpl(int, const char*, const char*, int, uint64_t) { CRASH(); }
 
-#endif // (OS(DARWIN) || PLATFORM(PLAYSTATION)) && (CPU(X64_64) || CPU(ARM64))
+#endif // OS(DARWIN) && (CPU(X64_64) || CPU(ARM64))
 
 namespace WTF {
 

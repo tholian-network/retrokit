@@ -143,17 +143,6 @@ public:
     void setUseSystemAppearanceForScrollbars(bool useSystemAppearanceForScrollbars) { m_useSystemAppearanceForScrollbars = useSystemAppearanceForScrollbars; }
 #endif
 
-#if PLATFORM(PLAYSTATION)
-    const WTF::String& webProcessPath() const { return m_webProcessPath; }
-    void setWebProcessPath(const WTF::String& webProcessPath) { m_webProcessPath = webProcessPath; }
-
-    const WTF::String& networkProcessPath() const { return m_networkProcessPath; }
-    void setNetworkProcessPath(const WTF::String& networkProcessPath) { m_networkProcessPath = networkProcessPath; }
-
-    int32_t userId() const { return m_userId; }
-    void setUserId(const int32_t userId) { m_userId = userId; }
-#endif
-
 #if PLATFORM(GTK) || PLATFORM(WPE)
     void setMemoryPressureHandlerConfiguration(const MemoryPressureHandler::Configuration& configuration) { m_memoryPressureHandlerConfiguration = configuration; }
     const std::optional<MemoryPressureHandler::Configuration>& memoryPressureHandlerConfiguration() const { return m_memoryPressureHandlerConfiguration; }
@@ -189,11 +178,6 @@ private:
     bool m_usesSingleWebProcess { false };
 #if PLATFORM(GTK) && !USE(GTK4)
     bool m_useSystemAppearanceForScrollbars { false };
-#endif
-#if PLATFORM(PLAYSTATION)
-    WTF::String m_webProcessPath;
-    WTF::String m_networkProcessPath;
-    int32_t m_userId { -1 };
 #endif
 #if PLATFORM(GTK) || PLATFORM(WPE)
     std::optional<MemoryPressureHandler::Configuration> m_memoryPressureHandlerConfiguration;

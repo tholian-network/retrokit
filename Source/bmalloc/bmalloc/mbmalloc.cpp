@@ -32,7 +32,7 @@
 
 namespace WebConfig {
 
-// FIXME: Other than OS(DARWIN) || PLATFORM(PLAYSTATION), CeilingOnPageSize is
+// FIXME: Other than OS(DARWIN) CeilingOnPageSize is
 // not 16K. ConfigAlignment should match that.
 constexpr size_t ConfigAlignment = 16 * bmalloc::Sizes::kB;
 constexpr size_t ConfigSizeToProtect = 16 * bmalloc::Sizes::kB;

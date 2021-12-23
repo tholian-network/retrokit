@@ -73,11 +73,6 @@ Ref<ProcessPoolConfiguration> ProcessPoolConfiguration::copy()
 #if PLATFORM(GTK) && !USE(GTK4)
     copy->m_useSystemAppearanceForScrollbars = m_useSystemAppearanceForScrollbars;
 #endif
-#if PLATFORM(PLAYSTATION)
-    copy->m_webProcessPath = this->m_webProcessPath;
-    copy->m_networkProcessPath = this->m_networkProcessPath;
-    copy->m_userId = this->m_userId;
-#endif
 #if PLATFORM(GTK) || PLATFORM(WPE)
     copy->m_memoryPressureHandlerConfiguration = this->m_memoryPressureHandlerConfiguration;
 #endif

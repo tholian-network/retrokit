@@ -38,7 +38,6 @@ if (NOT HAS_RUN_WEBKIT_COMMON)
         GTK
         JSCOnly
         Mac
-        PlayStation
         WPE
         WinCairo
     )

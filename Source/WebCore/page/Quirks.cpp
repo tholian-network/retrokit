@@ -1046,35 +1046,6 @@ bool Quirks::isMicrosoftTeamsRedirectURL(const URL& url)
     return url.host() == "teams.microsoft.com"_s && url.query().toString().contains("Retried+3+times+without+success");
 }
 
-static bool isStorageAccessQuirkDomainAndElement(const URL& url, const Element& element)
-{
-    // Microsoft Teams login case.
-    // FIXME(218779): Remove this quirk once microsoft.com completes their login flow redesign.
-    if (url.host() == "www.microsoft.com"_s) {
-        return element.hasClass()
-        && (element.classNames().contains("glyph_signIn_circle")
-        || element.classNames().contains("mectrl_headertext")
-        || element.classNames().contains("mectrl_header"));
-    }
-    // Skype case.
-    // FIXME(220105): Remove this quirk once Skype under outlook.live.com completes their login flow redesign.
-    if (url.host() == "outlook.live.com"_s) {
-        return element.hasClass()
-        && (element.classNames().contains("_3ioEp2RGR5vb0gqRDsaFPa")
-        || element.classNames().contains("_2Am2jvTaBz17UJ8XnfxFOy"));
-    }
-    // Sony Network Entertainment login case.
-    // FIXME(218760): Remove this quirk once playstation.com completes their login flow redesign.
-    if (url.host() == "www.playstation.com"_s || url.host() == "my.playstation.com"_s) {
-        return element.hasClass()
-        && (element.classNames().contains("web-toolbar__signin-button")
-        || element.classNames().contains("web-toolbar__signin-button-label")
-        || element.classNames().contains("sb-signin-button"));
-    }
-
-    return false;
-}
-
 bool Quirks::hasStorageAccessForAllLoginDomains(const HashSet<RegistrableDomain>& loginDomains, const RegistrableDomain& topFrameDomain)
 {
     for (auto& loginDomain : loginDomains) {
@@ -1082,33 +1053,6 @@ bool Quirks::hasStorageAccessForAllLoginDomains(const HashSet<RegistrableDomain>
             return false;
     }
     return true;
-}
-
-const String& Quirks::BBCRadioPlayerURLString()
-{
-    static NeverDestroyed<String> BBCRadioPlayerURLString = "https://www.bbc.co.uk/sounds/player/bbc_world_service"_s;
-    return BBCRadioPlayerURLString;
-}
-
-const String& Quirks::staticRadioPlayerURLString()
-{
-    static NeverDestroyed<String> staticRadioPlayerURLString = "https://static.radioplayer.co.uk/"_s;
-    return staticRadioPlayerURLString;
-}
-
-static bool isBBCDomain(const RegistrableDomain& domain)
-{
-    static NeverDestroyed<RegistrableDomain> BBCDomain = RegistrableDomain(URL(URL(), Quirks::BBCRadioPlayerURLString()));
-    return domain == BBCDomain;
-}
-
-static bool isBBCPopUpPlayerElement(const Element& element)
-{
-    auto* parentElement = element.parentElement();
-    if (!element.parentElement() || !element.parentElement()->hasClass() || !parentElement->parentElement() || !parentElement->parentElement()->hasClass())
-        return false;
-
-    return element.parentElement()->classNames().contains("p_audioButton_buttonInner") && parentElement->parentElement()->classNames().contains("hidden");
 }
 
 Quirks::StorageAccessResult Quirks::requestStorageAccessAndHandleClick(CompletionHandler<void(ShouldDispatchClick)>&& completionHandler) const
@@ -1222,43 +1166,6 @@ Quirks::StorageAccessResult Quirks::triggerOptionalStorageAccessQuirk(Element& e
             }
         }
 
-        // If the click is synthetic, the user has already gone through the storage access flow and we should not request again.
-        if (isStorageAccessQuirkDomainAndElement(m_document->url(), element) && isSyntheticClick == IsSyntheticClick::No) {
-            return requestStorageAccessAndHandleClick([element = makeWeakPtr(element), platformEvent, eventType, detail, relatedTarget] (ShouldDispatchClick shouldDispatchClick) mutable {
-                RefPtr protectedElement { element.get() };
-                if (!protectedElement)
-                    return;
-
-                if (shouldDispatchClick == ShouldDispatchClick::Yes)
-                    protectedElement->dispatchMouseEvent(platformEvent, eventType, detail, relatedTarget, IsSyntheticClick::Yes);
-            });
-        }
-
-        static NeverDestroyed<String> BBCRadioPlayerPopUpWindowFeatureString = "featurestring width=400,height=730"_s;
-        static NeverDestroyed<UserScript> BBCUserScript { "function triggerRedirect() { document.location.href = \"https://www.bbc.co.uk/sounds/player/bbc_world_service\"; } window.addEventListener('load', function () { triggerRedirect(); })", URL(aboutBlankURL()), Vector<String>(), Vector<String>(), UserScriptInjectionTime::DocumentEnd, UserContentInjectedFrames::InjectInTopFrameOnly, WaitForNotificationBeforeInjecting::Yes };
-
-        // BBC RadioPlayer case.
-        if (isBBCDomain(domain) && isBBCPopUpPlayerElement(element)) {
-            return requestStorageAccessAndHandleClick([document = m_document] (ShouldDispatchClick shouldDispatchClick) mutable {
-                if (!document || shouldDispatchClick == ShouldDispatchClick::No)
-                    return;
-
-                auto domWindow = document->domWindow();
-                if (domWindow) {
-                    ExceptionOr<RefPtr<WindowProxy>> proxyOrException = domWindow->open(*domWindow, *domWindow, staticRadioPlayerURLString(), emptyString(), BBCRadioPlayerPopUpWindowFeatureString);
-                    if (proxyOrException.hasException())
-                        return;
-                    auto proxy = proxyOrException.releaseReturnValue();
-                    auto* abstractFrame = proxy->frame();
-                    if (is<Frame>(abstractFrame)) {
-                        auto* frame = downcast<Frame>(abstractFrame);
-                        auto world = ScriptController::createWorld("bbcRadioPlayerWorld", ScriptController::WorldType::User);
-                        frame->addUserScriptAwaitingNotification(world.get(), BBCUserScript);
-                        return;
-                    }
-                }
-            });
-        }
     }
 #else
     UNUSED_PARAM(element);

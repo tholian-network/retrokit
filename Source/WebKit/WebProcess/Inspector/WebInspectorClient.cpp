@@ -112,7 +112,7 @@ void WebInspectorClient::didResizeMainFrame(Frame*)
 void WebInspectorClient::highlight()
 {
     if (!m_page->corePage()->settings().acceleratedCompositingEnabled()) {
-#if PLATFORM(GTK) || PLATFORM(WIN) || PLATFORM(PLAYSTATION)
+#if PLATFORM(GTK) || PLATFORM(WIN)
         // FIXME: It can be optimized by marking only highlighted rect dirty.
         // setNeedsDisplay always makes whole rect dirty, and could lead to poor performance.
         // https://bugs.webkit.org/show_bug.cgi?id=195933
@@ -140,7 +140,7 @@ void WebInspectorClient::highlight()
 
 void WebInspectorClient::hideHighlight()
 {
-#if PLATFORM(GTK) || PLATFORM(WIN) || PLATFORM(PLAYSTATION)
+#if PLATFORM(GTK) || PLATFORM(WIN)
     if (!m_page->corePage()->settings().acceleratedCompositingEnabled()) {
         // FIXME: It can be optimized by marking only highlighted rect dirty.
         // setNeedsDisplay always makes whole rect dirty, and could lead to poor performance.

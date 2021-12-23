@@ -93,14 +93,6 @@ std::optional<PlatformSocketType> listen(const char* addressStr, uint16_t port)
         return std::nullopt;
     }
 
-#if PLATFORM(PLAYSTATION)
-    if (setsockopt(fdListen, SOL_SOCKET, SO_USE_DEVLAN, &enabled, sizeof(enabled)) < 0) {
-        LOG_ERROR("setsocketopt() SO_USE_DEVLAN, errno = %d", errno);
-        ::close(fdListen);
-        return std::nullopt;
-    }
-#endif
-
     // FIXME: Support AF_INET6 connections.
     address.sin_family = AF_INET;
     if (addressStr && *addressStr)

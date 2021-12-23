@@ -44,7 +44,7 @@ namespace WTF {
 // On Linux, Power systems normally use 64 KiB pages.
 //
 // Use 64 KiB for any unknown CPUs to be conservative.
-#if OS(DARWIN) || PLATFORM(PLAYSTATION) || CPU(MIPS) || CPU(MIPS64)
+#if OS(DARWIN) || CPU(MIPS) || CPU(MIPS64)
 constexpr size_t CeilingOnPageSize = 16 * KB;
 #elif CPU(PPC) || CPU(PPC64) || CPU(PPC64LE) || CPU(UNKNOWN)
 constexpr size_t CeilingOnPageSize = 64 * KB;

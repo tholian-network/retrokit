@@ -38,8 +38,6 @@
 #include <WebKit/WKBaseMac.h>
 #elif defined(_WIN32)
 #include <WebKit/WKBaseWin.h>
-#elif defined(__SCE__)
-#include <WebKit/WKBasePlayStation.h>
 #endif
 
 /* WebKit2 shared types */

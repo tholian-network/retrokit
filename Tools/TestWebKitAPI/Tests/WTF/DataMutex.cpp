@@ -60,8 +60,6 @@ TEST(WTF_DataMutex, TakingTheMutex)
     }
 }
 
-// FIXME: Tests using ASSERT_DEATH currently panic on playstation
-#if !PLATFORM(PLAYSTATION)
 TEST(WTF_DataMutex, RunUnlockedIllegalAccessDeathTest)
 {
     ::testing::FLAGS_gtest_death_test_style = "threadsafe";
@@ -81,6 +79,5 @@ TEST(WTF_DataMutex, DoubleLockDeathTest)
     DataMutexLocker wrapper1 { myDataMutex };
     ASSERT_DEATH(DataMutexLocker wrapper2 { myDataMutex }, "");
 }
-#endif
 
 } // namespace TestWebKitAPI

@@ -457,9 +457,6 @@ private:
     GSocketMonitor m_readSocketMonitor;
     GSocketMonitor m_writeSocketMonitor;
 #endif
-#if PLATFORM(PLAYSTATION)
-    RefPtr<WTF::Thread> m_socketMonitor;
-#endif
 #elif OS(DARWIN)
     // Called on the connection queue.
     void receiveSourceEventHandler();
