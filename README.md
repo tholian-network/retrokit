@@ -31,17 +31,28 @@ or in order to make the current website content interaction useless.
 - [x] Playstation Platform Support (`__SCE__`, `PLATFORM_PLAYSTATION`, `BPLATFORM_PLAYSTATION`, `PlayStation`, `playstation`, `sony`)
 - [ ] Apple Watch Platform Support (`TARGET_OS_WATCH`, `BOS_WATCHOS`, `BPLATFORM_WATCHOS`)
 - [ ] Apple TV Platform Support (`TARGET_OS_TV`, `BOS_APPLETV`, `BPLATFORM_APPLETV`)
+
+# Removed Legacy Hacks
+
+- [x] Hardcoded Quirks and Hacks (`bbc.co.uk`, `microsoft.com`, `playstation.com`, `sony.com`, `sonyentertainment.com`)
+- [ ] Netscape Plugin API (`NETSCAPE_PLUGIN_API`)
+
+# Removed Library Dependencies
+
+- [x] Geoclue Library Integration (`geoclue`) which leaks your geolocation to websites.
+- [ ] Libhyphen Library Integration (`libhyphen`, `USE_LIBHYPHEN`) - do we love spell-ing so much?
+- [ ] Libsecret Library Integration (`libsecret`, `USE_LIBSECRET`) which automatically leaks stored credentials only by opening URLs with the same hostname.
+- [ ] Libnotify Library Integration (`libnotify`, `USE_LIBNOTIFY`) which is just annoying.
+- [ ] SystemD Library Integration (`libsystemd`, `USE_SYSTEMD`) which a Browser should never have a depdendency to.
 - [ ] ARKIT Integration (`ARKIT`)
 - [x] PASSKIT Integration (`PASSKIT`)
 
 # Removed ECMAScript APIs
 
-- [x] Hardcoded Quirks and Hacks (`bbc.co.uk`, `microsoft.com`, `playstation.com`, `sony.com`, `sonyentertainment.com`)
 - [x] Apple Pay API (`APPLE_PAY`, `ApplePay*`)
 - [x] Bluetooth API
 - [x] Gamepad API
 - [x] Geolocation API (`ENABLE_GEOLOCATION`, `Geolocation*`, `Geoposition*`)
-- [x] Geoclue Library (`geoclue`)
 - [x] Payment Request API (`PAYMENT_REQUEST`, `Merchant*`, `Payer*`, `Payment*`, `Coupon*`)
 - [x] DeviceOrientation API (`DEVICE_ORIENTATION`, `ORIENTATION_EVENTS`, `DeviceOrientation*`, `get_orientation`, `orientationChanged`, `onorientationchange`, `OrientationNotifier`, `DOM_WINDOW_PROP_ORIENTATION`, `orientation`)
 - [x] DeviceMotion API (`DEVICE_ORIENTATION`, `DeviceMotion*`)
@@ -51,11 +62,12 @@ or in order to make the current website content interaction useless.
 - [x] Magnetometer Sensor API
 - [x] FTP Directory Support (`FTPDIR`, `FTPDirectory*`, `unknownFileSizeText`)
 - [x] WebXR API (`WEBXR`, `OPENXR`, `WebXR*`, `XRSpatialTracking`, `xrCompatible`)
+- [ ] Web API Statistics (`WEB_API_STATISTICS`)
 - [ ] Encrypted Media API (`ENCRYPTED_MEDIA`, `LEGACY_ENCRYPTED_MEDIA`)
 - [ ] Picture in Picture API (`PICTURE_IN_PICTURE_API`)
+- [ ] Web RTC API (`WEB_RTC`, `RTC*`)
 - [ ] Web NFC API
 - [ ] Web Performance API
-- [ ] Web RTC API
 - [ ] Web Storage API
 - [ ] Indexed Database API
 - [ ] Canvas API (`OFFSCREEN_CANVAS`, `Canvas*`, `DOMConvertWebGL`, `JSANGLEInstancedArray`, `CanvasActivityRecord`)
@@ -66,9 +78,8 @@ or in order to make the current website content interaction useless.
 - [ ] Media Capture API
 - [ ] Screen Capture API (`getDisplayMedia`)
 - [ ] Media Stream API (`getUserMedia`)
-- [ ] Netscape Plugin Support
 - [ ] Page Visibility API
-- [ ] Pointer Lock API
+- [ ] Pointer Lock API (`POINTER_LOCK`)
 - [ ] Web Notifications API
 - [ ] Window Alert Method (`window.alert()`)
 - [ ] Window History Interface (`window.history`)
@@ -99,10 +110,6 @@ the future.
 
 - `DEVELOPER_MODE`
 - `WPE`, `USE_WPE_RENDERER`
-- `USE_SYSTEMD` - WTF, a Browser needs systemd integration!?
-- `USE_LIBSECRET` - GNOME Keyring
-- `USE_LIBNOTIFY` - GNOME Notifications
-- `USE_LIBHYPHEN`
 
 
 # Building on Linux
