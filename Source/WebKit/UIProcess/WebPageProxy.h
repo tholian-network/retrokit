@@ -184,10 +184,6 @@ interface ID3D11Device1;
 #include <WebCore/MediaSessionIdentifier.h>
 #endif
 
-#if ENABLE(WEBXR) && !USE(OPENXR)
-#include "PlatformXRSystem.h"
-#endif
-
 #if HAVE(ARKIT_INLINE_PREVIEW)
 #include "ModelElementController.h"
 #endif
@@ -3030,10 +3026,6 @@ private:
     bool m_isSuspended { false };
 
     std::optional<WebCore::PrivateClickMeasurement> m_privateClickMeasurement;
-
-#if ENABLE(WEBXR) && !USE(OPENXR)
-    std::unique_ptr<PlatformXRSystem> m_xrSystem;
-#endif
 
 #if ENABLE(APP_HIGHLIGHTS)
     RetainPtr<SYNotesActivationObserver> m_appHighlightsObserver;

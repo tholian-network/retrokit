@@ -148,10 +148,6 @@ typedef struct _AtkObject AtkObject;
 #include <WebCore/MediaSessionIdentifier.h>
 #endif
 
-#if ENABLE(WEBXR) && !USE(OPENXR)
-#include "PlatformXRSystemProxy.h"
-#endif
-
 #if PLATFORM(COCOA)
 #include "DynamicViewportSizeUpdate.h"
 #include <WebCore/VisibleSelection.h>
@@ -1447,10 +1443,6 @@ public:
     void textAutosizingUsesIdempotentModeChanged();
 #endif
 
-#if ENABLE(WEBXR) && !USE(OPENXR)
-    PlatformXRSystemProxy& xrSystemProxy();
-#endif
-
 #if HAVE(ARKIT_INLINE_PREVIEW_IOS)
     void takeModelElementFullscreen(WebCore::GraphicsLayer::PlatformLayerID contentLayerId);
 #endif
@@ -2343,10 +2335,6 @@ private:
     Vector<std::pair<WeakPtr<WebCore::HTMLElement>, Vector<CompletionHandler<void(RefPtr<WebCore::Element>&&)>>>> m_elementsPendingTextRecognition;
 #endif
 
-#if ENABLE(WEBXR) && !USE(OPENXR)
-    std::unique_ptr<PlatformXRSystemProxy> m_xrSystemProxy;
-#endif
-    
 #if ENABLE(APP_HIGHLIGHTS)
     WebCore::HighlightVisibility m_appHighlightsVisible { WebCore::HighlightVisibility::Hidden };
 #endif

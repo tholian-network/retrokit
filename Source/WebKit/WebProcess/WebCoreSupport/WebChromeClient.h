@@ -441,10 +441,6 @@ private:
     void showMediaControlsContextMenu(WebCore::FloatRect&&, Vector<WebCore::MediaControlsContextMenuItem>&&, CompletionHandler<void(WebCore::MediaControlsContextMenuItem::ID)>&&) final;
 #endif // ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
 
-#if ENABLE(WEBXR) && !USE(OPENXR)
-    void enumerateImmersiveXRDevices(CompletionHandler<void(const PlatformXR::Instance::DeviceList&)>&&) final;
-#endif
-
 #if HAVE(ARKIT_INLINE_PREVIEW_IOS)
     void takeModelElementFullscreen(WebCore::GraphicsLayer::PlatformLayerID contentLayerId) const final;
 #endif

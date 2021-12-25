@@ -73,10 +73,6 @@
 #include <WebCore/GraphicsTypesGL.h>
 #endif
 
-#if ENABLE(WEBXR)
-#include <WebCore/PlatformXR.h>
-#endif
-
 #if PLATFORM(COCOA)
 #include "ArgumentCodersCF.h"
 

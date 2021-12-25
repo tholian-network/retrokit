@@ -66,9 +66,6 @@ struct GraphicsContextGLAttributes {
     bool useMetal { true };
     bool hasFenceSync { false };
 #endif
-#if ENABLE(WEBXR)
-    bool xrCompatible { false };
-#endif
 };
 
 }

@@ -127,10 +127,6 @@ class ServiceWorker;
 class RTCRtpSFrameTransform;
 #endif
 
-#if ENABLE(WEBXR)
-class WebXRTest;
-#endif
-
 #if ENABLE(MEDIA_SESSION)
 class MediaSession;
 struct MediaSessionActionDetails;
@@ -1128,10 +1124,6 @@ public:
     unsigned numberOfAppHighlights();
 #endif
 
-#if ENABLE(WEBXR)
-    ExceptionOr<RefPtr<WebXRTest>> xrTest();
-#endif
-
 #if ENABLE(ENCRYPTED_MEDIA)
     unsigned mediaKeysInternalInstanceObjectRefCount(const MediaKeys&) const;
     unsigned mediaKeySessionInternalInstanceSessionObjectRefCount(const MediaKeySession&) const;
@@ -1212,10 +1204,6 @@ private:
     RefPtr<CacheStorageConnection> m_cacheStorageConnection;
 
     HashMap<unsigned, std::unique_ptr<WebCore::SleepDisabler>> m_sleepDisablers;
-
-#if ENABLE(WEBXR)
-    RefPtr<WebXRTest> m_xrTest;
-#endif
 
 #if ENABLE(MEDIA_SESSION_COORDINATOR)
     RefPtr<MockMediaSessionCoordinator> m_mockMediaSessionCoordinator;

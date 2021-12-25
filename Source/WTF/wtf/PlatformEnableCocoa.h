@@ -567,10 +567,6 @@
 #define ENABLE_WEBPROCESS_NSRUNLOOP 1
 #endif
 
-#if !defined(ENABLE_WEBXR)
-#define ENABLE_WEBXR 1
-#endif
-
 #if !defined(ENABLE_WEB_API_STATISTICS)
 #define ENABLE_WEB_API_STATISTICS 1
 #endif

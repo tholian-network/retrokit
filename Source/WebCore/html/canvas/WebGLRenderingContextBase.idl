@@ -605,8 +605,6 @@ typedef (HTMLCanvasElement) WebGLCanvas;
     undefined lineWidth(GLfloat width);
     undefined linkProgram(WebGLProgram program);
 
-    [NewObject, Conditional=WEBXR] Promise<undefined> makeXRCompatible();
-
     undefined pixelStorei(GLenum pname, GLint param);
     undefined polygonOffset(GLfloat factor, GLfloat units);
 

@@ -391,39 +391,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/Modules/webdriver/Navigator+WebDriver.idl \
     $(WebCore)/Modules/websockets/CloseEvent.idl \
     $(WebCore)/Modules/websockets/WebSocket.idl \
-    $(WebCore)/Modules/webxr/Navigator+WebXR.idl \
-    $(WebCore)/Modules/webxr/WebXRBoundedReferenceSpace.idl \
-    $(WebCore)/Modules/webxr/WebXRFrame.idl \
-    $(WebCore)/Modules/webxr/WebXRInputSourceArray.idl \
-    $(WebCore)/Modules/webxr/WebXRInputSource.idl \
-    $(WebCore)/Modules/webxr/WebXRLayer.idl \
-    $(WebCore)/Modules/webxr/WebXRPose.idl \
-    $(WebCore)/Modules/webxr/WebXRReferenceSpace.idl \
-    $(WebCore)/Modules/webxr/WebXRRenderState.idl \
-    $(WebCore)/Modules/webxr/WebXRRigidTransform.idl \
-    $(WebCore)/Modules/webxr/WebXRSession.idl \
-    $(WebCore)/Modules/webxr/WebXRSpace.idl \
-    $(WebCore)/Modules/webxr/WebXRSystem.idl \
-    $(WebCore)/Modules/webxr/WebXRViewerPose.idl \
-    $(WebCore)/Modules/webxr/WebXRView.idl \
-    $(WebCore)/Modules/webxr/WebXRViewport.idl \
-    $(WebCore)/Modules/webxr/WebXRWebGLLayer.idl \
-    $(WebCore)/Modules/webxr/XREnvironmentBlendMode.idl \
-    $(WebCore)/Modules/webxr/XREye.idl \
-    $(WebCore)/Modules/webxr/XRFrameRequestCallback.idl \
-    $(WebCore)/Modules/webxr/XRHandedness.idl \
-    $(WebCore)/Modules/webxr/XRInputSourceEvent.idl \
-    $(WebCore)/Modules/webxr/XRInputSourcesChangeEvent.idl \
-    $(WebCore)/Modules/webxr/XRInteractionMode.idl \
-    $(WebCore)/Modules/webxr/XRReferenceSpaceEvent.idl \
-    $(WebCore)/Modules/webxr/XRReferenceSpaceType.idl \
-    $(WebCore)/Modules/webxr/XRRenderStateInit.idl \
-    $(WebCore)/Modules/webxr/XRSessionEvent.idl \
-    $(WebCore)/Modules/webxr/XRSessionInit.idl \
-    $(WebCore)/Modules/webxr/XRSessionMode.idl \
-    $(WebCore)/Modules/webxr/XRTargetRayMode.idl \
-    $(WebCore)/Modules/webxr/XRVisibilityState.idl \
-    $(WebCore)/Modules/webxr/XRWebGLLayerInit.idl \
     $(WebCore)/accessibility/AccessibilityRole.idl \
     $(WebCore)/accessibility/AriaAttributes.idl \
     $(WebCore)/animation/Animatable.idl \
@@ -681,7 +648,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/html/HTMLAudioElement.idl \
     $(WebCore)/html/HTMLBRElement.idl \
     $(WebCore)/html/HTMLBaseElement.idl \
-    $(WebCore)/html/HTMLBodyElement+Compat.idl \
     $(WebCore)/html/HTMLBodyElement.idl \
     $(WebCore)/html/HTMLButtonElement.idl \
     $(WebCore)/html/HTMLCanvasElement.idl \
@@ -888,7 +854,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/page/DOMSelection.idl \
     $(WebCore)/page/DOMWindow+CSSOM.idl \
     $(WebCore)/page/DOMWindow+CSSOMView.idl \
-    $(WebCore)/page/DOMWindow+Compat.idl \
     $(WebCore)/page/DOMWindow+RequestIdleCallback.idl \
     $(WebCore)/page/DOMWindow+Selection.idl \
     $(WebCore)/page/DOMWindow+VisualViewport.idl \
@@ -1116,15 +1081,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/testing/MockWebAuthenticationConfiguration.idl \
     $(WebCore)/testing/ServiceWorkerInternals.idl \
     $(WebCore)/testing/TypeConversions.idl \
-    $(WebCore)/testing/FakeXRBoundsPoint.idl \
-    $(WebCore)/testing/FakeXRButtonStateInit.idl \
-    $(WebCore)/testing/FakeXRInputSourceInit.idl \
-    $(WebCore)/testing/FakeXRRigidTransformInit.idl \
-    $(WebCore)/testing/FakeXRViewInit.idl \
-    $(WebCore)/testing/WebFakeXRDevice.idl \
-    $(WebCore)/testing/WebFakeXRInputController.idl \
-    $(WebCore)/testing/WebXRTest.idl \
-    $(WebCore)/testing/XRSimulateUserActivationFunction.idl \
     $(WebCore)/workers/AbstractWorker.idl \
     $(WebCore)/workers/DedicatedWorkerGlobalScope.idl \
     $(WebCore)/workers/Worker.idl \

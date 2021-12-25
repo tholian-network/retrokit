@@ -87,10 +87,6 @@ bool defaultWebRTCCodecsInGPUProcess();
 bool defaultIncrementalPDFEnabled();
 #endif
 
-#if ENABLE(WEBXR)
-bool defaultWebXREnabled();
-#endif
-
 #if ENABLE(WEBM_FORMAT_READER)
 bool defaultWebMFormatReaderEnabled();
 #endif

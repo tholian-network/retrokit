@@ -1500,13 +1500,6 @@ void WebChromeClient::showMediaControlsContextMenu(FloatRect&& targetFrame, Vect
 
 #endif // ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
 
-#if ENABLE(WEBXR) && !USE(OPENXR)
-void WebChromeClient::enumerateImmersiveXRDevices(CompletionHandler<void(const PlatformXR::Instance::DeviceList&)>&& completionHandler)
-{
-    m_page.xrSystemProxy().enumerateImmersiveXRDevices(WTFMove(completionHandler));
-}
-#endif
-
 #if HAVE(ARKIT_INLINE_PREVIEW_IOS)
 void WebChromeClient::takeModelElementFullscreen(WebCore::GraphicsLayer::PlatformLayerID contentLayerId) const
 {

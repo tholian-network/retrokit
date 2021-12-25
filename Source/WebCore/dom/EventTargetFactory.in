@@ -63,7 +63,3 @@ Worker
 WorkletGlobalScope
 XMLHttpRequest
 XMLHttpRequestUpload
-WebXRLayer conditional=WEBXR
-WebXRSession conditional=WEBXR
-WebXRSpace conditional=WEBXR
-WebXRSystem conditional=WEBXR

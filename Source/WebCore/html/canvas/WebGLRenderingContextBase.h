@@ -55,10 +55,6 @@
 #include "WebGLVertexArrayObject.h"
 #endif
 
-#if ENABLE(WEBXR)
-#include "JSDOMPromiseDeferred.h"
-#endif
-
 namespace JSC {
 class AbstractSlotVisitor;
 }
@@ -255,11 +251,6 @@ public:
     void linkProgram(WebGLProgram&);
     bool linkProgramWithoutInvalidatingAttribLocations(WebGLProgram*);
     virtual void pixelStorei(GCGLenum pname, GCGLint param);
-#if ENABLE(WEBXR)
-    using MakeXRCompatiblePromise = DOMPromiseDeferred<void>;
-    void makeXRCompatible(MakeXRCompatiblePromise&&);
-    bool isXRCompatible() const { return m_isXRCompatible; }
-#endif
     void polygonOffset(GCGLfloat factor, GCGLfloat units);
     // This must be virtual so more validation can be added in WebGL 2.0.
     virtual void readPixels(GCGLint x, GCGLint y, GCGLsizei width, GCGLsizei height, GCGLenum format, GCGLenum type, ArrayBufferView& pixels);
@@ -1133,9 +1124,6 @@ private:
     Timer m_checkForContextLossHandlingTimer;
     bool m_isSuspended { false };
 
-#if ENABLE(WEBXR)
-    bool m_isXRCompatible { false };
-#endif
 };
 
 template <typename T>

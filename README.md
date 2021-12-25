@@ -31,6 +31,8 @@ or in order to make the current website content interaction useless.
 - [x] Playstation Platform Support (`__SCE__`, `PLATFORM_PLAYSTATION`, `BPLATFORM_PLAYSTATION`, `PlayStation`, `playstation`, `sony`)
 - [ ] Apple Watch Platform Support (`TARGET_OS_WATCH`, `BOS_WATCHOS`, `BPLATFORM_WATCHOS`)
 - [ ] Apple TV Platform Support (`TARGET_OS_TV`, `BOS_APPLETV`, `BPLATFORM_APPLETV`)
+- [ ] ARKIT Integration (`ARKIT`)
+- [x] PASSKIT Integration (`PASSKIT`)
 
 # Removed ECMAScript APIs
 
@@ -41,7 +43,6 @@ or in order to make the current website content interaction useless.
 - [x] Geolocation API (`ENABLE_GEOLOCATION`, `Geolocation*`, `Geoposition*`)
 - [x] Geoclue Library (`geoclue`)
 - [x] Payment Request API (`PAYMENT_REQUEST`, `Merchant*`, `Payer*`, `Payment*`, `Coupon*`)
-- [x] PASSKIT Integration (`PASSKIT`)
 - [x] DeviceOrientation API (`DEVICE_ORIENTATION`, `ORIENTATION_EVENTS`, `DeviceOrientation*`, `get_orientation`, `orientationChanged`, `onorientationchange`, `OrientationNotifier`, `DOM_WINDOW_PROP_ORIENTATION`, `orientation`)
 - [x] DeviceMotion API (`DEVICE_ORIENTATION`, `DeviceMotion*`)
 - [x] Accelerometer Sensor API
@@ -49,15 +50,16 @@ or in order to make the current website content interaction useless.
 - [x] Gyroscope Sensor API
 - [x] Magnetometer Sensor API
 - [x] FTP Directory Support (`FTPDIR`, `FTPDirectory*`, `unknownFileSizeText`)
+- [x] WebXR API (`WEBXR`, `OPENXR`, `WebXR*`, `XRSpatialTracking`, `xrCompatible`)
+- [ ] Encrypted Media API (`ENCRYPTED_MEDIA`, `LEGACY_ENCRYPTED_MEDIA`)
+- [ ] Picture in Picture API (`PICTURE_IN_PICTURE_API`)
 - [ ] Web NFC API
 - [ ] Web Performance API
 - [ ] Web RTC API
-- [ ] Encrypted Media Support
 - [ ] Web Storage API
 - [ ] Indexed Database API
 - [ ] Canvas API (`OFFSCREEN_CANVAS`, `Canvas*`, `DOMConvertWebGL`, `JSANGLEInstancedArray`, `CanvasActivityRecord`)
 - [ ] WebGL API (`WEBGL`, `WebGL*`, `JSANGLEInstancedArray`, `GraphicsContextGL*`, `HighPerformanceGraphicsUsageSampler`)
-- [ ] WebXR API (`WEBXR`, `WebXR*`, `XR*`)
 - [ ] GPU Process for WebGL (`GPU_PROCESS`)
 - [ ] WebGL via Metal (`WEBGL_COMPATIBLE_METAL`)
 - [ ] WebGPU API

@@ -60,7 +60,6 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${WEBCORE_DIR}/Modules/webgpu/WHLSL"
     "${WEBCORE_DIR}/Modules/webgpu/WHLSL/AST"
     "${WEBCORE_DIR}/Modules/websockets"
-    "${WEBCORE_DIR}/Modules/webxr"
     "${WEBCORE_DIR}/accessibility"
     "${WEBCORE_DIR}/accessibility/isolatedtree"
     "${WEBCORE_DIR}/animation"
@@ -849,7 +848,6 @@ set(WebCore_NON_SVG_IDL_FILES
     html/HTMLAudioElement.idl
     html/HTMLBRElement.idl
     html/HTMLBaseElement.idl
-    html/HTMLBodyElement+Compat.idl
     html/HTMLBodyElement.idl
     html/HTMLButtonElement.idl
     html/HTMLCanvasElement.idl
@@ -1008,7 +1006,6 @@ set(WebCore_NON_SVG_IDL_FILES
     page/DOMSelection.idl
     page/DOMWindow+CSSOM.idl
     page/DOMWindow+CSSOMView.idl
-    page/DOMWindow+Compat.idl
     page/DOMWindow+RequestIdleCallback.idl
     page/DOMWindow+Selection.idl
     page/DOMWindow+VisualViewport.idl
@@ -1264,42 +1261,6 @@ set(WebCore_SVG_IDL_FILES
     svg/SVGViewSpec.idl
     svg/SVGZoomAndPan.idl
     svg/SVGZoomEvent.idl
-)
-
-list(APPEND WebCore_NON_SVG_IDL_FILES
-    Modules/webxr/Navigator+WebXR.idl
-    Modules/webxr/WebXRBoundedReferenceSpace.idl
-    Modules/webxr/WebXRFrame.idl
-    Modules/webxr/WebXRInputSource.idl
-    Modules/webxr/WebXRInputSourceArray.idl
-    Modules/webxr/WebXRLayer.idl
-    Modules/webxr/WebXRPose.idl
-    Modules/webxr/WebXRReferenceSpace.idl
-    Modules/webxr/WebXRRenderState.idl
-    Modules/webxr/WebXRRigidTransform.idl
-    Modules/webxr/WebXRSession.idl
-    Modules/webxr/WebXRSpace.idl
-    Modules/webxr/WebXRSystem.idl
-    Modules/webxr/WebXRView.idl
-    Modules/webxr/WebXRViewerPose.idl
-    Modules/webxr/WebXRViewport.idl
-    Modules/webxr/WebXRWebGLLayer.idl
-    Modules/webxr/XREnvironmentBlendMode.idl
-    Modules/webxr/XREye.idl
-    Modules/webxr/XRFrameRequestCallback.idl
-    Modules/webxr/XRHandedness.idl
-    Modules/webxr/XRInputSourceEvent.idl
-    Modules/webxr/XRInputSourcesChangeEvent.idl
-    Modules/webxr/XRInteractionMode.idl
-    Modules/webxr/XRReferenceSpaceEvent.idl
-    Modules/webxr/XRReferenceSpaceType.idl
-    Modules/webxr/XRRenderStateInit.idl
-    Modules/webxr/XRSessionEvent.idl
-    Modules/webxr/XRSessionInit.idl
-    Modules/webxr/XRSessionMode.idl
-    Modules/webxr/XRTargetRayMode.idl
-    Modules/webxr/XRVisibilityState.idl
-    Modules/webxr/XRWebGLLayerInit.idl
 )
 
 set(WebCore_IDL_FILES
@@ -1700,25 +1661,6 @@ list(APPEND WebCoreTestSupport_SOURCES
     testing/ServiceWorkerInternals.cpp
     testing/js/WebCoreTestSupport.cpp
 )
-
-if (ENABLE_WEBXR)
-    list(APPEND WebCoreTestSupport_IDL_FILES
-        testing/FakeXRBoundsPoint.idl
-        testing/FakeXRButtonStateInit.idl
-        testing/FakeXRInputSourceInit.idl
-        testing/FakeXRRigidTransformInit.idl
-        testing/FakeXRViewInit.idl
-        testing/WebFakeXRDevice.idl
-        testing/WebFakeXRInputController.idl
-        testing/WebXRTest.idl
-        testing/XRSimulateUserActivationFunction.idl
-    )
-    list(APPEND WebCoreTestSupport_SOURCES
-        testing/WebFakeXRDevice.cpp
-        testing/WebFakeXRInputController.cpp
-        testing/WebXRTest.cpp
-    )
-endif ()
 
 # Modules that the bindings generator scripts may use
 set(SCRIPTS_RESOLVE_SUPPLEMENTAL

@@ -43,7 +43,6 @@ enum class TaskSource : uint8_t {
     Speech,
     UserInteraction,
     WebGL,
-    WebXR,
 
     // Internal to WebCore
     InternalAsyncTask, // Safe to re-order or delay.

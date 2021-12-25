@@ -499,10 +499,6 @@ bindings/js/JSUndoItemCustom.cpp
 bindings/js/JSWebAnimationCustom.cpp
 bindings/js/JSWebGL2RenderingContextCustom.cpp
 bindings/js/JSWebGLRenderingContextCustom.cpp
-bindings/js/JSWebXRReferenceSpaceCustom.cpp
-bindings/js/JSWebXRRigidTransformCustom.cpp
-bindings/js/JSWebXRSpaceCustom.cpp
-bindings/js/JSWebXRViewCustom.cpp
 bindings/js/JSWindowProxy.cpp
 bindings/js/JSWorkerGlobalScopeBase.cpp
 bindings/js/JSWorkerGlobalScopeCustom.cpp
@@ -2083,13 +2079,6 @@ platform/text/TextCodecUserDefined.cpp
 platform/text/TextEncoding.cpp
 platform/text/TextEncodingDetectorICU.cpp
 platform/text/TextEncodingRegistry.cpp
-platform/xr/openxr/OpenXRInput.cpp @no-unify
-platform/xr/openxr/OpenXRInputSource.cpp @no-unify
-platform/xr/openxr/OpenXRInstance.cpp @no-unify
-platform/xr/openxr/OpenXRExtensions.cpp @no-unify
-platform/xr/openxr/OpenXRLayer.cpp @no-unify
-platform/xr/openxr/OpenXRSwapchain.cpp @no-unify
-platform/xr/openxr/PlatformXROpenXR.cpp @no-unify
 plugins/DOMMimeType.cpp
 plugins/DOMMimeTypeArray.cpp
 plugins/DOMPlugin.cpp
@@ -3588,22 +3577,6 @@ JSWebKitPlaybackTargetAvailabilityEvent.cpp
 JSWebKitPoint.cpp
 JSWebKitTransitionEvent.cpp
 JSWebSocket.cpp
-JSWebXRBoundedReferenceSpace.cpp
-JSWebXRFrame.cpp
-JSWebXRInputSource.cpp
-JSWebXRInputSourceArray.cpp
-JSWebXRLayer.cpp
-JSWebXRPose.cpp
-JSWebXRReferenceSpace.cpp
-JSWebXRRenderState.cpp
-JSWebXRRigidTransform.cpp
-JSWebXRSession.cpp
-JSWebXRSpace.cpp
-JSWebXRSystem.cpp
-JSWebXRView.cpp
-JSWebXRViewerPose.cpp
-JSWebXRViewport.cpp
-JSWebXRWebGLLayer.cpp
 JSWheelEvent.cpp
 JSWindowEventHandlers.cpp
 JSWindowOrWorkerGlobalScope.cpp
@@ -3629,20 +3602,4 @@ JSXPathEvaluator.cpp
 JSXPathExpression.cpp
 JSXPathNSResolver.cpp
 JSXPathResult.cpp
-JSXREnvironmentBlendMode.cpp
-JSXREye.cpp
-JSXRFrameRequestCallback.cpp
-JSXRHandedness.cpp
-JSXRInputSourceEvent.cpp
-JSXRInputSourcesChangeEvent.cpp
-JSXRInteractionMode.cpp
-JSXRReferenceSpaceEvent.cpp
-JSXRReferenceSpaceType.cpp
-JSXRRenderStateInit.cpp
-JSXRSessionEvent.cpp
-JSXRSessionInit.cpp
-JSXRSessionMode.cpp
-JSXRTargetRayMode.cpp
-JSXRVisibilityState.cpp
-JSXRWebGLLayerInit.cpp
 JSXSLTProcessor.cpp

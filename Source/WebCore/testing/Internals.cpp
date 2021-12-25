@@ -312,12 +312,6 @@
 #include "MockPreviewLoaderClient.h"
 #endif
 
-#if ENABLE(WEBXR)
-#include "NavigatorWebXR.h"
-#include "WebXRSystem.h"
-#include "WebXRTest.h"
-#endif
-
 #if PLATFORM(MAC)
 #include "GraphicsChecksMac.h"
 #include "NSScrollerImpDetails.h"
@@ -6220,26 +6214,6 @@ bool Internals::destroySleepDisabler(unsigned identifier)
 {
     return m_sleepDisablers.remove(identifier);
 }
-
-#if ENABLE(WEBXR)
-
-ExceptionOr<RefPtr<WebXRTest>> Internals::xrTest()
-{
-    auto* document = contextDocument();
-    if (!document || !document->domWindow() || !document->settings().webXREnabled())
-        return Exception { InvalidAccessError };
-
-    if (!m_xrTest) {
-        auto* navigator = contextDocument()->domWindow()->optionalNavigator();
-        if (!navigator)
-            return Exception { InvalidAccessError };
-
-        m_xrTest = WebXRTest::create(makeWeakPtr(&NavigatorWebXR::xr(*navigator)));
-    }
-    return m_xrTest.get();
-}
-
-#endif
 
 #if ENABLE(ENCRYPTED_MEDIA)
 unsigned Internals::mediaKeysInternalInstanceObjectRefCount(const MediaKeys& mediaKeys) const

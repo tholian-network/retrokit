@@ -52,10 +52,6 @@ static const char* policyTypeName(FeaturePolicy::Type type)
         return "SyncXHR";
     case FeaturePolicy::Type::Fullscreen:
         return "Fullscreen";
-#if ENABLE(WEBXR)
-    case FeaturePolicy::Type::XRSpatialTracking:
-        return "XRSpatialTracking";
-#endif
     }
     ASSERT_NOT_REACHED();
     return "";
@@ -161,9 +157,6 @@ FeaturePolicy FeaturePolicy::parse(Document& document, const HTMLIFrameElement& 
     bool isDisplayCaptureInitialized = false;
     bool isSyncXHRInitialized = false;
     bool isFullscreenInitialized = false;
-#if ENABLE(WEBXR)
-    bool isXRSpatialTrackingInitialized = false;
-#endif
     for (auto allowItem : allowAttributeValue.split(';')) {
         auto item = allowItem.stripLeadingAndTrailingMatchedCharacters(isHTMLSpace<UChar>);
         if (item.startsWith("camera")) {
@@ -196,13 +189,6 @@ FeaturePolicy FeaturePolicy::parse(Document& document, const HTMLIFrameElement& 
             updateList(document, policy.m_fullscreenRule, item.substring(11));
             continue;
         }
-#if ENABLE(WEBXR)
-        if (item.startsWith("xr-spatial-tracking")) {
-            isXRSpatialTrackingInitialized = true;
-            updateList(document, policy.m_xrSpatialTrackingRule, item.substring(19));
-            continue;
-        }
-#endif
     }
 
     // By default, camera, microphone, speaker-selection, display-capture, fullscreen and xr-spatial-tracking policy is 'self'.
@@ -214,10 +200,6 @@ FeaturePolicy FeaturePolicy::parse(Document& document, const HTMLIFrameElement& 
         policy.m_speakerSelectionRule.allowedList.add(document.securityOrigin().data());
     if (!isDisplayCaptureInitialized)
         policy.m_displayCaptureRule.allowedList.add(document.securityOrigin().data());
-#if ENABLE(WEBXR)
-    if (!isXRSpatialTrackingInitialized)
-        policy.m_xrSpatialTrackingRule.allowedList.add(document.securityOrigin().data());
-#endif
 
     // https://w3c.github.io/webappsec-feature-policy/#process-feature-policy-attributes
     // 9.5 Process Feature Policy Attributes
@@ -255,10 +237,6 @@ bool FeaturePolicy::allows(Type type, const SecurityOriginData& origin) const
         return isAllowedByFeaturePolicy(m_syncXHRRule, origin);
     case Type::Fullscreen:
         return isAllowedByFeaturePolicy(m_fullscreenRule, origin);
-#if ENABLE(WEBXR)
-    case Type::XRSpatialTracking:
-        return isAllowedByFeaturePolicy(m_xrSpatialTrackingRule, origin);
-#endif
     }
     ASSERT_NOT_REACHED();
     return false;

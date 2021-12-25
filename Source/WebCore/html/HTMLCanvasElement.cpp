@@ -81,13 +81,6 @@
 #include "WebGL2RenderingContext.h"
 #endif
 
-#if ENABLE(WEBXR)
-#include "DOMWindow.h"
-#include "Navigator.h"
-#include "NavigatorWebXR.h"
-#include "WebXRSystem.h"
-#endif
-
 #if USE(CG)
 #include "ImageBufferUtilitiesCG.h"
 #endif
@@ -433,18 +426,6 @@ WebGLRenderingContextBase* HTMLCanvasElement::createContextWebGL(WebGLVersion ty
     if (!shouldEnableWebGL(document().settings()))
         return nullptr;
 
-#if ENABLE(WEBXR)
-    // https://immersive-web.github.io/webxr/#xr-compatible
-    if (attrs.xrCompatible) {
-        if (auto* window = document().domWindow())
-            // FIXME: how to make this sync without blocking the main thread?
-            // For reference: https://immersive-web.github.io/webxr/#ref-for-dom-webglcontextattributes-xrcompatible
-            NavigatorWebXR::xr(window->navigator()).ensureImmersiveXRDeviceIsSelected([]() { });
-    }
-#endif
-
-    // TODO(WEBXR): ensure the context is created in a compatible graphics
-    // adapter when there is an active immersive device.
     m_context = WebGLRenderingContextBase::create(*this, attrs, type);
     if (m_context) {
         // This new context needs to be observed by the Document, in order
@@ -453,9 +434,6 @@ WebGLRenderingContextBase* HTMLCanvasElement::createContextWebGL(WebGLVersion ty
 
         // Need to make sure a RenderLayer and compositing layer get created for the Canvas.
         invalidateStyleAndLayerComposition();
-#if ENABLE(WEBXR)
-        ASSERT(!attrs.xrCompatible || downcast<WebGLRenderingContextBase>(m_context.get())->isXRCompatible());
-#endif
     }
 
     return downcast<WebGLRenderingContextBase>(m_context.get());

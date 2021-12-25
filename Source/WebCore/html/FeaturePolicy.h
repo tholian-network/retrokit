@@ -45,9 +45,6 @@ public:
         DisplayCapture,
         SyncXHR,
         Fullscreen,
-#if ENABLE(WEBXR)
-        XRSpatialTracking,
-#endif
     };
     bool allows(Type, const SecurityOriginData&) const;
 
@@ -64,9 +61,6 @@ private:
     AllowRule m_displayCaptureRule;
     AllowRule m_syncXHRRule;
     AllowRule m_fullscreenRule;
-#if ENABLE(WEBXR)
-    AllowRule m_xrSpatialTrackingRule;
-#endif
 };
 
 enum class LogFeaturePolicyFailure { No, Yes };

@@ -3178,9 +3178,6 @@ void ArgumentCoder<WebCore::GraphicsContextGLAttributes>::encode(Encoder& encode
     encoder << attributes.noExtensions;
     encoder << attributes.devicePixelRatio;
     encoder << attributes.initialPowerPreference;
-#if ENABLE(WEBXR)
-    encoder << attributes.xrCompatible;
-#endif
 }
 
 std::optional<WebCore::GraphicsContextGLAttributes> ArgumentCoder<WebCore::GraphicsContextGLAttributes>::decode(Decoder& decoder)
@@ -3212,10 +3209,6 @@ std::optional<WebCore::GraphicsContextGLAttributes> ArgumentCoder<WebCore::Graph
         return std::nullopt;
     if (!decoder.decode(attributes.initialPowerPreference))
         return std::nullopt;
-#if ENABLE(WEBXR)
-    if (!decoder.decode(attributes.xrCompatible))
-        return std::nullopt;
-#endif
     return attributes;
 }
 

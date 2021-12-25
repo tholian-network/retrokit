@@ -1030,8 +1030,6 @@ enum AutoplayPolicy {
     [Conditional=APP_HIGHLIGHTS] readonly attribute sequence<DOMString> appHighlightContextMenuItemTitles;
     [Conditional=APP_HIGHLIGHTS] unsigned long numberOfAppHighlights();
 
-    [Conditional=WEBXR] readonly attribute WebXRTest xrTest;
-
     [Conditional=ENCRYPTED_MEDIA] unsigned long mediaKeysInternalInstanceObjectRefCount(MediaKeys mediaKeys);
     [Conditional=ENCRYPTED_MEDIA] unsigned long mediaKeySessionInternalInstanceSessionObjectRefCount(MediaKeySession session);
 
