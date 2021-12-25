@@ -128,7 +128,6 @@ $(PROJECT_DIR)/UIProcess/WebPageProxy.messages.in
 $(PROJECT_DIR)/UIProcess/WebPasteboardProxy.messages.in
 $(PROJECT_DIR)/UIProcess/WebProcessPool.messages.in
 $(PROJECT_DIR)/UIProcess/WebProcessProxy.messages.in
-$(PROJECT_DIR)/UIProcess/XR/PlatformXRSystem.messages.in
 $(PROJECT_DIR)/UIProcess/ios/EditableImageController.messages.in
 $(PROJECT_DIR)/UIProcess/ios/SmartMagnificationController.messages.in
 $(PROJECT_DIR)/UIProcess/mac/SecItemShimProxy.messages.in
@@ -196,7 +195,6 @@ $(PROJECT_DIR)/WebProcess/WebPage/VisitedLinkTableController.messages.in
 $(PROJECT_DIR)/WebProcess/WebPage/WebPage.messages.in
 $(PROJECT_DIR)/WebProcess/WebProcess.messages.in
 $(PROJECT_DIR)/WebProcess/WebStorage/StorageAreaMap.messages.in
-$(PROJECT_DIR)/WebProcess/XR/PlatformXRSystemProxy.messages.in
 $(PROJECT_DIR)/WebProcess/cocoa/AudioCaptureSampleManager.messages.in
 $(PROJECT_DIR)/WebProcess/cocoa/PlaybackSessionManager.messages.in
 $(PROJECT_DIR)/WebProcess/cocoa/RemoteCaptureSampleManager.messages.in

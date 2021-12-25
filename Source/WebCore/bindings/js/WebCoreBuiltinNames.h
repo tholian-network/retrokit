@@ -91,8 +91,6 @@ namespace WebCore {
     macro(EnterPictureInPictureEvent) \
     macro(ExtendableEvent) \
     macro(ExtendableMessageEvent) \
-    macro(FakeXRDevice) \
-    macro(FakeXRInputController) \
     macro(FetchEvent) \
     macro(FileSystem) \
     macro(FileSystemDirectoryEntry) \

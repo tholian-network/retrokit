@@ -45,7 +45,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/Shared/Plugins/Netscape/x11"
     "${WEBKIT_DIR}/Shared/RemoteLayerTree"
     "${WEBKIT_DIR}/Shared/WebsiteData"
-    "${WEBKIT_DIR}/Shared/XR"
     "${WEBKIT_DIR}/UIProcess"
     "${WEBKIT_DIR}/UIProcess/API"
     "${WEBKIT_DIR}/UIProcess/API/C"
@@ -67,7 +66,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/UIProcess/WebAuthentication"
     "${WEBKIT_DIR}/UIProcess/WebAuthentication/Mock"
     "${WEBKIT_DIR}/UIProcess/WebsiteData"
-    "${WEBKIT_DIR}/UIProcess/XR"
     "${WEBKIT_DIR}/WebAuthnProcess"
     "${WEBKIT_DIR}/WebProcess"
     "${WEBKIT_DIR}/WebProcess/ApplicationCache"
@@ -105,7 +103,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/WebProcess/WebPage"
     "${WEBKIT_DIR}/WebProcess/WebPage/RemoteLayerTree"
     "${WEBKIT_DIR}/WebProcess/WebStorage"
-    "${WEBKIT_DIR}/WebProcess/XR"
     "${CMAKE_SOURCE_DIR}/Source"
     "${CMAKE_SOURCE_DIR}/WebKitLibraries"
 )
@@ -212,8 +209,6 @@ set(WebKit_MESSAGES_IN_FILES
 
     UIProcess/UserContent/WebUserContentControllerProxy
 
-    UIProcess/XR/PlatformXRSystem
-
     WebProcess/WebProcess
 
     WebProcess/Automation/WebAutomationSessionProxy
@@ -283,7 +278,6 @@ set(WebKit_MESSAGES_IN_FILES
 
     WebProcess/WebStorage/StorageAreaMap
 
-    WebProcess/XR/PlatformXRSystemProxy
 )
 
 set(WebKit_FRAMEWORKS

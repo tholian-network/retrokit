@@ -290,9 +290,6 @@ Shared/Plugins/Netscape/PluginInformation.cpp @no-unify
 
 Shared/WebsiteData/WebsiteData.cpp
 
-Shared/XR/XRDeviceInfo.cpp
-Shared/XR/XRDeviceProxy.cpp
-
 UIProcess/AuxiliaryProcessProxy.cpp
 UIProcess/BackgroundProcessResponsivenessTimer.cpp
 UIProcess/DeviceIdHashSaltStorage.cpp
@@ -497,8 +494,6 @@ UIProcess/WebAuthentication/WebAuthnProcessProxy.cpp
 UIProcess/WebsiteData/WebsiteDataRecord.cpp
 UIProcess/WebsiteData/WebsiteDataStore.cpp
 UIProcess/WebsiteData/WebsiteDataStoreConfiguration.cpp
-
-UIProcess/XR/PlatformXRSystem.cpp
 
 WebAuthnProcess/WebAuthnConnectionToWebProcess.cpp
 WebAuthnProcess/WebAuthnProcess.cpp
@@ -713,14 +708,10 @@ WebProcess/WebStorage/StorageAreaMap.cpp
 WebProcess/WebStorage/StorageNamespaceImpl.cpp
 WebProcess/WebStorage/WebStorageNamespaceProvider.cpp
 
-WebProcess/XR/PlatformXRSystemProxy.cpp
-
 NetworkBroadcastChannelRegistryMessageReceiver.cpp
 RTCDataChannelRemoteManagerMessageReceiver.cpp
 RTCDataChannelRemoteManagerProxyMessageReceiver.cpp
 RemoteAudioMediaStreamTrackRendererInternalUnitManagerMessageReceiver.cpp
 RemoteGraphicsContextGLMessageReceiver.cpp
 RemoteGraphicsContextGLProxyMessageReceiver.cpp
-PlatformXRSystemMessageReceiver.cpp
-PlatformXRSystemProxyMessageReceiver.cpp
 WebBroadcastChannelRegistryMessageReceiver.cpp

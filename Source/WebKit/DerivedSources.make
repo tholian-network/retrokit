@@ -170,7 +170,6 @@ MESSAGE_RECEIVERS = \
 	UIProcess/Media/RemoteMediaSessionCoordinatorProxy \
 	UIProcess/SpeechRecognitionRemoteRealtimeMediaSourceManager \
 	UIProcess/SpeechRecognitionServer \
-	UIProcess/XR/PlatformXRSystem \
 	WebProcess/Databases/IndexedDB/WebIDBConnectionToServer \
 	WebProcess/GPU/GPUProcessConnection \
 	WebProcess/GPU/graphics/RemoteRenderingBackendProxy \
@@ -231,7 +230,6 @@ MESSAGE_RECEIVERS = \
 	WebProcess/WebPage/Cocoa/TextCheckingControllerProxy \
 	WebProcess/WebPage/ViewUpdateDispatcher \
 	WebProcess/WebAuthentication/WebAuthnProcessConnection \
-	WebProcess/XR/PlatformXRSystemProxy \
 	PluginProcess/WebProcessConnection \
 	PluginProcess/PluginControllerProxy \
 	PluginProcess/PluginProcess \
