@@ -36,6 +36,7 @@ legacy platforms that are no longer maintained.
 - [x] Playstation Platform Support (`__SCE__`, `PLATFORM_PLAYSTATION`, `BPLATFORM_PLAYSTATION`, `PlayStation`, `playstation`, `sony`)
 - [ ] Apple Watch Platform Support (`TARGET_OS_WATCH`, `BOS_WATCHOS`, `BPLATFORM_WATCHOS`)
 - [ ] Apple TV Platform Support (`TARGET_OS_TV`, `BOS_APPLETV`, `BPLATFORM_APPLETV`)
+- [ ] Solaris Platform Support
 - [ ] *Undecided* WebKit Platform for Embedded (`WPE`, `USE_WPE_RENDERER`)
 - [ ] *Undecided* Developer Mode (`DEVELOPER_MODE`)
 
@@ -45,6 +46,8 @@ legacy platforms that are no longer maintained.
 These legacy APIs that are no longer of relevance to a modern Web Browser.
 
 - [x] Hardcoded Quirks and Hacks (`bbc.co.uk`, `microsoft.com`, `playstation.com`, `sony.com`, `sonyentertainment.com`)
+- [x] `MEMMEM` hack in `StringExtras.h`
+- [ ] `STRNSTR` hack in `StringExtras.h`
 - [ ] Netscape Plugin API (`NETSCAPE_PLUGIN_API`)
 
 
