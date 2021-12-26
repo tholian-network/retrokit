@@ -399,8 +399,6 @@ bool Element::dispatchMouseEvent(const PlatformMouseEvent& platformEvent, const 
 #elif PLATFORM(MAC)
     isParentProcessAFullWebBrowser = MacApplication::isSafari();
 #endif
-    if (Quirks::StorageAccessResult::ShouldCancelEvent == document().quirks().triggerOptionalStorageAccessQuirk(*this, platformEvent, eventType, detail, relatedTarget, isParentProcessAFullWebBrowser, isSyntheticClick))
-        return false;
 
     ASSERT(!mouseEvent->target() || mouseEvent->target() != relatedTarget);
     dispatchEvent(mouseEvent);

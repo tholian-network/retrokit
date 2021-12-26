@@ -2317,16 +2317,6 @@ ExceptionOr<RefPtr<Frame>> DOMWindow::createWindow(const String& urlString, cons
 
 ExceptionOr<RefPtr<WindowProxy>> DOMWindow::open(DOMWindow& activeWindow, DOMWindow& firstWindow, const String& urlStringToOpen, const AtomString& frameName, const String& windowFeaturesString)
 {
-#if ENABLE(RESOURCE_LOAD_STATISTICS)
-    if (RefPtr document = this->document()) {
-        if (document->settings().needsSiteSpecificQuirks() && urlStringToOpen == Quirks::BBCRadioPlayerURLString()) {
-            auto radioPlayerDomain = RegistrableDomain(URL(URL(), Quirks::staticRadioPlayerURLString()));
-            auto BBCDomain = RegistrableDomain(URL(URL(), Quirks::BBCRadioPlayerURLString()));
-            if (!ResourceLoadObserver::shared().hasCrossPageStorageAccess(radioPlayerDomain, BBCDomain))
-                return RefPtr<WindowProxy> { nullptr };
-        }
-    }
-#endif
 
     if (!isCurrentlyDisplayedInFrame())
         return RefPtr<WindowProxy> { nullptr };

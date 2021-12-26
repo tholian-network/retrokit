@@ -905,32 +905,9 @@ void DocumentLoader::stopLoadingAfterXFrameOptionsOrContentSecurityPolicyDenied(
         cancelMainResourceLoad(frameLoader->cancelledError(m_request));
 }
 
-#if ENABLE(RESOURCE_LOAD_STATISTICS)
-static URL microsoftTeamsRedirectURL()
-{
-    return URL(URL(), "https://www.microsoft.com/en-us/microsoft-365/microsoft-teams/");
-}
-#endif
-
 void DocumentLoader::responseReceived(CachedResource& resource, const ResourceResponse& response, CompletionHandler<void()>&& completionHandler)
 {
     ASSERT_UNUSED(resource, m_mainResource == &resource);
-
-#if ENABLE(RESOURCE_LOAD_STATISTICS)
-    // FIXME(218779): Remove this quirk once microsoft.com completes their login flow redesign.
-    if (m_frame && m_frame->document()) {
-        auto& document = *m_frame->document();
-        if (Quirks::isMicrosoftTeamsRedirectURL(response.url())) {
-            auto firstPartyDomain = RegistrableDomain(response.url());
-            if (auto loginDomains = NetworkStorageSession::subResourceDomainsInNeedOfStorageAccessForFirstParty(firstPartyDomain)) {
-                if (!Quirks::hasStorageAccessForAllLoginDomains(*loginDomains, firstPartyDomain)) {
-                    m_frame->navigationScheduler().scheduleRedirect(document, 0, microsoftTeamsRedirectURL(), IsMetaRefresh::No);
-                    return;
-                }
-            }
-        }
-    }
-#endif
 
 #if ENABLE(SERVICE_WORKER)
     if (RuntimeEnabledFeatures::sharedFeatures().serviceWorkerEnabled() && response.source() == ResourceResponse::Source::MemoryCache) {

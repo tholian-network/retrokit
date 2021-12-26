@@ -45,7 +45,11 @@ legacy platforms that are no longer maintained.
 
 These legacy APIs that are no longer of relevance to a modern Web Browser.
 
-- [x] Hardcoded Quirks and Hacks (`bbc.co.uk`, `microsoft.com`, `playstation.com`, `sony.com`, `sonyentertainment.com`)
+- [x] Quirks for `bbc.co.uk` Media Player
+- [x] Quirks for `microsoft.com` Teams Redirect links
+- [x] Quirks for `playstation.com`, `sony.com` and `sonyentertainment.com`
+- [ ] Quirks for `twitter.com`
+- [x] Quirks for `kinja.com`
 - [x] `MEMMEM` hack in `StringExtras.h`
 - [ ] `STRNSTR` hack in `StringExtras.h`
 - [ ] Netscape Plugin API (`NETSCAPE_PLUGIN_API`)

@@ -122,9 +122,7 @@ public:
 
     bool shouldAvoidPastingImagesAsWebContent() const;
 
-    enum StorageAccessResult : bool { ShouldNotCancelEvent, ShouldCancelEvent };
     enum ShouldDispatchClick : bool { No, Yes };
-    StorageAccessResult triggerOptionalStorageAccessQuirk(Element&, const PlatformMouseEvent&, const AtomString& eventType, int, Element*, bool isParentProcessAFullWebBrowser, IsSyntheticClick) const;
 
     bool needsVP9FullRangeFlagQuirk() const;
     bool needsHDRPixelDepthQuirk() const;
@@ -138,14 +136,6 @@ public:
 
     WEBCORE_EXPORT bool blocksReturnToFullscreenFromPictureInPictureQuirk() const;
     bool shouldDisableEndFullscreenEventWhenEnteringPictureInPictureFromFullscreenQuirk() const;
-
-#if ENABLE(RESOURCE_LOAD_STATISTICS)
-    static bool isMicrosoftTeamsRedirectURL(const URL&);
-    static bool hasStorageAccessForAllLoginDomains(const HashSet<RegistrableDomain>&, const RegistrableDomain&);
-    static const String& BBCRadioPlayerURLString();
-    WEBCORE_EXPORT static const String& staticRadioPlayerURLString();
-    StorageAccessResult requestStorageAccessAndHandleClick(CompletionHandler<void(ShouldDispatchClick)>&&) const;
-#endif
 
 #if ENABLE(WEB_AUTHN)
     WEBCORE_EXPORT bool shouldBypassUserGestureRequirementForWebAuthn() const;
