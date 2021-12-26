@@ -1,118 +1,36 @@
 
-# Retro - Minimalistic WebKit Fork that aims to reduce its Attack Surface
+# RetroKit - Minimal WebKit Fork with reduced Attack Surface
 
-This WebKit2GTK Fork aims to reduce the Attack Surface of a Webview, and
-therefore tries to reduce its features that are abused by Fingerprinting
-libraries to a minimum.
+This WebKit2GTK fork reduces the Attack Surface of a WebView, and therefore
+reduces the set of Web APIs which are abused by fingerprinting libraries.
 
-Think of this as a safe and secure Webview alternative which aims to still
-allow ECMAScript to run, but with the idea that no malicious code can identify
-your device or fingerprint the system it is running on.
+The purpose of this fork is to create a secure webview alternative that
+can be embedded for high security (and cyber defense) environments which
+assume a hostile network infrastructure that is controlled by an opposing
+or malicious party.
 
-As the APIs and their bindings/interfaces/native adapters are completely
-removed from the codebase, there's no way they can be exploited or bypassed.
+Think of this as a modern WebKit fork that tries to keep up-to-date in
+regards to HTML5/CSS4, but removes all features that can be (and were used)
+for fingerprinting and tracking. As all the APIs and their bindings, interfaces,
+and native adapters are removed completely from the codebase, there's no way
+these can be bypassed or exploited.
 
-
-# Removed APIs
-
-These APIs have been removed, as they require either a proprietary service
-that is known to track you; or because they've been used in the past by libraries
-like fingerprint.js to track/identify you as a unique user.
-
-As fingerprinting libraries usually tries to identify hardware specifications,
-all Web APIs that expose the local hardware or network setup are removed as well.
-
-Some APIs are removed because they break User Experience in an annoying way
-for the end-user, and are regularly abused in order to block user interaction
-or in order to make the current website content interaction useless.
-
-# Removed Target Platforms
-
-- [x] Playstation Platform Support (`__SCE__`, `PLATFORM_PLAYSTATION`, `BPLATFORM_PLAYSTATION`, `PlayStation`, `playstation`, `sony`)
-- [ ] Apple Watch Platform Support (`TARGET_OS_WATCH`, `BOS_WATCHOS`, `BPLATFORM_WATCHOS`)
-- [ ] Apple TV Platform Support (`TARGET_OS_TV`, `BOS_APPLETV`, `BPLATFORM_APPLETV`)
-
-# Removed Legacy Hacks
-
-- [x] Hardcoded Quirks and Hacks (`bbc.co.uk`, `microsoft.com`, `playstation.com`, `sony.com`, `sonyentertainment.com`)
-- [ ] Netscape Plugin API (`NETSCAPE_PLUGIN_API`)
-
-# Removed Library Dependencies
-
-- [x] Geoclue Library Integration (`geoclue`) which leaks your geolocation to websites.
-- [ ] Libhyphen Library Integration (`libhyphen`, `USE_LIBHYPHEN`) - do we love spell-ing so much?
-- [ ] Libsecret Library Integration (`libsecret`, `USE_LIBSECRET`) which automatically leaks stored credentials only by opening URLs with the same hostname.
-- [ ] Libnotify Library Integration (`libnotify`, `USE_LIBNOTIFY`) which is just annoying.
-- [ ] SystemD Library Integration (`libsystemd`, `USE_SYSTEMD`) which a Browser should never have a depdendency to.
-- [ ] ARKIT Integration (`ARKIT`)
-- [x] PASSKIT Integration (`PASSKIT`)
-
-# Removed ECMAScript APIs
-
-- [x] Apple Pay API (`APPLE_PAY`, `ApplePay*`)
-- [x] Bluetooth API
-- [x] Gamepad API
-- [x] Geolocation API (`ENABLE_GEOLOCATION`, `Geolocation*`, `Geoposition*`)
-- [x] Payment Request API (`PAYMENT_REQUEST`, `Merchant*`, `Payer*`, `Payment*`, `Coupon*`)
-- [x] DeviceOrientation API (`DEVICE_ORIENTATION`, `ORIENTATION_EVENTS`, `DeviceOrientation*`, `get_orientation`, `orientationChanged`, `onorientationchange`, `OrientationNotifier`, `DOM_WINDOW_PROP_ORIENTATION`, `orientation`)
-- [x] DeviceMotion API (`DEVICE_ORIENTATION`, `DeviceMotion*`)
-- [x] Accelerometer Sensor API
-- [x] Gravity Sensor API
-- [x] Gyroscope Sensor API
-- [x] Magnetometer Sensor API
-- [x] FTP Directory Support (`FTPDIR`, `FTPDirectory*`, `unknownFileSizeText`)
-- [x] WebXR API (`WEBXR`, `OPENXR`, `WebXR*`, `XRSpatialTracking`, `xrCompatible`)
-- [ ] Web API Statistics (`WEB_API_STATISTICS`)
-- [ ] Encrypted Media API (`ENCRYPTED_MEDIA`, `LEGACY_ENCRYPTED_MEDIA`)
-- [ ] Picture in Picture API (`PICTURE_IN_PICTURE_API`)
-- [ ] Web RTC API (`WEB_RTC`, `RTC*`)
-- [ ] Web NFC API
-- [ ] Web Performance API
-- [ ] Web Storage API
-- [ ] Indexed Database API
-- [ ] Canvas API (`OFFSCREEN_CANVAS`, `Canvas*`, `DOMConvertWebGL`, `JSANGLEInstancedArray`, `CanvasActivityRecord`)
-- [ ] WebGL API (`WEBGL`, `WebGL*`, `JSANGLEInstancedArray`, `GraphicsContextGL*`, `HighPerformanceGraphicsUsageSampler`)
-- [ ] GPU Process for WebGL (`GPU_PROCESS`)
-- [ ] WebGL via Metal (`WEBGL_COMPATIBLE_METAL`)
-- [ ] WebGPU API
-- [ ] Media Capture API
-- [ ] Screen Capture API (`getDisplayMedia`)
-- [ ] Media Stream API (`getUserMedia`)
-- [ ] Page Visibility API
-- [ ] Pointer Lock API (`POINTER_LOCK`)
-- [ ] Web Notifications API
-- [ ] Window Alert Method (`window.alert()`)
-- [ ] Window History Interface (`window.history`)
-- [ ] Window Popups (`window.open()`)
-- [ ] WASM / WebASM Support
-
-# Removed CSS Features
-
-- [ ] CSS Filters
-- [ ] CSS Pointer Events
-- [ ] Enforce CSS Web Fonts Caching
-- [ ] Device Pixel Ratio
-- [ ] Disallow `overflow:hidden`
-
-# Undecided
-
-These features are undecided whether they are useful or not, and
-while they aren't known to be used as a tracking mechanism right
-now they could be potentially be abused for fingerprinting in
-the future.
-
-- [ ] Web Midi API
-- [ ] Web Workers API
-- [ ] Service Worker API
+As this is the WebView-side of a Web Browser's infrastructure, it is used
+by the [Tholian Stealth](https://github.com/tholian-network/stealth) Browser,
+which provides an extra layer of Security via a peer-to-peer TLS network and
+statistical content verification infrastructure.
 
 
-# Planned Removal of Compiler Flags
+## Security Improvements
 
-- `DEVELOPER_MODE`
-- `WPE`, `USE_WPE_RENDERER`
+For an overview of the differences to upstream WebKit, take a look at the
+[SECURITY.md](./SECURITY.md) file which documents the current progress of
+removals and changed behaviours of Web APIs.
 
 
-# Building on Linux
+# Building
+
+## ArchLinux
 
 ```bash
 sudo pacman -S ruby base-devel \
@@ -120,9 +38,22 @@ sudo pacman -S ruby base-devel \
 	libwebp openjpeg2 \
 	woff2 lcms harfbuzz harfbuzz-icu \
 	libwpe wpebackend-fdo;
-```
 
-```bash
+# Remove all build artifacts
+bash clean.sh;
+
+# Create a debug build
 cmake -DPORT=GTK -DCMAKE_BUILD_TYPE=RelWithDebInfo -DENABLE_MINIBROWSER=ON -GNinja;
 ninja;
 ```
+
+
+# License
+
+The License of this project is identical to upstream, which means that it is
+released under a mixture of BSD-2-Clause and LGPLv2.1.
+
+- [JavaScriptCore](/Source/WebCore) is licensed under LGPLv2.1
+- [WebCore](/Source/WebCore) is licensed under LGPLv2.1
+- [WebKit](/Source/WebKit) is licensed under BSD-2-Clause
+
