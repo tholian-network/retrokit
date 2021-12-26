@@ -59,33 +59,6 @@ static void encodeOptionSet(KeyedEncoder& encoder, const String& label, const Op
     encoder.encodeUInt64(label, optionSetBitMask);
 }
 
-#if ENABLE(WEB_API_STATISTICS)
-static void encodeHashSet(KeyedEncoder& encoder, const String& label,  const String& key, const HashSet<String>& hashSet)
-{
-    if (hashSet.isEmpty())
-        return;
-    
-    encoder.encodeObjects(label, hashSet.begin(), hashSet.end(), [&key](KeyedEncoder& encoderInner, const String& origin) {
-        encoderInner.encodeString(key, origin);
-    });
-}
-
-static void encodeFontHashSet(KeyedEncoder& encoder, const String& label, const HashSet<String>& hashSet)
-{
-    encodeHashSet(encoder, label, "font", hashSet);
-}
-    
-static void encodeCanvasActivityRecord(KeyedEncoder& encoder, const String& label, const CanvasActivityRecord& canvasActivityRecord)
-{
-    encoder.encodeObject(label, canvasActivityRecord, [] (KeyedEncoder& encoderInner, const CanvasActivityRecord& canvasActivityRecord) {
-        encoderInner.encodeBool("wasDataRead", canvasActivityRecord.wasDataRead);
-        encoderInner.encodeObjects("textWritten", canvasActivityRecord.textWritten.begin(), canvasActivityRecord.textWritten.end(), [] (KeyedEncoder& encoderInner2, const String& text) {
-            encoderInner2.encodeString("text", text);
-        });
-    });
-}
-#endif
-
 void ResourceLoadStatistics::encode(KeyedEncoder& encoder) const
 {
     encoder.encodeString("PrevalentResourceDomain"_s, registrableDomain.string());
@@ -123,14 +96,6 @@ void ResourceLoadStatistics::encode(KeyedEncoder& encoder) const
     encoder.encodeUInt32("timesAccessedAsFirstPartyDueToUserInteraction"_s, timesAccessedAsFirstPartyDueToUserInteraction);
     encoder.encodeUInt32("timesAccessedAsFirstPartyDueToStorageAccessAPI"_s, timesAccessedAsFirstPartyDueToStorageAccessAPI);
 
-#if ENABLE(WEB_API_STATISTICS)
-    encodeFontHashSet(encoder, "fontsFailedToLoad", fontsFailedToLoad);
-    encodeFontHashSet(encoder, "fontsSuccessfullyLoaded", fontsSuccessfullyLoaded);
-    encodeHashSet(encoder, "topFrameRegistrableDomainsWhichAccessedWebAPIs", "domain", topFrameRegistrableDomainsWhichAccessedWebAPIs);
-    encodeCanvasActivityRecord(encoder, "canvasActivityRecord", canvasActivityRecord);
-    encodeOptionSet(encoder, "navigatorFunctionsAccessedBitMask", navigatorFunctionsAccessed);
-    encodeOptionSet(encoder, "screenFunctionsAccessedBitMask", screenFunctionsAccessed);
-#endif
 }
 
 static void decodeHashCountedSet(KeyedDecoder& decoder, const String& label, HashCountedSet<RegistrableDomain>& hashCountedSet)
@@ -172,45 +137,6 @@ static void decodeOptionSet(KeyedDecoder& decoder, const String& label, OptionSe
     if (decoder.decodeUInt64(label, optionSetBitMask))
         optionSet = OptionSet<T>::fromRaw(optionSetBitMask);
 }
-
-#if ENABLE(WEB_API_STATISTICS)
-static void decodeHashSet(KeyedDecoder& decoder, const String& label, const String& key, HashSet<String>& hashSet)
-{
-    Vector<String> ignore;
-IGNORE_WARNINGS_BEGIN("unused-result")
-    decoder.decodeObjects(label, ignore, [&hashSet, &key](KeyedDecoder& decoderInner, String& origin) {
-        if (!decoderInner.decodeString(key, origin))
-            return false;
-        
-        hashSet.add(origin);
-        return true;
-    });
-IGNORE_WARNINGS_END
-}
-
-static void decodeFontHashSet(KeyedDecoder& decoder, const String& label, HashSet<String>& hashSet)
-{
-    decodeHashSet(decoder, label, "font", hashSet);
-}
-    
-static void decodeCanvasActivityRecord(KeyedDecoder& decoder, const String& label, CanvasActivityRecord& canvasActivityRecord)
-{
-IGNORE_WARNINGS_BEGIN("unused-result")
-    decoder.decodeObject(label, canvasActivityRecord, [] (KeyedDecoder& decoderInner, CanvasActivityRecord& canvasActivityRecord) {
-        if (!decoderInner.decodeBool("wasDataRead", canvasActivityRecord.wasDataRead))
-            return false;
-        Vector<String> ignore;
-        decoderInner.decodeObjects("textWritten", ignore, [&canvasActivityRecord] (KeyedDecoder& decoderInner2, String& text) {
-            if (!decoderInner2.decodeString("text", text))
-                return false;
-            canvasActivityRecord.textWritten.add(text);
-            return true;
-        });
-        return true;
-    });
-IGNORE_WARNINGS_END
-}
-#endif
 
 bool ResourceLoadStatistics::decode(KeyedDecoder& decoder, unsigned modelVersion)
 {
@@ -335,17 +261,6 @@ bool ResourceLoadStatistics::decode(KeyedDecoder& decoder, unsigned modelVersion
             timesAccessedAsFirstPartyDueToStorageAccessAPI = 0;
     }
 
-#if ENABLE(WEB_API_STATISTICS)
-    if (modelVersion >= 13) {
-        decodeFontHashSet(decoder, "fontsFailedToLoad", fontsFailedToLoad);
-        decodeFontHashSet(decoder, "fontsSuccessfullyLoaded", fontsSuccessfullyLoaded);
-        decodeHashSet(decoder, "topFrameRegistrableDomainsWhichAccessedWebAPIs", "domain", topFrameRegistrableDomainsWhichAccessedWebAPIs);
-        decodeCanvasActivityRecord(decoder, "canvasActivityRecord", canvasActivityRecord);
-        decodeOptionSet(decoder, "navigatorFunctionsAccessedBitMask", navigatorFunctionsAccessed);
-        decodeOptionSet(decoder, "screenFunctionsAccessedBitMask", screenFunctionsAccessed);
-    }
-#endif
-
     return true;
 }
 
@@ -363,81 +278,6 @@ static void appendHashSet(StringBuilder& builder, const String& label, const Has
     for (auto& entry : hashSet)
         builder.append("        ", entry.string(), '\n');
 }
-
-#if ENABLE(WEB_API_STATISTICS)
-static void appendHashSet(StringBuilder& builder, const String& label, const HashSet<String>& hashSet)
-{
-    if (hashSet.isEmpty())
-        return;
-    
-    builder.append("    ", label, ":\n");
-    for (auto& entry : hashSet)
-        builder.append("        ", entry, '\n');
-}
-
-static ASCIILiteral navigatorAPIEnumToString(ResourceLoadStatistics::NavigatorAPI navigatorEnum)
-{
-    switch (navigatorEnum) {
-    case ResourceLoadStatistics::NavigatorAPI::JavaEnabled:
-        return "javaEnabled"_s;
-    case ResourceLoadStatistics::NavigatorAPI::MimeTypes:
-        return "mimeTypes"_s;
-    case ResourceLoadStatistics::NavigatorAPI::CookieEnabled:
-        return "cookieEnabled"_s;
-    case ResourceLoadStatistics::NavigatorAPI::Plugins:
-        return "plugins"_s;
-    case ResourceLoadStatistics::NavigatorAPI::UserAgent:
-        return "userAgent"_s;
-    case ResourceLoadStatistics::NavigatorAPI::AppVersion:
-        return "appVersion"_s;
-    }
-    ASSERT_NOT_REACHED();
-    return "Invalid navigator API"_s;
-}
-
-static ASCIILiteral screenAPIEnumToString(ResourceLoadStatistics::ScreenAPI screenEnum)
-{
-    switch (screenEnum) {
-    case ResourceLoadStatistics::ScreenAPI::Height:
-        return "height"_s;
-    case ResourceLoadStatistics::ScreenAPI::Width:
-        return "width"_s;
-    case ResourceLoadStatistics::ScreenAPI::ColorDepth:
-        return "colorDepth"_s;
-    case ResourceLoadStatistics::ScreenAPI::PixelDepth:
-        return "pixelDepth"_s;
-    case ResourceLoadStatistics::ScreenAPI::AvailLeft:
-        return "availLeft"_s;
-    case ResourceLoadStatistics::ScreenAPI::AvailTop:
-        return "availTop"_s;
-    case ResourceLoadStatistics::ScreenAPI::AvailHeight:
-        return "availHeight"_s;
-    case ResourceLoadStatistics::ScreenAPI::AvailWidth:
-        return "availWidth"_s;
-    }
-    ASSERT_NOT_REACHED();
-    return "Invalid screen API"_s;
-}
-    
-static void appendNavigatorAPIOptionSet(StringBuilder& builder, const OptionSet<ResourceLoadStatistics::NavigatorAPI>& optionSet)
-{
-    if (optionSet.isEmpty())
-        return;
-    builder.append("    navigatorFunctionsAccessed:\n");
-    for (auto navigatorAPI : optionSet)
-        builder.append("        ", navigatorAPIEnumToString(navigatorAPI), '\n');
-}
-    
-static void appendScreenAPIOptionSet(StringBuilder& builder, const OptionSet<ResourceLoadStatistics::ScreenAPI>& optionSet)
-{
-    if (optionSet.isEmpty())
-        return;
-    builder.append("    screenFunctionsAccessed:\n");
-    for (auto screenAPI : optionSet) {
-        builder.append("        ", screenAPIEnumToString(screenAPI), '\n');
-    }
-}
-#endif
 
 static bool hasHadRecentUserInteraction(WTF::Seconds interactionTimeSeconds)
 {
@@ -483,18 +323,6 @@ String ResourceLoadStatistics::toString() const
     builder.append('\n');
     builder.append("    dataRecordsRemoved: ", dataRecordsRemoved);
     builder.append('\n');
-
-#if ENABLE(WEB_API_STATISTICS)
-    appendHashSet(builder, "fontsFailedToLoad", fontsFailedToLoad);
-    appendHashSet(builder, "fontsSuccessfullyLoaded", fontsSuccessfullyLoaded);
-    appendHashSet(builder, "topFrameRegistrableDomainsWhichAccessedWebAPIs", topFrameRegistrableDomainsWhichAccessedWebAPIs);
-    appendNavigatorAPIOptionSet(builder, navigatorFunctionsAccessed);
-    appendScreenAPIOptionSet(builder, screenFunctionsAccessed);
-    appendHashSet(builder, "canvasTextWritten", canvasActivityRecord.textWritten);
-    appendBoolean(builder, "canvasReadData", canvasActivityRecord.wasDataRead);
-    builder.append('\n');
-    builder.append('\n');
-#endif
 
     return builder.toString();
 }
@@ -557,14 +385,6 @@ void ResourceLoadStatistics::merge(const ResourceLoadStatistics& other)
     isVeryPrevalentResource |= other.isVeryPrevalentResource;
     dataRecordsRemoved = std::max(dataRecordsRemoved, other.dataRecordsRemoved);
     
-#if ENABLE(WEB_API_STATISTICS)
-    mergeHashSet(fontsFailedToLoad, other.fontsFailedToLoad);
-    mergeHashSet(fontsSuccessfullyLoaded, other.fontsSuccessfullyLoaded);
-    mergeHashSet(topFrameRegistrableDomainsWhichAccessedWebAPIs, other.topFrameRegistrableDomainsWhichAccessedWebAPIs);
-    canvasActivityRecord.mergeWith(other.canvasActivityRecord);
-    navigatorFunctionsAccessed.add(other.navigatorFunctionsAccessed);
-    screenFunctionsAccessed.add(other.screenFunctionsAccessed);
-#endif
 }
 
 WallTime ResourceLoadStatistics::reduceTimeResolution(WallTime time)

@@ -152,27 +152,9 @@ void WebResourceLoadObserver::logFontLoad(const Document& document, const String
     if (isEphemeral())
         return;
 
-#if ENABLE(WEB_API_STATISTICS)
-    RegistrableDomain registrableDomain { document.url() };
-    auto& statistics = ensureResourceStatisticsForRegistrableDomain(registrableDomain);
-    bool shouldCallNotificationCallback = false;
-    if (!loadStatus) {
-        if (statistics.fontsFailedToLoad.add(familyName).isNewEntry)
-            shouldCallNotificationCallback = true;
-    } else {
-        if (statistics.fontsSuccessfullyLoaded.add(familyName).isNewEntry)
-            shouldCallNotificationCallback = true;
-    }
-    RegistrableDomain mainFrameRegistrableDomain { document.topDocument().url() };
-    if (statistics.topFrameRegistrableDomainsWhichAccessedWebAPIs.add(mainFrameRegistrableDomain).isNewEntry)
-        shouldCallNotificationCallback = true;
-    if (shouldCallNotificationCallback)
-        scheduleNotificationIfNeeded();
-#else
     UNUSED_PARAM(document);
     UNUSED_PARAM(familyName);
     UNUSED_PARAM(loadStatus);
-#endif
 }
     
 void WebResourceLoadObserver::logCanvasRead(const Document& document)
@@ -180,16 +162,7 @@ void WebResourceLoadObserver::logCanvasRead(const Document& document)
     if (isEphemeral())
         return;
 
-#if ENABLE(WEB_API_STATISTICS)
-    RegistrableDomain registrableDomain { document.url() };
-    auto& statistics = ensureResourceStatisticsForRegistrableDomain(registrableDomain);
-    RegistrableDomain mainFrameRegistrableDomain { document.topDocument().url() };
-    statistics.canvasActivityRecord.wasDataRead = true;
-    if (statistics.topFrameRegistrableDomainsWhichAccessedWebAPIs.add(mainFrameRegistrableDomain).isNewEntry)
-        scheduleNotificationIfNeeded();
-#else
     UNUSED_PARAM(document);
-#endif
 }
 
 void WebResourceLoadObserver::logCanvasWriteOrMeasure(const Document& document, const String& textWritten)
@@ -197,21 +170,8 @@ void WebResourceLoadObserver::logCanvasWriteOrMeasure(const Document& document, 
     if (isEphemeral())
         return;
 
-#if ENABLE(WEB_API_STATISTICS)
-    RegistrableDomain registrableDomain { document.url() };
-    auto& statistics = ensureResourceStatisticsForRegistrableDomain(registrableDomain);
-    bool shouldCallNotificationCallback = false;
-    RegistrableDomain mainFrameRegistrableDomain { document.topDocument().url() };
-    if (statistics.canvasActivityRecord.recordWrittenOrMeasuredText(textWritten))
-        shouldCallNotificationCallback = true;
-    if (statistics.topFrameRegistrableDomainsWhichAccessedWebAPIs.add(mainFrameRegistrableDomain).isNewEntry)
-        shouldCallNotificationCallback = true;
-    if (shouldCallNotificationCallback)
-        scheduleNotificationIfNeeded();
-#else
     UNUSED_PARAM(document);
     UNUSED_PARAM(textWritten);
-#endif
 }
     
 void WebResourceLoadObserver::logNavigatorAPIAccessed(const Document& document, const ResourceLoadStatistics::NavigatorAPI functionName)
@@ -219,23 +179,8 @@ void WebResourceLoadObserver::logNavigatorAPIAccessed(const Document& document, 
     if (isEphemeral())
         return;
 
-#if ENABLE(WEB_API_STATISTICS)
-    RegistrableDomain registrableDomain { document.url() };
-    auto& statistics = ensureResourceStatisticsForRegistrableDomain(registrableDomain);
-    bool shouldCallNotificationCallback = false;
-    if (!statistics.navigatorFunctionsAccessed.contains(functionName)) {
-        statistics.navigatorFunctionsAccessed.add(functionName);
-        shouldCallNotificationCallback = true;
-    }
-    RegistrableDomain mainFrameRegistrableDomain { document.topDocument().url() };
-    if (statistics.topFrameRegistrableDomainsWhichAccessedWebAPIs.add(mainFrameRegistrableDomain).isNewEntry)
-        shouldCallNotificationCallback = true;
-    if (shouldCallNotificationCallback)
-        scheduleNotificationIfNeeded();
-#else
     UNUSED_PARAM(document);
     UNUSED_PARAM(functionName);
-#endif
 }
     
 void WebResourceLoadObserver::logScreenAPIAccessed(const Document& document, const ResourceLoadStatistics::ScreenAPI functionName)
@@ -243,23 +188,8 @@ void WebResourceLoadObserver::logScreenAPIAccessed(const Document& document, con
     if (isEphemeral())
         return;
 
-#if ENABLE(WEB_API_STATISTICS)
-    RegistrableDomain registrableDomain { document.url() };
-    auto& statistics = ensureResourceStatisticsForRegistrableDomain(registrableDomain);
-    bool shouldCallNotificationCallback = false;
-    if (!statistics.screenFunctionsAccessed.contains(functionName)) {
-        statistics.screenFunctionsAccessed.add(functionName);
-        shouldCallNotificationCallback = true;
-    }
-    RegistrableDomain mainFrameRegistrableDomain { document.topDocument().url() };
-    if (statistics.topFrameRegistrableDomainsWhichAccessedWebAPIs.add(mainFrameRegistrableDomain).isNewEntry)
-        shouldCallNotificationCallback = true;
-    if (shouldCallNotificationCallback)
-        scheduleNotificationIfNeeded();
-#else
     UNUSED_PARAM(document);
     UNUSED_PARAM(functionName);
-#endif
 }
 
 void WebResourceLoadObserver::logSubresourceLoading(const Frame* frame, const ResourceRequest& newRequest, const ResourceResponse& redirectResponse, FetchDestinationIsScriptLike isScriptLike)

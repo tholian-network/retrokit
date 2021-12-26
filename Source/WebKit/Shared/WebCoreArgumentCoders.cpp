@@ -2617,9 +2617,9 @@ bool ArgumentCoder<ExceptionDetails>::decode(IPC::Decoder& decoder, ExceptionDet
 void ArgumentCoder<ResourceLoadStatistics>::encode(Encoder& encoder, const WebCore::ResourceLoadStatistics& statistics)
 {
     encoder << statistics.registrableDomain;
-    
+
     encoder << statistics.lastSeen.secondsSinceEpoch().value();
-    
+
     // User interaction
     encoder << statistics.hadUserInteraction;
     encoder << statistics.mostRecentUserInteractionTime.secondsSinceEpoch().value();
@@ -2635,7 +2635,7 @@ void ArgumentCoder<ResourceLoadStatistics>::encode(Encoder& encoder, const WebCo
 
     // Subframe stats
     encoder << statistics.subframeUnderTopFrameDomains;
-    
+
     // Subresource stats
     encoder << statistics.subresourceUnderTopFrameDomains;
     encoder << statistics.subresourceUniqueRedirectsTo;
@@ -2646,16 +2646,6 @@ void ArgumentCoder<ResourceLoadStatistics>::encode(Encoder& encoder, const WebCo
     encoder << statistics.isVeryPrevalentResource;
     encoder << statistics.dataRecordsRemoved;
 
-#if ENABLE(WEB_API_STATISTICS)
-    encoder << statistics.fontsFailedToLoad;
-    encoder << statistics.fontsSuccessfullyLoaded;
-    encoder << statistics.topFrameRegistrableDomainsWhichAccessedWebAPIs;
-    
-    encoder << statistics.canvasActivityRecord;
-    
-    encoder << statistics.navigatorFunctionsAccessed;
-    encoder << statistics.screenFunctionsAccessed;
-#endif
 }
 
 std::optional<ResourceLoadStatistics> ArgumentCoder<ResourceLoadStatistics>::decode(Decoder& decoder)
@@ -2671,7 +2661,7 @@ std::optional<ResourceLoadStatistics> ArgumentCoder<ResourceLoadStatistics>::dec
     if (!decoder.decode(lastSeenTimeAsDouble))
         return std::nullopt;
     statistics.lastSeen = WallTime::fromRawSeconds(lastSeenTimeAsDouble);
-    
+
     // User interaction
     if (!decoder.decode(statistics.hadUserInteraction))
         return std::nullopt;
@@ -2745,26 +2735,6 @@ std::optional<ResourceLoadStatistics> ArgumentCoder<ResourceLoadStatistics>::dec
     
     if (!decoder.decode(statistics.dataRecordsRemoved))
         return std::nullopt;
-    
-#if ENABLE(WEB_API_STATISTICS)
-    if (!decoder.decode(statistics.fontsFailedToLoad))
-        return std::nullopt;
-    
-    if (!decoder.decode(statistics.fontsSuccessfullyLoaded))
-        return std::nullopt;
-    
-    if (!decoder.decode(statistics.topFrameRegistrableDomainsWhichAccessedWebAPIs))
-        return std::nullopt;
-    
-    if (!decoder.decode(statistics.canvasActivityRecord))
-        return std::nullopt;
-    
-    if (!decoder.decode(statistics.navigatorFunctionsAccessed))
-        return std::nullopt;
-    
-    if (!decoder.decode(statistics.screenFunctionsAccessed))
-        return std::nullopt;
-#endif
 
     return statistics;
 }

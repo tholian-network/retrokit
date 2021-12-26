@@ -74,18 +74,16 @@ list of Web APIs that are removed.
 
 - [x] Apple Pay API (`APPLE_PAY`, `ApplePay*`)
 - [x] Bluetooth API
+
+- [x] FTP Directory Support (`FTPDIR`, `FTPDirectory*`, `unknownFileSizeText`)
 - [x] Gamepad API
 - [x] Geolocation API (`ENABLE_GEOLOCATION`, `Geolocation*`, `Geoposition*`)
 - [x] Payment Request API (`PAYMENT_REQUEST`, `Merchant*`, `Payer*`, `Payment*`, `Coupon*`)
 - [x] DeviceOrientation API (`DEVICE_ORIENTATION`, `ORIENTATION_EVENTS`, `DeviceOrientation*`, `get_orientation`, `orientationChanged`, `onorientationchange`, `OrientationNotifier`, `DOM_WINDOW_PROP_ORIENTATION`, `orientation`)
 - [x] DeviceMotion API (`DEVICE_ORIENTATION`, `DeviceMotion*`)
-- [x] Accelerometer Sensor API
-- [x] Gravity Sensor API
-- [x] Gyroscope Sensor API
-- [x] Magnetometer Sensor API
-- [x] FTP Directory Support (`FTPDIR`, `FTPDirectory*`, `unknownFileSizeText`)
 - [x] WebXR API (`WEBXR`, `OPENXR`, `WebXR*`, `XRSpatialTracking`, `xrCompatible`)
-- [ ] Web API Statistics (`WEB_API_STATISTICS`)
+- [x] Web API Statistics (`WEB_API_STATISTICS`)
+
 - [ ] Encrypted Media API (`ENCRYPTED_MEDIA`, `LEGACY_ENCRYPTED_MEDIA`)
 - [ ] Picture in Picture API (`PICTURE_IN_PICTURE_API`)
 - [ ] Web RTC API (`WEB_RTC`, `RTC*`)

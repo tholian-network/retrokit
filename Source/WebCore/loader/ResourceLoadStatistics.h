@@ -121,16 +121,6 @@ struct ResourceLoadStatistics {
         AvailHeight = 1 << 6,
         AvailWidth = 1 << 7,
     };
-#if ENABLE(WEB_API_STATISTICS)
-    // This set represents the registrable domain of the top frame where web API
-    // were used in the top frame or one of its subframes.
-    HashSet<RegistrableDomain> topFrameRegistrableDomainsWhichAccessedWebAPIs;
-    HashSet<String> fontsFailedToLoad;
-    HashSet<String> fontsSuccessfullyLoaded;
-    CanvasActivityRecord canvasActivityRecord;
-    OptionSet<NavigatorAPI> navigatorFunctionsAccessed;
-    OptionSet<ScreenAPI> screenFunctionsAccessed;
-#endif
 };
 
 } // namespace WebCore
