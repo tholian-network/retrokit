@@ -50,6 +50,7 @@ These legacy APIs that are no longer of relevance to a modern Web Browser.
 - [x] Quirks for `playstation.com`, `sony.com` and `sonyentertainment.com`
 - [ ] Quirks for `twitter.com`
 - [x] Quirks for `kinja.com`
+- [x] Fix for `None` already being defined in `X11`
 - [x] `MEMMEM` hack in `StringExtras.h`
 - [ ] `STRNSTR` hack in `StringExtras.h`
 - [ ] Netscape Plugin API (`NETSCAPE_PLUGIN_API`)
