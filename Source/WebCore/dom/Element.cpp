@@ -373,7 +373,7 @@ static ShouldIgnoreMouseEvent dispatchPointerEventIfNeeded(Element& element, con
     return ShouldIgnoreMouseEvent::No;
 }
 
-bool Element::dispatchMouseEvent(const PlatformMouseEvent& platformEvent, const AtomString& eventType, int detail, Element* relatedTarget, IsSyntheticClick isSyntheticClick)
+bool Element::dispatchMouseEvent(const PlatformMouseEvent& platformEvent, const AtomString& eventType, int detail, Element* relatedTarget)
 {
     if (isDisabledFormControl())
         return false;
@@ -391,14 +391,6 @@ bool Element::dispatchMouseEvent(const PlatformMouseEvent& platformEvent, const 
 
     if (dispatchPointerEventIfNeeded(*this, mouseEvent.get(), platformEvent, didNotSwallowEvent) == ShouldIgnoreMouseEvent::Yes)
         return false;
-    
-    auto isParentProcessAFullWebBrowser = false;
-#if PLATFORM(IOS_FAMILY)
-    if (Frame* frame = document().frame())
-        isParentProcessAFullWebBrowser = frame->loader().client().isParentProcessAFullWebBrowser();
-#elif PLATFORM(MAC)
-    isParentProcessAFullWebBrowser = MacApplication::isSafari();
-#endif
 
     ASSERT(!mouseEvent->target() || mouseEvent->target() != relatedTarget);
     dispatchEvent(mouseEvent);
