@@ -1441,10 +1441,6 @@ void ResourceLoadStatisticsDatabaseStore::grantStorageAccess(SubFrameDomain&& su
             return;
         }
         ASSERT(subFrameStatus.first == AddedRecord::No);
-#if ASSERT_ENABLED
-        if (!NetworkStorageSession::canRequestStorageAccessForLoginOrCompatibilityPurposesWithoutPriorUserInteraction(subFrameDomain, topFrameDomain))
-            ASSERT(hasHadUserInteraction(subFrameDomain, OperatingDatesWindow::Long));
-#endif
         insertDomainRelationshipList(storageAccessUnderTopFrameDomainsQuery, HashSet<RegistrableDomain>({ topFrameDomain }), *subFrameStatus.second);
     }
 
@@ -1469,10 +1465,6 @@ void ResourceLoadStatisticsDatabaseStore::grantStorageAccessInternal(SubFrameDom
             return;
         }
         ASSERT(subFrameStatus.first == AddedRecord::No);
-#if ASSERT_ENABLED
-        if (!NetworkStorageSession::canRequestStorageAccessForLoginOrCompatibilityPurposesWithoutPriorUserInteraction(subFrameDomain, topFrameDomain))
-            ASSERT(hasHadUserInteraction(subFrameDomain, OperatingDatesWindow::Long));
-#endif
         ASSERT(hasUserGrantedStorageAccessThroughPrompt(*subFrameStatus.second, topFrameDomain) == StorageAccessPromptWasShown::Yes);
 #endif
         setUserInteraction(subFrameDomain, true, WallTime::now());
@@ -2196,13 +2188,10 @@ CookieAccess ResourceLoadStatisticsDatabaseStore::cookieAccess(const SubResource
 
     bool hasNoEntry = statement->step() != SQLITE_ROW;
     bool isPrevalent = !hasNoEntry && !!statement->columnInt(0);
-    bool hadUserInteraction = !hasNoEntry && statement->columnInt(1) ? true : false;
+    // bool hadUserInteraction = !hasNoEntry && statement->columnInt(1) ? true : false;
 
     if (!areAllThirdPartyCookiesBlockedUnder(topFrameDomain) && !isPrevalent)
         return CookieAccess::BasedOnCookiePolicy;
-
-    if (!NetworkStorageSession::canRequestStorageAccessForLoginOrCompatibilityPurposesWithoutPriorUserInteraction(subresourceDomain, topFrameDomain) && !hadUserInteraction)
-        return CookieAccess::CannotRequest;
 
     return CookieAccess::OnlyIfGranted;
 }

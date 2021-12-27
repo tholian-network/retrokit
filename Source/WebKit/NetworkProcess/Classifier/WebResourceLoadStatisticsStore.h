@@ -210,7 +210,6 @@ public:
     void logTestingEvent(const String&);
     void callGrantStorageAccessHandler(const SubFrameDomain&, const TopFrameDomain&, std::optional<WebCore::FrameIdentifier>, WebCore::PageIdentifier, StorageAccessScope, CompletionHandler<void(StorageAccessWasGranted)>&&);
     void removeAllStorageAccess(CompletionHandler<void()>&&);
-    bool needsUserInteractionQuirk(const RegistrableDomain&) const;
     void callUpdatePrevalentDomainsToBlockCookiesForHandler(const RegistrableDomainsToBlockCookiesFor&, CompletionHandler<void()>&&);
     void callHasStorageAccessForFrameHandler(const SubFrameDomain&, const TopFrameDomain&, WebCore::FrameIdentifier, WebCore::PageIdentifier, CompletionHandler<void(bool)>&&);
 
@@ -270,9 +269,6 @@ private:
 
     WebCore::ResourceLoadStatistics::IsEphemeral m_isEphemeral { WebCore::ResourceLoadStatistics::IsEphemeral::No };
     HashSet<RegistrableDomain> m_domainsWithEphemeralUserInteraction;
-
-    HashSet<RegistrableDomain> m_domainsWithUserInteractionQuirk;
-    HashMap<TopFrameDomain, SubResourceDomain> m_domainsWithCrossPageStorageAccessQuirk;
 
     bool m_hasScheduledProcessStats { false };
 

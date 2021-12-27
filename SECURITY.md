@@ -33,27 +33,30 @@ Windows 10 as an environment running Microsoft Edge or Google Chrome).
 The platforms are basically uninteresting for high security environments, or are
 legacy platforms that are no longer maintained.
 
-- [x] Playstation Platform Support (`__SCE__`, `PLATFORM_PLAYSTATION`, `BPLATFORM_PLAYSTATION`, `PlayStation`, `playstation`, `sony`)
-- [ ] Apple Watch Platform Support (`TARGET_OS_WATCH`, `BOS_WATCHOS`, `BPLATFORM_WATCHOS`)
-- [ ] Apple TV Platform Support (`TARGET_OS_TV`, `BOS_APPLETV`, `BPLATFORM_APPLETV`)
-- [ ] Solaris Platform Support
-- [ ] *Undecided* WebKit Platform for Embedded (`WPE`, `USE_WPE_RENDERER`)
-- [ ] *Undecided* Developer Mode (`DEVELOPER_MODE`)
+- [x] Remove Playstation Platform Support (`__SCE__`, `PLATFORM_PLAYSTATION`, `BPLATFORM_PLAYSTATION`, `PlayStation`, `playstation`, `sony`)
+- [ ] Remove Apple Watch Platform Support (`TARGET_OS_WATCH`, `BOS_WATCHOS`, `BPLATFORM_WATCHOS`)
+- [ ] Remove Apple TV Platform Support (`TARGET_OS_TV`, `BOS_APPLETV`, `BPLATFORM_APPLETV`)
+- [ ] Remove Solaris Platform Support
+- [ ] *Undecided* Remove WebKit Platform for Embedded (`WPE`, `USE_WPE_RENDERER`)
+- [ ] *Undecided* Remove Developer Mode (`DEVELOPER_MODE`)
 
 
 ## Legacy Hacks
 
 These legacy APIs that are no longer of relevance to a modern Web Browser.
 
-- [x] Quirks for `bbc.co.uk` Media Player
-- [x] Quirks for `microsoft.com` Teams Redirect links
-- [x] Quirks for `playstation.com`, `sony.com` and `sonyentertainment.com`
-- [ ] Quirks for `twitter.com`
-- [x] Quirks for `kinja.com`
-- [x] Fix for `None` already being defined in `X11`
-- [x] `MEMMEM` hack in `StringExtras.h`
-- [ ] `STRNSTR` hack in `StringExtras.h`
-- [ ] Netscape Plugin API (`NETSCAPE_PLUGIN_API`)
+- [x] Fix `None` already being defined in `X11`
+- [x] Remove `MEMMEM` hack in `StringExtras.h`
+- [ ] Remove `STRNSTR` hack in `StringExtras.h`
+- [x] Remove hardcoded Quirks for `bbc.co.uk` Media Player
+- [x] Remove hardcoded Quirks for `microsoft.com` and Microsoft Teams redirect links
+- [x] Remove hardcoded Quirks for `playstation.com`, `sony.com` and `sonyentertainment.com`
+- [ ] Remove hardcoded Quirks for `twitter.com`
+- [x] Remove hardcoded Quirks for `kinja.com`
+- [x] Remove hardcoded Quirks for `youtube.com`
+- [ ] Remove Netscape Plugin API (`NETSCAPE_PLUGIN_API`)
+- [ ] Remove `QuickTimePluginReplacement`
+- [ ] Remove `YouTubePluginReplacement`
 
 
 ## Library Dependencies
@@ -65,13 +68,13 @@ to track a user's identity, it is listed here.
 Dependencies that allow hardware fingerprinting or network fingerprinting are
 removed as well.
 
-- [x] Geoclue Library Integration (`geoclue`) which leaks your geolocation to websites.
-- [ ] Libhyphen Library Integration (`libhyphen`, `USE_LIBHYPHEN`) - do we love spell-ing so much?
-- [ ] Libsecret Library Integration (`libsecret`, `USE_LIBSECRET`) which automatically leaks stored credentials only by opening URLs with the same hostname.
-- [ ] Libnotify Library Integration (`libnotify`, `USE_LIBNOTIFY`) which is just annoying.
-- [ ] SystemD Library Integration (`libsystemd`, `USE_SYSTEMD`) which a Browser should never have a depdendency to.
-- [ ] ARKIT Integration (`ARKIT`)
-- [x] PASSKIT Integration (`PASSKIT`)
+- [x] Remove Geoclue Library Integration (`geoclue`) which leaks your geolocation to websites.
+- [ ] Remove Libhyphen Library Integration (`libhyphen`, `USE_LIBHYPHEN`) - do we love spell-ing so much?
+- [ ] Remove Libsecret Library Integration (`libsecret`, `USE_LIBSECRET`) which automatically leaks stored credentials only by opening URLs with the same hostname.
+- [ ] Remove Libnotify Library Integration (`libnotify`, `USE_LIBNOTIFY`) which is just annoying.
+- [ ] Remove SystemD Library Integration (`libsystemd`, `USE_SYSTEMD`) which a Browser should never have a depdendency to.
+- [ ] Remove ARKIT Integration (`ARKIT`)
+- [x] Remove PASSKIT Integration (`PASSKIT`)
 
 
 ## ECMAScript APIs
@@ -80,50 +83,49 @@ These Web APIs are abused by fingerprinting libraries in order to identify hardw
 specifications and/or the physical position of a computer. This is an accumulative
 list of Web APIs that are removed.
 
-- [x] Apple Pay API (`APPLE_PAY`, `ApplePay*`)
-- [x] Bluetooth API
+- [x] Remove Apple Pay API (`APPLE_PAY`, `ApplePay*`)
+- [x] Remove Bluetooth API
+- [x] Remove FTP Directory Support (`FTPDIR`, `FTPDirectory*`, `unknownFileSizeText`)
+- [x] Remove Gamepad API
+- [x] Remove Geolocation API (`ENABLE_GEOLOCATION`, `Geolocation*`, `Geoposition*`)
+- [x] Remove Payment Request API (`PAYMENT_REQUEST`, `Merchant*`, `Payer*`, `Payment*`, `Coupon*`)
+- [x] Remove DeviceOrientation API (`DEVICE_ORIENTATION`, `ORIENTATION_EVENTS`, `DeviceOrientation*`, `get_orientation`, `orientationChanged`, `onorientationchange`, `OrientationNotifier`, `DOM_WINDOW_PROP_ORIENTATION`, `orientation`)
+- [x] Remove DeviceMotion API (`DEVICE_ORIENTATION`, `DeviceMotion*`)
+- [x] Remove WebXR API (`WEBXR`, `OPENXR`, `WebXR*`, `XRSpatialTracking`, `xrCompatible`)
+- [x] Remove Web API Statistics (`WEB_API_STATISTICS`)
 
-- [x] FTP Directory Support (`FTPDIR`, `FTPDirectory*`, `unknownFileSizeText`)
-- [x] Gamepad API
-- [x] Geolocation API (`ENABLE_GEOLOCATION`, `Geolocation*`, `Geoposition*`)
-- [x] Payment Request API (`PAYMENT_REQUEST`, `Merchant*`, `Payer*`, `Payment*`, `Coupon*`)
-- [x] DeviceOrientation API (`DEVICE_ORIENTATION`, `ORIENTATION_EVENTS`, `DeviceOrientation*`, `get_orientation`, `orientationChanged`, `onorientationchange`, `OrientationNotifier`, `DOM_WINDOW_PROP_ORIENTATION`, `orientation`)
-- [x] DeviceMotion API (`DEVICE_ORIENTATION`, `DeviceMotion*`)
-- [x] WebXR API (`WEBXR`, `OPENXR`, `WebXR*`, `XRSpatialTracking`, `xrCompatible`)
-- [x] Web API Statistics (`WEB_API_STATISTICS`)
-
-- [ ] Encrypted Media API (`ENCRYPTED_MEDIA`, `LEGACY_ENCRYPTED_MEDIA`)
-- [ ] Picture in Picture API (`PICTURE_IN_PICTURE_API`)
-- [ ] Web RTC API (`WEB_RTC`, `RTC*`)
-- [ ] Web NFC API
-- [ ] Web Performance API
-- [ ] Web Storage API
-- [ ] Indexed Database API
-- [ ] Canvas API (`OFFSCREEN_CANVAS`, `Canvas*`, `DOMConvertWebGL`, `JSANGLEInstancedArray`, `CanvasActivityRecord`)
-- [ ] WebGL API (`WEBGL`, `WebGL*`, `JSANGLEInstancedArray`, `GraphicsContextGL*`, `HighPerformanceGraphicsUsageSampler`)
-- [ ] GPU Process for WebGL (`GPU_PROCESS`)
-- [ ] WebGL via Metal (`WEBGL_COMPATIBLE_METAL`)
-- [ ] WebGPU API
-- [ ] Media Capture API
-- [ ] Screen Capture API (`getDisplayMedia`)
-- [ ] Media Stream API (`getUserMedia`)
-- [ ] Page Visibility API
-- [ ] Pointer Lock API (`POINTER_LOCK`)
-- [ ] Web Notifications API
-- [ ] Window Alert Method (`window.alert()`)
-- [ ] Window History Interface (`window.history`)
-- [ ] Window Popups (`window.open()`)
-- [ ] WASM / WebASM Support
-- [ ] *Undecided* Web Midi API
-- [ ] *Undecided* Web Workers API
-- [ ] *Undecided* Service Worker API
+- [ ] Remove Encrypted Media API (`ENCRYPTED_MEDIA`, `LEGACY_ENCRYPTED_MEDIA`)
+- [ ] Remove Picture in Picture API (`PICTURE_IN_PICTURE_API`)
+- [ ] Remove Web RTC API (`WEB_RTC`, `RTC*`)
+- [ ] Remove Web NFC API
+- [ ] Remove Web Performance API
+- [ ] Remove Web Storage API
+- [ ] Remove Indexed Database API
+- [ ] Remove Canvas API (`OFFSCREEN_CANVAS`, `Canvas*`, `DOMConvertWebGL`, `JSANGLEInstancedArray`, `CanvasActivityRecord`)
+- [ ] Remove WebGL API (`WEBGL`, `WebGL*`, `JSANGLEInstancedArray`, `GraphicsContextGL*`, `HighPerformanceGraphicsUsageSampler`)
+- [ ] Remove GPU Process for WebGL (`GPU_PROCESS`)
+- [ ] Remove WebGL via Metal (`WEBGL_COMPATIBLE_METAL`)
+- [ ] Remove WebGPU API
+- [ ] Remove Media Capture API
+- [ ] Remove Screen Capture API (`getDisplayMedia`)
+- [ ] Remove Media Stream API (`getUserMedia`)
+- [ ] Remove Page Visibility API
+- [ ] Remove Pointer Lock API (`POINTER_LOCK`)
+- [ ] Remove Web Notifications API
+- [ ] Remove Window Alert Method (`window.alert()`)
+- [ ] Remove Window History Interface (`window.history`)
+- [ ] Remove Window Popups (`window.open()`)
+- [ ] Remove WASM / WebASM Support
+- [ ] *Undecided* Remove Web Midi API
+- [ ] *Undecided* Remove Web Workers API
+- [ ] *Undecided* Remove Service Worker API
 
 
 ## CSS Features
 
-- [ ] CSS Filters
-- [ ] CSS Pointer Events
-- [ ] Enforce CSS Web Fonts Caching
-- [ ] Device Pixel Ratio
-- [ ] Disallow `overflow:hidden`
+- [ ] Remove CSS Filters
+- [ ] Remove CSS Pointer Events
+- [ ] Remove Enforce CSS Web Fonts Caching
+- [ ] Remove Device Pixel Ratio
+- [ ] Remove Disallow `overflow:hidden`
 

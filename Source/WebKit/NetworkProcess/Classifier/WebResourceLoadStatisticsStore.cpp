@@ -501,7 +501,7 @@ void WebResourceLoadStatisticsStore::requestStorageAccessEphemeral(const Registr
 {
     ASSERT(isEphemeral());
 
-    if (!m_networkSession || (!m_domainsWithEphemeralUserInteraction.contains(subFrameDomain) && !NetworkStorageSession::canRequestStorageAccessForLoginOrCompatibilityPurposesWithoutPriorUserInteraction(subFrameDomain, topFrameDomain)))
+    if (!m_networkSession || !m_domainsWithEphemeralUserInteraction.contains(subFrameDomain))
         return completionHandler({ StorageAccessWasGranted::No, StorageAccessPromptWasShown::No, scope, topFrameDomain, subFrameDomain });
 
     CompletionHandler<void(bool)> requestConfirmationCompletionHandler = [this, protectedThis = makeRef(*this), subFrameDomain, topFrameDomain, frameID, webPageID, scope, completionHandler = WTFMove(completionHandler)] (bool userDidGrantAccess) mutable {
@@ -1255,18 +1255,6 @@ void WebResourceLoadStatisticsStore::setCacheMaxAgeCap(Seconds seconds, Completi
     completionHandler();
 }
 
-bool WebResourceLoadStatisticsStore::needsUserInteractionQuirk(const RegistrableDomain& domain) const
-{
-    static NeverDestroyed<HashSet<RegistrableDomain>> quirks = [] {
-        HashSet<RegistrableDomain> set;
-        set.add(RegistrableDomain::uncheckedCreateFromRegistrableDomainString("kinja.com"_s));
-        set.add(RegistrableDomain::uncheckedCreateFromRegistrableDomainString("youtube.com"_s));
-        return set;
-    }();
-
-    return quirks.get().contains(domain);
-}
-
 void WebResourceLoadStatisticsStore::callUpdatePrevalentDomainsToBlockCookiesForHandler(const RegistrableDomainsToBlockCookiesFor& domainsToBlock, CompletionHandler<void()>&& completionHandler)
 {
     ASSERT(RunLoop::isMain());
@@ -1276,34 +1264,6 @@ void WebResourceLoadStatisticsStore::callUpdatePrevalentDomainsToBlockCookiesFor
             storageSession->setPrevalentDomainsToBlockAndDeleteCookiesFor(domainsToBlock.domainsToBlockAndDeleteCookiesFor);
             storageSession->setPrevalentDomainsToBlockButKeepCookiesFor(domainsToBlock.domainsToBlockButKeepCookiesFor);
             storageSession->setDomainsWithUserInteractionAsFirstParty(domainsToBlock.domainsWithUserInteractionAsFirstParty);
-        }
-
-        HashSet<RegistrableDomain> domainsWithUserInteractionQuirk;
-        for (auto& domain : domainsToBlock.domainsWithUserInteractionAsFirstParty) {
-            if (needsUserInteractionQuirk(domain))
-                domainsWithUserInteractionQuirk.add(domain);
-        }
-
-        if (m_domainsWithUserInteractionQuirk != domainsWithUserInteractionQuirk) {
-            m_domainsWithUserInteractionQuirk = domainsWithUserInteractionQuirk;
-            m_networkSession->networkProcess().parentProcessConnection()->send(Messages::NetworkProcessProxy::SetDomainsWithUserInteraction(domainsWithUserInteractionQuirk), 0);
-        }
-
-        HashMap<TopFrameDomain, SubResourceDomain> domainsWithStorageAccessQuirk;
-        for (auto& firstPartyDomain : domainsToBlock.domainsWithStorageAccess.keys()) {
-            auto requestingDomain = domainsToBlock.domainsWithStorageAccess.get(firstPartyDomain);
-            if (NetworkStorageSession::loginDomainMatchesRequestingDomain(firstPartyDomain, requestingDomain))
-                domainsWithStorageAccessQuirk.add(firstPartyDomain, requestingDomain);
-        }
-
-        if (m_domainsWithCrossPageStorageAccessQuirk != domainsWithStorageAccessQuirk) {
-            if (m_networkSession) {
-                if (auto* storageSession = m_networkSession->networkStorageSession())
-                    storageSession->setDomainsWithCrossPageStorageAccess(domainsWithStorageAccessQuirk);
-                m_networkSession->networkProcess().parentProcessConnection()->sendWithAsyncReply(Messages::NetworkProcessProxy::SetDomainsWithCrossPageStorageAccess(domainsWithStorageAccessQuirk), [this, domainsWithStorageAccessQuirk] () mutable {
-                    m_domainsWithCrossPageStorageAccessQuirk = domainsWithStorageAccessQuirk;
-                });
-            }
         }
     }
 
