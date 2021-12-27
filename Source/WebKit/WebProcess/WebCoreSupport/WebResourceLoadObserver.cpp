@@ -363,12 +363,6 @@ void WebResourceLoadObserver::setDomainsWithCrossPageStorageAccess(HashMap<TopFr
     for (auto& topDomain : domains.keys()) {
         m_domainsWithCrossPageStorageAccess.ensure(topDomain, [] { return HashSet<RegistrableDomain> { };
             }).iterator->value.add(domains.get(topDomain));
-
-        // Some sites have quirks where multiple login domains require storage access.
-        if (auto additionalLoginDomain = WebCore::NetworkStorageSession::findAdditionalLoginDomain(topDomain, domains.get(topDomain))) {
-            m_domainsWithCrossPageStorageAccess.ensure(topDomain, [] { return HashSet<RegistrableDomain> { };
-                }).iterator->value.add(*additionalLoginDomain);
-        }
     }
     completionHandler();
 }
