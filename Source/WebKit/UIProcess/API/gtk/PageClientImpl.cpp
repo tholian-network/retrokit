@@ -358,62 +358,6 @@ void PageClientImpl::didCommitLoadForMainFrame(const String& /* mimeType */, boo
     webkitWebViewBaseResetClickCounter(WEBKIT_WEB_VIEW_BASE(m_viewWidget));
 }
 
-#if ENABLE(FULLSCREEN_API)
-WebFullScreenManagerProxyClient& PageClientImpl::fullScreenManagerProxyClient()
-{
-    return *this;
-}
-
-void PageClientImpl::closeFullScreenManager()
-{
-    notImplemented();
-}
-
-bool PageClientImpl::isFullScreen()
-{
-    return webkitWebViewBaseIsFullScreen(WEBKIT_WEB_VIEW_BASE(m_viewWidget));
-}
-
-void PageClientImpl::enterFullScreen()
-{
-    if (!m_viewWidget)
-        return;
-
-    if (isFullScreen())
-        return;
-
-    if (WEBKIT_IS_WEB_VIEW(m_viewWidget))
-        webkitWebViewEnterFullScreen(WEBKIT_WEB_VIEW(m_viewWidget));
-    else
-        webkitWebViewBaseEnterFullScreen(WEBKIT_WEB_VIEW_BASE(m_viewWidget));
-}
-
-void PageClientImpl::exitFullScreen()
-{
-    if (!m_viewWidget)
-        return;
-
-    if (!isFullScreen())
-        return;
-
-    if (WEBKIT_IS_WEB_VIEW(m_viewWidget))
-        webkitWebViewExitFullScreen(WEBKIT_WEB_VIEW(m_viewWidget));
-    else
-        webkitWebViewBaseExitFullScreen(WEBKIT_WEB_VIEW_BASE(m_viewWidget));
-}
-
-void PageClientImpl::beganEnterFullScreen(const IntRect& /* initialFrame */, const IntRect& /* finalFrame */)
-{
-    notImplemented();
-}
-
-void PageClientImpl::beganExitFullScreen(const IntRect& /* initialFrame */, const IntRect& /* finalFrame */)
-{
-    notImplemented();
-}
-
-#endif // ENABLE(FULLSCREEN_API)
-
 #if ENABLE(TOUCH_EVENTS)
 void PageClientImpl::doneWithTouchEvent(const NativeWebTouchEvent& event, bool wasEventHandled)
 {

@@ -59,19 +59,9 @@ public:
         if (prepare)
             prepareForRendering();
     }
-    
+
     virtual void prepareToPlay() { }
     virtual PlatformLayer* platformLayer() const { return nullptr; }
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    virtual RetainPtr<PlatformLayer> createVideoFullscreenLayer() { return nullptr; }
-    virtual void setVideoFullscreenLayer(PlatformLayer*, WTF::Function<void()>&& completionHandler) { completionHandler(); }
-    virtual void updateVideoFullscreenInlineImage() { }
-    virtual void setVideoFullscreenFrame(FloatRect) { }
-    virtual void setVideoFullscreenGravity(MediaPlayer::VideoGravity) { }
-    virtual void setVideoFullscreenMode(MediaPlayer::VideoFullscreenMode) { }
-    virtual void videoFullscreenStandbyChanged() { }
-#endif
 
 #if PLATFORM(IOS_FAMILY)
     virtual NSArray *timedMetadata() const { return nil; }
@@ -81,10 +71,9 @@ public:
     virtual long platformErrorCode() const { return 0; }
 
     virtual void play() = 0;
-    virtual void pause() = 0;    
+    virtual void pause() = 0;
     virtual void setBufferingPolicy(MediaPlayer::BufferingPolicy) { }
 
-    virtual bool supportsPictureInPicture() const { return false; }
     virtual bool supportsFullscreen() const { return false; }
     virtual bool supportsScanning() const { return false; }
     virtual bool requiresImmediateCompositing() const { return false; }

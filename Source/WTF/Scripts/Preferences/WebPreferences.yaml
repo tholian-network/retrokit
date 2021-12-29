@@ -220,18 +220,6 @@ AllowsInlineMediaPlaybackAfterFullscreen:
     WebCore:
       default: true
 
-AllowsPictureInPictureMediaPlayback:
-  type: bool
-  defaultValue:
-    WebKitLegacy:
-      "PLATFORM(IOS_FAMILY)": WebKit::defaultAllowsPictureInPictureMediaPlayback()
-      default: false
-    WebKit:
-      "PLATFORM(IOS_FAMILY)": true
-      default: false
-    WebCore:
-      default: true
-
 AlwaysUseAcceleratedOverflowScroll:
   type: bool
   defaultValue:
@@ -1620,17 +1608,6 @@ PictographFontFamily:
       default: '"Times"'
     WebCore:
       default: '""'
-
-PictureInPictureAPIEnabled:
-  type: bool
-  condition: ENABLE(PICTURE_IN_PICTURE_API)
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      default: true
-    WebCore:
-      default: true
 
 PitchCorrectionAlgorithm:
   type: uint32_t

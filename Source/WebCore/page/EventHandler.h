@@ -513,10 +513,6 @@ private:
     PlatformMouseEvent currentPlatformMouseEvent() const;
 #endif
 
-#if ENABLE(FULLSCREEN_API)
-    bool isKeyEventAllowedInFullScreen(const PlatformKeyboardEvent&) const;
-#endif
-
     void setLastKnownMousePosition(const PlatformMouseEvent&);
 
 #if ENABLE(CURSOR_VISIBILITY)

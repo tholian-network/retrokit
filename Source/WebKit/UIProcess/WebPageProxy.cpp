@@ -36,7 +36,6 @@
 #include "APIFindMatchesClient.h"
 #include "APIFormClient.h"
 #include "APIFrameInfo.h"
-#include "APIFullscreenClient.h"
 #include "APIGeometry.h"
 #include "APIHistoryClient.h"
 #include "APIHitTestResult.h"
@@ -112,8 +111,6 @@
 #include "WebEventConversion.h"
 #include "WebFrame.h"
 #include "WebFramePolicyListenerProxy.h"
-#include "WebFullScreenManagerProxy.h"
-#include "WebFullScreenManagerProxyMessages.h"
 #include "WebImage.h"
 #include "WebInspectorUIProxy.h"
 #include "WebInspectorUtilities.h"
@@ -218,8 +215,6 @@
 #include "RemoteLayerTreeDrawingAreaProxy.h"
 #include "RemoteLayerTreeScrollingPerformanceData.h"
 #include "UserMediaCaptureManagerProxy.h"
-#include "VideoFullscreenManagerProxy.h"
-#include "VideoFullscreenManagerProxyMessages.h"
 #include <WebCore/AttributedString.h>
 #include <WebCore/RunLoopObserver.h>
 #include <WebCore/SystemBattery.h>
@@ -257,7 +252,7 @@
 #include <WebCore/WebMediaSessionManager.h>
 #endif
 
-#if PLATFORM(IOS_FAMILY) || (PLATFORM(MAC) && ENABLE(VIDEO_PRESENTATION_MODE))
+#if PLATFORM(IOS_FAMILY)
 #include "PlaybackSessionManagerProxy.h"
 #endif
 
@@ -479,9 +474,6 @@ WebPageProxy::WebPageProxy(PageClient& pageClient, WebProcessProxy& process, Ref
     , m_websiteDataStore(*m_configuration->websiteDataStore())
     , m_userAgent(standardUserAgent())
     , m_overrideContentSecurityPolicy { m_configuration->overrideContentSecurityPolicy() }
-#if ENABLE(FULLSCREEN_API)
-    , m_fullscreenClient(makeUnique<API::FullscreenClient>())
-#endif
 #if PLATFORM(IOS_FAMILY)
     , m_audibleActivityTimer(RunLoop::main(), this, &WebPageProxy::clearAudibleActivity)
 #endif
@@ -1005,19 +997,6 @@ void WebPageProxy::didAttachToRunningProcess()
 {
     ASSERT(hasRunningProcess());
 
-#if ENABLE(FULLSCREEN_API)
-    ASSERT(!m_fullScreenManager);
-    m_fullScreenManager = makeUnique<WebFullScreenManagerProxy>(*this, pageClient().fullScreenManagerProxyClient());
-#endif
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    ASSERT(!m_playbackSessionManager);
-    m_playbackSessionManager = PlaybackSessionManagerProxy::create(*this);
-    ASSERT(!m_videoFullscreenManager);
-    m_videoFullscreenManager = VideoFullscreenManagerProxy::create(*this, *m_playbackSessionManager);
-    if (m_videoFullscreenManager)
-        m_videoFullscreenManager->setMockVideoPresentationModeEnabled(m_mockVideoPresentationModeEnabled);
-#endif
-
 #if USE(SYSTEM_PREVIEW)
     ASSERT(!m_systemPreviewController);
     m_systemPreviewController = makeUnique<SystemPreviewController>(*this);
@@ -1160,9 +1139,6 @@ void WebPageProxy::close()
     m_diagnosticLoggingClient = nullptr;
 #if ENABLE(CONTEXT_MENUS)
     m_contextMenuClient = makeUnique<API::ContextMenuClient>();
-#endif
-#if ENABLE(FULLSCREEN_API)
-    m_fullscreenClient = makeUnique<API::FullscreenClient>();
 #endif
 
     resetState(ResetStateReason::PageInvalidated);
@@ -2117,11 +2093,6 @@ void WebPageProxy::activityStateDidChange(OptionSet<ActivityState::Flag> mayHave
 void WebPageProxy::viewDidLeaveWindow()
 {
     closeOverlayedViews();
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    // When leaving the current page, close the video fullscreen.
-    if (m_videoFullscreenManager && m_videoFullscreenManager->hasMode(WebCore::HTMLMediaElementEnums::VideoFullscreenModeStandard))
-        m_videoFullscreenManager->requestHideAndExitFullscreen();
-#endif
 }
 
 void WebPageProxy::viewDidEnterWindow()
@@ -5813,7 +5784,7 @@ void WebPageProxy::createNewPage(FrameInfoData&& originatingFrameInfoData, WebPa
     };
 
     RefPtr<API::UserInitiatedAction> userInitiatedActivity;
-    
+
     userInitiatedActivity = m_process->userInitiatedActivity(navigationActionData.userGestureTokenIdentifier);
 
     bool shouldOpenAppLinks = originatingFrameInfo->request().url().host() != request.url().host();
@@ -5823,38 +5794,10 @@ void WebPageProxy::createNewPage(FrameInfoData&& originatingFrameInfoData, WebPa
         m_uiClient->createNewPage(*this, WTFMove(windowFeatures), WTFMove(navigationAction), WTFMove(completionHandler));
     });
 }
-    
+
 void WebPageProxy::showPage()
 {
     m_uiClient->showPage(this);
-}
-
-void WebPageProxy::exitFullscreenImmediately()
-{
-#if ENABLE(FULLSCREEN_API)
-    if (fullScreenManager())
-        fullScreenManager()->close();
-#endif
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    if (videoFullscreenManager())
-        videoFullscreenManager()->requestHideAndExitFullscreen();
-#endif
-}
-
-void WebPageProxy::fullscreenMayReturnToInline()
-{
-    m_uiClient->fullscreenMayReturnToInline(this);
-}
-
-void WebPageProxy::didEnterFullscreen()
-{
-    m_uiClient->didEnterFullscreen(this);
-}
-
-void WebPageProxy::didExitFullscreen()
-{
-    m_uiClient->didExitFullscreen(this);
 }
 
 void WebPageProxy::closePage()
@@ -5887,8 +5830,6 @@ void WebPageProxy::runJavaScriptAlert(FrameIdentifier frameID, FrameInfoData&& f
     auto frame = makeRefPtr(m_process->webFrame(frameID));
     MESSAGE_CHECK(m_process, frame);
 
-    exitFullscreenImmediately();
-
     // Since runJavaScriptAlert() can spin a nested run loop we need to turn off the responsiveness timer.
     m_process->stopResponsivenessTimer();
 
@@ -5910,8 +5851,6 @@ void WebPageProxy::runJavaScriptConfirm(FrameIdentifier frameID, FrameInfoData&&
     auto frame = makeRefPtr(m_process->webFrame(frameID));
     MESSAGE_CHECK(m_process, frame);
 
-    exitFullscreenImmediately();
-
     // Since runJavaScriptConfirm() can spin a nested run loop we need to turn off the responsiveness timer.
     m_process->stopResponsivenessTimer();
 
@@ -5932,8 +5871,6 @@ void WebPageProxy::runJavaScriptPrompt(FrameIdentifier frameID, FrameInfoData&& 
 {
     auto frame = makeRefPtr(m_process->webFrame(frameID));
     MESSAGE_CHECK(m_process, frame);
-
-    exitFullscreenImmediately();
 
     // Since runJavaScriptPrompt() can spin a nested run loop we need to turn off the responsiveness timer.
     m_process->stopResponsivenessTimer();
@@ -6510,42 +6447,6 @@ void WebPageProxy::resourceLoadDidCompleteWithError(ResourceLoadInfo&& loadInfo,
     if (m_resourceLoadClient)
         m_resourceLoadClient->didCompleteWithError(WTFMove(loadInfo), WTFMove(response), WTFMove(error));
 }
-
-#if ENABLE(FULLSCREEN_API)
-WebFullScreenManagerProxy* WebPageProxy::fullScreenManager()
-{
-    return m_fullScreenManager.get();
-}
-
-void WebPageProxy::setFullscreenClient(std::unique_ptr<API::FullscreenClient>&& client)
-{
-    if (!client) {
-        m_fullscreenClient = makeUnique<API::FullscreenClient>();
-        return;
-    }
-
-    m_fullscreenClient = WTFMove(client);
-}
-#endif
-    
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-PlaybackSessionManagerProxy* WebPageProxy::playbackSessionManager()
-{
-    return m_playbackSessionManager.get();
-}
-
-VideoFullscreenManagerProxy* WebPageProxy::videoFullscreenManager()
-{
-    return m_videoFullscreenManager.get();
-}
-
-void WebPageProxy::setMockVideoPresentationModeEnabled(bool enabled)
-{
-    m_mockVideoPresentationModeEnabled = enabled;
-    if (m_videoFullscreenManager)
-        m_videoFullscreenManager->setMockVideoPresentationModeEnabled(enabled);
-}
-#endif
 
 #if PLATFORM(IOS_FAMILY)
 bool WebPageProxy::allowsMediaDocumentInlinePlayback() const
@@ -7775,13 +7676,6 @@ void WebPageProxy::resetState(ResetStateReason resetStateReason)
 
     m_inspector->reset();
 
-#if ENABLE(FULLSCREEN_API)
-    if (m_fullScreenManager) {
-        m_fullScreenManager->close();
-        m_fullScreenManager = nullptr;
-    }
-#endif
-
 #if ENABLE(MEDIA_USAGE)
     if (m_mediaUsageManager)
         m_mediaUsageManager->reset();
@@ -7812,17 +7706,6 @@ void WebPageProxy::resetState(ResetStateReason resetStateReason)
     m_mainFrameIsPinnedToBottomSide = true;
 
     m_visibleScrollerThumbRect = IntRect();
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    if (m_playbackSessionManager) {
-        m_playbackSessionManager->invalidate();
-        m_playbackSessionManager = nullptr;
-    }
-    if (m_videoFullscreenManager) {
-        m_videoFullscreenManager->invalidate();
-        m_videoFullscreenManager = nullptr;
-    }
-#endif
 
 #if PLATFORM(IOS_FAMILY)
     m_firstLayerTreeTransactionIdAfterDidCommitLoad = { };
@@ -9444,34 +9327,17 @@ void WebPageProxy::videoControlsManagerDidChange()
 
 bool WebPageProxy::hasActiveVideoForControlsManager() const
 {
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    return m_playbackSessionManager && m_playbackSessionManager->controlsManagerInterface();
-#else
     return false;
-#endif
 }
 
 void WebPageProxy::requestControlledElementID() const
 {
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    if (m_playbackSessionManager)
-        m_playbackSessionManager->requestControlledElementID();
-#endif
 }
 
 void WebPageProxy::handleControlledElementIDResponse(const String& identifier) const
 {
 #if PLATFORM(MAC)
     pageClient().handleControlledElementIDResponse(identifier);
-#endif
-}
-
-bool WebPageProxy::isPlayingVideoInEnhancedFullscreen() const
-{
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    return m_videoFullscreenManager && m_videoFullscreenManager->isPlayingVideoInEnhancedFullscreen();
-#else
-    return false;
 #endif
 }
 
@@ -10680,13 +10546,6 @@ WebCore::CaptureSourceOrError WebPageProxy::createRealtimeMediaSourceForSpeechRe
 #endif
 }
 
-#endif
-
-#if HAVE(ARKIT_INLINE_PREVIEW_IOS)
-void WebPageProxy::takeModelElementFullscreen(WebCore::GraphicsLayer::PlatformLayerID contentLayerId)
-{
-    modelElementController()->takeModelElementFullscreen(contentLayerId);
-}
 #endif
 
 #if HAVE(ARKIT_INLINE_PREVIEW_MAC)

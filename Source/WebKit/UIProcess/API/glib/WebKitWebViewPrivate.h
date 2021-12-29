@@ -82,8 +82,6 @@ void webkitWebViewRemoveLoadingWebResource(WebKitWebView*, uint64_t resourceIden
 void webkitWebViewMaximizeWindow(WebKitWebView*, CompletionHandler<void()>&&);
 void webkitWebViewMinimizeWindow(WebKitWebView*, CompletionHandler<void()>&&);
 void webkitWebViewRestoreWindow(WebKitWebView*, CompletionHandler<void()>&&);
-void webkitWebViewEnterFullScreen(WebKitWebView*);
-void webkitWebViewExitFullScreen(WebKitWebView*);
 void webkitWebViewPopulateContextMenu(WebKitWebView*, const Vector<WebKit::WebContextMenuItemData>& proposedMenu, const WebKit::WebHitTestResultData&, GVariant*);
 void webkitWebViewSubmitFormRequest(WebKitWebView*, WebKitFormSubmissionRequest*);
 void webkitWebViewHandleAuthenticationChallenge(WebKitWebView*, WebKit::AuthenticationChallengeProxy*);

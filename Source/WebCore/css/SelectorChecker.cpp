@@ -1038,22 +1038,6 @@ bool SelectorChecker::checkOne(CheckingContext& checkingContext, const LocalCont
                 ASSERT(selector.argumentList() && !selector.argumentList()->isEmpty());
                 return matchesLangPseudoClass(element, *selector.argumentList());
             }
-#if ENABLE(FULLSCREEN_API)
-        case CSSSelector::PseudoClassFullScreen:
-            return matchesFullScreenPseudoClass(element);
-        case CSSSelector::PseudoClassAnimatingFullScreenTransition:
-            return matchesFullScreenAnimatingFullScreenTransitionPseudoClass(element);
-        case CSSSelector::PseudoClassFullScreenAncestor:
-            return matchesFullScreenAncestorPseudoClass(element);
-        case CSSSelector::PseudoClassFullScreenDocument:
-            return matchesFullScreenDocumentPseudoClass(element);
-        case CSSSelector::PseudoClassFullScreenControlsHidden:
-            return matchesFullScreenControlsHiddenPseudoClass(element);
-#endif
-#if ENABLE(PICTURE_IN_PICTURE_API)
-        case CSSSelector::PseudoClassPictureInPicture:
-            return matchesPictureInPicturePseudoClass(element);
-#endif
         case CSSSelector::PseudoClassInRange:
             return isInRange(element);
         case CSSSelector::PseudoClassOutOfRange:

@@ -184,7 +184,6 @@ void WebProcessCreationParameters::encode(IPC::Encoder& encoder) const
 
 #if PLATFORM(IOS_FAMILY)
     encoder << currentUserInterfaceIdiomIsPhoneOrWatch;
-    encoder << supportsPictureInPicture;
     encoder << cssValueToSystemColorMap;
     encoder << focusRingColor;
     encoder << localizedDeviceModel;
@@ -518,9 +517,6 @@ bool WebProcessCreationParameters::decode(IPC::Decoder& decoder, WebProcessCreat
 
 #if PLATFORM(IOS_FAMILY)
     if (!decoder.decode(parameters.currentUserInterfaceIdiomIsPhoneOrWatch))
-        return false;
-
-    if (!decoder.decode(parameters.supportsPictureInPicture))
         return false;
 
     std::optional<WebCore::RenderThemeIOS::CSSValueToSystemColorMap> cssValueToSystemColorMap;

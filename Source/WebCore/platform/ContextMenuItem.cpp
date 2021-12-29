@@ -251,13 +251,10 @@ bool isValidContextMenuAction(ContextMenuAction action)
     case ContextMenuAction::ContextMenuItemTagCopyMediaLinkToClipboard:
     case ContextMenuAction::ContextMenuItemTagToggleMediaControls:
     case ContextMenuAction::ContextMenuItemTagToggleMediaLoop:
-    case ContextMenuAction::ContextMenuItemTagEnterVideoFullscreen:
     case ContextMenuAction::ContextMenuItemTagMediaPlayPause:
     case ContextMenuAction::ContextMenuItemTagMediaMute:
     case ContextMenuAction::ContextMenuItemTagDictationAlternative:
-    case ContextMenuAction::ContextMenuItemTagToggleVideoFullscreen:
     case ContextMenuAction::ContextMenuItemTagShareMenu:
-    case ContextMenuAction::ContextMenuItemTagToggleVideoEnhancedFullscreen:
     case ContextMenuAction::ContextMenuItemTagQuickLookImage:
     case ContextMenuAction::ContextMenuItemTagTranslate:
     case ContextMenuAction::ContextMenuItemBaseCustomTag:

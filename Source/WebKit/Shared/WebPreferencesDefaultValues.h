@@ -27,12 +27,6 @@
 
 #include <wtf/Forward.h>
 
-#if PLATFORM(IOS_FAMILY)
-#define EXPERIMENTAL_FULLSCREEN_API_HIDDEN false
-#else
-#define EXPERIMENTAL_FULLSCREEN_API_HIDDEN true
-#endif
-
 namespace WebKit {
 
 bool isFeatureFlagEnabled(const char*, bool defaultValue = false);

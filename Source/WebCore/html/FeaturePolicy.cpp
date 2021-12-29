@@ -50,8 +50,6 @@ static const char* policyTypeName(FeaturePolicy::Type type)
         return "DisplayCapture";
     case FeaturePolicy::Type::SyncXHR:
         return "SyncXHR";
-    case FeaturePolicy::Type::Fullscreen:
-        return "Fullscreen";
     }
     ASSERT_NOT_REACHED();
     return "";
@@ -156,7 +154,6 @@ FeaturePolicy FeaturePolicy::parse(Document& document, const HTMLIFrameElement& 
     bool isSpeakerSelectionInitialized = false;
     bool isDisplayCaptureInitialized = false;
     bool isSyncXHRInitialized = false;
-    bool isFullscreenInitialized = false;
     for (auto allowItem : allowAttributeValue.split(';')) {
         auto item = allowItem.stripLeadingAndTrailingMatchedCharacters(isHTMLSpace<UChar>);
         if (item.startsWith("camera")) {
@@ -184,14 +181,9 @@ FeaturePolicy FeaturePolicy::parse(Document& document, const HTMLIFrameElement& 
             updateList(document, policy.m_syncXHRRule, item.substring(9));
             continue;
         }
-        if (item.startsWith("fullscreen")) {
-            isFullscreenInitialized = true;
-            updateList(document, policy.m_fullscreenRule, item.substring(11));
-            continue;
-        }
     }
 
-    // By default, camera, microphone, speaker-selection, display-capture, fullscreen and xr-spatial-tracking policy is 'self'.
+    // By default, camera, microphone, speaker-selection, display-capture and xr-spatial-tracking policy is 'self'.
     if (!isCameraInitialized)
         policy.m_cameraRule.allowedList.add(document.securityOrigin().data());
     if (!isMicrophoneInitialized)
@@ -200,21 +192,6 @@ FeaturePolicy FeaturePolicy::parse(Document& document, const HTMLIFrameElement& 
         policy.m_speakerSelectionRule.allowedList.add(document.securityOrigin().data());
     if (!isDisplayCaptureInitialized)
         policy.m_displayCaptureRule.allowedList.add(document.securityOrigin().data());
-
-    // https://w3c.github.io/webappsec-feature-policy/#process-feature-policy-attributes
-    // 9.5 Process Feature Policy Attributes
-    // 3.1 If element’s allowfullscreen attribute is specified, and container policy does
-    //     not contain an allowlist for fullscreen,
-    if (!isFullscreenInitialized) {
-        if (iframe.hasAttribute(allowfullscreenAttr) || iframe.hasAttribute(webkitallowfullscreenAttr)) {
-            // 3.1.1 Construct a new declaration for fullscreen, whose allowlist is the special value *.
-            policy.m_fullscreenRule.type = FeaturePolicy::AllowRule::Type::All;
-        } else {
-            // https://fullscreen.spec.whatwg.org/#feature-policy-integration
-            // The default allowlist is 'self'.
-            policy.m_fullscreenRule.allowedList.add(document.securityOrigin().data());
-        }
-    }
 
     if (!isSyncXHRInitialized)
         policy.m_syncXHRRule.type = AllowRule::Type::All;
@@ -235,8 +212,6 @@ bool FeaturePolicy::allows(Type type, const SecurityOriginData& origin) const
         return isAllowedByFeaturePolicy(m_displayCaptureRule, origin);
     case Type::SyncXHR:
         return isAllowedByFeaturePolicy(m_syncXHRRule, origin);
-    case Type::Fullscreen:
-        return isAllowedByFeaturePolicy(m_fullscreenRule, origin);
     }
     ASSERT_NOT_REACHED();
     return false;

@@ -38,7 +38,6 @@
 #include "EventLoop.h"
 #include "EventNames.h"
 #include "Frame.h"
-#include "FullscreenManager.h"
 #include "GraphicsContext.h"
 #include "HTMLVideoElement.h"
 #include "ImageBuffer.h"
@@ -331,18 +330,6 @@ void MediaControlTextTrackContainerElement::updateTextTrackStyle()
     removeInlineStyleProperty(CSSPropertyHeight);
     removeInlineStyleProperty(CSSPropertyLeft);
     removeInlineStyleProperty(CSSPropertyTop);
-}
-
-void MediaControlTextTrackContainerElement::enteredFullscreen()
-{
-    updateTextTrackRepresentationIfNeeded();
-    updateSizes(ForceUpdate::Yes);
-}
-
-void MediaControlTextTrackContainerElement::exitedFullscreen()
-{
-    clearTextTrackRepresentation();
-    updateSizes(ForceUpdate::Yes);
 }
 
 bool MediaControlTextTrackContainerElement::updateVideoDisplaySize()

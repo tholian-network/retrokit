@@ -41,7 +41,6 @@
 #include "FocusedElementInformation.h"
 #include "IdentifierTypes.h"
 #include "InjectedBundlePageContextMenuClient.h"
-#include "InjectedBundlePageFullScreenClient.h"
 #include "InjectedBundlePagePolicyClient.h"
 #include "LayerTreeContext.h"
 #include "MessageReceiver.h"
@@ -284,9 +283,7 @@ class WebDateTimeChooser;
 class WebDocumentLoader;
 class WebEvent;
 class PlaybackSessionManager;
-class VideoFullscreenManager;
 class WebFrame;
-class WebFullScreenManager;
 class WebGestureEvent;
 class WebImage;
 class WebInspector;
@@ -407,22 +404,14 @@ public:
 
     void inspectorFrontendCountChanged(unsigned);
 
-#if PLATFORM(IOS_FAMILY) || (PLATFORM(MAC) && ENABLE(VIDEO_PRESENTATION_MODE))
+#if PLATFORM(IOS_FAMILY)
     PlaybackSessionManager& playbackSessionManager();
     void videoControlsManagerDidChange();
-#endif
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    VideoFullscreenManager& videoFullscreenManager();
 #endif
 
 #if PLATFORM(IOS_FAMILY)
     void setAllowsMediaDocumentInlinePlayback(bool);
     bool allowsMediaDocumentInlinePlayback() const { return m_allowsMediaDocumentInlinePlayback; }
-#endif
-
-#if ENABLE(FULLSCREEN_API)
-    WebFullScreenManager* fullScreenManager();
 #endif
 
     void addConsoleMessage(WebCore::FrameIdentifier, MessageSource, MessageLevel, const String&, uint64_t requestID = 0);
@@ -509,9 +498,6 @@ public:
     void initializeInjectedBundlePolicyClient(WKBundlePagePolicyClientBase*);
     void setInjectedBundleResourceLoadClient(std::unique_ptr<API::InjectedBundle::ResourceLoadClient>&&);
     void setInjectedBundleUIClient(std::unique_ptr<API::InjectedBundle::PageUIClient>&&);
-#if ENABLE(FULLSCREEN_API)
-    void initializeInjectedBundleFullScreenClient(WKBundlePageFullScreenClientBase*);
-#endif
 
 #if ENABLE(CONTEXT_MENUS)
     API::InjectedBundle::PageContextMenuClient& injectedBundleContextMenuClient() { return *m_contextMenuClient; }
@@ -522,9 +508,6 @@ public:
     InjectedBundlePagePolicyClient& injectedBundlePolicyClient() { return m_policyClient; }
     API::InjectedBundle::ResourceLoadClient& injectedBundleResourceLoadClient() { return *m_resourceLoadClient; }
     API::InjectedBundle::PageUIClient& injectedBundleUIClient() { return *m_uiClient; }
-#if ENABLE(FULLSCREEN_API)
-    InjectedBundlePageFullScreenClient& injectedBundleFullScreenClient() { return m_fullScreenClient; }
-#endif
 
     bool findStringFromInjectedBundle(const String&, OptionSet<FindOptions>);
     void findStringMatchesFromInjectedBundle(const String&, OptionSet<FindOptions>);
@@ -2002,9 +1985,6 @@ private:
     InjectedBundlePagePolicyClient m_policyClient;
     std::unique_ptr<API::InjectedBundle::ResourceLoadClient> m_resourceLoadClient;
     std::unique_ptr<API::InjectedBundle::PageUIClient> m_uiClient;
-#if ENABLE(FULLSCREEN_API)
-    InjectedBundlePageFullScreenClient m_fullScreenClient;
-#endif
 
     UniqueRef<FindController> m_findController;
 
@@ -2013,18 +1993,9 @@ private:
     RefPtr<RemoteWebInspectorUI> m_remoteInspectorUI;
     std::unique_ptr<WebPageInspectorTargetController> m_inspectorTargetController;
 
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    RefPtr<PlaybackSessionManager> m_playbackSessionManager;
-    RefPtr<VideoFullscreenManager> m_videoFullscreenManager;
-#endif
-
 #if PLATFORM(IOS_FAMILY)
     bool m_allowsMediaDocumentInlinePlayback { false };
     std::optional<WebCore::SimpleRange> m_startingGestureRange;
-#endif
-
-#if ENABLE(FULLSCREEN_API)
-    RefPtr<WebFullScreenManager> m_fullScreenManager;
 #endif
 
     RefPtr<WebPopupMenu> m_activePopupMenu;

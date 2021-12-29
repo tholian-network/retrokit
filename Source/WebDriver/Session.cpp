@@ -918,47 +918,6 @@ void Session::minimizeWindow(Function<void (CommandResult&&)>&& completionHandle
     });
 }
 
-void Session::fullscreenWindow(Function<void (CommandResult&&)>&& completionHandler)
-{
-    if (!m_toplevelBrowsingContext) {
-        completionHandler(CommandResult::fail(CommandResult::ErrorCode::NoSuchWindow));
-        return;
-    }
-
-    handleUserPrompts([this, protectedThis = makeRef(*this), completionHandler = WTFMove(completionHandler)](CommandResult&& result) mutable {
-        if (result.isError()) {
-            completionHandler(WTFMove(result));
-            return;
-        }
-
-        auto parameters = JSON::Object::create();
-        parameters->setString("browsingContextHandle"_s, m_toplevelBrowsingContext.value());
-        parameters->setString("function"_s, StringImpl::createWithoutCopying(EnterFullscreenJavaScript, sizeof(EnterFullscreenJavaScript)));
-        parameters->setArray("arguments"_s, JSON::Array::create());
-        parameters->setBoolean("expectsImplicitCallbackArgument"_s, true);
-        m_host->sendCommandToBackend("evaluateJavaScriptFunction"_s, WTFMove(parameters), [this, protectedThis, completionHandler = WTFMove(completionHandler)](SessionHost::CommandResponse&& response) mutable {
-            if (response.isError || !response.responseObject) {
-                completionHandler(CommandResult::fail(WTFMove(response.responseObject)));
-                return;
-            }
-
-            auto valueString = response.responseObject->getString("result"_s);
-            if (!valueString) {
-                completionHandler(CommandResult::fail(CommandResult::ErrorCode::UnknownError));
-                return;
-            }
-
-            auto resultValue = JSON::Value::parseJSON(valueString);
-            if (!resultValue) {
-                completionHandler(CommandResult::fail(CommandResult::ErrorCode::UnknownError));
-                return;
-            }
-
-            getToplevelBrowsingContextRect(WTFMove(completionHandler));
-        });
-    });
-}
-
 RefPtr<JSON::Object> Session::createElement(RefPtr<JSON::Value>&& value)
 {
     if (!value)

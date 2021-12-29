@@ -55,7 +55,6 @@
 #include <WebCore/CSSImportRule.h>
 #include <WebCore/DOMException.h>
 #include <WebCore/Document.h>
-#include <WebCore/FullscreenManager.h>
 #include <WebCore/JSExecState.h>
 #include <WebCore/SecurityOrigin.h>
 #include <wtf/GetPtr.h>
@@ -136,11 +135,6 @@ enum {
     DOM_DOCUMENT_PROP_SELECTED_STYLESHEET_SET,
     DOM_DOCUMENT_PROP_ACTIVE_ELEMENT,
     DOM_DOCUMENT_PROP_COMPAT_MODE,
-    DOM_DOCUMENT_PROP_WEBKIT_IS_FULL_SCREEN,
-    DOM_DOCUMENT_PROP_WEBKIT_FULL_SCREEN_KEYBOARD_INPUT_ALLOWED,
-    DOM_DOCUMENT_PROP_WEBKIT_CURRENT_FULL_SCREEN_ELEMENT,
-    DOM_DOCUMENT_PROP_WEBKIT_FULLSCREEN_ENABLED,
-    DOM_DOCUMENT_PROP_WEBKIT_FULLSCREEN_ELEMENT,
     DOM_DOCUMENT_PROP_POINTER_LOCK_ELEMENT,
     DOM_DOCUMENT_PROP_VISIBILITY_STATE,
     DOM_DOCUMENT_PROP_HIDDEN,
@@ -303,21 +297,6 @@ static void webkit_dom_document_get_property(GObject* object, guint propertyId, 
         break;
     case DOM_DOCUMENT_PROP_COMPAT_MODE:
         g_value_take_string(value, webkit_dom_document_get_compat_mode(self));
-        break;
-    case DOM_DOCUMENT_PROP_WEBKIT_IS_FULL_SCREEN:
-        g_value_set_boolean(value, webkit_dom_document_get_webkit_is_fullscreen(self));
-        break;
-    case DOM_DOCUMENT_PROP_WEBKIT_FULL_SCREEN_KEYBOARD_INPUT_ALLOWED:
-        g_value_set_boolean(value, webkit_dom_document_get_webkit_fullscreen_keyboard_input_allowed(self));
-        break;
-    case DOM_DOCUMENT_PROP_WEBKIT_CURRENT_FULL_SCREEN_ELEMENT:
-        g_value_set_object(value, webkit_dom_document_get_webkit_current_fullscreen_element(self));
-        break;
-    case DOM_DOCUMENT_PROP_WEBKIT_FULLSCREEN_ENABLED:
-        g_value_set_boolean(value, webkit_dom_document_get_webkit_fullscreen_enabled(self));
-        break;
-    case DOM_DOCUMENT_PROP_WEBKIT_FULLSCREEN_ELEMENT:
-        g_value_set_object(value, webkit_dom_document_get_webkit_fullscreen_element(self));
         break;
     case DOM_DOCUMENT_PROP_POINTER_LOCK_ELEMENT:
         g_value_set_object(value, webkit_dom_document_get_pointer_lock_element(self));
@@ -718,56 +697,6 @@ void webkitDOMDocumentInstallProperties(GObjectClass* gobjectClass)
             "Document:compat-mode",
             "read-only gchar* Document:compat-mode",
             "",
-            WEBKIT_PARAM_READABLE));
-
-    g_object_class_install_property(
-        gobjectClass,
-        DOM_DOCUMENT_PROP_WEBKIT_IS_FULL_SCREEN,
-        g_param_spec_boolean(
-            "webkit-is-full-screen",
-            "Document:webkit-is-full-screen",
-            "read-only gboolean Document:webkit-is-full-screen",
-            FALSE,
-            WEBKIT_PARAM_READABLE));
-
-    g_object_class_install_property(
-        gobjectClass,
-        DOM_DOCUMENT_PROP_WEBKIT_FULL_SCREEN_KEYBOARD_INPUT_ALLOWED,
-        g_param_spec_boolean(
-            "webkit-full-screen-keyboard-input-allowed",
-            "Document:webkit-full-screen-keyboard-input-allowed",
-            "read-only gboolean Document:webkit-full-screen-keyboard-input-allowed",
-            FALSE,
-            WEBKIT_PARAM_READABLE));
-
-    g_object_class_install_property(
-        gobjectClass,
-        DOM_DOCUMENT_PROP_WEBKIT_CURRENT_FULL_SCREEN_ELEMENT,
-        g_param_spec_object(
-            "webkit-current-full-screen-element",
-            "Document:webkit-current-full-screen-element",
-            "read-only WebKitDOMElement* Document:webkit-current-full-screen-element",
-            WEBKIT_DOM_TYPE_ELEMENT,
-            WEBKIT_PARAM_READABLE));
-
-    g_object_class_install_property(
-        gobjectClass,
-        DOM_DOCUMENT_PROP_WEBKIT_FULLSCREEN_ENABLED,
-        g_param_spec_boolean(
-            "webkit-fullscreen-enabled",
-            "Document:webkit-fullscreen-enabled",
-            "read-only gboolean Document:webkit-fullscreen-enabled",
-            FALSE,
-            WEBKIT_PARAM_READABLE));
-
-    g_object_class_install_property(
-        gobjectClass,
-        DOM_DOCUMENT_PROP_WEBKIT_FULLSCREEN_ELEMENT,
-        g_param_spec_object(
-            "webkit-fullscreen-element",
-            "Document:webkit-fullscreen-element",
-            "read-only WebKitDOMElement* Document:webkit-fullscreen-element",
-            WEBKIT_DOM_TYPE_ELEMENT,
             WEBKIT_PARAM_READABLE));
 
     g_object_class_install_property(
@@ -1308,22 +1237,6 @@ gboolean webkit_dom_document_has_focus(WebKitDOMDocument* self)
     return result;
 }
 
-void webkit_dom_document_webkit_cancel_fullscreen(WebKitDOMDocument* self)
-{
-    WebCore::JSMainThreadNullState state;
-    g_return_if_fail(WEBKIT_DOM_IS_DOCUMENT(self));
-    WebCore::Document* item = WebKit::core(self);
-    item->fullscreenManager().cancelFullscreen();
-}
-
-void webkit_dom_document_webkit_exit_fullscreen(WebKitDOMDocument* self)
-{
-    WebCore::JSMainThreadNullState state;
-    g_return_if_fail(WEBKIT_DOM_IS_DOCUMENT(self));
-    WebCore::Document* item = WebKit::core(self);
-    item->fullscreenManager().exitFullscreen();
-}
-
 void webkit_dom_document_exit_pointer_lock(WebKitDOMDocument* self)
 {
 #if ENABLE(POINTER_LOCK)
@@ -1816,51 +1729,6 @@ gchar* webkit_dom_document_get_compat_mode(WebKitDOMDocument* self)
     WebCore::Document* item = WebKit::core(self);
     gchar* result = convertToUTF8String(item->compatMode());
     return result;
-}
-
-gboolean webkit_dom_document_get_webkit_is_fullscreen(WebKitDOMDocument* self)
-{
-    WebCore::JSMainThreadNullState state;
-    g_return_val_if_fail(WEBKIT_DOM_IS_DOCUMENT(self), FALSE);
-    WebCore::Document* item = WebKit::core(self);
-    gboolean result = item->fullscreenManager().isFullscreen();
-    return result;
-}
-
-gboolean webkit_dom_document_get_webkit_fullscreen_keyboard_input_allowed(WebKitDOMDocument* self)
-{
-    WebCore::JSMainThreadNullState state;
-    g_return_val_if_fail(WEBKIT_DOM_IS_DOCUMENT(self), FALSE);
-    WebCore::Document* item = WebKit::core(self);
-    gboolean result = item->fullscreenManager().isFullscreenKeyboardInputAllowed();
-    return result;
-}
-
-WebKitDOMElement* webkit_dom_document_get_webkit_current_fullscreen_element(WebKitDOMDocument* self)
-{
-    WebCore::JSMainThreadNullState state;
-    g_return_val_if_fail(WEBKIT_DOM_IS_DOCUMENT(self), 0);
-    WebCore::Document* item = WebKit::core(self);
-    RefPtr<WebCore::Element> gobjectResult = WTF::getPtr(item->fullscreenManager().currentFullscreenElement());
-    return WebKit::kit(gobjectResult.get());
-}
-
-gboolean webkit_dom_document_get_webkit_fullscreen_enabled(WebKitDOMDocument* self)
-{
-    WebCore::JSMainThreadNullState state;
-    g_return_val_if_fail(WEBKIT_DOM_IS_DOCUMENT(self), FALSE);
-    WebCore::Document* item = WebKit::core(self);
-    gboolean result = item->fullscreenManager().isFullscreenEnabled();
-    return result;
-}
-
-WebKitDOMElement* webkit_dom_document_get_webkit_fullscreen_element(WebKitDOMDocument* self)
-{
-    WebCore::JSMainThreadNullState state;
-    g_return_val_if_fail(WEBKIT_DOM_IS_DOCUMENT(self), 0);
-    WebCore::Document* item = WebKit::core(self);
-    RefPtr<WebCore::Element> gobjectResult = WTF::getPtr(item->fullscreenManager().fullscreenElement());
-    return WebKit::kit(gobjectResult.get());
 }
 
 WebKitDOMElement* webkit_dom_document_get_pointer_lock_element(WebKitDOMDocument* self)

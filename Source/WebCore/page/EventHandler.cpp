@@ -54,7 +54,6 @@
 #include "FrameSelection.h"
 #include "FrameTree.h"
 #include "FrameView.h"
-#include "FullscreenManager.h"
 #include "HTMLDialogElement.h"
 #include "HTMLDocument.h"
 #include "HTMLFrameElement.h"
@@ -3444,28 +3443,6 @@ bool EventHandler::needsKeyboardEventDisambiguationQuirks() const
 }
 #endif
 
-#if ENABLE(FULLSCREEN_API)
-bool EventHandler::isKeyEventAllowedInFullScreen(const PlatformKeyboardEvent& keyEvent) const
-{
-    RefPtr document = m_frame.document();
-    if (document->fullscreenManager().isFullscreenKeyboardInputAllowed())
-        return true;
-
-    if (keyEvent.type() == PlatformKeyboardEvent::Char) {
-        if (keyEvent.text().length() != 1)
-            return false;
-        UChar character = keyEvent.text()[0];
-        return character == ' ';
-    }
-
-    int keyCode = keyEvent.windowsVirtualKeyCode();
-    return (keyCode >= VK_BACK && keyCode <= VK_CAPITAL)
-        || (keyCode >= VK_SPACE && keyCode <= VK_DELETE)
-        || (keyCode >= VK_OEM_1 && keyCode <= VK_OEM_PLUS)
-        || (keyCode >= VK_MULTIPLY && keyCode <= VK_OEM_8);
-}
-#endif
-
 bool EventHandler::keyEvent(const PlatformKeyboardEvent& keyEvent)
 {
     Ref protectedFrame = m_frame;
@@ -3519,18 +3496,6 @@ bool EventHandler::internalKeyEvent(const PlatformKeyboardEvent& initialKeyEvent
                 validationMessageClient->hideAnyValidationMessage();
         }
     }
-
-#if ENABLE(FULLSCREEN_API)
-    if (m_frame.document()->fullscreenManager().isFullscreen()) {
-        if (initialKeyEvent.type() == PlatformEvent::KeyDown && initialKeyEvent.windowsVirtualKeyCode() == VK_ESCAPE) {
-            m_frame.document()->fullscreenManager().cancelFullscreen();
-            return true;
-        }
-
-        if (!isKeyEventAllowedInFullScreen(initialKeyEvent))
-            return false;
-    }
-#endif
 
     if (initialKeyEvent.windowsVirtualKeyCode() == VK_CAPITAL)
         capsLockStateMayHaveChanged();

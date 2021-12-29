@@ -220,14 +220,11 @@ void RenderTheme::adjustStyle(RenderStyle& style, const Element* element, const 
     case MediaPlayButtonPart:
     case MediaCurrentTimePart:
     case MediaTimeRemainingPart:
-    case MediaEnterFullscreenButtonPart:
-    case MediaExitFullscreenButtonPart:
     case MediaMuteButtonPart:
     case MediaVolumeSliderContainerPart:
         return adjustMediaControlStyle(style, element);
     case MediaSliderPart:
     case MediaVolumeSliderPart:
-    case MediaFullScreenVolumeSliderPart:
     case SliderHorizontalPart:
     case SliderVerticalPart:
         return adjustSliderTrackStyle(style, element);
@@ -365,9 +362,6 @@ bool RenderTheme::paint(const RenderBox& box, ControlStates& controlStates, cons
     case SliderThumbHorizontalPart:
     case SliderThumbVerticalPart:
         return paintSliderThumb(box, paintInfo, integralSnappedRect);
-    case MediaEnterFullscreenButtonPart:
-    case MediaExitFullscreenButtonPart:
-        return paintMediaFullscreenButton(box, paintInfo, integralSnappedRect);
     case MediaPlayButtonPart:
         return paintMediaPlayButton(box, paintInfo, integralSnappedRect);
     case MediaOverlayPlayButtonPart:
@@ -396,10 +390,6 @@ bool RenderTheme::paint(const RenderBox& box, ControlStates& controlStates, cons
         return paintMediaVolumeSliderTrack(box, paintInfo, integralSnappedRect);
     case MediaVolumeSliderThumbPart:
         return paintMediaVolumeSliderThumb(box, paintInfo, integralSnappedRect);
-    case MediaFullScreenVolumeSliderPart:
-        return paintMediaFullScreenVolumeSliderTrack(box, paintInfo, integralSnappedRect);
-    case MediaFullScreenVolumeSliderThumbPart:
-        return paintMediaFullScreenVolumeSliderThumb(box, paintInfo, integralSnappedRect);
     case MediaTimeRemainingPart:
         return paintMediaTimeRemaining(box, paintInfo, integralSnappedRect);
     case MediaCurrentTimePart:

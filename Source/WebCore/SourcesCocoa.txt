@@ -193,7 +193,6 @@ platform/cocoa/TelephoneNumberDetectorCocoa.cpp
 platform/cocoa/ThemeCocoa.mm
 platform/cocoa/UserAgentCocoa.mm
 platform/cocoa/VersionChecks.mm
-platform/cocoa/VideoFullscreenModelVideoElement.mm
 platform/cocoa/VideoToolboxSoftLink.cpp
 platform/cocoa/WebCoreAdditions.mm @no-unify
 platform/cocoa/WebCoreNSErrorExtras.mm
@@ -362,13 +361,11 @@ platform/ios/ThemeIOS.mm
 platform/ios/TileControllerMemoryHandlerIOS.cpp
 platform/ios/UserAgentIOS.mm
 platform/ios/ValidationBubbleIOS.mm
-platform/ios/VideoFullscreenInterfaceAVKit.mm @no-unify
 platform/ios/WebAVPlayerController.mm
 platform/ios/WebBackgroundTaskController.mm
 platform/ios/WebEvent.mm @no-unify
 platform/ios/WebItemProviderPasteboard.mm @no-unify
 platform/ios/WebSQLiteDatabaseTrackerClient.mm
-platform/ios/WebVideoFullscreenControllerAVKit.mm @no-unify
 platform/ios/WidgetIOS.mm
 platform/ios/wak/FloatingPointEnvironment.cpp
 platform/ios/wak/WAKScrollView.mm
@@ -413,10 +410,6 @@ platform/mac/ThreadCheck.mm @no-unify
 platform/mac/UserActivityMac.mm
 platform/mac/UserAgentMac.mm
 platform/mac/ValidationBubbleMac.mm
-platform/mac/VideoFullscreenInterfaceMac.mm
-platform/mac/WebCoreFullScreenPlaceholderView.mm
-platform/mac/WebCoreFullScreenWarningView.mm
-platform/mac/WebCoreFullScreenWindow.mm
 platform/mac/WebCoreNSFontManagerExtras.mm
 platform/mac/WebCoreNSURLExtras.mm
 platform/mac/WebCoreObjCExtras.mm

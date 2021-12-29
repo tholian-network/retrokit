@@ -55,7 +55,6 @@
 #include "FrameLoader.h"
 #include "FrameLoaderClient.h"
 #include "FrameView.h"
-#include "FullscreenManager.h"
 #include "HTMLParserIdioms.h"
 #include "HTMLSourceElement.h"
 #include "HTMLTrackElement.h"
@@ -85,7 +84,6 @@
 #include "PODIntervalTree.h"
 #include "Page.h"
 #include "PageGroup.h"
-#include "PictureInPictureSupport.h"
 #include "PlatformMediaSessionManager.h"
 #include "ProgressTracker.h"
 #include "Quirks.h"
@@ -131,7 +129,6 @@
 
 #if PLATFORM(IOS_FAMILY)
 #include "RuntimeApplicationChecks.h"
-#include "VideoFullscreenInterfaceAVKit.h"
 #endif
 
 #if ENABLE(WIRELESS_PLAYBACK_TARGET)
@@ -160,10 +157,6 @@
 
 #if ENABLE(ENCRYPTED_MEDIA)
 #include "NotImplemented.h"
-#endif
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-#include "VideoFullscreenModel.h"
 #endif
 
 #if ENABLE(MEDIA_SESSION)
@@ -328,7 +321,6 @@ struct MediaElementSessionInfo {
 
     MonotonicTime timeOfLastUserInteraction;
     bool canShowControlsManager : 1;
-    bool isVisibleInViewportOrFullscreen : 1;
     bool isLargeEnoughForMainContent : 1;
     bool isPlayingAudio : 1;
     bool hasEverNotifiedAboutPlaying : 1;
@@ -342,7 +334,7 @@ static MediaElementSessionInfo mediaElementSessionInfoForSession(const MediaElem
         purpose,
         session.mostRecentUserInteractionTime(),
         session.canShowControlsManager(purpose),
-        element.isFullscreen() || element.isVisibleInViewport(),
+        element.isVisibleInViewport(),
         session.isLargeEnoughForMainContent(MediaSessionMainContentPurpose::MediaControls),
         element.isPlaying() && element.hasAudio() && !element.muted(),
         element.hasEverNotifiedAboutPlaying()
@@ -353,11 +345,6 @@ static bool preferMediaControlsForCandidateSessionOverOtherCandidateSession(cons
 {
     MediaElementSession::PlaybackControlsPurpose purpose = session.purpose;
     ASSERT(purpose == otherSession.purpose);
-
-    // For the controls manager and MediaSession, prioritize visible media over offscreen media.
-    if ((purpose == MediaElementSession::PlaybackControlsPurpose::ControlsManager || purpose == MediaElementSession::PlaybackControlsPurpose::MediaSession)
-        && session.isVisibleInViewportOrFullscreen != otherSession.isVisibleInViewportOrFullscreen)
-        return session.isVisibleInViewportOrFullscreen;
 
     // For Now Playing and MediaSession, prioritize elements that would normally satisfy main content.
     if ((purpose == MediaElementSession::PlaybackControlsPurpose::NowPlaying || purpose == MediaElementSession::PlaybackControlsPurpose::MediaSession)
@@ -380,9 +367,6 @@ static bool mediaSessionMayBeConfusedWithMainContent(const MediaElementSessionIn
 
     if (purpose == MediaElementSession::PlaybackControlsPurpose::NowPlaying)
         return session.isPlayingAudio;
-
-    if (!session.isVisibleInViewportOrFullscreen)
-        return false;
 
     if (!session.isLargeEnoughForMainContent)
         return false;
@@ -441,8 +425,6 @@ HTMLMediaElement::HTMLMediaElement(const QualifiedName& tagName, Document& docum
     , m_mediaControlsDependOnPageScaleFactor(false)
     , m_haveSetUpCaptionContainer(false)
     , m_isScrubbingRemotely(false)
-    , m_waitingToEnterFullscreen(false)
-    , m_changingVideoFullscreenMode(false)
     , m_showPoster(true)
     , m_tracksAreReady(true)
     , m_haveVisibleTextTrack(false)
@@ -472,7 +454,6 @@ void HTMLMediaElement::initializeMediaSession()
     ASSERT(!m_mediaSession);
     m_mediaSession = makeUnique<MediaElementSession>(*this);
 
-    m_mediaSession->addBehaviorRestriction(MediaElementSession::RequireUserGestureForFullscreen);
     m_mediaSession->addBehaviorRestriction(MediaElementSession::RequirePageConsentToLoadMedia);
 #if ENABLE(WIRELESS_PLAYBACK_TARGET)
     m_mediaSession->addBehaviorRestriction(MediaElementSession::RequireUserGestureToAutoplayToExternalDevice);
@@ -513,13 +494,6 @@ void HTMLMediaElement::initializeMediaSession()
         if (document.settings().mainContentUserGestureOverrideEnabled())
             m_mediaSession->addBehaviorRestriction(MediaElementSession::OverrideUserGestureRequirementForMainContent);
     }
-
-#if PLATFORM(IOS_FAMILY)
-    if (!document.settings().videoPlaybackRequiresUserGesture() && !document.settings().audioPlaybackRequiresUserGesture()) {
-        // Relax RequireUserGestureForFullscreen when videoPlaybackRequiresUserGesture and audioPlaybackRequiresUserGesture is not set:
-        m_mediaSession->removeBehaviorRestriction(MediaElementSession::RequireUserGestureForFullscreen);
-    }
-#endif
 
     registerWithDocument(document);
 
@@ -618,7 +592,7 @@ RefPtr<HTMLMediaElement> HTMLMediaElement::bestMediaElementForRemoteControls(Med
 
     std::sort(candidateSessions.begin(), candidateSessions.end(), preferMediaControlsForCandidateSessionOverOtherCandidateSession);
     auto strongestSessionCandidate = candidateSessions.first();
-    if (!strongestSessionCandidate.isVisibleInViewportOrFullscreen && !strongestSessionCandidate.isPlayingAudio && atLeastOneNonCandidateMayBeConfusedForMainContent)
+    if (!strongestSessionCandidate.isPlayingAudio && atLeastOneNonCandidateMayBeConfusedForMainContent)
         return nullptr;
 
     return &strongestSessionCandidate.session->element();
@@ -825,11 +799,6 @@ void HTMLMediaElement::pauseAfterDetachedTask()
     // If we were re-inserted into an active document, no need to pause.
     if (m_inActiveDocument)
         return;
-
-    if (m_videoFullscreenMode != VideoFullscreenModePictureInPicture && m_networkState > NETWORK_EMPTY)
-        pause();
-    if (m_videoFullscreenMode == VideoFullscreenModeStandard)
-        exitFullscreen();
 
     if (!m_player)
         return;
@@ -1119,9 +1088,6 @@ void HTMLMediaElement::load()
 
     INFO_LOG(LOGIDENTIFIER);
 
-    if (m_videoFullscreenMode == VideoFullscreenModePictureInPicture && document().quirks().requiresUserGestureToLoadInPictureInPicture() && !document().processingUserGestureForMedia())
-        return;
-
     prepareForLoad();
     queueCancellableTaskKeepingObjectAlive(*this, TaskSource::MediaElement, m_resourceSelectionTaskCancellationGroup, std::bind(&HTMLMediaElement::prepareToPlay, this));
 }
@@ -1247,9 +1213,6 @@ void HTMLMediaElement::mediaPlayerReloadAndResumePlaybackIfNeeded()
     bool wasPaused = paused();
 
     load();
-
-    if (m_videoFullscreenMode != VideoFullscreenModeNone)
-        enterFullscreen(m_videoFullscreenMode);
 
     if (previousMediaTime) {
         queueCancellableTaskKeepingObjectAlive(*this, TaskSource::MediaElement, m_resourceSelectionTaskCancellationGroup, [this, previousMediaTime] {
@@ -3647,9 +3610,6 @@ void HTMLMediaElement::pause()
 
     m_temporarilyAllowingInlinePlaybackAfterFullscreen = false;
 
-    if (m_waitingToEnterFullscreen)
-        m_waitingToEnterFullscreen = false;
-
     if (!mediaSession().playbackStateChangePermitted(MediaPlaybackState::Paused))
         return;
 
@@ -4969,9 +4929,6 @@ void HTMLMediaElement::mediaPlayerTimeChanged()
 
 void HTMLMediaElement::addBehaviorRestrictionsOnEndIfNecessary()
 {
-    if (isFullscreen())
-        return;
-
     mediaSession().addBehaviorRestriction(MediaElementSession::RequireUserGestureToControlControlsManager);
     m_playbackControlsManagerBehaviorRestrictionsTimer.stop();
     m_playbackControlsManagerBehaviorRestrictionsTimer.startOneShot(hideMediaControlsAfterEndedDelay);
@@ -5120,12 +5077,6 @@ void HTMLMediaElement::mediaPlayerSizeChanged()
 
 bool HTMLMediaElement::mediaPlayerRenderingCanBeAccelerated()
 {
-    // This function must return "true" when the video is playing in the
-    // picture-in-picture window. Otherwise, the MediaPlayerPrivate* may
-    // destroy the video layer.
-    if (m_videoFullscreenMode == VideoFullscreenModePictureInPicture)
-        return true;
-
     auto* renderer = this->renderer();
     return is<RenderVideo>(renderer)
         && downcast<RenderVideo>(*renderer).view().compositor().canAccelerateVideoRendering(downcast<RenderVideo>(*renderer));
@@ -5190,14 +5141,6 @@ void HTMLMediaElement::mediaEngineWasUpdated()
 #if ENABLE(LEGACY_ENCRYPTED_MEDIA)
     if (m_player && m_webKitMediaKeys)
         m_player->setCDM(&m_webKitMediaKeys->cdm());
-#endif
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    if (m_player) {
-        m_player->setVideoFullscreenFrame(m_videoFullscreenFrame);
-        m_player->setVideoFullscreenGravity(m_videoFullscreenGravity);
-        m_player->setVideoFullscreenLayer(m_videoFullscreenLayer.get());
-    }
 #endif
 
 #if ENABLE(WIRELESS_PLAYBACK_TARGET)
@@ -5482,10 +5425,6 @@ void HTMLMediaElement::updatePlayState()
 
     ALWAYS_LOG(LOGIDENTIFIER, "shouldBePlaying = ", shouldBePlaying, ", playerPaused = ", playerPaused);
 
-    if (shouldBePlaying && playerPaused && mediaSession().requiresFullscreenForVideoPlayback() && (m_waitingToEnterFullscreen || !isFullscreen())) {
-        if (!m_waitingToEnterFullscreen)
-            enterFullscreen();
-
 #if PLATFORM(WATCHOS)
         // FIXME: Investigate doing this for all builds.
         return;
@@ -5765,9 +5704,6 @@ void HTMLMediaElement::stopWithoutDestroyingMediaPlayer()
 {
     INFO_LOG(LOGIDENTIFIER);
 
-    if (m_videoFullscreenMode != VideoFullscreenModeNone)
-        exitFullscreen();
-
     setPreparedToReturnVideoLayerToInline(true);
 
     schedulePlaybackControlsManagerUpdate();
@@ -5897,7 +5833,7 @@ void HTMLMediaElement::mediaVolumeDidChange()
 
 void HTMLMediaElement::visibilityStateChanged()
 {
-    bool elementIsHidden = document().hidden() && m_videoFullscreenMode == VideoFullscreenModeNone;
+    bool elementIsHidden = document().hidden();
     if (elementIsHidden == m_elementIsHidden)
         return;
 
@@ -5912,7 +5848,7 @@ void HTMLMediaElement::visibilityStateChanged()
 
 bool HTMLMediaElement::requiresTextTrackRepresentation() const
 {
-    return (m_videoFullscreenMode != VideoFullscreenModeNone) && m_player ? m_player->requiresTextTrackRepresentation() : false;
+    return m_player ? m_player->requiresTextTrackRepresentation() : false;
 }
 
 void HTMLMediaElement::setTextTrackRepresentation(TextTrackRepresentation* representation)
@@ -6042,13 +5978,6 @@ void HTMLMediaElement::dispatchEvent(Event& event)
 
     HTMLElement::dispatchEvent(event);
 
-    // Some pages may change the position/size of an inline video element
-    // when/after the video element enters fullscreen (rdar://problem/55814988).
-    // We need to fire the end fullscreen event to notify the page
-    // to change the position/size back *before* exiting fullscreen.
-    // Otherwise, the exit fullscreen animation will be incorrect.
-    if (!m_videoFullscreenStandby && m_videoFullscreenMode == VideoFullscreenModeNone && event.type() == eventNames().webkitendfullscreenEvent)
-        document().page()->chrome().client().exitVideoFullscreenForVideoElement(downcast<HTMLVideoElement>(*this));
 }
 
 bool HTMLMediaElement::addEventListener(const AtomString& eventType, Ref<EventListener>&& listener, const AddEventListenerOptions& options)
@@ -6137,240 +6066,6 @@ double HTMLMediaElement::maxFastForwardRate() const
     return m_player ? m_player->maxFastForwardRate() : 0;
 }
 
-bool HTMLMediaElement::isFullscreen() const
-{
-#if ENABLE(FULLSCREEN_API)
-    if (document().fullscreenManager().isFullscreen() && document().fullscreenManager().currentFullscreenElement() == this)
-        return true;
-#endif
-
-    return m_videoFullscreenMode != VideoFullscreenModeNone;
-}
-
-bool HTMLMediaElement::isStandardFullscreen() const
-{
-#if ENABLE(FULLSCREEN_API)
-    if (document().fullscreenManager().isFullscreen() && document().fullscreenManager().currentFullscreenElement() == this)
-        return true;
-#endif
-
-    return m_videoFullscreenMode == VideoFullscreenModeStandard;
-}
-
-void HTMLMediaElement::toggleStandardFullscreenState()
-{
-    if (isStandardFullscreen())
-        exitFullscreen();
-    else
-        enterFullscreen();
-}
-
-void HTMLMediaElement::enterFullscreen(VideoFullscreenMode mode)
-{
-    ALWAYS_LOG(LOGIDENTIFIER, ", m_videoFullscreenMode = ", m_videoFullscreenMode, ", mode = ", mode);
-    ASSERT(mode != VideoFullscreenModeNone);
-
-    if (m_videoFullscreenMode == mode)
-        return;
-
-    if (m_waitingToEnterFullscreen)
-        return;
-
-    m_changingVideoFullscreenMode = true;
-
-#if ENABLE(FULLSCREEN_API) && ENABLE(VIDEO_USES_ELEMENT_FULLSCREEN)
-    if (document().settings().fullScreenEnabled() && mode == VideoFullscreenModeStandard) {
-        m_temporarilyAllowingInlinePlaybackAfterFullscreen = false;
-        m_waitingToEnterFullscreen = true;
-        document().fullscreenManager().requestFullscreenForElement(this, FullscreenManager::ExemptIFrameAllowFullscreenRequirement);
-        return;
-    }
-#endif
-
-    queueTaskKeepingObjectAlive(*this, TaskSource::MediaElement, [this, mode] {
-        if (isContextStopped())
-            return;
-
-        if (document().hidden()) {
-            ALWAYS_LOG(LOGIDENTIFIER, " returning because document is hidden");
-            m_changingVideoFullscreenMode = false;
-            return;
-        }
-
-        if (is<HTMLVideoElement>(*this)) {
-            HTMLVideoElement& asVideo = downcast<HTMLVideoElement>(*this);
-            if (document().page()->chrome().client().supportsVideoFullscreen(mode)) {
-                ALWAYS_LOG(LOGIDENTIFIER, "Entering fullscreen mode ", mode, ", m_videoFullscreenStandby = ", m_videoFullscreenStandby);
-
-                m_temporarilyAllowingInlinePlaybackAfterFullscreen = false;
-                if (mode == VideoFullscreenModeStandard)
-                    m_waitingToEnterFullscreen = true;
-
-                auto oldMode = m_videoFullscreenMode;
-                setFullscreenMode(mode);
-                configureMediaControls();
-
-                document().page()->chrome().client().enterVideoFullscreenForVideoElement(asVideo, m_videoFullscreenMode, m_videoFullscreenStandby);
-                if (m_videoFullscreenStandby)
-                    return;
-
-                if (mode == VideoFullscreenModeStandard)
-                    scheduleEvent(eventNames().webkitbeginfullscreenEvent);
-                else if (oldMode == VideoFullscreenModeStandard && !document().quirks().shouldDisableEndFullscreenEventWhenEnteringPictureInPictureFromFullscreenQuirk())
-                    scheduleEvent(eventNames().webkitendfullscreenEvent);
-
-                return;
-            }
-        }
-
-        m_changingVideoFullscreenMode = false;
-    });
-}
-
-void HTMLMediaElement::enterFullscreen()
-{
-    enterFullscreen(VideoFullscreenModeStandard);
-}
-
-void HTMLMediaElement::exitFullscreen()
-{
-    ALWAYS_LOG(LOGIDENTIFIER);
-
-    m_waitingToEnterFullscreen = false;
-
-#if ENABLE(FULLSCREEN_API)
-    if (document().settings().fullScreenEnabled() && document().fullscreenManager().currentFullscreenElement() == this) {
-        if (document().fullscreenManager().isFullscreen()) {
-            m_changingVideoFullscreenMode = true;
-            document().fullscreenManager().cancelFullscreen();
-        }
-
-        if (m_videoFullscreenMode == VideoFullscreenModeStandard)
-            return;
-    }
-#endif
-
-    ASSERT(m_videoFullscreenMode != VideoFullscreenModeNone);
-    VideoFullscreenMode oldVideoFullscreenMode = m_videoFullscreenMode;
-    Ref<HTMLMediaElement> protectedThis(*this); // updateMediaControlsAfterPresentationModeChange calls methods that can trigger arbitrary DOM mutations.
-    updateMediaControlsAfterPresentationModeChange();
-
-    if (!document().page() || !is<HTMLVideoElement>(*this))
-        return;
-
-    if (!paused() && mediaSession().requiresFullscreenForVideoPlayback()) {
-        if (!document().settings().allowsInlineMediaPlaybackAfterFullscreen() || isVideoTooSmallForInlinePlayback())
-            pauseInternal();
-        else {
-            // Allow inline playback, but set a flag so pausing and starting again (e.g. when scrubbing or looping) won't go back to fullscreen.
-            // Also set the controls attribute so the user will be able to control playback.
-            m_temporarilyAllowingInlinePlaybackAfterFullscreen = true;
-            setControls(true);
-        }
-    }
-
-    if (document().activeDOMObjectsAreSuspended() || document().activeDOMObjectsAreStopped()) {
-        setFullscreenMode(VideoFullscreenModeNone);
-        document().page()->chrome().client().exitVideoFullscreenToModeWithoutAnimation(downcast<HTMLVideoElement>(*this), VideoFullscreenModeNone);
-    } else if (document().page()->chrome().client().supportsVideoFullscreen(oldVideoFullscreenMode)) {
-        if (m_videoFullscreenStandby) {
-            setFullscreenMode(VideoFullscreenModeNone);
-            m_changingVideoFullscreenMode = true;
-            document().page()->chrome().client().enterVideoFullscreenForVideoElement(downcast<HTMLVideoElement>(*this), m_videoFullscreenMode, m_videoFullscreenStandby);
-            return;
-        }
-
-        m_changingVideoFullscreenMode = true;
-
-        if (oldVideoFullscreenMode == VideoFullscreenModeStandard) {
-            setFullscreenMode(VideoFullscreenModeNone);
-            // The exit fullscreen request will be sent in dispatchEvent().
-            scheduleEvent(eventNames().webkitendfullscreenEvent);
-            return;
-        }
-
-        setFullscreenMode(VideoFullscreenModeNone);
-        if (auto* page = document().page())
-            page->chrome().client().exitVideoFullscreenForVideoElement(downcast<HTMLVideoElement>(*this));
-    }
-}
-
-void HTMLMediaElement::prepareForVideoFullscreenStandby()
-{
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    if (!document().page())
-        return;
-
-    document().page()->chrome().client().prepareForVideoFullscreen();
-#endif
-}
-
-WEBCORE_EXPORT void HTMLMediaElement::setVideoFullscreenStandby(bool value)
-{
-    ASSERT(is<HTMLVideoElement>(*this));
-    if (m_videoFullscreenStandby == value)
-        return;
-
-    if (!document().page())
-        return;
-
-    if (!document().page()->chrome().client().supportsVideoFullscreenStandby())
-        return;
-
-    m_videoFullscreenStandby = value;
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    if (m_player)
-        m_player->videoFullscreenStandbyChanged();
-#endif
-
-    if (m_videoFullscreenMode != VideoFullscreenModeNone)
-        return;
-
-    if (m_videoFullscreenStandby)
-        document().page()->chrome().client().enterVideoFullscreenForVideoElement(downcast<HTMLVideoElement>(*this), VideoFullscreenModeNone, m_videoFullscreenStandby);
-    else
-        document().page()->chrome().client().exitVideoFullscreenForVideoElement(downcast<HTMLVideoElement>(*this), [this, protectedThis = makeRef(*this)](auto success) mutable {
-            m_videoFullscreenStandby = !success;
-        });
-}
-
-void HTMLMediaElement::willBecomeFullscreenElement()
-{
-#if PLATFORM(MAC) && ENABLE(VIDEO_PRESENTATION_MODE)
-    HTMLMediaElementEnums::VideoFullscreenMode oldVideoFullscreenMode = m_videoFullscreenMode;
-#endif
-
-    if (m_videoFullscreenMode != VideoFullscreenModeStandard)
-        setFullscreenMode(VideoFullscreenModeStandard);
-
-#if PLATFORM(MAC) && ENABLE(VIDEO_PRESENTATION_MODE)
-    if (oldVideoFullscreenMode == VideoFullscreenModePictureInPicture && is<HTMLVideoElement>(*this))
-        downcast<HTMLVideoElement>(*this).exitToFullscreenModeWithoutAnimationIfPossible(oldVideoFullscreenMode, VideoFullscreenModeStandard);
-#endif
-
-    Element::willBecomeFullscreenElement();
-}
-
-void HTMLMediaElement::didBecomeFullscreenElement()
-{
-    ALWAYS_LOG(LOGIDENTIFIER, ", fullscreen mode = ", fullscreenMode());
-    m_waitingToEnterFullscreen = false;
-    m_changingVideoFullscreenMode = false;
-    scheduleUpdatePlayState();
-}
-
-void HTMLMediaElement::willStopBeingFullscreenElement()
-{
-    if (fullscreenMode() == VideoFullscreenModeStandard)
-        setFullscreenMode(VideoFullscreenModeNone);
-}
-
-void HTMLMediaElement::didStopBeingFullscreenElement()
-{
-    m_changingVideoFullscreenMode = false;
-}
-
 PlatformLayer* HTMLMediaElement::platformLayer() const
 {
     return m_player ? m_player->platformLayer() : nullptr;
@@ -6397,62 +6092,10 @@ void HTMLMediaElement::waitForPreparedForInlineThen(WTF::Function<void()>&& comp
     m_preparedForInlineCompletionHandler = WTFMove(completionHandler);
 }
 
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-
-void HTMLMediaElement::willExitFullscreen()
-{
-    if (m_player)
-        m_player->updateVideoFullscreenInlineImage();
-}
-
-bool HTMLMediaElement::isVideoLayerInline()
-{
-    return !m_videoFullscreenLayer;
-}
-
-RetainPtr<PlatformLayer> HTMLMediaElement::createVideoFullscreenLayer()
-{
-    if (m_player)
-        return m_player->createVideoFullscreenLayer();
-    return nullptr;
-}
-
-void HTMLMediaElement::setVideoFullscreenLayer(PlatformLayer* platformLayer, WTF::Function<void()>&& completionHandler)
-{
-    INFO_LOG(LOGIDENTIFIER);
-    m_videoFullscreenLayer = platformLayer;
-    if (!m_player) {
-        completionHandler();
-        return;
-    }
-
-    m_player->setVideoFullscreenLayer(platformLayer, WTFMove(completionHandler));
-    invalidateStyleAndLayerComposition();
-    updateTextTrackDisplay();
-}
-
-void HTMLMediaElement::setVideoFullscreenFrame(const FloatRect& frame)
-{
-    m_videoFullscreenFrame = frame;
-    if (m_player)
-        m_player->setVideoFullscreenFrame(frame);
-}
-
-void HTMLMediaElement::setVideoFullscreenGravity(MediaPlayer::VideoGravity gravity)
-{
-    m_videoFullscreenGravity = gravity;
-    if (m_player)
-        m_player->setVideoFullscreenGravity(gravity);
-}
-
-#else
-
 bool HTMLMediaElement::isVideoLayerInline()
 {
     return true;
 };
-
-#endif
 
 bool HTMLMediaElement::hasClosedCaptions() const
 {
@@ -6700,15 +6343,7 @@ void HTMLMediaElement::configureMediaControls()
 {
     bool requireControls = controls();
 
-    // Always create controls for video when fullscreen playback is required.
-    if (isVideo() && mediaSession().requiresFullscreenForVideoPlayback())
-        requireControls = true;
-
     if (shouldForceControlsDisplay())
-        requireControls = true;
-
-    // Always create controls when in full screen mode.
-    if (isFullscreen())
         requireControls = true;
 
 #if ENABLE(WIRELESS_PLAYBACK_TARGET)
@@ -7137,16 +6772,6 @@ Vector<RefPtr<PlatformTextTrack>> HTMLMediaElement::outOfBandTrackSources()
 
 #endif
 
-bool HTMLMediaElement::mediaPlayerIsFullscreen() const
-{
-    return isFullscreen();
-}
-
-bool HTMLMediaElement::mediaPlayerIsFullscreenPermitted() const
-{
-    return mediaSession().fullscreenPermitted();
-}
-
 bool HTMLMediaElement::mediaPlayerIsVideo() const
 {
     return isVideo();
@@ -7345,7 +6970,6 @@ void HTMLMediaElement::removeBehaviorRestrictionsAfterFirstUserGesture(MediaElem
 #endif
         | MediaElementSession::RequireUserGestureForVideoRateChange
         | MediaElementSession::RequireUserGestureForAudioRateChange
-        | MediaElementSession::RequireUserGestureForFullscreen
         | MediaElementSession::RequireUserGestureForVideoDueToLowPowerMode
         | MediaElementSession::InvisibleAutoplayNotPermitted
         | MediaElementSession::RequireUserGestureToControlControlsManager);
@@ -7578,42 +7202,6 @@ void HTMLMediaElement::setMediaControlsDependOnPageScaleFactor(bool dependsOnPag
     m_mediaControlsDependOnPageScaleFactor = dependsOnPageScale;
 }
 
-void HTMLMediaElement::updateMediaControlsAfterPresentationModeChange()
-{
-    // Don't execute script if the controls script hasn't been injected yet, or we have
-    // stopped/suspended the object.
-    if (!m_mediaControlsHost || document().activeDOMObjectsAreSuspended() || document().activeDOMObjectsAreStopped())
-        return;
-
-#if !ENABLE(MODERN_MEDIA_CONTROLS)
-    setupAndCallJS([this](JSDOMGlobalObject& globalObject, JSC::JSGlobalObject& lexicalGlobalObject, ScriptController&, DOMWrapperWorld&) {
-        auto& vm = globalObject.vm();
-        auto scope = DECLARE_THROW_SCOPE(vm);
-
-        auto controllerValue = controllerJSValue(lexicalGlobalObject, globalObject, *this);
-        RETURN_IF_EXCEPTION(scope, false);
-        auto* controllerObject = controllerValue.toObject(&lexicalGlobalObject);
-        RETURN_IF_EXCEPTION(scope, false);
-
-        auto functionValue = controllerObject->get(&lexicalGlobalObject, JSC::Identifier::fromString(vm, "handlePresentationModeChange"));
-        if (UNLIKELY(scope.exception()) || functionValue.isUndefinedOrNull())
-            return false;
-
-        auto* function = functionValue.toObject(&lexicalGlobalObject);
-        RETURN_IF_EXCEPTION(scope, false);
-        auto callData = JSC::getCallData(vm, function);
-        if (callData.type == JSC::CallData::Type::None)
-            return false;
-
-        JSC::MarkedArgumentBuffer argList;
-        ASSERT(!argList.hasOverflowed());
-        JSC::call(&lexicalGlobalObject, function, callData, controllerObject, argList);
-
-        return true;
-    });
-#endif // !ENABLE(MODERN_MEDIA_CONTROLS)
-}
-
 void HTMLMediaElement::pageScaleFactorChanged()
 {
     if (m_mediaControlsDependOnPageScaleFactor)
@@ -7702,14 +7290,6 @@ PlatformMediaSession::MediaType HTMLMediaElement::presentationType() const
 
 PlatformMediaSession::DisplayType HTMLMediaElement::displayType() const
 {
-    if (m_videoFullscreenMode == VideoFullscreenModeStandard)
-        return PlatformMediaSession::Fullscreen;
-    if (m_videoFullscreenMode & VideoFullscreenModePictureInPicture)
-        return PlatformMediaSession::Optimized;
-    if (m_videoFullscreenMode == VideoFullscreenModeNone)
-        return PlatformMediaSession::Normal;
-
-    ASSERT_NOT_REACHED();
     return PlatformMediaSession::Normal;
 }
 
@@ -7876,12 +7456,6 @@ bool HTMLMediaElement::shouldOverrideBackgroundPlaybackRestriction(PlatformMedia
             INFO_LOG(LOGIDENTIFIER, "returning true because isPlayingToAutomotiveHeadUnit() is true");
             return true;
         }
-        if (m_videoFullscreenMode & VideoFullscreenModePictureInPicture)
-            return true;
-#if PLATFORM(COCOA) && ENABLE(VIDEO_PRESENTATION_MODE)
-        if (((m_videoFullscreenMode == VideoFullscreenModeStandard) || m_videoFullscreenStandby) && supportsPictureInPicture() && isPlaying())
-            return true;
-#endif
 #if ENABLE(MEDIA_STREAM)
         if (hasMediaStreamSrcObject() && mediaState().containsAny(MediaProducer::MediaState::IsPlayingAudio) && document().mediaState().containsAny(MediaProducer::MediaState::HasActiveAudioCaptureDevice)) {
             INFO_LOG(LOGIDENTIFIER, "returning true because playing an audio MediaStreamTrack");
@@ -8125,12 +7699,6 @@ bool HTMLMediaElement::canSaveMediaData() const
     return false;
 }
 
-void HTMLMediaElement::allowsMediaDocumentInlinePlaybackChanged()
-{
-    if (potentiallyPlaying() && mediaSession().requiresFullscreenForVideoPlayback() && !isFullscreen())
-        enterFullscreen();
-}
-
 bool HTMLMediaElement::isVideoTooSmallForInlinePlayback()
 {
     auto* renderer = this->renderer();
@@ -8230,26 +7798,7 @@ bool HTMLMediaElement::shouldOverrideBackgroundLoadingRestriction() const
     if (isPlayingToExternalTarget())
         return true;
 
-    return m_videoFullscreenMode == VideoFullscreenModePictureInPicture;
-}
-
-void HTMLMediaElement::setFullscreenMode(VideoFullscreenMode mode)
-{
-    INFO_LOG(LOGIDENTIFIER, "changed from ", fullscreenMode(), ", to ", mode);
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    scheduleEvent(eventNames().webkitpresentationmodechangedEvent);
-#endif
-
-    setPreparedToReturnVideoLayerToInline(mode != HTMLMediaElementEnums::VideoFullscreenModePictureInPicture);
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    if (player())
-        player()->setVideoFullscreenMode(mode);
-#endif
-
-    m_videoFullscreenMode = mode;
-    visibilityStateChanged();
-    schedulePlaybackControlsManagerUpdate();
+    return false;
 }
 
 #if !RELEASE_LOG_DISABLED

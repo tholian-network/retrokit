@@ -51,7 +51,6 @@ VPATH = \
     $(WebKit2)/WebProcess/Automation \
     $(WebKit2)/WebProcess/Cache \
     $(WebKit2)/WebProcess/Databases/IndexedDB \
-    $(WebKit2)/WebProcess/FullScreen \
     $(WebKit2)/WebProcess/GPU \
     $(WebKit2)/WebProcess/GPU/graphics \
     $(WebKit2)/WebProcess/GPU/media \
@@ -139,7 +138,6 @@ MESSAGE_RECEIVERS = \
 	Shared/API/Cocoa/RemoteObjectRegistry \
 	Shared/Authentication/AuthenticationManager \
 	Shared/WebConnection \
-	UIProcess/WebFullScreenManagerProxy \
 	UIProcess/RemoteLayerTree/RemoteLayerTreeDrawingAreaProxy \
 	UIProcess/GPU/GPUProcessProxy \
 	UIProcess/WebAuthentication/WebAuthenticatorCoordinatorProxy \
@@ -159,7 +157,6 @@ MESSAGE_RECEIVERS = \
 	UIProcess/mac/SecItemShimProxy \
 	UIProcess/Cocoa/PlaybackSessionManagerProxy \
 	UIProcess/Cocoa/UserMediaCaptureManagerProxy \
-	UIProcess/Cocoa/VideoFullscreenManagerProxy \
 	UIProcess/WebCookieManagerProxy \
 	UIProcess/ViewGestureController \
 	UIProcess/WebProcessProxy \
@@ -217,9 +214,7 @@ MESSAGE_RECEIVERS = \
 	WebProcess/cocoa/PlaybackSessionManager \
 	WebProcess/cocoa/RemoteCaptureSampleManager \
 	WebProcess/cocoa/UserMediaCaptureManager \
-	WebProcess/cocoa/VideoFullscreenManager \
 	WebProcess/Automation/WebAutomationSessionProxy \
-	WebProcess/FullScreen/WebFullScreenManager \
 	WebProcess/Notifications/WebNotificationManager \
 	WebProcess/WebPage/EventDispatcher \
 	WebProcess/WebPage/RemoteLayerTree/RemoteScrollingCoordinator \

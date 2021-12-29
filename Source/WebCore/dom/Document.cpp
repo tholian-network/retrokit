@@ -83,7 +83,6 @@
 #include "FrameLoader.h"
 #include "FrameLoaderClient.h"
 #include "FrameView.h"
-#include "FullscreenManager.h"
 #include "GCReachableRef.h"
 #include "GenericCachedHTMLCollection.h"
 #include "HTMLAllCollection.h"
@@ -279,10 +278,6 @@
 #include "AppHighlightStorage.h"
 #endif
 
-#if ENABLE(FULLSCREEN_API)
-#include "RenderFullScreen.h"
-#endif
-
 #if ENABLE(CONTENT_CHANGE_OBSERVER)
 #include "ContentChangeObserver.h"
 #include "DOMTimerHoldingTank.h"
@@ -327,10 +322,6 @@
 #endif
 #if ENABLE(WEBGL2)
 #include "WebGL2RenderingContext.h"
-#endif
-
-#if ENABLE(PICTURE_IN_PICTURE_API)
-#include "HTMLVideoElement.h"
 #endif
 
 #define DOCUMENT_RELEASE_LOG(channel, fmt, ...) RELEASE_LOG(channel, "%p - [pageID=%" PRIu64 ", frameID=%" PRIu64 ", main=%d] Document::" fmt, this, pageID().value_or(PageIdentifier { }).toUInt64(), frameID().value_or(FrameIdentifier { }).toUInt64(), this == &topDocument(), ##__VA_ARGS__)
@@ -604,9 +595,6 @@ Document::Document(Frame* frame, const Settings& settings, const URL& url, Docum
     , m_xmlVersion("1.0"_s)
     , m_constantPropertyMap(makeUnique<ConstantPropertyMap>(*this))
     , m_documentClasses(documentClasses)
-#if ENABLE(FULLSCREEN_API)
-    , m_fullscreenManager { makeUniqueRef<FullscreenManager>(*this) }
-#endif
 #if ENABLE(INTERSECTION_OBSERVER)
     , m_intersectionObserversInitialUpdateTimer(*this, &Document::intersectionObserversInitialUpdateTimerFired)
 #endif
@@ -772,9 +760,6 @@ void Document::removedLastRef()
         m_documentElement = nullptr;
         m_focusNavigationStartingNode = nullptr;
         m_userActionElements.clear();
-#if ENABLE(FULLSCREEN_API)
-        m_fullscreenManager->clear();
-#endif
         m_associatedFormControls.clear();
         m_pendingRenderTreeTextUpdate = { };
 
@@ -817,10 +802,6 @@ void Document::removedLastRef()
 void Document::commonTeardown()
 {
     stopActiveDOMObjects();
-
-#if ENABLE(FULLSCREEN_API)
-    m_fullscreenManager->emptyEventQueue();
-#endif
 
     if (svgExtensions())
         accessSVGExtensions().pauseAnimations();
@@ -4785,10 +4766,6 @@ void Document::nodeChildrenWillBeRemoved(ContainerNode& container)
     adjustFocusedNodeOnNodeRemoval(container, NodeRemoval::ChildrenOfNode);
     adjustFocusNavigationNodeOnNodeRemoval(container, NodeRemoval::ChildrenOfNode);
 
-#if ENABLE(FULLSCREEN_API)
-    m_fullscreenManager->adjustFullscreenElementOnNodeRemoval(container, NodeRemoval::ChildrenOfNode);
-#endif
-
     for (auto* range : m_ranges)
         range->nodeChildrenWillBeRemoved(container);
 
@@ -4817,10 +4794,6 @@ void Document::nodeWillBeRemoved(Node& node)
 
     adjustFocusedNodeOnNodeRemoval(node);
     adjustFocusNavigationNodeOnNodeRemoval(node);
-
-#if ENABLE(FULLSCREEN_API)
-    m_fullscreenManager->adjustFullscreenElementOnNodeRemoval(node, NodeRemoval::Node);
-#endif
 
     for (auto* it : m_nodeIterators)
         it->nodeWillBeRemoved(node);
@@ -8743,18 +8716,6 @@ void Document::dispatchSystemPreviewActionEvent(const SystemPreviewInfo& systemP
     auto event = MessageEvent::create(message, securityOrigin().toString());
     UserGestureIndicator gestureIndicator(ProcessingUserGesture, this);
     element->dispatchEvent(event);
-}
-#endif
-
-#if ENABLE(PICTURE_IN_PICTURE_API)
-HTMLVideoElement* Document::pictureInPictureElement() const
-{
-    return m_pictureInPictureElement.get();
-};
-
-void Document::setPictureInPictureElement(HTMLVideoElement* element)
-{
-    m_pictureInPictureElement = makeWeakPtr(element);
 }
 #endif
 

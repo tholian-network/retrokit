@@ -12,7 +12,6 @@ function Replacement(root, parent, host, attributeNames, attributeValues)
     this.listeners = {};
     this.scriptObject = {};
 
-    this.autoExitFullScreen = true;
     this.postEvents = false;
     this.height = 0;
     this.width = 0;
@@ -38,11 +37,9 @@ Replacement.prototype = {
         play: 'qt_play',
         pause: 'qt_pause',
         ended: 'handleEnded',
-        webkitfullscreenchange: 'handleFullscreenChange',
     },
 
     AttributeMap: {
-        autoexitfullscreen: 'autoExitFullScreen',
         postdomevents: 'postEvents',
         height: 'height',
         width: 'width',
@@ -52,7 +49,7 @@ Replacement.prototype = {
         href: 'href',
         target: 'target',
     },
-    
+
     MethodMap: {
         SetURL : 'setURL',
         GetURL : 'url',
@@ -60,8 +57,6 @@ Replacement.prototype = {
         Stop : 'pause',
         GetRate : 'rate',
         SetRate : 'setRate',
-        IsFullScreen : 'isFullScreen',
-        ExitFullScreen : 'exitFullScreen',
         GetPluginStatus : 'pluginStatus',
         GetTime : 'currentTime',
         SetTime : 'setCurrentTime',
@@ -85,7 +80,7 @@ Replacement.prototype = {
 
         for (name in this.HandledVideoEvents)
             video.addEventListener(name, this, false);
-        
+
         for (i = 0; i < attributeNames.length; i++) {
             var property = this.AttributeMap[attributeNames[i]];
             if (this[property] != undefined)
@@ -109,7 +104,7 @@ Replacement.prototype = {
             video.poster = this.src;
             video.setAttribute('preload', 'none');
         }
-        
+
         if (src.length) {
             this.setStatus('Validating');
             this.video.src = src;
@@ -138,7 +133,7 @@ Replacement.prototype = {
 
         return url;
     },
- 
+
     createScriptInterface: function()
     {
         for (name in this.MethodMap) {
@@ -188,11 +183,6 @@ Replacement.prototype = {
         this.postEvent('qt_loadedmetadata');
     },
 
-    handleFullscreenChange: function(event)
-    {
-        this.postEvent(this.isFullScreen() ? 'qt_enterfullscreen' : 'qt_exitfullscreen');
-    },
-
     handleError: function(event)
     {
         this.setStatus('Error');
@@ -211,13 +201,6 @@ Replacement.prototype = {
     handleEnded: function(event)
     {
         this.postEvent('qt_ended');
-        if (this.isFullScreen() && this.autoExitFullScreen)
-            document.webkitExitFullscreen();
-    },
-
-    isFullScreen: function()
-    {
-        return document.webkitCurrentFullScreenElement === this.video;
     },
 
     setURL: function(url)
@@ -227,28 +210,28 @@ Replacement.prototype = {
             url = this.resolveRelativeToUrl(url, this.baseUrl);
         this.video.src = url;
     },
-    
+
     url: function()
     {
         return this.video.currentSrc;
     },
-    
+
     play: function()
     {
         this.video.play();
     },
-    
+
     pause: function()
     {
         this.video.playbackRate = 0;
         this.video.pause();
     },
-    
+
     rate: function()
     {
         return this.video.paused ? 0 : 1;
     },
-    
+
     setRate: function(rate)
     {
         if (rate)
@@ -256,12 +239,7 @@ Replacement.prototype = {
         else
             this.video.pause();
     },
-    
-    exitFullScreen: function()
-    {
-        document.webkitExitFullscreen();
-    },
-    
+
     pluginStatus: function()
     {
         return this.status;
@@ -281,17 +259,17 @@ Replacement.prototype = {
     {
         // FIXME: not implemented yet.
     },
-    
+
     date: function()
     {
         return new Date();
     },
-    
+
     duration: function()
     {
         return this.video.duration * this.TimeScale;
     },
-    
+
     timeScale: function()
     {
         // Note: QuickTime movies and MPEG-4 files have a timescale, but it is not exposed by all media engines.
@@ -299,18 +277,18 @@ Replacement.prototype = {
         // scale of 30000 and frame duration of 1001.
         return 30000;
     },
-    
+
     maxTimeLoaded: function()
     {
         return this.video.duration * this.TimeScale;
     },
-    
+
     maxBytesLoaded: function()
     {
         var percentLoaded = this.video.buffered.end(0) / this.video.duration;
         return percentLoaded * this.movieSize();
     },
-    
+
     movieSize: function()
     {
         try {
@@ -319,7 +297,7 @@ Replacement.prototype = {
 
         return 0;
     },
-    
+
     timedMetadataUpdates: function()
     {
         try {
@@ -328,7 +306,7 @@ Replacement.prototype = {
 
         return null;
     },
-    
+
     accessLog: function()
     {
         try {
@@ -337,7 +315,7 @@ Replacement.prototype = {
 
         return null;
     },
-    
+
     errorLog: function()
     {
         try {

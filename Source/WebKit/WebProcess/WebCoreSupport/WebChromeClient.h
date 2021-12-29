@@ -270,32 +270,10 @@ private:
     RefPtr<WebCore::ScrollingCoordinator> createScrollingCoordinator(WebCore::Page&) const final;
 #endif
 
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    void prepareForVideoFullscreen() final;
-    bool supportsVideoFullscreen(WebCore::HTMLMediaElementEnums::VideoFullscreenMode) final;
-    bool supportsVideoFullscreenStandby() final;
-    void setMockVideoPresentationModeEnabled(bool) final;
-    void enterVideoFullscreenForVideoElement(WebCore::HTMLVideoElement&, WebCore::HTMLMediaElementEnums::VideoFullscreenMode, bool standby) final;
-    void exitVideoFullscreenForVideoElement(WebCore::HTMLVideoElement&, WTF::CompletionHandler<void(bool)>&& = [](bool) { }) final;
-    void setUpPlaybackControlsManager(WebCore::HTMLMediaElement&) final;
-    void clearPlaybackControlsManager() final;
-    void playbackControlsMediaEngineChanged() final;
-#endif
-
 #if ENABLE(MEDIA_USAGE)
     void addMediaUsageManagerSession(WebCore::MediaSessionIdentifier, const String&, const URL&) final;
     void updateMediaUsageManagerSessionState(WebCore::MediaSessionIdentifier, const WebCore::MediaUsageInfo&) final;
     void removeMediaUsageManagerSession(WebCore::MediaSessionIdentifier) final;
-#endif
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    void exitVideoFullscreenToModeWithoutAnimation(WebCore::HTMLVideoElement&, WebCore::HTMLMediaElementEnums::VideoFullscreenMode) final;
-#endif
-
-#if ENABLE(FULLSCREEN_API)
-    bool supportsFullScreenForElement(const WebCore::Element&, bool withKeyboard) final;
-    void enterFullScreenForElement(WebCore::Element&) final;
-    void exitFullScreenForElement(WebCore::Element*) final;
 #endif
 
 #if PLATFORM(COCOA)
@@ -441,9 +419,6 @@ private:
     void showMediaControlsContextMenu(WebCore::FloatRect&&, Vector<WebCore::MediaControlsContextMenuItem>&&, CompletionHandler<void(WebCore::MediaControlsContextMenuItem::ID)>&&) final;
 #endif // ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
 
-#if HAVE(ARKIT_INLINE_PREVIEW_IOS)
-    void takeModelElementFullscreen(WebCore::GraphicsLayer::PlatformLayerID contentLayerId) const final;
-#endif
 #if HAVE(ARKIT_INLINE_PREVIEW_MAC)
     void modelElementDidCreatePreview(WebCore::HTMLModelElement&, const URL&, const String&, const WebCore::FloatSize&) const final;
 #endif

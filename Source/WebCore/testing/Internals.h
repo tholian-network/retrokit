@@ -519,32 +519,6 @@ public:
 
     void setTopContentInset(float);
 
-#if ENABLE(FULLSCREEN_API)
-    void webkitWillEnterFullScreenForElement(Element&);
-    void webkitDidEnterFullScreenForElement(Element&);
-    void webkitWillExitFullScreenForElement(Element&);
-    void webkitDidExitFullScreenForElement(Element&);
-    bool isAnimatingFullScreen() const;
-#endif
-
-    struct FullscreenInsets {
-        float top { 0 };
-        float left { 0 };
-        float bottom { 0 };
-        float right { 0 };
-    };
-    void setFullscreenInsets(FullscreenInsets);
-    void setFullscreenAutoHideDuration(double);
-    void setFullscreenControlsHidden(bool);
-
-#if ENABLE(VIDEO)
-    bool isChangingPresentationMode(HTMLVideoElement&) const;
-#endif
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    void setMockVideoPresentationModeEnabled(bool);
-#endif
-
     WEBCORE_TESTSUPPORT_EXPORT void setApplicationCacheOriginQuota(unsigned long long);
 
     void registerURLSchemeAsBypassingContentSecurityPolicy(const String& scheme);
@@ -930,7 +904,6 @@ public:
         bool canShowNowPlayingControls;
         bool isSuspended;
         bool isInActiveDocument;
-        bool isFullscreen;
         bool isMuted;
         bool isMediaDocumentInMainFrame;
         bool isVideo;
@@ -945,7 +918,6 @@ public:
         bool pageMediaPlaybackSuspended;
         bool isMediaDocumentAndNotOwnerElement;
         bool pageExplicitlyAllowsElementToAutoplayInline;
-        bool requiresFullscreenForVideoPlaybackAndFullscreenNotPermitted;
         bool hasHadUserInteractionAndQuirksContainsShouldAutoplayForArbitraryUserGesture;
         bool isVideoAndRequiresUserGestureForVideoRateChange;
         bool isAudioAndRequiresUserGestureForAudioRateChange;
@@ -953,7 +925,6 @@ public:
         bool noUserGestureRequired;
         bool requiresPlaybackAndIsNotPlaying;
         bool hasEverNotifiedAboutPlaying;
-        bool outsideOfFullscreen;
         bool isLargeEnoughForMainContent;
     };
     ExceptionOr<MediaUsageState> mediaUsageState(HTMLMediaElement&) const;
@@ -1109,8 +1080,6 @@ public:
     String encodedPreferenceValue(const String& domain, const String& key);
 
     String getUTIFromTag(const String& tagClass, const String& tag, const String& conformingToUTI);
-
-    bool supportsPictureInPicture();
 
     String focusRingColor();
 

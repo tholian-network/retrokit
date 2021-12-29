@@ -30,7 +30,6 @@
 #include "Logging.h"
 #include "ViewGestureControllerMessages.h"
 #include "WebBackForwardList.h"
-#include "WebFullScreenManagerProxy.h"
 #include "WebPageProxy.h"
 #include "WebProcessProxy.h"
 #include <wtf/MathExtras.h>
@@ -153,11 +152,6 @@ bool ViewGestureController::canSwipeInDirection(SwipeDirection direction) const
 {
     if (!m_swipeGestureEnabled)
         return false;
-
-#if ENABLE(FULLSCREEN_API)
-    if (m_webPageProxy.fullScreenManager() && m_webPageProxy.fullScreenManager()->isFullScreen())
-        return false;
-#endif
 
     RefPtr<WebPageProxy> alternateBackForwardListSourcePage = m_alternateBackForwardListSourcePage.get();
     auto& backForwardList = alternateBackForwardListSourcePage ? alternateBackForwardListSourcePage->backForwardList() : m_webPageProxy.backForwardList();

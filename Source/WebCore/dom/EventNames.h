@@ -290,11 +290,7 @@ namespace WebCore {
     macro(webkitAnimationStart) \
     macro(webkitBeforeTextInserted) \
     macro(webkitTransitionEnd) \
-    macro(webkitbeginfullscreen) \
     macro(webkitcurrentplaybacktargetiswirelesschanged) \
-    macro(webkitendfullscreen) \
-    macro(webkitfullscreenchange) \
-    macro(webkitfullscreenerror) \
     macro(webkitkeyadded) \
     macro(webkitkeyerror) \
     macro(webkitkeymessage) \

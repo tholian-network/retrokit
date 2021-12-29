@@ -840,30 +840,6 @@ WI.NetworkTableContentView = class NetworkTableContentView extends WI.ContentVie
                 groupedDOMEvents.lastValue.domEvents.push(domEvent);
             }
 
-            let fullscreenDOMEvents = WI.DOMNode.getFullscreenDOMEvents(domNode.domEvents);
-            if (fullscreenDOMEvents.length) {
-                if (!fullscreenDOMEvents[0].data.enabled)
-                    fullscreenDOMEvents.unshift({timestamp: graphStartTime});
-
-                if (fullscreenDOMEvents.lastValue.data.enabled)
-                    fullscreenDOMEvents.push({timestamp: collection.waterfallEndTime});
-
-                console.assert((fullscreenDOMEvents.length % 2) === 0, "Every enter/exit of fullscreen should have a corresponding exit/enter.");
-
-                for (let i = 0; i < fullscreenDOMEvents.length; i += 2) {
-                    let fullscreenElement = container.appendChild(document.createElement("div"));
-                    fullscreenElement.classList.add("area", "dom-fullscreen");
-                    positionByStartOffset(fullscreenElement, fullscreenDOMEvents[i].timestamp);
-                    setWidthForDuration(fullscreenElement, fullscreenDOMEvents[i].timestamp, fullscreenDOMEvents[i + 1].timestamp);
-
-                    let originator = fullscreenDOMEvents[i].originator || fullscreenDOMEvents[i + 1].originator;
-                    if (originator)
-                        fullscreenElement.title = WI.UIString("Full-Screen from \u201C%s\u201D").format(originator.displayName);
-                    else
-                        fullscreenElement.title = WI.UIString("Full-Screen");
-                }
-            }
-
             for (let powerEfficientPlaybackRange of domNode.powerEfficientPlaybackRanges) {
                 let startTimestamp = powerEfficientPlaybackRange.startTimestamp || graphStartTime;
                 let endTimestamp = powerEfficientPlaybackRange.endTimestamp || collection.waterfallEndTime;

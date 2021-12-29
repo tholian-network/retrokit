@@ -194,10 +194,6 @@ Modules/notifications/NotificationController.cpp
 Modules/permissions/NavigatorPermissions.cpp
 Modules/permissions/PermissionStatus.cpp
 Modules/permissions/Permissions.cpp
-Modules/pictureinpicture/DocumentPictureInPicture.cpp
-Modules/pictureinpicture/EnterPictureInPictureEvent.cpp
-Modules/pictureinpicture/HTMLVideoElementPictureInPicture.cpp
-Modules/pictureinpicture/PictureInPictureWindow.cpp
 Modules/remoteplayback/RemotePlayback.cpp
 Modules/speech/SpeechRecognition.cpp
 Modules/speech/SpeechRecognitionAlternative.cpp
@@ -824,7 +820,6 @@ dom/ExceptionData.cpp
 dom/ExtensionStyleSheets.cpp
 dom/FocusEvent.cpp
 dom/FormDataEvent.cpp
-dom/FullscreenManager.cpp
 dom/GCReachableRef.cpp
 dom/HashChangeEvent.cpp
 dom/IdTargetObserver.cpp
@@ -2142,7 +2137,6 @@ rendering/RenderFragmentedFlow.cpp
 rendering/RenderFrame.cpp
 rendering/RenderFrameBase.cpp
 rendering/RenderFrameSet.cpp
-rendering/RenderFullScreen.cpp
 rendering/RenderGeometryMap.cpp
 rendering/RenderGrid.cpp
 rendering/RenderHTMLCanvas.cpp
@@ -2336,7 +2330,6 @@ rendering/updating/RenderTreeBuilderBlockFlow.cpp
 rendering/updating/RenderTreeBuilderContinuation.cpp
 rendering/updating/RenderTreeBuilderFirstLetter.cpp
 rendering/updating/RenderTreeBuilderFormControls.cpp
-rendering/updating/RenderTreeBuilderFullScreen.cpp
 rendering/updating/RenderTreeBuilderInline.cpp
 rendering/updating/RenderTreeBuilderList.cpp
 rendering/updating/RenderTreeBuilderMathML.cpp
@@ -2886,7 +2879,6 @@ JSEffectTiming.cpp
 JSElement.cpp
 JSElementCSSInlineStyle.cpp
 JSEndingType.cpp
-JSEnterPictureInPictureEvent.cpp
 JSErrorCallback.cpp
 JSErrorEvent.cpp
 JSEvent.cpp
@@ -3189,7 +3181,6 @@ JSPermissionName.cpp
 JSPermissionState.cpp
 JSPermissionStatus.cpp
 JSPermissions.cpp
-JSPictureInPictureWindow.cpp
 JSPlaybackDirection.cpp
 JSPointerEvent.cpp
 JSPopStateEvent.cpp

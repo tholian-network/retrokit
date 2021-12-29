@@ -11,7 +11,6 @@ action
 align
 alink
 allow
-allowfullscreen
 alt
 archive
 aria-activedescendant
@@ -325,10 +324,6 @@ onwaiting
 onwebkitanimationstart
 onwebkitanimationiteration
 onwebkitanimationend
-onwebkitbeginfullscreen
-onwebkitendfullscreen
-onwebkitfullscreenchange
-onwebkitfullscreenerror
 onwebkitkeyadded
 onwebkitkeyerror
 onwebkitkeymessage
@@ -420,7 +415,6 @@ valuetype
 version
 vlink
 vspace
-webkitallowfullscreen
 webkitattachmentid
 webkitattachmentpath
 webkitattachmentbloburl

@@ -161,15 +161,6 @@ WI.DOMNode = class DOMNode extends WI.Object
 
     // Static
 
-    static getFullscreenDOMEvents(domEvents)
-    {
-        return domEvents.reduce((accumulator, current) => {
-            if (current.eventName === "webkitfullscreenchange" && current.data && (!accumulator.length || accumulator.lastValue.data.enabled !== current.data.enabled))
-                accumulator.push(current);
-            return accumulator;
-        }, []);
-    }
-
     static isPlayEvent(eventName)
     {
         return eventName === "play"

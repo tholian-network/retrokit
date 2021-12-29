@@ -35,7 +35,6 @@
 #include "DocumentLoader.h"
 #include "Frame.h"
 #include "FrameView.h"
-#include "FullscreenManager.h"
 #include "HTMLAudioElement.h"
 #include "HTMLMediaElement.h"
 #include "HTMLNames.h"
@@ -93,7 +92,6 @@ static String restrictionNames(MediaElementSession::BehaviorRestrictions restric
     CASE(RequireUserGestureForLoad)
     CASE(RequireUserGestureForVideoRateChange)
     CASE(RequireUserGestureForAudioRateChange)
-    CASE(RequireUserGestureForFullscreen)
     CASE(RequirePageConsentToLoadMedia)
     CASE(RequirePageConsentToResumeMedia)
     CASE(RequireUserGestureToShowPlaybackTargetPicker)
@@ -251,7 +249,7 @@ void MediaElementSession::visibilityChanged()
 
     bool elementIsHidden = m_element.elementIsHidden();
 
-    if (elementIsHidden && !m_element.isFullscreen())
+    if (elementIsHidden)
         m_elementIsHiddenUntilVisibleInViewport = true;
     else if (m_element.isVisibleInViewport())
         m_elementIsHiddenUntilVisibleInViewport = false;
@@ -283,7 +281,7 @@ void MediaElementSession::isVisibleInViewportChanged()
 {
     scheduleClientDataBufferingCheck();
 
-    if (m_element.isFullscreen() || m_element.isVisibleInViewport())
+    if (m_element.isVisibleInViewport())
         m_elementIsHiddenUntilVisibleInViewport = false;
 }
 
@@ -372,11 +370,6 @@ Expected<void, MediaPlaybackDenialReason> MediaElementSession::playbackStateChan
     if (pageExplicitlyAllowsElementToAutoplayInline(m_element))
         return { };
 
-    if (requiresFullscreenForVideoPlayback() && !fullscreenPermitted()) {
-        ALWAYS_LOG(LOGIDENTIFIER, "Returning FALSE because of fullscreen restriction");
-        return makeUnexpected(MediaPlaybackDenialReason::FullscreenRequired);
-    }
-
     if (m_restrictions & OverrideUserGestureRequirementForMainContent && updateIsMainContent())
         return { };
 
@@ -388,16 +381,6 @@ Expected<void, MediaPlaybackDenialReason> MediaElementSession::playbackStateChan
             return { };
     }
 #endif
-
-    // FIXME: Why are we checking top-level document only for PerDocumentAutoplayBehavior?
-    const auto& topDocument = document.topDocument();
-    if (topDocument.quirks().requiresUserGestureToPauseInPictureInPicture()
-        && m_element.fullscreenMode() & HTMLMediaElementEnums::VideoFullscreenModePictureInPicture
-        && !m_element.paused() && state == MediaPlaybackState::Paused
-        && !document.processingUserGestureForMedia()) {
-        ALWAYS_LOG(LOGIDENTIFIER, "Returning FALSE because a quirk requires a user gesture to pause while in Picture-in-Picture");
-        return makeUnexpected(MediaPlaybackDenialReason::UserGestureRequired);
-    }
 
     if (topDocument.mediaState() & MediaProducer::MediaState::HasUserInteractedWithMediaElement && topDocument.quirks().needsPerDocumentAutoplayBehavior())
         return { };
@@ -501,16 +484,6 @@ MediaPlayer::BufferingPolicy MediaElementSession::preferredBufferingPolicy() con
     return MediaPlayer::BufferingPolicy::Default;
 }
 
-bool MediaElementSession::fullscreenPermitted() const
-{
-    if (m_restrictions & RequireUserGestureForFullscreen && !m_element.document().processingUserGestureForMedia()) {
-        INFO_LOG(LOGIDENTIFIER, "returning FALSE");
-        return false;
-    }
-
-    return true;
-}
-
 bool MediaElementSession::pageAllowsDataLoading() const
 {
     Page* page = m_element.document().page();
@@ -538,11 +511,6 @@ bool MediaElementSession::canShowControlsManager(PlaybackControlsPurpose purpose
     if (m_element.isSuspended() || !m_element.inActiveDocument()) {
         INFO_LOG(LOGIDENTIFIER, "returning FALSE: isSuspended()");
         return false;
-    }
-
-    if (m_element.isFullscreen()) {
-        INFO_LOG(LOGIDENTIFIER, "returning TRUE: is fullscreen");
-        return true;
     }
 
     if (m_element.muted()) {
@@ -599,15 +567,6 @@ bool MediaElementSession::canShowControlsManager(PlaybackControlsPurpose purpose
         INFO_LOG(LOGIDENTIFIER, "returning FALSE: hasn't fired playing notification");
         return false;
     }
-
-#if ENABLE(FULLSCREEN_API)
-    // Elements which are not descendants of the current fullscreen element cannot be main content.
-    auto* fullscreenElement = m_element.document().fullscreenManager().currentFullscreenElement();
-    if (fullscreenElement && !m_element.isDescendantOf(*fullscreenElement)) {
-        INFO_LOG(LOGIDENTIFIER, "returning FALSE: outside of full screen");
-        return false;
-    }
-#endif
 
     // Only allow the main content heuristic to forbid videos from showing up if our purpose is the controls manager.
     if (purpose == PlaybackControlsPurpose::ControlsManager && m_element.isVideo()) {
@@ -829,43 +788,6 @@ MediaPlayer::Preload MediaElementSession::effectivePreloadForElement() const
     return preload;
 }
 
-bool MediaElementSession::requiresFullscreenForVideoPlayback() const
-{
-    if (pageExplicitlyAllowsElementToAutoplayInline(m_element))
-        return false;
-
-    if (is<HTMLAudioElement>(m_element))
-        return false;
-
-    if (m_element.document().isMediaDocument()) {
-        ASSERT(is<HTMLVideoElement>(m_element));
-        const HTMLVideoElement& videoElement = *downcast<const HTMLVideoElement>(&m_element);
-        if (m_element.readyState() < HTMLVideoElement::HAVE_METADATA || !videoElement.hasEverHadVideo())
-            return false;
-    }
-
-    if (m_element.isTemporarilyAllowingInlinePlaybackAfterFullscreen())
-        return false;
-
-    if (!m_element.document().settings().allowsInlineMediaPlayback())
-        return true;
-
-    if (!m_element.document().settings().inlineMediaPlaybackRequiresPlaysInlineAttribute())
-        return false;
-
-#if PLATFORM(IOS_FAMILY)
-    if (CocoaApplication::isIBooks())
-        return !m_element.hasAttributeWithoutSynchronization(HTMLNames::webkit_playsinlineAttr) && !m_element.hasAttributeWithoutSynchronization(HTMLNames::playsinlineAttr);
-    if (applicationSDKVersion() < DYLD_IOS_VERSION_10_0)
-        return !m_element.hasAttributeWithoutSynchronization(HTMLNames::webkit_playsinlineAttr);
-#endif
-
-    if (m_element.document().isMediaDocument() && m_element.document().ownerElement())
-        return false;
-
-    return !m_element.hasAttributeWithoutSynchronization(HTMLNames::playsinlineAttr);
-}
-
 bool MediaElementSession::allowsAutomaticMediaDataLoading() const
 {
     if (pageExplicitlyAllowsElementToAutoplayInline(m_element))
@@ -913,11 +835,6 @@ bool MediaElementSession::bufferingSuspended() const
     if (auto* page = m_element.document().page())
         return page->mediaBufferingIsSuspended();
     return true;
-}
-
-bool MediaElementSession::allowsPictureInPicture() const
-{
-    return m_element.document().settings().allowsPictureInPictureMediaPlayback();
 }
 
 #if PLATFORM(IOS_FAMILY)
@@ -1203,11 +1120,6 @@ void MediaElementSession::updateMediaUsageIfChanged()
     if (!page || page->sessionID().isEphemeral())
         return;
 
-    bool isOutsideOfFullscreen = false;
-#if ENABLE(FULLSCREEN_API)
-    if (auto* fullscreenElement = document.fullscreenManager().currentFullscreenElement())
-        isOutsideOfFullscreen = !m_element.isDescendantOf(*fullscreenElement);
-#endif
     bool isAudio = client().presentationType() == MediaType::Audio;
     bool isVideo = client().presentationType() == MediaType::Video;
     bool processingUserGesture = document.processingUserGestureForMedia();
@@ -1220,7 +1132,6 @@ void MediaElementSession::updateMediaUsageIfChanged()
         !page->isVisibleAndActive(),
         m_element.isSuspended(),
         m_element.inActiveDocument(),
-        m_element.isFullscreen(),
         m_element.muted(),
         document.isMediaDocument() && (document.frame() && document.frame()->isMainFrame()),
         isVideo,
@@ -1235,7 +1146,6 @@ void MediaElementSession::updateMediaUsageIfChanged()
         page->mediaPlaybackIsSuspended(),
         document.isMediaDocument() && !document.ownerElement(),
         pageExplicitlyAllowsElementToAutoplayInline(m_element),
-        requiresFullscreenForVideoPlayback() && !fullscreenPermitted(),
         document.topDocument().hasHadUserInteraction() && document.quirks().shouldAutoplayForArbitraryUserGesture(),
         isVideo && hasBehaviorRestriction(RequireUserGestureForVideoRateChange) && !processingUserGesture,
         isAudio && hasBehaviorRestriction(RequireUserGestureForAudioRateChange) && !processingUserGesture && !m_element.muted() && m_element.volume(),
@@ -1243,7 +1153,6 @@ void MediaElementSession::updateMediaUsageIfChanged()
         !hasBehaviorRestriction(RequireUserGestureToControlControlsManager) || processingUserGesture,
         hasBehaviorRestriction(RequirePlaybackToControlControlsManager) && !isPlaying,
         m_element.hasEverNotifiedAboutPlaying(),
-        isOutsideOfFullscreen,
         isLargeEnoughForMainContent(MediaSessionMainContentPurpose::MediaControls),
     };
 
@@ -1262,12 +1171,10 @@ String convertEnumerationToString(const MediaPlaybackDenialReason enumerationVal
 {
     static const NeverDestroyed<String> values[] = {
         MAKE_STATIC_STRING_IMPL("UserGestureRequired"),
-        MAKE_STATIC_STRING_IMPL("FullscreenRequired"),
         MAKE_STATIC_STRING_IMPL("PageConsentRequired"),
         MAKE_STATIC_STRING_IMPL("InvalidState"),
     };
     static_assert(static_cast<size_t>(MediaPlaybackDenialReason::UserGestureRequired) == 0, "MediaPlaybackDenialReason::UserGestureRequired is not 0 as expected");
-    static_assert(static_cast<size_t>(MediaPlaybackDenialReason::FullscreenRequired) == 1, "MediaPlaybackDenialReason::FullscreenRequired is not 1 as expected");
     static_assert(static_cast<size_t>(MediaPlaybackDenialReason::PageConsentRequired) == 2, "MediaPlaybackDenialReason::PageConsentRequired is not 2 as expected");
     static_assert(static_cast<size_t>(MediaPlaybackDenialReason::InvalidState) == 3, "MediaPlaybackDenialReason::InvalidState is not 3 as expected");
     ASSERT(static_cast<size_t>(enumerationValue) < WTF_ARRAY_LENGTH(values));

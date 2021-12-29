@@ -37,7 +37,6 @@
 #include "WebAutomationSessionMessages.h"
 #include "WebAutomationSessionProxyMessages.h"
 #include "WebCookieManagerProxy.h"
-#include "WebFullScreenManagerProxy.h"
 #include "WebInspectorUIProxy.h"
 #include "WebOpenPanelResultListenerProxy.h"
 #include "WebPageProxy.h"
@@ -588,27 +587,7 @@ void WebAutomationSession::hideWindowOfBrowsingContext(const Inspector::Protocol
 
 void WebAutomationSession::exitFullscreenWindowForPage(WebPageProxy& page, WTF::CompletionHandler<void()>&& completionHandler)
 {
-#if ENABLE(FULLSCREEN_API)
-    ASSERT(!m_windowStateTransitionCallback);
-    if (!page.fullScreenManager() || !page.fullScreenManager()->isFullScreen()) {
-        completionHandler();
-        return;
-    }
-    
-    m_windowStateTransitionCallback = WTF::Function<void(WindowTransitionedToState)> { [this, protectedThis = makeRef(*this), completionHandler = WTFMove(completionHandler)](WindowTransitionedToState state) mutable {
-        // If fullscreen exited and we didn't request that, just ignore it.
-        if (state != WindowTransitionedToState::Unfullscreen)
-            return;
-
-        // Keep this callback in scope so completionHandler does not get destroyed before we call it.
-        auto protectedCallback = WTFMove(m_windowStateTransitionCallback);
-        completionHandler();
-    } };
-    
-    page.fullScreenManager()->requestExitFullScreen();
-#else
     completionHandler();
-#endif
 }
 
 void WebAutomationSession::restoreWindowForPage(WebPageProxy& page, WTF::CompletionHandler<void()>&& completionHandler)
@@ -677,18 +656,6 @@ void WebAutomationSession::willShowJavaScriptDialog(WebPageProxy& page)
             }
         }
 #endif // ENABLE(WEBDRIVER_WHEEL_INTERACTIONS)
-}
-    
-void WebAutomationSession::didEnterFullScreenForPage(const WebPageProxy&)
-{
-    if (m_windowStateTransitionCallback)
-        m_windowStateTransitionCallback(WindowTransitionedToState::Fullscreen);
-}
-
-void WebAutomationSession::didExitFullScreenForPage(const WebPageProxy&)
-{
-    if (m_windowStateTransitionCallback)
-        m_windowStateTransitionCallback(WindowTransitionedToState::Unfullscreen);
 }
 
 void WebAutomationSession::navigateBrowsingContext(const Inspector::Protocol::Automation::BrowsingContextHandle& handle, const String& url, std::optional<Inspector::Protocol::Automation::PageLoadStrategy>&& optionalPageLoadStrategy, std::optional<double>&& optionalPageLoadTimeout, Ref<NavigateBrowsingContextCallback>&& callback)

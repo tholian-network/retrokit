@@ -33,7 +33,6 @@ Notification conditional=NOTIFICATIONS
 OffscreenCanvas conditional=OFFSCREEN_CANVAS
 Performance
 PermissionStatus
-PictureInPictureWindow conditional=PICTURE_IN_PICTURE_API
 RemotePlayback conditional=WIRELESS_PLAYBACK_TARGET
 RTCDataChannel conditional=WEB_RTC
 RTCDtlsTransport conditional=WEB_RTC

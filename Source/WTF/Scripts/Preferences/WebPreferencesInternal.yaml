@@ -253,20 +253,6 @@ FrameFlatteningEnabled:
       "PLATFORM(IOS_FAMILY)": true
       default: false
 
-FullScreenEnabled:
-  type: bool
-  humanReadableName: "Fullscreen API"
-  humanReadableDescription: "Fullscreen API"
-  condition: ENABLE(FULLSCREEN_API)
-  hidden: EXPERIMENTAL_FULLSCREEN_API_HIDDEN
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      default: false
-    WebCore:
-      default: false
-
 ICECandidateFilteringEnabled:
   type: bool
   webcoreOnChange: iceCandidateFilteringEnabledChanged

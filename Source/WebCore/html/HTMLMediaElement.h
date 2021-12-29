@@ -158,9 +158,6 @@ public:
     WEBCORE_EXPORT void rewind(double timeDelta);
     WEBCORE_EXPORT void returnToRealtime() override;
 
-    // Eventually overloaded in HTMLVideoElement
-    bool supportsFullscreen(HTMLMediaElementEnums::VideoFullscreenMode) const override { return false; };
-
     bool supportsScanning() const override;
 
     bool canSaveMediaData() const;
@@ -171,16 +168,6 @@ public:
     bool isVideoLayerInline();
     void setPreparedToReturnVideoLayerToInline(bool);
     void waitForPreparedForInlineThen(WTF::Function<void()>&& completionHandler = [] { });
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    RetainPtr<PlatformLayer> createVideoFullscreenLayer();
-    WEBCORE_EXPORT void setVideoFullscreenLayer(PlatformLayer*, WTF::Function<void()>&& completionHandler = [] { });
-#ifdef __OBJC__
-    PlatformLayer* videoFullscreenLayer() const { return m_videoFullscreenLayer.get(); }
-#endif
-    virtual void setVideoFullscreenFrame(const FloatRect&);
-    void setVideoFullscreenGravity(MediaPlayer::VideoGravity);
-    MediaPlayer::VideoGravity videoFullscreenGravity() const { return m_videoFullscreenGravity; }
-#endif
 
     void scheduleCheckPlaybackTargetCompatability();
     void checkPlaybackTargetCompatibility();
@@ -434,19 +421,6 @@ public:
     bool hasSingleSecurityOrigin() const { return !m_player || m_player->hasSingleSecurityOrigin(); }
     bool didPassCORSAccessCheck() const { return m_player && m_player->didPassCORSAccessCheck(); }
     bool wouldTaintOrigin(const SecurityOrigin& origin) const { return m_player && m_player->wouldTaintOrigin(origin); }
-    
-    WEBCORE_EXPORT bool isFullscreen() const override;
-    bool isStandardFullscreen() const;
-    void toggleStandardFullscreenState();
-
-    using MediaPlayerEnums::VideoFullscreenMode;
-    VideoFullscreenMode fullscreenMode() const { return m_videoFullscreenMode; }
-
-    void enterFullscreen(VideoFullscreenMode);
-    WEBCORE_EXPORT void enterFullscreen() override;
-    WEBCORE_EXPORT void exitFullscreen();
-    WEBCORE_EXPORT void prepareForVideoFullscreenStandby();
-    WEBCORE_EXPORT void setVideoFullscreenStandby(bool);
 
     bool hasClosedCaptions() const override;
     bool closedCaptionsVisible() const override;
@@ -512,7 +486,6 @@ public:
     void layoutSizeChanged();
     void visibilityDidChange();
 
-    void allowsMediaDocumentInlinePlaybackChanged();
     void updateShouldPlay();
 
     RenderMedia* renderer() const;
@@ -551,10 +524,6 @@ public:
     bool willLog(WTFLogLevel) const;
 
     bool isSuspended() const final;
-
-    WEBCORE_EXPORT void didBecomeFullscreenElement() final;
-    WEBCORE_EXPORT void willExitFullscreen();
-    WEBCORE_EXPORT void didStopBeingFullscreenElement() final;
 
     void scheduleEvent(Ref<Event>&&);
 
@@ -607,16 +576,12 @@ protected:
 
     bool mediaControlsDependOnPageScaleFactor() const { return m_mediaControlsDependOnPageScaleFactor; }
     void setMediaControlsDependOnPageScaleFactor(bool);
-    void updateMediaControlsAfterPresentationModeChange();
 
     void scheduleEvent(const AtomString&);
     template<typename T> void scheduleEventOn(T& target, Ref<Event>&&);
 
     bool showPosterFlag() const { return m_showPoster; }
     void setShowPosterFlag(bool);
-    
-    void setChangingVideoFullscreenMode(bool value) { m_changingVideoFullscreenMode = value; }
-    bool isChangingVideoFullscreenMode() const { return m_changingVideoFullscreenMode; }
 
 private:
     friend class Internals;
@@ -632,8 +597,6 @@ private:
     void removedFromAncestor(RemovalType, ContainerNode&) override;
     void didRecalcStyle(Style::Change) override;
     bool isInteractiveContent() const override;
-
-    void setFullscreenMode(VideoFullscreenMode);
 
     void willBecomeFullscreenElement() override;
     void willStopBeingFullscreenElement() override;
@@ -742,8 +705,6 @@ private:
     void mediaPlayerEngineFailedToLoad() const final;
 
     double mediaPlayerRequestedPlaybackRate() const final;
-    VideoFullscreenMode mediaPlayerFullscreenMode() const final { return fullscreenMode(); }
-    bool mediaPlayerIsVideoFullscreenStandby() const final { return m_videoFullscreenStandby; }
     bool mediaPlayerShouldDisableSleep() const final { return shouldDisableSleep() == SleepType::Display; }
     bool mediaPlayerShouldCheckHardwareSupport() const final;
     const Vector<ContentType>& mediaContentTypesRequiringHardwareSupport() const final;
@@ -1018,18 +979,10 @@ private:
     RefPtr<HTMLSourceElement> m_currentSourceNode;
     RefPtr<HTMLSourceElement> m_nextChildNodeToConsider;
 
-    VideoFullscreenMode m_videoFullscreenMode { VideoFullscreenModeNone };
-    bool m_videoFullscreenStandby { false };
     bool m_preparedForInline;
     WTF::Function<void()> m_preparedForInlineCompletionHandler;
 
     bool m_temporarilyAllowingInlinePlaybackAfterFullscreen { false };
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    RetainPtr<PlatformLayer> m_videoFullscreenLayer;
-    FloatRect m_videoFullscreenFrame;
-    MediaPlayer::VideoGravity m_videoFullscreenGravity { MediaPlayer::VideoGravity::ResizeAspect };
-#endif
 
     RefPtr<MediaPlayer> m_player;
     bool m_cachedSupportsAcceleratedRendering { false };
@@ -1105,8 +1058,6 @@ private:
     bool m_haveSetUpCaptionContainer : 1;
 
     bool m_isScrubbingRemotely : 1;
-    bool m_waitingToEnterFullscreen : 1;
-    bool m_changingVideoFullscreenMode : 1;
 
     bool m_showPoster : 1;
     bool m_tracksAreReady : 1;

@@ -23,7 +23,6 @@ function Controller(root, video, host)
     this.updatePlaying();
     this.updateCaptionButton();
     this.updateCaptionContainer();
-    this.updateFullscreenButton();
     this.updateVolume();
     this.updateHasAudio();
     this.updateHasVideo();
@@ -42,10 +41,7 @@ Controller.prototype = {
         durationchange: 'handleDurationChange',
         playing: 'handlePlay',
         pause: 'handlePause',
-        volumechange: 'handleVolumeChange',
-        webkitfullscreenchange: 'handleFullscreenChange',
-        webkitbeginfullscreen: 'handleFullscreenChange',
-        webkitendfullscreen: 'handleFullscreenChange',
+        volumechange: 'handleVolumeChange'
     },
     HideControlsDelay: 4 * 1000,
     ClassNames: {
@@ -194,17 +190,12 @@ Controller.prototype = {
         return this.video instanceof HTMLAudioElement;
     },
 
-    isFullScreen: function()
-    {
-        return this.video.webkitDisplayingFullscreen;
-    },
-
     shouldHaveControls: function()
     {
         if (!this.isAudio() && !this.host.allowsInlineMediaPlayback)
             return true;
 
-        return this.video.controls || this.isFullScreen();
+        return this.video.controls;
     },
 
     updateBase: function()
@@ -290,11 +281,6 @@ Controller.prototype = {
         this.listenFor(captionButton, 'mouseover', this.handleCaptionButtonMouseOver);
         this.listenFor(captionButton, 'mouseout', this.handleCaptionButtonMouseOut);
 
-        var fullscreenButton = this.controls.fullscreenButton = document.createElement('button');
-        fullscreenButton.setAttribute('pseudo', '-webkit-media-controls-fullscreen-button');
-        fullscreenButton.setAttribute('aria-label', 'Display Full Screen');
-        fullscreenButton.disabled = true;
-        this.listenFor(fullscreenButton, 'click', this.handleFullscreenButtonClicked);
     },
 
     configureControls: function()
@@ -307,8 +293,6 @@ Controller.prototype = {
         this.controls.muteBox.appendChild(this.controls.volumeBox);
         this.controls.volumeBox.appendChild(this.controls.volume);
         this.controls.panel.appendChild(this.controls.captionButton);
-        if (!this.isAudio())
-            this.controls.panel.appendChild(this.controls.fullscreenButton);
         this.controls.enclosure.appendChild(this.controls.panel);
     },
 
@@ -515,16 +499,6 @@ Controller.prototype = {
         this.host.updateTextTrackContainer();
     },
 
-    updateFullscreenButton: function()
-    {
-        if (this.video.readyState > HTMLMediaElement.HAVE_NOTHING && !this.hasVisualMedia) {
-            this.controls.fullscreenButton.classList.add(this.ClassNames.hidden);
-            return;
-        }
-
-        this.controls.fullscreenButton.disabled = !this.host.supportsFullscreen;
-    },
-
     updateVolume: function()
     {
         if (this.video.muted || !this.video.volume) {
@@ -556,7 +530,6 @@ Controller.prototype = {
         this.updateDuration();
         this.updateCaptionButton();
         this.updateCaptionContainer();
-        this.updateFullscreenButton();
     },
 
     handleTimeUpdate: function(event)
@@ -583,22 +556,6 @@ Controller.prototype = {
     handleVolumeChange: function(event)
     {
         this.updateVolume();
-    },
-
-    handleFullscreenChange: function(event)
-    {
-        this.updateBase();
-        this.updateControls();
-
-        if (this.isFullScreen()) {
-            this.controls.fullscreenButton.classList.add(this.ClassNames.exit);
-            this.controls.fullscreenButton.setAttribute('aria-label', 'Exit Full Screen');
-            this.host.enteredFullscreen();
-        } else {
-            this.controls.fullscreenButton.classList.remove(this.ClassNames.exit);
-            this.controls.fullscreenButton.setAttribute('aria-label', 'Display Full Screen');
-            this.host.exitedFullscreen();
-        }
     },
 
     handleTextTrackChange: function(event)
@@ -661,9 +618,6 @@ Controller.prototype = {
     handlePanelMouseDown: function(event)
     {
         if (event.target != this.controls.panel)
-            return;
-
-        if (!this.isFullScreen())
             return;
 
         this.listenFor(this.base, 'mouseup', this.handleWrapperMouseUp, true);
@@ -750,15 +704,6 @@ Controller.prototype = {
             this.controls.muteButton.setAttribute('aria-label', 'Mute');
         }
         this.video.volume = this.controls.volume.value;
-    },
-
-    handleFullscreenButtonClicked: function(event)
-    {
-        if (this.isFullScreen())
-            this.video.webkitExitFullscreen();
-        else
-            this.video.webkitEnterFullscreen();
-        return true;
     },
 
     buildCaptionMenu: function()

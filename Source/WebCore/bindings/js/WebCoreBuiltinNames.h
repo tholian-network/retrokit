@@ -88,7 +88,6 @@ namespace WebCore {
     macro(DataTransferItem) \
     macro(DataTransferItemList) \
     macro(DocumentTimeline) \
-    macro(EnterPictureInPictureEvent) \
     macro(ExtendableEvent) \
     macro(ExtendableMessageEvent) \
     macro(FetchEvent) \
@@ -155,7 +154,6 @@ namespace WebCore {
     macro(PaintRenderingContext2D) \
     macro(PannerNode) \
     macro(PerformanceNavigationTiming) \
-    macro(PictureInPictureWindow) \
     macro(SQLError) \
     macro(SQLResultSet) \
     macro(SQLResultSetRowList) \

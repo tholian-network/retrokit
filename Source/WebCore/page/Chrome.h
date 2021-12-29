@@ -177,8 +177,6 @@ public:
     void dispatchDisabledAdaptationsDidChange(const OptionSet<DisabledAdaptations>&) const;
     void dispatchViewportPropertiesDidChange(const ViewportArguments&) const;
 
-    bool requiresFullscreenForVideoPlayback();
-
 #if PLATFORM(COCOA)
     WEBCORE_EXPORT void focusNSView(NSView*);
 #endif

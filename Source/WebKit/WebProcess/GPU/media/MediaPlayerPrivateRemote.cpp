@@ -457,11 +457,6 @@ bool MediaPlayerPrivateRemote::supportsFullscreen() const
     return m_configuration.supportsFullscreen;
 }
 
-bool MediaPlayerPrivateRemote::supportsPictureInPicture() const
-{
-    return m_configuration.supportsPictureInPicture;
-}
-
 bool MediaPlayerPrivateRemote::supportsAcceleratedRendering() const
 {
     return m_configuration.supportsAcceleratedRendering;
@@ -808,45 +803,6 @@ PlatformLayer* MediaPlayerPrivateRemote::platformLayer() const
     return nullptr;
 #endif
 }
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-
-void MediaPlayerPrivateRemote::setVideoFullscreenLayer(PlatformLayer* videoFullscreenLayer, WTF::Function<void()>&& completionHandler)
-{
-#if PLATFORM(COCOA)
-    m_videoLayerManager->setVideoFullscreenLayer(videoFullscreenLayer, WTFMove(completionHandler), nullptr);
-#endif
-}
-
-void MediaPlayerPrivateRemote::updateVideoFullscreenInlineImage()
-{
-    connection().send(Messages::RemoteMediaPlayerProxy::UpdateVideoFullscreenInlineImage(), m_id);
-}
-
-void MediaPlayerPrivateRemote::setVideoFullscreenFrame(WebCore::FloatRect rect)
-{
-#if PLATFORM(COCOA)
-    ALWAYS_LOG(LOGIDENTIFIER, "width = ", rect.size().width(), ", height = ", rect.size().height());
-    m_videoLayerManager->setVideoFullscreenFrame(rect);
-#endif
-}
-
-void MediaPlayerPrivateRemote::setVideoFullscreenGravity(WebCore::MediaPlayerEnums::VideoGravity gravity)
-{
-    m_videoFullscreenGravity = gravity;
-    connection().send(Messages::RemoteMediaPlayerProxy::SetVideoFullscreenGravity(gravity), m_id);
-}
-
-void MediaPlayerPrivateRemote::setVideoFullscreenMode(MediaPlayer::VideoFullscreenMode mode)
-{
-    connection().send(Messages::RemoteMediaPlayerProxy::SetVideoFullscreenMode(mode), m_id);
-}
-
-void MediaPlayerPrivateRemote::videoFullscreenStandbyChanged()
-{
-    connection().send(Messages::RemoteMediaPlayerProxy::VideoFullscreenStandbyChanged(), m_id);
-}
-#endif
 
 #if PLATFORM(IOS_FAMILY)
 NSArray* MediaPlayerPrivateRemote::timedMetadata() const
@@ -1285,17 +1241,6 @@ void MediaPlayerPrivateRemote::notifyActiveSourceBuffersChanged()
     // FIXME: this just rounds trip up and down to activeSourceBuffersChanged(). Should this call ::activeSourceBuffersChanged directly?
     connection().send(Messages::RemoteMediaPlayerProxy::NotifyActiveSourceBuffersChanged(), m_id);
 }
-
-#if PLATFORM(COCOA)
-bool MediaPlayerPrivateRemote::inVideoFullscreenOrPictureInPicture() const
-{
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    return !!m_videoLayerManager->videoFullscreenLayer();
-#else
-    return false;
-#endif
-}
-#endif
 
 void MediaPlayerPrivateRemote::applicationWillResignActive()
 {

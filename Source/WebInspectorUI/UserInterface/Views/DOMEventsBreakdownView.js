@@ -97,20 +97,6 @@ WI.DOMEventsBreakdownView = class DOMEventsBreakdownView extends WI.View
             return time / totalTime * 100;
         }
 
-        let fullscreenRanges = [];
-        let fullscreenDOMEvents = WI.DOMNode.getFullscreenDOMEvents(domEvents);
-        for (let fullscreenDOMEvent of fullscreenDOMEvents) {
-            let {enabled} = fullscreenDOMEvent.data;
-            if (enabled || !fullscreenRanges.length) {
-                fullscreenRanges.push({
-                    startTimestamp: enabled ? fullscreenDOMEvent.timestamp : startTimestamp,
-                });
-            }
-            fullscreenRanges.lastValue.endTimestamp = (enabled && fullscreenDOMEvent === fullscreenDOMEvents.lastValue) ? endTimestamp : fullscreenDOMEvent.timestamp;
-            if (fullscreenDOMEvent.originator)
-                fullscreenRanges.lastValue.originator = fullscreenDOMEvent.originator;
-        }
-
         let powerEfficientPlaybackRanges = this._domNode ? this._domNode.powerEfficientPlaybackRanges : [];
 
         for (let domEvent of domEvents) {
@@ -123,19 +109,6 @@ WI.DOMEventsBreakdownView = class DOMEventsBreakdownView extends WI.View
             if (this._includeGraph) {
                 let graphCell = rowElement.appendChild(document.createElement("td"));
                 graphCell.classList.add("graph");
-
-                let fullscreenRange = fullscreenRanges.find((range) => domEvent.timestamp >= range.startTimestamp && domEvent.timestamp <= range.endTimestamp);
-                if (fullscreenRange) {
-                    let fullscreenArea = graphCell.appendChild(document.createElement("div"));
-                    fullscreenArea.classList.add("area", "fullscreen");
-                    fullscreenArea.style.setProperty(styleAttribute, percentOfTotalTime(fullscreenRange.startTimestamp - startTimestamp) + "%");
-                    fullscreenArea.style.setProperty("width", percentOfTotalTime(fullscreenRange.endTimestamp - fullscreenRange.startTimestamp) + "%");
-
-                    if (fullscreenRange.originator)
-                        fullscreenArea.title = WI.UIString("Full-Screen from \u201C%s\u201D").format(fullscreenRange.originator.displayName);
-                    else
-                        fullscreenArea.title = WI.UIString("Full-Screen");
-                }
 
                 let powerEfficientPlaybackRange = powerEfficientPlaybackRanges.find((range) => domEvent.timestamp >= range.startTimestamp && domEvent.timestamp <= range.endTimestamp);
                 if (powerEfficientPlaybackRange) {

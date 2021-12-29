@@ -85,7 +85,6 @@
 #include "Frame.h"
 #include "FrameLoader.h"
 #include "FrameView.h"
-#include "FullscreenManager.h"
 #include "GCObservation.h"
 #include "GridPosition.h"
 #include "HEVCUtilities.h"
@@ -152,7 +151,6 @@
 #include "Page.h"
 #include "PageOverlay.h"
 #include "PathUtilities.h"
-#include "PictureInPictureSupport.h"
 #include "PlatformKeyboardEvent.h"
 #include "PlatformMediaSession.h"
 #include "PlatformMediaSessionManager.h"
@@ -578,10 +576,6 @@ void Internals::resetToConsistentState(Page& page)
     RuntimeEnabledFeatures::sharedFeatures().setWebRTCH265CodecEnabled(true);
     page.settings().setWebRTCEncryptionEnabled(true);
 #endif
-
-    page.setFullscreenAutoHideDuration(0_s);
-    page.setFullscreenInsets({ });
-    page.setFullscreenControlsHidden(false);
 
     MediaEngineConfigurationFactory::disableMock();
 
@@ -3360,97 +3354,6 @@ void Internals::setTopContentInset(float contentInset)
     document->page()->setTopContentInset(contentInset);
 }
 
-#if ENABLE(FULLSCREEN_API)
-
-void Internals::webkitWillEnterFullScreenForElement(Element& element)
-{
-    Document* document = contextDocument();
-    if (!document)
-        return;
-    document->fullscreenManager().willEnterFullscreen(element);
-}
-
-void Internals::webkitDidEnterFullScreenForElement(Element&)
-{
-    Document* document = contextDocument();
-    if (!document)
-        return;
-    document->fullscreenManager().didEnterFullscreen();
-}
-
-void Internals::webkitWillExitFullScreenForElement(Element&)
-{
-    Document* document = contextDocument();
-    if (!document)
-        return;
-    document->fullscreenManager().willExitFullscreen();
-}
-
-void Internals::webkitDidExitFullScreenForElement(Element&)
-{
-    Document* document = contextDocument();
-    if (!document)
-        return;
-    document->fullscreenManager().didExitFullscreen();
-}
-
-bool Internals::isAnimatingFullScreen() const
-{
-    Document* document = contextDocument();
-    if (!document)
-        return false;
-    return document->fullscreenManager().isAnimatingFullscreen();
-}
-
-#endif
-
-void Internals::setFullscreenInsets(FullscreenInsets insets)
-{
-    Page* page = contextDocument()->frame()->page();
-    ASSERT(page);
-
-    page->setFullscreenInsets(FloatBoxExtent(insets.top, insets.right, insets.bottom, insets.left));
-}
-
-void Internals::setFullscreenAutoHideDuration(double duration)
-{
-    Page* page = contextDocument()->frame()->page();
-    ASSERT(page);
-
-    page->setFullscreenAutoHideDuration(Seconds(duration));
-}
-
-void Internals::setFullscreenControlsHidden(bool hidden)
-{
-    Page* page = contextDocument()->frame()->page();
-    ASSERT(page);
-
-    page->setFullscreenControlsHidden(hidden);
-}
-
-#if ENABLE(VIDEO)
-bool Internals::isChangingPresentationMode(HTMLVideoElement& element) const
-{
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    return element.isChangingPresentationMode();
-#else
-    UNUSED_PARAM(element);
-    return false;
-#endif
-}
-#endif
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-void Internals::setMockVideoPresentationModeEnabled(bool enabled)
-{
-    Document* document = contextDocument();
-    if (!document || !document->page())
-        return;
-
-    document->page()->chrome().client().setMockVideoPresentationModeEnabled(enabled);
-}
-#endif
-
 void Internals::setApplicationCacheOriginQuota(unsigned long long quota)
 {
     Document* document = contextDocument();
@@ -4320,8 +4223,6 @@ void Internals::setMediaElementRestrictions(HTMLMediaElement& element, StringVie
             restrictions |= MediaElementSession::RequireUserGestureForLoad;
         if (equalLettersIgnoringASCIICase(restrictionString, "requireusergestureforvideoratechange"))
             restrictions |= MediaElementSession::RequireUserGestureForVideoRateChange;
-        if (equalLettersIgnoringASCIICase(restrictionString, "requireusergestureforfullscreen"))
-            restrictions |= MediaElementSession::RequireUserGestureForFullscreen;
         if (equalLettersIgnoringASCIICase(restrictionString, "requirepageconsenttoloadmedia"))
             restrictions |= MediaElementSession::RequirePageConsentToLoadMedia;
         if (equalLettersIgnoringASCIICase(restrictionString, "requirepageconsenttoresumemedia"))
@@ -4491,7 +4392,6 @@ ExceptionOr<Internals::MediaUsageState> Internals::mediaUsageState(HTMLMediaElem
         info.value().canShowNowPlayingControls,
         info.value().isSuspended,
         info.value().isInActiveDocument,
-        info.value().isFullscreen,
         info.value().isMuted,
         info.value().isMediaDocumentInMainFrame,
         info.value().isVideo,
@@ -4506,7 +4406,6 @@ ExceptionOr<Internals::MediaUsageState> Internals::mediaUsageState(HTMLMediaElem
         info.value().pageMediaPlaybackSuspended,
         info.value().isMediaDocumentAndNotOwnerElement,
         info.value().pageExplicitlyAllowsElementToAutoplayInline,
-        info.value().requiresFullscreenForVideoPlaybackAndFullscreenNotPermitted,
         info.value().hasHadUserInteractionAndQuirksContainsShouldAutoplayForArbitraryUserGesture,
         info.value().isVideoAndRequiresUserGestureForVideoRateChange,
         info.value().isAudioAndRequiresUserGestureForAudioRateChange,
@@ -4514,7 +4413,6 @@ ExceptionOr<Internals::MediaUsageState> Internals::mediaUsageState(HTMLMediaElem
         info.value().noUserGestureRequired,
         info.value().requiresPlaybackAndIsNotPlaying,
         info.value().hasEverNotifiedAboutPlaying,
-        info.value().outsideOfFullscreen,
         info.value().isLargeEnoughForMainContent,
     } };
 
@@ -6191,11 +6089,6 @@ unsigned Internals::numberOfAppHighlights()
     return numHighlights;
 }
 #endif
-
-bool Internals::supportsPictureInPicture()
-{
-    return WebCore::supportsPictureInPicture();
-}
 
 String Internals::focusRingColor()
 {

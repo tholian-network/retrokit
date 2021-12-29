@@ -29,7 +29,6 @@
 #include "FocusController.h"
 #include "Frame.h"
 #include "FrameSelection.h"
-#include "FullscreenManager.h"
 #include "HTMLDialogElement.h"
 #include "HTMLFrameElement.h"
 #include "HTMLIFrameElement.h"
@@ -49,10 +48,6 @@
 #if ENABLE(VIDEO)
 #include "HTMLMediaElement.h"
 #include "WebVTTElement.h"
-#endif
-
-#if ENABLE(PICTURE_IN_PICTURE_API)
-#include "HTMLVideoElement.h"
 #endif
 
 namespace WebCore {
@@ -376,60 +371,6 @@ ALWAYS_INLINE bool scrollbarMatchesCornerPresentPseudoClass(const SelectorChecke
 {
     return context.scrollbarState && context.scrollbarState->scrollCornerIsVisible;
 }
-
-#if ENABLE(FULLSCREEN_API)
-
-ALWAYS_INLINE bool matchesFullScreenPseudoClass(const Element& element)
-{
-    // While a Document is in the fullscreen state, and the document's current fullscreen
-    // element is an element in the document, the 'full-screen' pseudoclass applies to
-    // that element. Also, an <iframe>, <object> or <embed> element whose child browsing
-    // context's Document is in the fullscreen state has the 'full-screen' pseudoclass applied.
-    if (is<HTMLFrameElementBase>(element) && element.containsFullScreenElement())
-        return true;
-    if (!element.document().fullscreenManager().isFullscreen())
-        return false;
-    return &element == element.document().fullscreenManager().currentFullscreenElement();
-}
-
-ALWAYS_INLINE bool matchesFullScreenAnimatingFullScreenTransitionPseudoClass(const Element& element)
-{
-    if (&element != element.document().fullscreenManager().currentFullscreenElement())
-        return false;
-    return element.document().fullscreenManager().isAnimatingFullscreen();
-}
-
-ALWAYS_INLINE bool matchesFullScreenAncestorPseudoClass(const Element& element)
-{
-    return element.containsFullScreenElement();
-}
-
-ALWAYS_INLINE bool matchesFullScreenDocumentPseudoClass(const Element& element)
-{
-    // While a Document is in the fullscreen state, the 'full-screen-document' pseudoclass applies
-    // to all elements of that Document.
-    if (!element.document().fullscreenManager().isFullscreen())
-        return false;
-    return true;
-}
-
-ALWAYS_INLINE bool matchesFullScreenControlsHiddenPseudoClass(const Element& element)
-{
-    if (&element != element.document().fullscreenManager().currentFullscreenElement())
-        return false;
-    return element.document().fullscreenManager().areFullscreenControlsHidden();
-}
-
-#endif
-
-#if ENABLE(PICTURE_IN_PICTURE_API)
-
-ALWAYS_INLINE bool matchesPictureInPicturePseudoClass(const Element& element)
-{
-    return is<HTMLVideoElement>(element) && element.document().pictureInPictureElement() == &element;
-}
-
-#endif
 
 #if ENABLE(VIDEO)
 

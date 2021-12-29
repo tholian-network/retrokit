@@ -38,7 +38,6 @@ struct MediaUsageInfo {
     bool canShowNowPlayingControls { false };
     bool isSuspended { false };
     bool isInActiveDocument { false };
-    bool isFullscreen { false };
     bool isMuted { false };
     bool isMediaDocumentInMainFrame { false };
     bool isVideo { false };
@@ -53,7 +52,6 @@ struct MediaUsageInfo {
     bool pageMediaPlaybackSuspended { false };
     bool isMediaDocumentAndNotOwnerElement { false };
     bool pageExplicitlyAllowsElementToAutoplayInline { false };
-    bool requiresFullscreenForVideoPlaybackAndFullscreenNotPermitted { false };
     bool hasHadUserInteractionAndQuirksContainsShouldAutoplayForArbitraryUserGesture { false };
     bool isVideoAndRequiresUserGestureForVideoRateChange { false };
     bool isAudioAndRequiresUserGestureForAudioRateChange { false };
@@ -61,7 +59,6 @@ struct MediaUsageInfo {
     bool noUserGestureRequired { false };
     bool requiresPlaybackAndIsNotPlaying { false };
     bool hasEverNotifiedAboutPlaying { false };
-    bool outsideOfFullscreen { false };
     bool isLargeEnoughForMainContent { false };
 
     bool operator==(const MediaUsageInfo& other) const
@@ -72,7 +69,6 @@ struct MediaUsageInfo {
             && canShowNowPlayingControls == other.canShowNowPlayingControls
             && isSuspended == other.isSuspended
             && isInActiveDocument == other.isInActiveDocument
-            && isFullscreen == other.isFullscreen
             && isMuted == other.isMuted
             && isMediaDocumentInMainFrame == other.isMediaDocumentInMainFrame
             && isVideo == other.isVideo
@@ -87,7 +83,6 @@ struct MediaUsageInfo {
             && pageMediaPlaybackSuspended == other.pageMediaPlaybackSuspended
             && isMediaDocumentAndNotOwnerElement == other.isMediaDocumentAndNotOwnerElement
             && pageExplicitlyAllowsElementToAutoplayInline == other.pageExplicitlyAllowsElementToAutoplayInline
-            && requiresFullscreenForVideoPlaybackAndFullscreenNotPermitted == other.requiresFullscreenForVideoPlaybackAndFullscreenNotPermitted
             && hasHadUserInteractionAndQuirksContainsShouldAutoplayForArbitraryUserGesture == other.hasHadUserInteractionAndQuirksContainsShouldAutoplayForArbitraryUserGesture
             && isVideoAndRequiresUserGestureForVideoRateChange == other.isVideoAndRequiresUserGestureForVideoRateChange
             && isAudioAndRequiresUserGestureForAudioRateChange == other.isAudioAndRequiresUserGestureForAudioRateChange
@@ -95,7 +90,6 @@ struct MediaUsageInfo {
             && noUserGestureRequired == other.noUserGestureRequired
             && requiresPlaybackAndIsNotPlaying == other.requiresPlaybackAndIsNotPlaying
             && hasEverNotifiedAboutPlaying == other.hasEverNotifiedAboutPlaying
-            && outsideOfFullscreen == other.outsideOfFullscreen
             && isLargeEnoughForMainContent == other.isLargeEnoughForMainContent;
     }
 
@@ -116,7 +110,6 @@ template<class Encoder> inline void MediaUsageInfo::encode(Encoder& encoder) con
     encoder << canShowNowPlayingControls;
     encoder << isSuspended;
     encoder << isInActiveDocument;
-    encoder << isFullscreen;
     encoder << isMuted;
     encoder << isMediaDocumentInMainFrame;
     encoder << isVideo;
@@ -131,7 +124,6 @@ template<class Encoder> inline void MediaUsageInfo::encode(Encoder& encoder) con
     encoder << pageMediaPlaybackSuspended;
     encoder << isMediaDocumentAndNotOwnerElement;
     encoder << pageExplicitlyAllowsElementToAutoplayInline;
-    encoder << requiresFullscreenForVideoPlaybackAndFullscreenNotPermitted;
     encoder << hasHadUserInteractionAndQuirksContainsShouldAutoplayForArbitraryUserGesture;
     encoder << isVideoAndRequiresUserGestureForVideoRateChange;
     encoder << isAudioAndRequiresUserGestureForAudioRateChange;
@@ -139,7 +131,6 @@ template<class Encoder> inline void MediaUsageInfo::encode(Encoder& encoder) con
     encoder << noUserGestureRequired;
     encoder << requiresPlaybackAndIsNotPlaying;
     encoder << hasEverNotifiedAboutPlaying;
-    encoder << outsideOfFullscreen;
     encoder << isLargeEnoughForMainContent;
 }
 
@@ -163,9 +154,6 @@ template<class Decoder> inline std::optional<MediaUsageInfo> MediaUsageInfo::dec
         return { };
 
     if (!decoder.decode(info.isInActiveDocument))
-        return { };
-
-    if (!decoder.decode(info.isFullscreen))
         return { };
 
     if (!decoder.decode(info.isMuted))
@@ -210,9 +198,6 @@ template<class Decoder> inline std::optional<MediaUsageInfo> MediaUsageInfo::dec
     if (!decoder.decode(info.pageExplicitlyAllowsElementToAutoplayInline))
         return { };
 
-    if (!decoder.decode(info.requiresFullscreenForVideoPlaybackAndFullscreenNotPermitted))
-        return { };
-
     if (!decoder.decode(info.hasHadUserInteractionAndQuirksContainsShouldAutoplayForArbitraryUserGesture))
         return { };
 
@@ -232,9 +217,6 @@ template<class Decoder> inline std::optional<MediaUsageInfo> MediaUsageInfo::dec
         return { };
 
     if (!decoder.decode(info.hasEverNotifiedAboutPlaying))
-        return { };
-
-    if (!decoder.decode(info.outsideOfFullscreen))
         return { };
 
     if (!decoder.decode(info.isLargeEnoughForMainContent))

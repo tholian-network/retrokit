@@ -146,10 +146,6 @@ public:
 
     void activeSourceBuffersChanged();
 
-#if PLATFORM(COCOA)
-    bool inVideoFullscreenOrPictureInPicture() const;
-#endif
-
 #if ENABLE(ENCRYPTED_MEDIA)
     void waitingForKeyChanged(bool);
     void initializationDataEncountered(const String&, IPC::DataReference&&);
@@ -214,16 +210,6 @@ private:
 
     PlatformLayer* platformLayer() const final;
 
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    PlatformLayerContainer createVideoFullscreenLayer() final;
-    void setVideoFullscreenLayer(PlatformLayer*, WTF::Function<void()>&& completionHandler) final;
-    void updateVideoFullscreenInlineImage() final;
-    void setVideoFullscreenFrame(WebCore::FloatRect) final;
-    void setVideoFullscreenGravity(WebCore::MediaPlayer::VideoGravity) final;
-    void setVideoFullscreenMode(WebCore::MediaPlayer::VideoFullscreenMode) final;
-    void videoFullscreenStandbyChanged() final;
-#endif
-
 #if PLATFORM(IOS_FAMILY)
     NSArray *timedMetadata() const final;
     String accessLog() const final;
@@ -232,7 +218,6 @@ private:
 
     void setBufferingPolicy(WebCore::MediaPlayer::BufferingPolicy) final;
 
-    bool supportsPictureInPicture() const final;
     bool supportsFullscreen() const final;
     bool supportsScanning() const final;
 

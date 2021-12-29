@@ -145,12 +145,6 @@ namespace WebCore {
     String contextMenuItemTagShowMediaControls();
     String contextMenuItemTagHideMediaControls();
     String contextMenuItemTagToggleMediaLoop();
-    String contextMenuItemTagEnterVideoFullscreen();
-    String contextMenuItemTagExitVideoFullscreen();
-#if PLATFORM(MAC) && ENABLE(VIDEO_PRESENTATION_MODE)
-    String contextMenuItemTagEnterVideoEnhancedFullscreen();
-    String contextMenuItemTagExitVideoEnhancedFullscreen();
-#endif
     String contextMenuItemTagMediaPlay();
     String contextMenuItemTagMediaPause();
     String contextMenuItemTagMediaMute();
@@ -278,8 +272,6 @@ namespace WebCore {
     String unacceptableTLSCertificate();
 #endif
 
-    String clickToExitFullScreenText();
-
 #if ENABLE(VIDEO)
     String trackNoLabelText();
     String textTrackOffMenuItemText();
@@ -325,7 +317,6 @@ namespace WebCore {
     WEBCORE_EXPORT String insertListTypeBulletedAccessibilityTitle();
     WEBCORE_EXPORT String insertListTypeNumbered();
     WEBCORE_EXPORT String insertListTypeNumberedAccessibilityTitle();
-    WEBCORE_EXPORT String exitFullScreenButtonAccessibilityTitle();
 #endif
 
 #if PLATFORM(WATCHOS)

@@ -157,22 +157,8 @@ WI.MediaTimelineDataGridNode = class MediaTimelineDataGridNode extends WI.Timeli
         }
 
         case WI.MediaTimelineRecord.EventType.MediaElement: {
-            let fullScreenSegments = [];
             let powerEfficientPlaybackSegments = [];
             let activeSegments = [];
-
-            let fullScreenStartTime = NaN;
-            let fullScreenOriginator = null;
-            function addFullScreenSegment(startTime, endTime) {
-                fullScreenSegments.push({
-                    startTime,
-                    endTime,
-                    classNames: ["segment", "media-element-full-screen"],
-                    title: fullScreenOriginator ? WI.UIString("Full-Screen from \u201C%s\u201D").format(fullScreenOriginator.displayName) : WI.UIString("Full-Screen"),
-                });
-                fullScreenStartTime = NaN;
-                fullScreenOriginator = null;
-            }
 
             let powerEfficientPlaybackStartTime = NaN;
             function addPowerEfficientPlaybackSegment(startTime, endTime) {
@@ -224,17 +210,6 @@ WI.MediaTimelineDataGridNode = class MediaTimelineDataGridNode extends WI.Timeli
                             addPausedSegment(pausedStartTime, item.timestamp);
                         if (!isNaN(playingStartTime))
                             addPlayingSegment(playingStartTime, item.timestamp);
-                    } else if (item.eventName === "webkitfullscreenchange") {
-                        if (!fullScreenOriginator && item.originator)
-                            fullScreenOriginator = item.originator;
-
-                        if (isNaN(fullScreenStartTime)) {
-                            if (item.data && item.data.enabled)
-                                fullScreenStartTime = item.timestamp;
-                            else
-                                addFullScreenSegment(this.graphDataSource ? this.graphDataSource.startTime : record.startTime, item.timestamp);
-                        } else if (!item.data || !item.data.enabled)
-                            addFullScreenSegment(fullScreenStartTime, item.timestamp);
                     }
                 } else if (item.type === WI.MediaTimelineRecord.TimestampType.MediaElementPowerEfficientPlaybackStateChange) {
                     if (isNaN(powerEfficientPlaybackStartTime)) {
@@ -247,8 +222,6 @@ WI.MediaTimelineDataGridNode = class MediaTimelineDataGridNode extends WI.Timeli
                 }
             }
 
-            if (!isNaN(fullScreenStartTime))
-                addFullScreenSegment(fullScreenStartTime, NaN);
             if (!isNaN(powerEfficientPlaybackStartTime))
                 addPowerEfficientPlaybackSegment(powerEfficientPlaybackStartTime, NaN);
             if (!isNaN(pausedStartTime))
@@ -256,7 +229,6 @@ WI.MediaTimelineDataGridNode = class MediaTimelineDataGridNode extends WI.Timeli
             if (!isNaN(playingStartTime))
                 addPlayingSegment(playingStartTime, NaN);
 
-            children.pushAll(fullScreenSegments);
             children.pushAll(powerEfficientPlaybackSegments);
             children.pushAll(activeSegments);
             break;
@@ -293,10 +265,6 @@ WI.MediaTimelineDataGridNode = class MediaTimelineDataGridNode extends WI.Timeli
                 break;
 
             case WI.MediaTimelineRecord.TimestampType.MediaElementDOMEvent:
-                // Don't create a marker segment full-screen timestamps, as that will be handled by a
-                // range segment above.
-                if (item.eventName === "webkitfullscreenchange")
-                    return;
 
                 image.title = WI.UIString("DOM Event \u201C%s\u201D").format(item.eventName);
                 if (WI.DOMNode.isPlayEvent(item.eventName))

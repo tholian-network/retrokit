@@ -151,16 +151,6 @@ namespace WebCore {
             PseudoClassDoubleButton,
             PseudoClassSingleButton,
             PseudoClassNoButton,
-#if ENABLE(FULLSCREEN_API)
-            PseudoClassFullScreen,
-            PseudoClassFullScreenDocument,
-            PseudoClassFullScreenAncestor,
-            PseudoClassAnimatingFullScreenTransition,
-            PseudoClassFullScreenControlsHidden,
-#endif
-#if ENABLE(PICTURE_IN_PICTURE_API)
-            PseudoClassPictureInPicture,
-#endif
             PseudoClassInRange,
             PseudoClassOutOfRange,
 #if ENABLE(VIDEO)

@@ -1696,16 +1696,6 @@ bool WKPreferencesGetSelectionPaintingWithoutSelectionGapsEnabled(WKPreferencesR
     return toImpl(preferencesRef)->selectionPaintingWithoutSelectionGapsEnabled();
 }
 
-void WKPreferencesSetAllowsPictureInPictureMediaPlayback(WKPreferencesRef preferencesRef, bool enabled)
-{
-    toImpl(preferencesRef)->setAllowsPictureInPictureMediaPlayback(enabled);
-}
-
-bool WKPreferencesGetAllowsPictureInPictureMediaPlayback(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->allowsPictureInPictureMediaPlayback();
-}
-
 void WKPreferencesSetLinkPreloadEnabled(WKPreferencesRef preferencesRef, bool flag)
 {
     toImpl(preferencesRef)->setLinkPreloadEnabled(flag);

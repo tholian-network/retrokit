@@ -42,14 +42,6 @@ public:
     virtual void setVideoLayer(PlatformLayer*, IntSize) = 0;
     virtual void didDestroyVideoLayer() = 0;
 
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    virtual PlatformLayer* videoFullscreenLayer() const = 0;
-    virtual void setVideoFullscreenLayer(PlatformLayer*, WTF::Function<void()>&& completionHandler, PlatformImagePtr) = 0;
-    virtual FloatRect videoFullscreenFrame() const = 0;
-    virtual void setVideoFullscreenFrame(FloatRect) = 0;
-    virtual void updateVideoFullscreenInlineImage(PlatformImagePtr) = 0;
-#endif
-
     virtual bool requiresTextTrackRepresentation() const = 0;
     virtual void setTextTrackRepresentationLayer(PlatformLayer*) = 0;
     virtual void syncTextTrackBounds() = 0;

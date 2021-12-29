@@ -428,7 +428,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     dom/DocumentEventTiming.h
     dom/DocumentFontLoader.h
     dom/DocumentFragment.h
-    dom/DocumentFullscreen.h
     dom/DocumentMarker.h
     dom/DocumentMarkerController.h
     dom/DocumentStorageAccess.h
@@ -459,7 +458,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     dom/ExceptionOr.h
     dom/FocusOptions.h
     dom/FragmentScriptingPermission.h
-    dom/FullscreenManager.h
     dom/GCReachableRef.h
     dom/InlineStyleSheetOwner.h
     dom/KeyboardEvent.h

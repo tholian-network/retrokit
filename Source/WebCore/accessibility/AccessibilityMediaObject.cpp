@@ -168,8 +168,8 @@ bool AccessibilityMediaObject::isPlayingInline() const
     HTMLMediaElement* element = mediaElement();
     if (!element)
         return false;
-    
-    return !element->mediaSession().requiresFullscreenForVideoPlayback();
+
+    return true;
 }
 
 void AccessibilityMediaObject::enterFullscreen() const

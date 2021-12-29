@@ -56,7 +56,6 @@
 #include "Frame.h"
 #include "FrameSelection.h"
 #include "FrameView.h"
-#include "FullscreenManager.h"
 #include "GetAnimationsOptions.h"
 #include "HTMLBodyElement.h"
 #include "HTMLCanvasElement.h"
@@ -2183,11 +2182,6 @@ Node::InsertedIntoAncestorResult Element::insertedIntoAncestor(InsertionType ins
 {
     ContainerNode::insertedIntoAncestor(insertionType, parentOfInsertedTree);
 
-#if ENABLE(FULLSCREEN_API)
-    if (containsFullScreenElement() && parentElement() && !parentElement()->containsFullScreenElement())
-        setContainsFullScreenElementOnAncestorsCrossingFrameBoundaries(true);
-#endif
-
     if (parentNode() == &parentOfInsertedTree) {
         if (auto* shadowRoot = parentNode()->shadowRoot())
             shadowRoot->hostChildElementDidChange(*this);
@@ -2240,10 +2234,6 @@ Node::InsertedIntoAncestorResult Element::insertedIntoAncestor(InsertionType ins
 
 void Element::removedFromAncestor(RemovalType removalType, ContainerNode& oldParentOfRemovedTree)
 {
-#if ENABLE(FULLSCREEN_API)
-    if (containsFullScreenElement())
-        setContainsFullScreenElementOnAncestorsCrossingFrameBoundaries(false);
-#endif
 
     if (auto* page = document().page()) {
 #if ENABLE(POINTER_LOCK)
@@ -3343,12 +3333,6 @@ void Element::setMinimumSizeForResizing(const LayoutSize& size)
     ensureElementRareData().setMinimumSizeForResizing(size);
 }
 
-void Element::willBecomeFullscreenElement()
-{
-    for (auto& child : descendantsOfType<Element>(*this))
-        child.ancestorWillEnterFullscreen();
-}
-
 static inline RenderLayer* renderLayerForElement(Element& element)
 {
     auto* renderer = element.renderer();
@@ -3816,39 +3800,6 @@ bool Element::childShouldCreateRenderer(const Node& child) const
     }
     return true;
 }
-
-#if ENABLE(FULLSCREEN_API)
-
-static Element* parentCrossingFrameBoundaries(const Element* element)
-{
-    ASSERT(element);
-    if (auto* parent = element->parentElementInComposedTree())
-        return parent;
-    return element->document().ownerElement();
-}
-
-void Element::webkitRequestFullscreen()
-{
-    document().fullscreenManager().requestFullscreenForElement(this, FullscreenManager::EnforceIFrameAllowFullscreenRequirement);
-}
-
-void Element::setContainsFullScreenElement(bool flag)
-{
-    if (flag)
-        setNodeFlag(NodeFlag::ContainsFullScreenElement);
-    else
-        clearNodeFlag(NodeFlag::ContainsFullScreenElement);
-    invalidateStyleAndLayerComposition();
-}
-
-void Element::setContainsFullScreenElementOnAncestorsCrossingFrameBoundaries(bool flag)
-{
-    Element* element = this;
-    while ((element = parentCrossingFrameBoundaries(element)))
-        element->setContainsFullScreenElement(flag);
-}
-
-#endif
 
 ExceptionOr<void> Element::setPointerCapture(int32_t pointerId)
 {

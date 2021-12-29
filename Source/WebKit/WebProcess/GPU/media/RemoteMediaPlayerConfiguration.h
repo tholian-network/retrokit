@@ -38,7 +38,6 @@ struct RemoteMediaPlayerConfiguration {
     double maximumDurationToCacheMediaTime;
     bool supportsScanning { false };
     bool supportsFullscreen { false };
-    bool supportsPictureInPicture { false };
     bool supportsAcceleratedRendering { false };
     bool supportsPlayAtHostTime { false };
     bool supportsPauseAtHostTime { false };
@@ -52,7 +51,6 @@ struct RemoteMediaPlayerConfiguration {
         encoder << maximumDurationToCacheMediaTime;
         encoder << supportsScanning;
         encoder << supportsFullscreen;
-        encoder << supportsPictureInPicture;
         encoder << supportsAcceleratedRendering;
         encoder << supportsPlayAtHostTime;
         encoder << supportsPauseAtHostTime;
@@ -81,11 +79,6 @@ struct RemoteMediaPlayerConfiguration {
         std::optional<bool> supportsFullscreen;
         decoder >> supportsFullscreen;
         if (!supportsFullscreen)
-            return std::nullopt;
-
-        std::optional<bool> supportsPictureInPicture;
-        decoder >> supportsPictureInPicture;
-        if (!supportsPictureInPicture)
             return std::nullopt;
 
         std::optional<bool> supportsAcceleratedRendering;
@@ -118,7 +111,6 @@ struct RemoteMediaPlayerConfiguration {
             *maximumDurationToCacheMediaTime,
             *supportsScanning,
             *supportsFullscreen,
-            *supportsPictureInPicture,
             *supportsAcceleratedRendering,
             *supportsPlayAtHostTime,
             *supportsPauseAtHostTime,

@@ -188,10 +188,6 @@ class WebDataListSuggestionsDropdown;
 class WebDateTimePicker;
 #endif
 
-#if ENABLE(FULLSCREEN_API)
-class WebFullScreenManagerProxyClient;
-#endif
-
 #if USE(GSTREAMER)
 class InstallMissingMediaPluginsPermissionRequest;
 #endif
@@ -490,11 +486,6 @@ public:
 #endif
 
     virtual WebCore::Color contentViewBackgroundColor() = 0;
-#endif
-
-    // Auxiliary Client Creation
-#if ENABLE(FULLSCREEN_API)
-    virtual WebFullScreenManagerProxyClient& fullScreenManagerProxyClient() = 0;
 #endif
 
     // Custom representations.

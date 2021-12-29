@@ -42,7 +42,6 @@ enum class MediaPlaybackState { Playing, Paused };
 
 enum class MediaPlaybackDenialReason {
     UserGestureRequired,
-    FullscreenRequired,
     PageConsentRequired,
     InvalidState,
 };
@@ -97,8 +96,6 @@ public:
     void mediaStateDidChange(MediaProducer::MediaStateFlags);
 #endif
 
-    bool requiresFullscreenForVideoPlayback() const;
-    WEBCORE_EXPORT bool allowsPictureInPicture() const;
     MediaPlayer::Preload effectivePreloadForElement() const;
     bool allowsAutomaticMediaDataLoading() const;
 
@@ -116,7 +113,6 @@ public:
         NoRestrictions = 0,
         RequireUserGestureForLoad = 1 << 0,
         RequireUserGestureForVideoRateChange = 1 << 1,
-        RequireUserGestureForFullscreen = 1 << 2,
         RequirePageConsentToLoadMedia = 1 << 3,
         RequirePageConsentToResumeMedia = 1 << 4,
         RequireUserGestureForAudioRateChange = 1 << 5,

@@ -31,7 +31,6 @@
 
 #include "Chrome.h"
 #include "ChromeClient.h"
-#include "FullscreenManager.h"
 #include "HTMLAnchorElement.h"
 #include "HTMLBRElement.h"
 #include "HTMLBodyElement.h"
@@ -168,7 +167,7 @@ void UserAgentStyle::ensureDefaultStyleSheetsForElement(const Element& element)
                 addToDefaultStyle(*dialogStyleSheet);
             }
         }
-#if ENABLE(VIDEO) && !ENABLE(MODERN_MEDIA_CONTROLS)
+#if ENABLE(VIDEO)
         else if (is<HTMLMediaElement>(element)) {
             if (!mediaControlsStyleSheet) {
                 String mediaRules = RenderTheme::singleton().mediaControlsStyleSheet();
@@ -179,7 +178,7 @@ void UserAgentStyle::ensureDefaultStyleSheetsForElement(const Element& element)
 
             }
         }
-#endif // ENABLE(VIDEO) && !ENABLE(MODERN_MEDIA_CONTROLS)
+#endif // ENABLE(VIDEO)
 #if ENABLE(DATALIST_ELEMENT)
         else if (!dataListStyleSheet && is<HTMLDataListElement>(element)) {
             dataListStyleSheet = parseUASheet(RenderTheme::singleton().dataListStyleSheet());
@@ -208,18 +207,6 @@ void UserAgentStyle::ensureDefaultStyleSheetsForElement(const Element& element)
         }
     }
 #endif // ENABLE(MATHML)
-
-#if ENABLE(FULLSCREEN_API)
-    if (!fullscreenStyleSheet && element.document().fullscreenManager().isFullscreen()) {
-        StringBuilder fullscreenRules;
-        fullscreenRules.appendCharacters(fullscreenUserAgentStyleSheet, sizeof(fullscreenUserAgentStyleSheet));
-        fullscreenRules.append(RenderTheme::singleton().extraFullScreenStyleSheet());
-        if (element.document().quirks().needsBlackFullscreenBackgroundQuirk())
-            fullscreenRules.append(":-webkit-full-screen { background-color: black; }"_s);
-        fullscreenStyleSheet = parseUASheet(fullscreenRules.toString());
-        addToDefaultStyle(*fullscreenStyleSheet);
-    }
-#endif // ENABLE(FULLSCREEN_API)
 
 #if ENABLE(IOS_FORM_CONTROL_REFRESH)
     if (!legacyFormControlsIOSStyleSheet && !element.document().settings().iOSFormControlRefreshEnabled()) {

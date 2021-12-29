@@ -402,11 +402,6 @@ String CSSSelector::selectorText(const String& rightSide) const
             serializeIdentifier(cs->serializingValue(), builder);
         } else if (cs->match() == CSSSelector::PseudoClass) {
             switch (cs->pseudoClassType()) {
-#if ENABLE(FULLSCREEN_API)
-            case CSSSelector::PseudoClassAnimatingFullScreenTransition:
-                builder.append(":-webkit-animating-full-screen-transition");
-                break;
-#endif
             case CSSSelector::PseudoClassAny: {
                 builder.append(":-webkit-any(");
                 cs->selectorList()->buildSelectorsText(builder);
@@ -437,25 +432,6 @@ String CSSSelector::selectorText(const String& rightSide) const
             case CSSSelector::PseudoClassFullPageMedia:
                 builder.append(":-webkit-full-page-media");
                 break;
-#if ENABLE(FULLSCREEN_API)
-            case CSSSelector::PseudoClassFullScreen:
-                builder.append(":-webkit-full-screen");
-                break;
-            case CSSSelector::PseudoClassFullScreenAncestor:
-                builder.append(":-webkit-full-screen-ancestor");
-                break;
-            case CSSSelector::PseudoClassFullScreenDocument:
-                builder.append(":-webkit-full-screen-document");
-                break;
-            case CSSSelector::PseudoClassFullScreenControlsHidden:
-                builder.append(":-webkit-full-screen-controls-hidden");
-                break;
-#endif
-#if ENABLE(PICTURE_IN_PICTURE_API)
-            case CSSSelector::PseudoClassPictureInPicture:
-                builder.append(":picture-in-picture");
-                break;
-#endif
             case CSSSelector::PseudoClassActive:
                 builder.append(":active");
                 break;

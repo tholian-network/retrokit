@@ -431,12 +431,6 @@ public:
     virtual void prepareForDocumentSuspension() { }
     virtual void resumeFromDocumentSuspension() { }
 
-    virtual void willBecomeFullscreenElement();
-    virtual void ancestorWillEnterFullscreen() { }
-    virtual void didBecomeFullscreenElement() { }
-    virtual void willStopBeingFullscreenElement() { }
-    virtual void didStopBeingFullscreenElement() { }
-
     bool isFinishedParsingChildren() const { return isParsingChildrenFinished(); }
     void finishParsingChildren() override;
     void beginParsingChildren() final;
@@ -514,13 +508,6 @@ public:
     bool isInTopLayer() const { return hasNodeFlag(NodeFlag::IsInTopLayer); }
     void addToTopLayer();
     void removeFromTopLayer();
-
-#if ENABLE(FULLSCREEN_API)
-    bool containsFullScreenElement() const { return hasNodeFlag(NodeFlag::ContainsFullScreenElement); }
-    void setContainsFullScreenElement(bool);
-    void setContainsFullScreenElementOnAncestorsCrossingFrameBoundaries(bool);
-    WEBCORE_EXPORT virtual void webkitRequestFullscreen();
-#endif
 
     ExceptionOr<void> setPointerCapture(int32_t);
     ExceptionOr<void> releasePointerCapture(int32_t);

@@ -760,11 +760,6 @@ bool MediaPlayer::seeking() const
     return m_private->seeking();
 }
 
-bool MediaPlayer::supportsFullscreen() const
-{
-    return m_private->supportsFullscreen();
-}
-
 bool MediaPlayer::canSaveMediaData() const
 {
     return m_private->canSaveMediaData();
@@ -799,55 +794,6 @@ PlatformLayer* MediaPlayer::platformLayer() const
 {
     return m_private->platformLayer();
 }
-    
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-
-RetainPtr<PlatformLayer> MediaPlayer::createVideoFullscreenLayer()
-{
-    return m_private->createVideoFullscreenLayer();
-}
-
-void MediaPlayer::setVideoFullscreenLayer(PlatformLayer* layer, WTF::Function<void()>&& completionHandler)
-{
-    m_private->setVideoFullscreenLayer(layer, WTFMove(completionHandler));
-}
-
-void MediaPlayer::updateVideoFullscreenInlineImage()
-{
-    m_private->updateVideoFullscreenInlineImage();
-}
-
-void MediaPlayer::setVideoFullscreenFrame(FloatRect frame)
-{
-    m_private->setVideoFullscreenFrame(frame);
-}
-
-void MediaPlayer::setVideoFullscreenGravity(MediaPlayer::VideoGravity gravity)
-{
-    m_private->setVideoFullscreenGravity(gravity);
-}
-
-void MediaPlayer::setVideoFullscreenMode(MediaPlayer::VideoFullscreenMode mode)
-{
-    m_private->setVideoFullscreenMode(mode);
-}
-
-MediaPlayer::VideoFullscreenMode MediaPlayer::fullscreenMode() const
-{
-    return client().mediaPlayerFullscreenMode();
-}
-
-void MediaPlayer::videoFullscreenStandbyChanged()
-{
-    m_private->videoFullscreenStandbyChanged();
-}
-
-bool MediaPlayer::isVideoFullscreenStandby() const
-{
-    return client().mediaPlayerIsVideoFullscreenStandby();
-}
-
-#endif
 
 #if PLATFORM(IOS_FAMILY)
 
@@ -1091,11 +1037,6 @@ bool MediaPlayer::isAvailable()
         return true;
 #endif
     return !installedMediaEngines().isEmpty();
-}
-
-bool MediaPlayer::supportsPictureInPicture() const
-{
-    return m_private->supportsPictureInPicture();
 }
 
 #if ENABLE(WIRELESS_PLAYBACK_TARGET)

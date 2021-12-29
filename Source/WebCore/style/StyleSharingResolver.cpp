@@ -27,7 +27,6 @@
 #include "StyleSharingResolver.h"
 
 #include "ElementRuleCollector.h"
-#include "FullscreenManager.h"
 #include "HTMLInputElement.h"
 #include "HTMLNames.h"
 #include "NodeRenderStyle.h"
@@ -307,10 +306,6 @@ bool SharingResolver::canShareStyleWithElement(const Context& context, const Sty
         return false;
 #endif
 
-#if ENABLE(FULLSCREEN_API)
-    if (&candidateElement == m_document.fullscreenManager().currentFullscreenElement() || &element == m_document.fullscreenManager().currentFullscreenElement())
-        return false;
-#endif
     return true;
 }
 

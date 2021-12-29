@@ -562,9 +562,6 @@ protected:
 
         HasPendingResources = 1 << 22,
         HasElementIdentifier = 1 << 23,
-#if ENABLE(FULLSCREEN_API)
-        ContainsFullScreenElement = 1 << 24,
-#endif
         IsComputedStyleInvalidFlag = 1 << 25,
         HasShadowRootContainingSlots = 1 << 26,
         IsInTopLayer = 1 << 27,

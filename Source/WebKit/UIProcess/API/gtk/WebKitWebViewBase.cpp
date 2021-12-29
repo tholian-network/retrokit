@@ -81,10 +81,6 @@
 #include <wtf/glib/WTFGType.h>
 #include <wtf/text/CString.h>
 
-#if ENABLE(FULLSCREEN_API)
-#include "WebFullScreenManagerProxy.h"
-#endif
-
 using namespace WebKit;
 using namespace WebCore;
 
@@ -303,11 +299,6 @@ struct _WebKitWebViewBasePrivate {
     OptionSet<ActivityState::Flag> activityState;
     OptionSet<ActivityState::Flag> activityStateFlagsToUpdate;
     RunLoop::Timer<WebKitWebViewBasePrivate> updateActivityStateTimer;
-
-#if ENABLE(FULLSCREEN_API)
-    bool fullScreenModeActive { false };
-    std::unique_ptr<PAL::SleepDisabler> sleepDisabler;
-#endif
 
     std::unique_ptr<AcceleratedBackingStore> acceleratedBackingStore;
 
@@ -982,20 +973,6 @@ static gboolean webkitWebViewBaseKeyPressEvent(GtkWidget* widget, GdkEventKey* k
     if (priv->dialog)
         return GTK_WIDGET_CLASS(webkit_web_view_base_parent_class)->key_press_event(widget, keyEvent);
 
-#if ENABLE(FULLSCREEN_API)
-    if (priv->fullScreenModeActive) {
-        switch (keyval) {
-        case GDK_KEY_Escape:
-        case GDK_KEY_f:
-        case GDK_KEY_F:
-            priv->pageProxy->fullScreenManager()->requestExitFullScreen();
-            return GDK_EVENT_STOP;
-        default:
-            break;
-        }
-    }
-#endif
-
     auto filterResult = priv->inputMethodFilter.filterKeyEvent(reinterpret_cast<GdkEvent*>(keyEvent));
     if (!filterResult.handled) {
         priv->pageProxy->handleKeyboardEvent(NativeWebKeyboardEvent(reinterpret_cast<GdkEvent*>(keyEvent), filterResult.keyText,
@@ -1053,20 +1030,6 @@ static gboolean webkitWebViewBaseKeyPressed(WebKitWebViewBase* webViewBase, unsi
 
     if (priv->dialog)
         return gtk_event_controller_key_forward(GTK_EVENT_CONTROLLER_KEY(controller), priv->dialog);
-
-#if ENABLE(FULLSCREEN_API)
-    if (priv->fullScreenModeActive) {
-        switch (keyval) {
-        case GDK_KEY_Escape:
-        case GDK_KEY_f:
-        case GDK_KEY_F:
-            priv->pageProxy->fullScreenManager()->requestExitFullScreen();
-            return GDK_EVENT_STOP;
-        default:
-            break;
-        }
-    }
-#endif
 
     auto* event = gtk_event_controller_get_current_event(controller);
     auto filterResult = priv->inputMethodFilter.filterKeyEvent(event);
@@ -2276,51 +2239,6 @@ void webkitWebViewBaseForwardNextWheelEvent(WebKitWebViewBase* webkitWebViewBase
     webkitWebViewBase->priv->shouldForwardNextWheelEvent = true;
 }
 
-void webkitWebViewBaseEnterFullScreen(WebKitWebViewBase* webkitWebViewBase)
-{
-#if ENABLE(FULLSCREEN_API)
-    WebKitWebViewBasePrivate* priv = webkitWebViewBase->priv;
-    ASSERT(!priv->fullScreenModeActive);
-
-    WebFullScreenManagerProxy* fullScreenManagerProxy = priv->pageProxy->fullScreenManager();
-    fullScreenManagerProxy->willEnterFullScreen();
-
-    GtkWidget* topLevelWindow = gtk_widget_get_toplevel(GTK_WIDGET(webkitWebViewBase));
-    if (gtk_widget_is_toplevel(topLevelWindow))
-        gtk_window_fullscreen(GTK_WINDOW(topLevelWindow));
-    fullScreenManagerProxy->didEnterFullScreen();
-    priv->fullScreenModeActive = true;
-    priv->sleepDisabler = PAL::SleepDisabler::create(_("Website running in fullscreen mode"), PAL::SleepDisabler::Type::Display);
-#endif
-}
-
-void webkitWebViewBaseExitFullScreen(WebKitWebViewBase* webkitWebViewBase)
-{
-#if ENABLE(FULLSCREEN_API)
-    WebKitWebViewBasePrivate* priv = webkitWebViewBase->priv;
-    ASSERT(priv->fullScreenModeActive);
-
-    WebFullScreenManagerProxy* fullScreenManagerProxy = priv->pageProxy->fullScreenManager();
-    fullScreenManagerProxy->willExitFullScreen();
-
-    GtkWidget* topLevelWindow = gtk_widget_get_toplevel(GTK_WIDGET(webkitWebViewBase));
-    if (gtk_widget_is_toplevel(topLevelWindow))
-        gtk_window_unfullscreen(GTK_WINDOW(topLevelWindow));
-    fullScreenManagerProxy->didExitFullScreen();
-    priv->fullScreenModeActive = false;
-    priv->sleepDisabler = nullptr;
-#endif
-}
-
-bool webkitWebViewBaseIsFullScreen(WebKitWebViewBase* webkitWebViewBase)
-{
-#if ENABLE(FULLSCREEN_API)
-    return webkitWebViewBase->priv->fullScreenModeActive;
-#else
-    return false;
-#endif
-}
-
 void webkitWebViewBaseSetInspectorViewSize(WebKitWebViewBase* webkitWebViewBase, unsigned size)
 {
     if (webkitWebViewBase->priv->inspectorViewSize == size)
@@ -2856,20 +2774,6 @@ void webkitWebViewBaseSynthesizeKeyEvent(WebKitWebViewBase* webViewBase, KeyEven
                 return;
             }
         }
-
-#if ENABLE(FULLSCREEN_API)
-        if (priv->fullScreenModeActive) {
-            switch (keyval) {
-            case GDK_KEY_Escape:
-            case GDK_KEY_f:
-            case GDK_KEY_F:
-                priv->pageProxy->fullScreenManager()->requestExitFullScreen();
-                return;
-            default:
-                break;
-            }
-        }
-#endif
 
 #if !USE(GTK4)
         if (priv->activeContextMenuProxy && keyval == GDK_KEY_Escape) {

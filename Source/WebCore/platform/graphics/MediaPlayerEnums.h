@@ -74,13 +74,6 @@ public:
         MayBeSupported
     };
 
-    enum {
-        VideoFullscreenModeNone = 0,
-        VideoFullscreenModeStandard = 1 << 0,
-        VideoFullscreenModePictureInPicture = 1 << 1,
-    };
-    typedef uint32_t VideoFullscreenMode;
-
     enum class BufferingPolicy : uint8_t {
         Default,
         LimitReadAhead,

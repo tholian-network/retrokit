@@ -88,9 +88,6 @@
     // Non-standard: https://developer.apple.com/reference/webkitjs/element/1634205-onwebkitneedkey.
     [NotEnumerable, Conditional=LEGACY_ENCRYPTED_MEDIA, EnabledBySetting=LegacyEncryptedMediaAPI] attribute EventHandler onwebkitneedkey;
 
-    // Non-standard: https://developer.apple.com/reference/webkitjs/element/1633943-onwebkitpresentationmodechanged.
-    [NotEnumerable, Conditional=VIDEO_PRESENTATION_MODE] attribute EventHandler onwebkitpresentationmodechanged;
-
     // Non-standard: https://developer.apple.com/reference/webkitjs/element/1630042-onwebkitcurrentplaybacktargetisw.
     [NotEnumerable, Conditional=WIRELESS_PLAYBACK_TARGET] attribute EventHandler onwebkitcurrentplaybacktargetiswirelesschanged;
 

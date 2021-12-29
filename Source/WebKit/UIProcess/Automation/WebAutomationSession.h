@@ -129,8 +129,6 @@ public:
     void willClosePage(const WebPageProxy&);
     void handleRunOpenPanel(const WebPageProxy&, const WebFrameProxy&, const API::OpenPanelParameters&, WebOpenPanelResultListenerProxy&);
     void willShowJavaScriptDialog(WebPageProxy&);
-    void didEnterFullScreenForPage(const WebPageProxy&);
-    void didExitFullScreenForPage(const WebPageProxy&);
 
     bool shouldAllowGetUserMediaForPage(const WebPageProxy&) const;
 

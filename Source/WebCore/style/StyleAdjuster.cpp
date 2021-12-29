@@ -652,21 +652,6 @@ void Adjuster::adjustForSiteSpecificQuirks(RenderStyle& style) const
             && const_cast<Element*>(m_element)->classList().contains(class2))
             style.setMinHeight(Length(0, LengthType::Fixed));
     }
-#if ENABLE(VIDEO)
-    if (m_document.quirks().needsFullscreenDisplayNoneQuirk()) {
-        if (is<HTMLDivElement>(m_element) && style.display() == DisplayType::None) {
-            static MainThreadNeverDestroyed<const AtomString> instreamNativeVideoDivClass("instream-native-video--mobile", AtomString::ConstructFromLiteral);
-            static MainThreadNeverDestroyed<const AtomString> videoElementID("vjs_video_3_html5_api", AtomString::ConstructFromLiteral);
-
-            auto& div = downcast<HTMLDivElement>(*m_element);
-            if (div.hasClass() && div.classNames().contains(instreamNativeVideoDivClass)) {
-                auto* video = div.treeScope().getElementById(videoElementID);
-                if (is<HTMLVideoElement>(video) && downcast<HTMLVideoElement>(*video).isFullscreen())
-                    style.setEffectiveDisplay(DisplayType::Block);
-            }
-        }
-    }
-#endif
 }
 
 #if ENABLE(TEXT_AUTOSIZING)

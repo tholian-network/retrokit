@@ -412,16 +412,6 @@ URL HitTestResult::absoluteMediaURL() const
 #endif
 }
 
-bool HitTestResult::mediaSupportsFullscreen() const
-{
-#if ENABLE(VIDEO)
-    HTMLMediaElement* mediaElt(mediaElement());
-    return is<HTMLVideoElement>(mediaElt) && mediaElt->supportsFullscreen(HTMLMediaElementEnums::VideoFullscreenModeStandard);
-#else
-    return false;
-#endif
-}
-
 #if ENABLE(VIDEO)
 HTMLMediaElement* HitTestResult::mediaElement() const
 {
@@ -450,41 +440,6 @@ void HitTestResult::toggleMediaLoopPlayback() const
 #if ENABLE(VIDEO)
     if (HTMLMediaElement* mediaElt = mediaElement())
         mediaElt->setLoop(!mediaElt->loop());
-#endif
-}
-
-bool HitTestResult::mediaIsInFullscreen() const
-{
-#if ENABLE(VIDEO)
-    if (HTMLMediaElement* mediaElement = this->mediaElement())
-        return mediaElement->isVideo() && mediaElement->isStandardFullscreen();
-#endif
-    return false;
-}
-
-void HitTestResult::toggleMediaFullscreenState() const
-{
-#if ENABLE(VIDEO)
-    if (HTMLMediaElement* mediaElement = this->mediaElement()) {
-        if (mediaElement->isVideo() && mediaElement->supportsFullscreen(HTMLMediaElementEnums::VideoFullscreenModeStandard)) {
-            UserGestureIndicator indicator(ProcessingUserGesture, &mediaElement->document());
-            mediaElement->toggleStandardFullscreenState();
-        }
-    }
-#endif
-}
-
-void HitTestResult::enterFullscreenForVideo() const
-{
-#if ENABLE(VIDEO)
-    HTMLMediaElement* mediaElement(this->mediaElement());
-    if (is<HTMLVideoElement>(mediaElement)) {
-        HTMLVideoElement& videoElement = downcast<HTMLVideoElement>(*mediaElement);
-        if (!videoElement.isFullscreen() && mediaElement->supportsFullscreen(HTMLMediaElementEnums::VideoFullscreenModeStandard)) {
-            UserGestureIndicator indicator(ProcessingUserGesture, &mediaElement->document());
-            videoElement.webkitEnterFullscreen();
-        }
-    }
 #endif
 }
 
@@ -762,42 +717,6 @@ String HitTestResult::linkSuggestedFilename() const
     if (!is<HTMLAnchorElement>(urlElement))
         return nullAtom();
     return ResourceResponse::sanitizeSuggestedFilename(urlElement->attributeWithoutSynchronization(HTMLNames::downloadAttr));
-}
-
-bool HitTestResult::mediaSupportsEnhancedFullscreen() const
-{
-#if PLATFORM(MAC) && ENABLE(VIDEO) && ENABLE(VIDEO_PRESENTATION_MODE)
-    HTMLMediaElement* mediaElt(mediaElement());
-    return is<HTMLVideoElement>(mediaElt) && mediaElt->supportsFullscreen(HTMLMediaElementEnums::VideoFullscreenModePictureInPicture);
-#else
-    return false;
-#endif
-}
-
-bool HitTestResult::mediaIsInEnhancedFullscreen() const
-{
-#if PLATFORM(MAC) && ENABLE(VIDEO) && ENABLE(VIDEO_PRESENTATION_MODE)
-    HTMLMediaElement* mediaElt(mediaElement());
-    return is<HTMLVideoElement>(mediaElt) && mediaElt->fullscreenMode() == HTMLMediaElementEnums::VideoFullscreenModePictureInPicture;
-#else
-    return false;
-#endif
-}
-
-void HitTestResult::toggleEnhancedFullscreenForVideo() const
-{
-#if PLATFORM(MAC) && ENABLE(VIDEO) && ENABLE(VIDEO_PRESENTATION_MODE)
-    HTMLMediaElement* mediaElement(this->mediaElement());
-    if (!is<HTMLVideoElement>(mediaElement) || !mediaElement->supportsFullscreen(HTMLMediaElementEnums::VideoFullscreenModePictureInPicture))
-        return;
-
-    HTMLVideoElement& videoElement = downcast<HTMLVideoElement>(*mediaElement);
-    UserGestureIndicator indicator(ProcessingUserGesture, &mediaElement->document());
-    if (videoElement.webkitPresentationMode() == HTMLVideoElement::VideoPresentationMode::PictureInPicture)
-        videoElement.webkitSetPresentationMode(HTMLVideoElement::VideoPresentationMode::Inline);
-    else
-        videoElement.webkitSetPresentationMode(HTMLVideoElement::VideoPresentationMode::PictureInPicture);
-#endif
 }
 
 } // namespace WebCore

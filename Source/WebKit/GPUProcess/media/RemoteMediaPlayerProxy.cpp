@@ -112,7 +112,6 @@ void RemoteMediaPlayerProxy::getConfiguration(RemoteMediaPlayerConfiguration& co
     configuration.maximumDurationToCacheMediaTime = maxDuration ? maxDuration : 0.2;
     configuration.supportsScanning = m_player->supportsScanning();
     configuration.supportsFullscreen = m_player->supportsFullscreen();
-    configuration.supportsPictureInPicture = m_player->supportsPictureInPicture();
     configuration.supportsAcceleratedRendering = m_player->supportsAcceleratedRendering();
     configuration.supportsPlayAtHostTime = m_player->supportsPlayAtHostTime();
     configuration.supportsPauseAtHostTime = m_player->supportsPauseAtHostTime();
@@ -246,13 +245,6 @@ void RemoteMediaPlayerProxy::setShouldMaintainAspectRatio(bool maintainRatio)
     m_player->setShouldMaintainAspectRatio(maintainRatio);
 }
 
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-void RemoteMediaPlayerProxy::setVideoFullscreenGravity(WebCore::MediaPlayerEnums::VideoGravity gravity)
-{
-    m_player->setVideoFullscreenGravity(gravity);
-}
-#endif
-
 void RemoteMediaPlayerProxy::acceleratedRenderingStateChanged(bool renderingCanBeAccelerated)
 {
     m_renderingCanBeAccelerated = renderingCanBeAccelerated;
@@ -301,25 +293,6 @@ void RemoteMediaPlayerProxy::removeResource(RemoteMediaResourceIdentifier remote
 {
     m_webProcessConnection->send(Messages::MediaPlayerPrivateRemote::RemoveResource(remoteMediaResourceIdentifier), m_id);
 }
-
-// MediaPlayerClient
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-void RemoteMediaPlayerProxy::updateVideoFullscreenInlineImage()
-{
-    m_player->updateVideoFullscreenInlineImage();
-}
-
-void RemoteMediaPlayerProxy::setVideoFullscreenMode(MediaPlayer::VideoFullscreenMode mode)
-{
-    m_player->setVideoFullscreenMode(mode);
-
-}
-
-void RemoteMediaPlayerProxy::videoFullscreenStandbyChanged()
-{
-    m_player->videoFullscreenStandbyChanged();
-}
-#endif
 
 void RemoteMediaPlayerProxy::setBufferingPolicy(MediaPlayer::BufferingPolicy policy)
 {
@@ -803,20 +776,6 @@ double RemoteMediaPlayerProxy::mediaPlayerRequestedPlaybackRate() const
     notImplemented();
     return 0;
 }
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-MediaPlayerEnums::VideoFullscreenMode RemoteMediaPlayerProxy::mediaPlayerFullscreenMode() const
-{
-    notImplemented();
-    return MediaPlayerEnums::VideoFullscreenModeNone;
-}
-
-bool RemoteMediaPlayerProxy::mediaPlayerIsVideoFullscreenStandby() const
-{
-    notImplemented();
-    return false;
-}
-#endif
 
 bool RemoteMediaPlayerProxy::mediaPlayerShouldDisableSleep() const
 {

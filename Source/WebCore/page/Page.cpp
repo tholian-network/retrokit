@@ -66,7 +66,6 @@
 #include "FrameSelection.h"
 #include "FrameTree.h"
 #include "FrameView.h"
-#include "FullscreenManager.h"
 #include "HTMLElement.h"
 #include "HTMLImageElement.h"
 #include "HTMLMediaElement.h"
@@ -1562,9 +1561,6 @@ void Page::updateRendering()
     runProcessingStep(RenderingUpdateStep::Animations, [] (Document& document) {
         document.updateAnimationsAndSendEvents();
     });
-
-    // FIXME: Run the fullscreen steps.
-    m_renderingUpdateRemainingSteps.last().remove(RenderingUpdateStep::Fullscreen);
 
     runProcessingStep(RenderingUpdateStep::AnimationFrameCallbacks, [] (Document& document) {
         document.serviceRequestAnimationFrameCallbacks();
@@ -3095,10 +3091,6 @@ void Page::setAllowsMediaDocumentInlinePlayback(bool flag)
     if (m_allowsMediaDocumentInlinePlayback == flag)
         return;
     m_allowsMediaDocumentInlinePlayback = flag;
-
-    forEachMediaElement([] (HTMLMediaElement& element) {
-        element.allowsMediaDocumentInlinePlaybackChanged();
-    });
 }
 
 #endif
@@ -3244,41 +3236,6 @@ void Page::setUseDarkAppearanceOverride(std::optional<bool> valueOverride)
     appearanceDidChange();
 #else
     UNUSED_PARAM(valueOverride);
-#endif
-}
-
-void Page::setFullscreenInsets(const FloatBoxExtent& insets)
-{
-    if (insets == m_fullscreenInsets)
-        return;
-
-    m_fullscreenInsets = insets;
-
-    forEachDocument([] (Document& document) {
-        document.constantProperties().didChangeFullscreenInsets();
-    });
-}
-
-void Page::setFullscreenAutoHideDuration(Seconds duration)
-{
-    if (duration == m_fullscreenAutoHideDuration)
-        return;
-
-    m_fullscreenAutoHideDuration = duration;
-
-    forEachDocument([&] (Document& document) {
-        document.constantProperties().setFullscreenAutoHideDuration(duration);
-    });
-}
-
-void Page::setFullscreenControlsHidden(bool hidden)
-{
-#if ENABLE(FULLSCREEN_API)
-    forEachDocument([&] (Document& document) {
-        document.fullscreenManager().setFullscreenControlsHidden(hidden);
-    });
-#else
-    UNUSED_PARAM(hidden);
 #endif
 }
 
@@ -3579,7 +3536,6 @@ WTF::TextStream& operator<<(WTF::TextStream& ts, RenderingUpdateStep step)
     case RenderingUpdateStep::Scroll: ts << "Scroll"; break;
     case RenderingUpdateStep::MediaQueryEvaluation: ts << "MediaQueryEvaluation"; break;
     case RenderingUpdateStep::Animations: ts << "Animations"; break;
-    case RenderingUpdateStep::Fullscreen: ts << "Fullscreen"; break;
     case RenderingUpdateStep::AnimationFrameCallbacks: ts << "AnimationFrameCallbacks"; break;
 #if ENABLE(INTERSECTION_OBSERVER)
     case RenderingUpdateStep::IntersectionObservations: ts << "IntersectionObservations"; break;

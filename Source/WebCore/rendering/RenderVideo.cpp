@@ -41,10 +41,6 @@
 #include <wtf/IsoMallocInlines.h>
 #include <wtf/StackStats.h>
 
-#if ENABLE(FULLSCREEN_API)
-#include "RenderFullScreen.h"
-#endif
-
 namespace WebCore {
 
 using namespace HTMLNames;
@@ -66,14 +62,8 @@ void RenderVideo::willBeDestroyed()
 {
     visibleInViewportStateChanged();
 
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    auto player = videoElement().player();
-    if (player && videoElement().webkitPresentationMode() != HTMLVideoElement::VideoPresentationMode::PictureInPicture)
-        player->setPageIsVisible(false);
-#else
     if (auto player = videoElement().player())
         player->setPageIsVisible(false);
-#endif
 
     RenderMedia::willBeDestroyed();
 }
@@ -232,7 +222,7 @@ void RenderVideo::paintReplaced(PaintInfo& paintInfo, const LayoutPoint& paintOf
 
     if (displayingPoster)
         paintIntoRect(paintInfo, rect);
-    else if (!videoElement().isFullscreen() || !videoElement().supportsAcceleratedRendering()) {
+    else if (!videoElement().supportsAcceleratedRendering()) {
         if (paintInfo.paintBehavior.contains(PaintBehavior::FlattenCompositingLayers))
             context.paintFrameForMedia(*mediaPlayer, rect);
         else
@@ -312,44 +302,6 @@ bool RenderVideo::requiresImmediateCompositing() const
     auto player = videoElement().player();
     return player && player->requiresImmediateCompositing();
 }
-
-#if ENABLE(FULLSCREEN_API)
-
-static const RenderBlock* placeholder(const RenderVideo& renderer)
-{
-    auto* parent = renderer.parent();
-    return is<RenderFullScreen>(parent) ? downcast<RenderFullScreen>(*parent).placeholder() : nullptr;
-}
-
-LayoutUnit RenderVideo::offsetLeft() const
-{
-    if (auto* block = placeholder(*this))
-        return block->offsetLeft();
-    return RenderMedia::offsetLeft();
-}
-
-LayoutUnit RenderVideo::offsetTop() const
-{
-    if (auto* block = placeholder(*this))
-        return block->offsetTop();
-    return RenderMedia::offsetTop();
-}
-
-LayoutUnit RenderVideo::offsetWidth() const
-{
-    if (auto* block = placeholder(*this))
-        return block->offsetWidth();
-    return RenderMedia::offsetWidth();
-}
-
-LayoutUnit RenderVideo::offsetHeight() const
-{
-    if (auto* block = placeholder(*this))
-        return block->offsetHeight();
-    return RenderMedia::offsetHeight();
-}
-
-#endif
 
 bool RenderVideo::foregroundIsKnownToBeOpaqueInRect(const LayoutRect& localRect, unsigned maxDepthToTest) const
 {

@@ -335,7 +335,6 @@ UIProcess/WebFormClient.cpp
 UIProcess/WebFormSubmissionListenerProxy.cpp
 UIProcess/WebFramePolicyListenerProxy.cpp
 UIProcess/WebFrameProxy.cpp
-UIProcess/WebFullScreenManagerProxy.cpp
 UIProcess/WebNavigationState.cpp
 UIProcess/WebOpenPanelResultListenerProxy.cpp
 UIProcess/WebPageDiagnosticLoggingClient.cpp
@@ -519,8 +518,6 @@ WebProcess/EncryptedMedia/MediaKeySystemPermissionRequestManager.cpp
 
 WebProcess/FileAPI/BlobRegistryProxy.cpp
 
-WebProcess/FullScreen/WebFullScreenManager.cpp
-
 WebProcess/InjectedBundle/InjectedBundle.cpp
 WebProcess/InjectedBundle/InjectedBundleClient.cpp
 WebProcess/InjectedBundle/InjectedBundleDOMWindowExtension.cpp
@@ -529,7 +526,6 @@ WebProcess/InjectedBundle/InjectedBundleNavigationAction.cpp
 WebProcess/InjectedBundle/InjectedBundlePageContextMenuClient.cpp
 WebProcess/InjectedBundle/InjectedBundlePageEditorClient.cpp
 WebProcess/InjectedBundle/InjectedBundlePageFormClient.cpp
-WebProcess/InjectedBundle/InjectedBundlePageFullScreenClient.cpp
 WebProcess/InjectedBundle/InjectedBundlePageLoaderClient.cpp
 WebProcess/InjectedBundle/InjectedBundlePagePolicyClient.cpp
 WebProcess/InjectedBundle/InjectedBundlePageResourceLoadClient.cpp

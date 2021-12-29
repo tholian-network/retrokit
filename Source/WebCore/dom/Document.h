@@ -139,7 +139,6 @@ class FormController;
 class Frame;
 class FrameSelection;
 class FrameView;
-class FullscreenManager;
 class GPUCanvasContext;
 class HTMLAllCollection;
 class HTMLAttachmentElement;
@@ -1171,11 +1170,6 @@ public:
     using DisplayChangedObserver = WTF::Observer<void(PlatformDisplayID)>;
     void addDisplayChangedObserver(const DisplayChangedObserver&);
 
-#if ENABLE(FULLSCREEN_API)
-    FullscreenManager& fullscreenManager() { return m_fullscreenManager; }
-    const FullscreenManager& fullscreenManager() const { return m_fullscreenManager; }
-#endif
-
 #if ENABLE(POINTER_LOCK)
     WEBCORE_EXPORT void exitPointerLock();
 #endif
@@ -1562,11 +1556,6 @@ public:
     WEBCORE_EXPORT void dispatchSystemPreviewActionEvent(const SystemPreviewInfo&, const String& message);
 #endif
 
-#if ENABLE(PICTURE_IN_PICTURE_API)
-    HTMLVideoElement* pictureInPictureElement() const;
-    void setPictureInPictureElement(HTMLVideoElement*);
-#endif
-
     WEBCORE_EXPORT TextManipulationController& textManipulationController();
     TextManipulationController* textManipulationControllerIfExists() { return m_textManipulationController.get(); }
 
@@ -1890,10 +1879,6 @@ private:
     WeakHashSet<MediaCanStartListener> m_mediaCanStartListeners;
     WeakHashSet<DisplayChangedObserver> m_displayChangedObservers;
 
-#if ENABLE(FULLSCREEN_API)
-    UniqueRef<FullscreenManager> m_fullscreenManager;
-#endif
-
     WeakHashSet<HTMLImageElement> m_dynamicMediaQueryDependentImages;
 
 #if ENABLE(INTERSECTION_OBSERVER)
@@ -2161,10 +2146,6 @@ private:
 #if ENABLE(CONTENT_CHANGE_OBSERVER)
     std::unique_ptr<ContentChangeObserver> m_contentChangeObserver;
     std::unique_ptr<DOMTimerHoldingTank> m_domTimerHoldingTank;
-#endif
-
-#if ENABLE(PICTURE_IN_PICTURE_API)
-    WeakPtr<HTMLVideoElement> m_pictureInPictureElement;
 #endif
 
     std::unique_ptr<TextManipulationController> m_textManipulationController;

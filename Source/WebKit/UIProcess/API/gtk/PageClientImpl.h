@@ -30,7 +30,6 @@
 
 #include "DefaultUndoController.h"
 #include "PageClient.h"
-#include "WebFullScreenManagerProxy.h"
 #include "WebPageProxy.h"
 #include <WebCore/IntSize.h>
 #include <gtk/gtk.h>
@@ -48,9 +47,6 @@ class WebPageNamespace;
 enum class UndoOrRedo : bool;
 
 class PageClientImpl : public PageClient
-#if ENABLE(FULLSCREEN_API)
-    , public WebFullScreenManagerProxyClient
-#endif
 {
     WTF_MAKE_FAST_ALLOCATED;
 public:
@@ -120,21 +116,6 @@ private:
     void didFinishNavigation(API::Navigation*) override;
     void didFailNavigation(API::Navigation*) override;
     void didSameDocumentNavigationForMainFrame(SameDocumentNavigationType) override;
-
-    // Auxiliary Client Creation
-#if ENABLE(FULLSCREEN_API)
-    WebFullScreenManagerProxyClient& fullScreenManagerProxyClient() final;
-#endif
-
-#if ENABLE(FULLSCREEN_API)
-    // WebFullScreenManagerProxyClient
-    void closeFullScreenManager() override;
-    bool isFullScreen() override;
-    void enterFullScreen() override;
-    void exitFullScreen() override;
-    void beganEnterFullScreen(const WebCore::IntRect& initialFrame, const WebCore::IntRect& finalFrame) override;
-    void beganExitFullScreen(const WebCore::IntRect& initialFrame, const WebCore::IntRect& finalFrame) override;
-#endif
 
     void didFinishLoadingDataForCustomContentProvider(const String& suggestedFilename, const IPC::DataReference&) override;
 

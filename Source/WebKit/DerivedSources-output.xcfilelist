@@ -339,12 +339,6 @@ $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/UserMediaCaptureManagerMessagesRepl
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/UserMediaCaptureManagerProxyMessageReceiver.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/UserMediaCaptureManagerProxyMessages.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/UserMediaCaptureManagerProxyMessagesReplies.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/VideoFullscreenManagerMessageReceiver.cpp
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/VideoFullscreenManagerMessages.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/VideoFullscreenManagerMessagesReplies.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/VideoFullscreenManagerProxyMessageReceiver.cpp
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/VideoFullscreenManagerProxyMessages.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/VideoFullscreenManagerProxyMessagesReplies.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/ViewGestureControllerMessageReceiver.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/ViewGestureControllerMessages.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/ViewGestureControllerMessagesReplies.h
@@ -397,12 +391,6 @@ $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebCookieManagerMessagesReplies.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebCookieManagerProxyMessageReceiver.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebCookieManagerProxyMessages.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebCookieManagerProxyMessagesReplies.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebFullScreenManagerMessageReceiver.cpp
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebFullScreenManagerMessages.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebFullScreenManagerMessagesReplies.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebFullScreenManagerProxyMessageReceiver.cpp
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebFullScreenManagerProxyMessages.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebFullScreenManagerProxyMessagesReplies.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebIDBConnectionToServerMessageReceiver.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebIDBConnectionToServerMessages.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebIDBConnectionToServerMessagesReplies.h

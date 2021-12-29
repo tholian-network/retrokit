@@ -230,7 +230,6 @@ struct WebProcessCreationParameters {
 
 #if PLATFORM(IOS_FAMILY)
     bool currentUserInterfaceIdiomIsPhoneOrWatch { false };
-    bool supportsPictureInPicture { false };
     WebCore::RenderThemeIOS::CSSValueToSystemColorMap cssValueToSystemColorMap;
     WebCore::Color focusRingColor;
     String localizedDeviceModel;

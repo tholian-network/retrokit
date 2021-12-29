@@ -485,10 +485,6 @@ messages -> WebPageProxy {
     MockMediaPlaybackTargetPickerDismissPopup()
 #endif
 
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    SetMockVideoPresentationModeEnabled(bool enabled)
-#endif
-
 #if ENABLE(POINTER_LOCK)
     RequestPointerLock()
     RequestPointerUnlock()

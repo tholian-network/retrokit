@@ -973,8 +973,6 @@ WI.NativePrototypeFunctionParameters = {
     },
 
     HTMLVideoElement: {
-        webkitSetPresentationMode: "mode",
-        webkitSupportsPresentationMode: "mode",
         __proto__: null,
     },
 

@@ -222,11 +222,8 @@ RenderLayerBacking::RenderLayerBacking(RenderLayer& layer)
         m_isMainFrameRenderViewLayer = renderer().frame().isMainFrame();
         m_isFrameLayerWithTiledBacking = renderer().page().chrome().client().shouldUseTiledBackingForFrameView(renderer().view().frameView());
     }
-    
+
     createPrimaryGraphicsLayer();
-#if ENABLE(FULLSCREEN_API)
-    setRequiresBackgroundLayer(layer.renderer().isRenderFullScreen());
-#endif
 
     if (auto* tiledBacking = this->tiledBacking()) {
         tiledBacking->setIsInWindow(renderer().page().isInWindow());

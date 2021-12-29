@@ -31,7 +31,6 @@ namespace WebCore {
 
 class HTMLMediaElementEnums : public MediaPlayerEnums {
 public:
-    using MediaPlayerEnums::VideoFullscreenMode;
 
     enum ReadyState { HAVE_NOTHING, HAVE_METADATA, HAVE_CURRENT_DATA, HAVE_FUTURE_DATA, HAVE_ENOUGH_DATA };
     enum NetworkState { NETWORK_EMPTY, NETWORK_IDLE, NETWORK_LOADING, NETWORK_NO_SOURCE };

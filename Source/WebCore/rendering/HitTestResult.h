@@ -111,21 +111,14 @@ public:
     WEBCORE_EXPORT bool isContentEditable() const;
     void toggleMediaControlsDisplay() const;
     void toggleMediaLoopPlayback() const;
-    WEBCORE_EXPORT bool mediaIsInFullscreen() const;
-    void toggleMediaFullscreenState() const;
-    void enterFullscreenForVideo() const;
     bool mediaControlsEnabled() const;
     bool mediaLoopEnabled() const;
     bool mediaPlaying() const;
-    bool mediaSupportsFullscreen() const;
     void toggleMediaPlayState() const;
     WEBCORE_EXPORT bool mediaHasAudio() const;
     WEBCORE_EXPORT bool mediaIsVideo() const;
     bool mediaMuted() const;
     void toggleMediaMuteState() const;
-    bool mediaSupportsEnhancedFullscreen() const;
-    bool mediaIsInEnhancedFullscreen() const;
-    void toggleEnhancedFullscreenForVideo() const;
 
     WEBCORE_EXPORT bool isDownloadableMedia() const;
     WEBCORE_EXPORT bool isOverTextInsideFormControlElement() const;

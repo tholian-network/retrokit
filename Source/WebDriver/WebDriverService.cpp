@@ -167,7 +167,6 @@ const WebDriverService::Command WebDriverService::s_commands[] = {
     { HTTPMethod::Post, "/session/$sessionId/window/rect", &WebDriverService::setWindowRect },
     { HTTPMethod::Post, "/session/$sessionId/window/maximize", &WebDriverService::maximizeWindow },
     { HTTPMethod::Post, "/session/$sessionId/window/minimize", &WebDriverService::minimizeWindow },
-    { HTTPMethod::Post, "/session/$sessionId/window/fullscreen", &WebDriverService::fullscreenWindow },
 
     { HTTPMethod::Post, "/session/$sessionId/element", &WebDriverService::findElement },
     { HTTPMethod::Post, "/session/$sessionId/elements", &WebDriverService::findElements },
@@ -1153,14 +1152,6 @@ void WebDriverService::minimizeWindow(RefPtr<JSON::Object>&& parameters, Functio
     // https://w3c.github.io/webdriver/#minimize-window
     if (findSessionOrCompleteWithError(*parameters, completionHandler))
         m_session->minimizeWindow(WTFMove(completionHandler));
-}
-
-void WebDriverService::fullscreenWindow(RefPtr<JSON::Object>&& parameters, Function<void (CommandResult&&)>&& completionHandler)
-{
-    // §10.7.5 Fullscreen Window
-    // https://w3c.github.io/webdriver/#fullscreen-window
-    if (findSessionOrCompleteWithError(*parameters, completionHandler))
-        m_session->fullscreenWindow(WTFMove(completionHandler));
 }
 
 void WebDriverService::closeWindow(RefPtr<JSON::Object>&& parameters, Function<void (CommandResult&&)>&& completionHandler)

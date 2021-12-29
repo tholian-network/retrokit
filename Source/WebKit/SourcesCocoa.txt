@@ -382,7 +382,6 @@ UIProcess/Cocoa/DiagnosticLoggingClient.mm
 UIProcess/Cocoa/LegacyDownloadClient.mm
 UIProcess/Cocoa/DownloadProxyMapCocoa.mm
 UIProcess/Cocoa/FindClient.mm
-UIProcess/Cocoa/FullscreenClient.mm
 UIProcess/Cocoa/GPUProcessProxyCocoa.mm
 UIProcess/Cocoa/GlobalFindInPageState.mm
 UIProcess/Cocoa/IconLoadingDelegate.mm
@@ -402,7 +401,6 @@ UIProcess/Cocoa/UIDelegate.mm
 UIProcess/Cocoa/UIRemoteObjectRegistry.cpp
 UIProcess/Cocoa/UserMediaCaptureManagerProxy.cpp
 UIProcess/Cocoa/UserMediaPermissionRequestManagerProxy.mm
-UIProcess/Cocoa/VideoFullscreenManagerProxy.mm
 UIProcess/Cocoa/WebPageProxyCocoa.mm
 UIProcess/Cocoa/WebPasteboardProxyCocoa.mm
 UIProcess/Cocoa/WebPreferencesCocoa.mm
@@ -446,11 +444,6 @@ UIProcess/ios/forms/WKNumberPadViewController.mm
 UIProcess/ios/forms/WKSelectMenuListViewController.mm
 UIProcess/ios/forms/WKTextInputListViewController.mm
 UIProcess/ios/forms/WKTimePickerViewController.mm
-
-UIProcess/ios/fullscreen/FullscreenTouchSecheuristic.cpp
-UIProcess/ios/fullscreen/WKFullscreenStackView.mm
-UIProcess/ios/fullscreen/WKFullScreenViewController.mm
-UIProcess/ios/fullscreen/WKFullScreenWindowControllerIOS.mm
 
 UIProcess/ios/AppKitSoftLink.mm
 UIProcess/ios/DragDropInteractionState.mm
@@ -585,7 +578,6 @@ WebProcess/cocoa/RemoteRealtimeAudioSource.cpp
 WebProcess/cocoa/RemoteRealtimeMediaSourceProxy.cpp
 WebProcess/cocoa/RemoteRealtimeVideoSource.cpp
 WebProcess/cocoa/UserMediaCaptureManager.cpp
-WebProcess/cocoa/VideoFullscreenManager.mm
 WebProcess/cocoa/WebProcessCocoa.mm
 
 WebProcess/EntryPoint/Cocoa/XPCService/WebContentServiceEntryPoint.mm

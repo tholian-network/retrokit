@@ -387,15 +387,7 @@ public:
     virtual GraphicsDeviceAdapter* graphicsDeviceAdapter() const { return nullptr; }
 #endif
 
-    virtual bool supportsVideoFullscreen(HTMLMediaElementEnums::VideoFullscreenMode) { return false; }
-    virtual bool supportsVideoFullscreenStandby() { return false; }
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    virtual void prepareForVideoFullscreen() { }
-#endif
-
 #if ENABLE(VIDEO)
-    virtual void enterVideoFullscreenForVideoElement(HTMLVideoElement&, HTMLMediaElementEnums::VideoFullscreenMode, bool standby) { UNUSED_PARAM(standby); }
     virtual void setUpPlaybackControlsManager(HTMLMediaElement&) { }
     virtual void clearPlaybackControlsManager() { }
     virtual void playbackControlsMediaEngineChanged() { }
@@ -405,21 +397,6 @@ public:
     virtual void addMediaUsageManagerSession(MediaSessionIdentifier, const String&, const URL&) { }
     virtual void updateMediaUsageManagerSessionState(MediaSessionIdentifier, const MediaUsageInfo&) { }
     virtual void removeMediaUsageManagerSession(MediaSessionIdentifier) { }
-#endif
-
-    virtual void exitVideoFullscreenForVideoElement(HTMLVideoElement&, WTF::CompletionHandler<void(bool)>&& completionHandler = [](bool) { }) { completionHandler(true); }
-    virtual void exitVideoFullscreenToModeWithoutAnimation(HTMLVideoElement&, HTMLMediaElementEnums::VideoFullscreenMode) { }
-    virtual bool requiresFullscreenForVideoPlayback() { return false; } 
-
-#if ENABLE(FULLSCREEN_API)
-    virtual bool supportsFullScreenForElement(const Element&, bool) { return false; }
-    virtual void enterFullScreenForElement(Element&) { }
-    virtual void exitFullScreenForElement(Element*) { }
-    virtual void setRootFullScreenLayer(GraphicsLayer*) { }
-#endif
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    virtual void setMockVideoPresentationModeEnabled(bool) { }
 #endif
 
 #if USE(COORDINATED_GRAPHICS)

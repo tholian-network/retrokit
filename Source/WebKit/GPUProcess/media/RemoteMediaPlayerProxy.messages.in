@@ -56,13 +56,6 @@ messages -> RemoteMediaPlayerProxy NotRefCounted {
     SetRate(double rate)
     DidLoadingProgress() -> (bool flag) Async
 
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    UpdateVideoFullscreenInlineImage()
-    SetVideoFullscreenMode(WebCore::MediaPlayer::VideoFullscreenMode mode)
-    SetVideoFullscreenGravity(enum:uint8_t WebCore::MediaPlayerEnums::VideoGravity gravity)
-    VideoFullscreenStandbyChanged()
-#endif
-
     SetBufferingPolicy(WebCore::MediaPlayer::BufferingPolicy policy)
 
 #if PLATFORM(COCOA)

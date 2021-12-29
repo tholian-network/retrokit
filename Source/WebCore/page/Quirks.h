@@ -100,7 +100,6 @@ public:
 
     bool needsGMailOverflowScrollQuirk() const;
     bool needsYouTubeOverflowScrollQuirk() const;
-    bool needsFullscreenDisplayNoneQuirk() const;
     bool needsWeChatScrollingQuirk() const;
 
     bool shouldOpenAsAboutBlank(const String&) const;
@@ -116,8 +115,6 @@ public:
     bool shouldEnableLegacyGetUserMediaQuirk() const;
 #endif
 
-    bool shouldDisableElementFullscreenQuirk() const;
-
     bool needsCanPlayAfterSeekedQuirk() const;
 
     bool shouldAvoidPastingImagesAsWebContent() const;
@@ -126,16 +123,6 @@ public:
 
     bool needsVP9FullRangeFlagQuirk() const;
     bool needsHDRPixelDepthQuirk() const;
-    
-    bool needsAkamaiMediaPlayerQuirk(const HTMLVideoElement&) const;
-
-    bool needsBlackFullscreenBackgroundQuirk() const;
-
-    bool requiresUserGestureToPauseInPictureInPicture() const;
-    bool requiresUserGestureToLoadInPictureInPicture() const;
-
-    WEBCORE_EXPORT bool blocksReturnToFullscreenFromPictureInPictureQuirk() const;
-    bool shouldDisableEndFullscreenEventWhenEnteringPictureInPictureFromFullscreenQuirk() const;
 
 #if ENABLE(WEB_AUTHN)
     WEBCORE_EXPORT bool shouldBypassUserGestureRequirementForWebAuthn() const;
@@ -158,15 +145,12 @@ private:
     WeakPtr<Document> m_document;
 
     mutable std::optional<bool> m_hasBrokenEncryptedMediaAPISupportQuirk;
-    mutable std::optional<bool> m_needsFullWidthHeightFullscreenStyleQuirk;
 #if PLATFORM(IOS_FAMILY)
     mutable std::optional<bool> m_needsGMailOverflowScrollQuirk;
     mutable std::optional<bool> m_needsYouTubeOverflowScrollQuirk;
     mutable std::optional<bool> m_needsPreloadAutoQuirk;
-    mutable std::optional<bool> m_needsFullscreenDisplayNoneQuirk;
     mutable std::optional<bool> m_shouldAvoidPastingImagesAsWebContent;
 #endif
-    mutable std::optional<bool> m_shouldDisableElementFullscreenQuirk;
 #if ENABLE(TOUCH_EVENTS)
     enum class ShouldDispatchSimulatedMouseEvents : uint8_t {
         Unknown,
@@ -183,14 +167,9 @@ private:
     mutable std::optional<bool> m_shouldBypassAsyncScriptDeferring;
     mutable std::optional<bool> m_needsVP9FullRangeFlagQuirk;
     mutable std::optional<bool> m_needsHDRPixelDepthQuirk;
-    mutable std::optional<bool> m_needsBlackFullscreenBackgroundQuirk;
-    mutable std::optional<bool> m_requiresUserGestureToPauseInPictureInPicture;
-    mutable std::optional<bool> m_requiresUserGestureToLoadInPictureInPicture;
 #if ENABLE(MEDIA_STREAM)
     mutable std::optional<bool> m_shouldEnableLegacyGetUserMediaQuirk;
 #endif
-    mutable std::optional<bool> m_blocksReturnToFullscreenFromPictureInPictureQuirk;
-    mutable std::optional<bool> m_shouldDisableEndFullscreenEventWhenEnteringPictureInPictureFromFullscreenQuirk;
 };
 
 } // namespace WebCore

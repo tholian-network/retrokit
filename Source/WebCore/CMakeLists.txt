@@ -430,12 +430,6 @@ set(WebCore_NON_SVG_IDL_FILES
     Modules/permissions/PermissionStatus.idl
     Modules/permissions/Permissions.idl
 
-    Modules/pictureinpicture/Document+PictureInPicture.idl
-    Modules/pictureinpicture/DocumentOrShadowRoot+PictureInPicture.idl
-    Modules/pictureinpicture/EnterPictureInPictureEvent.idl
-    Modules/pictureinpicture/HTMLVideoElement+PictureInPicture.idl
-    Modules/pictureinpicture/PictureInPictureWindow.idl
-
     Modules/remoteplayback/RemotePlayback.idl
     Modules/remoteplayback/RemotePlaybackAvailabilityCallback.idl
 
@@ -730,7 +724,6 @@ set(WebCore_NON_SVG_IDL_FILES
     dom/DataTransferItem.idl
     dom/DataTransferItemList.idl
     dom/Document+CSSOMView.idl
-    dom/Document+Fullscreen.idl
     dom/Document+HTML.idl
     dom/Document+HTMLObsolete.idl
     dom/Document+PageVisibility.idl
@@ -748,7 +741,6 @@ set(WebCore_NON_SVG_IDL_FILES
     dom/DragEvent.idl
     dom/Element+CSSOMView.idl
     dom/Element+DOMParsing.idl
-    dom/Element+Fullscreen.idl
     dom/Element+PointerEvents.idl
     dom/Element+PointerLock.idl
     dom/Element.idl
@@ -1278,7 +1270,6 @@ set(WebCore_CSS_VALUE_KEYWORDS
 
 set(WebCore_USER_AGENT_STYLE_SHEETS
     ${WEBCORE_DIR}/css/dialog.css
-    ${WEBCORE_DIR}/css/fullscreen.css
     ${WEBCORE_DIR}/css/html.css
     ${WEBCORE_DIR}/css/mathml.css
     ${WEBCORE_DIR}/css/mediaControls.css

@@ -145,9 +145,6 @@ enum {
 
     RESOURCE_LOAD_STARTED,
 
-    ENTER_FULLSCREEN,
-    LEAVE_FULLSCREEN,
-
     RUN_FILE_CHOOSER,
 
     CONTEXT_MENU,
@@ -1928,52 +1925,6 @@ static void webkit_web_view_class_init(WebKitWebViewClass* webViewClass)
         WEBKIT_TYPE_WEB_RESOURCE,
                      WEBKIT_TYPE_URI_REQUEST);
 
-    /**
-     * WebKitWebView::enter-fullscreen:
-     * @web_view: the #WebKitWebView on which the signal is emitted.
-     *
-     * Emitted when JavaScript code calls
-     * <function>element.webkitRequestFullScreen</function>. If the
-     * signal is not handled the #WebKitWebView will proceed to full screen
-     * its top level window. This signal can be used by client code to
-     * request permission to the user prior doing the full screen
-     * transition and eventually prepare the top-level window
-     * (e.g. hide some widgets that would otherwise be part of the
-     * full screen window).
-     *
-     * Returns: %TRUE to stop other handlers from being invoked for the event.
-     *    %FALSE to continue emission of the event.
-     */
-    signals[ENTER_FULLSCREEN] = g_signal_new(
-        "enter-fullscreen",
-        G_TYPE_FROM_CLASS(webViewClass),
-        G_SIGNAL_RUN_LAST,
-        G_STRUCT_OFFSET(WebKitWebViewClass, enter_fullscreen),
-        g_signal_accumulator_true_handled, nullptr,
-        g_cclosure_marshal_generic,
-        G_TYPE_BOOLEAN, 0);
-
-    /**
-     * WebKitWebView::leave-fullscreen:
-     * @web_view: the #WebKitWebView on which the signal is emitted.
-     *
-     * Emitted when the #WebKitWebView is about to restore its top level
-     * window out of its full screen state. This signal can be used by
-     * client code to restore widgets hidden during the
-     * #WebKitWebView::enter-fullscreen stage for instance.
-     *
-     * Returns: %TRUE to stop other handlers from being invoked for the event.
-     *    %FALSE to continue emission of the event.
-     */
-    signals[LEAVE_FULLSCREEN] = g_signal_new(
-        "leave-fullscreen",
-        G_TYPE_FROM_CLASS(webViewClass),
-        G_SIGNAL_RUN_LAST,
-        G_STRUCT_OFFSET(WebKitWebViewClass, leave_fullscreen),
-        g_signal_accumulator_true_handled, nullptr,
-        g_cclosure_marshal_generic,
-        G_TYPE_BOOLEAN, 0);
-
      /**
      * WebKitWebView::run-file-chooser:
      * @web_view: the #WebKitWebView on which the signal is emitted
@@ -2697,30 +2648,6 @@ void webkitWebViewRemoveLoadingWebResource(WebKitWebView* webView, uint64_t reso
     WebKitWebViewPrivate* priv = webView->priv;
     ASSERT(priv->loadingResourcesMap.contains(resourceIdentifier));
     priv->loadingResourcesMap.remove(resourceIdentifier);
-}
-
-void webkitWebViewEnterFullScreen(WebKitWebView* webView)
-{
-#if ENABLE(FULLSCREEN_API)
-    gboolean returnValue;
-    g_signal_emit(webView, signals[ENTER_FULLSCREEN], 0, &returnValue);
-#if PLATFORM(GTK)
-    if (!returnValue)
-        webkitWebViewBaseEnterFullScreen(WEBKIT_WEB_VIEW_BASE(webView));
-#endif
-#endif
-}
-
-void webkitWebViewExitFullScreen(WebKitWebView* webView)
-{
-#if ENABLE(FULLSCREEN_API)
-    gboolean returnValue;
-    g_signal_emit(webView, signals[LEAVE_FULLSCREEN], 0, &returnValue);
-#if PLATFORM(GTK)
-    if (!returnValue)
-        webkitWebViewBaseExitFullScreen(WEBKIT_WEB_VIEW_BASE(webView));
-#endif
-#endif
 }
 
 void webkitWebViewRunFileChooserRequest(WebKitWebView* webView, WebKitFileChooserRequest* request)

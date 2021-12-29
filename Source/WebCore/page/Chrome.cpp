@@ -577,11 +577,6 @@ RefPtr<SearchPopupMenu> Chrome::createSearchPopupMenu(PopupMenuClient& client) c
     return m_client.createSearchPopupMenu(client);
 }
 
-bool Chrome::requiresFullscreenForVideoPlayback()
-{
-    return m_client.requiresFullscreenForVideoPlayback();
-}
-
 void Chrome::didReceiveDocType(Frame& frame)
 {
 #if !PLATFORM(IOS_FAMILY)

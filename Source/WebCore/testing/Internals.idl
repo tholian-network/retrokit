@@ -143,7 +143,6 @@ enum AutoplayPolicy {
     boolean canShowNowPlayingControls;
     boolean isSuspended;
     boolean isInActiveDocument;
-    boolean isFullscreen;
     boolean isMuted;
     boolean isMediaDocumentInMainFrame;
     boolean isVideo;
@@ -158,7 +157,6 @@ enum AutoplayPolicy {
     boolean pageMediaPlaybackSuspended;
     boolean isMediaDocumentAndNotOwnerElement;
     boolean pageExplicitlyAllowsElementToAutoplayInline;
-    boolean requiresFullscreenForVideoPlaybackAndFullscreenNotPermitted;
     boolean hasHadUserInteractionAndQuirksContainsShouldAutoplayForArbitraryUserGesture;
     boolean isVideoAndRequiresUserGestureForVideoRateChange;
     boolean isAudioAndRequiresUserGestureForAudioRateChange;
@@ -166,18 +164,7 @@ enum AutoplayPolicy {
     boolean noUserGestureRequired;
     boolean requiresPlaybackAndIsNotPlaying;
     boolean hasEverNotifiedAboutPlaying;
-    boolean outsideOfFullscreen;
     boolean isLargeEnoughForMainContent;
-};
-
-[
-    ExportMacro=WEBCORE_TESTSUPPORT_EXPORT,
-    JSGenerateToJSObject,
-] dictionary FullscreenInsets {
-    double top;
-    double left;
-    double bottom;
-    double right;
 };
 
 [
@@ -603,19 +590,6 @@ enum AutoplayPolicy {
 
     undefined setTopContentInset(unrestricted float contentInset);
 
-    [Conditional=FULLSCREEN_API] undefined webkitWillEnterFullScreenForElement(Element element);
-    [Conditional=FULLSCREEN_API] undefined webkitDidEnterFullScreenForElement(Element element);
-    [Conditional=FULLSCREEN_API] undefined webkitWillExitFullScreenForElement(Element element);
-    [Conditional=FULLSCREEN_API] undefined webkitDidExitFullScreenForElement(Element element);
-    [Conditional=FULLSCREEN_API] readonly attribute boolean isAnimatingFullScreen;
-
-    undefined setFullscreenInsets(FullscreenInsets insets);
-    undefined setFullscreenAutoHideDuration(double duration);
-    undefined setFullscreenControlsHidden(boolean hidden);
-
-    [Conditional=VIDEO] boolean isChangingPresentationMode(HTMLVideoElement element);
-    [Conditional=VIDEO_PRESENTATION_MODE] undefined setMockVideoPresentationModeEnabled(boolean enabled);
-
     undefined setApplicationCacheOriginQuota(unsigned long long quota);
 
     undefined registerURLSchemeAsBypassingContentSecurityPolicy(DOMString scheme);
@@ -1019,8 +993,6 @@ enum AutoplayPolicy {
     DOMString encodedPreferenceValue(DOMString domain, DOMString key);
 
     DOMString getUTIFromTag(DOMString tagClass, DOMString tag, DOMString conformingToUTI);
-
-    boolean supportsPictureInPicture();
 
     boolean isRemoteUIAppForAccessibility();
 

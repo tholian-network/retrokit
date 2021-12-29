@@ -42,7 +42,7 @@ public:
     void setHidden(bool) const final { }
 };
 
-#if !(PLATFORM(IOS_FAMILY) || (PLATFORM(MAC) && ENABLE(VIDEO_PRESENTATION_MODE)))
+#if !(PLATFORM(IOS_FAMILY)
 
 std::unique_ptr<TextTrackRepresentation> TextTrackRepresentation::create(TextTrackRepresentationClient&)
 {

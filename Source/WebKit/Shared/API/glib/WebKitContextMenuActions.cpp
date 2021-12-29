@@ -124,8 +124,6 @@ ContextMenuAction webkitContextMenuActionGetActionTag(WebKitContextMenuAction ac
         return ContextMenuItemTagToggleMediaControls;
     case WEBKIT_CONTEXT_MENU_ACTION_TOGGLE_MEDIA_LOOP:
         return ContextMenuItemTagToggleMediaLoop;
-    case WEBKIT_CONTEXT_MENU_ACTION_ENTER_VIDEO_FULLSCREEN:
-        return ContextMenuItemTagEnterVideoFullscreen;
     case WEBKIT_CONTEXT_MENU_ACTION_MEDIA_PLAY:
     case WEBKIT_CONTEXT_MENU_ACTION_MEDIA_PAUSE:
         return ContextMenuItemTagMediaPlayPause;
@@ -228,8 +226,6 @@ WebKitContextMenuAction webkitContextMenuActionGetForContextMenuItem(const WebKi
         return WEBKIT_CONTEXT_MENU_ACTION_TOGGLE_MEDIA_CONTROLS;
     case ContextMenuItemTagToggleMediaLoop:
         return WEBKIT_CONTEXT_MENU_ACTION_TOGGLE_MEDIA_LOOP;
-    case ContextMenuItemTagEnterVideoFullscreen:
-        return WEBKIT_CONTEXT_MENU_ACTION_ENTER_VIDEO_FULLSCREEN;
     case ContextMenuItemTagMediaPlayPause:
         return menuItem.title() == contextMenuItemTagMediaPlay() ?
             WEBKIT_CONTEXT_MENU_ACTION_MEDIA_PLAY : WEBKIT_CONTEXT_MENU_ACTION_MEDIA_PAUSE;
@@ -330,8 +326,6 @@ String webkitContextMenuActionGetLabel(WebKitContextMenuAction action)
         return contextMenuItemTagToggleMediaControls();
     case WEBKIT_CONTEXT_MENU_ACTION_TOGGLE_MEDIA_LOOP:
         return contextMenuItemTagToggleMediaLoop();
-    case WEBKIT_CONTEXT_MENU_ACTION_ENTER_VIDEO_FULLSCREEN:
-        return contextMenuItemTagEnterVideoFullscreen();
     case WEBKIT_CONTEXT_MENU_ACTION_MEDIA_PLAY:
         return contextMenuItemTagMediaPlay();
     case WEBKIT_CONTEXT_MENU_ACTION_MEDIA_PAUSE:

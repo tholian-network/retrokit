@@ -391,15 +391,6 @@ String contextMenuItemTagToggleMediaLoop()
     return WEB_UI_STRING("Loop", "Media Loop context menu item");
 }
 
-String contextMenuItemTagEnterVideoFullscreen()
-{
-    return WEB_UI_STRING("Enter Full Screen", "Video Enter Full Screen context menu item");
-}
-
-String contextMenuItemTagExitVideoFullscreen()
-{
-    return WEB_UI_STRING_KEY("Exit Full Screen", "Exit Full Screen (context menu)", "Video Exit Full Screen context menu item");
-}
 #endif
 
 String contextMenuItemTagMediaPlay()
@@ -815,10 +806,6 @@ String localizedMediaControlElementString(const String& name)
         return WEB_UI_STRING("remaining time", "accessibility label for time remaining display");
     if (name == "StatusDisplay")
         return WEB_UI_STRING("status", "accessibility label for movie status");
-    if (name == "EnterFullscreenButton")
-        return WEB_UI_STRING("enter full screen", "accessibility label for enter full screen button");
-    if (name == "ExitFullscreenButton")
-        return WEB_UI_STRING("exit full screen", "accessibility label for exit full screen button");
     if (name == "SeekForwardButton")
         return WEB_UI_STRING("fast forward", "accessibility label for fast forward button");
     if (name == "SeekBackButton")
@@ -868,17 +855,11 @@ String localizedMediaControlElementHelpText(const String& name)
         return WEB_UI_STRING("seek quickly back", "accessibility help text for fast rewind button");
     if (name == "SeekForwardButton")
         return WEB_UI_STRING("seek quickly forward", "accessibility help text for fast forward button");
-    if (name == "FullscreenButton")
-        return WEB_UI_STRING("Play movie in full screen mode", "accessibility help text for enter full screen button");
     if (name == "ShowClosedCaptionsButton")
         return WEB_UI_STRING("start displaying closed captions", "accessibility help text for show closed captions button");
     if (name == "HideClosedCaptionsButton")
         return WEB_UI_STRING("stop displaying closed captions", "accessibility help text for hide closed captions button");
 
-    // The description of this button is descriptive enough that it doesn't require help text.
-    if (name == "EnterFullscreenButton")
-        return String();
-    
     ASSERT_NOT_REACHED();
     return String();
 }
@@ -1004,11 +985,6 @@ String validationMessageStepMismatchText(const String&, const String&)
 String validationMessageBadInputForNumberText()
 {
     return WEB_UI_STRING("Enter a number", "Validation message for number fields where the user entered a non-number string");
-}
-
-String clickToExitFullScreenText()
-{
-    return WEB_UI_STRING("Click to Exit Full Screen", "Message to display in browser window when in webkit full screen mode.");
 }
 
 #if ENABLE(VIDEO)

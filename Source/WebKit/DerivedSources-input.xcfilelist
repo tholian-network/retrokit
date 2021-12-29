@@ -102,7 +102,6 @@ $(PROJECT_DIR)/UIProcess/Automation/Automation.json
 $(PROJECT_DIR)/UIProcess/Automation/WebAutomationSession.messages.in
 $(PROJECT_DIR)/UIProcess/Cocoa/PlaybackSessionManagerProxy.messages.in
 $(PROJECT_DIR)/UIProcess/Cocoa/UserMediaCaptureManagerProxy.messages.in
-$(PROJECT_DIR)/UIProcess/Cocoa/VideoFullscreenManagerProxy.messages.in
 $(PROJECT_DIR)/UIProcess/Downloads/DownloadProxy.messages.in
 $(PROJECT_DIR)/UIProcess/DrawingAreaProxy.messages.in
 $(PROJECT_DIR)/UIProcess/GPU/GPUProcessProxy.messages.in
@@ -123,7 +122,6 @@ $(PROJECT_DIR)/UIProcess/VisitedLinkStore.messages.in
 $(PROJECT_DIR)/UIProcess/WebAuthentication/WebAuthenticatorCoordinatorProxy.messages.in
 $(PROJECT_DIR)/UIProcess/WebAuthentication/WebAuthnProcessProxy.messages.in
 $(PROJECT_DIR)/UIProcess/WebCookieManagerProxy.messages.in
-$(PROJECT_DIR)/UIProcess/WebFullScreenManagerProxy.messages.in
 $(PROJECT_DIR)/UIProcess/WebPageProxy.messages.in
 $(PROJECT_DIR)/UIProcess/WebPasteboardProxy.messages.in
 $(PROJECT_DIR)/UIProcess/WebProcessPool.messages.in
@@ -138,7 +136,6 @@ $(PROJECT_DIR)/WebProcess/Automation/WebAutomationSessionProxy.js
 $(PROJECT_DIR)/WebProcess/Automation/WebAutomationSessionProxy.messages.in
 $(PROJECT_DIR)/WebProcess/Cache/WebCacheStorageConnection.messages.in
 $(PROJECT_DIR)/WebProcess/Databases/IndexedDB/WebIDBConnectionToServer.messages.in
-$(PROJECT_DIR)/WebProcess/FullScreen/WebFullScreenManager.messages.in
 $(PROJECT_DIR)/WebProcess/GPU/GPUProcessConnection.messages.in
 $(PROJECT_DIR)/WebProcess/GPU/graphics/RemoteGraphicsContextGLProxy.messages.in
 $(PROJECT_DIR)/WebProcess/GPU/graphics/RemoteRenderingBackendProxy.messages.in
@@ -199,5 +196,4 @@ $(PROJECT_DIR)/WebProcess/cocoa/AudioCaptureSampleManager.messages.in
 $(PROJECT_DIR)/WebProcess/cocoa/PlaybackSessionManager.messages.in
 $(PROJECT_DIR)/WebProcess/cocoa/RemoteCaptureSampleManager.messages.in
 $(PROJECT_DIR)/WebProcess/cocoa/UserMediaCaptureManager.messages.in
-$(PROJECT_DIR)/WebProcess/cocoa/VideoFullscreenManager.messages.in
 $(PROJECT_DIR)/WebProcess/com.apple.WebProcess.sb.in

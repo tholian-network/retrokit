@@ -129,7 +129,6 @@ typedef void (*WKHandleAutoplayEventCallback)(WKPageRef page, WKAutoplayEvent ev
 typedef void (*WKFullscreenMayReturnToInlineCallback)(WKPageRef page, const void* clientInfo);
 typedef void (*WKRequestPointerLockCallback)(WKPageRef page, const void* clientInfo);
 typedef void (*WKDidLosePointerLockCallback)(WKPageRef page, const void* clientInfo);
-typedef void (*WKHasVideoInPictureInPictureDidChangeCallback)(WKPageRef page, bool hasVideoInPictureInPicture, const void* clientInfo);
 typedef void (*WKDidExceedBackgroundResourceLimitWhileInForegroundCallback)(WKPageRef page, WKResourceLimit limit, const void* clientInfo);
 typedef void (*WKPageDidResignInputElementStrongPasswordAppearanceCallback)(WKPageRef page, WKTypeRef userData, const void *clientInfo);
 
@@ -929,7 +928,6 @@ typedef struct WKPageUIClientV10 {
     WKHandleAutoplayEventCallback                                       handleAutoplayEvent;
     
     // Version 10.
-    WKHasVideoInPictureInPictureDidChangeCallback                       hasVideoInPictureInPictureDidChange;
     WKDidExceedBackgroundResourceLimitWhileInForegroundCallback         didExceedBackgroundResourceLimitWhileInForeground;
 } WKPageUIClientV10;
 
@@ -1023,7 +1021,6 @@ typedef struct WKPageUIClientV11 {
     WKHandleAutoplayEventCallback                                       handleAutoplayEvent;
 
     // Version 10.
-    WKHasVideoInPictureInPictureDidChangeCallback                       hasVideoInPictureInPictureDidChange;
     WKDidExceedBackgroundResourceLimitWhileInForegroundCallback         didExceedBackgroundResourceLimitWhileInForeground;
 
     // Version 11.
@@ -1120,7 +1117,6 @@ typedef struct WKPageUIClientV12 {
     WKHandleAutoplayEventCallback                                       handleAutoplayEvent;
     
     // Version 10.
-    WKHasVideoInPictureInPictureDidChangeCallback                       hasVideoInPictureInPictureDidChange;
     WKDidExceedBackgroundResourceLimitWhileInForegroundCallback         didExceedBackgroundResourceLimitWhileInForeground;
     
     // Version 11.
@@ -1220,7 +1216,6 @@ typedef struct WKPageUIClientV13 {
     WKHandleAutoplayEventCallback                                       handleAutoplayEvent;
 
     // Version 10.
-    WKHasVideoInPictureInPictureDidChangeCallback                       hasVideoInPictureInPictureDidChange;
     WKDidExceedBackgroundResourceLimitWhileInForegroundCallback         didExceedBackgroundResourceLimitWhileInForeground;
 
     // Version 11.
@@ -1321,7 +1316,6 @@ typedef struct WKPageUIClientV14 {
     WKHandleAutoplayEventCallback                                       handleAutoplayEvent;
 
     // Version 10.
-    WKHasVideoInPictureInPictureDidChangeCallback                       hasVideoInPictureInPictureDidChange;
     WKDidExceedBackgroundResourceLimitWhileInForegroundCallback         didExceedBackgroundResourceLimitWhileInForeground;
 
     // Version 11.
@@ -1424,7 +1418,6 @@ typedef struct WKPageUIClientV15 {
     WKHandleAutoplayEventCallback                                       handleAutoplayEvent;
 
     // Version 10.
-    WKHasVideoInPictureInPictureDidChangeCallback                       hasVideoInPictureInPictureDidChange;
     WKDidExceedBackgroundResourceLimitWhileInForegroundCallback         didExceedBackgroundResourceLimitWhileInForeground;
 
     // Version 11.
@@ -1531,7 +1524,6 @@ typedef struct WKPageUIClientV16 {
     WKHandleAutoplayEventCallback                                       handleAutoplayEvent;
 
     // Version 10.
-    WKHasVideoInPictureInPictureDidChangeCallback                       hasVideoInPictureInPictureDidChange;
     WKDidExceedBackgroundResourceLimitWhileInForegroundCallback         didExceedBackgroundResourceLimitWhileInForeground;
 
     // Version 11.

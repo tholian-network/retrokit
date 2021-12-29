@@ -197,7 +197,6 @@ class Error;
 class FindClient;
 class FindMatchesClient;
 class FormClient;
-class FullscreenClient;
 class HistoryClient;
 class IconLoadingClient;
 class LoaderClient;
@@ -349,10 +348,8 @@ class WebBackForwardList;
 class WebBackForwardListItem;
 class WebContextMenuProxy;
 class WebEditCommandProxy;
-class WebFullScreenManagerProxy;
 class PlaybackSessionManagerProxy;
 class UserMediaPermissionRequestProxy;
-class VideoFullscreenManagerProxy;
 class WebAuthenticatorCoordinatorProxy;
 class WebBackForwardCache;
 class WebKeyboardEvent;
@@ -493,11 +490,6 @@ public:
     void setAddsVisitedLinks(bool addsVisitedLinks) { m_addsVisitedLinks = addsVisitedLinks; }
     VisitedLinkStore& visitedLinkStore() { return m_visitedLinkStore; }
 
-    void exitFullscreenImmediately();
-    void fullscreenMayReturnToInline();
-    void didEnterFullscreen();
-    void didExitFullscreen();
-
     void suspend(CompletionHandler<void(bool)>&&);
     void resume(CompletionHandler<void(bool)>&&);
     bool isSuspended() const { return m_isSuspended; }
@@ -539,18 +531,6 @@ public:
     void remoteInspectorInformationDidChange();
 #endif
 
-#if ENABLE(FULLSCREEN_API)
-    WebFullScreenManagerProxy* fullScreenManager();
-
-    API::FullscreenClient& fullscreenClient() const { return *m_fullscreenClient; }
-    void setFullscreenClient(std::unique_ptr<API::FullscreenClient>&&);
-#endif
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    PlaybackSessionManagerProxy* playbackSessionManager();
-    VideoFullscreenManagerProxy* videoFullscreenManager();
-    void setMockVideoPresentationModeEnabled(bool);
-#endif
-
 #if PLATFORM(IOS_FAMILY)
     bool allowsMediaDocumentInlinePlayback() const;
     void setAllowsMediaDocumentInlinePlayback(bool);
@@ -565,9 +545,6 @@ public:
 
 #if HAVE(ARKIT_INLINE_PREVIEW)
     ModelElementController* modelElementController() { return m_modelElementController.get(); }
-#endif
-#if HAVE(ARKIT_INLINE_PREVIEW_IOS)
-    void takeModelElementFullscreen(WebCore::GraphicsLayer::PlatformLayerID contentLayerId);
 #endif
 #if HAVE(ARKIT_INLINE_PREVIEW_MAC)
     void modelElementDidCreatePreview(const WebCore::ElementContext&, const URL&, const String&, const WebCore::FloatSize&);
@@ -1501,7 +1478,6 @@ public:
     bool hasActiveVideoForControlsManager() const;
     void requestControlledElementID() const;
     void handleControlledElementIDResponse(const String&) const;
-    bool isPlayingVideoInEnhancedFullscreen() const;
 
 #if PLATFORM(COCOA)
     void requestActiveNowPlayingSessionInfo(CompletionHandler<void(bool, bool, const String&, double, double, uint64_t)>&&);
@@ -2546,17 +2522,6 @@ private:
 
 #if PLATFORM(COCOA)
     WeakObjCPtr<WKWebView> m_cocoaView;
-#endif
-
-#if ENABLE(FULLSCREEN_API)
-    std::unique_ptr<WebFullScreenManagerProxy> m_fullScreenManager;
-    std::unique_ptr<API::FullscreenClient> m_fullscreenClient;
-#endif
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    RefPtr<PlaybackSessionManagerProxy> m_playbackSessionManager;
-    RefPtr<VideoFullscreenManagerProxy> m_videoFullscreenManager;
-    bool m_mockVideoPresentationModeEnabled { false };
 #endif
 
 #if ENABLE(MEDIA_USAGE)

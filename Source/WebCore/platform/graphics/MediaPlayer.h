@@ -222,8 +222,6 @@ public:
 
     virtual String mediaPlayerReferrer() const { return String(); }
     virtual String mediaPlayerUserAgent() const { return String(); }
-    virtual bool mediaPlayerIsFullscreen() const { return false; }
-    virtual bool mediaPlayerIsFullscreenPermitted() const { return false; }
     virtual bool mediaPlayerIsVideo() const { return false; }
     virtual LayoutRect mediaPlayerContentBoxRect() const { return LayoutRect(); }
     virtual float mediaPlayerContentsScale() const { return 1; }
@@ -264,8 +262,6 @@ public:
     virtual void mediaPlayerEngineFailedToLoad() const { }
 
     virtual double mediaPlayerRequestedPlaybackRate() const { return 0; }
-    virtual MediaPlayerEnums::VideoFullscreenMode mediaPlayerFullscreenMode() const { return MediaPlayerEnums::VideoFullscreenModeNone; }
-    virtual bool mediaPlayerIsVideoFullscreenStandby() const { return false; }
     virtual Vector<String> mediaPlayerPreferredAudioCharacteristics() const { return Vector<String>(); }
 
 #if USE(GSTREAMER)
@@ -312,8 +308,6 @@ public:
     static void clearMediaCacheForOrigins(const String& path, const HashSet<SecurityOriginData>&);
     static bool supportsKeySystem(const String& keySystem, const String& mimeType);
 
-    bool supportsPictureInPicture() const;
-    bool supportsFullscreen() const;
     bool supportsScanning() const;
     bool canSaveMediaData() const;
     bool requiresImmediateCompositing() const;
@@ -321,19 +315,6 @@ public:
     PlatformLayer* platformLayer() const;
 
     void reloadAndResumePlaybackIfNeeded();
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    RetainPtr<PlatformLayer> createVideoFullscreenLayer();
-    void setVideoFullscreenLayer(PlatformLayer*, WTF::Function<void()>&& completionHandler = [] { });
-    void setVideoFullscreenFrame(FloatRect);
-    void updateVideoFullscreenInlineImage();
-    using MediaPlayerEnums::VideoGravity;
-    void setVideoFullscreenGravity(VideoGravity);
-    void setVideoFullscreenMode(VideoFullscreenMode);
-    VideoFullscreenMode fullscreenMode() const;
-    void videoFullscreenStandbyChanged();
-    bool isVideoFullscreenStandby() const;
-#endif
 
 #if PLATFORM(IOS_FAMILY)
     NSArray *timedMetadata() const;

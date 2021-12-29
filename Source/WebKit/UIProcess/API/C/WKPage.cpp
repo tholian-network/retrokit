@@ -1642,14 +1642,6 @@ void WKPageSetPageUIClient(WKPageRef pageRef, const WKPageUIClientBase* wkClient
 
             m_client.fullscreenMayReturnToInline(toAPI(page), m_client.base.clientInfo);
         }
-        
-        void hasVideoInPictureInPictureDidChange(WebPageProxy* page, bool hasVideoInPictureInPicture) final
-        {
-            if (!m_client.hasVideoInPictureInPictureDidChange)
-                return;
-            
-            m_client.hasVideoInPictureInPictureDidChange(toAPI(page), hasVideoInPictureInPicture, m_client.base.clientInfo);
-        }
 
         void didExceedBackgroundResourceLimitWhileInForeground(WebPageProxy& page, WKResourceLimit limit) final
         {

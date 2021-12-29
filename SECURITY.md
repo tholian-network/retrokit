@@ -55,15 +55,22 @@ These legacy APIs that are no longer of relevance to a modern Web Browser.
 - [x] Fix `None` already being defined in `X11`
 - [x] Remove `MEMMEM` hack in `StringExtras.h`
 - [ ] Remove `STRNSTR` hack in `StringExtras.h`
+- [x] Remove hardcoded Quirks for Akamai Media Player
 - [x] Remove hardcoded Quirks for `bbc.co.uk` Media Player
-- [x] Remove hardcoded Quirks for `microsoft.com` and Microsoft Teams redirect links
-- [x] Remove hardcoded Quirks for `playstation.com`, `sony.com` and `sonyentertainment.com`
-- [ ] Remove hardcoded Quirks for `twitter.com`
+- [x] Remove hardcoded Quirks for `espn.com`
+- [x] Remove hardcoded Quirks for `gizmodo.com`
 - [x] Remove hardcoded Quirks for `kinja.com`
+- [x] Remove hardcoded Quirks for `microsoft.com` and Microsoft Teams redirect links
+- [x] Remove hardcoded Quirks for `mlb.com`
+- [x] Remove hardcoded Quirks for `nfl.com`
+- [ ] Remove hardcoded Quirks for `twitter.com`
+- [x] Remove hardcoded Quirks for `playstation.com`, `sony.com` and `sonyentertainment.com`
+- [x] Remove hardcoded Quirks for `vimeo.com`
 - [x] Remove hardcoded Quirks for `youtube.com`
 - [ ] Remove Netscape Plugin API (`NETSCAPE_PLUGIN_API`)
 - [ ] Remove `QuickTimePluginReplacement`
 - [ ] Remove `YouTubePluginReplacement`
+- [ ] Remove Modern Media Controls Hack (`MODERN_MEDIA_CONTROLS`)
 
 
 ## Library Dependencies
@@ -100,9 +107,13 @@ list of Web APIs that are removed.
 - [x] Remove DeviceMotion API (`DEVICE_ORIENTATION`, `DeviceMotion*`)
 - [x] Remove WebXR API (`WEBXR`, `OPENXR`, `WebXR*`, `XRSpatialTracking`, `xrCompatible`)
 - [x] Remove Web API Statistics (`WEB_API_STATISTICS`)
-
+- [x] Remove Fullscreen API (`FULLSCREEN`, `TOGGLE_VIDEO_FULLSCREEN`, `FullScreenClient`, `FullScreenManagerProxy`, `*EnterFullScreen`, `*ExitFullScreen`, `*IsFullScreen`, `WebFullScreenManager`, `webkitfullscreenchange`, `webkitfullscreenerror`)
+- [x] Remove Fullscreen Events (`allowfullscreen`, `webkitbeginfullscreen`, `webkitendfullscreen`, `webkitfullscreenchange`, `webkitfullscreenerror`)
+- [x] Remove Picture in Picture API (`PICTURE_IN_PICTURE_API`, `operationMatchesPictureinPicturePseudoClass`, `EnterPictureInPictureEvent`, `picture-in-picture`, `PictureInPictureElement`)
+- [x] Remove Video Presentation Mode (`VIDEO_PRESENTATION_MODE`, `ControlledElementID`, `EnhancedFullscreen`, `VideoPresentation`, `prepareForVideoFullscreen`, `webkitPresentationModeChanged`)
+- [ ] Remove Wireless Playback Target API (`WIRELESS_PLAYBACK_TARGET`)
+- [ ] Remove 3D Model Element API (`MODEL_ELEMENT`)
 - [ ] Remove Encrypted Media API (`ENCRYPTED_MEDIA`, `LEGACY_ENCRYPTED_MEDIA`)
-- [ ] Remove Picture in Picture API (`PICTURE_IN_PICTURE_API`)
 - [ ] Remove Web RTC API (`WEB_RTC`, `RTC*`)
 - [ ] Remove Web NFC API
 - [ ] Remove Web Performance API
@@ -130,6 +141,7 @@ list of Web APIs that are removed.
 
 ## CSS Features
 
+- [x] Remove `:-webkit-animating-full-screen-transition`, `:-webkit-full-screen*`
 - [ ] Remove CSS Filters
 - [ ] Remove CSS Pointer Events
 - [ ] Enforce CSS Web Fonts Caching

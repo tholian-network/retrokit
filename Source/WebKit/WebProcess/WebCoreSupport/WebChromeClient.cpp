@@ -49,7 +49,6 @@
 #include "WebDateTimeChooser.h"
 #include "WebFrame.h"
 #include "WebFrameLoaderClient.h"
-#include "WebFullScreenManager.h"
 #include "WebHitTestResultData.h"
 #include "WebImage.h"
 #include "WebOpenPanelResultListener.h"
@@ -75,7 +74,6 @@
 #include <WebCore/Frame.h>
 #include <WebCore/FrameLoader.h>
 #include <WebCore/FrameView.h>
-#include <WebCore/FullscreenManager.h>
 #include <WebCore/HTMLInputElement.h>
 #include <WebCore/HTMLNames.h>
 #include <WebCore/HTMLParserIdioms.h>
@@ -90,12 +88,8 @@
 #include <WebCore/Settings.h>
 #include <WebCore/TextIndicator.h>
 
-#if PLATFORM(IOS_FAMILY) || (PLATFORM(MAC) && ENABLE(VIDEO_PRESENTATION_MODE))
+#if PLATFORM(IOS_FAMILY)
 #include "PlaybackSessionManager.h"
-#endif
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-#include "VideoFullscreenManager.h"
 #endif
 
 #if ENABLE(ASYNC_SCROLLING)
@@ -261,10 +255,6 @@ void WebChromeClient::focusedFrameChanged(Frame* frame)
 
 Page* WebChromeClient::createWindow(Frame& frame, const WindowFeatures& windowFeatures, const NavigationAction& navigationAction)
 {
-#if ENABLE(FULLSCREEN_API)
-    if (frame.document() && frame.document()->fullscreenManager().currentFullscreenElement())
-        frame.document()->fullscreenManager().cancelFullscreen();
-#endif
 
     auto& webProcess = WebProcess::singleton();
 
@@ -1016,60 +1006,6 @@ RefPtr<ScrollingCoordinator> WebChromeClient::createScrollingCoordinator(Page& p
 
 #endif
 
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-
-void WebChromeClient::prepareForVideoFullscreen()
-{
-    m_page.videoFullscreenManager();
-}
-
-bool WebChromeClient::supportsVideoFullscreen(HTMLMediaElementEnums::VideoFullscreenMode mode)
-{
-    return m_page.videoFullscreenManager().supportsVideoFullscreen(mode);
-}
-
-bool WebChromeClient::supportsVideoFullscreenStandby()
-{
-    return m_page.videoFullscreenManager().supportsVideoFullscreenStandby();
-}
-
-void WebChromeClient::setMockVideoPresentationModeEnabled(bool enabled)
-{
-    m_page.send(Messages::WebPageProxy::SetMockVideoPresentationModeEnabled(enabled));
-}
-
-void WebChromeClient::enterVideoFullscreenForVideoElement(HTMLVideoElement& videoElement, HTMLMediaElementEnums::VideoFullscreenMode mode, bool standby)
-{
-#if ENABLE(FULLSCREEN_API) && PLATFORM(IOS_FAMILY)
-    ASSERT(standby || mode != HTMLMediaElementEnums::VideoFullscreenModeNone);
-#else
-    ASSERT(mode != HTMLMediaElementEnums::VideoFullscreenModeNone);
-#endif
-    m_page.videoFullscreenManager().enterVideoFullscreenForVideoElement(videoElement, mode, standby);
-}
-
-void WebChromeClient::exitVideoFullscreenForVideoElement(HTMLVideoElement& videoElement, CompletionHandler<void(bool)>&& completionHandler)
-{
-    m_page.videoFullscreenManager().exitVideoFullscreenForVideoElement(videoElement, WTFMove(completionHandler));
-}
-
-void WebChromeClient::setUpPlaybackControlsManager(HTMLMediaElement& mediaElement)
-{
-    m_page.playbackSessionManager().setUpPlaybackControlsManager(mediaElement);
-}
-
-void WebChromeClient::clearPlaybackControlsManager()
-{
-    m_page.playbackSessionManager().clearPlaybackControlsManager();
-}
-
-void WebChromeClient::playbackControlsMediaEngineChanged()
-{
-    m_page.playbackSessionManager().mediaEngineChanged();
-}
-
-#endif
-
 #if ENABLE(MEDIA_USAGE)
 void WebChromeClient::addMediaUsageManagerSession(MediaSessionIdentifier identifier, const String& bundleIdentifier, const URL& pageURL)
 {
@@ -1086,34 +1022,6 @@ void WebChromeClient::removeMediaUsageManagerSession(MediaSessionIdentifier iden
     m_page.removeMediaUsageManagerSession(identifier);
 }
 #endif // ENABLE(MEDIA_USAGE)
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-
-void WebChromeClient::exitVideoFullscreenToModeWithoutAnimation(HTMLVideoElement& videoElement, HTMLMediaElementEnums::VideoFullscreenMode targetMode)
-{
-    m_page.videoFullscreenManager().exitVideoFullscreenToModeWithoutAnimation(videoElement, targetMode);
-}
-
-#endif
-
-#if ENABLE(FULLSCREEN_API)
-
-bool WebChromeClient::supportsFullScreenForElement(const Element&, bool withKeyboard)
-{
-    return m_page.fullScreenManager()->supportsFullScreen(withKeyboard);
-}
-
-void WebChromeClient::enterFullScreenForElement(Element& element)
-{
-    m_page.fullScreenManager()->enterFullScreenForElement(&element);
-}
-
-void WebChromeClient::exitFullScreenForElement(Element* element)
-{
-    m_page.fullScreenManager()->exitFullScreenForElement(element);
-}
-
-#endif
 
 #if PLATFORM(IOS_FAMILY)
 
@@ -1499,13 +1407,6 @@ void WebChromeClient::showMediaControlsContextMenu(FloatRect&& targetFrame, Vect
 }
 
 #endif // ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
-
-#if HAVE(ARKIT_INLINE_PREVIEW_IOS)
-void WebChromeClient::takeModelElementFullscreen(WebCore::GraphicsLayer::PlatformLayerID contentLayerId) const
-{
-    m_page.takeModelElementFullscreen(contentLayerId);
-}
-#endif
 
 #if HAVE(ARKIT_INLINE_PREVIEW_MAC)
 void WebChromeClient::modelElementDidCreatePreview(WebCore::HTMLModelElement& element, const URL& url, const String& uuid, const WebCore::FloatSize& size) const

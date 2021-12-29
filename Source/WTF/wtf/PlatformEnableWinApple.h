@@ -39,10 +39,6 @@
 
 /* --------- Apple Windows port --------- */
 
-#if !defined(ENABLE_FULLSCREEN_API)
-#define ENABLE_FULLSCREEN_API 1
-#endif
-
 #if !defined(ENABLE_WEB_ARCHIVE)
 #define ENABLE_WEB_ARCHIVE 1
 #endif

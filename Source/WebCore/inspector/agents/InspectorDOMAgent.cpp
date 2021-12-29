@@ -65,7 +65,6 @@
 #include "Frame.h"
 #include "FrameTree.h"
 #include "FrameView.h"
-#include "FullscreenManager.h"
 #include "HTMLElement.h"
 #include "HTMLFrameOwnerElement.h"
 #include "HTMLMediaElement.h"
@@ -251,11 +250,6 @@ public:
         m_domAgent.m_dispatchedEvents.add(&event);
 
         RefPtr<JSON::Object> data = JSON::Object::create();
-
-#if ENABLE(FULLSCREEN_API)
-        if (event.type() == eventNames().webkitfullscreenchangeEvent)
-            data->setBoolean("enabled"_s, !!node->document().fullscreenManager().fullscreenElement());
-#endif // ENABLE(FULLSCREEN_API)
 
         auto timestamp = m_domAgent.m_environment.executionStopwatch().elapsedTime().seconds();
         m_domAgent.m_frontendDispatcher->didFireEvent(nodeId, event.type(), timestamp, data->size() ? WTFMove(data) : nullptr);
@@ -2380,11 +2374,6 @@ void InspectorDOMAgent::addEventListenersToNode(Node& node)
     auto createEventListener = [&] (const AtomString& eventName) {
         node.addEventListener(eventName, callback.copyRef(), false);
     };
-
-#if ENABLE(FULLSCREEN_API)
-    if (is<Document>(node) || is<HTMLMediaElement>(node))
-        createEventListener(eventNames().webkitfullscreenchangeEvent);
-#endif // ENABLE(FULLSCREEN_API)
 
     if (is<HTMLMediaElement>(node)) {
         createEventListener(eventNames().abortEvent);

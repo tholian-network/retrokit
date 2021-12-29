@@ -46,13 +46,8 @@ TextStream& operator<<(TextStream& ts, ControlPart controlPart)
     case ListItemPart: ts << "list-item-part"; break;
     case MediaControlsBackgroundPart: ts << "media-controls-background-part"; break;
     case MediaControlsDarkBarBackgroundPart: ts << "media-controls-dark-bar-background-part"; break;
-    case MediaControlsFullscreenBackgroundPart: ts << "media-controls-fullscreen-background-part"; break;
     case MediaControlsLightBarBackgroundPart: ts << "media-controls-light-bar-background-part"; break;
     case MediaCurrentTimePart: ts << "media-current-time-part"; break;
-    case MediaEnterFullscreenButtonPart: ts << "media-enter-fullscreen-button-part"; break;
-    case MediaExitFullscreenButtonPart: ts << "media-exit-fullscreen-button-part"; break;
-    case MediaFullScreenVolumeSliderPart: ts << "media-full-screen-volume-slider-part"; break;
-    case MediaFullScreenVolumeSliderThumbPart: ts << "media-full-screen-volume-slider-thumb-part"; break;
     case MediaMuteButtonPart: ts << "media-mute-button-part"; break;
     case MediaOverlayPlayButtonPart: ts << "media-overlay-play-button-part"; break;
     case MediaPlayButtonPart: ts << "media-play-button-part"; break;

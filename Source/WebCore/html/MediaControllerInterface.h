@@ -66,11 +66,6 @@ public:
     using HTMLMediaElementEnums::ReadyState;
     virtual ReadyState readyState() const = 0;
 
-    // MediaControlElements:
-    virtual bool supportsFullscreen(HTMLMediaElementEnums::VideoFullscreenMode) const = 0;
-    virtual bool isFullscreen() const = 0;
-    virtual void enterFullscreen() = 0;
-
     virtual bool hasAudio() const = 0;
     virtual bool hasVideo() const = 0;
     virtual bool hasClosedCaptions() const = 0;

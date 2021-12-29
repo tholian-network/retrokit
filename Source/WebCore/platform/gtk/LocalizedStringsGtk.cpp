@@ -83,11 +83,6 @@ String contextMenuItemTagToggleMediaLoop()
     return String::fromUTF8(_("Toggle Media _Loop Playback"));
 }
 
-String contextMenuItemTagEnterVideoFullscreen()
-{
-    return String::fromUTF8(_("Switch Video to _Fullscreen"));
-}
-
 String contextMenuItemTagPasteAsPlainText()
 {
     return String::fromUTF8(_("Paste As Plain _Text"));

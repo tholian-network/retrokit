@@ -103,10 +103,6 @@ private:
 
     const String& mediaGroup() const { return m_mediaGroup; }
 
-    bool supportsFullscreen(HTMLMediaElementEnums::VideoFullscreenMode) const final { return false; }
-    bool isFullscreen() const final { return false; }
-    void enterFullscreen() final { }
-
     bool hasAudio() const final;
     bool hasVideo() const final;
     bool hasClosedCaptions() const final;

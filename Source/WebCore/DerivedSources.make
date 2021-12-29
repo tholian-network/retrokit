@@ -250,11 +250,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/Modules/permissions/PermissionState.idl \
     $(WebCore)/Modules/permissions/PermissionStatus.idl \
     $(WebCore)/Modules/permissions/Permissions.idl \
-    $(WebCore)/Modules/pictureinpicture/DocumentOrShadowRoot+PictureInPicture.idl \
-    $(WebCore)/Modules/pictureinpicture/Document+PictureInPicture.idl \
-    $(WebCore)/Modules/pictureinpicture/EnterPictureInPictureEvent.idl \
-    $(WebCore)/Modules/pictureinpicture/HTMLVideoElement+PictureInPicture.idl \
-    $(WebCore)/Modules/pictureinpicture/PictureInPictureWindow.idl \
     $(WebCore)/Modules/plugins/QuickTimePluginReplacement.idl \
     $(WebCore)/Modules/remoteplayback/HTMLMediaElement+RemotePlayback.idl \
     $(WebCore)/Modules/remoteplayback/RemotePlayback.idl \
@@ -536,7 +531,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/dom/DataTransferItemList.idl \
     $(WebCore)/dom/Document.idl \
     $(WebCore)/dom/Document+CSSOMView.idl \
-    $(WebCore)/dom/Document+Fullscreen.idl \
     $(WebCore)/dom/Document+HTML.idl \
     $(WebCore)/dom/Document+HTMLObsolete.idl \
     $(WebCore)/dom/Document+PageVisibility.idl \
@@ -552,7 +546,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/dom/DragEvent.idl \
     $(WebCore)/dom/Element+CSSOMView.idl \
     $(WebCore)/dom/Element+DOMParsing.idl \
-    $(WebCore)/dom/Element+Fullscreen.idl \
     $(WebCore)/dom/Element+PointerEvents.idl \
     $(WebCore)/dom/Element+PointerLock.idl \
     $(WebCore)/dom/Element.idl \
@@ -1349,49 +1342,10 @@ LocalizableAdditions.strings.out : $(WebCore)/preprocess-localizable-strings.pl 
 
 # --------
 
-# modern media controls
-
-POSSIBLE_ADDITIONAL_MODERN_MEDIA_CONTROLS_STYLE_SHEETS = \
-    $(foreach \
-        STYLE_SHEET, \
-        $(ADDITIONAL_MODERN_MEDIA_CONTROLS_STYLE_SHEETS), \
-        $(firstword $(realpath $(foreach \
-            ADDITIONS_PATH, \
-            $(ADDITIONS_PATHS), \
-            $(ADDITIONS_PATH)/$(STYLE_SHEET)))))
-
-MODERN_MEDIA_CONTROLS_STYLE_SHEETS = \
-    $(WebCore)/Modules/modern-media-controls/controls/activity-indicator.css \
-    $(WebCore)/Modules/modern-media-controls/controls/airplay-button.css \
-    $(WebCore)/Modules/modern-media-controls/controls/background-tint.css \
-    $(WebCore)/Modules/modern-media-controls/controls/button.css \
-    $(WebCore)/Modules/modern-media-controls/controls/buttons-container.css \
-    $(WebCore)/Modules/modern-media-controls/controls/controls-bar.css \
-    $(WebCore)/Modules/modern-media-controls/controls/inline-media-controls.css \
-    $(WebCore)/Modules/modern-media-controls/controls/macos-fullscreen-media-controls.css \
-    $(WebCore)/Modules/modern-media-controls/controls/macos-inline-media-controls.css \
-    $(WebCore)/Modules/modern-media-controls/controls/media-controls.css \
-    $(WebCore)/Modules/modern-media-controls/controls/media-document.css \
-    $(WebCore)/Modules/modern-media-controls/controls/placard.css \
-    $(WebCore)/Modules/modern-media-controls/controls/slider.css \
-    $(WebCore)/Modules/modern-media-controls/controls/status-label.css \
-    $(WebCore)/Modules/modern-media-controls/controls/text-tracks.css \
-    $(WebCore)/Modules/modern-media-controls/controls/time-label.css \
-    $(WebCore)/Modules/modern-media-controls/controls/watchos-activity-indicator.css \
-    $(WebCore)/Modules/modern-media-controls/controls/watchos-media-controls.css \
-    $(POSSIBLE_ADDITIONAL_MODERN_MEDIA_CONTROLS_STYLE_SHEETS) \
-#
-
-all : ModernMediaControls.css
-
-ModernMediaControls.css : $(MODERN_MEDIA_CONTROLS_STYLE_SHEETS)
-	cat $^ > ModernMediaControls.css
-
 # user agent style sheets
 
 USER_AGENT_STYLE_SHEETS = \
     $(WebCore)/css/dialog.css \
-    $(WebCore)/css/fullscreen.css \
     $(WebCore)/css/html.css \
     $(WebCore)/css/legacyFormControlsIOS.css \
     $(WebCore)/css/mathml.css \
@@ -1409,95 +1363,6 @@ UserAgentStyleSheets.h : $(WebCore)/css/make-css-file-arrays.pl $(WebCore)/bindi
 	$(PERL) $< --defines "$(FEATURE_AND_PLATFORM_DEFINES)" $@ UserAgentStyleSheetsData.cpp $(USER_AGENT_STYLE_SHEETS)
 
 # --------
-
-# modern media controls
-
-POSSIBLE_ADDITIONAL_MODERN_MEDIA_CONTROLS_SCRIPTS = \
-    $(foreach \
-        SCRIPT, \
-        $(ADDITIONAL_MODERN_MEDIA_CONTROLS_SCRIPTS), \
-        $(firstword $(realpath $(foreach \
-            ADDITIONS_PATH, \
-            $(ADDITIONS_PATHS), \
-            $(ADDITIONS_PATH)/$(SCRIPT)))))
-
-MODERN_MEDIA_CONTROLS_SCRIPTS = \
-    $(WebCore)/Modules/modern-media-controls/main.js \
-    $(WebCore)/Modules/modern-media-controls/gesture-recognizers/gesture-recognizer.js \
-    $(WebCore)/Modules/modern-media-controls/gesture-recognizers/tap.js \
-    $(WebCore)/Modules/modern-media-controls/gesture-recognizers/pinch.js \
-    $(WebCore)/Modules/modern-media-controls/controls/scheduler.js \
-    $(WebCore)/Modules/modern-media-controls/controls/layout-traits.js \
-    $(WebCore)/Modules/modern-media-controls/controls/layout-node.js \
-    $(WebCore)/Modules/modern-media-controls/controls/layout-item.js \
-    $(WebCore)/Modules/modern-media-controls/controls/icon-service.js \
-    $(WebCore)/Modules/modern-media-controls/controls/background-tint.js \
-    $(WebCore)/Modules/modern-media-controls/controls/time-control.js \
-    $(WebCore)/Modules/modern-media-controls/controls/time-label.js \
-    $(WebCore)/Modules/modern-media-controls/controls/slider.js \
-    $(WebCore)/Modules/modern-media-controls/controls/button.js \
-    $(WebCore)/Modules/modern-media-controls/controls/play-pause-button.js \
-    $(WebCore)/Modules/modern-media-controls/controls/skip-back-button.js \
-    $(WebCore)/Modules/modern-media-controls/controls/skip-forward-button.js \
-    $(WebCore)/Modules/modern-media-controls/controls/mute-button.js \
-    $(WebCore)/Modules/modern-media-controls/controls/airplay-button.js \
-    $(WebCore)/Modules/modern-media-controls/controls/pip-button.js \
-    $(WebCore)/Modules/modern-media-controls/controls/tracks-button.js \
-    $(WebCore)/Modules/modern-media-controls/controls/fullscreen-button.js \
-    $(WebCore)/Modules/modern-media-controls/controls/seek-button.js \
-    $(WebCore)/Modules/modern-media-controls/controls/rewind-button.js \
-    $(WebCore)/Modules/modern-media-controls/controls/forward-button.js \
-    $(WebCore)/Modules/modern-media-controls/controls/overflow-button.js \
-    $(WebCore)/Modules/modern-media-controls/controls/buttons-container.js \
-    $(WebCore)/Modules/modern-media-controls/controls/status-label.js \
-    $(WebCore)/Modules/modern-media-controls/controls/controls-bar.js \
-    $(WebCore)/Modules/modern-media-controls/controls/auto-hide-controller.js \
-    $(WebCore)/Modules/modern-media-controls/controls/media-controls.js \
-    $(WebCore)/Modules/modern-media-controls/controls/background-click-delegate-notifier.js \
-    $(WebCore)/Modules/modern-media-controls/controls/inline-media-controls.js \
-    $(WebCore)/Modules/modern-media-controls/controls/ios-inline-media-controls.js \
-    $(WebCore)/Modules/modern-media-controls/controls/ios-layout-traits.js \
-    $(WebCore)/Modules/modern-media-controls/controls/macos-inline-media-controls.js \
-    $(WebCore)/Modules/modern-media-controls/controls/macos-fullscreen-media-controls.js \
-    $(WebCore)/Modules/modern-media-controls/controls/macos-layout-traits.js \
-    $(WebCore)/Modules/modern-media-controls/controls/placard.js \
-    $(WebCore)/Modules/modern-media-controls/controls/airplay-placard.js \
-    $(WebCore)/Modules/modern-media-controls/controls/invalid-placard.js \
-    $(WebCore)/Modules/modern-media-controls/controls/pip-placard.js \
-    $(WebCore)/Modules/modern-media-controls/controls/watchos-activity-indicator.js \
-    $(WebCore)/Modules/modern-media-controls/controls/watchos-media-controls.js \
-    $(WebCore)/Modules/modern-media-controls/controls/watchos-layout-traits.js \
-    $(WebCore)/Modules/modern-media-controls/media/media-controller-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/airplay-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/audio-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/controls-visibility-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/fullscreen-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/mute-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/overflow-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/pip-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/placard-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/playback-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/scrubbing-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/seek-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/seek-backward-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/seek-forward-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/skip-back-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/skip-forward-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/start-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/status-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/time-control-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/tracks-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/volume-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/media-document-controller.js \
-    $(WebCore)/Modules/modern-media-controls/media/watchos-media-controls-support.js \
-    $(WebCore)/Modules/modern-media-controls/media/media-controller.js \
-    $(POSSIBLE_ADDITIONAL_MODERN_MEDIA_CONTROLS_SCRIPTS) \
-#
-
-all : ModernMediaControls.js
-
-ModernMediaControls.js : $(MODERN_MEDIA_CONTROLS_SCRIPTS)
-	cat $^ > ModernMediaControls.js
 
 # user agent scripts
 

@@ -87,14 +87,7 @@ public:
     virtual String mediaControlsStyleSheet() { return String(); }
     virtual String extraMediaControlsStyleSheet() { return String(); }
     virtual Vector<String, 2> mediaControlsScripts() { return { }; }
-#if ENABLE(MODERN_MEDIA_CONTROLS)
-    virtual String mediaControlsBase64StringForIconNameAndType(const String&, const String&) { return String(); }
-    virtual String mediaControlsFormattedStringForDuration(double) { return String(); }
-#endif // ENABLE(MODERN_MEDIA_CONTROLS)
 #endif // ENABLE(VIDEO)
-#if ENABLE(FULLSCREEN_API)
-    virtual String extraFullScreenStyleSheet() { return String(); }
-#endif
 #if ENABLE(DATALIST_ELEMENT)
     String dataListStyleSheet() const;
 #endif
@@ -381,7 +374,6 @@ protected:
     virtual bool paintSearchFieldResultsButton(const RenderBox&, const PaintInfo&, const IntRect&) { return true; }
 
     virtual void adjustMediaControlStyle(RenderStyle&, const Element*) const;
-    virtual bool paintMediaFullscreenButton(const RenderObject&, const PaintInfo&, const IntRect&) { return true; }
     virtual bool paintMediaPlayButton(const RenderObject&, const PaintInfo&, const IntRect&) { return true; }
     virtual bool paintMediaOverlayPlayButton(const RenderObject&, const PaintInfo&, const IntRect&) { return true; }
     virtual bool paintMediaMuteButton(const RenderObject&, const PaintInfo&, const IntRect&) { return true; }
@@ -398,8 +390,6 @@ protected:
     virtual bool paintMediaControlsBackground(const RenderObject&, const PaintInfo&, const IntRect&) { return true; }
     virtual bool paintMediaCurrentTime(const RenderObject&, const PaintInfo&, const IntRect&) { return true; }
     virtual bool paintMediaTimeRemaining(const RenderObject&, const PaintInfo&, const IntRect&) { return true; }
-    virtual bool paintMediaFullScreenVolumeSliderTrack(const RenderObject&, const PaintInfo&, const IntRect&) { return true; }
-    virtual bool paintMediaFullScreenVolumeSliderThumb(const RenderObject&, const PaintInfo&, const IntRect&) { return true; }
 
 public:
     void updateControlStatesForRenderer(const RenderBox&, ControlStates&) const;

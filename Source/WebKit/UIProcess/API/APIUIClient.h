@@ -81,10 +81,6 @@ public:
 
     virtual void createNewPage(WebKit::WebPageProxy&, WebCore::WindowFeatures&&, Ref<API::NavigationAction>&&, CompletionHandler<void(RefPtr<WebKit::WebPageProxy>&&)>&& completionHandler) { completionHandler(nullptr); }
     virtual void showPage(WebKit::WebPageProxy*) { }
-    virtual void fullscreenMayReturnToInline(WebKit::WebPageProxy*) { }
-    virtual void didEnterFullscreen(WebKit::WebPageProxy*) { }
-    virtual void didExitFullscreen(WebKit::WebPageProxy*) { }
-    virtual void hasVideoInPictureInPictureDidChange(WebKit::WebPageProxy*, bool) { }
     virtual void close(WebKit::WebPageProxy*) { }
 
     virtual bool takeFocus(WebKit::WebPageProxy*, WKFocusDirection) { return false; }

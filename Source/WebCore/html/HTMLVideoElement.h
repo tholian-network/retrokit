@@ -37,7 +37,6 @@ class DestinationColorSpace;
 class HTMLImageLoader;
 class ImageBuffer;
 class RenderVideo;
-class PictureInPictureObserver;
 
 enum class PixelFormat : uint8_t;
 enum class RenderingMode : bool;
@@ -51,13 +50,6 @@ public:
     WEBCORE_EXPORT unsigned videoWidth() const;
     WEBCORE_EXPORT unsigned videoHeight() const;
 
-    WEBCORE_EXPORT ExceptionOr<void> webkitEnterFullscreen();
-    WEBCORE_EXPORT void webkitExitFullscreen();
-    WEBCORE_EXPORT bool webkitSupportsFullscreen();
-    WEBCORE_EXPORT bool webkitDisplayingFullscreen();
-
-    void ancestorWillEnterFullscreen() final;
-
 #if ENABLE(WIRELESS_PLAYBACK_TARGET)
     bool webkitWirelessVideoPlaybackDisabled() const;
     void setWebkitWirelessVideoPlaybackDisabled(bool);
@@ -66,10 +58,6 @@ public:
 #if ENABLE(MEDIA_STATISTICS)
     unsigned webkitDecodedFrameCount() const;
     unsigned webkitDroppedFrameCount() const;
-#endif
-
-#if ENABLE(FULLSCREEN_API) && PLATFORM(IOS_FAMILY)
-    void webkitRequestFullscreen() override;
 #endif
 
     RefPtr<ImageBuffer> createBufferForPainting(const FloatSize&, RenderingMode, const DestinationColorSpace&, PixelFormat) const;
@@ -83,29 +71,6 @@ public:
 
     URL posterImageURL() const;
     RenderPtr<RenderElement> createElementRenderer(RenderStyle&&, const RenderTreePosition&) final;
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    enum class VideoPresentationMode { Inline, Fullscreen, PictureInPicture };
-    static VideoPresentationMode toPresentationMode(HTMLMediaElementEnums::VideoFullscreenMode);
-    WEBCORE_EXPORT bool webkitSupportsPresentationMode(VideoPresentationMode) const;
-    VideoPresentationMode webkitPresentationMode() const;
-    void webkitSetPresentationMode(VideoPresentationMode);
-
-    WEBCORE_EXPORT void setPresentationMode(VideoPresentationMode);
-    WEBCORE_EXPORT void didEnterFullscreenOrPictureInPicture(const FloatSize&);
-    WEBCORE_EXPORT void didExitFullscreenOrPictureInPicture();
-    WEBCORE_EXPORT bool isChangingPresentationMode() const;
-
-    void setVideoFullscreenFrame(const FloatRect&) final;
-
-#if ENABLE(PICTURE_IN_PICTURE_API)
-    void setPictureInPictureObserver(PictureInPictureObserver*);
-#endif
-#endif
-
-#if PLATFORM(MAC) && ENABLE(VIDEO_PRESENTATION_MODE)
-    void exitToFullscreenModeWithoutAnimationIfPossible(HTMLMediaElementEnums::VideoFullscreenMode fromMode, HTMLMediaElementEnums::VideoFullscreenMode toMode);
-#endif
 
     RenderVideo* renderer() const;
 
@@ -121,7 +86,6 @@ private:
     void collectPresentationalHintsForAttribute(const QualifiedName&, const AtomString&, MutableStyleProperties&) final;
     bool isVideo() const final { return true; }
     bool hasVideo() const final { return player() && player()->hasVideo(); }
-    bool supportsFullscreen(HTMLMediaElementEnums::VideoFullscreenMode) const final;
     bool isURLAttribute(const Attribute&) const final;
     const AtomString& imageSourceURL() const final;
 
@@ -139,14 +103,6 @@ private:
     unsigned m_lastReportedVideoWidth { 0 };
     unsigned m_lastReportedVideoHeight { 0 };
 
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    bool m_enteringPictureInPicture { false };
-    bool m_exitingPictureInPicture { false };
-#endif
-
-#if ENABLE(PICTURE_IN_PICTURE_API)
-    PictureInPictureObserver* m_pictureInPictureObserver { nullptr };
-#endif
 };
 
 } // namespace WebCore

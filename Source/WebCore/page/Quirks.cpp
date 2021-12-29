@@ -681,23 +681,6 @@ bool Quirks::needsYouTubeOverflowScrollQuirk() const
 #endif
 }
 
-bool Quirks::needsFullscreenDisplayNoneQuirk() const
-{
-#if PLATFORM(IOS_FAMILY)
-    if (!needsQuirks())
-        return false;
-
-    if (!m_needsFullscreenDisplayNoneQuirk) {
-        auto host = m_document->topDocument().url().host();
-        m_needsFullscreenDisplayNoneQuirk = equalLettersIgnoringASCIICase(host, "gizmodo.com") || host.endsWithIgnoringASCIICase(".gizmodo.com");
-    }
-
-    return *m_needsFullscreenDisplayNoneQuirk;
-#else
-    return false;
-#endif
-}
-
 // FIXME: Remove after the site is fixed, <rdar://problem/74377902>
 bool Quirks::needsWeChatScrollingQuirk() const
 {
@@ -945,25 +928,6 @@ bool Quirks::shouldEnableLegacyGetUserMediaQuirk() const
 }
 #endif
 
-bool Quirks::shouldDisableElementFullscreenQuirk() const
-{
-#if PLATFORM(IOS_FAMILY)
-    if (!needsQuirks())
-        return false;
-
-    if (m_shouldDisableElementFullscreenQuirk)
-        return m_shouldDisableElementFullscreenQuirk.value();
-
-    auto domain = m_document->securityOrigin().domain().convertToASCIILowercase();
-
-    m_shouldDisableElementFullscreenQuirk = domain == "nfl.com" || domain.endsWith(".nfl.com");
-
-    return m_shouldDisableElementFullscreenQuirk.value();
-#else
-    return false;
-#endif
-}
-
 bool Quirks::needsCanPlayAfterSeekedQuirk() const
 {
     if (!needsQuirks())
@@ -1032,132 +996,6 @@ bool Quirks::needsHDRPixelDepthQuirk() const
         m_needsHDRPixelDepthQuirk = equalLettersIgnoringASCIICase(m_document->url().host(), "www.youtube.com");
 
     return *m_needsHDRPixelDepthQuirk;
-}
-
-// FIXME: remove this once rdar://66739450 has been fixed.
-bool Quirks::needsAkamaiMediaPlayerQuirk(const HTMLVideoElement& element) const
-{
-#if PLATFORM(IOS_FAMILY)
-    // Akamai Media Player begins polling `webkitDisplayingFullscreen` every 100ms immediately after calling
-    // `webkitEnterFullscreen` and exits fullscreen as soon as it returns false. r262456 changed the HTMLMediaPlayer state
-    // machine so `webkitDisplayingFullscreen` doesn't return true until the fullscreen window has been opened in the
-    // UI process, which causes Akamai Media Player to frequently exit fullscreen mode immediately.
-
-    static NeverDestroyed<const AtomString> akamaiHTML5(MAKE_STATIC_STRING_IMPL("akamai-html5"));
-    static NeverDestroyed<const AtomString> akamaiMediaElement(MAKE_STATIC_STRING_IMPL("akamai-media-element"));
-    static NeverDestroyed<const AtomString> ampHTML5(MAKE_STATIC_STRING_IMPL("amp-html5"));
-    static NeverDestroyed<const AtomString> ampMediaElement(MAKE_STATIC_STRING_IMPL("amp-media-element"));
-
-    if (!needsQuirks())
-        return false;
-
-    if (!element.hasClass())
-        return false;
-
-    auto& classNames = element.classNames();
-    return (classNames.contains(akamaiHTML5) && classNames.contains(akamaiMediaElement)) || (classNames.contains(ampHTML5) && classNames.contains(ampMediaElement));
-#else
-    UNUSED_PARAM(element);
-    return false;
-#endif
-}
-
-bool Quirks::needsBlackFullscreenBackgroundQuirk() const
-{
-    // MLB.com sets a black background-color on the :backdrop pseudo element, which WebKit does not yet support. This
-    // quirk can be removed once support for :backdrop psedue element is added.
-    if (!needsQuirks())
-        return false;
-
-    if (!m_needsBlackFullscreenBackgroundQuirk) {
-        auto host = m_document->topDocument().url().host();
-        m_needsBlackFullscreenBackgroundQuirk = equalLettersIgnoringASCIICase(host, "mlb.com") || host.endsWithIgnoringASCIICase(".mlb.com");
-    }
-
-    return *m_needsBlackFullscreenBackgroundQuirk;
-}
-
-bool Quirks::requiresUserGestureToPauseInPictureInPicture() const
-{
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    // Facebook, Twitter, and Reddit will naively pause a <video> element that has scrolled out of the viewport,
-    // regardless of whether that element is currently in PiP mode.
-    // We should remove the quirk once <rdar://problem/67273166>, <rdar://problem/73369869>, and <rdar://problem/80645747> have been fixed.
-    if (!needsQuirks())
-        return false;
-
-    if (!m_requiresUserGestureToPauseInPictureInPicture) {
-        auto domain = RegistrableDomain(m_document->topDocument().url()).string();
-        m_requiresUserGestureToPauseInPictureInPicture = domain == "facebook.com"_s || domain == "twitter.com"_s || domain == "reddit.com"_s;
-    }
-
-    return *m_requiresUserGestureToPauseInPictureInPicture;
-#else
-    return false;
-#endif
-}
-
-bool Quirks::requiresUserGestureToLoadInPictureInPicture() const
-{
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    // Twitter will remove the "src" attribute of a <video> element that has scrolled out of the viewport and
-    // load the <video> element with an empty "src" regardless of whether that element is currently in PiP mode.
-    // We should remove the quirk once <rdar://problem/73369869> has been fixed.
-    if (!needsQuirks())
-        return false;
-
-    if (!m_requiresUserGestureToLoadInPictureInPicture) {
-        auto domain = RegistrableDomain(m_document->topDocument().url());
-        m_requiresUserGestureToLoadInPictureInPicture = domain.string() == "twitter.com"_s;
-    }
-
-    return *m_requiresUserGestureToLoadInPictureInPicture;
-#else
-    return false;
-#endif
-}
-
-bool Quirks::blocksReturnToFullscreenFromPictureInPictureQuirk() const
-{
-#if ENABLE(FULLSCREEN_API) && ENABLE(VIDEO_PRESENTATION_MODE)
-    // Some sites (e.g., vimeo.com) do not set element's styles properly when a video
-    // returns to fullscreen from picture-in-picture. This quirk disables the "return to fullscreen
-    // from picture-in-picture" feature for those sites. We should remove the quirk once
-    // rdar://problem/73167931 has been fixed.
-    if (!needsQuirks())
-        return false;
-
-    if (!m_blocksReturnToFullscreenFromPictureInPictureQuirk) {
-        auto domain = RegistrableDomain { m_document->topDocument().url() };
-        m_blocksReturnToFullscreenFromPictureInPictureQuirk = domain == "vimeo.com"_s;
-    }
-
-    return *m_blocksReturnToFullscreenFromPictureInPictureQuirk;
-#else
-    return false;
-#endif
-}
-
-bool Quirks::shouldDisableEndFullscreenEventWhenEnteringPictureInPictureFromFullscreenQuirk() const
-{
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    // This quirk disables the "webkitendfullscreen" event when a video enters picture-in-picture
-    // from fullscreen for the sites which cannot handle the event properly in that case.
-    // We should remove the quirk once rdar://problem/73261957 has been fixed.
-    if (!needsQuirks())
-        return false;
-
-    if (!m_shouldDisableEndFullscreenEventWhenEnteringPictureInPictureFromFullscreenQuirk) {
-        auto host = m_document->topDocument().url().host();
-        auto domain = RegistrableDomain(m_document->topDocument().url());
-
-        m_shouldDisableEndFullscreenEventWhenEnteringPictureInPictureFromFullscreenQuirk = equalLettersIgnoringASCIICase(host, "trailers.apple.com") || domain == "espn.com"_s;
-    }
-
-    return *m_shouldDisableEndFullscreenEventWhenEnteringPictureInPictureFromFullscreenQuirk;
-#else
-    return false;
-#endif
 }
 
 #if ENABLE(WEB_AUTHN)

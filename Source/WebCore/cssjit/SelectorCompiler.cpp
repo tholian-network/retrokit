@@ -98,16 +98,6 @@ static JSC_DECLARE_JIT_OPERATION_WITHOUT_WTF_INTERNAL(operationIsRequiredFormCon
 static JSC_DECLARE_JIT_OPERATION_WITHOUT_WTF_INTERNAL(operationIsValid, bool, (const Element&));
 static JSC_DECLARE_JIT_OPERATION_WITHOUT_WTF_INTERNAL(operationIsWindowInactive, bool, (const Element&));
 static JSC_DECLARE_JIT_OPERATION_WITHOUT_WTF_INTERNAL(operationMatchesLangPseudoClass, bool, (const Element&, const Vector<AtomString>&));
-#if ENABLE(FULLSCREEN_API)
-static JSC_DECLARE_JIT_OPERATION_WITHOUT_WTF_INTERNAL(operationMatchesFullScreenPseudoClass, bool, (const Element&));
-static JSC_DECLARE_JIT_OPERATION_WITHOUT_WTF_INTERNAL(operationMatchesFullScreenDocumentPseudoClass, bool, (const Element&));
-static JSC_DECLARE_JIT_OPERATION_WITHOUT_WTF_INTERNAL(operationMatchesFullScreenAncestorPseudoClass, bool, (const Element&));
-static JSC_DECLARE_JIT_OPERATION_WITHOUT_WTF_INTERNAL(operationMatchesFullScreenAnimatingFullScreenTransitionPseudoClass, bool, (const Element&));
-static JSC_DECLARE_JIT_OPERATION_WITHOUT_WTF_INTERNAL(operationMatchesFullScreenControlsHiddenPseudoClass, bool, (const Element&));
-#endif
-#if ENABLE(PICTURE_IN_PICTURE_API)
-static JSC_DECLARE_JIT_OPERATION_WITHOUT_WTF_INTERNAL(operationMatchesPictureInPicturePseudoClass, bool, (const Element&));
-#endif
 #if ENABLE(VIDEO)
 static JSC_DECLARE_JIT_OPERATION_WITHOUT_WTF_INTERNAL(operationMatchesFutureCuePseudoClass, bool, (const Element&));
 static JSC_DECLARE_JIT_OPERATION_WITHOUT_WTF_INTERNAL(operationMatchesPastCuePseudoClass, bool, (const Element&));
@@ -704,40 +694,6 @@ JSC_DEFINE_JIT_OPERATION(operationIsWindowInactive, bool, (const Element& elemen
     return isWindowInactive(element);
 }
 
-#if ENABLE(FULLSCREEN_API)
-JSC_DEFINE_JIT_OPERATION(operationMatchesFullScreenPseudoClass, bool, (const Element& element))
-{
-    return matchesFullScreenPseudoClass(element);
-}
-
-JSC_DEFINE_JIT_OPERATION(operationMatchesFullScreenDocumentPseudoClass, bool, (const Element& element))
-{
-    return matchesFullScreenDocumentPseudoClass(element);
-}
-
-JSC_DEFINE_JIT_OPERATION(operationMatchesFullScreenAncestorPseudoClass, bool, (const Element& element))
-{
-    return matchesFullScreenAncestorPseudoClass(element);
-}
-
-JSC_DEFINE_JIT_OPERATION(operationMatchesFullScreenAnimatingFullScreenTransitionPseudoClass, bool, (const Element& element))
-{
-    return matchesFullScreenAnimatingFullScreenTransitionPseudoClass(element);
-}
-
-JSC_DEFINE_JIT_OPERATION(operationMatchesFullScreenControlsHiddenPseudoClass, bool, (const Element& element))
-{
-    return matchesFullScreenControlsHiddenPseudoClass(element);
-}
-#endif
-
-#if ENABLE(PICTURE_IN_PICTURE_API)
-JSC_DEFINE_JIT_OPERATION(operationMatchesPictureInPicturePseudoClass, bool, (const Element& element))
-{
-    return matchesPictureInPicturePseudoClass(element);
-}
-#endif
-
 #if ENABLE(VIDEO)
 JSC_DEFINE_JIT_OPERATION(operationMatchesFutureCuePseudoClass, bool, (const Element& element))
 {
@@ -876,31 +832,6 @@ static inline FunctionType addPseudoClassType(const CSSSelector& selector, Selec
     case CSSSelector::PseudoClassWindowInactive:
         fragment.unoptimizedPseudoClasses.append(JSC::FunctionPtr<JSC::OperationPtrTag>(operationIsWindowInactive));
         return FunctionType::SimpleSelectorChecker;
-
-#if ENABLE(FULLSCREEN_API)
-    case CSSSelector::PseudoClassFullScreen:
-        fragment.unoptimizedPseudoClasses.append(JSC::FunctionPtr<JSC::OperationPtrTag>(operationMatchesFullScreenPseudoClass));
-        return FunctionType::SimpleSelectorChecker;
-    case CSSSelector::PseudoClassFullScreenDocument:
-        fragment.unoptimizedPseudoClasses.append(JSC::FunctionPtr<JSC::OperationPtrTag>(operationMatchesFullScreenDocumentPseudoClass));
-        return FunctionType::SimpleSelectorChecker;
-    case CSSSelector::PseudoClassFullScreenAncestor:
-        fragment.unoptimizedPseudoClasses.append(JSC::FunctionPtr<JSC::OperationPtrTag>(operationMatchesFullScreenAncestorPseudoClass));
-        return FunctionType::SimpleSelectorChecker;
-    case CSSSelector::PseudoClassAnimatingFullScreenTransition:
-        fragment.unoptimizedPseudoClasses.append(JSC::FunctionPtr<JSC::OperationPtrTag>(operationMatchesFullScreenAnimatingFullScreenTransitionPseudoClass));
-        return FunctionType::SimpleSelectorChecker;
-
-    case CSSSelector::PseudoClassFullScreenControlsHidden:
-        fragment.unoptimizedPseudoClasses.append(JSC::FunctionPtr<JSC::OperationPtrTag>(operationMatchesFullScreenControlsHiddenPseudoClass));
-        return FunctionType::SimpleSelectorChecker;
-#endif
-
-#if ENABLE(PICTURE_IN_PICTURE_API)
-    case CSSSelector::PseudoClassPictureInPicture:
-        fragment.unoptimizedPseudoClasses.append(JSC::FunctionPtr<JSC::OperationPtrTag>(operationMatchesPictureInPicturePseudoClass));
-        return FunctionType::SimpleSelectorChecker;
-#endif
 
 #if ENABLE(VIDEO)
     case CSSSelector::PseudoClassFuture:

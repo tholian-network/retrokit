@@ -188,7 +188,6 @@ set(WebKit_MESSAGES_IN_FILES
     UIProcess/SpeechRecognitionServer
     UIProcess/VisitedLinkStore
     UIProcess/WebCookieManagerProxy
-    UIProcess/WebFullScreenManagerProxy
     UIProcess/WebPageProxy
     UIProcess/WebPasteboardProxy
     UIProcess/WebProcessPool
@@ -214,8 +213,6 @@ set(WebKit_MESSAGES_IN_FILES
     WebProcess/Automation/WebAutomationSessionProxy
 
     WebProcess/Databases/IndexedDB/WebIDBConnectionToServer
-
-    WebProcess/FullScreen/WebFullScreenManager
 
     WebProcess/GPU/GPUProcessConnection
 

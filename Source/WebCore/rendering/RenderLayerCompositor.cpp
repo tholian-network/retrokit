@@ -34,7 +34,6 @@
 #include "ChromeClient.h"
 #include "Frame.h"
 #include "FrameView.h"
-#include "FullscreenManager.h"
 #include "GraphicsLayer.h"
 #include "HTMLCanvasElement.h"
 #include "HTMLIFrameElement.h"
@@ -50,7 +49,6 @@
 #include "PageOverlayController.h"
 #include "RenderEmbeddedObject.h"
 #include "RenderFragmentedFlow.h"
-#include "RenderFullScreen.h"
 #include "RenderGeometryMap.h"
 #include "RenderIFrame.h"
 #include "RenderImage.h"
@@ -2607,25 +2605,6 @@ bool RenderLayerCompositor::canBeComposited(const RenderLayer& layer) const
     return false;
 }
 
-#if ENABLE(FULLSCREEN_API)
-enum class FullScreenDescendant { Yes, No, NotApplicable };
-static FullScreenDescendant isDescendantOfFullScreenLayer(const RenderLayer& layer)
-{
-    auto& document = layer.renderer().document();
-
-    if (!document.fullscreenManager().isFullscreen() || !document.fullscreenManager().fullscreenRenderer())
-        return FullScreenDescendant::NotApplicable;
-
-    auto* fullScreenLayer = document.fullscreenManager().fullscreenRenderer()->layer();
-    if (!fullScreenLayer) {
-        ASSERT_NOT_REACHED();
-        return FullScreenDescendant::NotApplicable;
-    }
-
-    return layer.isDescendantOf(*fullScreenLayer) ? FullScreenDescendant::Yes : FullScreenDescendant::No;
-}
-#endif
-
 bool RenderLayerCompositor::requiresOwnBackingStore(const RenderLayer& layer, const RenderLayer* compositingAncestorLayer, const LayoutRect& layerCompositedBoundsInAncestor, const LayoutRect& ancestorCompositedBounds) const
 {
     auto& renderer = layer.renderer();
@@ -3114,12 +3093,6 @@ bool RenderLayerCompositor::requiresCompositingForWillChange(RenderLayerModelObj
     if (!renderer.style().willChange() || !renderer.style().willChange()->canTriggerCompositing())
         return false;
 
-#if ENABLE(FULLSCREEN_API)
-    // FIXME: does this require layout?
-    if (renderer.layer() && isDescendantOfFullScreenLayer(*renderer.layer()) == FullScreenDescendant::No)
-        return false;
-#endif
-
 #if !PLATFORM(MAC)
     // Ugly workaround for rdar://71881767. Undo when webkit.org/b/222092 and webkit.org/b/222132 are fixed.
     if (m_compositingPolicy == CompositingPolicy::Conservative)
@@ -3217,17 +3190,12 @@ bool RenderLayerCompositor::requiresCompositingForPosition(RenderLayerModelObjec
     // z-index and clipping will be broken.
     if (!renderer.isPositioned())
         return false;
-    
-#if ENABLE(FULLSCREEN_API)
-    if (isDescendantOfFullScreenLayer(layer) == FullScreenDescendant::No)
-        return false;
-#endif
 
     auto position = renderer.style().position();
     bool isFixed = renderer.isFixedPositioned();
     if (isFixed && !layer.isStackingContext())
         return false;
-    
+
     bool isSticky = renderer.isInFlowPositioned() && position == PositionType::Sticky;
     if (!isFixed && !isSticky)
         return false;

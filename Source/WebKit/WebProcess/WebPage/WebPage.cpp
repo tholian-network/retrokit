@@ -94,8 +94,6 @@
 #include "WebEventFactory.h"
 #include "WebFrame.h"
 #include "WebFrameLoaderClient.h"
-#include "WebFullScreenManager.h"
-#include "WebFullScreenManagerMessages.h"
 #include "WebImage.h"
 #include "WebInspector.h"
 #include "WebInspectorClient.h"
@@ -181,7 +179,6 @@
 #include <WebCore/FrameLoadRequest.h>
 #include <WebCore/FrameLoaderTypes.h>
 #include <WebCore/FrameView.h>
-#include <WebCore/FullscreenManager.h>
 #include <WebCore/GeometryUtilities.h>
 #include <WebCore/HTMLAttachmentElement.h>
 #include <WebCore/HTMLFormElement.h>
@@ -293,7 +290,6 @@
 #include "RemoteObjectRegistryMessages.h"
 #include "TextCheckingControllerProxy.h"
 #include "UserMediaCaptureManager.h"
-#include "VideoFullscreenManager.h"
 #include "WKStringCF.h"
 #include "WebRemoteObjectRegistry.h"
 #include <WebCore/LegacyWebArchive.h>
@@ -772,9 +768,6 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
     webProcess.addMessageReceiver(Messages::WebInspector::messageReceiverName(), m_identifier, *this);
     webProcess.addMessageReceiver(Messages::WebInspectorUI::messageReceiverName(), m_identifier, *this);
     webProcess.addMessageReceiver(Messages::RemoteWebInspectorUI::messageReceiverName(), m_identifier, *this);
-#if ENABLE(FULLSCREEN_API)
-    webProcess.addMessageReceiver(Messages::WebFullScreenManager::messageReceiverName(), m_identifier, *this);
-#endif
 
 #ifndef NDEBUG
     webPageCounter.increment();
@@ -1019,13 +1012,6 @@ WebPage::~WebPage()
         gpuProcessConnection->destroyVisibilityPropagationContextForPage(*this);
 #endif // ENABLE(GPU_PROCESS)
     
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    if (m_playbackSessionManager)
-        m_playbackSessionManager->invalidate();
-
-    if (m_videoFullscreenManager)
-        m_videoFullscreenManager->invalidate();
-#endif
 
     for (auto& completionHandler : std::exchange(m_markLayersAsVolatileCompletionHandlers, { }))
         completionHandler(false);
@@ -1118,13 +1104,6 @@ void WebPage::setInjectedBundleUIClient(std::unique_ptr<API::InjectedBundle::Pag
 
     m_uiClient = WTFMove(uiClient);
 }
-
-#if ENABLE(FULLSCREEN_API)
-void WebPage::initializeInjectedBundleFullScreenClient(WKBundlePageFullScreenClientBase* client)
-{
-    m_fullScreenClient.initialize(client);
-}
-#endif
 
 #if ENABLE(NETSCAPE_PLUGIN_API)
 
@@ -1503,10 +1482,6 @@ void WebPage::close()
 
     m_page->inspectorController().disconnectAllFrontends();
 
-#if ENABLE(FULLSCREEN_API)
-    m_fullScreenManager = nullptr;
-#endif
-
     if (m_activePopupMenu) {
         m_activePopupMenu->disconnectFromPage();
         m_activePopupMenu = nullptr;
@@ -1553,9 +1528,6 @@ void WebPage::close()
     m_policyClient.initialize(0);
     m_resourceLoadClient = makeUnique<API::InjectedBundle::ResourceLoadClient>();
     m_uiClient = makeUnique<API::InjectedBundle::PageUIClient>();
-#if ENABLE(FULLSCREEN_API)
-    m_fullScreenClient.initialize(0);
-#endif
 
     m_printContext = nullptr;
     m_mainFrame->coreFrame()->loader().detachFromParent();
@@ -1581,9 +1553,7 @@ void WebPage::close()
     webProcess.removeMessageReceiver(Messages::WebInspector::messageReceiverName(), m_identifier);
     webProcess.removeMessageReceiver(Messages::WebInspectorUI::messageReceiverName(), m_identifier);
     webProcess.removeMessageReceiver(Messages::RemoteWebInspectorUI::messageReceiverName(), m_identifier);
-#if ENABLE(FULLSCREEN_API)
-    webProcess.removeMessageReceiver(Messages::WebFullScreenManager::messageReceiverName(), m_identifier);
-#endif
+
 #if PLATFORM(COCOA) || PLATFORM(GTK)
     m_viewGestureGeometryCollector = nullptr;
 #endif
@@ -2749,15 +2719,6 @@ void WebPage::updateDrawingAreaLayerTreeFreezeState()
 {
     if (!m_drawingArea)
         return;
-
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-    // When the browser is in the background, we should not freeze the layer tree
-    // if the page has a video playing in picture-in-picture.
-    if (m_videoFullscreenManager && m_videoFullscreenManager->hasVideoPlayingInPictureInPicture() && m_layerTreeFreezeReasons.hasExactlyOneBitSet() && m_layerTreeFreezeReasons.contains(LayerTreeFreezeReason::BackgroundApplication)) {
-        m_drawingArea->setLayerTreeStateIsFrozen(false);
-        return;
-    }
-#endif
 
     m_drawingArea->setLayerTreeStateIsFrozen(!!m_layerTreeFreezeReasons);
 }
@@ -4230,44 +4191,10 @@ void WebPage::inspectorFrontendCountChanged(unsigned count)
     send(Messages::WebPageProxy::DidChangeInspectorFrontendCount(count));
 }
 
-#if ENABLE(VIDEO_PRESENTATION_MODE)
-PlaybackSessionManager& WebPage::playbackSessionManager()
-{
-    if (!m_playbackSessionManager)
-        m_playbackSessionManager = PlaybackSessionManager::create(*this);
-    return *m_playbackSessionManager;
-}
-
-VideoFullscreenManager& WebPage::videoFullscreenManager()
-{
-    if (!m_videoFullscreenManager)
-        m_videoFullscreenManager = VideoFullscreenManager::create(*this, playbackSessionManager());
-    return *m_videoFullscreenManager;
-}
-
-void WebPage::videoControlsManagerDidChange()
-{
-#if ENABLE(FULLSCREEN_API)
-    if (auto* manager = fullScreenManager())
-        manager->videoControlsManagerDidChange();
-#endif
-}
-
-#endif
-
 #if PLATFORM(IOS_FAMILY)
 void WebPage::setAllowsMediaDocumentInlinePlayback(bool allows)
 {
     m_page->setAllowsMediaDocumentInlinePlayback(allows);
-}
-#endif
-
-#if ENABLE(FULLSCREEN_API)
-WebFullScreenManager* WebPage::fullScreenManager()
-{
-    if (!m_fullScreenManager)
-        m_fullScreenManager = WebFullScreenManager::create(this);
-    return m_fullScreenManager.get();
 }
 #endif
 
@@ -4971,13 +4898,6 @@ void WebPage::didReceiveMessage(IPC::Connection& connection, IPC::Decoder& decod
             remoteInspectorUI->didReceiveMessage(connection, decoder);
         return;
     }
-
-#if ENABLE(FULLSCREEN_API)
-    if (decoder.messageReceiverName() == Messages::WebFullScreenManager::messageReceiverName()) {
-        fullScreenManager()->didReceiveMessage(connection, decoder);
-        return;
-    }
-#endif
 
     didReceiveWebPageMessage(connection, decoder);
 }
@@ -6003,11 +5923,6 @@ void WebPage::elementDidFocus(WebCore::Element& element)
         m_hasPendingInputContextUpdateAfterBlurringAndRefocusingElement = false;
 
 #if PLATFORM(IOS_FAMILY)
-
-#if ENABLE(FULLSCREEN_API)
-        if (element.document().fullscreenManager().isFullscreen())
-            element.document().fullscreenManager().cancelFullscreen();
-#endif
 
         auto information = focusedElementInformation();
         if (!information)

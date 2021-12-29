@@ -29,9 +29,6 @@
 #include "Document.h"
 #include "DocumentFragment.h"
 #include "Element.h"
-#if ENABLE(PICTURE_IN_PICTURE_API)
-#include "HTMLVideoElement.h"
-#endif
 #include "ShadowRootMode.h"
 #include <wtf/HashMap.h>
 
@@ -108,10 +105,6 @@ public:
     using PartMappings = HashMap<AtomString, Vector<AtomString, 1>>;
     const PartMappings& partMappings() const;
     void invalidatePartMappings();
-
-#if ENABLE(PICTURE_IN_PICTURE_API)
-    HTMLVideoElement* pictureInPictureElement() const;
-#endif
 
     Vector<RefPtr<WebAnimation>> getAnimations();
 
