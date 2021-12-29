@@ -29,11 +29,6 @@
 #include <wtf/ThreadSafeRefCounted.h>
 #include <wtf/text/StringBuilder.h>
 
-#if USE(JOURNALD)
-#define SD_JOURNAL_SUPPRESS_LOCATION
-#include <systemd/sd-journal.h>
-#endif
-
 namespace WTF {
 
 template<typename T>
@@ -240,11 +235,6 @@ public:
         if (!m_enabled)
             return false;
 
-#if USE(SYSTEMD)
-        if (channel.state == WTFLogChannelState::Off)
-            return false;
-#endif
-
         if (level <= WTFLogLevel::Error)
             return true;
 
@@ -315,9 +305,6 @@ private:
 #if USE(OS_LOG) && !RELEASE_LOG_DISABLED
         os_log(channel.osLogChannel, "%{public}s", logMessage.utf8().data());
 #endif
-#if USE(JOURNALD) && !RELEASE_LOG_DISABLED
-        sd_journal_send("WEBKIT_SUBSYSTEM=%s", channel.subsystem, "WEBKIT_CHANNEL=%s", channel.name, "MESSAGE=%s", logMessage.utf8().data(), nullptr);
-#endif
 
         if (channel.state == WTFLogChannelState::Off || level > channel.level)
             return;
@@ -343,11 +330,6 @@ private:
         UNUSED_PARAM(file);
         UNUSED_PARAM(line);
         UNUSED_PARAM(function);
-#endif
-#if USE(JOURNALD) && !RELEASE_LOG_DISABLED
-        auto fileString = makeString("CODE_FILE=", file);
-        auto lineString = makeString("CODE_LINE=", line);
-        sd_journal_send_with_location(fileString.utf8().data(), lineString.utf8().data(), function, "WEBKIT_SUBSYSTEM=%s", channel.subsystem, "WEBKIT_CHANNEL=%s", channel.name, "MESSAGE=%s", logMessage.utf8().data(), nullptr);
 #endif
 
         if (channel.state == WTFLogChannelState::Off || level > channel.level)

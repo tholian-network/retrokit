@@ -59,10 +59,6 @@
 #include <unistd.h>
 #endif
 
-#if USE(JOURNALD)
-#include <wtf/StringPrintStream.h>
-#endif
-
 #if PLATFORM(COCOA)
 #import <wtf/spi/cocoa/OSLogSPI.h>
 #endif
@@ -601,16 +597,6 @@ void WTFReleaseLogStackTrace(WTFLogChannel* channel)
                 os_log(channel->osLogChannel, "%-3d %p %{public}s", frameNumber, stackFrame, demangled->mangledName());
             else
                 os_log(channel->osLogChannel, "%-3d %p", frameNumber, stackFrame);
-#elif USE(JOURNALD)
-            StringPrintStream out;
-            if (demangled && demangled->demangledName())
-                out.printf("%-3d %p %s", frameNumber, stackFrame, demangled->demangledName());
-            else if (demangled && demangled->mangledName())
-                out.printf("%-3d %p %s", frameNumber, stackFrame, demangled->mangledName());
-            else
-                out.printf("%-3d %p", frameNumber, stackFrame);
-            sd_journal_send("WEBKIT_SUBSYSTEM=%s", channel->subsystem, "WEBKIT_CHANNEL=%s", channel->name, "MESSAGE=%s", out.toCString().data(), nullptr);
-#endif
         }
     }
 }

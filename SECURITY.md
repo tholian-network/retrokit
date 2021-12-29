@@ -25,6 +25,13 @@ As some APIs are expected to be there in a Web Browser, they will probably be
 polyfilled to represent the "answers" a fingerprinting library expects (e.g.
 Windows 10 as an environment running Microsoft Edge or Google Chrome).
 
+At some point these APIs will be integrated via a Web Extension that polyfills
+those expected APIs, providing a flexible turn-on/off style feature that allows
+users to avoid fingerprinting by faking fingerprinting details with commonly
+used hardware specifications.
+
+(As of now, this Web Extension does not exist, so RetroKit itself will likely
+be classified either as an outdated WebKit/Safari Browser or as a Web Scraper)
 
 # Removed Features
 
@@ -72,7 +79,7 @@ removed as well.
 - [ ] Remove Libhyphen Library Integration (`libhyphen`, `USE_LIBHYPHEN`) - do we love spell-ing so much?
 - [ ] Remove Libsecret Library Integration (`libsecret`, `USE_LIBSECRET`) which automatically leaks stored credentials only by opening URLs with the same hostname.
 - [ ] Remove Libnotify Library Integration (`libnotify`, `USE_LIBNOTIFY`) which is just annoying.
-- [ ] Remove SystemD Library Integration (`libsystemd`, `USE_SYSTEMD`) which a Browser should never have a depdendency to.
+- [x] Remove SystemD Library Integration (`libsystemd`, `USE_SYSTEMD`, `JOURNALD`) which is just unnecessary.
 - [ ] Remove ARKIT Integration (`ARKIT`)
 - [x] Remove PASSKIT Integration (`PASSKIT`)
 
@@ -125,7 +132,7 @@ list of Web APIs that are removed.
 
 - [ ] Remove CSS Filters
 - [ ] Remove CSS Pointer Events
-- [ ] Remove Enforce CSS Web Fonts Caching
+- [ ] Enforce CSS Web Fonts Caching
 - [ ] Remove Device Pixel Ratio
-- [ ] Remove Disallow `overflow:hidden`
+- [ ] Disallow `overflow:hidden`
 
