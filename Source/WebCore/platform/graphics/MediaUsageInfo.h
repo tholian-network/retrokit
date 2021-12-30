@@ -52,7 +52,6 @@ struct MediaUsageInfo {
     bool pageMediaPlaybackSuspended { false };
     bool isMediaDocumentAndNotOwnerElement { false };
     bool pageExplicitlyAllowsElementToAutoplayInline { false };
-    bool hasHadUserInteractionAndQuirksContainsShouldAutoplayForArbitraryUserGesture { false };
     bool isVideoAndRequiresUserGestureForVideoRateChange { false };
     bool isAudioAndRequiresUserGestureForAudioRateChange { false };
     bool isVideoAndRequiresUserGestureForVideoDueToLowPowerMode { false };
@@ -83,7 +82,6 @@ struct MediaUsageInfo {
             && pageMediaPlaybackSuspended == other.pageMediaPlaybackSuspended
             && isMediaDocumentAndNotOwnerElement == other.isMediaDocumentAndNotOwnerElement
             && pageExplicitlyAllowsElementToAutoplayInline == other.pageExplicitlyAllowsElementToAutoplayInline
-            && hasHadUserInteractionAndQuirksContainsShouldAutoplayForArbitraryUserGesture == other.hasHadUserInteractionAndQuirksContainsShouldAutoplayForArbitraryUserGesture
             && isVideoAndRequiresUserGestureForVideoRateChange == other.isVideoAndRequiresUserGestureForVideoRateChange
             && isAudioAndRequiresUserGestureForAudioRateChange == other.isAudioAndRequiresUserGestureForAudioRateChange
             && isVideoAndRequiresUserGestureForVideoDueToLowPowerMode == other.isVideoAndRequiresUserGestureForVideoDueToLowPowerMode
@@ -124,7 +122,6 @@ template<class Encoder> inline void MediaUsageInfo::encode(Encoder& encoder) con
     encoder << pageMediaPlaybackSuspended;
     encoder << isMediaDocumentAndNotOwnerElement;
     encoder << pageExplicitlyAllowsElementToAutoplayInline;
-    encoder << hasHadUserInteractionAndQuirksContainsShouldAutoplayForArbitraryUserGesture;
     encoder << isVideoAndRequiresUserGestureForVideoRateChange;
     encoder << isAudioAndRequiresUserGestureForAudioRateChange;
     encoder << isVideoAndRequiresUserGestureForVideoDueToLowPowerMode;
@@ -196,9 +193,6 @@ template<class Decoder> inline std::optional<MediaUsageInfo> MediaUsageInfo::dec
         return { };
 
     if (!decoder.decode(info.pageExplicitlyAllowsElementToAutoplayInline))
-        return { };
-
-    if (!decoder.decode(info.hasHadUserInteractionAndQuirksContainsShouldAutoplayForArbitraryUserGesture))
         return { };
 
     if (!decoder.decode(info.isVideoAndRequiresUserGestureForVideoRateChange))

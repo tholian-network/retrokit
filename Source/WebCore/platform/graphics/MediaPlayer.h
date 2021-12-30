@@ -268,7 +268,6 @@ public:
     virtual void requestInstallMissingPlugins(const String&, const String&, MediaPlayerRequestInstallMissingPluginsCallback&) { };
 #endif
 
-    virtual bool mediaPlayerShouldDisableSleep() const { return false; }
     virtual const Vector<ContentType>& mediaContentTypesRequiringHardwareSupport() const = 0;
     virtual bool mediaPlayerShouldCheckHardwareSupport() const { return false; }
 
@@ -599,9 +598,6 @@ public:
     Vector<String> preferredAudioCharacteristics() const;
 
     bool ended() const;
-
-    void setShouldDisableSleep(bool);
-    bool shouldDisableSleep() const;
 
     String contentMIMEType() const { return m_contentType.containerType(); }
     String contentTypeCodecs() const { return m_contentType.parameter(ContentType::codecsParameter()); }

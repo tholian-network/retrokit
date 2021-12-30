@@ -636,16 +636,6 @@ bool WKPreferencesGetJavaScriptCanAccessClipboard(WKPreferencesRef preferencesRe
     return toImpl(preferencesRef)->javaScriptCanAccessClipboard();
 }
 
-void WKPreferencesSetFullScreenEnabled(WKPreferencesRef preferencesRef, bool enabled)
-{
-    toImpl(preferencesRef)->setFullScreenEnabled(enabled);
-}
-
-bool WKPreferencesGetFullScreenEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->fullScreenEnabled();
-}
-
 void WKPreferencesSetAsynchronousSpellCheckingEnabled(WKPreferencesRef preferencesRef, bool enabled)
 {
     toImpl(preferencesRef)->setAsynchronousSpellCheckingEnabled(enabled);

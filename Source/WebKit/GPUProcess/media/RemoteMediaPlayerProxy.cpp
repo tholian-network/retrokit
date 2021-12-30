@@ -720,17 +720,6 @@ void RemoteMediaPlayerProxy::setWirelessPlaybackTarget(MediaPlaybackTargetContex
 }
 #endif
 
-bool RemoteMediaPlayerProxy::mediaPlayerIsFullscreen() const
-{
-    return false;
-}
-
-bool RemoteMediaPlayerProxy::mediaPlayerIsFullscreenPermitted() const
-{
-    notImplemented();
-    return false;
-}
-
 float RemoteMediaPlayerProxy::mediaPlayerContentsScale() const
 {
     return m_videoContentScale;

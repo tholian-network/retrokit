@@ -62,7 +62,6 @@ function(element, attributeName) {
             dialog: ["open"],
             fieldset: ["disabled"],
             form: ["novalidate"],
-            iframe: ["allowfullscreen"],
             img: ["ismap"],
             input: [
                 "autofocus",

@@ -85,7 +85,6 @@ class MediaStream;
 class RenderMedia;
 class ScriptController;
 class ScriptExecutionContext;
-class SleepDisabler;
 class SourceBuffer;
 class TextTrackList;
 class TimeRanges;
@@ -458,8 +457,6 @@ public:
     MediaController* controllerForBindings() const { return controller(); }
     void setControllerForBindings(MediaController*);
 
-    void enteredOrExitedFullscreen() { configureMediaControls(); }
-
     unsigned long long fileSize() const;
 
     void mediaLoadingFailed(MediaPlayer::NetworkState);
@@ -476,8 +473,6 @@ public:
     WEBCORE_EXPORT void setMediaControlsMaximumRightContainerButtonCountOverride(size_t);
     WEBCORE_EXPORT void setMediaControlsHidePlaybackRates(bool);
     MediaControlsHost* mediaControlsHost() { return m_mediaControlsHost.get(); }
-
-    bool isDisablingSleep() const { return m_sleepDisabler.get(); }
 
     double maxBufferedTime() const;
 
@@ -499,8 +494,6 @@ public:
     bool hasEverHadVideo() const { return m_hasEverHadVideo; }
 
     double playbackStartedTime() const { return m_playbackStartedTime; }
-
-    bool isTemporarilyAllowingInlinePlaybackAfterFullscreen() const {return m_temporarilyAllowingInlinePlaybackAfterFullscreen; }
 
     void isVisibleInViewportChanged();
     void updateRateChangeRestrictions();
@@ -598,9 +591,6 @@ private:
     void didRecalcStyle(Style::Change) override;
     bool isInteractiveContent() const override;
 
-    void willBecomeFullscreenElement() override;
-    void willStopBeingFullscreenElement() override;
-
     // ActiveDOMObject API.
     const char* activeDOMObjectName() const override;
     void suspend(ReasonForSuspension) override;
@@ -674,8 +664,6 @@ private:
     String mediaPlayerReferrer() const override;
     String mediaPlayerUserAgent() const override;
 
-    bool mediaPlayerIsFullscreen() const override;
-    bool mediaPlayerIsFullscreenPermitted() const override;
     bool mediaPlayerIsVideo() const override;
     LayoutRect mediaPlayerContentBoxRect() const override;
     float mediaPlayerContentsScale() const override;
@@ -705,7 +693,6 @@ private:
     void mediaPlayerEngineFailedToLoad() const final;
 
     double mediaPlayerRequestedPlaybackRate() const final;
-    bool mediaPlayerShouldDisableSleep() const final { return shouldDisableSleep() == SleepType::Display; }
     bool mediaPlayerShouldCheckHardwareSupport() const final;
     const Vector<ContentType>& mediaContentTypesRequiringHardwareSupport() const final;
     void mediaPlayerBufferedTimeRangesChanged() final;
@@ -822,10 +809,6 @@ private:
     void setCurrentSrc(const URL&);
     bool hasCurrentSrc() const override { return !m_currentSrc.isEmpty(); }
     bool isLiveStream() const override { return movieLoadType() == MovieLoadType::LiveStream; }
-
-    void updateSleepDisabling();
-    enum class SleepType { None, Display, System };
-    SleepType shouldDisableSleep() const;
 
     void didAddUserAgentShadowRoot(ShadowRoot&) override;
     DOMWrapperWorld& ensureIsolatedWorld();
@@ -982,8 +965,6 @@ private:
     bool m_preparedForInline;
     WTF::Function<void()> m_preparedForInlineCompletionHandler;
 
-    bool m_temporarilyAllowingInlinePlaybackAfterFullscreen { false };
-
     RefPtr<MediaPlayer> m_player;
     bool m_cachedSupportsAcceleratedRendering { false };
 
@@ -1096,8 +1077,6 @@ private:
     String m_mediaGroup;
     friend class MediaController;
     RefPtr<MediaController> m_mediaController;
-
-    std::unique_ptr<SleepDisabler> m_sleepDisabler;
 
     WeakPtr<const MediaResourceLoader> m_lastMediaResourceLoaderForTesting;
 

@@ -72,7 +72,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <glib/gi18n-lib.h>
 #include <memory>
-#include <pal/system/SleepDisabler.h>
 #include <wtf/Compiler.h>
 #include <wtf/HashMap.h>
 #include <wtf/MathExtras.h>
@@ -695,7 +694,6 @@ static void webkitWebViewBaseDispose(GObject* gobject)
     webView->priv->inputMethodFilter.setContext(nullptr);
     webView->priv->pageProxy->close();
     webView->priv->acceleratedBackingStore = nullptr;
-    webView->priv->sleepDisabler = nullptr;
     webView->priv->keyBindingTranslator.invalidate();
     G_OBJECT_CLASS(webkit_web_view_base_parent_class)->dispose(gobject);
 }

@@ -34,7 +34,6 @@
 #include "IDLTypes.h"
 #include "PageConsoleClient.h"
 #include "RealtimeMediaSource.h"
-#include "SleepDisabler.h"
 #include "TextIndicator.h"
 #include "VP9Utilities.h"
 #include <JavaScriptCore/Float32Array.h>
@@ -680,7 +679,6 @@ public:
     void setMediaElementRestrictions(HTMLMediaElement&, StringView restrictionsString);
     ExceptionOr<void> postRemoteControlCommand(const String&, float argument);
     void activeAudioRouteDidChange(bool shouldPause);
-    bool elementIsBlockingDisplaySleep(HTMLMediaElement&) const;
     bool isPlayerVisibleInViewport(HTMLMediaElement&) const;
 #endif
 
@@ -1085,9 +1083,6 @@ public:
 
     bool isRemoteUIAppForAccessibility();
 
-    unsigned createSleepDisabler(const String& reason, bool display);
-    bool destroySleepDisabler(unsigned identifier);
-        
 #if ENABLE(APP_HIGHLIGHTS)
     Vector<String> appHighlightContextMenuItemTitles() const;
     unsigned numberOfAppHighlights();
@@ -1171,8 +1166,6 @@ private:
 #endif
     std::unique_ptr<InspectorStubFrontend> m_inspectorFrontend;
     RefPtr<CacheStorageConnection> m_cacheStorageConnection;
-
-    HashMap<unsigned, std::unique_ptr<WebCore::SleepDisabler>> m_sleepDisablers;
 
 #if ENABLE(MEDIA_SESSION_COORDINATOR)
     RefPtr<MockMediaSessionCoordinator> m_mockMediaSessionCoordinator;

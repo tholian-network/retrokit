@@ -597,6 +597,7 @@ void WTFReleaseLogStackTrace(WTFLogChannel* channel)
                 os_log(channel->osLogChannel, "%-3d %p %{public}s", frameNumber, stackFrame, demangled->mangledName());
             else
                 os_log(channel->osLogChannel, "%-3d %p", frameNumber, stackFrame);
+#endif
         }
     }
 }

@@ -51,7 +51,6 @@
 #include <WebCore/ProcessIdentifier.h>
 #include <WebCore/RegistrableDomain.h>
 #include <WebCore/SharedStringHash.h>
-#include <WebCore/SleepDisabler.h>
 #include <memory>
 #include <pal/SessionID.h>
 #include <wtf/Forward.h>
@@ -379,8 +378,6 @@ public:
     void gpuProcessExited(GPUProcessTerminationReason);
 #endif
 
-    bool hasSleepDisabler() const;
-
 #if PLATFORM(COCOA)
     bool hasNetworkExtensionSandboxAccess() const { return m_hasNetworkExtensionSandboxAccess; }
     void markHasNetworkExtensionSandboxAccess() { m_hasNetworkExtensionSandboxAccess = true; }
@@ -523,9 +520,6 @@ private:
     void sendMessageToWebContextWithReply(UserMessage&&, CompletionHandler<void(UserMessage&&)>&&);
 #endif
 
-    void didCreateSleepDisabler(WebCore::SleepDisablerIdentifier, const String& reason, bool display);
-    void didDestroySleepDisabler(WebCore::SleepDisablerIdentifier);
-
     void createSpeechRecognitionServer(SpeechRecognitionServerIdentifier);
     void destroySpeechRecognitionServer(SpeechRecognitionServerIdentifier);
 
@@ -652,8 +646,6 @@ private:
         WeakHashSet<WebProcessProxy> clientProcesses;
     };
     std::optional<ServiceWorkerInformation> m_serviceWorkerInformation;
-
-    HashMap<WebCore::SleepDisablerIdentifier, std::unique_ptr<WebCore::SleepDisabler>> m_sleepDisablers;
 
     struct AudibleMediaActivity {
         Ref<ProcessAssertion> assertion;

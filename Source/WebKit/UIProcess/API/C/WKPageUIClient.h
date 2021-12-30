@@ -83,7 +83,7 @@ WK_EXPORT void WKPageRunJavaScriptPromptResultListenerCall(WKPageRunJavaScriptPr
 
 WK_EXPORT WKTypeID WKPageRequestStorageAccessConfirmResultListenerGetTypeID(void);
 WK_EXPORT void WKPageRequestStorageAccessConfirmResultListenerCall(WKPageRequestStorageAccessConfirmResultListenerRef listener, bool result);
-    
+
 typedef void (*WKPageUIClientCallback)(WKPageRef page, const void* clientInfo);
 typedef WKPageRef (*WKPageCreateNewPageCallback)(WKPageRef page, WKPageConfigurationRef configuration, WKNavigationActionRef navigationAction, WKWindowFeaturesRef windowFeatures, const void *clientInfo);
 typedef void (*WKPageRunBeforeUnloadConfirmPanelCallback)(WKPageRef page, WKStringRef message, WKFrameRef frame, WKPageRunBeforeUnloadConfirmPanelResultListenerRef listener, const void *clientInfo);
@@ -126,7 +126,6 @@ typedef void (*WKPageDecidePolicyForUserMediaPermissionRequestCallback)(WKPageRe
 typedef void (*WKCheckUserMediaPermissionCallback)(WKPageRef page, WKFrameRef frame, WKSecurityOriginRef userMediaDocumentOrigin, WKSecurityOriginRef topLevelDocumentOrigin, WKUserMediaPermissionCheckRef devicesRequest, const void *clientInfo);
 typedef void (*WKPageDidClickAutoFillButtonCallback)(WKPageRef page, WKTypeRef userData, const void *clientInfo);
 typedef void (*WKHandleAutoplayEventCallback)(WKPageRef page, WKAutoplayEvent event, WKAutoplayEventFlags flags, const void* clientInfo);
-typedef void (*WKFullscreenMayReturnToInlineCallback)(WKPageRef page, const void* clientInfo);
 typedef void (*WKRequestPointerLockCallback)(WKPageRef page, const void* clientInfo);
 typedef void (*WKDidLosePointerLockCallback)(WKPageRef page, const void* clientInfo);
 typedef void (*WKDidExceedBackgroundResourceLimitWhileInForegroundCallback)(WKPageRef page, WKResourceLimit limit, const void* clientInfo);
@@ -416,7 +415,7 @@ typedef struct WKPageUIClientV4 {
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
     WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
-    
+
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;
 
@@ -480,7 +479,7 @@ typedef struct WKPageUIClientV5 {
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
     WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
-    
+
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;
 
@@ -658,12 +657,11 @@ typedef struct WKPageUIClientV7 {
 
     // Version 7.
     WKPageRunBeforeUnloadConfirmPanelCallback                           runBeforeUnloadConfirmPanel;
-    WKFullscreenMayReturnToInlineCallback                               fullscreenMayReturnToInline;
 } WKPageUIClientV7;
 
 typedef struct WKPageUIClientV8 {
     WKPageUIClientBase                                                  base;
-    
+
     // Version 0.
     WKPageCreateNewPageCallback_deprecatedForUseWithV0                  createNewPage_deprecatedForUseWithV0;
     WKPageUIClientCallback                                              showPage;
@@ -703,27 +701,27 @@ typedef struct WKPageUIClientV8 {
     void*                                                               unused1; // Used to be didCompleteRubberBandForMainFrame
     WKPageSaveDataToFileInDownloadsFolderCallback                       saveDataToFileInDownloadsFolder;
     void*                                                               shouldInterruptJavaScript_unavailable;
-    
+
     // Version 1.
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage_deprecatedForUseWithV1;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
     WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
-    
+
     // Version 2.
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
     WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
-    
+
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;
-    
+
     // Version 4.
     void*                                                               unused2; // Used to be didBeginTrackingPotentialLongMousePress.
     void*                                                               unused3; // Used to be didRecognizeLongMousePress.
     void*                                                               unused4; // Used to be didCancelTrackingPotentialLongMousePress.
     WKPageIsPlayingAudioDidChangeCallback                               isPlayingAudioDidChange;
-    
+
     // Version 5.
     WKPageDecidePolicyForUserMediaPermissionRequestCallback             decidePolicyForUserMediaPermissionRequest;
     WKPageDidClickAutoFillButtonCallback                                didClickAutoFillButton;
@@ -731,18 +729,17 @@ typedef struct WKPageUIClientV8 {
     WKPageRunJavaScriptConfirmCallback_deprecatedForUseWithV5           runJavaScriptConfirm_deprecatedForUseWithV5;
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV5            runJavaScriptPrompt_deprecatedForUseWithV5;
     void*                                                               unused5; // Used to be mediaSessionMetadataDidChange.
-    
+
     // Version 6.
     WKPageCreateNewPageCallback                                         createNewPage;
     WKPageRunJavaScriptAlertCallback                                    runJavaScriptAlert;
     WKPageRunJavaScriptConfirmCallback                                  runJavaScriptConfirm;
     WKPageRunJavaScriptPromptCallback                                   runJavaScriptPrompt;
     WKCheckUserMediaPermissionCallback                                  checkUserMediaPermissionForOrigin;
-    
+
     // Version 7.
     WKPageRunBeforeUnloadConfirmPanelCallback                           runBeforeUnloadConfirmPanel;
-    WKFullscreenMayReturnToInlineCallback                               fullscreenMayReturnToInline;
-    
+
     // Version 8.
     WKRequestPointerLockCallback                                        requestPointerLock;
     WKDidLosePointerLockCallback                                        didLosePointerLock;
@@ -828,7 +825,6 @@ typedef struct WKPageUIClientV9 {
 
     // Version 7.
     WKPageRunBeforeUnloadConfirmPanelCallback                           runBeforeUnloadConfirmPanel;
-    WKFullscreenMayReturnToInlineCallback                               fullscreenMayReturnToInline;
 
     // Version 8.
     WKRequestPointerLockCallback                                        requestPointerLock;
@@ -837,10 +833,10 @@ typedef struct WKPageUIClientV9 {
     // Version 9.
     WKHandleAutoplayEventCallback                                       handleAutoplayEvent;
 } WKPageUIClientV9;
-    
+
 typedef struct WKPageUIClientV10 {
     WKPageUIClientBase                                                  base;
-    
+
     // Version 0.
     WKPageCreateNewPageCallback_deprecatedForUseWithV0                  createNewPage_deprecatedForUseWithV0;
     WKPageUIClientCallback                                              showPage;
@@ -880,27 +876,27 @@ typedef struct WKPageUIClientV10 {
     void*                                                               unused1; // Used to be didCompleteRubberBandForMainFrame
     WKPageSaveDataToFileInDownloadsFolderCallback                       saveDataToFileInDownloadsFolder;
     void*                                                               shouldInterruptJavaScript_unavailable;
-    
+
     // Version 1.
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage_deprecatedForUseWithV1;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
     WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
-    
+
     // Version 2.
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
     WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
-    
+
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;
-    
+
     // Version 4.
     void*                                                               unused2; // Used to be didBeginTrackingPotentialLongMousePress.
     void*                                                               unused3; // Used to be didRecognizeLongMousePress.
     void*                                                               unused4; // Used to be didCancelTrackingPotentialLongMousePress.
     WKPageIsPlayingAudioDidChangeCallback                               isPlayingAudioDidChange;
-    
+
     // Version 5.
     WKPageDecidePolicyForUserMediaPermissionRequestCallback             decidePolicyForUserMediaPermissionRequest;
     WKPageDidClickAutoFillButtonCallback                                didClickAutoFillButton;
@@ -908,25 +904,24 @@ typedef struct WKPageUIClientV10 {
     WKPageRunJavaScriptConfirmCallback_deprecatedForUseWithV5           runJavaScriptConfirm_deprecatedForUseWithV5;
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV5            runJavaScriptPrompt_deprecatedForUseWithV5;
     void*                                                               unused5; // Used to be mediaSessionMetadataDidChange.
-    
+
     // Version 6.
     WKPageCreateNewPageCallback                                         createNewPage;
     WKPageRunJavaScriptAlertCallback                                    runJavaScriptAlert;
     WKPageRunJavaScriptConfirmCallback                                  runJavaScriptConfirm;
     WKPageRunJavaScriptPromptCallback                                   runJavaScriptPrompt;
     WKCheckUserMediaPermissionCallback                                  checkUserMediaPermissionForOrigin;
-    
+
     // Version 7.
     WKPageRunBeforeUnloadConfirmPanelCallback                           runBeforeUnloadConfirmPanel;
-    WKFullscreenMayReturnToInlineCallback                               fullscreenMayReturnToInline;
-    
+
     // Version 8.
     WKRequestPointerLockCallback                                        requestPointerLock;
     WKDidLosePointerLockCallback                                        didLosePointerLock;
-    
+
     // Version 9.
     WKHandleAutoplayEventCallback                                       handleAutoplayEvent;
-    
+
     // Version 10.
     WKDidExceedBackgroundResourceLimitWhileInForegroundCallback         didExceedBackgroundResourceLimitWhileInForeground;
 } WKPageUIClientV10;
@@ -1011,7 +1006,6 @@ typedef struct WKPageUIClientV11 {
 
     // Version 7.
     WKPageRunBeforeUnloadConfirmPanelCallback                           runBeforeUnloadConfirmPanel;
-    WKFullscreenMayReturnToInlineCallback                               fullscreenMayReturnToInline;
 
     // Version 8.
     WKRequestPointerLockCallback                                        requestPointerLock;
@@ -1029,7 +1023,7 @@ typedef struct WKPageUIClientV11 {
 
 typedef struct WKPageUIClientV12 {
     WKPageUIClientBase                                                  base;
-    
+
     // Version 0.
     WKPageCreateNewPageCallback_deprecatedForUseWithV0                  createNewPage_deprecatedForUseWithV0;
     WKPageUIClientCallback                                              showPage;
@@ -1069,27 +1063,27 @@ typedef struct WKPageUIClientV12 {
     void*                                                               unused1; // Used to be didCompleteRubberBandForMainFrame
     WKPageSaveDataToFileInDownloadsFolderCallback                       saveDataToFileInDownloadsFolder;
     void*                                                               shouldInterruptJavaScript_unavailable;
-    
+
     // Version 1.
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage_deprecatedForUseWithV1;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
     WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
-    
+
     // Version 2.
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
     WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
-    
+
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;
-    
+
     // Version 4.
     void*                                                               unused2; // Used to be didBeginTrackingPotentialLongMousePress.
     void*                                                               unused3; // Used to be didRecognizeLongMousePress.
     void*                                                               unused4; // Used to be didCancelTrackingPotentialLongMousePress.
     WKPageIsPlayingAudioDidChangeCallback                               isPlayingAudioDidChange;
-    
+
     // Version 5.
     WKPageDecidePolicyForUserMediaPermissionRequestCallback             decidePolicyForUserMediaPermissionRequest;
     WKPageDidClickAutoFillButtonCallback                                didClickAutoFillButton;
@@ -1097,28 +1091,27 @@ typedef struct WKPageUIClientV12 {
     WKPageRunJavaScriptConfirmCallback_deprecatedForUseWithV5           runJavaScriptConfirm_deprecatedForUseWithV5;
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV5            runJavaScriptPrompt_deprecatedForUseWithV5;
     void*                                                               unused5; // Used to be mediaSessionMetadataDidChange.
-    
+
     // Version 6.
     WKPageCreateNewPageCallback                                         createNewPage;
     WKPageRunJavaScriptAlertCallback                                    runJavaScriptAlert;
     WKPageRunJavaScriptConfirmCallback                                  runJavaScriptConfirm;
     WKPageRunJavaScriptPromptCallback                                   runJavaScriptPrompt;
     WKCheckUserMediaPermissionCallback                                  checkUserMediaPermissionForOrigin;
-    
+
     // Version 7.
     WKPageRunBeforeUnloadConfirmPanelCallback                           runBeforeUnloadConfirmPanel;
-    WKFullscreenMayReturnToInlineCallback                               fullscreenMayReturnToInline;
-    
+
     // Version 8.
     WKRequestPointerLockCallback                                        requestPointerLock;
     WKDidLosePointerLockCallback                                        didLosePointerLock;
-    
+
     // Version 9.
     WKHandleAutoplayEventCallback                                       handleAutoplayEvent;
-    
+
     // Version 10.
     WKDidExceedBackgroundResourceLimitWhileInForegroundCallback         didExceedBackgroundResourceLimitWhileInForeground;
-    
+
     // Version 11.
     WKPageDidResignInputElementStrongPasswordAppearanceCallback         didResignInputElementStrongPasswordAppearance;
 
@@ -1206,7 +1199,6 @@ typedef struct WKPageUIClientV13 {
 
     // Version 7.
     WKPageRunBeforeUnloadConfirmPanelCallback                           runBeforeUnloadConfirmPanel;
-    WKFullscreenMayReturnToInlineCallback                               fullscreenMayReturnToInline;
 
     // Version 8.
     WKRequestPointerLockCallback                                        requestPointerLock;
@@ -1306,7 +1298,6 @@ typedef struct WKPageUIClientV14 {
 
     // Version 7.
     WKPageRunBeforeUnloadConfirmPanelCallback                           runBeforeUnloadConfirmPanel;
-    WKFullscreenMayReturnToInlineCallback                               fullscreenMayReturnToInline;
 
     // Version 8.
     WKRequestPointerLockCallback                                        requestPointerLock;
@@ -1408,7 +1399,6 @@ typedef struct WKPageUIClientV15 {
 
     // Version 7.
     WKPageRunBeforeUnloadConfirmPanelCallback                           runBeforeUnloadConfirmPanel;
-    WKFullscreenMayReturnToInlineCallback                               fullscreenMayReturnToInline;
 
     // Version 8.
     WKRequestPointerLockCallback                                        requestPointerLock;
@@ -1514,7 +1504,6 @@ typedef struct WKPageUIClientV16 {
 
     // Version 7.
     WKPageRunBeforeUnloadConfirmPanelCallback                           runBeforeUnloadConfirmPanel;
-    WKFullscreenMayReturnToInlineCallback                               fullscreenMayReturnToInline;
 
     // Version 8.
     WKRequestPointerLockCallback                                        requestPointerLock;

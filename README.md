@@ -47,6 +47,8 @@ cmake -DPORT=GTK -DCMAKE_BUILD_TYPE=RelWithDebInfo -DENABLE_MINIBROWSER=ON -GNin
 ninja;
 ```
 
+The complete list of available options is described in the [Source/cmake/WebKitFeatures.cmake](/Source/cmake/WebKitFeatures.cmake) file.
+
 
 # License
 

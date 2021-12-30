@@ -44,7 +44,11 @@ legacy platforms that are no longer maintained.
 - [ ] Remove Apple Watch Platform Support (`TARGET_OS_WATCH`, `BOS_WATCHOS`, `BPLATFORM_WATCHOS`)
 - [ ] Remove Apple TV Platform Support (`TARGET_OS_TV`, `BOS_APPLETV`, `BPLATFORM_APPLETV`)
 - [ ] Remove Solaris Platform Support
+- [ ] Remove User Message Handlers Support (`USER_MESSAGE_HANDLERS`)
+- [ ] Remove Wireless Playback Target Support (`WIRELESS_PLAYBACK_TARGET`)
+- [ ] *Undecided* Remove WebDriver Support (`WEBDRIVER`, `WEBDRIVER_KEYBOARD_INTERACTIONS`, `WEBDRIVER_MOUSE_INTERACTIONS`, `WEBDRIVER_TOUCH_INTERACTIONS`, `WEBDRIVER_WHEEL_INTERACTIONS`)
 - [ ] *Undecided* Remove WebKit Platform for Embedded (`WPE`, `USE_WPE_RENDERER`)
+- [ ] *Undecided* Remove Remote Inspector Support (`REMOTE_INSPECTOR`)
 - [ ] *Undecided* Remove Developer Mode (`DEVELOPER_MODE`)
 
 
@@ -58,19 +62,25 @@ These legacy APIs that are no longer of relevance to a modern Web Browser.
 - [x] Remove hardcoded Quirks for Akamai Media Player
 - [x] Remove hardcoded Quirks for `bbc.co.uk` Media Player
 - [x] Remove hardcoded Quirks for `espn.com`
+- [x] Remove hardcoded Quirks for `facebook.com`
 - [x] Remove hardcoded Quirks for `gizmodo.com`
 - [x] Remove hardcoded Quirks for `kinja.com`
 - [x] Remove hardcoded Quirks for `microsoft.com` and Microsoft Teams redirect links
 - [x] Remove hardcoded Quirks for `mlb.com`
+- [x] Remove hardcoded Quirks for `netflix.com`
 - [x] Remove hardcoded Quirks for `nfl.com`
 - [ ] Remove hardcoded Quirks for `twitter.com`
 - [x] Remove hardcoded Quirks for `playstation.com`, `sony.com` and `sonyentertainment.com`
 - [x] Remove hardcoded Quirks for `vimeo.com`
 - [x] Remove hardcoded Quirks for `youtube.com`
+- [x] Remove Modern Media Controls Hacks and Shadow DOM (`MODERN_MEDIA_CONTROLS`)
+- [x] Remove Sleep Disablers (`SleepDisabler`, `SleepDisablerClient`, `sleepDisablers`, `shouldDisableSleep`, `isDisablingSleep`, `mediaPlayerShouldDisableSleep`, `elementIsBlockingDisplaySleep`)
+- [ ] Remove System Sleep Listener (`SystemSleepListener`)
 - [ ] Remove Netscape Plugin API (`NETSCAPE_PLUGIN_API`)
+- [ ] Remove `AllowsInlineMediaPlayback` Hacks (`AllowsInlineMediaPlayback`, `MEDIA_PLAYBACK_ALLOWS_INLINE`) and default playback behaviour to no-autoplay.
 - [ ] Remove `QuickTimePluginReplacement`
 - [ ] Remove `YouTubePluginReplacement`
-- [ ] Remove Modern Media Controls Hack (`MODERN_MEDIA_CONTROLS`)
+- [ ] Remove `bmalloc` and prefer system allocator (`USE_SYSTEM_MALLOC`)
 
 
 ## Library Dependencies
@@ -111,9 +121,11 @@ list of Web APIs that are removed.
 - [x] Remove Fullscreen Events (`allowfullscreen`, `webkitbeginfullscreen`, `webkitendfullscreen`, `webkitfullscreenchange`, `webkitfullscreenerror`)
 - [x] Remove Picture in Picture API (`PICTURE_IN_PICTURE_API`, `operationMatchesPictureinPicturePseudoClass`, `EnterPictureInPictureEvent`, `picture-in-picture`, `PictureInPictureElement`)
 - [x] Remove Video Presentation Mode (`VIDEO_PRESENTATION_MODE`, `ControlledElementID`, `EnhancedFullscreen`, `VideoPresentation`, `prepareForVideoFullscreen`, `webkitPresentationModeChanged`)
-- [ ] Remove Wireless Playback Target API (`WIRELESS_PLAYBACK_TARGET`)
+- [x] Remove iFrame `allowfullscreen` Property
+- [ ] Remove Network Shareable Resource API (`SHAREABLE_RESOURCE`)
 - [ ] Remove 3D Model Element API (`MODEL_ELEMENT`)
 - [ ] Remove Encrypted Media API (`ENCRYPTED_MEDIA`, `LEGACY_ENCRYPTED_MEDIA`)
+- [ ] Remove Encrypted Media Thunder API (`THUNDER`)
 - [ ] Remove Web RTC API (`WEB_RTC`, `RTC*`)
 - [ ] Remove Web NFC API
 - [ ] Remove Web Performance API
@@ -121,6 +133,7 @@ list of Web APIs that are removed.
 - [ ] Remove Indexed Database API
 - [ ] Remove Canvas API (`OFFSCREEN_CANVAS`, `Canvas*`, `DOMConvertWebGL`, `JSANGLEInstancedArray`, `CanvasActivityRecord`)
 - [ ] Remove WebGL API (`WEBGL`, `WebGL*`, `JSANGLEInstancedArray`, `GraphicsContextGL*`, `HighPerformanceGraphicsUsageSampler`)
+- [ ] Remove WebGL2 API (`WEBGL2`)
 - [ ] Remove GPU Process for WebGL (`GPU_PROCESS`)
 - [ ] Remove WebGL via Metal (`WEBGL_COMPATIBLE_METAL`)
 - [ ] Remove WebGPU API
@@ -133,10 +146,16 @@ list of Web APIs that are removed.
 - [ ] Remove Window Alert Method (`window.alert()`)
 - [ ] Remove Window History Interface (`window.history`)
 - [ ] Remove Window Popups (`window.open()`)
+- [ ] Remove Window Resize Observer Support (`RESIZE_OBSERVER`)
 - [ ] Remove WASM / WebASM Support
 - [ ] *Undecided* Remove Web Midi API
 - [ ] *Undecided* Remove Web Workers API
 - [ ] *Undecided* Remove Service Worker API
+
+
+## HTML Features
+
+- [ ] Remove `preconnect` Support (`SERVER_PRECONNECT`)
 
 
 ## CSS Features

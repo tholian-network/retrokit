@@ -101,7 +101,6 @@
 #include "SecurityPolicy.h"
 #include "Settings.h"
 #include "ShadowRoot.h"
-#include "SleepDisabler.h"
 #include "TextTrackCueList.h"
 #include "TextTrackList.h"
 #include "ThreadableBlobRegistry.h"
@@ -129,6 +128,7 @@
 
 #if PLATFORM(IOS_FAMILY)
 #include "RuntimeApplicationChecks.h"
+#include "VideoFullscreenInterfaceAVKit.h"
 #endif
 
 #if ENABLE(WIRELESS_PLAYBACK_TARGET)
@@ -321,6 +321,7 @@ struct MediaElementSessionInfo {
 
     MonotonicTime timeOfLastUserInteraction;
     bool canShowControlsManager : 1;
+    bool isVisibleInViewport : 1;
     bool isLargeEnoughForMainContent : 1;
     bool isPlayingAudio : 1;
     bool hasEverNotifiedAboutPlaying : 1;
@@ -346,6 +347,11 @@ static bool preferMediaControlsForCandidateSessionOverOtherCandidateSession(cons
     MediaElementSession::PlaybackControlsPurpose purpose = session.purpose;
     ASSERT(purpose == otherSession.purpose);
 
+    // For the controls manager and MediaSession, prioritize visible media over offscreen media.
+    if ((purpose == MediaElementSession::PlaybackControlsPurpose::ControlsManager || purpose == MediaElementSession::PlaybackControlsPurpose::MediaSession)
+        && session.isVisibleInViewport != otherSession.isVisibleInViewport)
+        return session.isVisibleInViewport;
+
     // For Now Playing and MediaSession, prioritize elements that would normally satisfy main content.
     if ((purpose == MediaElementSession::PlaybackControlsPurpose::NowPlaying || purpose == MediaElementSession::PlaybackControlsPurpose::MediaSession)
         && session.isLargeEnoughForMainContent != otherSession.isLargeEnoughForMainContent)
@@ -367,6 +373,9 @@ static bool mediaSessionMayBeConfusedWithMainContent(const MediaElementSessionIn
 
     if (purpose == MediaElementSession::PlaybackControlsPurpose::NowPlaying)
         return session.isPlayingAudio;
+
+    if (!session.isVisibleInViewport)
+        return false;
 
     if (!session.isLargeEnoughForMainContent)
         return false;
@@ -592,7 +601,7 @@ RefPtr<HTMLMediaElement> HTMLMediaElement::bestMediaElementForRemoteControls(Med
 
     std::sort(candidateSessions.begin(), candidateSessions.end(), preferMediaControlsForCandidateSessionOverOtherCandidateSession);
     auto strongestSessionCandidate = candidateSessions.first();
-    if (!strongestSessionCandidate.isPlayingAudio && atLeastOneNonCandidateMayBeConfusedForMainContent)
+    if (!strongestSessionCandidate.isVisibleInViewport && !strongestSessionCandidate.isPlayingAudio && atLeastOneNonCandidateMayBeConfusedForMainContent)
         return nullptr;
 
     return &strongestSessionCandidate.session->element();
@@ -707,8 +716,6 @@ void HTMLMediaElement::parseAttribute(const QualifiedName& name, const AtomStrin
             prepareForLoad();
     } else if (name == controlsAttr)
         configureMediaControls();
-    else if (name == loopAttr)
-        updateSleepDisabling();
     else if (name == preloadAttr) {
         if (equalLettersIgnoringASCIICase(value, "none"))
             m_preload = MediaPlayer::Preload::None;
@@ -799,6 +806,9 @@ void HTMLMediaElement::pauseAfterDetachedTask()
     // If we were re-inserted into an active document, no need to pause.
     if (m_inActiveDocument)
         return;
+
+    if (m_networkState > NETWORK_EMPTY)
+        pause();
 
     if (!m_player)
         return;
@@ -3608,8 +3618,6 @@ void HTMLMediaElement::pause()
 {
     ALWAYS_LOG(LOGIDENTIFIER);
 
-    m_temporarilyAllowingInlinePlaybackAfterFullscreen = false;
-
     if (!mediaSession().playbackStateChangePermitted(MediaPlaybackState::Paused))
         return;
 
@@ -3793,7 +3801,6 @@ void HTMLMediaElement::setMuted(bool muted)
         scheduleUpdateMediaState();
 #endif
         mediaSession().canProduceAudioChanged();
-        updateSleepDisabling();
 
         invalidateStyle();
     }
@@ -5020,8 +5027,6 @@ void HTMLMediaElement::mediaPlayerRateChanged()
     if (m_playing)
         invalidateCachedTime();
 
-    updateSleepDisabling();
-
     endProcessingMediaPlayerCallback();
 }
 
@@ -5038,8 +5043,6 @@ void HTMLMediaElement::mediaPlayerPlaybackStateChanged()
         pauseInternal();
     else
         playInternal();
-
-    updateSleepDisabling();
 
     endProcessingMediaPlayerCallback();
 }
@@ -5218,7 +5221,6 @@ void HTMLMediaElement::mediaPlayerCharacteristicChanged()
     document().updateIsPlayingMedia();
 
     checkForAudioAndVideo();
-    updateSleepDisabling();
 
     endProcessingMediaPlayerCallback();
 }
@@ -5424,12 +5426,6 @@ void HTMLMediaElement::updatePlayState()
     bool playerPaused = m_player->paused();
 
     ALWAYS_LOG(LOGIDENTIFIER, "shouldBePlaying = ", shouldBePlaying, ", playerPaused = ", playerPaused);
-
-#if PLATFORM(WATCHOS)
-        // FIXME: Investigate doing this for all builds.
-        return;
-#endif
-    }
 
     if (shouldBePlaying) {
         schedulePlaybackControlsManagerUpdate();
@@ -5691,8 +5687,6 @@ void HTMLMediaElement::clearMediaPlayer()
     }
 
     m_resourceSelectionTaskCancellationGroup.cancel();
-
-    updateSleepDisabling();
 }
 
 const char* HTMLMediaElement::activeDOMObjectName() const
@@ -5722,8 +5716,6 @@ void HTMLMediaElement::stopWithoutDestroyingMediaPlayer()
     updateRenderer();
 
     stopPeriodicTimers();
-
-    updateSleepDisabling();
 }
 
 void HTMLMediaElement::closeTaskQueues()
@@ -5840,7 +5832,6 @@ void HTMLMediaElement::visibilityStateChanged()
     m_elementIsHidden = elementIsHidden;
     ALWAYS_LOG(LOGIDENTIFIER, "visible = ", !m_elementIsHidden);
 
-    updateSleepDisabling();
     mediaSession().visibilityChanged();
     if (m_player)
         m_player->setPageIsVisible(!m_elementIsHidden);
@@ -5909,7 +5900,6 @@ void HTMLMediaElement::setIsPlayingToWirelessTarget(bool isPlayingToWirelessTarg
         mediaSession().isPlayingToWirelessPlaybackTargetChanged(m_isPlayingToWirelessTarget);
         mediaSession().canProduceAudioChanged();
         scheduleUpdateMediaState();
-        updateSleepDisabling();
 
         m_failedToPlayToWirelessTarget = false;
         m_currentPlaybackTargetIsWirelessEventFiredTime = MonotonicTime::now();
@@ -5972,12 +5962,9 @@ void HTMLMediaElement::dispatchEvent(Event& event)
     if (event.type() == eventNames().endedEvent) {
         if (m_removedBehaviorRestrictionsAfterFirstUserGesture)
             document().userActivatedMediaFinishedPlaying();
-
-        updateSleepDisabling();
     }
 
     HTMLElement::dispatchEvent(event);
-
 }
 
 bool HTMLMediaElement::addEventListener(const AtomString& eventType, Ref<EventListener>&& listener, const AddEventListenerOptions& options)
@@ -6470,7 +6457,6 @@ void HTMLMediaElement::createMediaPlayer() WTF_IGNORES_THREAD_SAFETY_ANALYSIS
     }
 #endif
 
-    updateSleepDisabling();
 }
 
 #if ENABLE(WEB_AUDIO)
@@ -6627,21 +6613,6 @@ void HTMLMediaElement::applyMediaFragmentURI()
     }
 }
 
-void HTMLMediaElement::updateSleepDisabling()
-{
-    SleepType shouldDisableSleep = this->shouldDisableSleep();
-    if (shouldDisableSleep == SleepType::None && m_sleepDisabler)
-        m_sleepDisabler = nullptr;
-    else if (shouldDisableSleep != SleepType::None) {
-        auto type = shouldDisableSleep == SleepType::Display ? PAL::SleepDisabler::Type::Display : PAL::SleepDisabler::Type::System;
-        if (!m_sleepDisabler || m_sleepDisabler->type() != type)
-            m_sleepDisabler = makeUnique<SleepDisabler>("com.apple.WebCore: HTMLMediaElement playback", type);
-    }
-
-    if (m_player)
-        m_player->setShouldDisableSleep(shouldDisableSleep == SleepType::Display);
-}
-
 #if ENABLE(MEDIA_STREAM)
 static inline bool isRemoteMediaStreamVideoTrack(RefPtr<MediaStreamTrack>& item)
 {
@@ -6649,39 +6620,6 @@ static inline bool isRemoteMediaStreamVideoTrack(RefPtr<MediaStreamTrack>& item)
     return track->privateTrack().type() == RealtimeMediaSource::Type::Video && !track->isCaptureTrack() && !track->isCanvas();
 }
 #endif
-
-HTMLMediaElement::SleepType HTMLMediaElement::shouldDisableSleep() const
-{
-#if !PLATFORM(COCOA) && !PLATFORM(GTK) && !PLATFORM(WPE)
-    return SleepType::None;
-#endif
-    if (m_sentEndEvent || !m_player || m_player->paused() || loop())
-        return SleepType::None;
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    // If the media is playing remotely, we can't know definitively whether it has audio or video tracks.
-    if (m_isPlayingToWirelessTarget)
-        return SleepType::System;
-#endif
-
-    if (PlatformMediaSessionManager::sharedManager().processIsSuspended())
-        return SleepType::None;
-
-    bool shouldBeAbleToSleep = mediaType() != PlatformMediaSession::MediaType::VideoAudio;
-#if ENABLE(MEDIA_STREAM)
-    // Remote media stream video tracks may have their corresponding audio tracks being played outside of the media element. Let's ensure to not IDLE the screen in that case.
-    // FIXME: We should check that audio is being/to be played. Ideally, we would come up with a media stream agnostic heuristisc.
-    shouldBeAbleToSleep = shouldBeAbleToSleep && !(m_mediaStreamSrcObject && WTF::anyOf(m_mediaStreamSrcObject->getTracks(), isRemoteMediaStreamVideoTrack));
-#endif
-
-    if (shouldBeAbleToSleep)
-        return SleepType::None;
-
-    if (m_elementIsHidden)
-        return SleepType::System;
-
-    return SleepType::Display;
-}
 
 String HTMLMediaElement::mediaPlayerReferrer() const
 {
@@ -7488,7 +7426,6 @@ bool HTMLMediaElement::processingUserGestureForMedia() const
 
 void HTMLMediaElement::processIsSuspendedChanged()
 {
-    updateSleepDisabling();
 }
 
 bool HTMLMediaElement::shouldOverridePauseDuringRouteChange() const

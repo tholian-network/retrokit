@@ -44,7 +44,6 @@ public:
         SpeakerSelection,
         DisplayCapture,
         SyncXHR,
-        Fullscreen,
     };
     bool allows(Type, const SecurityOriginData&) const;
 

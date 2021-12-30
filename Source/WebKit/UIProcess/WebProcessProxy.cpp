@@ -487,7 +487,6 @@ void WebProcessProxy::shutDown()
     m_webUserContentControllerProxies.clear();
 
     m_userInitiatedActionMap.clear();
-    m_sleepDisablers.clear();
 
 #if ENABLE(ROUTING_ARBITRATION)
     m_routingArbitrator->processDidTerminate();
@@ -935,7 +934,6 @@ void WebProcessProxy::processDidTerminateOrFailedToLaunch(ProcessTerminationReas
     for (auto& page : pages)
         page->dispatchProcessDidTerminate(reason);
 
-    m_sleepDisablers.clear();
 }
 
 void WebProcessProxy::didReceiveInvalidMessage(IPC::Connection& connection, IPC::MessageName messageName)
@@ -1982,23 +1980,6 @@ void WebProcessProxy::enableServiceWorkers(const UserContentControllerIdentifier
 #if ENABLE(SERVICE_WORKER)
     updateServiceWorkerProcessAssertion();
 #endif
-}
-
-void WebProcessProxy::didCreateSleepDisabler(SleepDisablerIdentifier identifier, const String& reason, bool display)
-{
-    MESSAGE_CHECK(!reason.isNull());
-    auto sleepDisabler = makeUnique<WebCore::SleepDisabler>(reason.utf8().data(), display ? PAL::SleepDisabler::Type::Display : PAL::SleepDisabler::Type::System);
-    m_sleepDisablers.add(identifier, WTFMove(sleepDisabler));
-}
-
-void WebProcessProxy::didDestroySleepDisabler(SleepDisablerIdentifier identifier)
-{
-    m_sleepDisablers.remove(identifier);
-}
-
-bool WebProcessProxy::hasSleepDisabler() const
-{
-    return !m_sleepDisablers.isEmpty();
 }
 
 void WebProcessProxy::systemBeep()

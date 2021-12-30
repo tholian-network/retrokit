@@ -246,8 +246,6 @@ private:
 
     String mediaPlayerReferrer() const final;
     String mediaPlayerUserAgent() const final;
-    bool mediaPlayerIsFullscreen() const final;
-    bool mediaPlayerIsFullscreenPermitted() const final;
     bool mediaPlayerIsVideo() const final;
     float mediaPlayerContentsScale() const final;
     bool mediaPlayerPlatformVolumeConfigurationRequired() const final;

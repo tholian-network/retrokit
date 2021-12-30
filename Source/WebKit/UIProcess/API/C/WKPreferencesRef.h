@@ -183,10 +183,6 @@ WK_EXPORT bool WKPreferencesGetShouldPrintBackgrounds(WKPreferencesRef preferenc
 WK_EXPORT void WKPreferencesSetJavaScriptCanAccessClipboard(WKPreferencesRef preferencesRef, bool enabled);
 WK_EXPORT bool WKPreferencesGetJavaScriptCanAccessClipboard(WKPreferencesRef preferencesRef);
 
-// Defaults to false
-WK_EXPORT void WKPreferencesSetFullScreenEnabled(WKPreferencesRef preferencesRef, bool enabled);
-WK_EXPORT bool WKPreferencesGetFullScreenEnabled(WKPreferencesRef preferencesRef);
-
 // Defaults to true.
 WK_EXPORT void WKPreferencesSetAVFoundationEnabled(WKPreferencesRef preferencesRef, bool enabled);
 WK_EXPORT bool WKPreferencesGetAVFoundationEnabled(WKPreferencesRef preferencesRef);
@@ -198,7 +194,7 @@ WK_EXPORT bool WKPreferencesGetAVFoundationNSURLSessionEnabled(WKPreferencesRef 
 // Defaults to false
 WK_EXPORT void WKPreferencesSetWebAudioEnabled(WKPreferencesRef preferencesRef, bool enabled);
 WK_EXPORT bool WKPreferencesGetWebAudioEnabled(WKPreferencesRef preferencesRef);
-    
+
 // Defaults to false
 WK_EXPORT void WKPreferencesSetSuppressesIncrementalRendering(WKPreferencesRef preferencesRef, bool enabled);
 WK_EXPORT bool WKPreferencesGetSuppressesIncrementalRendering(WKPreferencesRef preferencesRef);

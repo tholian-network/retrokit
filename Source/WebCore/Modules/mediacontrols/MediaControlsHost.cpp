@@ -239,7 +239,7 @@ void MediaControlsHost::updateCaptionDisplaySizes(ForceUpdate force)
 
 bool MediaControlsHost::allowsInlineMediaPlayback() const
 {
-    return m_mediaElement;
+    return m_mediaElement && true;
 }
 
 bool MediaControlsHost::isVideoLayerInline() const

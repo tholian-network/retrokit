@@ -1619,7 +1619,7 @@ void WKPageSetPageUIClient(WKPageRef pageRef, const WKPageUIClientBase* wkClient
                     Ref<API::URLRequest> request = API::URLRequest::create(navigationAction->request());
                     return completionHandler(adoptRef(toImpl(m_client.createNewPage_deprecatedForUseWithV1(toAPI(&page), toAPI(request.ptr()), toAPI(featuresMap.ptr()), toAPI(navigationAction->modifiers()), toAPI(navigationAction->mouseButton()), m_client.base.clientInfo))));
                 }
-    
+
                 ASSERT(m_client.createNewPage_deprecatedForUseWithV0);
                 return completionHandler(adoptRef(toImpl(m_client.createNewPage_deprecatedForUseWithV0(toAPI(&page), toAPI(featuresMap.ptr()), toAPI(navigationAction->modifiers()), toAPI(navigationAction->mouseButton()), m_client.base.clientInfo))));
             }
@@ -1633,14 +1633,6 @@ void WKPageSetPageUIClient(WKPageRef pageRef, const WKPageUIClientBase* wkClient
                 return;
 
             m_client.showPage(toAPI(page), m_client.base.clientInfo);
-        }
-
-        void fullscreenMayReturnToInline(WebPageProxy* page) final
-        {
-            if (!m_client.fullscreenMayReturnToInline)
-                return;
-
-            m_client.fullscreenMayReturnToInline(toAPI(page), m_client.base.clientInfo);
         }
 
         void didExceedBackgroundResourceLimitWhileInForeground(WebPageProxy& page, WKResourceLimit limit) final

@@ -30,7 +30,6 @@
     [Reflect, CEReactions=NotNeeded] attribute DOMString name;
 
     [PutForwards=value] readonly attribute DOMTokenList sandbox;
-    [Reflect, CEReactions=NotNeeded] attribute boolean allowFullscreen;
     [Reflect, CEReactions=NotNeeded] attribute DOMString allow;
 
     [Reflect, CEReactions=NotNeeded] attribute DOMString scrolling;

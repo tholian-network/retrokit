@@ -105,7 +105,7 @@ void HTMLIFrameElement::parseAttribute(const QualifiedName& name, const AtomStri
         setSandboxFlags(value.isNull() ? SandboxNone : SecurityContext::parseSandboxPolicy(value, invalidTokens));
         if (!invalidTokens.isNull())
             document().addConsoleMessage(MessageSource::Other, MessageLevel::Error, "Error while parsing the 'sandbox' attribute: " + invalidTokens);
-    } else if (name == allowAttr || name == allowfullscreenAttr || name == webkitallowfullscreenAttr) {
+    } else if (name == allowAttr) {
         m_featurePolicy = std::nullopt;
     } else if (name == loadingAttr) {
         // Allow loading=eager to load the frame immediately if the lazy load was started, but

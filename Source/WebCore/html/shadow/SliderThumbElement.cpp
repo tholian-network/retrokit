@@ -101,8 +101,6 @@ void RenderSliderThumb::updateAppearance(const RenderStyle* parentStyle)
         mutableStyle().setAppearance(MediaSliderThumbPart);
     else if (parentStyle->appearance() == MediaVolumeSliderPart)
         mutableStyle().setAppearance(MediaVolumeSliderThumbPart);
-    else if (parentStyle->appearance() == MediaFullScreenVolumeSliderPart)
-        mutableStyle().setAppearance(MediaFullScreenVolumeSliderThumbPart);
     if (style().hasAppearance()) {
         ASSERT(element());
         theme().adjustSliderThumbSize(mutableStyle(), element());
@@ -600,8 +598,6 @@ std::optional<Style::ElementStyle> SliderThumbElement::resolveCustomStyle(const 
     case MediaSliderThumbPart:
     case MediaVolumeSliderPart:
     case MediaVolumeSliderThumbPart:
-    case MediaFullScreenVolumeSliderPart:
-    case MediaFullScreenVolumeSliderThumbPart:
         m_shadowPseudoId = mediaSliderThumbShadowPseudoId;
         break;
     default:
@@ -654,8 +650,6 @@ std::optional<Style::ElementStyle> SliderContainerElement::resolveCustomStyle(co
     case MediaSliderThumbPart:
     case MediaVolumeSliderPart:
     case MediaVolumeSliderThumbPart:
-    case MediaFullScreenVolumeSliderPart:
-    case MediaFullScreenVolumeSliderThumbPart:
         m_shadowPseudoId = mediaSliderContainer;
         break;
     default:

@@ -133,33 +133,6 @@ bool Quirks::needsSeekingSupportDisabled() const
     return equalLettersIgnoringASCIICase(host, "netflix.com") || host.endsWithIgnoringASCIICase(".netflix.com");
 }
 
-bool Quirks::needsPerDocumentAutoplayBehavior() const
-{
-#if PLATFORM(MAC)
-    ASSERT(m_document == &m_document->topDocument());
-    return needsQuirks() && allowedAutoplayQuirks(*m_document).contains(AutoplayQuirk::PerDocumentAutoplayBehavior);
-#else
-    if (!needsQuirks())
-        return false;
-
-    auto host = m_document->topDocument().url().host();
-    return equalLettersIgnoringASCIICase(host, "netflix.com") || host.endsWithIgnoringASCIICase(".netflix.com");
-#endif
-}
-
-bool Quirks::shouldAutoplayForArbitraryUserGesture() const
-{
-#if PLATFORM(MAC)
-    return needsQuirks() && allowedAutoplayQuirks(*m_document).contains(AutoplayQuirk::ArbitraryUserGestures);
-#else
-    if (!needsQuirks())
-        return false;
-
-    auto domain = RegistrableDomain { m_document->topDocument().url() };
-    return domain == "twitter.com"_s || domain == "facebook.com"_s;
-#endif
-}
-
 bool Quirks::shouldAutoplayWebAudioForArbitraryUserGesture() const
 {
     if (!needsQuirks())

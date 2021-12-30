@@ -382,12 +382,6 @@ Expected<void, MediaPlaybackDenialReason> MediaElementSession::playbackStateChan
     }
 #endif
 
-    if (topDocument.mediaState() & MediaProducer::MediaState::HasUserInteractedWithMediaElement && topDocument.quirks().needsPerDocumentAutoplayBehavior())
-        return { };
-
-    if (topDocument.hasHadUserInteraction() && document.quirks().shouldAutoplayForArbitraryUserGesture())
-        return { };
-
     if (m_restrictions & RequireUserGestureForVideoRateChange && m_element.isVideo() && !document.processingUserGestureForMedia()) {
         ALWAYS_LOG(LOGIDENTIFIER, "Returning FALSE because a user gesture is required for video rate change restriction");
         return makeUnexpected(MediaPlaybackDenialReason::UserGestureRequired);
@@ -1146,7 +1140,6 @@ void MediaElementSession::updateMediaUsageIfChanged()
         page->mediaPlaybackIsSuspended(),
         document.isMediaDocument() && !document.ownerElement(),
         pageExplicitlyAllowsElementToAutoplayInline(m_element),
-        document.topDocument().hasHadUserInteraction() && document.quirks().shouldAutoplayForArbitraryUserGesture(),
         isVideo && hasBehaviorRestriction(RequireUserGestureForVideoRateChange) && !processingUserGesture,
         isAudio && hasBehaviorRestriction(RequireUserGestureForAudioRateChange) && !processingUserGesture && !m_element.muted() && m_element.volume(),
         isVideo && hasBehaviorRestriction(RequireUserGestureForVideoDueToLowPowerMode) && !processingUserGesture,
@@ -1175,8 +1168,8 @@ String convertEnumerationToString(const MediaPlaybackDenialReason enumerationVal
         MAKE_STATIC_STRING_IMPL("InvalidState"),
     };
     static_assert(static_cast<size_t>(MediaPlaybackDenialReason::UserGestureRequired) == 0, "MediaPlaybackDenialReason::UserGestureRequired is not 0 as expected");
-    static_assert(static_cast<size_t>(MediaPlaybackDenialReason::PageConsentRequired) == 2, "MediaPlaybackDenialReason::PageConsentRequired is not 2 as expected");
-    static_assert(static_cast<size_t>(MediaPlaybackDenialReason::InvalidState) == 3, "MediaPlaybackDenialReason::InvalidState is not 3 as expected");
+    static_assert(static_cast<size_t>(MediaPlaybackDenialReason::PageConsentRequired) == 1, "MediaPlaybackDenialReason::PageConsentRequired is not 2 as expected");
+    static_assert(static_cast<size_t>(MediaPlaybackDenialReason::InvalidState) == 2, "MediaPlaybackDenialReason::InvalidState is not 3 as expected");
     ASSERT(static_cast<size_t>(enumerationValue) < WTF_ARRAY_LENGTH(values));
     return values[static_cast<size_t>(enumerationValue)];
 }

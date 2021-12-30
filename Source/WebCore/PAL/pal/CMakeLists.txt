@@ -10,7 +10,6 @@ set(PAL_PUBLIC_HEADERS
 
     system/Clock.h
     system/ClockGeneric.h
-    system/SleepDisabler.h
     system/Sound.h
     system/SystemSleepListener.h
 
@@ -23,7 +22,6 @@ set(PAL_SOURCES
     Logging.cpp
     SessionID.cpp
 
-    system/SleepDisabler.cpp
     system/SystemSleepListener.cpp
 )
 

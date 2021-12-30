@@ -71,7 +71,6 @@ AccessibilityOrientation AccessibilitySlider::orientation() const
     case SliderThumbHorizontalPart:
     case SliderHorizontalPart:
     case MediaSliderPart:
-    case MediaFullScreenVolumeSliderPart:
         return AccessibilityOrientation::Horizontal;
     
     case SliderThumbVerticalPart: 

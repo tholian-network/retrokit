@@ -752,7 +752,6 @@ enum AutoplayPolicy {
 
     [Conditional=VIDEO] undefined simulateSystemSleep();
     [Conditional=VIDEO] undefined simulateSystemWake();
-    [Conditional=VIDEO] boolean elementIsBlockingDisplaySleep(HTMLMediaElement element);
     [Conditional=VIDEO] boolean isPlayerVisibleInViewport(HTMLMediaElement element);
 
     MockPageOverlay installMockPageOverlay(PageOverlayType type);
@@ -996,9 +995,6 @@ enum AutoplayPolicy {
 
     boolean isRemoteUIAppForAccessibility();
 
-    unsigned long createSleepDisabler(DOMString reason, boolean display);
-    boolean destroySleepDisabler(unsigned long identifier);
-    
     [Conditional=APP_HIGHLIGHTS] readonly attribute sequence<DOMString> appHighlightContextMenuItemTitles;
     [Conditional=APP_HIGHLIGHTS] unsigned long numberOfAppHighlights();
 

@@ -139,7 +139,6 @@ enum {
     PROP_ENABLE_TABS_TO_LINKS,
     PROP_ENABLE_DNS_PREFETCHING,
     PROP_ENABLE_CARET_BROWSING,
-    PROP_ENABLE_FULLSCREEN,
     PROP_PRINT_BACKGROUNDS,
     PROP_ENABLE_WEBAUDIO,
     PROP_ENABLE_WEBGL,
@@ -293,9 +292,6 @@ static void webKitSettingsSetProperty(GObject* object, guint propId, const GValu
         break;
     case PROP_ENABLE_CARET_BROWSING:
         webkit_settings_set_enable_caret_browsing(settings, g_value_get_boolean(value));
-        break;
-    case PROP_ENABLE_FULLSCREEN:
-        webkit_settings_set_enable_fullscreen(settings, g_value_get_boolean(value));
         break;
     case PROP_PRINT_BACKGROUNDS:
         webkit_settings_set_print_backgrounds(settings, g_value_get_boolean(value));
@@ -495,9 +491,6 @@ static void webKitSettingsGetProperty(GObject* object, guint propId, GValue* val
         break;
     case PROP_ENABLE_CARET_BROWSING:
         g_value_set_boolean(value, webkit_settings_get_enable_caret_browsing(settings));
-        break;
-    case PROP_ENABLE_FULLSCREEN:
-        g_value_set_boolean(value, webkit_settings_get_enable_fullscreen(settings));
         break;
     case PROP_PRINT_BACKGROUNDS:
         g_value_set_boolean(value, webkit_settings_get_print_backgrounds(settings));
@@ -1018,22 +1011,6 @@ static void webkit_settings_class_init(WebKitSettingsClass* klass)
             _("Enable Caret Browsing"),
             _("Whether to enable accessibility enhanced keyboard navigation"),
             FALSE,
-            readWriteConstructParamFlags);
-
-    /**
-     * WebKitSettings:enable-fullscreen:
-     *
-     * Whether to enable the Javascript Fullscreen API. The API
-     * allows any HTML element to request fullscreen display. See also
-     * the current draft of the spec:
-     * http://www.w3.org/TR/fullscreen/
-     */
-    sObjProperties[PROP_ENABLE_FULLSCREEN] =
-        g_param_spec_boolean(
-            "enable-fullscreen",
-            _("Enable Fullscreen"),
-            _("Whether to enable the Javascript Fullscreen API"),
-            TRUE,
             readWriteConstructParamFlags);
 
     /**
@@ -2622,41 +2599,6 @@ void webkit_settings_set_enable_caret_browsing(WebKitSettings* settings, gboolea
 
     priv->preferences->setCaretBrowsingEnabled(enabled);
     g_object_notify_by_pspec(G_OBJECT(settings), sObjProperties[PROP_ENABLE_CARET_BROWSING]);
-}
-
-/**
- * webkit_settings_get_enable_fullscreen:
- * @settings: a #WebKitSettings
- *
- * Get the #WebKitSettings:enable-fullscreen property.
- *
- * Returns: %TRUE If fullscreen support is enabled or %FALSE otherwise.
- */
-gboolean webkit_settings_get_enable_fullscreen(WebKitSettings* settings)
-{
-    g_return_val_if_fail(WEBKIT_IS_SETTINGS(settings), FALSE);
-
-    return settings->priv->preferences->fullScreenEnabled();
-}
-
-/**
- * webkit_settings_set_enable_fullscreen:
- * @settings: a #WebKitSettings
- * @enabled: Value to be set
- *
- * Set the #WebKitSettings:enable-fullscreen property.
- */
-void webkit_settings_set_enable_fullscreen(WebKitSettings* settings, gboolean enabled)
-{
-    g_return_if_fail(WEBKIT_IS_SETTINGS(settings));
-
-    WebKitSettingsPrivate* priv = settings->priv;
-    bool currentValue = priv->preferences->fullScreenEnabled();
-    if (currentValue == enabled)
-        return;
-
-    priv->preferences->setFullScreenEnabled(enabled);
-    g_object_notify_by_pspec(G_OBJECT(settings), sObjProperties[PROP_ENABLE_FULLSCREEN]);
 }
 
 /**
