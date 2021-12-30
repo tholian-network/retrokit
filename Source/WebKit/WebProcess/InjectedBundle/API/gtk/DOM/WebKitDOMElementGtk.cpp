@@ -888,14 +888,6 @@ gboolean webkit_dom_element_webkit_matches_selector(WebKitDOMElement* self, cons
     return webkit_dom_element_matches(self, selectors, error);
 }
 
-void webkit_dom_element_webkit_request_fullscreen(WebKitDOMElement* self)
-{
-    WebCore::JSMainThreadNullState state;
-    g_return_if_fail(WEBKIT_DOM_IS_ELEMENT(self));
-    WebCore::Element* item = WebKit::core(self);
-    item->webkitRequestFullscreen();
-}
-
 WebKitDOMElement* webkit_dom_element_insert_adjacent_element(WebKitDOMElement* self, const gchar* where, WebKitDOMElement* element, GError** error)
 {
     WebCore::JSMainThreadNullState state;

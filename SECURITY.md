@@ -156,6 +156,8 @@ list of Web APIs that are removed.
 ## HTML Features
 
 - [ ] Remove `preconnect` Support (`SERVER_PRECONNECT`)
+- [ ] Remove `preload` Support
+- [ ] Remove `prerender` Support
 
 
 ## CSS Features
