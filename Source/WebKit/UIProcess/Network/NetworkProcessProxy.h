@@ -41,10 +41,6 @@
 #include <memory>
 #include <wtf/Deque.h>
 
-#if ENABLE(LEGACY_CUSTOM_PROTOCOL_MANAGER)
-#include "LegacyCustomProtocolManagerProxy.h"
-#endif
-
 #if PLATFORM(COCOA)
 #include "XPCEventHandler.h"
 #include <wtf/OSObjectPtr.h>
@@ -52,10 +48,6 @@
 
 namespace IPC {
 class FormDataReference;
-}
-
-namespace API {
-class CustomProtocolManagerClient;
 }
 
 namespace PAL {
@@ -226,22 +218,19 @@ public:
     enum class SendParametersToNetworkProcess : bool { No, Yes };
     void addSession(WebsiteDataStore&, SendParametersToNetworkProcess);
     void removeSession(WebsiteDataStore&);
-    
+
     void createSymLinkForFileUpgrade(const String& indexedDatabaseDirectory);
 
     // ProcessThrottlerClient
     void sendProcessDidResume() final;
     ASCIILiteral clientName() const final { return "NetworkProcess"_s; }
-    
+
     static void setSuspensionAllowedForTesting(bool);
     void sendProcessWillSuspendImminentlyForTesting();
 
-    void registerSchemeForLegacyCustomProtocol(const String&);
-    void unregisterSchemeForLegacyCustomProtocol(const String&);
-
     enum class TerminationReason { RequestedByClient, Crash, ExceededMemoryLimit };
     void networkProcessDidTerminate(TerminationReason);
-    
+
     void resetQuota(PAL::SessionID, CompletionHandler<void()>&&);
 
     void resourceLoadDidSendRequest(WebPageProxyIdentifier, ResourceLoadInfo&&, WebCore::ResourceRequest&&, std::optional<IPC::FormDataReference>&&);
@@ -262,8 +251,6 @@ public:
     void clearBundleIdentifier(CompletionHandler<void()>&&);
 
     WebCookieManagerProxy& cookieManager() { return m_cookieManager.get(); }
-
-    API::CustomProtocolManagerClient& customProtocolManagerClient() { return m_customProtocolManagerClient.get(); }
 
 #if PLATFORM(COCOA)
     xpc_object_t xpcEndpointMessage() const { return m_endpointMessage.get(); }
@@ -338,11 +325,6 @@ private:
 #endif
 
     std::unique_ptr<DownloadProxyMap> m_downloadProxyMap;
-
-    UniqueRef<API::CustomProtocolManagerClient> m_customProtocolManagerClient;
-#if ENABLE(LEGACY_CUSTOM_PROTOCOL_MANAGER)
-    LegacyCustomProtocolManagerProxy m_customProtocolManagerProxy;
-#endif
 
     ProcessThrottler m_throttler;
     ProcessThrottler::ActivityVariant m_activityFromWebProcesses;

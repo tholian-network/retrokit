@@ -138,7 +138,6 @@ void WebPageCreationParameters::encode(IPC::Encoder& encoder) const
     encoder << overrideContentSecurityPolicy;
     encoder << cpuLimit;
     encoder << urlSchemeHandlers;
-    encoder << urlSchemesWithLegacyCustomProtocolHandlers;
 #if ENABLE(APPLICATION_MANIFEST)
     encoder << applicationManifest;
 #endif
@@ -460,12 +459,6 @@ std::optional<WebPageCreationParameters> WebPageCreationParameters::decode(IPC::
 
     if (!decoder.decode(parameters.urlSchemeHandlers))
         return std::nullopt;
-    
-    std::optional<Vector<String>> urlSchemesWithLegacyCustomProtocolHandlers;
-    decoder >> urlSchemesWithLegacyCustomProtocolHandlers;
-    if (!urlSchemesWithLegacyCustomProtocolHandlers)
-        return std::nullopt;
-    parameters.urlSchemesWithLegacyCustomProtocolHandlers = WTFMove(*urlSchemesWithLegacyCustomProtocolHandlers);
 
 #if ENABLE(APPLICATION_MANIFEST)
     std::optional<std::optional<WebCore::ApplicationManifest>> applicationManifest;

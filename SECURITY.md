@@ -76,7 +76,9 @@ These legacy APIs that are no longer of relevance to a modern Web Browser.
 - [x] Remove Modern Media Controls Hacks and Shadow DOM (`MODERN_MEDIA_CONTROLS`)
 - [x] Remove Sleep Disablers (`SleepDisabler`, `SleepDisablerClient`, `sleepDisablers`, `shouldDisableSleep`, `isDisablingSleep`, `mediaPlayerShouldDisableSleep`, `elementIsBlockingDisplaySleep`)
 - [ ] Remove System Sleep Listener (`SystemSleepListener`)
-- [ ] Remove Netscape Plugin API (`NETSCAPE_PLUGIN_API`)
+- [x] Remove Legacy Custom Protocol Manager Support (`LEGACY_CUSTOM_PROTOCOL_MANAGER`, `LegacyCustomProtocol`, `LegacyCustomProtocolManager`, `registerSchemeForLegacyCustomProtocol`, `unregisterSchemeForLegacyCustomProtocol`, `LegacySchemeRegistry`, `CustomProtocolManagerClient`)
+- [ ] Remove Legacy Encrypted Media API (`LEGACY_ENCRYPTED_MEDIA`)
+- [ ] Remove Legacy Netscape Plugin API (`NETSCAPE_PLUGIN_API`)
 - [ ] Remove `AllowsInlineMediaPlayback` Hacks (`AllowsInlineMediaPlayback`, `MEDIA_PLAYBACK_ALLOWS_INLINE`) and default playback behaviour to no-autoplay.
 - [ ] Remove `QuickTimePluginReplacement`
 - [ ] Remove `YouTubePluginReplacement`
@@ -148,6 +150,7 @@ list of Web APIs that are removed.
 - [ ] Remove Window Popups (`window.open()`)
 - [ ] Remove Window Resize Observer Support (`RESIZE_OBSERVER`)
 - [ ] Remove WASM / WebASM Support
+- [ ] *Undecided* Remove Custom Protocol Manager Support (`CustomProtocol`, `CustomProtocolManager`)
 - [ ] *Undecided* Remove Web Midi API
 - [ ] *Undecided* Remove Web Workers API
 - [ ] *Undecided* Remove Service Worker API

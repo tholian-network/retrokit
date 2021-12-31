@@ -27,16 +27,11 @@
 #include "NetworkProcessProxy.h"
 
 #include "APIContentRuleList.h"
-#include "APICustomProtocolManagerClient.h"
 #include "AuthenticationChallengeProxy.h"
 #include "AuthenticationManager.h"
 #include "DownloadProxyMap.h"
 #include "DownloadProxyMessages.h"
 #include "FrameInfoData.h"
-#if ENABLE(LEGACY_CUSTOM_PROTOCOL_MANAGER)
-#include "LegacyCustomProtocolManagerMessages.h"
-#include "LegacyCustomProtocolManagerProxyMessages.h"
-#endif
 #include "LegacyGlobalSettings.h"
 #include "Logging.h"
 #include "NetworkContentRuleListManagerMessages.h"
@@ -74,10 +69,6 @@
 
 #if PLATFORM(IOS_FAMILY)
 #include <wtf/spi/darwin/XPCSPI.h>
-#endif
-
-#if PLATFORM(COCOA)
-#include "LegacyCustomProtocolManagerClient.h"
 #endif
 
 #define MESSAGE_CHECK(assertion) MESSAGE_CHECK_BASE(assertion, connection())
@@ -197,12 +188,6 @@ static bool anyProcessPoolShouldTakeUIBackgroundAssertion()
 
 NetworkProcessProxy::NetworkProcessProxy()
     : AuxiliaryProcessProxy(anyProcessPoolAlwaysRunsAtBackgroundPriority())
-#if ENABLE(LEGACY_CUSTOM_PROTOCOL_MANAGER)
-    , m_customProtocolManagerClient(makeUniqueRef<LegacyCustomProtocolManagerClient>())
-    , m_customProtocolManagerProxy(*this)
-#else
-    , m_customProtocolManagerClient(makeUniqueRef<API::CustomProtocolManagerClient>())
-#endif
     , m_throttler(*this, anyProcessPoolShouldTakeUIBackgroundAssertion())
     , m_cookieManager(makeUniqueRef<WebCookieManagerProxy>(*this))
 {
@@ -319,9 +304,6 @@ void NetworkProcessProxy::networkProcessDidTerminate(TerminationReason reason)
 
     if (m_downloadProxyMap)
         m_downloadProxyMap->invalidate();
-#if ENABLE(LEGACY_CUSTOM_PROTOCOL_MANAGER)
-    m_customProtocolManagerProxy.invalidate();
-#endif
 
     m_uploadActivity = std::nullopt;
 
@@ -1424,24 +1406,6 @@ void NetworkProcessProxy::requestStorageSpace(PAL::SessionID sessionID, const We
             });
         });
     });
-}
-
-void NetworkProcessProxy::registerSchemeForLegacyCustomProtocol(const String& scheme)
-{
-#if ENABLE(LEGACY_CUSTOM_PROTOCOL_MANAGER)
-    send(Messages::LegacyCustomProtocolManager::RegisterScheme(scheme), 0);
-#else
-    UNUSED_PARAM(scheme);
-#endif
-}
-
-void NetworkProcessProxy::unregisterSchemeForLegacyCustomProtocol(const String& scheme)
-{
-#if ENABLE(LEGACY_CUSTOM_PROTOCOL_MANAGER)
-    send(Messages::LegacyCustomProtocolManager::UnregisterScheme(scheme), 0);
-#else
-    UNUSED_PARAM(scheme);
-#endif
 }
 
 void NetworkProcessProxy::setWebProcessHasUploads(WebCore::ProcessIdentifier processID, bool hasUpload)

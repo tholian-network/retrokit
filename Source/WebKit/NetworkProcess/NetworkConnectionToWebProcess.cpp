@@ -76,10 +76,6 @@
 #include <WebCore/SameSiteInfo.h>
 #include <WebCore/SecurityPolicy.h>
 
-#if ENABLE(LEGACY_CUSTOM_PROTOCOL_MANAGER)
-#include "LegacyCustomProtocolManager.h"
-#endif
-
 #define CONNECTION_RELEASE_LOG(channel, fmt, ...) RELEASE_LOG(channel, "%p - [webProcessIdentifier=%" PRIu64 "] NetworkConnectionToWebProcess::" fmt, this, webProcessIdentifier().toUInt64(), ##__VA_ARGS__)
 #define CONNECTION_RELEASE_LOG_ERROR(channel, fmt, ...) RELEASE_LOG_ERROR(channel, "%p - [webProcessIdentifier=%" PRIu64 "] NetworkConnectionToWebProcess::" fmt, this, webProcessIdentifier().toUInt64(), ##__VA_ARGS__)
 
@@ -621,13 +617,6 @@ void NetworkConnectionToWebProcess::preconnectTo(std::optional<uint64_t> preconn
         if (preconnectionIdentifier)
             didFinishPreconnection(*preconnectionIdentifier, error);
     };
-
-#if ENABLE(LEGACY_CUSTOM_PROTOCOL_MANAGER)
-    if (networkProcess().supplement<LegacyCustomProtocolManager>()->supportsScheme(loadParameters.request.url().protocol().toString())) {
-        completionHandler(internalError(loadParameters.request.url()));
-        return;
-    }
-#endif
 
 #if ENABLE(SERVER_PRECONNECT)
     auto* session = networkSession();

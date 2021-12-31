@@ -120,7 +120,6 @@ MESSAGE_RECEIVERS = \
 	NetworkProcess/NetworkContentRuleListManager \
 	NetworkProcess/WebStorage/StorageManagerSet \
 	NetworkProcess/cache/CacheStorageEngineConnection \
-	NetworkProcess/CustomProtocols/LegacyCustomProtocolManager \
 	NetworkProcess/NetworkSocketChannel \
 	NetworkProcess/ServiceWorker/WebSWServerConnection \
 	NetworkProcess/ServiceWorker/ServiceWorkerFetchTask \
@@ -150,7 +149,6 @@ MESSAGE_RECEIVERS = \
 	UIProcess/Plugins/PluginProcessProxy \
 	UIProcess/DrawingAreaProxy \
 	UIProcess/Network/NetworkProcessProxy \
-	UIProcess/Network/CustomProtocols/LegacyCustomProtocolManagerProxy \
 	UIProcess/WebPageProxy \
 	UIProcess/VisitedLinkStore \
 	UIProcess/ios/SmartMagnificationController \

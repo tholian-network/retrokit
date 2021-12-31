@@ -28,7 +28,6 @@
 
 #include "APIArray.h"
 #include "APIAutomationClient.h"
-#include "APICustomProtocolManagerClient.h"
 #include "APIDownloadClient.h"
 #include "APIHTTPCookieStore.h"
 #include "APIInjectedBundleClient.h"
@@ -1326,8 +1325,6 @@ void WebProcessPool::registerGlobalURLSchemeAsHavingCustomProtocolHandlers(const
 
     InitializeWebKit2();
     globalURLSchemesWithCustomProtocolHandlers().add(urlScheme);
-    for (auto networkProcess : NetworkProcessProxy::allNetworkProcesses())
-        networkProcess->registerSchemeForLegacyCustomProtocol(urlScheme);
 }
 
 void WebProcessPool::unregisterGlobalURLSchemeAsHavingCustomProtocolHandlers(const String& urlScheme)
@@ -1337,8 +1334,6 @@ void WebProcessPool::unregisterGlobalURLSchemeAsHavingCustomProtocolHandlers(con
 
     InitializeWebKit2();
     globalURLSchemesWithCustomProtocolHandlers().remove(urlScheme);
-    for (auto networkProcess : NetworkProcessProxy::allNetworkProcesses())
-        networkProcess->unregisterSchemeForLegacyCustomProtocol(urlScheme);
 }
 
 void WebProcessPool::registerURLSchemeAsCachePartitioned(const String& urlScheme)

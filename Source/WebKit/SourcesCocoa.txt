@@ -33,9 +33,6 @@ NetworkProcess/Classifier/WebResourceLoadStatisticsStore.cpp
 
 NetworkProcess/Cookies/mac/WebCookieManagerMac.mm
 
-NetworkProcess/CustomProtocols/Cocoa/LegacyCustomProtocolManagerCocoa.mm
-NetworkProcess/CustomProtocols/LegacyCustomProtocolManager.cpp
-
 NetworkProcess/Downloads/cocoa/DownloadCocoa.mm
 
 NetworkProcess/EntryPoint/Cocoa/Daemon/DaemonEntryPoint.mm
@@ -385,7 +382,6 @@ UIProcess/Cocoa/FindClient.mm
 UIProcess/Cocoa/GPUProcessProxyCocoa.mm
 UIProcess/Cocoa/GlobalFindInPageState.mm
 UIProcess/Cocoa/IconLoadingDelegate.mm
-UIProcess/Cocoa/LegacyCustomProtocolManagerClient.mm
 UIProcess/Cocoa/MediaUtilities.mm
 UIProcess/Cocoa/MediaPermissionUtilities.mm
 UIProcess/Cocoa/ModelElementControllerCocoa.mm
@@ -517,8 +513,6 @@ UIProcess/mac/WKViewLayoutStrategy.mm
 
 UIProcess/Media/cocoa/AudioSessionRoutingArbitratorProxyCocoa.mm
 UIProcess/Media/cocoa/MediaUsageManagerCocoa.mm
-
-UIProcess/Network/CustomProtocols/LegacyCustomProtocolManagerProxy.cpp
 
 UIProcess/Plugins/mac/PluginInfoStoreMac.mm
 UIProcess/Plugins/mac/PluginProcessManagerMac.mm
