@@ -467,20 +467,6 @@ static GtkWidget *webViewCreate(WebKitWebView *webView, WebKitNavigationAction *
     return GTK_WIDGET(newWebView);
 }
 
-static gboolean webViewEnterFullScreen(WebKitWebView *webView, BrowserWindow *window)
-{
-    gtk_widget_hide(window->toolbar);
-    browser_tab_enter_fullscreen(window->activeTab);
-    return FALSE;
-}
-
-static gboolean webViewLeaveFullScreen(WebKitWebView *webView, BrowserWindow *window)
-{
-    browser_tab_leave_fullscreen(window->activeTab);
-    gtk_widget_show(window->toolbar);
-    return FALSE;
-}
-
 static gboolean webViewLoadFailed(WebKitWebView *webView, WebKitLoadEvent loadEvent, const char *failingURI, GError *error, BrowserWindow *window)
 {
     gtk_entry_set_progress_fraction(GTK_ENTRY(window->uriEntry), 0.);
@@ -1241,8 +1227,6 @@ static void browserWindowSwitchTab(GtkNotebook *notebook, BrowserTab *tab, guint
     g_signal_connect(webView, "mouse-target-changed", G_CALLBACK(webViewMouseTargetChanged), window);
     g_signal_connect(webView, "notify::zoom-level", G_CALLBACK(webViewZoomLevelChanged), window);
     g_signal_connect(webView, "notify::favicon", G_CALLBACK(faviconChanged), window);
-    g_signal_connect(webView, "enter-fullscreen", G_CALLBACK(webViewEnterFullScreen), window);
-    g_signal_connect(webView, "leave-fullscreen", G_CALLBACK(webViewLeaveFullScreen), window);
 #if !GTK_CHECK_VERSION(3, 98, 0)
     g_signal_connect(webView, "scroll-event", G_CALLBACK(scrollEventCallback), window);
 #endif

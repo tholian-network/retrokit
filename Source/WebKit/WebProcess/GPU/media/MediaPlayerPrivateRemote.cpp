@@ -452,11 +452,6 @@ bool MediaPlayerPrivateRemote::supportsScanning() const
     return m_configuration.supportsScanning;
 }
 
-bool MediaPlayerPrivateRemote::supportsFullscreen() const
-{
-    return m_configuration.supportsFullscreen;
-}
-
 bool MediaPlayerPrivateRemote::supportsAcceleratedRendering() const
 {
     return m_configuration.supportsAcceleratedRendering;

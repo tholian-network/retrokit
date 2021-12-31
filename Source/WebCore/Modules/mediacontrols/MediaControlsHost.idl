@@ -45,7 +45,6 @@ enum DeviceType {
     undefined setSelectedTextTrack(TextTrack? track);
     readonly attribute HTMLElement textTrackContainer;
     readonly attribute boolean allowsInlineMediaPlayback;
-    readonly attribute boolean supportsFullscreen;
     readonly attribute boolean isVideoLayerInline;
     readonly attribute boolean userGestureRequired;
     readonly attribute boolean isInMediaDocument;
@@ -57,8 +56,6 @@ enum DeviceType {
     attribute boolean controlsDependOnPageScaleFactor;
 
     undefined updateTextTrackContainer();
-    undefined enteredFullscreen();
-    undefined exitedFullscreen();
 
     DOMString generateUUID();
 

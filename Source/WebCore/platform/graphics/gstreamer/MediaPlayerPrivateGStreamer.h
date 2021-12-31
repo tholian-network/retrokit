@@ -181,7 +181,6 @@ public:
     AudioSourceProvider* audioSourceProvider() final;
 #endif
     void paint(GraphicsContext&, const FloatRect&) final;
-    bool supportsFullscreen() const final;
     MediaPlayer::MovieLoadType movieLoadType() const final;
 
     std::optional<VideoPlaybackQualityMetrics> videoPlaybackQualityMetrics() final;

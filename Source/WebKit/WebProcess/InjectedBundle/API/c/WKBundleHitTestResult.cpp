@@ -80,11 +80,6 @@ WKURLRef WKBundleHitTestResultCopyAbsoluteMediaURL(WKBundleHitTestResultRef hitT
     return WebKit::toCopiedURLAPI(WebKit::toImpl(hitTestResultRef)->absoluteMediaURL());
 }
 
-bool WKBundleHitTestResultMediaIsInFullscreen(WKBundleHitTestResultRef hitTestResultRef)
-{
-    return WebKit::toImpl(hitTestResultRef)->mediaIsInFullscreen();
-}
-
 bool WKBundleHitTestResultMediaHasAudio(WKBundleHitTestResultRef hitTestResultRef)
 {
     return WebKit::toImpl(hitTestResultRef)->mediaHasAudio();

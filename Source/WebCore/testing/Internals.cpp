@@ -4381,7 +4381,8 @@ ExceptionOr<Internals::MediaUsageState> Internals::mediaUsageState(HTMLMediaElem
     if (!info)
         return Exception { NotSupportedError };
 
-    return { { info.value().mediaURL.string(),
+    return { {
+        info.value().mediaURL.string(),
         info.value().isPlaying,
         info.value().canShowControlsManager,
         info.value().canShowNowPlayingControls,

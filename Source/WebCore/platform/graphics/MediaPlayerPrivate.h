@@ -74,7 +74,6 @@ public:
     virtual void pause() = 0;
     virtual void setBufferingPolicy(MediaPlayer::BufferingPolicy) { }
 
-    virtual bool supportsFullscreen() const { return false; }
     virtual bool supportsScanning() const { return false; }
     virtual bool requiresImmediateCompositing() const { return false; }
 

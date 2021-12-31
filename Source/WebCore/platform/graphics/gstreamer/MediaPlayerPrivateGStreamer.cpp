@@ -3336,11 +3336,6 @@ void MediaPlayerPrivateGStreamer::updateTextureMapperFlags()
 }
 #endif
 
-bool MediaPlayerPrivateGStreamer::supportsFullscreen() const
-{
-    return true;
-}
-
 MediaPlayer::MovieLoadType MediaPlayerPrivateGStreamer::movieLoadType() const
 {
     if (m_readyState == MediaPlayer::ReadyState::HaveNothing)

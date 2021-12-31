@@ -37,7 +37,6 @@ struct RemoteMediaPlayerConfiguration {
     String engineDescription;
     double maximumDurationToCacheMediaTime;
     bool supportsScanning { false };
-    bool supportsFullscreen { false };
     bool supportsAcceleratedRendering { false };
     bool supportsPlayAtHostTime { false };
     bool supportsPauseAtHostTime { false };
@@ -50,7 +49,6 @@ struct RemoteMediaPlayerConfiguration {
         encoder << engineDescription;
         encoder << maximumDurationToCacheMediaTime;
         encoder << supportsScanning;
-        encoder << supportsFullscreen;
         encoder << supportsAcceleratedRendering;
         encoder << supportsPlayAtHostTime;
         encoder << supportsPauseAtHostTime;
@@ -74,11 +72,6 @@ struct RemoteMediaPlayerConfiguration {
         std::optional<bool> supportsScanning;
         decoder >> supportsScanning;
         if (!supportsScanning)
-            return std::nullopt;
-
-        std::optional<bool> supportsFullscreen;
-        decoder >> supportsFullscreen;
-        if (!supportsFullscreen)
             return std::nullopt;
 
         std::optional<bool> supportsAcceleratedRendering;
@@ -110,7 +103,6 @@ struct RemoteMediaPlayerConfiguration {
             WTFMove(*engineDescription),
             *maximumDurationToCacheMediaTime,
             *supportsScanning,
-            *supportsFullscreen,
             *supportsAcceleratedRendering,
             *supportsPlayAtHostTime,
             *supportsPauseAtHostTime,

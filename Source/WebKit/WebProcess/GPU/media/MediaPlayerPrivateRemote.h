@@ -218,7 +218,6 @@ private:
 
     void setBufferingPolicy(WebCore::MediaPlayer::BufferingPolicy) final;
 
-    bool supportsFullscreen() const final;
     bool supportsScanning() const final;
 
     bool canSaveMediaData() const final;

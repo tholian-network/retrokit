@@ -111,7 +111,6 @@ void RemoteMediaPlayerProxy::getConfiguration(RemoteMediaPlayerConfiguration& co
     auto maxDuration = m_player->maximumDurationToCacheMediaTime();
     configuration.maximumDurationToCacheMediaTime = maxDuration ? maxDuration : 0.2;
     configuration.supportsScanning = m_player->supportsScanning();
-    configuration.supportsFullscreen = m_player->supportsFullscreen();
     configuration.supportsAcceleratedRendering = m_player->supportsAcceleratedRendering();
     configuration.supportsPlayAtHostTime = m_player->supportsPlayAtHostTime();
     configuration.supportsPauseAtHostTime = m_player->supportsPauseAtHostTime();

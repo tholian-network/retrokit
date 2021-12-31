@@ -69,7 +69,6 @@ public:
     Element* textTrackContainer();
     void updateTextTrackContainer();
     bool allowsInlineMediaPlayback() const;
-    bool supportsFullscreen() const;
     bool isVideoLayerInline() const;
     bool isInMediaDocument() const;
     bool userGestureRequired() const;
@@ -78,8 +77,6 @@ public:
     enum class ForceUpdate { Yes, No };
     void updateCaptionDisplaySizes(ForceUpdate = ForceUpdate::No);
     void updateTextTrackRepresentationImageIfNeeded();
-    void enteredFullscreen();
-    void exitedFullscreen();
 
     String externalDeviceDisplayName() const;
 

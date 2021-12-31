@@ -54,7 +54,6 @@ public:
     String absolutePDFURL() const;
     String absoluteLinkURL() const;
     String absoluteMediaURL() const;
-    bool mediaIsInFullscreen() const;
     bool mediaHasAudio() const;
     bool isDownloadableMedia() const;
     BundleHitTestResultMediaType mediaType() const;

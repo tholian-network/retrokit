@@ -59,9 +59,6 @@ public:
 
     void updateTextTrackRepresentationImageIfNeeded();
 
-    void enteredFullscreen();
-    void exitedFullscreen();
-
 private:
     explicit MediaControlTextTrackContainerElement(Document&, HTMLMediaElement&);
 
