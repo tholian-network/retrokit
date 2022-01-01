@@ -154,11 +154,6 @@
 #include <wtf/WeakObjCPtr.h>
 #endif
 
-#if HAVE(TOUCH_BAR)
-#include "TouchBarMenuData.h"
-#include "TouchBarMenuItemData.h"
-#endif
-
 #if PLATFORM(GTK)
 #include "ArgumentCodersGtk.h"
 #endif
@@ -709,10 +704,6 @@ public:
     void setBaseWritingDirection(WebCore::WritingDirection);
 
     std::optional<WebCore::FontAttributes> cachedFontAttributesAtSelectionStart() const { return m_cachedFontAttributesAtSelectionStart; }
-
-#if HAVE(TOUCH_BAR)
-    const TouchBarMenuData& touchBarMenuData() const { return m_touchBarMenuData; }
-#endif
 
     bool maintainsInactiveSelection() const;
     void setMaintainsInactiveSelection(bool);
@@ -1606,13 +1597,6 @@ public:
     bool updateEditorState(const EditorState& newEditorState);
     void scheduleFullEditorStateUpdate();
     void dispatchDidUpdateEditorState();
-
-#if HAVE(TOUCH_BAR)
-    void touchBarMenuDataRemoved();
-    void touchBarMenuDataChanged(const TouchBarMenuData&);
-    void touchBarMenuItemDataAdded(const TouchBarMenuItemData&);
-    void touchBarMenuItemDataRemoved(const TouchBarMenuItemData&);
-#endif
 
 #if ENABLE(RESOURCE_LOAD_STATISTICS)
     void requestStorageAccessConfirm(const WebCore::RegistrableDomain& subFrameDomain, const WebCore::RegistrableDomain& topFrameDomain, WebCore::FrameIdentifier, CompletionHandler<void(bool)>&&);
@@ -2597,10 +2581,6 @@ private:
 
     EditorState m_editorState;
     bool m_isEditable { false };
-
-#if HAVE(TOUCH_BAR)
-    TouchBarMenuData m_touchBarMenuData;
-#endif
 
     double m_textZoomFactor { 1 };
     double m_pageZoomFactor { 1 };

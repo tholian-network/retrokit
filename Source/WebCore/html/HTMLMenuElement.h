@@ -31,8 +31,6 @@ class HTMLMenuElement final : public HTMLElement {
 public:
     static Ref<HTMLMenuElement> create(const QualifiedName&, Document&);
     
-    bool isTouchBarMenu() const { return m_isTouchBarMenu; }
-
 private:
     HTMLMenuElement(const QualifiedName&, Document&);
 
@@ -40,7 +38,6 @@ private:
     void removedFromAncestor(RemovalType, ContainerNode&) final;
     void parseAttribute(const QualifiedName&, const AtomString&) final;
 
-    bool m_isTouchBarMenu;
 };
 
 } // namespace WebCore

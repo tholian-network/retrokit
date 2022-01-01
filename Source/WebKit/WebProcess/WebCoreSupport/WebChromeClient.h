@@ -50,21 +50,16 @@ public:
 private:
     ~WebChromeClient();
 
-    void didInsertMenuElement(WebCore::HTMLMenuElement&) final;
-    void didRemoveMenuElement(WebCore::HTMLMenuElement&) final;
-    void didInsertMenuItemElement(WebCore::HTMLMenuItemElement&) final;
-    void didRemoveMenuItemElement(WebCore::HTMLMenuItemElement&) final;
-
     void chromeDestroyed() final;
-    
+
     void setWindowRect(const WebCore::FloatRect&) final;
     WebCore::FloatRect windowRect() final;
-    
+
     WebCore::FloatRect pageRect() final;
-    
+
     void focus() final;
     void unfocus() final;
-    
+
     bool canTakeFocus(WebCore::FocusDirection) final;
     void takeFocus(WebCore::FocusDirection) final;
 
@@ -77,33 +72,33 @@ private:
     // created Page has its show method called.
     WebCore::Page* createWindow(WebCore::Frame&, const WebCore::WindowFeatures&, const WebCore::NavigationAction&) final;
     void show() final;
-    
+
     bool canRunModal() final;
     void runModal() final;
 
     void reportProcessCPUTime(Seconds, WebCore::ActivityStateForCPUSampling) final;
-    
+
     void setToolbarsVisible(bool) final;
     bool toolbarsVisible() final;
-    
+
     void setStatusbarVisible(bool) final;
     bool statusbarVisible() final;
-    
+
     void setScrollbarsVisible(bool) final;
     bool scrollbarsVisible() final;
-    
+
     void setMenubarVisible(bool) final;
     bool menubarVisible() final;
-    
+
     void setResizable(bool) final;
-    
+
     void addMessageToConsole(JSC::MessageSource, JSC::MessageLevel, const String& message, unsigned lineNumber, unsigned columnNumber, const String& sourceID) final;
-    
+
     bool canRunBeforeUnloadConfirmPanel() final;
     bool runBeforeUnloadConfirmPanel(const String& message, WebCore::Frame&) final;
-    
+
     void closeWindowSoon() final;
-    
+
     void runJavaScriptAlert(WebCore::Frame&, const String&) final;
     bool runJavaScriptConfirm(WebCore::Frame&, const String&) final;
     bool runJavaScriptPrompt(WebCore::Frame&, const String& message, const String& defaultValue, String& result) final;
@@ -148,7 +143,7 @@ private:
 
     void reachedMaxAppCacheSize(int64_t spaceNeeded) final;
     void reachedApplicationCacheOriginQuota(WebCore::SecurityOrigin&, int64_t spaceNeeded) final;
-    
+
 #if ENABLE(INPUT_TYPE_COLOR)
     std::unique_ptr<WebCore::ColorChooser> createColorChooser(WebCore::ColorChooserClient&, const WebCore::Color&) final;
 #endif

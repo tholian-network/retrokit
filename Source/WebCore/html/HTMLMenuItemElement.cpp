@@ -48,25 +48,12 @@ inline HTMLMenuItemElement::HTMLMenuItemElement(const QualifiedName& tagName, Do
 
 Node::InsertedIntoAncestorResult HTMLMenuItemElement::insertedIntoAncestor(InsertionType type, ContainerNode& ancestor)
 {
-    auto result = HTMLElement::insertedIntoAncestor(type, ancestor);
-    if (type.connectedToDocument) {
-        if (auto* page = document().page()) {
-            if (is<HTMLMenuElement>(ancestor) && downcast<HTMLMenuElement>(ancestor).isTouchBarMenu())
-                page->chrome().client().didInsertMenuItemElement(*this);
-        }
-    }
-    return result;
+    return HTMLElement::insertedIntoAncestor(type, ancestor);
 }
 
 void HTMLMenuItemElement::removedFromAncestor(RemovalType type, ContainerNode& ancestor)
 {
     HTMLElement::removedFromAncestor(type, ancestor);
-    if (type.disconnectedFromDocument) {
-        if (auto* page = document().page()) {
-            if (is<HTMLMenuElement>(ancestor) && downcast<HTMLMenuElement>(ancestor).isTouchBarMenu())
-                page->chrome().client().didRemoveMenuItemElement(*this);
-        }
-    }
 }
 
 Ref<HTMLMenuItemElement> HTMLMenuItemElement::create(const QualifiedName& tagName, Document& document)

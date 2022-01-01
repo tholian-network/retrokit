@@ -40,13 +40,13 @@ be classified either as an outdated WebKit/Safari Browser or as a Web Scraper)
 The platforms are basically uninteresting for high security environments, or are
 legacy platforms that are no longer maintained.
 
-- [x] Remove Playstation Platform Support (`__SCE__`, `PLATFORM_PLAYSTATION`, `BPLATFORM_PLAYSTATION`, `PlayStation`, `playstation`, `sony`)
 - [ ] Remove Apple Watch Platform Support (`TARGET_OS_WATCH`, `BOS_WATCHOS`, `BPLATFORM_WATCHOS`)
 - [ ] Remove Apple TV Platform Support (`TARGET_OS_TV`, `BOS_APPLETV`, `BPLATFORM_APPLETV`)
+- [x] Remove Playstation Platform Support (`__SCE__`, `PLATFORM_PLAYSTATION`, `BPLATFORM_PLAYSTATION`, `PlayStation`, `playstation`, `sony`)
 - [ ] Remove Solaris Platform Support
+- [x] Remove Touch Bar Support (`TOUCH_BAR`, `TouchBarMenuData`, `TouchBarMenuItemData`, `didInsertMenuElement`, `didRemoveMenuElement`, `didInsertMenuItemElement`, `didRemoveMenuItemElement`, `touchBarMenu*`)
 - [ ] Remove User Message Handlers Support (`USER_MESSAGE_HANDLERS`)
 - [ ] Remove Wireless Playback Target Support (`WIRELESS_PLAYBACK_TARGET`)
-- [ ] Remove Touch Bar Support (`TOUCH_BAR`, `TouchBar*`)
 - [ ] *Undecided* Remove WebDriver Support (`WEBDRIVER`, `WEBDRIVER_KEYBOARD_INTERACTIONS`, `WEBDRIVER_MOUSE_INTERACTIONS`, `WEBDRIVER_TOUCH_INTERACTIONS`, `WEBDRIVER_WHEEL_INTERACTIONS`)
 - [ ] *Undecided* Remove WebKit Platform for Embedded (`WPE`, `USE_WPE_RENDERER`)
 - [ ] *Undecided* Remove Remote Inspector Support (`REMOTE_INSPECTOR`)
@@ -214,7 +214,8 @@ list of Web APIs that are removed.
 - [ ] Remove Window Alert Method (`window.alert()`)
 - [ ] Remove Window History Interface (`window.history`)
 - [ ] Remove Window Popups (`window.open()`)
-- [ ] Remove Window Resize Observer Support (`RESIZE_OBSERVER`)
+- [ ] Remove Performance Observer API (`PerformanceObserver`)
+- [ ] Remove Resize Observer API (`RESIZE_OBSERVER`, `ResizeObserver`)
 - [ ] Remove WASM / WebASM Support
 - [ ] *Undecided* Remove Custom Protocol Manager Support (`CustomProtocol`, `CustomProtocolManager`)
 - [ ] *Undecided* Remove Web Midi API

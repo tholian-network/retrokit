@@ -47,21 +47,13 @@ inline HTMLMenuElement::HTMLMenuElement(const QualifiedName& tagName, Document& 
 
 Node::InsertedIntoAncestorResult HTMLMenuElement::insertedIntoAncestor(InsertionType type, ContainerNode& ancestor)
 {
-    auto result = HTMLElement::insertedIntoAncestor(type, ancestor);
-    if (type.connectedToDocument && RuntimeEnabledFeatures::sharedFeatures().menuItemElementEnabled() && m_isTouchBarMenu) {
-        if (auto* page = document().page())
-            page->chrome().client().didInsertMenuElement(*this);
-    }
+    return HTMLElement::insertedIntoAncestor(type, ancestor);
     return result;
 }
 
 void HTMLMenuElement::removedFromAncestor(RemovalType type, ContainerNode& ancestor)
 {
     HTMLElement::removedFromAncestor(type, ancestor);
-    if (type.disconnectedFromDocument && RuntimeEnabledFeatures::sharedFeatures().menuItemElementEnabled() && m_isTouchBarMenu) {
-        if (auto* page = document().page())
-            page->chrome().client().didRemoveMenuElement(*this);
-    }
 }
 
 void HTMLMenuElement::parseAttribute(const QualifiedName& name, const AtomString& value)
@@ -69,18 +61,6 @@ void HTMLMenuElement::parseAttribute(const QualifiedName& name, const AtomString
     if (name != typeAttr || !RuntimeEnabledFeatures::sharedFeatures().menuItemElementEnabled()) {
         HTMLElement::parseAttribute(name, value);
         return;
-    }
-    bool wasTouchBarMenu = m_isTouchBarMenu;
-    m_isTouchBarMenu = equalLettersIgnoringASCIICase(value, "touchbar");
-    if (!wasTouchBarMenu && m_isTouchBarMenu) {
-        if (auto* page = document().page()) {
-            page->chrome().client().didInsertMenuElement(*this);
-            for (auto& child : childrenOfType<Element>(*this))
-                page->chrome().client().didInsertMenuItemElement(downcast<HTMLMenuItemElement>(child));
-        }
-    } else if (wasTouchBarMenu && !m_isTouchBarMenu) {
-        if (auto* page = document().page())
-            page->chrome().client().didRemoveMenuElement(*this);
     }
 }
 
