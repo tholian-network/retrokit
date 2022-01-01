@@ -45,46 +45,6 @@ static bool constraintsAreAllRelative(const ViewportConfiguration::Parameters& c
 }
 #endif // ASSERT_ENABLED
 
-static constexpr float platformDeviceWidthOverride()
-{
-#if PLATFORM(WATCHOS)
-    return 320;
-#else
-    return 0;
-#endif
-}
-
-static constexpr double platformMinimumScaleForWebpage()
-{
-#if PLATFORM(WATCHOS)
-    return 0.1;
-#else
-    return 0.25;
-#endif
-}
-
-static constexpr bool shouldOverrideShrinkToFitArgument()
-{
-#if PLATFORM(WATCHOS)
-    return true;
-#else
-    return false;
-#endif
-}
-
-static bool needsUpdateAfterChangingDisabledAdaptations(const OptionSet<DisabledAdaptations>& oldDisabledAdaptations, const OptionSet<DisabledAdaptations>& newDisabledAdaptations)
-{
-    if (oldDisabledAdaptations == newDisabledAdaptations)
-        return false;
-
-#if PLATFORM(WATCHOS)
-    if (oldDisabledAdaptations.contains(DisabledAdaptations::Watch) != newDisabledAdaptations.contains(DisabledAdaptations::Watch))
-        return true;
-#endif
-
-    return false;
-}
-
 ViewportConfiguration::ViewportConfiguration()
     : m_minimumLayoutSize(1024, 768)
     , m_viewLayoutSize(1024, 768)
@@ -144,11 +104,6 @@ bool ViewportConfiguration::setDisabledAdaptations(const OptionSet<DisabledAdapt
     auto previousDisabledAdaptations = m_disabledAdaptations;
     m_disabledAdaptations = disabledAdaptations;
 
-    if (!needsUpdateAfterChangingDisabledAdaptations(previousDisabledAdaptations, disabledAdaptations))
-        return false;
-
-    updateMinimumLayoutSize();
-    updateConfiguration();
     return true;
 }
 
@@ -196,22 +151,10 @@ IntSize ViewportConfiguration::layoutSize() const
     return IntSize(layoutWidth(), layoutHeight());
 }
 
-bool ViewportConfiguration::shouldOverrideDeviceWidthAndShrinkToFit() const
-{
-    if (m_disabledAdaptations.contains(DisabledAdaptations::Watch))
-        return false;
-
-    auto viewWidth = m_viewLayoutSize.width();
-    return 0 < viewWidth && viewWidth < platformDeviceWidthOverride();
-}
-
 bool ViewportConfiguration::shouldIgnoreHorizontalScalingConstraints() const
 {
     if (!m_canIgnoreScalingConstraints)
         return false;
-
-    if (shouldOverrideDeviceWidthAndShrinkToFit())
-        return true;
 
     if (!m_configuration.allowsShrinkToFit)
         return false;
@@ -248,7 +191,7 @@ bool ViewportConfiguration::shouldIgnoreScalingConstraints() const
 
 bool ViewportConfiguration::shouldIgnoreScalingConstraintsRegardlessOfContentSize() const
 {
-    return m_canIgnoreScalingConstraints && shouldOverrideDeviceWidthAndShrinkToFit();
+    return m_canIgnoreScalingConstraints;
 }
 
 double ViewportConfiguration::initialScaleFromSize(double width, double height, bool shouldIgnoreScalingConstraints) const
@@ -381,7 +324,7 @@ ViewportConfiguration::Parameters ViewportConfiguration::nativeWebpageParameters
 {
     Parameters parameters = ViewportConfiguration::nativeWebpageParametersWithoutShrinkToFit();
     parameters.allowsShrinkToFit = true;
-    parameters.minimumScale = platformMinimumScaleForWebpage();
+    parameters.minimumScale = 0.25;
     parameters.initialScaleIsSet = false;
     return parameters;
 }
@@ -393,7 +336,7 @@ ViewportConfiguration::Parameters ViewportConfiguration::webpageParameters()
     parameters.widthIsSet = true;
     parameters.allowsUserScaling = true;
     parameters.allowsShrinkToFit = true;
-    parameters.minimumScale = platformMinimumScaleForWebpage();
+    parameters.minimumScale = 0.25;
     parameters.maximumScale = 5;
     return parameters;
 }
@@ -509,9 +452,7 @@ void ViewportConfiguration::updateConfiguration()
     if (booleanViewportArgumentIsSet(m_viewportArguments.userZoom))
         m_configuration.allowsUserScaling = m_viewportArguments.userZoom != 0.;
 
-    if (shouldOverrideShrinkToFitArgument())
-        m_configuration.allowsShrinkToFit = shouldOverrideDeviceWidthAndShrinkToFit();
-    else if (booleanViewportArgumentIsSet(m_viewportArguments.shrinkToFit))
+    if (booleanViewportArgumentIsSet(m_viewportArguments.shrinkToFit))
         m_configuration.allowsShrinkToFit = m_viewportArguments.shrinkToFit != 0.;
 
     if (canOverrideConfigurationParameters() && !viewportArgumentsOverridesWidth)
@@ -529,12 +470,6 @@ void ViewportConfiguration::updateConfiguration()
 void ViewportConfiguration::updateMinimumLayoutSize()
 {
     m_minimumLayoutSize = m_viewLayoutSize / effectiveLayoutSizeScaleFactor();
-
-    if (!shouldOverrideDeviceWidthAndShrinkToFit())
-        return;
-
-    float minDeviceWidth = platformDeviceWidthOverride();
-    m_minimumLayoutSize = FloatSize(minDeviceWidth, std::roundf(m_minimumLayoutSize.height() * (minDeviceWidth / m_minimumLayoutSize.width())));
 }
 
 double ViewportConfiguration::viewportArgumentsLength(double length) const

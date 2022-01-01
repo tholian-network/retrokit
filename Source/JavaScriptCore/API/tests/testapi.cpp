@@ -620,8 +620,6 @@ void TestAPI::promiseDrainDoesNotEatExceptions()
     bool useLegacyDrain = false;
 #if PLATFORM(MAC)
     useLegacyDrain = applicationSDKVersion() < DYLD_MACOSX_VERSION_12_00;
-#elif PLATFORM(WATCH)
-        // Don't check, JSC isn't API on watch anyway.
 #elif PLATFORM(IOS_FAMILY)
     useLegacyDrain = applicationSDKVersion() < DYLD_IOS_VERSION_15_0;
 #else

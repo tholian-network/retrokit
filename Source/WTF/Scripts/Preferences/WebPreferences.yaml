@@ -30,7 +30,6 @@ AVFoundationEnabled:
     WebKitLegacy:
       default: true
     WebKit:
-      "PLATFORM(WATCHOS)": false
       default: true
 
 AVFoundationNSURLSessionEnabled:
@@ -643,7 +642,6 @@ DisabledAdaptationsMetaTagEnabled:
     WebKitLegacy:
       default: false
     WebKit:
-      "PLATFORM(WATCHOS)": true
       default: false
     WebCore:
       default: false
@@ -1107,7 +1105,6 @@ LayoutViewportHeightExpansionFactor:
     WebKitLegacy:
       default: 0
     WebKit:
-      "PLATFORM(WATCHOS)": 1
       default: 0
     WebCore:
       default: 0
@@ -1412,10 +1409,8 @@ MinimumZoomFontSize:
     WebKitLegacy:
       default: 15
     WebKit:
-      "PLATFORM(WATCHOS)": 30
       default: 15
     WebCore:
-      "PLATFORM(WATCHOS)": 30
       default: 15
 
 MockCaptureDevicesPromptEnabled:
@@ -2073,7 +2068,6 @@ StandardFontFamily:
     WebKitLegacy:
       default: '"Times"'
     WebKit:
-      "PLATFORM(WATCHOS)": '"system-ui"'
       default: '"Times"'
     WebCore:
       default: '""'
@@ -2204,13 +2198,10 @@ TextInteractionEnabled:
   type: bool
   defaultValue:
     WebKitLegacy:
-      "PLATFORM(WATCH_OS)": false
       default: true
     WebKit:
-      "PLATFORM(WATCH_OS)": false
       default: true
     WebCore:
-      "PLATFORM(WATCH_OS)": false
       default: true
 
 ThreadedScrollingEnabled:
@@ -2426,7 +2417,7 @@ WebShareEnabled:
     WebKitLegacy:
       default: false
     WebKit:
-      "PLATFORM(COCOA) && !PLATFORM(WATCHOS) && !PLATFORM(APPLETV)": true
+      "PLATFORM(COCOA) && !PLATFORM(APPLETV)": true
       default: false
     WebCore:
       default: false

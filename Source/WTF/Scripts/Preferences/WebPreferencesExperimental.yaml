@@ -1474,7 +1474,7 @@ WebShareFileAPIEnabled:
     WebKitLegacy:
       default: false
     WebKit:
-      "PLATFORM(COCOA) && !PLATFORM(WATCHOS) && !PLATFORM(APPLETV)": true
+      "PLATFORM(COCOA) && !PLATFORM(APPLETV)": true
       default: false
     WebCore:
       default: false

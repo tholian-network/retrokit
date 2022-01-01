@@ -52,7 +52,7 @@ bool defaultDisallowSyncXHRDuringPageDismissalEnabled();
 bool defaultAppleMailPaginationQuirkEnabled();
 #endif
 
-#if !PLATFORM(MACCATALYST) && !PLATFORM(WATCHOS)
+#if !PLATFORM(MACCATALYST)
 bool allowsDeprecatedSynchronousXMLHttpRequestDuringUnload();
 #endif
 

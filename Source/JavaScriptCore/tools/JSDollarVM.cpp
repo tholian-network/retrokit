@@ -3694,7 +3694,7 @@ JSC_DEFINE_HOST_FUNCTION(functionAsanEnabled, (JSGlobalObject*, CallFrame*))
 JSC_DEFINE_HOST_FUNCTION(functionIsMemoryLimited, (JSGlobalObject*, CallFrame*))
 {
     DollarVMAssertScope assertScope;
-#if PLATFORM(IOS) || PLATFORM(APPLETV) || PLATFORM(WATCHOS)
+#if PLATFORM(IOS) || PLATFORM(APPLETV)
     return JSValue::encode(jsBoolean(true));
 #else
     return JSValue::encode(jsBoolean(false));

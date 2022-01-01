@@ -164,7 +164,7 @@ DOMPasteAccessRequestsEnabled:
     WebCore:
       default: false
 
-# FIXME: This is on by default in WebKit2 (for everything but WatchOS). Perhaps we should consider turning it on for WebKitLegacy as well.
+# FIXME: This is on by default in WebKit2. Perhaps we should consider turning it on for WebKitLegacy as well.
 DataListElementEnabled:
   type: bool
   humanReadableName: "DataList Element"
@@ -175,7 +175,6 @@ DataListElementEnabled:
     WebKitLegacy:
       default: false
     WebKit:
-      "PLATFORM(WATCHOS)": false
       default: true
 
 # FIXME: This is on by default in WebKit2 (for macOS at least). Perhaps we should consider turning it on for WebKitLegacy as well.
@@ -300,7 +299,6 @@ InputTypeColorEnabled:
     WebKitLegacy:
       default: false
     WebKit:
-      "PLATFORM(WATCHOS)": false
       default: true
     WebCore:
       default: false
@@ -565,7 +563,7 @@ PreferFasterClickOverDoubleTap:
   exposed: [ WebKit ]
   defaultValue:
     WebKit:
-      "PLATFORM(IOS_FAMILY) && !PLATFORM(WATCHOS)": true
+      "PLATFORM(IOS_FAMILY)": true
       default: false
 
 PreferInlineTextSelectionInImages:

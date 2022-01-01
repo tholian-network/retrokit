@@ -42,9 +42,6 @@ namespace WebCore {
 
 RuntimeEnabledFeatures::RuntimeEnabledFeatures()
 {
-#if PLATFORM(WATCHOS)
-    m_isWebSocketEnabled = false;
-#endif
 }
 
 RuntimeEnabledFeatures& RuntimeEnabledFeatures::sharedFeatures()

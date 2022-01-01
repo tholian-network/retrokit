@@ -84,7 +84,3 @@
 #define WTF_PLATFORM_APPLETV 1
 #endif
 
-/* PLATFORM(WATCHOS) */
-#if defined(TARGET_OS_WATCH) && TARGET_OS_WATCH
-#define WTF_PLATFORM_WATCHOS 1
-#endif

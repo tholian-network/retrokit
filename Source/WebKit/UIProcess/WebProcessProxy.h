@@ -279,11 +279,6 @@ public:
     void didCommitProvisionalLoad() { m_hasCommittedAnyProvisionalLoads = true; }
     bool hasCommittedAnyProvisionalLoads() const { return m_hasCommittedAnyProvisionalLoads; }
 
-#if PLATFORM(WATCHOS)
-    void startBackgroundActivityForFullscreenInput();
-    void endBackgroundActivityForFullscreenInput();
-#endif
-
     bool isPrewarmed() const { return m_isPrewarmed; }
     void markIsNoLongerInPrewarmedPool();
 
@@ -627,10 +622,6 @@ private:
 #endif
 #if PLATFORM(IOS)
     bool m_hasManagedSessionSandboxAccess { false };
-#endif
-
-#if PLATFORM(WATCHOS)
-    std::unique_ptr<ProcessThrottler::BackgroundActivity> m_backgroundActivityForFullscreenFormControls;
 #endif
 
 #if PLATFORM(COCOA)

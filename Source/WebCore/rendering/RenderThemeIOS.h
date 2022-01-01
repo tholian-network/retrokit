@@ -180,10 +180,6 @@ private:
     RenderThemeIOS();
     virtual ~RenderThemeIOS() = default;
 
-#if PLATFORM(WATCHOS)
-    String extraDefaultStyleSheet() final;
-#endif
-
 #if ENABLE(IOS_FORM_CONTROL_REFRESH)
     bool paintProgressBarWithFormControlRefresh(const RenderObject&, const PaintInfo&, const IntRect&);
     bool paintSliderTrackWithFormControlRefresh(const RenderObject&, const PaintInfo&, const IntRect&);

@@ -72,11 +72,6 @@
 #define WTF_OS_TVOS 1
 #endif
 
-/* OS(WATCHOS) - watchOS */
-#if OS(DARWIN) && TARGET_OS_WATCH
-#define WTF_OS_WATCHOS 1
-#endif
-
 /* FIXME: Rename this to drop the X, as that is no longer the name of the operating system. */
 /* OS(MAC_OS_X) - macOS (not including iOS family) */
 #if OS(DARWIN) && TARGET_OS_OSX

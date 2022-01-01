@@ -157,7 +157,6 @@ private:
     double viewportArgumentsLength(double length) const;
     double initialScaleFromSize(double width, double height, bool shouldIgnoreScalingConstraints) const;
 
-    bool shouldOverrideDeviceWidthAndShrinkToFit() const;
     bool shouldIgnoreScalingConstraintsRegardlessOfContentSize() const;
     bool shouldIgnoreScalingConstraints() const;
     bool shouldIgnoreVerticalScalingConstraints() const;

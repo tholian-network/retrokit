@@ -40,8 +40,12 @@ be classified either as an outdated WebKit/Safari Browser or as a Web Scraper)
 The platforms are basically uninteresting for high security environments, or are
 legacy platforms that are no longer maintained.
 
-- [ ] Remove Apple Watch Platform Support (`TARGET_OS_WATCH`, `BOS_WATCHOS`, `BPLATFORM_WATCHOS`)
-- [ ] Remove Apple TV Platform Support (`TARGET_OS_TV`, `BOS_APPLETV`, `BPLATFORM_APPLETV`)
+- [ ] Remove AIX Support (`AIX`)
+- [x] Remove Apple Watch Platform Support (`TARGET_OS_WATCH`, `BOS_WATCHOS`, `BPLATFORM_WATCHOS`, `WATCHOS`, `__WATCH_OS_VERSION`, `PEPPER_UI_CORE`, `QUICKBOARD_CONTROLLER`, `PUIC_BUTTON_TYPE_PILL`, `SYMPTOMS_FRAMEWORK`, `WatchOS*`)
+- [ ] Remove Apple TV Platform Support (`TARGET_OS_TV`, `BOS_APPLETV`, `BPLATFORM_APPLETV`, `TVOS`, `__TV_OS_VERSION`)
+- [ ] Remove Fuchsia OS Support (`FUCHSIA`)
+- [ ] Remove GNU/Hurd Support (`HURD`)
+- [ ] Remove iOS Support (`IOS_FAMILY`, `IOS_FAMILY_SIMULATOR`)
 - [x] Remove Playstation Platform Support (`__SCE__`, `PLATFORM_PLAYSTATION`, `BPLATFORM_PLAYSTATION`, `PlayStation`, `playstation`, `sony`)
 - [ ] Remove Solaris Platform Support
 - [x] Remove Touch Bar Support (`TOUCH_BAR`, `TouchBarMenuData`, `TouchBarMenuItemData`, `didInsertMenuElement`, `didRemoveMenuElement`, `didInsertMenuItemElement`, `didRemoveMenuItemElement`, `touchBarMenu*`)
@@ -60,6 +64,7 @@ These legacy APIs that are no longer of relevance to a modern Web View.
 - [x] Fix `None` already being defined in `X11`
 - [x] Remove `MEMMEM` hack in `StringExtras.h`
 - [ ] Remove `STRNSTR` hack in `StringExtras.h`
+- [ ] Remove `CoreFoundation`, and instead use internal data types (`USE_CF`, `CFSTR()`)
 - [x] Remove Modern Media Controls Hacks and Shadow DOM (`MODERN_MEDIA_CONTROLS`)
 - [x] Remove Sleep Disablers (`SleepDisabler`, `SleepDisablerClient`, `sleepDisablers`, `shouldDisableSleep`, `isDisablingSleep`, `mediaPlayerShouldDisableSleep`, `elementIsBlockingDisplaySleep`)
 - [ ] Remove System Sleep Listener (`SystemSleepListener`)

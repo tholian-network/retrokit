@@ -319,18 +319,6 @@ namespace WebCore {
     WEBCORE_EXPORT String insertListTypeNumberedAccessibilityTitle();
 #endif
 
-#if PLATFORM(WATCHOS)
-    WEBCORE_EXPORT String numberPadOKButtonTitle();
-    WEBCORE_EXPORT String formControlCancelButtonTitle();
-    WEBCORE_EXPORT String formControlHideButtonTitle();
-    WEBCORE_EXPORT String formControlGoButtonTitle();
-    WEBCORE_EXPORT String formControlSearchButtonTitle();
-    WEBCORE_EXPORT String datePickerSetButtonTitle();
-    WEBCORE_EXPORT String datePickerDayLabelTitle();
-    WEBCORE_EXPORT String datePickerMonthLabelTitle();
-    WEBCORE_EXPORT String datePickerYearLabelTitle();
-#endif
-
 #if ENABLE(WEB_AUTHN)
     WEBCORE_EXPORT String makeCredentialTouchIDPromptTitle(const String& bundleName, const String& domain);
     WEBCORE_EXPORT String getAssertionTouchIDPromptTitle(const String& bundleName, const String& domain);

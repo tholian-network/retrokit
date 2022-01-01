@@ -82,11 +82,6 @@
 #define BPLATFORM_COCOA 1
 #endif
 
-#if defined(TARGET_OS_WATCH) && TARGET_OS_WATCH
-#define BOS_WATCHOS 1
-#define BPLATFORM_WATCHOS 1
-#endif
-
 #if defined(TARGET_OS_TV) && TARGET_OS_TV
 #define BOS_APPLETV 1
 #define BPLATFORM_APPLETV 1

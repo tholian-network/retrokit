@@ -1823,28 +1823,6 @@ void WebProcessProxy::pageIsBecomingInvisible(WebCore::PageIdentifier identifier
         speechRecognitionServer->mute();
 }
 
-#if PLATFORM(WATCHOS)
-
-void WebProcessProxy::startBackgroundActivityForFullscreenInput()
-{
-    if (m_backgroundActivityForFullscreenFormControls)
-        return;
-
-    m_backgroundActivityForFullscreenFormControls = m_throttler.backgroundActivity("Fullscreen input"_s).moveToUniquePtr();
-    WEBPROCESSPROXY_RELEASE_LOG(ProcessSuspension, "startBackgroundActivityForFullscreenInput: UIProcess is taking a background assertion because it is presenting fullscreen UI for form controls.");
-}
-
-void WebProcessProxy::endBackgroundActivityForFullscreenInput()
-{
-    if (!m_backgroundActivityForFullscreenFormControls)
-        return;
-
-    m_backgroundActivityForFullscreenFormControls = nullptr;
-    WEBPROCESSPROXY_RELEASE_LOG(ProcessSuspension, "endBackgroundActivityForFullscreenInput: UIProcess is releasing a background assertion because it has dismissed fullscreen UI for form controls.");
-}
-
-#endif
-
 #if ENABLE(SERVICE_WORKER)
 void WebProcessProxy::establishServiceWorkerContext(const WebPreferencesStore& store, CompletionHandler<void()>&& completionHandler)
 {

@@ -89,7 +89,7 @@ bool defaultDisallowSyncXHRDuringPageDismissalEnabled()
         WTFLogAlways("Allowing synchronous XHR during page unload due to managed preference");
         return false;
     }
-#elif PLATFORM(IOS_FAMILY) && !PLATFORM(MACCATALYST) && !PLATFORM(WATCHOS)
+#elif PLATFORM(IOS_FAMILY) && !PLATFORM(MACCATALYST)
     if (allowsDeprecatedSynchronousXMLHttpRequestDuringUnload()) {
         WTFLogAlways("Allowing synchronous XHR during page unload due to managed preference");
         return false;

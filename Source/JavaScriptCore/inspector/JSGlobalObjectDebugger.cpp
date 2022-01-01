@@ -71,20 +71,7 @@ void JSGlobalObjectDebugger::runEventLoopWhilePaused()
 
 RunLoopMode JSGlobalObjectDebugger::runLoopMode()
 {
-#if USE(CF) && !PLATFORM(WATCHOS)
-    // Run the RunLoop in a custom run loop mode to prevent default observers
-    // to run and potentially evaluate JavaScript in this context while we are
-    // nested. Only the debugger should control things until we continue.
-    // FIXME: This is not a perfect solution, as background threads are not
-    // paused and can still access and evalute script in the JSContext.
-
-    // FIXME: <rdar://problem/25972777>. On watchOS, in order for auto-attach to work,
-    // we need to run in the default run loop mode otherwise we do not receive the XPC messages
-    // necessary to setup the relay connection and negotiate an auto-attach debugger.
-    return CFSTR("com.apple.JavaScriptCore.remote-inspector-runloop-mode");
-#else
     return DefaultRunLoopMode;
-#endif
 }
 
 } // namespace Inspector

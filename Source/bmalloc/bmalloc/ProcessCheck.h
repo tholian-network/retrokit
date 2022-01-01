@@ -30,11 +30,7 @@
 namespace bmalloc {
 
 #if BPLATFORM(COCOA)
-#if BPLATFORM(WATCHOS)
-inline bool gigacageEnabledForProcess() { return false; }
-#else
 bool gigacageEnabledForProcess();
-#endif
 #else
 inline bool gigacageEnabledForProcess() { return true; }
 #endif

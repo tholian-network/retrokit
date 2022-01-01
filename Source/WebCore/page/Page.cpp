@@ -2633,10 +2633,6 @@ static LayoutRect relevantViewRect(RenderView* view)
     LayoutRect viewRect = view->viewRect();
 
     float relevantViewRectWidth = 980;
-#if PLATFORM(WATCHOS)
-    // FIXME(186051): Consider limiting the relevant rect width to the view width everywhere.
-    relevantViewRectWidth = std::min<float>(viewRect.width().toFloat(), relevantViewRectWidth);
-#endif
 
     // DidHitRelevantRepaintedObjectsAreaThreshold is a LayoutMilestone intended to indicate that
     // a certain relevant amount of content has been drawn to the screen. This is the rect that

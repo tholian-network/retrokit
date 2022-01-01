@@ -124,8 +124,6 @@ String MediaControlsHost::layoutTraitsClassName() const
     return "MacOSLayoutTraits";
 #elif PLATFORM(IOS)
     return "IOSLayoutTraits";
-#elif PLATFORM(WATCHOS)
-    return "WatchOSLayoutTraits";
 #else
     ASSERT_NOT_REACHED();
     return nullString();
