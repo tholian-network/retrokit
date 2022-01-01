@@ -59,16 +59,9 @@ static ProtectionSpace protectionSpaceFromSoupAuthAndURL(SoupAuth* soupAuth, con
     else
         scheme = ProtectionSpaceAuthenticationSchemeUnknown;
 
-#if USE(SOUP2)
-    auto host = url.host();
-    auto port = url.port();
-    if (!port)
-        port = defaultPortForProtocol(url.protocol());
-#else
     URL authURL({ }, makeString("http://", soup_auth_get_authority(soupAuth)));
     auto host = authURL.host();
     auto port = authURL.port();
-#endif
 
     return ProtectionSpace(host.toString(), static_cast<int>(port.value_or(0)),
         protectionSpaceServerTypeFromURL(url, soup_auth_is_for_proxy(soupAuth)),
@@ -81,9 +74,6 @@ AuthenticationChallenge::AuthenticationChallenge(SoupMessage* soupMessage, SoupA
         , retrying ? 1 : 0 // previousFailureCount
         , soupMessage // failureResponse
         , ResourceError::authenticationError(soupMessage))
-#if USE(SOUP2)
-    , m_soupMessage(soupMessage)
-#endif
     , m_soupAuth(soupAuth)
 {
 }
@@ -136,10 +126,6 @@ bool AuthenticationChallenge::platformCompare(const AuthenticationChallenge& a, 
 
     if (a.tlsPasswordFlags() != b.tlsPasswordFlags())
         return false;
-
-#if USE(SOUP2)
-    return a.soupMessage() == b.soupMessage();
-#endif
 
     return true;
 }

@@ -23,12 +23,6 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#if USE(LIBSECRET)
-#define SECRET_WITH_UNSTABLE 1
-#define SECRET_API_SUBJECT_TO_CHANGE 1
-#include <libsecret/secret.h>
-#endif
-
 namespace WTF {
 
 #if !USE(GTK4)
@@ -43,21 +37,6 @@ template <> void derefGPtr(GtkTargetList* ptr)
 {
     if (ptr)
         gtk_target_list_unref(ptr);
-}
-#endif
-
-#if USE(LIBSECRET)
-template <> SecretValue* refGPtr(SecretValue* ptr)
-{
-    if (ptr)
-        secret_value_ref(ptr);
-    return ptr;
-}
-
-template <> void derefGPtr(SecretValue* ptr)
-{
-    if (ptr)
-        secret_value_unref(ptr);
 }
 #endif
 

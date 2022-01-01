@@ -33,11 +33,6 @@ class URL;
 }
 
 namespace WebCore {
-#if USE(SOUP2)
-WTF::URL soupURIToURL(SoupURI*);
-GUniquePtr<SoupURI> urlToSoupURI(const WTF::URL&);
-#else
-WTF::URL soupURIToURL(GUri*);
-GRefPtr<GUri> urlToSoupURI(const WTF::URL&);
-#endif
+    WTF::URL soupURIToURL(GUri*);
+    GRefPtr<GUri> urlToSoupURI(const WTF::URL&);
 } // namespace WebCore

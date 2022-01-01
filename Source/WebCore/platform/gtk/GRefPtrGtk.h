@@ -33,11 +33,6 @@ template <> GtkTargetList* refGPtr(GtkTargetList* ptr);
 template <> void derefGPtr(GtkTargetList* ptr);
 #endif
 
-#if USE(LIBSECRET)
-template <> SecretValue* refGPtr(SecretValue* ptr);
-template <> void derefGPtr(SecretValue* ptr);
-#endif
-
 #if !USE(GTK4)
 template <> GtkWidgetPath* refGPtr(GtkWidgetPath* ptr);
 template <> void derefGPtr(GtkWidgetPath* ptr);

@@ -216,11 +216,7 @@ gboolean webkit_authentication_request_can_save_credentials(WebKitAuthentication
     if (request->priv->canSaveCredentials)
         return request->priv->canSaveCredentials.value();
 
-#if USE(LIBSECRET)
-    return request->priv->persistentCredentialStorageEnabled;
-#else
     return FALSE;
-#endif
 }
 
 /**

@@ -169,11 +169,14 @@ to track a user's identity, it is listed here.
 Dependencies that allow hardware fingerprinting or network fingerprinting are
 removed as well.
 
-- [x] Remove Geoclue Library Integration (`geoclue`) which leaks your geolocation to websites.
-- [ ] Remove Libhyphen Library Integration (`libhyphen`, `USE_LIBHYPHEN`) - do we love spell-ing so much?
-- [ ] Remove Libsecret Library Integration (`libsecret`, `USE_LIBSECRET`) which automatically leaks stored credentials only by opening URLs with the same hostname.
-- [ ] Remove Libnotify Library Integration (`libnotify`, `USE_LIBNOTIFY`) which is just annoying.
-- [x] Remove SystemD Library Integration (`libsystemd`, `USE_SYSTEMD`, `JOURNALD`) which is just unnecessary.
+- [x] Update Libsoup Integration to version `2.99.99` and later
+- [x] Remove `SOUP2`
+- [ ] Switch to cURL (Remove `USE_SOUP` and insert `USE_CURL` from Windows Platform)
+- [x] Remove Geoclue Integration (`geoclue`) which leaks your geolocation to websites
+- [ ] Remove libhyphen Integration (`libhyphen`, `USE_LIBHYPHEN`)
+- [x] Remove libsecret Integration (`libsecret`, `USE_LIBSECRET`, `secret.h`)
+- [ ] Remove libnotify Integration (`libnotify`, `USE_LIBNOTIFY`) which is just annoying
+- [x] Remove SystemD Integration (`libsystemd`, `USE_SYSTEMD`, `JOURNALD`)
 - [ ] Remove ARKIT Integration (`ARKIT`)
 - [x] Remove PASSKIT Integration (`PASSKIT`)
 
@@ -184,17 +187,17 @@ These Web APIs are abused by fingerprinting libraries in order to identify hardw
 specifications and/or the physical position of a computer. This is an accumulative
 list of Web APIs that are removed.
 
-- [x] Remove Apple Pay API (`APPLE_PAY`, `ApplePay*`)
+- [x] Remove Apple Pay API (`APPLE_PAY`, `ApplePay`)
 - [x] Remove Bluetooth API
-- [x] Remove FTP Directory Support (`FTPDIR`, `FTPDirectory*`, `unknownFileSizeText`)
+- [x] Remove FTP Directory Support (`FTPDIR`, `FTPDirectory`, `unknownFileSizeText`)
 - [x] Remove Gamepad API
-- [x] Remove Geolocation API (`ENABLE_GEOLOCATION`, `Geolocation*`, `Geoposition*`)
-- [x] Remove Payment Request API (`PAYMENT_REQUEST`, `Merchant*`, `Payer*`, `Payment*`, `Coupon*`)
-- [x] Remove DeviceOrientation API (`DEVICE_ORIENTATION`, `ORIENTATION_EVENTS`, `DeviceOrientation*`, `get_orientation`, `orientationChanged`, `onorientationchange`, `OrientationNotifier`, `DOM_WINDOW_PROP_ORIENTATION`, `orientation`)
-- [x] Remove DeviceMotion API (`DEVICE_ORIENTATION`, `DeviceMotion*`)
-- [x] Remove WebXR API (`WEBXR`, `OPENXR`, `WebXR*`, `XRSpatialTracking`, `xrCompatible`)
+- [x] Remove Geolocation API (`ENABLE_GEOLOCATION`, `Geolocation`, `Geoposition`)
+- [x] Remove Payment Request API (`PAYMENT_REQUEST`, `Merchant`, `Payer`, `Payment`, `Coupon`)
+- [x] Remove DeviceOrientation API (`DEVICE_ORIENTATION`, `ORIENTATION_EVENTS`, `DeviceOrientation`, `get_orientation`, `orientationChanged`, `onorientationchange`, `OrientationNotifier`, `DOM_WINDOW_PROP_ORIENTATION`, `orientation`)
+- [x] Remove DeviceMotion API (`DEVICE_ORIENTATION`, `DeviceMotion`)
+- [x] Remove WebXR API (`WEBXR`, `OPENXR`, `WebXR`, `XRSpatialTracking`, `xrCompatible`)
 - [x] Remove Web API Statistics (`WEB_API_STATISTICS`)
-- [x] Remove Fullscreen API (`FULLSCREEN`, `TOGGLE_VIDEO_FULLSCREEN`, `FullScreenClient`, `FullScreenManagerProxy`, `*EnterFullScreen`, `*ExitFullScreen`, `*IsFullScreen`, `WebFullScreenManager`, `webkitfullscreenchange`, `webkitfullscreenerror`)
+- [x] Remove Fullscreen API (`FULLSCREEN`, `TOGGLE_VIDEO_FULLSCREEN`, `FullScreenClient`, `FullScreenManagerProxy`, `EnterFullScreen`, `ExitFullScreen`, `IsFullScreen`, `WebFullScreenManager`, `webkitfullscreenchange`, `webkitfullscreenerror`)
 - [x] Remove Fullscreen Events (`allowfullscreen`, `webkitbeginfullscreen`, `webkitendfullscreen`, `webkitfullscreenchange`, `webkitfullscreenerror`)
 - [x] Remove Picture in Picture API (`PICTURE_IN_PICTURE_API`, `operationMatchesPictureinPicturePseudoClass`, `EnterPictureInPictureEvent`, `picture-in-picture`, `PictureInPictureElement`)
 - [x] Remove Video Presentation Mode (`VIDEO_PRESENTATION_MODE`, `ControlledElementID`, `EnhancedFullscreen`, `VideoPresentation`, `prepareForVideoFullscreen`, `webkitPresentationModeChanged`)
@@ -203,13 +206,13 @@ list of Web APIs that are removed.
 - [ ] Remove 3D Model Element API (`MODEL_ELEMENT`)
 - [ ] Remove Encrypted Media API (`ENCRYPTED_MEDIA`, `LEGACY_ENCRYPTED_MEDIA`)
 - [ ] Remove Encrypted Media Thunder API (`THUNDER`)
-- [ ] Remove Web RTC API (`WEB_RTC`, `RTC*`)
+- [ ] Remove Web RTC API (`WEB_RTC`, `RTC`)
 - [ ] Remove Web NFC API
 - [ ] Remove Web Performance API
 - [ ] Remove Web Storage API
 - [ ] Remove Indexed Database API
-- [ ] Remove Canvas API (`OFFSCREEN_CANVAS`, `Canvas*`, `DOMConvertWebGL`, `JSANGLEInstancedArray`, `CanvasActivityRecord`)
-- [ ] Remove WebGL API (`WEBGL`, `WebGL*`, `JSANGLEInstancedArray`, `GraphicsContextGL*`, `HighPerformanceGraphicsUsageSampler`)
+- [ ] Remove Canvas API (`OFFSCREEN_CANVAS`, `Canvas`, `DOMConvertWebGL`, `JSANGLEInstancedArray`, `CanvasActivityRecord`)
+- [ ] Remove WebGL API (`WEBGL`, `WebGL`, `JSANGLEInstancedArray`, `GraphicsContextGL`, `HighPerformanceGraphicsUsageSampler`)
 - [ ] Remove WebGL2 API (`WEBGL2`)
 - [ ] Remove GPU Process for WebGL (`GPU_PROCESS`)
 - [ ] Remove WebGL via Metal (`WEBGL_COMPATIBLE_METAL`)
@@ -242,7 +245,7 @@ list of Web APIs that are removed.
 
 ## CSS Features
 
-- [x] Remove `:-webkit-animating-full-screen-transition`, `:-webkit-full-screen*`
+- [x] Remove `:-webkit-animating-full-screen-transition`, `:-webkit-full-screen-...`
 - [ ] Remove CSS Filters
 - [ ] Remove CSS Pointer Events
 - [ ] Enforce CSS Web Fonts Caching

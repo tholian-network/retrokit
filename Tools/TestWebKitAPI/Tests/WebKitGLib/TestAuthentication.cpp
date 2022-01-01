@@ -239,20 +239,6 @@ static void testWebViewAuthenticationEphemeral(EphemeralAuthenticationTest* test
 static void testWebViewAuthenticationStorage(AuthenticationTest* test, gconstpointer)
 {
     WebKitAuthenticationRequest* request = nullptr;
-#if USE(LIBSECRET)
-    // If WebKit has been compiled with libsecret, and private browsing is disabled
-    // then check that credentials can be saved.
-    test->loadURI(kServer->getURIForPath("/auth-test.html").data());
-    request = test->waitForAuthenticationRequest();
-    g_assert_null(webkit_authentication_request_get_proposed_credential(request));
-    g_assert_true(webkit_authentication_request_can_save_credentials(request));
-    webkit_authentication_request_set_can_save_credentials(request, FALSE);
-    g_assert_false(webkit_authentication_request_can_save_credentials(request));
-    webkit_authentication_request_cancel(request);
-    test->waitUntilLoadFinished();
-    g_assert_true(test->m_authenticationCancelledReceived);
-    g_assert_false(test->m_authenticationSucceededReceived);
-#endif
 
     auto* websiteDataManager = webkit_web_view_get_website_data_manager(test->m_webView);
     g_assert_true(webkit_website_data_manager_get_persistent_credential_storage_enabled(websiteDataManager));

@@ -42,15 +42,9 @@ namespace WebKit {
 
 static inline bool isConnectionError(GError* error, SoupMessage* message)
 {
-#if USE(SOUP2)
-    return g_error_matches(error, SOUP_WEBSOCKET_ERROR, SOUP_WEBSOCKET_ERROR_NOT_WEBSOCKET)
-        && message
-        && (message->status_code == SOUP_STATUS_CANT_CONNECT || message->status_code == SOUP_STATUS_CANT_CONNECT_PROXY);
-#else
     UNUSED_PARAM(message);
     // If not a SOUP_WEBSOCKET_ERROR_NOT_WEBSOCKET, then it's a connection error.
     return error && !g_error_matches(error, SOUP_WEBSOCKET_ERROR, SOUP_WEBSOCKET_ERROR_NOT_WEBSOCKET);
-#endif
 }
 
 WebSocketTask::WebSocketTask(NetworkSocketChannel& channel, const WebCore::ResourceRequest& request, SoupSession* session, SoupMessage* msg, const String& protocol)
@@ -68,13 +62,6 @@ WebSocketTask::WebSocketTask(NetworkSocketChannel& channel, const WebCore::Resou
         for (auto& subprotocol : protocolList)
             protocols.get()[i++] = g_strdup(WebCore::stripLeadingAndTrailingHTTPSpaces(subprotocol).utf8().data());
     }
-
-#if USE(SOUP2)
-    // Ensure a new connection is used for WebSockets.
-    // FIXME: this is done by libsoup since 2.69.1 and 2.68.4, so it can be removed when bumping the libsoup requirement.
-    // See https://bugs.webkit.org/show_bug.cgi?id=203404
-    soup_message_set_flags(msg, static_cast<SoupMessageFlags>(soup_message_get_flags(msg) | SOUP_MESSAGE_NEW_CONNECTION));
-#endif
 
     soup_session_websocket_connect_async(session, msg, nullptr, protocols.get(), RunLoopSourcePriority::AsyncIONetwork, m_cancellable.get(),
         [] (GObject* session, GAsyncResult* result, gpointer userData) {
