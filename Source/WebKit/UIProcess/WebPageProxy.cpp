@@ -6469,20 +6469,6 @@ void WebPageProxy::setHasHadSelectionChangesFromUserInteraction(bool hasHadUserS
     m_hasHadSelectionChangesFromUserInteraction = hasHadUserSelectionChanges;
 }
 
-#if HAVE(TOUCH_BAR)
-
-void WebPageProxy::setIsTouchBarUpdateSupressedForHiddenContentEditable(bool ignoreTouchBarUpdate)
-{
-    m_isTouchBarUpdateSupressedForHiddenContentEditable = ignoreTouchBarUpdate;
-}
-
-void WebPageProxy::setIsNeverRichlyEditableForTouchBar(bool isNeverRichlyEditable)
-{
-    m_isNeverRichlyEditableForTouchBar = isNeverRichlyEditable;
-}
-
-#endif
-
 void WebPageProxy::requestDOMPasteAccess(const WebCore::IntRect& elementRect, const String& originIdentifier, CompletionHandler<void(WebCore::DOMPasteAccessResponse)>&& completionHandler)
 {
     m_pageClient->requestDOMPasteAccess(elementRect, originIdentifier, WTFMove(completionHandler));

@@ -147,12 +147,10 @@ void ScriptedAnimationController::serviceRequestAnimationFrameCallbacks(ReducedR
         scheduleAnimation();
         return;
     }
-    
+
     TraceScope tracingScope(RAFCallbackStart, RAFCallbackEnd);
 
     auto highResNowMs = std::round(1000 * timestamp.seconds());
-    if (m_document && m_document->quirks().needsMillisecondResolutionForHighResTimeStamp())
-        highResNowMs += 0.1;
 
     LOG_WITH_STREAM(RequestAnimationFrame, stream << "ScriptedAnimationController::serviceRequestAnimationFrameCallbacks at " << highResNowMs << " (throttling reasons " << throttlingReasons() << ", preferred interval " << preferredScriptedAnimationInterval().milliseconds() << "ms)");
 

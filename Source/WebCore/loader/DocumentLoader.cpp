@@ -78,7 +78,6 @@
 #include "PlatformStrategies.h"
 #include "PolicyChecker.h"
 #include "ProgressTracker.h"
-#include "Quirks.h"
 #include "ResourceHandle.h"
 #include "ResourceLoadObserver.h"
 #include "RuntimeEnabledFeatures.h"
@@ -1421,14 +1420,6 @@ void DocumentLoader::applyPoliciesToSettings()
 
 MouseEventPolicy DocumentLoader::mouseEventPolicy() const
 {
-#if ENABLE(IOS_TOUCH_EVENTS)
-    if (m_mouseEventPolicy == MouseEventPolicy::Default) {
-        if (auto* document = this->document()) {
-            if (document->quirks().shouldSynthesizeTouchEvents())
-                return MouseEventPolicy::SynthesizeTouchEvents;
-        }
-    }
-#endif
     return m_mouseEventPolicy;
 }
 

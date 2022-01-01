@@ -497,9 +497,6 @@ void HTMLMediaElement::initializeMediaSession()
             m_mediaSession->addBehaviorRestriction(MediaElementSession::RequireUserGestureToShowPlaybackTargetPicker);
 #endif
 
-        if (!document.mediaDataLoadsAutomatically() && !document.quirks().needsPreloadAutoQuirk())
-            m_mediaSession->addBehaviorRestriction(MediaElementSession::AutoPreloadingNotPermitted);
-
         if (document.settings().mainContentUserGestureOverrideEnabled())
             m_mediaSession->addBehaviorRestriction(MediaElementSession::OverrideUserGestureRequirementForMainContent);
     }
@@ -2333,16 +2330,6 @@ Expected<void, MediaPlaybackDenialReason> HTMLMediaElement::canTransitionFromAut
     return permitted;
 }
 
-void HTMLMediaElement::dispatchPlayPauseEventsIfNeedsQuirks()
-{
-    if (!document().quirks().needsAutoplayPlayPauseEvents())
-        return;
-
-    ALWAYS_LOG(LOGIDENTIFIER);
-    scheduleEvent(eventNames().playingEvent);
-    scheduleEvent(eventNames().pauseEvent);
-}
-
 void HTMLMediaElement::setReadyState(MediaPlayer::ReadyState state)
 {
     // Set "wasPotentiallyPlaying" BEFORE updating m_readyState, potentiallyPlaying() uses it
@@ -3097,9 +3084,6 @@ void HTMLMediaElement::seekTask()
             scheduleEvent(eventNames().seekingEvent);
             scheduleTimeupdateEvent(false);
             scheduleEvent(eventNames().seekedEvent);
-
-            if (document().quirks().needsCanPlayAfterSeekedQuirk() && m_readyState > HAVE_CURRENT_DATA)
-                scheduleEvent(eventNames().canplayEvent);
         }
         clearSeeking();
         return;
@@ -3149,9 +3133,6 @@ void HTMLMediaElement::finishSeek()
 
     // 17 - Queue a task to fire a simple event named seeked at the element.
     scheduleEvent(eventNames().seekedEvent);
-
-    if (document().quirks().needsCanPlayAfterSeekedQuirk() && m_readyState > HAVE_CURRENT_DATA)
-        scheduleEvent(eventNames().canplayEvent);
 
     if (m_mediaSession)
         m_mediaSession->clientCharacteristicsChanged();
@@ -7380,7 +7361,7 @@ void HTMLMediaElement::didReceiveRemoteControlCommand(PlatformMediaSession::Remo
 
 bool HTMLMediaElement::supportsSeeking() const
 {
-    return !document().quirks().needsSeekingSupportDisabled();
+    return true;
 }
 
 bool HTMLMediaElement::shouldOverrideBackgroundPlaybackRestriction(PlatformMediaSession::InterruptionType type) const
@@ -7554,7 +7535,6 @@ void HTMLMediaElement::setAutoplayEventPlaybackState(AutoplayEventPlaybackState 
     m_autoplayEventPlaybackState = reason;
 
     if (reason == AutoplayEventPlaybackState::PreventedAutoplay) {
-        dispatchPlayPauseEventsIfNeedsQuirks();
         handleAutoplayEvent(AutoplayEvent::DidPreventMediaFromPlaying);
     }
 }

@@ -46,7 +46,6 @@
 #include "HTMLVideoElement.h"
 #include "MathMLElement.h"
 #include "Page.h"
-#include "Quirks.h"
 #include "RenderBox.h"
 #include "RenderStyle.h"
 #include "RenderTheme.h"
@@ -525,7 +524,6 @@ void Adjuster::adjust(RenderStyle& style, const RenderStyle* userAgentAppearance
         adjustForTextAutosizing(style, *m_element);
 #endif
 
-    adjustForSiteSpecificQuirks(style);
 }
 
 static bool hasEffectiveDisplayNoneForDisplayContents(const Element& element)
@@ -616,42 +614,9 @@ void Adjuster::adjustAnimatedStyle(RenderStyle& style, OptionSet<AnimationImpact
     // 2. When we want the stacking context side-effets of explicit z-index, via forceStackingContext.
     // It's important to not clobber an existing used z-index, since an earlier animation may have set it, but we
     // may still need to update the used z-index value from the specified value.
-    
+
     if (style.hasAutoUsedZIndex() && impact.contains(AnimationImpact::ForcesStackingContext))
         style.setUsedZIndex(0);
-}
-
-void Adjuster::adjustForSiteSpecificQuirks(RenderStyle& style) const
-{
-    if (!m_element)
-        return;
-
-    if (m_document.quirks().needsGMailOverflowScrollQuirk()) {
-        // This turns sidebar scrollable without mouse move event.
-        static MainThreadNeverDestroyed<const AtomString> roleValue("navigation", AtomString::ConstructFromLiteral);
-        if (style.overflowY() == Overflow::Hidden && m_element->attributeWithoutSynchronization(roleAttr) == roleValue)
-            style.setOverflowY(Overflow::Auto);
-    }
-    if (m_document.quirks().needsYouTubeOverflowScrollQuirk()) {
-        // This turns sidebar scrollable without hover.
-        static MainThreadNeverDestroyed<const AtomString> idValue("guide-inner-content", AtomString::ConstructFromLiteral);
-        if (style.overflowY() == Overflow::Hidden && m_element->idForStyleResolution() == idValue)
-            style.setOverflowY(Overflow::Auto);
-    }
-    if (m_document.quirks().needsWeChatScrollingQuirk()) {
-        static MainThreadNeverDestroyed<const AtomString> class1("tree-select", AtomString::ConstructFromLiteral);
-        static MainThreadNeverDestroyed<const AtomString> class2("v-tree-select", AtomString::ConstructFromLiteral);
-        const auto& flexBasis = style.flexBasis();
-        if (style.minHeight().isAuto()
-            && style.display() == DisplayType::Flex
-            && style.flexGrow() == 1
-            && style.flexShrink() == 1
-            && (flexBasis.isPercent() || flexBasis.isFixed())
-            && flexBasis.value() == 0
-            && const_cast<Element*>(m_element)->classList().contains(class1)
-            && const_cast<Element*>(m_element)->classList().contains(class2))
-            style.setMinHeight(Length(0, LengthType::Fixed));
-    }
 }
 
 #if ENABLE(TEXT_AUTOSIZING)

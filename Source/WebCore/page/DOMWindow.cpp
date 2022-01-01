@@ -2330,8 +2330,6 @@ ExceptionOr<RefPtr<WindowProxy>> DOMWindow::open(DOMWindow& activeWindow, DOMWin
         return RefPtr<WindowProxy> { nullptr };
 
     auto urlString = urlStringToOpen;
-    if (activeDocument->quirks().shouldOpenAsAboutBlank(urlStringToOpen))
-        urlString = "about:blank"_s;
 
 #if ENABLE(CONTENT_EXTENSIONS)
     auto* page = firstFrame->page();

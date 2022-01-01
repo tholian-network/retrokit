@@ -483,7 +483,7 @@ void HTMLElement::parseAttribute(const QualifiedName& name, const AtomString& va
         auto& document = this->document();
         if (this == document.focusedElement()) {
             if (auto* page = document.page())
-                page->chrome().client().focusedElementDidChangeInputMode(*this, canonicalInputMode());
+                page->chrome().client().focusedElementDidChangeInputMode(*this, inputMode());
         }
     }
 
@@ -1201,19 +1201,9 @@ void HTMLElement::setAutocorrect(bool autocorrect)
 
 #endif
 
-InputMode HTMLElement::canonicalInputMode() const
-{
-    auto mode = inputModeForAttributeValue(attributeWithoutSynchronization(inputmodeAttr));
-    if (mode == InputMode::Unspecified) {
-        if (document().quirks().needsInputModeNoneImplicitly(*this))
-            return InputMode::None;
-    }
-    return mode;
-}
-
 const AtomString& HTMLElement::inputMode() const
 {
-    return stringForInputMode(canonicalInputMode());
+    return stringForInputMode(inputModeForAttributeValue(attributeWithoutSynchronization(inputmodeAttr)));
 }
 
 void HTMLElement::setInputMode(const AtomString& value)
@@ -1459,8 +1449,6 @@ void HTMLElement::updateWithTextRecognitionResult(const TextRecognitionResult& r
         }
 #endif // ENABLE(DATA_DETECTION)
 
-        if (document().quirks().needsToForceUserSelectWhenInstallingImageOverlay())
-            setInlineStyleProperty(CSSPropertyWebkitUserSelect, CSSValueText);
     }
 
     if (!hadExistingTextRecognitionElements) {

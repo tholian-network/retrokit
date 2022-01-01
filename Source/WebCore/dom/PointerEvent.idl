@@ -37,7 +37,6 @@ dictionary PointerEventInit : MouseEventInit {
 };
 
 [
-    DisabledByQuirk=shouldDisablePointerEvents,
     Exposed=Window
 ] interface PointerEvent : MouseEvent {
     constructor(DOMString type, optional PointerEventInit eventInitDict);

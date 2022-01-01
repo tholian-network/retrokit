@@ -74,7 +74,6 @@
 #include "HTMLHtmlElement.h"
 #include "HTMLIFrameElement.h"
 #include "HTMLNames.h"
-#include "Quirks.h"
 #include "ScriptController.h"
 #include "StyleResolver.h"
 #include <wtf/IsoMallocInlines.h>
@@ -142,9 +141,6 @@ std::optional<Variant<RefPtr<WindowProxy>, RefPtr<Element>, RefPtr<HTMLCollectio
 
 Vector<AtomString> HTMLDocument::supportedPropertyNames() const
 {
-    if (Quirks::shouldOmitHTMLDocumentSupportedPropertyNames())
-        return { };
-
     auto properties = m_documentNamedItem.keys();
     // The specification says these should be sorted in document order but this would be expensive
     // and other browser engines do not comply with this part of the specification. For now, just

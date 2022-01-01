@@ -65,7 +65,6 @@ public:
 
 private:
     void adjustDisplayContentsStyle(RenderStyle&) const;
-    void adjustForSiteSpecificQuirks(RenderStyle&) const;
     static OptionSet<EventListenerRegionType> computeEventListenerRegionTypes(const EventTarget&, OptionSet<EventListenerRegionType>);
 
     const Document& m_document;

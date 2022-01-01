@@ -228,9 +228,6 @@ std::optional<Style::ElementStyle> TextControlPlaceholderElement::resolveCustomS
 inline SearchFieldResultsButtonElement::SearchFieldResultsButtonElement(Document& document)
     : HTMLDivElement(divTag, document)
 {
-    if (document.quirks().shouldHideSearchFieldResultsButton())
-        setInlineStyleProperty(CSSPropertyDisplay, CSSValueNone);
-
     setHasCustomStyleResolveCallbacks();
 }
 

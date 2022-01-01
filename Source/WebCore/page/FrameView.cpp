@@ -75,7 +75,6 @@
 #include "PageOverlayController.h"
 #include "PerformanceLoggingClient.h"
 #include "ProgressTracker.h"
-#include "Quirks.h"
 #include "RenderEmbeddedObject.h"
 #include "RenderIFrame.h"
 #include "RenderInline.h"
@@ -3409,10 +3408,6 @@ void FrameView::scheduleResizeEventIfNeeded()
 #endif
 
     auto* document = frame().document();
-    if (document->quirks().shouldSilenceWindowResizeEvents()) {
-        FRAMEVIEW_RELEASE_LOG(Events, "scheduleResizeEventIfNeeded: Not firing resize events because they are temporarily disabled for this page");
-        return;
-    }
 
     LOG_WITH_STREAM(Events, stream << "FrameView " << this << " scheduleResizeEventIfNeeded scheduling resize event for document" << document << ", size " << currentSize);
     document->setNeedsDOMWindowResizeEvent();

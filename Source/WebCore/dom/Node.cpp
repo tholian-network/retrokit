@@ -2089,17 +2089,8 @@ void Node::moveNodeToNewDocument(Document& oldDocument, Document& newDocument)
         }
 
         unsigned numTouchEventListeners = 0;
-#if ENABLE(TOUCH_EVENTS)
-        if (newDocument.quirks().shouldDispatchSimulatedMouseEvents(this)) {
-            for (auto& name : eventNames().extendedTouchRelatedEventNames())
-                numTouchEventListeners += eventListeners(name).size();
-        } else {
-#endif
-            for (auto& name : eventNames().touchRelatedEventNames())
-                numTouchEventListeners += eventListeners(name).size();
-#if ENABLE(TOUCH_EVENTS)
-        }
-#endif
+        for (auto& name : eventNames().touchRelatedEventNames())
+            numTouchEventListeners += eventListeners(name).size();
 
         for (unsigned i = 0; i < numTouchEventListeners; ++i) {
             oldDocument.didRemoveTouchEventHandler(*this);

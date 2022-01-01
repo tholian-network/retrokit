@@ -46,6 +46,7 @@ legacy platforms that are no longer maintained.
 - [ ] Remove Solaris Platform Support
 - [ ] Remove User Message Handlers Support (`USER_MESSAGE_HANDLERS`)
 - [ ] Remove Wireless Playback Target Support (`WIRELESS_PLAYBACK_TARGET`)
+- [ ] Remove Touch Bar Support (`TOUCH_BAR`, `TouchBar*`)
 - [ ] *Undecided* Remove WebDriver Support (`WEBDRIVER`, `WEBDRIVER_KEYBOARD_INTERACTIONS`, `WEBDRIVER_MOUSE_INTERACTIONS`, `WEBDRIVER_TOUCH_INTERACTIONS`, `WEBDRIVER_WHEEL_INTERACTIONS`)
 - [ ] *Undecided* Remove WebKit Platform for Embedded (`WPE`, `USE_WPE_RENDERER`)
 - [ ] *Undecided* Remove Remote Inspector Support (`REMOTE_INSPECTOR`)
@@ -54,35 +55,100 @@ legacy platforms that are no longer maintained.
 
 ## Legacy Hacks
 
-These legacy APIs that are no longer of relevance to a modern Web Browser.
+These legacy APIs that are no longer of relevance to a modern Web View.
 
 - [x] Fix `None` already being defined in `X11`
 - [x] Remove `MEMMEM` hack in `StringExtras.h`
 - [ ] Remove `STRNSTR` hack in `StringExtras.h`
-- [x] Remove hardcoded Quirks for Akamai Media Player
-- [x] Remove hardcoded Quirks for `bbc.co.uk` Media Player
-- [x] Remove hardcoded Quirks for `espn.com`
-- [x] Remove hardcoded Quirks for `facebook.com`
-- [x] Remove hardcoded Quirks for `gizmodo.com`
-- [x] Remove hardcoded Quirks for `kinja.com`
-- [x] Remove hardcoded Quirks for `microsoft.com` and Microsoft Teams redirect links
-- [x] Remove hardcoded Quirks for `mlb.com`
-- [x] Remove hardcoded Quirks for `netflix.com`
-- [x] Remove hardcoded Quirks for `nfl.com`
-- [ ] Remove hardcoded Quirks for `twitter.com`
-- [x] Remove hardcoded Quirks for `playstation.com`, `sony.com` and `sonyentertainment.com`
-- [x] Remove hardcoded Quirks for `vimeo.com`
-- [x] Remove hardcoded Quirks for `youtube.com`
 - [x] Remove Modern Media Controls Hacks and Shadow DOM (`MODERN_MEDIA_CONTROLS`)
 - [x] Remove Sleep Disablers (`SleepDisabler`, `SleepDisablerClient`, `sleepDisablers`, `shouldDisableSleep`, `isDisablingSleep`, `mediaPlayerShouldDisableSleep`, `elementIsBlockingDisplaySleep`)
 - [ ] Remove System Sleep Listener (`SystemSleepListener`)
 - [x] Remove Legacy Custom Protocol Manager Support (`LEGACY_CUSTOM_PROTOCOL_MANAGER`, `LegacyCustomProtocol`, `LegacyCustomProtocolManager`, `registerSchemeForLegacyCustomProtocol`, `unregisterSchemeForLegacyCustomProtocol`, `LegacySchemeRegistry`, `CustomProtocolManagerClient`)
 - [ ] Remove Legacy Encrypted Media API (`LEGACY_ENCRYPTED_MEDIA`)
 - [ ] Remove Legacy Netscape Plugin API (`NETSCAPE_PLUGIN_API`)
+- [ ] Remove Webkit InjectedBundle API (`InjectedBundle`, `WKBundle*`)
+- [ ] Remove WebKit WebExtension API (`WebKitWebExtension`, `webkit_web_extension*`)
 - [ ] Remove `AllowsInlineMediaPlayback` Hacks (`AllowsInlineMediaPlayback`, `MEDIA_PLAYBACK_ALLOWS_INLINE`) and default playback behaviour to no-autoplay.
 - [ ] Remove `QuickTimePluginReplacement`
 - [ ] Remove `YouTubePluginReplacement`
 - [ ] Remove `bmalloc` and prefer system allocator (`USE_SYSTEM_MALLOC`)
+- [ ] *Undecided* Remove WebKit Content Extensions API (`CONTENT_EXTENSIONS`)
+- [ ] *Undecided* Remove Arbitrary User Gestures (`ArbitraryUserGesture`)
+
+
+## Legacy Quirks
+
+These legacy Quirks are really dirty Hacks that are domain-specific and site-specific
+and are also no longer of relevance to a modern Web View.
+
+- [ ] Remove `needsSiteSpecificQuirks()`
+- [ ] Remove `shouldAutoplayForArbitraryUserGesture()` Quirk (`facebook.com`, `twitter.com`)
+- [ ] Remove `shouldAutoplayWebAudioForArbitraryUserGesture()` Quirk (`bing.com`, `zoom.us`)
+- [ ] Remove `hasBrokenEncryptedMediaAPISupportQuirk()` Quirk (`hulu.com`, `starz.com`, `youtube.com`)
+- [x] Remove `shouldIgnoreInvalidSignal()` Quirk
+- [x] Remove `needsFormControlToBeMouseFocusable()` Quirk (`ceac.state.gov`)
+- [x] Remove `needsAutoplayPlayPauseEvents()` Quirk
+- [x] Remove `needsSeekingSupportDisabled()` Quirk (`netflix.com`)
+- [x] Remove `needsPerDocumentAutoplayBehavior()` Quirk (`netflix.com`)
+- [x] Remove `shouldDisableContentChangeObserverTouchEventAdjustment()` Quirk (`youtube.com`)
+- [x] Remove `shouldTooltipPreventFromProceedingWithClick()` Quirk (`covid.cdc.gov`)
+- [x] Remove `shouldHideSearchFieldResultsButton()` Quirk (`google.com`)
+- [x] Remove `needsMillisecondResolutionForHighResTimeStamp()` Quirk (`icourse163.org`)
+- [x] Remove `shouldStripQuotationMarkInFontFaceSetFamily()` Quirk (`docs.google.com`)
+- [x] Remove `isTouchBarUpdateSupressedForHiddenContentEditable()` Quirk (`docs.google.com`)
+- [x] Remove `isNeverRichlyEditableForTouchBar()` Quirk (`icloud.com`, `onedrive.live.com`, `trix-editor.org`, `twitter.com`)
+- [x] Remove `needsYouTubeMouseOutQuirk()` Quirk (`youtube.com`)
+- [x] Remove `shouldAvoidUsingIOS13ForGmail()` Quirk (`mail.google.com`)
+- [x] Remove `shouldSuppressAutocorrectionAndAutocaptializationInHiddenEditableAreas()` Quirk (`docs.google.com`)
+- [x] Remove `shouldDispatchSyntheticMouseEventsWhenModifyingSelection()` Quirk (`medium.com`, `weebly.com`)
+- [x] Remove `shouldDispatchSimulatedMouseEvents()` Quirk (`airtable.com`, `flipkart.com`, `figma.com`, `iqiyi.com`, `msn.com`, `mybinder.com, `nba.com`, `naver.com`, `soundcloud.com`, `trailers.apple.com`, `trello.com`
+- [x] Remove `shouldDispatchedSimulatedMouseEventsAssumeDefaultPrevented()` Quirk (`soundcloud.com`)
+- [x] Remove `simulatedMouseEventTypeForTarget()` Quirk (`airtable.com`, `desmos.com`)
+- [x] Remove `shouldMakeTouchEventNonCancelableForTarget()` Quirk (`youtube.com`)
+- [x] Remove `shouldPreventPointerMediaQueryFromEvaluatingToCoarse()` Quirk (`shutterstock.com`)
+- [x] Remove `shouldPreventDispatchOfTouchEvent()` Quirk (`sites.google.com`)
+- [x] Remove `shouldSynthesizeTouchEvents()` Quirk (`mail.yahoo.com`)
+- [x] Remove `shouldAvoidResizingWhenInputViewBoundsChange()` Quirk (`google.com`, `live.com`, `sharepoint.com`, `twitter.com`)
+- [x] Remove `shouldDisablePointerEventsQuirk()` Quirk (`mailchimp.com`)
+- [x] Remove `needsDeferKeyDownAndKeyPressTimersUntilNextEditingCommand()` Quirk (`docs.google.com`)
+- [x] Remove `needsInputModeNoneImplicitly()` Quirk (`calendar.google.com`)
+- [x] Remove `needsGMailOverflowScrollQuirk()` Quirk (`mail.google.com`)
+- [x] Remove `needsYouTubeOverflowScrollQuirk()` Quirk (`youtube.com`)
+- [x] Remove `needsFullscreenDisplayNoneQuirk()` Quirk (`gizmodo.com`)
+- [x] Remove `needsWeChatScrollingQuirk()` Quirk (`wechat.com`, WeChat iOS App)
+- [x] Remove `shouldSilenceWindowResizeEvents()` Quirk (`nytimes.com`, `twitter.com`)
+- [x] Remove `shouldSilenceMediaQueryListChangeEvents()` Quirk (`twitter.com`)
+- [x] Remove `shouldAvoidScrollingWhenFocusedContentIsVisible()` Quirk (`zillow.com`)
+- [x] Remove `shouldUseLegacySelectPopoverDismissalBehaviorInDataActivation()` Quirk (`att.com`)
+- [x] Remove `shouldIgnoreAriaForFastPathContentObservationCheck()` Quirk (`ralphlauren.com`)
+- [x] Remove `shouldOpenAsAboutBlank()` Quirk (`docs.google.com`, `srcdoc://`)
+- [x] Remove `needsPreloadAutoQuirk()` Quirk (`vimeo.com`)
+- [x] Remove `shouldBypassBackForwardCache()` Quirk (`docs.google.com`, `vimeo.com`)
+- [x] Remove `shouldBypassAsyncScriptDeferring()` Quirk (`bungalow.com`)
+- [x] Remove `shouldMakeEventListenerPassive()` Quirk (`SmoothScroll.js`)
+- [x] Remove `shouldEnableLegacyGetUserMediaQuirk()` Quirk (`baidu.com`, `warbyparker.com`)
+- [x] Remove `shouldDisableElementFullscreenQuirk()` Quirk (`nfl.com`)
+- [x] Remove `needsCanPlayAfterSeekedQuirk()` Quirk (`hulu.com`)
+- [x] Remove `shouldLayOutAtMinimumWindowWidthWhenIgnoringScalingConstraints()` Quirk (`wikipedia.org`)
+- [x] Remove `shouldIgnoreContentObservationForSyntheticClick()` Quirk (`shutterstock.com`)
+- [x] Remove `shouldAvoidPastingImagesAsWebContent()` Quirk (`mail.yahoo.com`)
+- [x] Remove `isMicrosoftTeamsRedirectURL()` Quirk (`teams.microsoft.com`)
+- [x] Remove `isStorageAccessQuirkDomainAndElement` Quirk (`outlook.live.com`, `playstation.com`)
+- [x] Remove `isBBCDomain`, `BBCRadioPlayerURLString()` and `staticRadioPlayerURLString()` Quirk (`bbc.co.uk`)
+- [x] Remove `triggerOptionalStorageAccessQuirk()` Quirk (`avclub.com`, `gizmodo.com`, `deadspin.com`, `jalopnik.com`, `jezebel.com`, `kotaku.com`, `lifehacker.com`, `theroot.com`, `thetakeout.com`, `theonion.com`, `theinventory.com`)
+- [x] Remove `needsVP9FullRangeFlagQuirk()` Quirk (`youtube.com`)
+- [x] Remove `needsHDRPixelDepthQuirk()` Quirk (`youtube.com`)
+- [x] Remove `needsAkamaiMediaPlayerQuirk()` Quirk
+- [x] Remove `needsBlackFullscreenBackgroundQuirk()` Quirk (`mlb.com`)
+- [x] Remove `requiresUserGestureToPauseInPictureInPicture()` Quirk (`facebook.com`, `reddit.com`, `twitter.com`)
+- [x] Remove `requiresUserGestureToLoadInPictureInPicture()` Quirk (`twitter.com`)
+- [x] Remove `blocksReturnToFullscreenFromPictureInPictureQuirk()` Quirk (`vimeo.com`)
+- [x] Remove `shouldDisableEndFullscreenEventWhenEnteringPictureInPictureFromFullscreenQuirk()` Quirk (`trailers.apple.com`, `espn.com`)
+- [x] Remove `needsToForceUserSelectAndUserDragWhenInstallingImageOverlay()` Quirk (`youtube.com`)
+- [x] Remove `hasStorageAccessForAllLoginDomains()` Quirk
+- [x] Remove `requestStorageAccessAndHandleClick()` Quirk
+- [x] Remove `shouldOmitHTMLDocumentSupportedPropertyNames()` Quirk
+- [x] Remove `shouldBypassUserGestureRequirementForWebAuthn` Quirk (`dropbox.com`, `facebook.com`, `google.com`, `microsoft.com`, `twitter.com`)
 
 
 ## Library Dependencies
@@ -154,6 +220,7 @@ list of Web APIs that are removed.
 - [ ] *Undecided* Remove Web Midi API
 - [ ] *Undecided* Remove Web Workers API
 - [ ] *Undecided* Remove Service Worker API
+- [ ] *Undecided* Remove Content Change Observer (`CONTENT_CHANGE_OBSERVER`)
 
 
 ## HTML Features

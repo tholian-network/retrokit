@@ -3573,22 +3573,18 @@ bool EventHandler::internalKeyEvent(const PlatformKeyboardEvent& initialKeyEvent
     // 1. preventing default handling of keydown and keypress events has no effect on IM input;
     // 2. if an input method handles the event, its keyCode is set to 229 in keydown event.
     m_frame.editor().handleInputMethodKeydown(keydown.get());
-    
+
     bool handledByInputMethod = keydown->defaultHandled();
-    
+
     if (handledByInputMethod) {
         keyDownEvent.setWindowsVirtualKeyCode(CompositionEventKeyCode);
         keydown = KeyboardEvent::create(keyDownEvent, &m_frame.windowProxy());
         keydown->setTarget(element);
         keydown->setIsDefaultEventHandlerIgnored();
     }
-    
+
     if (accessibilityPreventsEventPropagation(keydown))
         keydown->stopPropagation();
-
-#if ENABLE(CONTENT_CHANGE_OBSERVER)
-    DeferDOMTimersForScope deferralScope { m_frame.document()->quirks().needsDeferKeyDownAndKeyPressTimersUntilNextEditingCommand() };
-#endif
 
     element->dispatchEvent(keydown);
     if (handledByInputMethod) {

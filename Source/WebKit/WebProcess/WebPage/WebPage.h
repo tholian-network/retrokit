@@ -1741,9 +1741,8 @@ private:
     void capitalizeWord();
 #endif
 
-    bool shouldDispatchSyntheticMouseEventsWhenModifyingSelection() const;
     void platformDidSelectAll();
-    
+
     void setHasResourceLoadClient(bool);
     void setCanUseCredentialStorage(bool);
 
@@ -2100,10 +2099,6 @@ private:
     bool m_userIsInteracting { false };
     bool m_hasEverFocusedElementDueToUserInteractionSincePageTransition { false };
 
-#if HAVE(TOUCH_BAR)
-    bool m_isTouchBarUpdateSupressedForHiddenContentEditable { false };
-    bool m_isNeverRichlyEditableForTouchBar { false };
-#endif
     OptionSet<WebCore::ActivityState::Flag> m_lastActivityStateChanges;
 
 #if ENABLE(CONTEXT_MENUS)

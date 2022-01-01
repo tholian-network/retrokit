@@ -45,7 +45,6 @@
 #include "NodeRenderStyle.h"
 #include "Page.h"
 #include "PlatformScreen.h"
-#include "Quirks.h"
 #include "RenderStyle.h"
 #include "RenderView.h"
 #include "Settings.h"
@@ -741,14 +740,6 @@ static bool pointerEvaluate(CSSValue* value, const CSSToLengthConversionData&, F
 {
     auto* page = frame.page();
     auto pointerCharacteristicsOfPrimaryPointingDevice = page ? page->chrome().client().pointerCharacteristicsOfPrimaryPointingDevice() : std::optional<PointerCharacteristics>();
-
-#if ENABLE(TOUCH_EVENTS)
-    if (pointerCharacteristicsOfPrimaryPointingDevice == PointerCharacteristics::Coarse) {
-        auto* document = frame.document();
-        if (document && document->quirks().shouldPreventPointerMediaQueryFromEvaluatingToCoarse())
-            pointerCharacteristicsOfPrimaryPointingDevice = PointerCharacteristics::Fine;
-    }
-#endif
 
     if (!is<CSSPrimitiveValue>(value))
         return !!pointerCharacteristicsOfPrimaryPointingDevice;

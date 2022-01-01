@@ -387,13 +387,7 @@ bool HTMLFormControlElement::isKeyboardFocusable(KeyboardEvent* event) const
 
 bool HTMLFormControlElement::isMouseFocusable() const
 {
-#if (PLATFORM(GTK) || PLATFORM(WPE))
     return HTMLElement::isMouseFocusable();
-#else
-    if (needsMouseFocusableQuirk())
-        return HTMLElement::isMouseFocusable();
-    return false;
-#endif
 }
 
 bool HTMLFormControlElement::matchesValidPseudoClass() const
@@ -680,12 +674,6 @@ AutofillData HTMLFormControlElement::autofillData() const
     // owner's autocomplete attribute changed or the form owner itself changed.
 
     return AutofillData::createFromHTMLFormControlElement(*this);
-}
-
-// FIXME: We should remove the quirk once <rdar://problem/47334655> is fixed.
-bool HTMLFormControlElement::needsMouseFocusableQuirk() const
-{
-    return document().quirks().needsFormControlToBeMouseFocusable();
 }
 
 } // namespace Webcore

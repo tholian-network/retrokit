@@ -1249,12 +1249,6 @@ void WebPage::selectAll()
     platformDidSelectAll();
 }
 
-bool WebPage::shouldDispatchSyntheticMouseEventsWhenModifyingSelection() const
-{
-    auto* document = m_page->mainFrame().document();
-    return document && document->quirks().shouldDispatchSyntheticMouseEventsWhenModifyingSelection();
-}
-
 #if !PLATFORM(IOS_FAMILY)
 
 void WebPage::platformDidSelectAll()
@@ -3489,18 +3483,6 @@ void WebPage::didStartPageTransition()
 #if PLATFORM(MAC)
     if (hasPreviouslyFocusedDueToUserInteraction)
         send(Messages::WebPageProxy::SetHasHadSelectionChangesFromUserInteraction(m_hasEverFocusedElementDueToUserInteractionSincePageTransition));
-#endif
-
-#if HAVE(TOUCH_BAR)
-    if (m_isTouchBarUpdateSupressedForHiddenContentEditable) {
-        m_isTouchBarUpdateSupressedForHiddenContentEditable = false;
-        send(Messages::WebPageProxy::SetIsTouchBarUpdateSupressedForHiddenContentEditable(m_isTouchBarUpdateSupressedForHiddenContentEditable));
-    }
-
-    if (m_isNeverRichlyEditableForTouchBar) {
-        m_isNeverRichlyEditableForTouchBar = false;
-        send(Messages::WebPageProxy::SetIsNeverRichlyEditableForTouchBar(m_isNeverRichlyEditableForTouchBar));
-    }
 #endif
 
 #if PLATFORM(IOS_FAMILY)
@@ -5838,18 +5820,6 @@ void WebPage::didChangeSelectionOrOverflowScrollPosition()
     m_hasEverFocusedElementDueToUserInteractionSincePageTransition |= m_userIsInteracting;
 
     if (!hasPreviouslyFocusedDueToUserInteraction && m_hasEverFocusedElementDueToUserInteractionSincePageTransition) {
-#if HAVE(TOUCH_BAR)
-        if (frame.document()->quirks().isTouchBarUpdateSupressedForHiddenContentEditable()) {
-            m_isTouchBarUpdateSupressedForHiddenContentEditable = true;
-            send(Messages::WebPageProxy::SetIsTouchBarUpdateSupressedForHiddenContentEditable(m_isTouchBarUpdateSupressedForHiddenContentEditable));
-        }
-
-        if (frame.document()->quirks().isNeverRichlyEditableForTouchBar()) {
-            m_isNeverRichlyEditableForTouchBar = true;
-            send(Messages::WebPageProxy::SetIsNeverRichlyEditableForTouchBar(m_isNeverRichlyEditableForTouchBar));
-        }
-#endif
-
         send(Messages::WebPageProxy::SetHasHadSelectionChangesFromUserInteraction(m_hasEverFocusedElementDueToUserInteractionSincePageTransition));
     }
 

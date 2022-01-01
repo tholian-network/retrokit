@@ -78,7 +78,7 @@ static bool shouldDocumentAllowWebAudioToAutoPlay(const Document& document)
 {
     if (document.processingUserGestureForMedia() || document.isCapturing())
         return true;
-    return document.quirks().shouldAutoplayWebAudioForArbitraryUserGesture() && document.topDocument().hasHadUserInteraction();
+    return document.topDocument().hasHadUserInteraction();
 }
 
 void AudioContext::setDefaultSampleRateForTesting(std::optional<float> sampleRate)

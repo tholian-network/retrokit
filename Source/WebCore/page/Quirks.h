@@ -52,124 +52,14 @@ public:
     Quirks(Document&);
     ~Quirks();
 
-    bool shouldSilenceWindowResizeEvents() const;
-    bool shouldSilenceMediaQueryListChangeEvents() const;
-    bool shouldIgnoreInvalidSignal() const;
-    bool needsFormControlToBeMouseFocusable() const;
-    bool needsAutoplayPlayPauseEvents() const;
-    bool needsSeekingSupportDisabled() const;
-    bool needsPerDocumentAutoplayBehavior() const;
-    bool shouldAutoplayForArbitraryUserGesture() const;
-    bool shouldAutoplayWebAudioForArbitraryUserGesture() const;
     bool hasBrokenEncryptedMediaAPISupportQuirk() const;
-    bool shouldStripQuotationMarkInFontFaceSetFamily() const;
-#if ENABLE(TOUCH_EVENTS)
-    bool shouldDispatchSimulatedMouseEvents(EventTarget*) const;
-    bool shouldDispatchedSimulatedMouseEventsAssumeDefaultPrevented(EventTarget*) const;
-    std::optional<Event::IsCancelable> simulatedMouseEventTypeForTarget(EventTarget*) const;
-    bool shouldMakeTouchEventNonCancelableForTarget(EventTarget*) const;
-    bool shouldPreventPointerMediaQueryFromEvaluatingToCoarse() const;
-    bool shouldPreventDispatchOfTouchEvent(const AtomString&, EventTarget*) const;
-#endif
-#if ENABLE(IOS_TOUCH_EVENTS)
-    WEBCORE_EXPORT bool shouldSynthesizeTouchEvents() const;
-#endif
-    bool shouldDisablePointerEventsQuirk() const;
-    bool needsInputModeNoneImplicitly(const HTMLElement&) const;
-    bool needsDeferKeyDownAndKeyPressTimersUntilNextEditingCommand() const;
-    bool shouldDisableContentChangeObserverTouchEventAdjustment() const;
-    bool shouldTooltipPreventFromProceedingWithClick(const Element&) const;
-    bool shouldHideSearchFieldResultsButton() const;
-
-    bool needsMillisecondResolutionForHighResTimeStamp() const;
-
-    WEBCORE_EXPORT bool shouldDispatchSyntheticMouseEventsWhenModifyingSelection() const;
-    WEBCORE_EXPORT bool shouldSuppressAutocorrectionAndAutocaptializationInHiddenEditableAreas() const;
-    WEBCORE_EXPORT bool isTouchBarUpdateSupressedForHiddenContentEditable() const;
-    WEBCORE_EXPORT bool isNeverRichlyEditableForTouchBar() const;
-    WEBCORE_EXPORT bool shouldAvoidResizingWhenInputViewBoundsChange() const;
-    WEBCORE_EXPORT bool shouldAvoidScrollingWhenFocusedContentIsVisible() const;
-    WEBCORE_EXPORT bool shouldUseLegacySelectPopoverDismissalBehaviorInDataActivation() const;
-    WEBCORE_EXPORT bool shouldIgnoreAriaForFastPathContentObservationCheck() const;
-    WEBCORE_EXPORT bool shouldLayOutAtMinimumWindowWidthWhenIgnoringScalingConstraints() const;
-    WEBCORE_EXPORT bool shouldIgnoreContentObservationForSyntheticClick(bool isFirstSyntheticClickOnPage) const;
-
-    WEBCORE_EXPORT bool needsYouTubeMouseOutQuirk() const;
-    
-    WEBCORE_EXPORT bool shouldAvoidUsingIOS13ForGmail() const;
-
-    bool needsGMailOverflowScrollQuirk() const;
-    bool needsYouTubeOverflowScrollQuirk() const;
-    bool needsWeChatScrollingQuirk() const;
-
-    bool shouldOpenAsAboutBlank(const String&) const;
-
-    bool needsPreloadAutoQuirk() const;
-
-    bool shouldBypassBackForwardCache() const;
-    bool shouldBypassAsyncScriptDeferring() const;
-
-    static bool shouldMakeEventListenerPassive(const EventTarget&, const AtomString& eventType, const EventListener&);
-
-#if ENABLE(MEDIA_STREAM)
-    bool shouldEnableLegacyGetUserMediaQuirk() const;
-#endif
-
-    bool needsCanPlayAfterSeekedQuirk() const;
-
-    bool shouldAvoidPastingImagesAsWebContent() const;
-
-    enum ShouldDispatchClick : bool { No, Yes };
-
-    bool needsVP9FullRangeFlagQuirk() const;
-    bool needsHDRPixelDepthQuirk() const;
-
-#if ENABLE(WEB_AUTHN)
-    WEBCORE_EXPORT bool shouldBypassUserGestureRequirementForWebAuthn() const;
-#endif
-
-    static bool shouldOmitHTMLDocumentSupportedPropertyNames();
-
-#if ENABLE(IMAGE_ANALYSIS)
-    bool needsToForceUserSelectWhenInstallingImageOverlay() const;
-#endif
 
 private:
     bool needsQuirks() const;
 
-#if ENABLE(TOUCH_EVENTS)
-    bool isAmazon() const;
-    bool isGoogleMaps() const;
-#endif
-
     WeakPtr<Document> m_document;
 
     mutable std::optional<bool> m_hasBrokenEncryptedMediaAPISupportQuirk;
-#if PLATFORM(IOS_FAMILY)
-    mutable std::optional<bool> m_needsGMailOverflowScrollQuirk;
-    mutable std::optional<bool> m_needsYouTubeOverflowScrollQuirk;
-    mutable std::optional<bool> m_needsPreloadAutoQuirk;
-    mutable std::optional<bool> m_shouldAvoidPastingImagesAsWebContent;
-#endif
-#if ENABLE(TOUCH_EVENTS)
-    enum class ShouldDispatchSimulatedMouseEvents : uint8_t {
-        Unknown,
-        No,
-        DependingOnTargetFor_mybinder_org,
-        Yes,
-    };
-    mutable ShouldDispatchSimulatedMouseEvents m_shouldDispatchSimulatedMouseEventsQuirk { ShouldDispatchSimulatedMouseEvents::Unknown };
-#endif
-#if ENABLE(IOS_TOUCH_EVENTS)
-    mutable std::optional<bool> m_shouldSynthesizeTouchEventsQuirk;
-#endif
-    mutable std::optional<bool> m_needsCanPlayAfterSeekedQuirk;
-    mutable std::optional<bool> m_shouldBypassAsyncScriptDeferring;
-    mutable std::optional<bool> m_needsVP9FullRangeFlagQuirk;
-    mutable std::optional<bool> m_needsHDRPixelDepthQuirk;
-#if ENABLE(MEDIA_STREAM)
-    mutable std::optional<bool> m_shouldEnableLegacyGetUserMediaQuirk;
-#endif
 };
 
 } // namespace WebCore

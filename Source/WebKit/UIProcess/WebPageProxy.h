@@ -1590,11 +1590,6 @@ public:
 
     bool hasHadSelectionChangesFromUserInteraction() const { return m_hasHadSelectionChangesFromUserInteraction; }
 
-#if HAVE(TOUCH_BAR)
-    bool isTouchBarUpdateSupressedForHiddenContentEditable() const { return m_isTouchBarUpdateSupressedForHiddenContentEditable; }
-    bool isNeverRichlyEditableForTouchBar() const { return m_isNeverRichlyEditableForTouchBar; }
-#endif
-
     void isLoadingChanged() { activityStateDidChange(WebCore::ActivityState::IsLoading); }
 
     void clearUserMediaState();
@@ -2146,11 +2141,6 @@ private:
 
     void compositionWasCanceled();
     void setHasHadSelectionChangesFromUserInteraction(bool);
-
-#if HAVE(TOUCH_BAR)
-    void setIsTouchBarUpdateSupressedForHiddenContentEditable(bool);
-    void setIsNeverRichlyEditableForTouchBar(bool);
-#endif
 
     void requestDOMPasteAccess(const WebCore::IntRect&, const String&, CompletionHandler<void(WebCore::DOMPasteAccessResponse)>&&);
     void willPerformPasteCommand();
@@ -2855,11 +2845,6 @@ private:
     Seconds m_mediaCaptureReportingDelay { DefaultMediaCaptureReportingDelay };
 
     bool m_hasHadSelectionChangesFromUserInteraction { false };
-
-#if HAVE(TOUCH_BAR)
-    bool m_isTouchBarUpdateSupressedForHiddenContentEditable { false };
-    bool m_isNeverRichlyEditableForTouchBar { false };
-#endif
 
 #if ENABLE(WIRELESS_PLAYBACK_TARGET) && !PLATFORM(IOS_FAMILY)
     bool m_requiresTargetMonitoring { false };

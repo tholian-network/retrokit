@@ -178,7 +178,7 @@ private:
     bool isValidFormControlElement() const;
 
     bool computeIsDisabledByFieldsetAncestor() const;
-    
+
     void startDelayingUpdateValidity() { ++m_delayedUpdateValidityCount; }
     void endDelayingUpdateValidity();
 
@@ -187,10 +187,8 @@ private:
     FormNamedItem* asFormNamedItem() final { return this; }
     FormAssociatedElement* asFormAssociatedElement() final { return this; }
 
-    bool needsMouseFocusableQuirk() const;
-
     std::unique_ptr<ValidationMessage> m_validationMessage;
-    
+
     unsigned m_delayedUpdateValidityCount { 0 };
 
     bool m_isFocusingWithValidationMessage { false };
@@ -226,7 +224,7 @@ public:
     {
         m_element.startDelayingUpdateValidity();
     }
-    
+
     ~DelayedUpdateValidityScope()
     {
         m_element.endDelayingUpdateValidity();

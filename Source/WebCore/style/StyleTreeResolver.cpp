@@ -42,7 +42,6 @@
 #include "NodeRenderStyle.h"
 #include "Page.h"
 #include "PlatformStrategies.h"
-#include "Quirks.h"
 #include "RenderElement.h"
 #include "RenderStyle.h"
 #include "RenderView.h"
@@ -262,7 +261,7 @@ ElementUpdates TreeResolver::resolveElement(Element& element)
 
 #if ENABLE(TOUCH_ACTION_REGIONS)
     // FIXME: Track this exactly.
-    if (update.style->touchActions() != TouchAction::Auto && !m_document.quirks().shouldDisablePointerEventsQuirk())
+    if (update.style->touchActions() != TouchAction::Auto)
         m_document.setMayHaveElementsWithNonAutoTouchAction();
 #endif
 #if ENABLE(EDITABLE_REGION)

@@ -89,7 +89,7 @@ unsigned Screen::pixelDepth() const
         ResourceLoadObserver::shared().logScreenAPIAccessed(*frame->document(), ResourceLoadStatistics::ScreenAPI::PixelDepth);
 
     auto* document = window()->document();
-    if (!document || !document->quirks().needsHDRPixelDepthQuirk() || !screenSupportsHighDynamicRange(frame->view()))
+    if (!document || !screenSupportsHighDynamicRange(frame->view()))
         return static_cast<unsigned>(screenDepth(frame->view()));
 
     return static_cast<unsigned>(screenDepth(frame->view())) + 1;

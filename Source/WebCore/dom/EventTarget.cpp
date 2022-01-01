@@ -42,7 +42,6 @@
 #include "JSEventListener.h"
 #include "JSLazyEventListener.h"
 #include "Logging.h"
-#include "Quirks.h"
 #include "ScriptController.h"
 #include "ScriptDisallowedScope.h"
 #include "Settings.h"
@@ -81,10 +80,6 @@ bool EventTarget::addEventListener(const AtomString& eventType, Ref<EventListene
         return false;
 
     auto passive = options.passive;
-
-    if (!passive.has_value() && Quirks::shouldMakeEventListenerPassive(*this, eventType, listener.get()))
-        passive = true;
-
     bool listenerCreatedFromScript = listener->type() == EventListener::JSEventListenerType && !listener->wasCreatedFromMarkup();
 
     if (!ensureEventTargetData().eventListenerMap.add(eventType, listener.copyRef(), { options.capture, passive.value_or(false), options.once }))
