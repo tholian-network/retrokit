@@ -40,15 +40,18 @@ be classified either as an outdated WebKit/Safari Browser or as a Web Scraper)
 The platforms are basically uninteresting for high security environments, or are
 legacy platforms that are no longer maintained.
 
-- [ ] Remove AIX Support (`AIX`)
+- [x] Remove AIX Support (`_AIX`)
 - [x] Remove Apple Watch Platform Support (`TARGET_OS_WATCH`, `BOS_WATCHOS`, `BPLATFORM_WATCHOS`, `WATCHOS`, `__WATCH_OS_VERSION`, `PEPPER_UI_CORE`, `QUICKBOARD_CONTROLLER`, `PUIC_BUTTON_TYPE_PILL`, `SYMPTOMS_FRAMEWORK`, `WatchOS*`)
 - [ ] Remove Apple TV Platform Support (`TARGET_OS_TV`, `BOS_APPLETV`, `BPLATFORM_APPLETV`, `TVOS`, `__TV_OS_VERSION`)
+- [x] Remove BeOS Support (`BEOS`, `__BEOS__`)
 - [ ] Remove Fuchsia OS Support (`FUCHSIA`)
-- [x] Remove GNU/Hurd Platform Support (`HURD`)
-- [ ] Remove HP/UX Platform Support (`HPUX`)
+- [x] Remove GNU/Hurd Platform Support (`HURD`, `__GNU__`)
+- [x] Remove HP-UX Platform Support (`HPUX`)
 - [ ] Remove iOS Platform Support (`IOS_FAMILY`, `IOS_FAMILY_SIMULATOR`)
 - [x] Remove Playstation Platform Support (`__SCE__`, `PLATFORM_PLAYSTATION`, `BPLATFORM_PLAYSTATION`, `PlayStation`, `playstation`, `sony`)
-- [ ] Remove Solaris Platform Support
+- [x] Remove SGI IRIX Platform Support (`IRIX`)
+- [x] Remove Solaris Platform Support (`sun`, `__sun`)
+- [x] Remove Tru64 OSF/1 Platform Support (`__osf`)
 - [x] Remove Touch Bar Support (`TOUCH_BAR`, `TouchBarMenuData`, `TouchBarMenuItemData`, `didInsertMenuElement`, `didRemoveMenuElement`, `didInsertMenuItemElement`, `didRemoveMenuItemElement`, `touchBarMenu*`)
 - [ ] Remove User Message Handlers Support (`USER_MESSAGE_HANDLERS`)
 - [ ] Remove Wireless Playback Target Support (`WIRELESS_PLAYBACK_TARGET`)

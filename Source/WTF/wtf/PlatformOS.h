@@ -47,11 +47,6 @@
 /* ==== OS() - underlying operating system; only to be used for mandated low-level services like
    virtual memory, not to choose a GUI toolkit ==== */
 
-/* OS(AIX) - AIX */
-#if defined(_AIX)
-#define WTF_OS_AIX 1
-#endif
-
 /* OS(DARWIN) - Any Darwin-based OS, including macOS, iOS, macCatalyst, tvOS, and watchOS */
 #if defined(__APPLE__)
 #define WTF_OS_DARWIN 1

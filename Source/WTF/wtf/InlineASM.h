@@ -69,7 +69,6 @@
     || OS(FREEBSD)             \
     || OS(FUCHSIA)             \
     || OS(OPENBSD)             \
-    || OS(HPUX)                \
     || OS(NETBSD)
     // ELF platform
 #define HIDE_SYMBOL(name) ".hidden " #name
