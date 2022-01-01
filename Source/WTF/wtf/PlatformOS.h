@@ -88,11 +88,6 @@
 #define WTF_OS_FUCHSIA 1
 #endif
 
-/* OS(HURD) - GNU/Hurd */
-#if defined(__GNU__)
-#define WTF_OS_HURD 1
-#endif
-
 /* OS(LINUX) - Linux */
 #if defined(__linux__)
 #define WTF_OS_LINUX 1
@@ -119,7 +114,6 @@
     || OS(DARWIN)           \
     || OS(FREEBSD)          \
     || OS(FUCHSIA)          \
-    || OS(HURD)             \
     || OS(LINUX)            \
     || OS(NETBSD)           \
     || OS(OPENBSD)          \

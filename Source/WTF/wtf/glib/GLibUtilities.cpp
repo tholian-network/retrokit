@@ -40,11 +40,6 @@ CString getCurrentExecutablePath()
         return CString();
     return CString(readLinkBuffer, result);
 }
-#elif OS(HURD)
-CString getCurrentExecutablePath()
-{
-    return CString();
-}
 #elif OS(UNIX)
 CString getCurrentExecutablePath()
 {

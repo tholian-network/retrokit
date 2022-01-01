@@ -86,7 +86,6 @@
     || OS(FREEBSD)             \
     || OS(FUCHSIA)             \
     || OS(OPENBSD)             \
-    || OS(HURD)                \
     || OS(NETBSD)              \
     || COMPILER(MINGW)
     // GNU as-compatible syntax.
