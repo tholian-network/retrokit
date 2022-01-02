@@ -59,6 +59,7 @@ legacy platforms that are no longer maintained.
 - [ ] *Undecided* Remove WebKit Platform for Embedded (`WPE`, `USE_WPE_RENDERER`)
 - [ ] *Undecided* Remove Remote Inspector Support (`REMOTE_INSPECTOR`)
 - [ ] *Undecided* Remove Developer Mode (`DEVELOPER_MODE`)
+- [ ] *Undecided* Refactor Repository Structure to contain all library dependencies in one place
 
 
 ## Legacy Hacks
@@ -66,6 +67,7 @@ legacy platforms that are no longer maintained.
 These legacy APIs that are no longer of relevance to a modern Web View.
 
 - [x] Fix `None` already being defined in `X11`
+- [ ] Enforce modern HarfBuzz version, and remove legacy `OPENTYPE_MATH`
 - [x] Remove `MEMMEM` hack in `StringExtras.h`
 - [ ] Remove `STRNSTR` hack in `StringExtras.h`
 - [ ] Remove `CoreFoundation`, and instead use internal data types (`USE_CF`, `CFSTR()`)

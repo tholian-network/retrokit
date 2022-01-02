@@ -31,7 +31,6 @@
 #include <WebCore/HTTPParsers.h>
 #include <WebCore/ResourceRequest.h>
 #include <WebCore/ResourceResponse.h>
-#include <WebCore/SoupVersioning.h>
 #include <WebCore/WebSocketChannel.h>
 #include <wtf/RunLoop.h>
 #include <wtf/glib/GUniquePtr.h>

@@ -483,7 +483,7 @@ void HTMLElement::parseAttribute(const QualifiedName& name, const AtomString& va
         auto& document = this->document();
         if (this == document.focusedElement()) {
             if (auto* page = document.page())
-                page->chrome().client().focusedElementDidChangeInputMode(*this, inputMode());
+                page->chrome().client().focusedElementDidChangeInputMode(*this, canonicalInputMode());
         }
     }
 
@@ -1200,6 +1200,11 @@ void HTMLElement::setAutocorrect(bool autocorrect)
 }
 
 #endif
+
+InputMode HTMLElement::canonicalInputMode() const
+{
+    return inputModeForAttributeValue(attributeWithoutSynchronization(inputmodeAttr));
+}
 
 const AtomString& HTMLElement::inputMode() const
 {

@@ -43,7 +43,6 @@
 #include <WebCore/SharedBuffer.h>
 #include <WebCore/ShouldRelaxThirdPartyCookieBlocking.h>
 #include <WebCore/SoupNetworkSession.h>
-#include <WebCore/SoupVersioning.h>
 #include <WebCore/TextEncoding.h>
 #include <WebCore/TimingAllowOrigin.h>
 #include <wtf/MainThread.h>
@@ -662,24 +661,7 @@ void NetworkDataTaskSoup::authenticate(AuthenticationChallenge&& challenge)
         }
     }
 
-    // We could also do this before we even start the request, but that would be at the expense
-    // of all request latency, versus a one-time latency for the small subset of requests that
-    // use HTTP authentication. In the end, this doesn't matter much, because persistent credentials
-    // will become session credentials after the first use.
-    if (m_storedCredentialsPolicy == StoredCredentialsPolicy::Use && persistentCredentialStorageEnabled()) {
-        auto protectionSpace = challenge.protectionSpace();
-        m_session->networkStorageSession()->getCredentialFromPersistentStorage(protectionSpace, m_cancellable.get(),
-            [this, protectedThis = makeRef(*this), authChallenge = WTFMove(challenge)] (Credential&& credential) mutable {
-                if (m_state == State::Canceling || m_state == State::Completed || !m_client) {
-                    clearRequest();
-                    return;
-                }
-
-                authChallenge.setProposedCredential(WTFMove(credential));
-                continueAuthenticate(WTFMove(authChallenge));
-        });
-    } else
-        continueAuthenticate(WTFMove(challenge));
+    continueAuthenticate(WTFMove(challenge));
 }
 
 void NetworkDataTaskSoup::continueAuthenticate(AuthenticationChallenge&& challenge)
@@ -1086,7 +1068,6 @@ void NetworkDataTaskSoup::didGetHeaders()
     // incorrect credentials or polluting the keychain with invalid credentials.
     auto statusCode = soup_message_get_status(m_soupMessage.get());
     if (!isAuthenticationFailureStatusCode(statusCode) && statusCode < 500 && persistentCredentialStorageEnabled()) {
-        m_session->networkStorageSession()->saveCredentialToPersistentStorage(m_protectionSpaceForPersistentStorage, m_credentialForPersistentStorage);
         m_protectionSpaceForPersistentStorage = ProtectionSpace();
         m_credentialForPersistentStorage = Credential();
     }

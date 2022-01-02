@@ -79,19 +79,6 @@ void NetworkStorageSession::setCookieObserverHandler(Function<void ()>&& handler
     m_cookieObserverHandler = WTFMove(handler);
 }
 
-void NetworkStorageSession::getCredentialFromPersistentStorage(const ProtectionSpace& protectionSpace, GCancellable* cancellable, Function<void (Credential&&)>&& completionHandler)
-{
-    UNUSED_PARAM(protectionSpace);
-    UNUSED_PARAM(cancellable);
-    completionHandler({ });
-}
-
-void NetworkStorageSession::saveCredentialToPersistentStorage(const ProtectionSpace& protectionSpace, const Credential& credential)
-{
-    UNUSED_PARAM(protectionSpace);
-    UNUSED_PARAM(credential);
-}
-
 void NetworkStorageSession::setCookieAcceptPolicy(HTTPCookieAcceptPolicy policy)
 {
     if (m_isResourceLoadStatisticsEnabled && m_thirdPartyCookieBlockingMode == ThirdPartyCookieBlockingMode::All) {

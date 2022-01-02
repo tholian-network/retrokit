@@ -48,7 +48,6 @@ inline HTMLMenuElement::HTMLMenuElement(const QualifiedName& tagName, Document& 
 Node::InsertedIntoAncestorResult HTMLMenuElement::insertedIntoAncestor(InsertionType type, ContainerNode& ancestor)
 {
     return HTMLElement::insertedIntoAncestor(type, ancestor);
-    return result;
 }
 
 void HTMLMenuElement::removedFromAncestor(RemovalType type, ContainerNode& ancestor)
