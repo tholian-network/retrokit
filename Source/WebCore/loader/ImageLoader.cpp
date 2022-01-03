@@ -36,7 +36,6 @@
 #include "FrameLoader.h"
 #include "HTMLImageElement.h"
 #include "HTMLNames.h"
-#include "HTMLObjectElement.h"
 #include "HTMLParserIdioms.h"
 #include "InspectorInstrumentation.h"
 #include "JSDOMPromiseDeferred.h"
@@ -513,7 +512,7 @@ void ImageLoader::dispatchPendingBeforeLoadEvent()
         bool didEventListenerDisconnectThisElement = !element().isConnected() || &element().document() != originalDocument.ptr();
         if (didEventListenerDisconnectThisElement)
             return;
-        
+
         updateRenderer();
         return;
     }
@@ -524,9 +523,6 @@ void ImageLoader::dispatchPendingBeforeLoadEvent()
 
     loadEventSender().cancelEvent(*this);
     m_hasPendingLoadEvent = false;
-    
-    if (is<HTMLObjectElement>(element()))
-        downcast<HTMLObjectElement>(element()).renderFallbackContent();
 
     // Only consider updating the protection ref-count of the Element immediately before returning
     // from this function as doing so might result in the destruction of this ImageLoader.

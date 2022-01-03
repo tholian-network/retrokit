@@ -288,9 +288,8 @@ JSC::JSInternalPromise* ScriptModuleLoader::importModule(JSC::JSGlobalObject* js
     // SourceOrigin can be null if the source code is not coupled with the script file.
     // The examples,
     //     1. The code evaluated by the inspector.
-    //     2. The other unusual code execution like the evaluation through the NPAPI.
-    //     3. The code from injected bundle's script.
-    //     4. The code from extension script.
+    //     2. The code from injected bundle's script.
+    //     3. The code from extension script.
     URL baseURL;
     RefPtr<JSC::ScriptFetcher> scriptFetcher;
     if (sourceOrigin.isNull()) {

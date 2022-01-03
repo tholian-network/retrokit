@@ -97,7 +97,6 @@
 #include "HTMLLinkElement.h"
 #include "HTMLNames.h"
 #include "HTMLPictureElement.h"
-#include "HTMLPlugInElement.h"
 #include "HTMLPreloadScanner.h"
 #include "HTMLSelectElement.h"
 #include "HTMLTextAreaElement.h"
@@ -156,13 +155,11 @@
 #include "PlatformMediaSessionManager.h"
 #include "PlatformScreen.h"
 #include "PlatformStrategies.h"
-#include "PluginData.h"
 #include "PrintContext.h"
 #include "PseudoElement.h"
 #include "RTCRtpSFrameTransform.h"
 #include "Range.h"
 #include "ReadableStream.h"
-#include "RenderEmbeddedObject.h"
 #include "RenderLayerBacking.h"
 #include "RenderLayerCompositor.h"
 #include "RenderLayerScrollableArea.h"
@@ -557,7 +554,6 @@ void Internals::resetToConsistentState(Page& page)
     MediaResourceLoader::recordResponsesForTesting();
 #endif
 
-    page.setShowAllPlugins(false);
     page.setLowPowerModeEnabledOverrideForTesting(std::nullopt);
     page.setOutsideViewportThrottlingEnabledForTesting(false);
 
@@ -4005,36 +4001,6 @@ void Internals::setSelectionWithoutValidation(Ref<Node> baseNode, unsigned baseO
         VisiblePosition { makeDeprecatedLegacyPosition(extentNode.get(), extentOffset) });
 }
 
-ExceptionOr<bool> Internals::isPluginUnavailabilityIndicatorObscured(Element& element)
-{
-    if (!is<HTMLPlugInElement>(element))
-        return Exception { InvalidAccessError };
-
-    return downcast<HTMLPlugInElement>(element).isReplacementObscured();
-}
-
-ExceptionOr<String> Internals::unavailablePluginReplacementText(Element& element)
-{
-    if (!is<HTMLPlugInElement>(element))
-        return Exception { InvalidAccessError };
-
-    auto* renderer = element.renderer();
-    if (!is<RenderEmbeddedObject>(renderer))
-        return String { };
-
-    return String { downcast<RenderEmbeddedObject>(*renderer).pluginReplacementTextIfUnavailable() };
-}
-
-bool Internals::isPluginSnapshotted(Element&)
-{
-    return false;
-}
-
-bool Internals::pluginIsBelowSizeThreshold(Element& element)
-{
-    return is<HTMLPlugInElement>(element) && downcast<HTMLPlugInElement>(element).isBelowSizeThreshold();
-}
-
 #if ENABLE(MEDIA_SOURCE)
 
 void Internals::initializeMockMediaSource()
@@ -4772,19 +4738,6 @@ String Internals::userVisibleString(const DOMURL& url)
 }
 
 #endif
-
-void Internals::setShowAllPlugins(bool show)
-{
-    Document* document = contextDocument();
-    if (!document)
-        return;
-
-    Page* page = document->page();
-    if (!page)
-        return;
-
-    page->setShowAllPlugins(show);
-}
 
 bool Internals::isReadableStreamDisturbed(JSC::JSGlobalObject& lexicalGlobalObject, JSValue stream)
 {
@@ -5705,14 +5658,6 @@ void Internals::setUseSystemAppearance(bool value)
     if (!contextDocument() || !contextDocument()->page())
         return;
     contextDocument()->page()->setUseSystemAppearance(value);
-}
-
-size_t Internals::pluginCount()
-{
-    if (!contextDocument() || !contextDocument()->page())
-        return 0;
-
-    return contextDocument()->page()->pluginData().webVisiblePlugins().size();
 }
 
 void Internals::notifyResourceLoadObserver()

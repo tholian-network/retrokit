@@ -1,7 +1,6 @@
 set(WebKit_OUTPUT_NAME WebKit2)
 set(WebProcess_OUTPUT_NAME WebKitWebProcess)
 set(NetworkProcess_OUTPUT_NAME WebKitNetworkProcess)
-set(PluginProcess_OUTPUT_NAME WebKitPluginProcess)
 set(GPUProcess_OUTPUT_NAME WebKitGPUProcess)
 
 include(Headers.cmake)
@@ -25,8 +24,6 @@ list(APPEND WebKit_SOURCES
     Platform/win/SharedMemoryWin.cpp
 
     Shared/API/c/curl/WKCertificateInfoCurl.cpp
-
-    Shared/Plugins/Netscape/NetscapePluginModuleNone.cpp
 
     Shared/win/AuxiliaryProcessMainWin.cpp
     Shared/win/NativeWebKeyboardEventWin.cpp
@@ -71,10 +68,6 @@ list(APPEND WebKit_SOURCES
 
     WebProcess/MediaCache/WebMediaKeyStorageManager.cpp
 
-    WebProcess/Plugins/Netscape/NetscapePluginNone.cpp
-
-    WebProcess/Plugins/Netscape/win/PluginProxyWin.cpp
-
     WebProcess/WebCoreSupport/win/WebPopupMenuWin.cpp
 
     WebProcess/WebPage/AcceleratedSurface.cpp
@@ -91,11 +84,9 @@ list(APPEND WebKit_SOURCES
 
 list(APPEND WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/Platform/classifier"
-    "${WEBKIT_DIR}/PluginProcess/win"
     "${WEBKIT_DIR}/Shared/API/c/win"
     "${WEBKIT_DIR}/Shared/CoordinatedGraphics"
     "${WEBKIT_DIR}/Shared/CoordinatedGraphics/threadedcompositor"
-    "${WEBKIT_DIR}/Shared/Plugins/win"
     "${WEBKIT_DIR}/Shared/win"
     "${WEBKIT_DIR}/UIProcess/API/C/cairo"
     "${WEBKIT_DIR}/UIProcess/API/C/curl"
@@ -105,7 +96,6 @@ list(APPEND WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/UIProcess/CoordinatedGraphics"
     "${WEBKIT_DIR}/UIProcess/Inspector/socket"
     "${WEBKIT_DIR}/UIProcess/Inspector/win"
-    "${WEBKIT_DIR}/UIProcess/Plugins/win"
     "${WEBKIT_DIR}/UIProcess/win"
     "${WEBKIT_DIR}/WebProcess/InjectedBundle/API/win"
     "${WEBKIT_DIR}/WebProcess/InjectedBundle/API/win/DOM"

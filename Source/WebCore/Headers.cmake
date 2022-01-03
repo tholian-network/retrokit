@@ -113,9 +113,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     Modules/permissions/PermissionObserver.h
     Modules/permissions/PermissionState.h
 
-    Modules/plugins/PluginReplacement.h
-    Modules/plugins/YouTubePluginReplacement.h
-
     Modules/speech/SpeechRecognitionCaptureSource.h
     Modules/speech/SpeechRecognitionCaptureSourceImpl.h
     Modules/speech/SpeechRecognitionConnection.h
@@ -263,7 +260,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     bindings/js/JSMediaListCustom.h
     bindings/js/JSNodeCustom.h
     bindings/js/JSNodeListCustom.h
-    bindings/js/JSPluginElementFunctions.h
     bindings/js/JSStyleSheetCustom.h
     bindings/js/JSValueInWrappedObject.h
     bindings/js/JSWindowProxy.h
@@ -280,20 +276,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     bindings/js/WebCoreTypedArrayController.h
     bindings/js/WindowProxy.h
     bindings/js/WorkerScriptFetcher.h
-
-    bridge/Bridge.h
-    bridge/IdentifierRep.h
-    bridge/NP_jsobject.h
-    bridge/npruntime_impl.h
-    bridge/npruntime_internal.h
-    bridge/runtime_method.h
-    bridge/runtime_object.h
-    bridge/runtime_root.h
-
-    bridge/c/c_instance.h
-    bridge/c/c_utility.h
-
-    bridge/jsc/BridgeJSC.h
 
     contentextensions/CombinedFiltersAlphabet.h
     contentextensions/CombinedURLFilters.h
@@ -625,7 +607,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     html/HTMLDivElement.h
     html/HTMLDocument.h
     html/HTMLElement.h
-    html/HTMLEmbedElement.h
     html/HTMLFieldSetElement.h
     html/HTMLFontElement.h
     html/HTMLFormControlElement.h
@@ -657,14 +638,11 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     html/HTMLMetaElement.h
     html/HTMLModElement.h
     html/HTMLOListElement.h
-    html/HTMLObjectElement.h
     html/HTMLOptGroupElement.h
     html/HTMLOptionElement.h
     html/HTMLOptionsCollection.h
     html/HTMLParagraphElement.h
     html/HTMLParamElement.h
-    html/HTMLPlugInElement.h
-    html/HTMLPlugInImageElement.h
     html/HTMLPreElement.h
     html/HTMLQuoteElement.h
     html/HTMLScriptElement.h
@@ -697,7 +675,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     html/MediaDocument.h
     html/MediaElementSession.h
     html/MediaError.h
-    html/PluginDocument.h
     html/StepRange.h
     html/TimeRanges.h
     html/TypeAhead.h
@@ -787,7 +764,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     loader/MediaResourceLoader.h
     loader/MixedContentChecker.h
     loader/NavigationAction.h
-    loader/NetscapePlugInStreamLoader.h
     loader/PingLoader.h
     loader/PolicyChecker.h
     loader/PolicyContainer.h
@@ -1487,14 +1463,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/text/UnicodeBidi.h
     platform/text/WritingMode.h
 
-    plugins/PluginData.h
-    plugins/PluginInfoProvider.h
-    plugins/PluginViewBase.h
-    plugins/npapi.h
-    plugins/npfunctions.h
-    plugins/npruntime.h
-    plugins/nptypes.h
-
     rendering/BreakLines.h
     rendering/ClipPathOperation.h
     rendering/ClipRect.h
@@ -1526,7 +1494,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     rendering/RenderBox.h
     rendering/RenderBoxModelObject.h
     rendering/RenderElement.h
-    rendering/RenderEmbeddedObject.h
     rendering/RenderFlexibleBox.h
     rendering/RenderFrame.h
     rendering/RenderFrameBase.h

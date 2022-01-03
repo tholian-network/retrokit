@@ -711,11 +711,7 @@ void HTMLTreeBuilder::processStartTagForInBody(AtomHTMLToken&& token)
         m_tree.insertFormattingElement(WTFMove(token));
         return;
     }
-    if (token.name() == appletTag || token.name() == embedTag || token.name() == objectTag) {
-        if (!pluginContentIsAllowed(m_tree.parserContentPolicy()))
-            return;
-    }
-    if (token.name() == appletTag || token.name() == marqueeTag || token.name() == objectTag) {
+    if (token.name() == marqueeTag) {
         m_tree.reconstructTheActiveFormattingElements();
         m_tree.insertHTMLElement(WTFMove(token));
         m_tree.activeFormattingElements().appendMarker();
@@ -738,7 +734,6 @@ void HTMLTreeBuilder::processStartTagForInBody(AtomHTMLToken&& token)
     }
     if (token.name() == areaTag
         || token.name() == brTag
-        || token.name() == embedTag
         || token.name() == imgTag
         || token.name() == keygenTag
         || token.name() == wbrTag) {
@@ -1825,7 +1820,7 @@ void HTMLTreeBuilder::processEndTagForInBody(AtomHTMLToken&& token)
         callTheAdoptionAgency(token);
         return;
     }
-    if (token.name() == appletTag || token.name() == marqueeTag || token.name() == objectTag) {
+    if (token.name() == marqueeTag) {
         if (!m_tree.openElements().inScope(token.name())) {
             parseError(token);
             return;
@@ -2742,7 +2737,6 @@ void HTMLTreeBuilder::processTokenInForeignContent(AtomHTMLToken&& token)
             || token.name() == dlTag
             || token.name() == dtTag
             || token.name() == emTag
-            || token.name() == embedTag
             || isNumberedHeaderTag(token.name())
             || token.name() == headTag
             || token.name() == hrTag

@@ -46,7 +46,6 @@
 #include "MessageReceiver.h"
 #include "MessageSender.h"
 #include "NetworkResourceLoadIdentifier.h"
-#include "PDFPluginIdentifier.h"
 #include "Plugin.h"
 #include "PolicyDecision.h"
 #include "SandboxExtension.h"
@@ -78,7 +77,6 @@
 #include <WebCore/Page.h>
 #include <WebCore/PageIdentifier.h>
 #include <WebCore/PageOverlay.h>
-#include <WebCore/PluginData.h>
 #include <WebCore/PointerCharacteristics.h>
 #include <WebCore/PointerID.h>
 #include <WebCore/SecurityPolicyViolationEvent.h>
@@ -190,7 +188,6 @@ class HTMLElement;
 class HTMLImageElement;
 class HTMLMenuElement;
 class HTMLMenuItemElement;
-class HTMLPlugInElement;
 class IntPoint;
 class KeyboardEvent;
 class MediaPlaybackTargetContext;
@@ -266,9 +263,7 @@ class LayerHostingContext;
 class MediaDeviceSandboxExtensions;
 class MediaKeySystemPermissionRequestManager;
 class NotificationPermissionRequestManager;
-class PDFPlugin;
 class PageBanner;
-class PluginView;
 class RemoteMediaSessionCoordinator;
 class RemoteRenderingBackendProxy;
 class RemoteWebInspectorUI;
@@ -372,16 +367,6 @@ public:
     bool scrollBy(uint32_t scrollDirection, uint32_t scrollGranularity);
 
     void centerSelectionInVisibleArea();
-
-#if ENABLE(UI_PROCESS_PDF_HUD)
-    void createPDFHUD(PDFPlugin&, const WebCore::IntRect&);
-    void updatePDFHUDLocation(PDFPlugin&, const WebCore::IntRect&);
-    void removePDFHUD(PDFPlugin&);
-    void zoomPDFIn(PDFPluginIdentifier);
-    void zoomPDFOut(PDFPluginIdentifier);
-    void savePDF(PDFPluginIdentifier, CompletionHandler<void(const String&, const URL&, const IPC::DataReference&)>&&);
-    void openPDFWithPreview(PDFPluginIdentifier, CompletionHandler<void(const String&, FrameInfoData&&, const IPC::DataReference&, const String&)>&&);
-#endif
 
 #if PLATFORM(COCOA)
     void willCommitLayerTree(RemoteLayerTreeTransaction&);
@@ -515,10 +500,6 @@ public:
 
     std::optional<WebCore::SimpleRange> currentSelectionAsRange();
 
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    RefPtr<Plugin> createPlugin(WebFrame*, WebCore::HTMLPlugInElement*, const Plugin::Parameters&, String& newMIMEType);
-#endif
-
 #if ENABLE(WEBGL)
     WebCore::WebGLLoadPolicy webGLPolicyForURL(WebFrame*, const URL&);
     WebCore::WebGLLoadPolicy resolveWebGLPolicyForURL(WebFrame*, const URL&);
@@ -601,9 +582,6 @@ public:
     void enterAcceleratedCompositingMode(WebCore::GraphicsLayer*);
     void exitAcceleratedCompositingMode();
 
-    void addPluginView(PluginView*);
-    void removePluginView(PluginView*);
-
     bool isVisible() const { return m_activityState.contains(WebCore::ActivityState::IsVisible); }
     bool isVisibleOrOccluded() const { return m_activityState.contains(WebCore::ActivityState::IsVisibleOrOccluded); }
 
@@ -617,8 +595,6 @@ public:
     const WebCore::FloatRect& viewFrameInWindowCoordinates() const { return m_viewFrameInWindowCoordinates; }
 
     bool hasCachedWindowFrame() const { return m_hasCachedWindowFrame; }
-
-    void updateHeaderAndFooterLayersForDeviceScaleChange(float scaleFactor);
 #endif
 
     void didUpdateRendering();
@@ -626,8 +602,6 @@ public:
 #if PLATFORM(MAC)
     void setTopOverhangImage(WebImage*);
     void setBottomOverhangImage(WebImage*);
-
-    void setUseSystemAppearance(bool);
 
     void didEndMagnificationGesture();
 #endif
@@ -1084,15 +1058,7 @@ public:
     void setArtificialPluginInitializationDelayEnabled(bool enabled) { m_artificialPluginInitializationDelayEnabled = enabled; }
 
 #if PLATFORM(COCOA)
-    bool pdfPluginEnabled() const { return m_pdfPluginEnabled; }
-    void setPDFPluginEnabled(bool enabled) { m_pdfPluginEnabled = enabled; }
-
     NSDictionary *dataDetectionContext() const { return m_dataDetectionContext.get(); }
-#endif
-
-#if ENABLE(PDFKIT_PLUGIN) && !ENABLE(UI_PROCESS_PDF_HUD)
-    void savePDFToFileInDownloadsFolder(const String& suggestedFilename, const URL& originatingURL, const uint8_t* data, unsigned long size);
-    void savePDFToTemporaryFolderAndOpenWithNativeApplication(const String& suggestedFilename, FrameInfoData&&, const uint8_t* data, unsigned long size, const String& pdfUUID);
 #endif
 
     bool mainFrameIsScrollable() const { return m_mainFrameIsScrollable; }
@@ -1118,7 +1084,6 @@ public:
     std::optional<WebCore::IntSize> viewportSizeForCSSViewportUnits() const { return m_viewportSizeForCSSViewportUnits; }
 
     bool canShowMIMEType(const String& MIMEType) const;
-    bool canShowResponse(const WebCore::ResourceResponse&) const;
 
     void addTextCheckingRequest(TextCheckerRequestID, Ref<WebCore::TextCheckingRequest>&&);
     void didFinishCheckingText(TextCheckerRequestID, const Vector<WebCore::TextCheckingResult>&);
@@ -1213,8 +1178,6 @@ public:
     void stopAllURLSchemeTasks();
 
     std::optional<double> cpuLimit() const { return m_cpuLimit; }
-
-    static PluginView* pluginViewForFrame(WebCore::Frame*);
 
     void themeColorChanged() { m_pendingThemeColorChange = true; }
     void flushPendingThemeColorChange();
@@ -1402,10 +1365,6 @@ public:
 #endif
 
     void dispatchWheelEventWithoutScrolling(const WebWheelEvent&, CompletionHandler<void(bool)>&&);
-
-#if ENABLE(PDFKIT_PLUGIN)
-    bool shouldUsePDFPlugin(const String& contentType, StringView path) const;
-#endif
 
 #if ENABLE(MEDIA_SESSION_COORDINATOR)
     void createMediaSessionCoordinator(const String&, CompletionHandler<void(bool)>&&);
@@ -1648,13 +1607,9 @@ private:
     void performDictionaryLookupOfCurrentSelection();
     void performDictionaryLookupForRange(WebCore::Frame&, const WebCore::SimpleRange&, NSDictionary *options, WebCore::TextIndicatorPresentationTransition);
     WebCore::DictionaryPopupInfo dictionaryPopupInfoForRange(WebCore::Frame&, const WebCore::SimpleRange&, NSDictionary *options, WebCore::TextIndicatorPresentationTransition);
-#if ENABLE(PDFKIT_PLUGIN)
-    WebCore::DictionaryPopupInfo dictionaryPopupInfoForSelectionInPDFPlugin(PDFSelection *, PDFPlugin&, NSDictionary *options, WebCore::TextIndicatorPresentationTransition);
-#endif
 
     void windowAndViewFramesChanged(const WebCore::FloatRect& windowFrameInScreenCoordinates, const WebCore::FloatRect& windowFrameInUnflippedScreenCoordinates, const WebCore::FloatRect& viewFrameInWindowCoordinates, const WebCore::FloatPoint& accessibilityViewCoordinates);
 
-    RetainPtr<PDFDocument> pdfDocumentForPrintingFrame(WebCore::Frame*);
     void computePagesForPrintingPDFDocument(WebCore::FrameIdentifier, const PrintInfo&, Vector<WebCore::IntRect>& resultPageRects);
     void drawPDFDocument(CGContextRef, PDFDocument *, const PrintInfo&, const WebCore::IntRect&);
     void drawPagesToPDFFromPDFDocument(CGContextRef, PDFDocument *, const PrintInfo&, uint32_t first, uint32_t count);
@@ -1743,8 +1698,6 @@ private:
 
     static bool platformCanHandleRequest(const WebCore::ResourceRequest&);
 
-    static PluginView* focusedPluginViewForFrame(WebCore::Frame&);
-
     void reportUsedFeatures();
 
     void updateWebsitePolicies(WebsitePoliciesData&&);
@@ -1794,8 +1747,6 @@ private:
 
     void setUserInterfaceLayoutDirection(uint32_t);
 
-    bool canPluginHandleResponse(const WebCore::ResourceResponse&);
-
 #if USE(SYSTEM_PREVIEW)
     void systemPreviewActionTriggered(WebCore::SystemPreviewInfo, const String& message);
 #endif
@@ -1830,8 +1781,6 @@ private:
 #if ENABLE(ATTACHMENT_ELEMENT)
     RefPtr<WebCore::HTMLAttachmentElement> attachmentElementWithIdentifier(const String& identifier) const;
 #endif
-
-    bool canShowMIMEType(const String&, const Function<bool(const String&, WebCore::PluginData::AllowedPluginTypes)>& supportsPlugin) const;
 
     void cancelGesturesBlockedOnSynchronousReplies();
 
@@ -1870,18 +1819,11 @@ private:
     std::unique_ptr<DrawingArea> m_drawingArea;
     DrawingAreaType m_drawingAreaType;
 
-    HashSet<PluginView*> m_pluginViews;
-    bool m_hasSeenPlugin { false };
-
     HashMap<TextCheckerRequestID, RefPtr<WebCore::TextCheckingRequest>> m_pendingTextCheckingRequestMap;
 
     bool m_useFixedLayout { false };
 
     WebCore::Color m_underlayColor;
-
-#if ENABLE(UI_PROCESS_PDF_HUD)
-    HashMap<PDFPluginIdentifier, WeakPtr<PDFPlugin>> m_pdfPlugInsWithHUD;
-#endif
 
     WTF::Function<void()> m_selectionChangedHandler;
     bool m_isInRedo { false };

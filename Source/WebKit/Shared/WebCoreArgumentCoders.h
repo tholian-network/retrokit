@@ -154,7 +154,6 @@ struct GrammarDetail;
 struct MimeClassInfo;
 struct PasteboardImage;
 struct PasteboardURL;
-struct PluginInfo;
 struct PromisedAttachmentInfo;
 struct RecentSearch;
 struct ResourceLoadStatistics;
@@ -376,11 +375,6 @@ template<> struct ArgumentCoder<WebCore::VelocityData> {
 template<> struct ArgumentCoder<WebCore::MimeClassInfo> {
     static void encode(Encoder&, const WebCore::MimeClassInfo&);
     static std::optional<WebCore::MimeClassInfo> decode(Decoder&);
-};
-
-template<> struct ArgumentCoder<WebCore::PluginInfo> {
-    static void encode(Encoder&, const WebCore::PluginInfo&);
-    static std::optional<WebCore::PluginInfo> decode(Decoder&);
 };
 
 template<> struct ArgumentCoder<WebCore::AuthenticationChallenge> {

@@ -456,14 +456,6 @@ private:
     bool hasProvisionalPageWithID(WebPageProxyIdentifier) const;
     bool isAllowedToUpdateBackForwardItem(WebBackForwardListItem&) const;
 
-    // Plugins
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    void getPlugins(bool refresh, CompletionHandler<void(Vector<WebCore::PluginInfo>&& plugins, Vector<WebCore::PluginInfo>&& applicationPlugins, std::optional<Vector<WebCore::SupportedPluginIdentifier>>&&)>&&);
-#endif // ENABLE(NETSCAPE_PLUGIN_API)
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    void getPluginProcessConnection(uint64_t pluginProcessToken, Messages::WebProcessProxy::GetPluginProcessConnectionDelayedReply&&);
-#endif
-    
     void getNetworkProcessConnection(Messages::WebProcessProxy::GetNetworkProcessConnectionDelayedReply&&);
 
 #if ENABLE(GPU_PROCESS)

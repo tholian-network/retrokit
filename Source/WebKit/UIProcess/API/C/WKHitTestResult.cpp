@@ -42,11 +42,6 @@ WKURLRef WKHitTestResultCopyAbsoluteImageURL(WKHitTestResultRef hitTestResultRef
     return toCopiedURLAPI(toImpl(hitTestResultRef)->absoluteImageURL());
 }
 
-WKURLRef WKHitTestResultCopyAbsolutePDFURL(WKHitTestResultRef hitTestResultRef)
-{
-    return toCopiedURLAPI(toImpl(hitTestResultRef)->absolutePDFURL());
-}
-
 WKURLRef WKHitTestResultCopyAbsoluteLinkURL(WKHitTestResultRef hitTestResultRef)
 {
     return toCopiedURLAPI(toImpl(hitTestResultRef)->absoluteLinkURL());

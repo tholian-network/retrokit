@@ -1145,11 +1145,6 @@ String snapshottedPlugInLabelSubtitle()
     return WEB_UI_STRING("Click to restart", "Subtitle of the label to show on a snapshotted plug-in");
 }
 
-String useBlockedPlugInContextMenuTitle()
-{
-    return formatLocalizedString(WEB_UI_STRING("Show in blocked plug-in", "Title of the context menu item to show when PDFPlugin was used instead of a blocked plugin"));
-}
-
 #if ENABLE(WEB_CRYPTO)
 
 String webCryptoMasterKeyKeychainLabel(const String& localizedApplicationName)

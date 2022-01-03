@@ -132,11 +132,6 @@ LayoutUnit RenderView::availableLogicalHeight(AvailableLogicalHeightType) const
     if (multiColumnFlow() && multiColumnFlow()->firstMultiColumnSet())
         return multiColumnFlow()->firstMultiColumnSet()->computedColumnHeight();
 
-#if PLATFORM(IOS_FAMILY)
-    // Workaround for <rdar://problem/7166808>.
-    if (document().isPluginDocument() && frameView().useFixedLayout())
-        return frameView().fixedLayoutSize().height();
-#endif
     return isHorizontalWritingMode() ? frameView().layoutSize().height() : frameView().layoutSize().width();
 }
 

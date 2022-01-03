@@ -110,7 +110,6 @@
 #include "HTMLNameCollection.h"
 #include "HTMLParserIdioms.h"
 #include "HTMLPictureElement.h"
-#include "HTMLPlugInElement.h"
 #include "HTMLScriptElement.h"
 #include "HTMLStyleElement.h"
 #include "HTMLTitleElement.h"
@@ -165,8 +164,6 @@
 #include "PlatformMediaSessionManager.h"
 #include "PlatformScreen.h"
 #include "PlatformStrategies.h"
-#include "PlugInsResources.h"
-#include "PluginDocument.h"
 #include "PointerCaptureController.h"
 #include "PointerLockController.h"
 #include "PolicyChecker.h"
@@ -2585,9 +2582,6 @@ void Document::willBeRemovedFromFrame()
 
     if (hasLivingRenderTree())
         destroyRenderTree();
-
-    if (is<PluginDocument>(*this))
-        downcast<PluginDocument>(*this).detachFromPluginElement();
 
     if (auto* page = this->page()) {
 #if ENABLE(POINTER_LOCK)
@@ -5927,22 +5921,6 @@ Ref<HTMLCollection> Document::images()
     return ensureCachedCollection<DocImages>();
 }
 
-Ref<HTMLCollection> Document::applets()
-{
-    return ensureCachedCollection<DocApplets>();
-}
-
-Ref<HTMLCollection> Document::embeds()
-{
-    return ensureCachedCollection<DocEmbeds>();
-}
-
-Ref<HTMLCollection> Document::plugins()
-{
-    // This is an alias for embeds() required for the JS DOM bindings.
-    return ensureCachedCollection<DocEmbeds>();
-}
-
 Ref<HTMLCollection> Document::scripts()
 {
     return ensureCachedCollection<DocScripts>();
@@ -6016,12 +5994,6 @@ void Document::finishedParsing()
         applyPendingXSLTransformsNowIfScheduled();
 #endif
 
-        // FrameLoader::finishedParsing() might end up calling Document::implicitClose() if all
-        // resource loads are complete. HTMLObjectElements can start loading their resources from
-        // post attach callbacks triggered by resolveStyle(). This means if we parse out an <object>
-        // tag and then reach the end of the document without updating styles, we might not have yet
-        // started the resource load and might fire the window load event too early. To avoid this
-        // we force the styles to be up to date before calling FrameLoader::finishedParsing().
         // See https://bugs.webkit.org/show_bug.cgi?id=36864 starting around comment 35.
         updateStyleIfNeeded();
 
@@ -6239,20 +6211,6 @@ void Document::initContentSecurityPolicy()
     if (parentFrame)
         contentSecurityPolicy()->copyUpgradeInsecureRequestStateFrom(*parentFrame->document()->contentSecurityPolicy());
 
-    // FIXME: Remove this special plugin document logic. We are stricter than the CSP 3 spec. with regards to plugins: we prefer to
-    // inherit the full policy unless the plugin document is opened in a new window. The CSP 3 spec. implies that only plugin documents
-    // delivered with a local scheme (e.g. blob, file, data) should inherit a policy.
-    if (!isPluginDocument())
-        return;
-    RefPtr openerFrame = m_frame->loader().opener();
-    bool shouldInhert = parentFrame || (openerFrame && openerFrame->document()->securityOrigin().isSameOriginDomain(securityOrigin()));
-    if (!shouldInhert)
-        return;
-    setContentSecurityPolicy(makeUnique<ContentSecurityPolicy>(URL { m_url }, *this));
-    if (openerFrame)
-        contentSecurityPolicy()->createPolicyForPluginDocumentFrom(*openerFrame->document()->contentSecurityPolicy());
-    else
-        contentSecurityPolicy()->copyStateFrom(parentFrame->document()->contentSecurityPolicy());
 }
 
 // https://html.spec.whatwg.org/#the-rules-for-choosing-a-browsing-context-given-a-browsing-context-name (Step 8.2)
@@ -7044,8 +7002,6 @@ Element* eventTargetElementForDocument(Document* document)
     if (!document)
         return nullptr;
     Element* element = document->focusedElement();
-    if (!element && is<PluginDocument>(*document))
-        element = downcast<PluginDocument>(*document).pluginElement();
     if (!element && document->isHTMLDocument())
         element = document->bodyOrFrameset();
     if (!element)
@@ -7448,24 +7404,6 @@ void Document::didLoadResourceSynchronously(const URL& url)
 
     if (auto* page = this->page())
         page->cookieJar().clearCacheForHost(url.host().toString());
-}
-
-void Document::ensurePlugInsInjectedScript(DOMWrapperWorld& world)
-{
-    if (m_hasInjectedPlugInsScript)
-        return;
-
-    auto& scriptController = frame()->script();
-
-    // Use the JS file provided by the Chrome client, or fallback to the default one.
-    String jsString = page()->chrome().client().plugInExtraScript();
-    if (!jsString || !scriptController.shouldAllowUserAgentScripts(*this))
-        jsString = StringImpl::createWithoutCopying(plugInsJavaScript, sizeof(plugInsJavaScript));
-
-    setHasEvaluatedUserAgentScripts();
-    scriptController.evaluateInWorldIgnoringException(ScriptSourceCode(jsString), world);
-
-    m_hasInjectedPlugInsScript = true;
 }
 
 #if ENABLE(WEB_CRYPTO)

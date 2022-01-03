@@ -49,10 +49,6 @@ typedef WKBundlePageUIElementVisibility (*WKBundlePageMenuBarIsVisibleCallback)(
 typedef WKBundlePageUIElementVisibility (*WKBundlePageToolbarsAreVisibleCallback)(WKBundlePageRef page, const void *clientInfo);
 typedef void (*WKBundlePageReachedAppCacheOriginQuotaCallback)(WKBundlePageRef page, WKSecurityOriginRef origin, int64_t totalBytesNeeded, const void *clientInfo);
 typedef uint64_t (*WKBundlePageExceededDatabaseQuotaCallback)(WKBundlePageRef page, WKSecurityOriginRef origin, WKStringRef databaseName, WKStringRef databaseDisplayName, uint64_t currentQuotaBytes, uint64_t currentOriginUsageBytes, uint64_t currentDatabaseUsageBytes, uint64_t expectedUsageBytes, const void *clientInfo);
-typedef WKStringRef (*WKBundlePagePlugInCreateStartLabelTitleCallback)(WKStringRef mimeType, const void *clientInfo);
-typedef WKStringRef (*WKBundlePagePlugInCreateStartLabelSubtitleCallback)(WKStringRef mimeType, const void *clientInfo);
-typedef WKStringRef (*WKBundlePagePlugInCreateExtraStyleSheetCallback)(const void *clientInfo);
-typedef WKStringRef (*WKBundlePagePlugInCreateExtraScriptCallback)(const void *clientInfo);
 typedef void (*WKBundlePageDidClickAutoFillButtonCallback)(WKBundlePageRef page, WKBundleNodeHandleRef inputElement, WKTypeRef* userData, const void *clientInfo);
 typedef void (*WKBundlePageDidResignInputElementStrongPasswordAppearance)(WKBundlePageRef page, WKBundleNodeHandleRef inputElement, WKTypeRef* userData, const void *clientInfo);
 
@@ -128,10 +124,6 @@ typedef struct WKBundlePageUIClientV2 {
 
     // Version 2.
     WKBundlePageExceededDatabaseQuotaCallback                           didExceedDatabaseQuota;
-    WKBundlePagePlugInCreateStartLabelTitleCallback                     createPlugInStartLabelTitle;
-    WKBundlePagePlugInCreateStartLabelSubtitleCallback                  createPlugInStartLabelSubtitle;
-    WKBundlePagePlugInCreateExtraStyleSheetCallback                     createPlugInExtraStyleSheet;
-    WKBundlePagePlugInCreateExtraScriptCallback                         createPlugInExtraScript;
 } WKBundlePageUIClientV2;
 
 typedef struct WKBundlePageUIClientV3 {
@@ -158,10 +150,6 @@ typedef struct WKBundlePageUIClientV3 {
 
     // Version 2.
     WKBundlePageExceededDatabaseQuotaCallback                           didExceedDatabaseQuota;
-    WKBundlePagePlugInCreateStartLabelTitleCallback                     createPlugInStartLabelTitle;
-    WKBundlePagePlugInCreateStartLabelSubtitleCallback                  createPlugInStartLabelSubtitle;
-    WKBundlePagePlugInCreateExtraStyleSheetCallback                     createPlugInExtraStyleSheet;
-    WKBundlePagePlugInCreateExtraScriptCallback                         createPlugInExtraScript;
 
     // Version 3.
     void*                                                               unused3;
@@ -195,10 +183,6 @@ typedef struct WKBundlePageUIClientV4 {
 
     // Version 2.
     WKBundlePageExceededDatabaseQuotaCallback                           didExceedDatabaseQuota;
-    WKBundlePagePlugInCreateStartLabelTitleCallback                     createPlugInStartLabelTitle;
-    WKBundlePagePlugInCreateStartLabelSubtitleCallback                  createPlugInStartLabelSubtitle;
-    WKBundlePagePlugInCreateExtraStyleSheetCallback                     createPlugInExtraStyleSheet;
-    WKBundlePagePlugInCreateExtraScriptCallback                         createPlugInExtraScript;
 
     // Version 3.
     void*                                                               unused3;

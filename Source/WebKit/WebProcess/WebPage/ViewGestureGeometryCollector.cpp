@@ -84,9 +84,6 @@ void ViewGestureGeometryCollector::collectGeometryForSmartMagnificationGesture(F
 {
     FloatRect visibleContentRect = m_webPage.mainFrameView()->unobscuredContentRectIncludingScrollbars();
 
-    if (m_webPage.mainWebFrame().handlesPageScaleGesture())
-        return;
-
     double viewportMinimumScale;
     double viewportMaximumScale;
 
@@ -248,8 +245,7 @@ void ViewGestureGeometryCollector::computeMinimumAndMaximumViewportScales(double
 void ViewGestureGeometryCollector::collectGeometryForMagnificationGesture()
 {
     FloatRect visibleContentRect = m_webPage.mainFrameView()->unobscuredContentRectIncludingScrollbars();
-    bool frameHandlesMagnificationGesture = m_webPage.mainWebFrame().handlesPageScaleGesture();
-    m_webPage.send(Messages::ViewGestureController::DidCollectGeometryForMagnificationGesture(visibleContentRect, frameHandlesMagnificationGesture));
+    m_webPage.send(Messages::ViewGestureController::DidCollectGeometryForMagnificationGesture(visibleContentRect, false));
 }
 
 void ViewGestureGeometryCollector::setRenderTreeSizeNotificationThreshold(uint64_t size)

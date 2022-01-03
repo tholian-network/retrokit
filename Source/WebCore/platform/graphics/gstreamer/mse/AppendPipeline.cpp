@@ -808,7 +808,6 @@ void AppendPipeline::Track::initializeElements(AppendPipeline* appendPipeline, G
 
     // Some audio files unhelpfully omit the duration of frames in the container. We need to parse
     // the contained audio streams in order to know the duration of the frames.
-    // This is known to be an issue with YouTube WebM files containing Opus audio as of YTTV2018.
     // If no parser is needed, a GstIdentity element will be created instead.
     parser = createOptionalParserForFormat(trackId, caps.get());
     gst_bin_add(bin, parser.get());

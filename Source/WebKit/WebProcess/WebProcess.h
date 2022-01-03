@@ -29,7 +29,6 @@
 #include "AuxiliaryProcess.h"
 #include "CacheModel.h"
 #include "IdentifierTypes.h"
-#include "PluginProcessConnectionManager.h"
 #include "SandboxExtension.h"
 #include "StorageAreaIdentifier.h"
 #include "TextCheckerState.h"
@@ -44,7 +43,6 @@
 #include <WebCore/FrameIdentifier.h>
 #include <WebCore/NetworkStorageSession.h>
 #include <WebCore/PageIdentifier.h>
-#include <WebCore/PluginData.h>
 #include <WebCore/RegistrableDomain.h>
 #include <WebCore/RenderingMode.h>
 #include <WebCore/ServiceWorkerTypes.h>
@@ -102,7 +100,6 @@ struct DisplayUpdate;
 struct MessagePortIdentifier;
 struct MessageWithMessagePorts;
 struct MockMediaDevice;
-struct PluginInfo;
 struct PrewarmInformation;
 struct SecurityOriginData;
 
@@ -202,8 +199,6 @@ public:
     const WTF::MachSendRight& compositingRenderServerPort() const { return m_compositingRenderServerPort; }
 #endif
 
-    void refreshPlugins();
-
     bool fullKeyboardAccessEnabled() const { return m_fullKeyboardAccessEnabled; }
 
 #if HAVE(MOUSE_DEVICE_OBSERVATION)
@@ -230,10 +225,6 @@ public:
     
     const TextCheckerState& textCheckerState() const { return m_textCheckerState; }
     void setTextCheckerState(const TextCheckerState&);
-    
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    PluginProcessConnectionManager& pluginProcessConnectionManager();
-#endif
 
     EventDispatcher& eventDispatcher() { return m_eventDispatcher.get(); }
 
@@ -657,10 +648,6 @@ private:
     PAL::HysteresisActivity m_dnsPrefetchHystereris;
 
     std::unique_ptr<WebAutomationSessionProxy> m_automationSessionProxy;
-
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    RefPtr<PluginProcessConnectionManager> m_pluginProcessConnectionManager;
-#endif
 
 #if ENABLE(SERVICE_CONTROLS)
     bool m_hasImageServices { false };

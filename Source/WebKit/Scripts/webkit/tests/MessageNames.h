@@ -51,12 +51,10 @@ enum class MessageName : uint16_t {
     , TestWithImageData_SendImageData
     , TestWithLegacyReceiver_AddEvent
     , TestWithLegacyReceiver_Close
-    , TestWithLegacyReceiver_CreatePlugin
     , TestWithLegacyReceiver_DeprecatedOperation
     , TestWithLegacyReceiver_DidCreateWebProcessConnection
     , TestWithLegacyReceiver_DidReceivePolicyDecision
     , TestWithLegacyReceiver_ExperimentalOperation
-    , TestWithLegacyReceiver_GetPlugins
     , TestWithLegacyReceiver_InterpretKeyEvent
     , TestWithLegacyReceiver_LoadSomething
     , TestWithLegacyReceiver_LoadSomethingElse
@@ -84,12 +82,10 @@ enum class MessageName : uint16_t {
     , TestWithSuperclass_TestAsyncMessageWithNoArguments
     , TestWithoutAttributes_AddEvent
     , TestWithoutAttributes_Close
-    , TestWithoutAttributes_CreatePlugin
     , TestWithoutAttributes_DeprecatedOperation
     , TestWithoutAttributes_DidCreateWebProcessConnection
     , TestWithoutAttributes_DidReceivePolicyDecision
     , TestWithoutAttributes_ExperimentalOperation
-    , TestWithoutAttributes_GetPlugins
     , TestWithoutAttributes_InterpretKeyEvent
     , TestWithoutAttributes_LoadSomething
     , TestWithoutAttributes_LoadSomethingElse
@@ -111,11 +107,9 @@ enum class MessageName : uint16_t {
     , TestWithSuperclass_TestAsyncMessageWithConnectionReply
     , TestWithSuperclass_TestAsyncMessageWithMultipleArgumentsReply
     , TestWithSuperclass_TestAsyncMessageWithNoArgumentsReply
-    , TestWithLegacyReceiver_GetPluginProcessConnection
     , TestWithLegacyReceiver_TestMultipleAttributes
     , TestWithSuperclass_TestSyncMessage
     , TestWithSuperclass_TestSynchronousMessage
-    , TestWithoutAttributes_GetPluginProcessConnection
     , TestWithoutAttributes_TestMultipleAttributes
     , WrappedAsyncMessageForTesting
     , Last = WrappedAsyncMessageForTesting
@@ -126,7 +120,7 @@ const char* description(MessageName);
 bool isValidMessageName(MessageName);
 constexpr bool messageIsSync(MessageName name)
 {
-    return name >= MessageName::TestWithLegacyReceiver_GetPluginProcessConnection;
+    return name >= MessageName::TestWithLegacyReceiver_TestMultipleAttributes;
 }
 
 } // namespace IPC

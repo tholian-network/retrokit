@@ -89,7 +89,6 @@ public:
     const URL& unreachableURL() const { return m_frameLoadState.unreachableURL(); }
 
     const String& mimeType() const { return m_MIMEType; }
-    bool containsPluginDocument() const { return m_containsPluginDocument; }
 
     const String& title() const { return m_title; }
 
@@ -111,7 +110,7 @@ public:
     void didExplicitOpen(URL&&, String&& mimeType);
     void didReceiveServerRedirectForProvisionalLoad(const URL&);
     void didFailProvisionalLoad();
-    void didCommitLoad(const String& contentType, WebCertificateInfo&, bool containsPluginDocument);
+    void didCommitLoad(const String& contentType, WebCertificateInfo&);
     void didFinishLoad();
     void didFailLoad();
     void didSameDocumentNavigation(const URL&); // eg. anchor navigation, session state change.
@@ -137,7 +136,6 @@ private:
 
     String m_MIMEType;
     String m_title;
-    bool m_containsPluginDocument { false };
     RefPtr<WebCertificateInfo> m_certificateInfo;
     RefPtr<WebFramePolicyListenerProxy> m_activeListener;
     WebCore::FrameIdentifier m_frameID;

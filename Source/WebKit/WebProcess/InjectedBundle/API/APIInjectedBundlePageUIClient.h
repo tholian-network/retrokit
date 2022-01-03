@@ -80,11 +80,6 @@ public:
         return 0;
     }
 
-    virtual WTF::String plugInStartLabelTitle(const WTF::String& mimeType) const { UNUSED_PARAM(mimeType); return emptyString(); }
-    virtual WTF::String plugInStartLabelSubtitle(const WTF::String& mimeType) const { UNUSED_PARAM(mimeType); return emptyString(); }
-    virtual WTF::String plugInExtraStyleSheet() const { return emptyString(); }
-    virtual WTF::String plugInExtraScript() const { return emptyString(); }
-
     virtual void didClickAutoFillButton(WebKit::WebPage&, WebKit::InjectedBundleNodeHandle&, RefPtr<API::Object>&) { }
 
     virtual void didResignInputElementStrongPasswordAppearance(WebKit::WebPage&, WebKit::InjectedBundleNodeHandle&, RefPtr<API::Object>&) { };

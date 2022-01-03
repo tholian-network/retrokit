@@ -63,7 +63,6 @@
 #include "Page.h"
 #include "PageConfiguration.h"
 #include "PermissionController.h"
-#include "PluginInfoProvider.h"
 #include "ProgressTrackerClient.h"
 #include "SecurityOriginData.h"
 #include "SocketProvider.h"
@@ -404,12 +403,6 @@ class EmptyInspectorClient final : public InspectorClient {
     void hideHighlight() final { }
 };
 
-class EmptyPluginInfoProvider final : public PluginInfoProvider {
-    void refreshPlugins() final { };
-    Vector<PluginInfo> pluginInfo(Page&, std::optional<Vector<SupportedPluginIdentifier>>&) final { return { }; }
-    Vector<PluginInfo> webVisiblePluginInfo(Page&, const URL&) final { return { }; }
-};
-
 class EmptyPopupMenu : public PopupMenu {
 public:
     EmptyPopupMenu() = default;
@@ -590,11 +583,6 @@ Ref<DocumentLoader> EmptyFrameLoaderClient::createDocumentLoader(const ResourceR
 }
 
 RefPtr<Frame> EmptyFrameLoaderClient::createFrame(const String&, HTMLFrameOwnerElement&)
-{
-    return nullptr;
-}
-
-RefPtr<Widget> EmptyFrameLoaderClient::createPlugin(const IntSize&, HTMLPlugInElement&, const URL&, const Vector<String>&, const Vector<String>&, const String&, bool)
 {
     return nullptr;
 }
@@ -833,14 +821,6 @@ void EmptyFrameLoaderClient::willReplaceMultipartContent()
 }
 
 void EmptyFrameLoaderClient::didReplaceMultipartContent()
-{
-}
-
-void EmptyFrameLoaderClient::committedLoad(DocumentLoader*, const uint8_t*, int)
-{
-}
-
-void EmptyFrameLoaderClient::finishedLoading(DocumentLoader*)
 {
 }
 
@@ -1192,7 +1172,6 @@ PageConfiguration pageConfigurationWithEmptyClients(PAL::SessionID sessionID)
 
     pageConfiguration.applicationCacheStorage = ApplicationCacheStorage::create({ }, { });
     pageConfiguration.databaseProvider = adoptRef(*new EmptyDatabaseProvider);
-    pageConfiguration.pluginInfoProvider = adoptRef(*new EmptyPluginInfoProvider);
     pageConfiguration.storageNamespaceProvider = adoptRef(*new EmptyStorageNamespaceProvider);
     pageConfiguration.visitedLinkStore = adoptRef(*new EmptyVisitedLinkStore);
     

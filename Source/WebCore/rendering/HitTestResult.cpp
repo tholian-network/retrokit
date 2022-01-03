@@ -30,10 +30,8 @@
 #include "FrameSelection.h"
 #include "HTMLAnchorElement.h"
 #include "HTMLAttachmentElement.h"
-#include "HTMLEmbedElement.h"
 #include "HTMLImageElement.h"
 #include "HTMLInputElement.h"
-#include "HTMLObjectElement.h"
 #include "HTMLParserIdioms.h"
 #include "HTMLTextAreaElement.h"
 #include "HTMLVideoElement.h"
@@ -373,32 +371,12 @@ URL HitTestResult::absoluteImageURL() const
     if (!renderer || !renderer->isImage())
         return { };
 
-    if (is<HTMLEmbedElement>(*imageNode)
-        || is<HTMLImageElement>(*imageNode)
+    if (is<HTMLImageElement>(*imageNode)
         || is<HTMLInputElement>(*imageNode)
-        || is<HTMLObjectElement>(*imageNode)
         || is<SVGImageElement>(*imageNode))
         return imageNode->document().completeURL(downcast<Element>(*imageNode).imageSourceURL());
 
     return { };
-}
-
-URL HitTestResult::absolutePDFURL() const
-{
-    if (!m_innerNonSharedNode)
-        return URL();
-
-    if (!is<HTMLEmbedElement>(*m_innerNonSharedNode) && !is<HTMLObjectElement>(*m_innerNonSharedNode))
-        return URL();
-
-    HTMLPlugInImageElement& element = downcast<HTMLPlugInImageElement>(*m_innerNonSharedNode);
-    URL url = m_innerNonSharedNode->document().completeURL(stripLeadingAndTrailingHTMLSpaces(element.url()));
-    if (!url.isValid())
-        return URL();
-
-    if (element.serviceType() == "application/pdf" || (element.serviceType().isEmpty() && url.path().endsWithIgnoringASCIICase(".pdf")))
-        return url;
-    return URL();
 }
 
 URL HitTestResult::absoluteMediaURL() const

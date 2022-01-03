@@ -857,19 +857,6 @@ WEBKIT_DEPRECATED WebKitDOMHTMLCollection*
 webkit_dom_document_get_embeds(WebKitDOMDocument* self);
 
 /**
- * webkit_dom_document_get_plugins:
- * @self: A #WebKitDOMDocument
- *
- * Returns: (transfer full): A #WebKitDOMHTMLCollection
- *
- * Since: 2.14
- *
- * Deprecated: 2.22: Use JavaScriptCore API instead
-**/
-WEBKIT_DEPRECATED WebKitDOMHTMLCollection*
-webkit_dom_document_get_plugins(WebKitDOMDocument* self);
-
-/**
  * webkit_dom_document_get_scripts:
  * @self: A #WebKitDOMDocument
  *

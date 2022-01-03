@@ -146,7 +146,6 @@ UIProcess/API/glib/WebKitInputMethodContext.cpp @no-unify
 UIProcess/API/glib/WebKitInstallMissingMediaPluginsPermissionRequest.cpp @no-unify
 UIProcess/API/glib/WebKitJavascriptResult.cpp @no-unify
 UIProcess/API/glib/WebKitMediaKeySystemPermissionRequest.cpp @no-unify
-UIProcess/API/glib/WebKitMimeInfo.cpp @no-unify
 UIProcess/API/glib/WebKitMemoryPressureSettings.cpp @no-unify
 UIProcess/API/glib/WebKitNavigationAction.cpp @no-unify
 UIProcess/API/glib/WebKitNavigationClient.cpp @no-unify
@@ -158,7 +157,6 @@ UIProcess/API/glib/WebKitNotificationProvider.cpp @no-unify
 UIProcess/API/glib/WebKitOptionMenu.cpp @no-unify
 UIProcess/API/glib/WebKitOptionMenuItem.cpp @no-unify
 UIProcess/API/glib/WebKitPermissionRequest.cpp @no-unify
-UIProcess/API/glib/WebKitPlugin.cpp @no-unify
 UIProcess/API/glib/WebKitPointerLockPermissionRequest.cpp @no-unify
 UIProcess/API/glib/WebKitPolicyDecision.cpp @no-unify
 UIProcess/API/glib/WebKitPrivate.cpp @no-unify
@@ -320,7 +318,6 @@ WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMEventTarget.cpp
 WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMFile.cpp
 WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMFileList.cpp
 WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLAnchorElement.cpp
-WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLAppletElement.cpp
 WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLAreaElement.cpp
 WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLBRElement.cpp
 WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLBaseElement.cpp
@@ -333,7 +330,6 @@ WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLDirectoryElement.cpp
 WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLDivElement.cpp
 WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLDocument.cpp
 WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLElement.cpp
-WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLEmbedElement.cpp
 WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLFieldSetElement.cpp
 WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLFontElement.cpp
 WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLFormElement.cpp
@@ -356,7 +352,6 @@ WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLMenuElement.cpp
 WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLMetaElement.cpp
 WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLModElement.cpp
 WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLOListElement.cpp
-WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLObjectElement.cpp
 WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLOptGroupElement.cpp
 WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLOptionElement.cpp
 WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMHTMLOptionsCollection.cpp

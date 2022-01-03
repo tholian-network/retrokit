@@ -43,7 +43,6 @@
 #if PLATFORM(MAC)
 #include "MachPort.h"
 #endif
-#include "Plugin.h"
 #include "StreamConnectionBuffer.h"
 #include "TestClassName.h"
 #if ENABLE(TEST_FEATURE)
@@ -68,7 +67,6 @@
 #if PLATFORM(MAC)
 #include <WebCore/KeyboardEvent.h>
 #endif
-#include <WebCore/PluginData.h>
 #include <optional>
 #include <utility>
 #include <wtf/HashMap.h>
@@ -135,14 +133,8 @@ std::optional<JSC::JSValue> jsValueForArguments(JSC::JSGlobalObject* globalObjec
         return jsValueForDecodedArguments<Messages::TestWithLegacyReceiver::SendDoubleAndFloat::Arguments>(globalObject, decoder);
     case MessageName::TestWithLegacyReceiver_SendInts:
         return jsValueForDecodedArguments<Messages::TestWithLegacyReceiver::SendInts::Arguments>(globalObject, decoder);
-    case MessageName::TestWithLegacyReceiver_CreatePlugin:
-        return jsValueForDecodedArguments<Messages::TestWithLegacyReceiver::CreatePlugin::Arguments>(globalObject, decoder);
     case MessageName::TestWithLegacyReceiver_RunJavaScriptAlert:
         return jsValueForDecodedArguments<Messages::TestWithLegacyReceiver::RunJavaScriptAlert::Arguments>(globalObject, decoder);
-    case MessageName::TestWithLegacyReceiver_GetPlugins:
-        return jsValueForDecodedArguments<Messages::TestWithLegacyReceiver::GetPlugins::Arguments>(globalObject, decoder);
-    case MessageName::TestWithLegacyReceiver_GetPluginProcessConnection:
-        return jsValueForDecodedArguments<Messages::TestWithLegacyReceiver::GetPluginProcessConnection::Arguments>(globalObject, decoder);
     case MessageName::TestWithLegacyReceiver_TestMultipleAttributes:
         return jsValueForDecodedArguments<Messages::TestWithLegacyReceiver::TestMultipleAttributes::Arguments>(globalObject, decoder);
     case MessageName::TestWithLegacyReceiver_TestParameterAttributes:
@@ -195,14 +187,8 @@ std::optional<JSC::JSValue> jsValueForArguments(JSC::JSGlobalObject* globalObjec
         return jsValueForDecodedArguments<Messages::TestWithoutAttributes::SendDoubleAndFloat::Arguments>(globalObject, decoder);
     case MessageName::TestWithoutAttributes_SendInts:
         return jsValueForDecodedArguments<Messages::TestWithoutAttributes::SendInts::Arguments>(globalObject, decoder);
-    case MessageName::TestWithoutAttributes_CreatePlugin:
-        return jsValueForDecodedArguments<Messages::TestWithoutAttributes::CreatePlugin::Arguments>(globalObject, decoder);
     case MessageName::TestWithoutAttributes_RunJavaScriptAlert:
         return jsValueForDecodedArguments<Messages::TestWithoutAttributes::RunJavaScriptAlert::Arguments>(globalObject, decoder);
-    case MessageName::TestWithoutAttributes_GetPlugins:
-        return jsValueForDecodedArguments<Messages::TestWithoutAttributes::GetPlugins::Arguments>(globalObject, decoder);
-    case MessageName::TestWithoutAttributes_GetPluginProcessConnection:
-        return jsValueForDecodedArguments<Messages::TestWithoutAttributes::GetPluginProcessConnection::Arguments>(globalObject, decoder);
     case MessageName::TestWithoutAttributes_TestMultipleAttributes:
         return jsValueForDecodedArguments<Messages::TestWithoutAttributes::TestMultipleAttributes::Arguments>(globalObject, decoder);
     case MessageName::TestWithoutAttributes_TestParameterAttributes:
@@ -286,14 +272,10 @@ std::optional<JSC::JSValue> jsValueForReplyArguments(JSC::JSGlobalObject* global
     case MessageName::TestWithSuperclass_TestSynchronousMessage:
         return jsValueForDecodedArguments<Messages::TestWithSuperclass::TestSynchronousMessage::ReplyArguments>(globalObject, decoder);
 #if (ENABLE(WEBKIT2) && (NESTED_MASTER_CONDITION || MASTER_OR && MASTER_AND))
-    case MessageName::TestWithLegacyReceiver_GetPluginProcessConnection:
-        return jsValueForDecodedArguments<Messages::TestWithLegacyReceiver::GetPluginProcessConnection::ReplyArguments>(globalObject, decoder);
     case MessageName::TestWithLegacyReceiver_TestMultipleAttributes:
         return jsValueForDecodedArguments<Messages::TestWithLegacyReceiver::TestMultipleAttributes::ReplyArguments>(globalObject, decoder);
 #endif
 #if (ENABLE(WEBKIT2) && (NESTED_MASTER_CONDITION || MASTER_OR && MASTER_AND))
-    case MessageName::TestWithoutAttributes_GetPluginProcessConnection:
-        return jsValueForDecodedArguments<Messages::TestWithoutAttributes::GetPluginProcessConnection::ReplyArguments>(globalObject, decoder);
     case MessageName::TestWithoutAttributes_TestMultipleAttributes:
         return jsValueForDecodedArguments<Messages::TestWithoutAttributes::TestMultipleAttributes::ReplyArguments>(globalObject, decoder);
 #endif
@@ -383,23 +365,10 @@ std::optional<Vector<ArgumentDescription>> messageArgumentDescriptions(MessageNa
             {"ints", "Vector<uint64_t>", nullptr, false},
             {"intVectors", "Vector<Vector<uint64_t>>", nullptr, false},
         };
-    case MessageName::TestWithLegacyReceiver_CreatePlugin:
-        return Vector<ArgumentDescription> {
-            {"pluginInstanceID", "uint64_t", nullptr, false},
-            {"parameters", "WebKit::Plugin::Parameters", nullptr, false},
-        };
     case MessageName::TestWithLegacyReceiver_RunJavaScriptAlert:
         return Vector<ArgumentDescription> {
             {"frameID", "uint64_t", nullptr, false},
             {"message", "String", nullptr, false},
-        };
-    case MessageName::TestWithLegacyReceiver_GetPlugins:
-        return Vector<ArgumentDescription> {
-            {"refresh", "bool", nullptr, false},
-        };
-    case MessageName::TestWithLegacyReceiver_GetPluginProcessConnection:
-        return Vector<ArgumentDescription> {
-            {"pluginPath", "String", nullptr, false},
         };
     case MessageName::TestWithLegacyReceiver_TestMultipleAttributes:
         return Vector<ArgumentDescription> { };
@@ -492,23 +461,10 @@ std::optional<Vector<ArgumentDescription>> messageArgumentDescriptions(MessageNa
             {"ints", "Vector<uint64_t>", nullptr, false},
             {"intVectors", "Vector<Vector<uint64_t>>", nullptr, false},
         };
-    case MessageName::TestWithoutAttributes_CreatePlugin:
-        return Vector<ArgumentDescription> {
-            {"pluginInstanceID", "uint64_t", nullptr, false},
-            {"parameters", "WebKit::Plugin::Parameters", nullptr, false},
-        };
     case MessageName::TestWithoutAttributes_RunJavaScriptAlert:
         return Vector<ArgumentDescription> {
             {"frameID", "uint64_t", nullptr, false},
             {"message", "String", nullptr, false},
-        };
-    case MessageName::TestWithoutAttributes_GetPlugins:
-        return Vector<ArgumentDescription> {
-            {"refresh", "bool", nullptr, false},
-        };
-    case MessageName::TestWithoutAttributes_GetPluginProcessConnection:
-        return Vector<ArgumentDescription> {
-            {"pluginPath", "String", nullptr, false},
         };
     case MessageName::TestWithoutAttributes_TestMultipleAttributes:
         return Vector<ArgumentDescription> { };
@@ -642,18 +598,10 @@ std::optional<Vector<ArgumentDescription>> messageReplyArgumentDescriptions(Mess
             {"optionalReply", "WebKit::TestClassName", nullptr, true},
         };
 #if (ENABLE(WEBKIT2) && (NESTED_MASTER_CONDITION || MASTER_OR && MASTER_AND))
-    case MessageName::TestWithLegacyReceiver_GetPluginProcessConnection:
-        return Vector<ArgumentDescription> {
-            {"connectionHandle", "IPC::Connection::Handle", nullptr, false},
-        };
     case MessageName::TestWithLegacyReceiver_TestMultipleAttributes:
         return Vector<ArgumentDescription> { };
 #endif
 #if (ENABLE(WEBKIT2) && (NESTED_MASTER_CONDITION || MASTER_OR && MASTER_AND))
-    case MessageName::TestWithoutAttributes_GetPluginProcessConnection:
-        return Vector<ArgumentDescription> {
-            {"connectionHandle", "IPC::Connection::Handle", nullptr, false},
-        };
     case MessageName::TestWithoutAttributes_TestMultipleAttributes:
         return Vector<ArgumentDescription> { };
 #endif

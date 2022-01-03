@@ -147,20 +147,6 @@ WEBKIT_API void
 webkit_settings_set_enable_frame_flattening                    (WebKitSettings *settings,
                                                                 gboolean        enabled);
 
-WEBKIT_DEPRECATED gboolean
-webkit_settings_get_enable_plugins                             (WebKitSettings *settings);
-
-WEBKIT_DEPRECATED void
-webkit_settings_set_enable_plugins                             (WebKitSettings *settings,
-                                                                gboolean        enabled);
-
-WEBKIT_API gboolean
-webkit_settings_get_enable_java                                (WebKitSettings *settings);
-
-WEBKIT_API void
-webkit_settings_set_enable_java                                (WebKitSettings *settings,
-                                                                gboolean        enabled);
-
 WEBKIT_API gboolean
 webkit_settings_get_javascript_can_open_windows_automatically  (WebKitSettings *settings);
 

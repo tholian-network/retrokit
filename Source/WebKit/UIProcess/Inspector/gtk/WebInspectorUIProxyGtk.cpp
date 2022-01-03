@@ -230,10 +230,8 @@ WebPageProxy* WebInspectorUIProxy::platformCreateFrontendPage()
         nullptr, // createPage
         nullptr, // mouseDidMoveOverElement
         nullptr, // decidePolicyForNotificationPermissionRequest
-        nullptr, // unavailablePluginButtonClicked_deprecatedForUseWithV1
         nullptr, // showColorPicker
         nullptr, // hideColorPicker
-        nullptr, // unavailablePluginButtonClicked
     };
 
     WKPageNavigationClientV0 navigationClient = {

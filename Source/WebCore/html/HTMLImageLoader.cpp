@@ -29,7 +29,6 @@
 #include "Event.h"
 #include "EventNames.h"
 #include "HTMLNames.h"
-#include "HTMLObjectElement.h"
 #include "HTMLParserIdioms.h"
 #include "HTMLVideoElement.h"
 #include "Settings.h"
@@ -56,8 +55,6 @@ void HTMLImageLoader::dispatchLoadEvent()
 #endif
 
     bool errorOccurred = image()->errorOccurred();
-    if (!errorOccurred && image()->response().httpStatusCode() >= 400)
-        errorOccurred = is<HTMLObjectElement>(element()); // An <object> considers a 404 to be an error and should fire onerror.
     element().dispatchEvent(Event::create(errorOccurred ? eventNames().errorEvent : eventNames().loadEvent, Event::CanBubble::No, Event::IsCancelable::No));
 }
 
@@ -85,8 +82,6 @@ void HTMLImageLoader::notifyFinished(CachedResource&, const NetworkLoadMetrics& 
         }
     }
 
-    if (loadError && is<HTMLObjectElement>(element()))
-        downcast<HTMLObjectElement>(element()).renderFallbackContent();
 }
 
 }

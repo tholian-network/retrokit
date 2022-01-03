@@ -30,8 +30,6 @@
 
 #include "Logging.h"
 #include "NetworkSession.h"
-#include "PluginProcessManager.h"
-#include "PluginProcessProxy.h"
 #include "StorageAccessStatus.h"
 #include "WebProcessProxy.h"
 #include "WebsiteDataStore.h"

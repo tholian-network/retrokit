@@ -30,7 +30,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/NetworkProcess/webrtc"
     "${WEBKIT_DIR}/Platform"
     "${WEBKIT_DIR}/Platform/IPC"
-    "${WEBKIT_DIR}/PluginProcess"
     "${WEBKIT_DIR}/Shared"
     "${WEBKIT_DIR}/Shared/API"
     "${WEBKIT_DIR}/Shared/API/c"
@@ -39,9 +38,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/Shared/Databases"
     "${WEBKIT_DIR}/Shared/Databases/IndexedDB"
     "${WEBKIT_DIR}/Shared/FileAPI"
-    "${WEBKIT_DIR}/Shared/Plugins"
-    "${WEBKIT_DIR}/Shared/Plugins/Netscape"
-    "${WEBKIT_DIR}/Shared/Plugins/Netscape/x11"
     "${WEBKIT_DIR}/Shared/RemoteLayerTree"
     "${WEBKIT_DIR}/Shared/WebsiteData"
     "${WEBKIT_DIR}/UIProcess"
@@ -58,7 +54,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/UIProcess/Media"
     "${WEBKIT_DIR}/UIProcess/Network"
     "${WEBKIT_DIR}/UIProcess/Notifications"
-    "${WEBKIT_DIR}/UIProcess/Plugins"
     "${WEBKIT_DIR}/UIProcess/RemoteLayerTree"
     "${WEBKIT_DIR}/UIProcess/UserContent"
     "${WEBKIT_DIR}/UIProcess/WebAuthentication"
@@ -91,8 +86,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/WebProcess/Network/webrtc"
     "${WEBKIT_DIR}/WebProcess/Notifications"
     "${WEBKIT_DIR}/WebProcess/OriginData"
-    "${WEBKIT_DIR}/WebProcess/Plugins"
-    "${WEBKIT_DIR}/WebProcess/Plugins/Netscape"
     "${WEBKIT_DIR}/WebProcess/ResourceCache"
     "${WEBKIT_DIR}/WebProcess/Speech"
     "${WEBKIT_DIR}/WebProcess/Storage"
@@ -167,16 +160,10 @@ set(WebKit_MESSAGES_IN_FILES
     NetworkProcess/webrtc/NetworkRTCProvider
     NetworkProcess/webrtc/RTCDataChannelRemoteManagerProxy
 
-    PluginProcess/PluginControllerProxy
-    PluginProcess/PluginProcess
-    PluginProcess/WebProcessConnection
-
     Shared/AuxiliaryProcess
     Shared/WebConnection
 
     Shared/Authentication/AuthenticationManager
-
-    Shared/Plugins/NPObjectMessageReceiver
 
     UIProcess/DrawingAreaProxy
 
@@ -201,8 +188,6 @@ set(WebKit_MESSAGES_IN_FILES
     UIProcess/Inspector/WebInspectorUIProxy
 
     UIProcess/Network/NetworkProcessProxy
-
-    UIProcess/Plugins/PluginProcessProxy
 
     UIProcess/UserContent/WebUserContentControllerProxy
 
@@ -252,10 +237,6 @@ set(WebKit_MESSAGES_IN_FILES
 
     WebProcess/Notifications/WebNotificationManager
 
-    WebProcess/Plugins/PluginProcessConnection
-    WebProcess/Plugins/PluginProcessConnectionManager
-    WebProcess/Plugins/PluginProxy
-
     WebProcess/Speech/SpeechRecognitionRealtimeMediaSourceManager
 
     WebProcess/Storage/WebSWClientConnection
@@ -288,7 +269,6 @@ endif ()
 set(WebProcess_LIBRARIES WebKit)
 set(NetworkProcess_LIBRARIES WebKit)
 set(GPUProcess_LIBRARIES WebKit)
-set(PluginProcess_LIBRARIES WebKit)
 
 if (ENABLE_ENCRYPTED_MEDIA AND ENABLE_OPENCDM)
   list(APPEND WebKit_SYSTEM_INCLUDE_DIRECTORIES
@@ -388,11 +368,6 @@ WEBKIT_EXECUTABLE_DECLARE(NetworkProcess)
 if (ENABLE_GPU_PROCESS)
     WEBKIT_EXECUTABLE_DECLARE(GPUProcess)
     list(APPEND WebKit_INTERFACE_DEPENDENCIES GPUProcess)
-endif ()
-
-if (ENABLE_PLUGIN_PROCESS)
-    WEBKIT_EXECUTABLE_DECLARE(PluginProcess)
-    list(APPEND WebKit_INTERFACE_DEPENDENCIES PluginProcess)
 endif ()
 
 WEBKIT_FRAMEWORK_DECLARE(WebKit)
@@ -566,21 +541,12 @@ if (ENABLE_GPU_PROCESS)
     ADD_WEBKIT_PREFIX_HEADER(GPUProcess)
 endif ()
 
-if (ENABLE_PLUGIN_PROCESS)
-    list(APPEND PluginProcess_PRIVATE_INCLUDE_DIRECTORIES $<TARGET_PROPERTY:WebKit,INCLUDE_DIRECTORIES>)
-    WEBKIT_EXECUTABLE(PluginProcess)
-    ADD_WEBKIT_PREFIX_HEADER(PluginProcess)
-endif ()
-
 if (COMPILER_IS_GCC_OR_CLANG)
     WEBKIT_ADD_TARGET_CXX_FLAGS(WebKit -Wno-unused-parameter)
     WEBKIT_ADD_TARGET_CXX_FLAGS(WebProcess -Wno-unused-parameter)
     WEBKIT_ADD_TARGET_CXX_FLAGS(NetworkProcess -Wno-unused-parameter)
     if (ENABLE_GPU_PROCESS)
         WEBKIT_ADD_TARGET_CXX_FLAGS(GPUProcess -Wno-unused-parameter)
-    endif ()
-    if (ENABLE_PLUGIN_PROCESS)
-        WEBKIT_ADD_TARGET_CXX_FLAGS(PluginProcess -Wno-unused-parameter)
     endif ()
 endif ()
 

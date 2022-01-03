@@ -37,12 +37,10 @@
 #include "HTMLDataListElement.h"
 #include "HTMLDialogElement.h"
 #include "HTMLDivElement.h"
-#include "HTMLEmbedElement.h"
 #include "HTMLHeadElement.h"
 #include "HTMLHtmlElement.h"
 #include "HTMLInputElement.h"
 #include "HTMLMediaElement.h"
-#include "HTMLObjectElement.h"
 #include "HTMLSpanElement.h"
 #include "MathMLElement.h"
 #include "MediaQueryEvaluator.h"
@@ -73,7 +71,6 @@ StyleSheetContents* UserAgentStyle::svgStyleSheet;
 StyleSheetContents* UserAgentStyle::mathMLStyleSheet;
 StyleSheetContents* UserAgentStyle::mediaControlsStyleSheet;
 StyleSheetContents* UserAgentStyle::fullscreenStyleSheet;
-StyleSheetContents* UserAgentStyle::plugInsStyleSheet;
 StyleSheetContents* UserAgentStyle::mediaQueryStyleSheet;
 #if ENABLE(DATALIST_ELEMENT)
 StyleSheetContents* UserAgentStyle::dataListStyleSheet;
@@ -152,16 +149,7 @@ void UserAgentStyle::initDefaultStyleSheet()
 void UserAgentStyle::ensureDefaultStyleSheetsForElement(const Element& element)
 {
     if (is<HTMLElement>(element)) {
-        if (is<HTMLObjectElement>(element) || is<HTMLEmbedElement>(element)) {
-            if (!plugInsStyleSheet && element.document().page()) {
-                String plugInsRules = RenderTheme::singleton().extraPlugInsStyleSheet() + element.document().page()->chrome().client().plugInExtraStyleSheet();
-                if (plugInsRules.isEmpty())
-                    plugInsRules = String(StringImpl::createWithoutCopying(plugInsUserAgentStyleSheet, sizeof(plugInsUserAgentStyleSheet)));
-                plugInsStyleSheet = parseUASheet(plugInsRules);
-                addToDefaultStyle(*plugInsStyleSheet);
-            }
-        }
-        else if (is<HTMLDialogElement>(element) && RuntimeEnabledFeatures::sharedFeatures().dialogElementEnabled()) {
+        if (is<HTMLDialogElement>(element) && RuntimeEnabledFeatures::sharedFeatures().dialogElementEnabled()) {
             if (!dialogStyleSheet) {
                 dialogStyleSheet = parseUASheet(StringImpl::createWithoutCopying(dialogUserAgentStyleSheet, sizeof(dialogUserAgentStyleSheet)));
                 addToDefaultStyle(*dialogStyleSheet);

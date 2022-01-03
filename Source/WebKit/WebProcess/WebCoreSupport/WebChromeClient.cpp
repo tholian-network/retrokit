@@ -39,7 +39,6 @@
 #include "NetworkConnectionToWebProcessMessages.h"
 #include "NetworkProcessConnection.h"
 #include "PageBanner.h"
-#include "PluginView.h"
 #include "RemoteRenderingBackendProxy.h"
 #include "SharedBufferCopy.h"
 #include "UserData.h"
@@ -77,7 +76,6 @@
 #include <WebCore/HTMLInputElement.h>
 #include <WebCore/HTMLNames.h>
 #include <WebCore/HTMLParserIdioms.h>
-#include <WebCore/HTMLPlugInImageElement.h>
 #include <WebCore/Icon.h>
 #include <WebCore/NotImplemented.h>
 #include <WebCore/RegistrableDomain.h>
@@ -635,48 +633,6 @@ void WebChromeClient::scrollContainingScrollViewsToRevealRect(const IntRect&) co
     notImplemented();
 }
 
-bool WebChromeClient::shouldUnavailablePluginMessageBeButton(RenderEmbeddedObject::PluginUnavailabilityReason pluginUnavailabilityReason) const
-{
-    switch (pluginUnavailabilityReason) {
-    case RenderEmbeddedObject::PluginMissing:
-        // FIXME: <rdar://problem/8794397> We should only return true when there is a
-        // missingPluginButtonClicked callback defined on the Page UI client.
-    case RenderEmbeddedObject::InsecurePluginVersion:
-        return true;
-
-
-    case RenderEmbeddedObject::PluginCrashed:
-    case RenderEmbeddedObject::PluginBlockedByContentSecurityPolicy:
-    case RenderEmbeddedObject::UnsupportedPlugin:
-    case RenderEmbeddedObject::PluginTooSmall:
-        return false;
-    }
-
-    ASSERT_NOT_REACHED();
-    return false;
-}
-    
-void WebChromeClient::unavailablePluginButtonClicked(Element& element, RenderEmbeddedObject::PluginUnavailabilityReason pluginUnavailabilityReason) const
-{
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    ASSERT(element.hasTagName(objectTag) || element.hasTagName(embedTag) || element.hasTagName(appletTag));
-    ASSERT(pluginUnavailabilityReason == RenderEmbeddedObject::PluginMissing || pluginUnavailabilityReason == RenderEmbeddedObject::InsecurePluginVersion || pluginUnavailabilityReason);
-
-    auto& pluginElement = downcast<HTMLPlugInImageElement>(element);
-
-    String frameURLString = pluginElement.document().frame()->loader().documentLoader()->responseURL().string();
-    String pageURLString = m_page.mainFrame()->loader().documentLoader()->responseURL().string();
-    String pluginURLString = pluginElement.document().completeURL(pluginElement.url()).string();
-    URL pluginspageAttributeURL = pluginElement.document().completeURL(stripLeadingAndTrailingHTMLSpaces(pluginElement.attributeWithoutSynchronization(pluginspageAttr)));
-    if (!pluginspageAttributeURL.protocolIsInHTTPFamily())
-        pluginspageAttributeURL = URL();
-    m_page.send(Messages::WebPageProxy::UnavailablePluginButtonClicked(pluginUnavailabilityReason, pluginElement.serviceType(), pluginURLString, pluginspageAttributeURL.string(), frameURLString, pageURLString));
-#else
-    UNUSED_PARAM(element);
-    UNUSED_PARAM(pluginUnavailabilityReason);
-#endif // ENABLE(NETSCAPE_PLUGIN_API)
-}
-
 void WebChromeClient::mouseDidMoveOverElement(const HitTestResult& hitTestResult, unsigned modifierFlags, const String& toolTip, TextDirection)
 {
     RefPtr<API::Object> userData;
@@ -717,12 +673,6 @@ void WebChromeClient::print(Frame& frame, const StringWithDirection& title)
 #endif
 
     WebCore::FloatSize pdfFirstPageSize;
-#if PLATFORM(COCOA)
-    if (auto* pluginView = WebPage::pluginViewForFrame(&frame)) {
-        if (auto* plugin = pluginView->plugin())
-            pdfFirstPageSize = plugin->pdfDocumentSizeForPrinting();
-    }
-#endif
 
     auto truncatedTitle = truncateFromEnd(title, maxTitleLength);
     m_page.sendSyncWithDelayedReply(Messages::WebPageProxy::PrintFrame(webFrame->frameID(), truncatedTitle.string, pdfFirstPageSize), Messages::WebPageProxy::PrintFrame::Reply());
@@ -1077,26 +1027,6 @@ WebCore::HighlightVisibility WebChromeClient::appHighlightsVisiblility() const
 void WebChromeClient::wheelEventHandlersChanged(bool hasHandlers)
 {
     m_page.wheelEventHandlersChanged(hasHandlers);
-}
-
-String WebChromeClient::plugInStartLabelTitle(const String& mimeType) const
-{
-    return m_page.injectedBundleUIClient().plugInStartLabelTitle(mimeType);
-}
-
-String WebChromeClient::plugInStartLabelSubtitle(const String& mimeType) const
-{
-    return m_page.injectedBundleUIClient().plugInStartLabelSubtitle(mimeType);
-}
-
-String WebChromeClient::plugInExtraStyleSheet() const
-{
-    return m_page.injectedBundleUIClient().plugInExtraStyleSheet();
-}
-
-String WebChromeClient::plugInExtraScript() const
-{
-    return m_page.injectedBundleUIClient().plugInExtraScript();
 }
 
 void WebChromeClient::enableSuddenTermination()

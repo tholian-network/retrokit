@@ -79,8 +79,6 @@
 #include "NotificationPermissionRequest.h"
 #include "NotificationPermissionRequestManager.h"
 #include "PageClient.h"
-#include "PluginInformation.h"
-#include "PluginProcessManager.h"
 #include "PrintInfo.h"
 #include "ProcessThrottler.h"
 #include "ProvisionalPageProxy.h"
@@ -171,7 +169,6 @@
 #include <WebCore/PlatformEvent.h>
 #include <WebCore/PrivateClickMeasurement.h>
 #include <WebCore/PublicSuffix.h>
-#include <WebCore/RenderEmbeddedObject.h>
 #include <WebCore/ResourceLoadStatistics.h>
 #include <WebCore/RuntimeApplicationChecks.h>
 #include <WebCore/RuntimeEnabledFeatures.h>
@@ -1817,13 +1814,6 @@ bool WebPageProxy::canShowMIMEType(const String& mimeType)
     if (MIMETypeRegistry::canShowMIMEType(mimeType))
         return true;
 
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    String newMimeType = mimeType;
-    PluginModuleInfo plugin = m_process->processPool().pluginInfoStore().findPlugin(newMimeType, URL());
-    if (!plugin.path.isNull() && m_preferences->pluginsEnabled())
-        return true;
-#endif // ENABLE(NETSCAPE_PLUGIN_API)
-
 #if PLATFORM(COCOA)
     // On Mac, we can show PDFs.
     if (MIMETypeRegistry::isPDFOrPostScriptMIMEType(mimeType) && !WebProcessPool::omitPDFSupport())
@@ -2927,64 +2917,6 @@ WebPreferencesStore WebPageProxy::preferencesStore() const
     return m_preferences->store();
 }
 
-#if ENABLE(NETSCAPE_PLUGIN_API)
-void WebPageProxy::findPlugin(const String& mimeType, const String& urlString, const String& frameURLString, const String& pageURLString, bool allowOnlyApplicationPlugins, Messages::WebPageProxy::FindPlugin::DelayedReply&& reply)
-{
-    PageClientProtector protector(pageClient());
-
-    MESSAGE_CHECK_URL(m_process, urlString);
-
-    URL pluginURL = URL { URL(), urlString };
-    String newMimeType = mimeType.convertToASCIILowercase();
-
-    PluginData::AllowedPluginTypes allowedPluginTypes = allowOnlyApplicationPlugins ? PluginData::OnlyApplicationPlugins : PluginData::AllPlugins;
-
-    URL pageURL = URL { URL(), pageURLString };
-    if (!m_process->processPool().pluginInfoStore().isSupportedPlugin(mimeType, pluginURL, frameURLString, pageURL)) {
-        reply(0, newMimeType, PluginModuleLoadNormally, { }, true);
-        return;
-    }
-
-    PluginModuleInfo plugin = m_process->processPool().pluginInfoStore().findPlugin(newMimeType, pluginURL, allowedPluginTypes);
-    if (!plugin.path) {
-        reply(0, newMimeType, PluginModuleLoadNormally, { }, false);
-        return;
-    }
-
-    uint32_t pluginLoadPolicy = PluginInfoStore::defaultLoadPolicyForPlugin(plugin);
-
-#if PLATFORM(COCOA)
-    auto pluginInformation = createPluginInformationDictionary(plugin, frameURLString, String(), pageURLString, String(), String());
-#endif
-
-    auto findPluginCompletion = [reply = WTFMove(reply), newMimeType = WTFMove(newMimeType), plugin = WTFMove(plugin)] (uint32_t pluginLoadPolicy, const String& unavailabilityDescription) mutable {
-        PluginProcessSandboxPolicy pluginProcessSandboxPolicy = PluginProcessSandboxPolicy::Normal;
-        switch (pluginLoadPolicy) {
-        case PluginModuleLoadNormally:
-            pluginProcessSandboxPolicy = PluginProcessSandboxPolicy::Normal;
-            break;
-        case PluginModuleLoadUnsandboxed:
-            pluginProcessSandboxPolicy = PluginProcessSandboxPolicy::Unsandboxed;
-            break;
-
-        case PluginModuleBlockedForSecurity:
-        case PluginModuleBlockedForCompatibility:
-            reply(0, newMimeType, pluginLoadPolicy, unavailabilityDescription, false);
-            return;
-        }
-
-        reply(PluginProcessManager::singleton().pluginProcessToken(plugin, pluginProcessSandboxPolicy), newMimeType, pluginLoadPolicy, unavailabilityDescription, false);
-    };
-
-#if PLATFORM(COCOA)
-    m_navigationClient->decidePolicyForPluginLoad(*this, static_cast<PluginModuleLoadPolicy>(pluginLoadPolicy), pluginInformation.get(), WTFMove(findPluginCompletion));
-#else
-    findPluginCompletion(pluginLoadPolicy, { });
-#endif
-}
-
-#endif // ENABLE(NETSCAPE_PLUGIN_API)
-
 #if ENABLE(TOUCH_EVENTS)
 
 static TrackingType mergeTrackingTypes(TrackingType a, TrackingType b)
@@ -3517,7 +3449,7 @@ void WebPageProxy::receivedPolicyDecision(PolicyAction action, API::Navigation* 
     sender->send(PolicyDecision { sender->identifier(), isNavigatingToAppBoundDomain(), action, navigation ? navigation->navigationID() : 0, downloadID, WTFMove(websitePoliciesData), WTFMove(sandboxExtensionHandle) });
 }
 
-void WebPageProxy::commitProvisionalPage(FrameIdentifier frameID, FrameInfoData&& frameInfo, ResourceRequest&& request, uint64_t navigationID, const String& mimeType, bool frameHasCustomContentProvider, WebCore::FrameLoadType frameLoadType, const WebCore::CertificateInfo& certificateInfo, bool usedLegacyTLS, bool containsPluginDocument, std::optional<WebCore::HasInsecureContent> forcedHasInsecureContent, WebCore::MouseEventPolicy mouseEventPolicy, const UserData& userData)
+void WebPageProxy::commitProvisionalPage(FrameIdentifier frameID, FrameInfoData&& frameInfo, ResourceRequest&& request, uint64_t navigationID, const String& mimeType, bool frameHasCustomContentProvider, WebCore::FrameLoadType frameLoadType, const WebCore::CertificateInfo& certificateInfo, bool usedLegacyTLS, std::optional<WebCore::HasInsecureContent> forcedHasInsecureContent, WebCore::MouseEventPolicy mouseEventPolicy, const UserData& userData)
 {
     ASSERT(m_provisionalPage);
     WEBPAGEPROXY_RELEASE_LOG(Loading, "commitProvisionalPage: newPID=%i", m_provisionalPage->process().processIdentifier());
@@ -3551,7 +3483,7 @@ void WebPageProxy::commitProvisionalPage(FrameIdentifier frameID, FrameInfoData&
     const auto oldWebPageID = m_webPageID;
     swapToProvisionalPage(std::exchange(m_provisionalPage, nullptr));
 
-    didCommitLoadForFrame(frameID, WTFMove(frameInfo), WTFMove(request), navigationID, mimeType, frameHasCustomContentProvider, frameLoadType, certificateInfo, usedLegacyTLS, containsPluginDocument, forcedHasInsecureContent, mouseEventPolicy, userData);
+    didCommitLoadForFrame(frameID, WTFMove(frameInfo), WTFMove(request), navigationID, mimeType, frameHasCustomContentProvider, frameLoadType, certificateInfo, usedLegacyTLS, forcedHasInsecureContent, mouseEventPolicy, userData);
 
     m_inspectorController->didCommitProvisionalPage(oldWebPageID, m_webPageID);
 }
@@ -3853,19 +3785,11 @@ void WebPageProxy::setPageAndTextZoomFactors(double pageZoomFactor, double textZ
 
 double WebPageProxy::pageZoomFactor() const
 {
-    // Zoom factor for non-PDF pages persists across page loads. We maintain a separate member variable for PDF
-    // zoom which ensures that we don't use the PDF zoom for a normal page.
-    if (m_mainFramePluginHandlesPageScaleGesture)
-        return m_pluginZoomFactor;
     return m_pageZoomFactor;
 }
 
 double WebPageProxy::pageScaleFactor() const
 {
-    // PDF documents use zoom and scale factors to size themselves appropriately in the window. We store them
-    // separately but decide which to return based on the main frame.
-    if (m_mainFramePluginHandlesPageScaleGesture)
-        return m_pluginScaleFactor;
     return m_pageScaleFactor;
 }
 
@@ -4213,16 +4137,6 @@ void WebPageProxy::setPaginationLineGridEnabled(bool lineGridEnabled)
 void WebPageProxy::pageScaleFactorDidChange(double scaleFactor)
 {
     m_pageScaleFactor = scaleFactor;
-}
-
-void WebPageProxy::pluginScaleFactorDidChange(double pluginScaleFactor)
-{
-    m_pluginScaleFactor = pluginScaleFactor;
-}
-
-void WebPageProxy::pluginZoomFactorDidChange(double pluginZoomFactor)
-{
-    m_pluginZoomFactor = pluginZoomFactor;
 }
 
 void WebPageProxy::findStringMatches(const String& string, OptionSet<FindOptions> options, unsigned maxMatchCount)
@@ -4794,7 +4708,7 @@ static OptionSet<CrossSiteNavigationDataTransfer::Flag> checkIfNavigationContain
 }
 #endif
 
-void WebPageProxy::didCommitLoadForFrame(FrameIdentifier frameID, FrameInfoData&& frameInfo, ResourceRequest&& request, uint64_t navigationID, const String& mimeType, bool frameHasCustomContentProvider, WebCore::FrameLoadType frameLoadType, const WebCore::CertificateInfo& certificateInfo, bool usedLegacyTLS, bool containsPluginDocument, std::optional<HasInsecureContent> hasInsecureContent, WebCore::MouseEventPolicy mouseEventPolicy, const UserData& userData)
+void WebPageProxy::didCommitLoadForFrame(FrameIdentifier frameID, FrameInfoData&& frameInfo, ResourceRequest&& request, uint64_t navigationID, const String& mimeType, bool frameHasCustomContentProvider, WebCore::FrameLoadType frameLoadType, const WebCore::CertificateInfo& certificateInfo, bool usedLegacyTLS, std::optional<HasInsecureContent> hasInsecureContent, WebCore::MouseEventPolicy mouseEventPolicy, const UserData& userData)
 {
     LOG(Loading, "(Loading) WebPageProxy %" PRIu64 " didCommitLoadForFrame in navigation %" PRIu64, m_identifier.toUInt64(), navigationID);
     LOG(BackForward, "(Back/Forward) After load commit, back/forward list is now:%s", m_backForwardList->loggingString());
@@ -4847,7 +4761,7 @@ void WebPageProxy::didCommitLoadForFrame(FrameIdentifier frameID, FrameInfoData&
     pageClient().resetSecureInputState();
 #endif
 
-    frame->didCommitLoad(mimeType, webCertificateInfo, containsPluginDocument);
+    frame->didCommitLoad(mimeType, webCertificateInfo);
 
     if (frame->isMainFrame()) {
         std::optional<WebCore::PrivateClickMeasurement> privateClickMeasurement;
@@ -4885,16 +4799,11 @@ void WebPageProxy::didCommitLoadForFrame(FrameIdentifier frameID, FrameInfoData&
     if (frame->isMainFrame()) {
         if (frameLoadType == FrameLoadType::Standard) {
             m_pageScaleFactor = 1;
-            m_pluginScaleFactor = 1;
-            m_mainFramePluginHandlesPageScaleGesture = false;
         }
 #if ENABLE(POINTER_LOCK)
         requestPointerUnlock();
 #endif
         pageClient().setMouseEventPolicy(mouseEventPolicy);
-#if ENABLE(UI_PROCESS_PDF_HUD)
-        pageClient().removeAllPDFHUDs();
-#endif
     }
 
     m_pageLoadState.commitChanges();
@@ -5204,11 +5113,6 @@ void WebPageProxy::didRunInsecureContentForFrame(FrameIdentifier frameID, const 
 
 void WebPageProxy::didDetectXSSForFrame(FrameIdentifier, const UserData&)
 {
-}
-
-void WebPageProxy::mainFramePluginHandlesPageScaleGestureDidChange(bool mainFramePluginHandlesPageScaleGesture)
-{
-    m_mainFramePluginHandlesPageScaleGesture = mainFramePluginHandlesPageScaleGesture;
 }
 
 #if !PLATFORM(COCOA)
@@ -5895,39 +5799,6 @@ void WebPageProxy::mouseDidMoveOverElement(WebHitTestResultData&& hitTestResultD
     m_uiClient->mouseDidMoveOverElement(*this, hitTestResultData, modifiers, m_process->transformHandlesToObjects(userData.object()).get());
     setToolTip(hitTestResultData.toolTipText);
 }
-
-#if ENABLE(NETSCAPE_PLUGIN_API)
-void WebPageProxy::unavailablePluginButtonClicked(uint32_t opaquePluginUnavailabilityReason, const String& mimeType, const String& pluginURLString, const String& pluginspageAttributeURLString, const String& frameURLString, const String& pageURLString)
-{
-    MESSAGE_CHECK_URL(m_process, pluginURLString);
-    MESSAGE_CHECK_URL(m_process, pluginspageAttributeURLString);
-    MESSAGE_CHECK_URL(m_process, frameURLString);
-    MESSAGE_CHECK_URL(m_process, pageURLString);
-
-    String newMimeType = mimeType;
-    PluginModuleInfo plugin = m_process->processPool().pluginInfoStore().findPlugin(newMimeType, URL(URL(), pluginURLString));
-    auto pluginInformation = createPluginInformationDictionary(plugin, frameURLString, mimeType, pageURLString, pluginspageAttributeURLString, pluginURLString);
-
-    WKPluginUnavailabilityReason pluginUnavailabilityReason = kWKPluginUnavailabilityReasonPluginMissing;
-    switch (static_cast<RenderEmbeddedObject::PluginUnavailabilityReason>(opaquePluginUnavailabilityReason)) {
-    case RenderEmbeddedObject::PluginMissing:
-        pluginUnavailabilityReason = kWKPluginUnavailabilityReasonPluginMissing;
-        break;
-    case RenderEmbeddedObject::InsecurePluginVersion:
-        pluginUnavailabilityReason = kWKPluginUnavailabilityReasonInsecurePluginVersion;
-        break;
-    case RenderEmbeddedObject::PluginCrashed:
-        pluginUnavailabilityReason = kWKPluginUnavailabilityReasonPluginCrashed;
-        break;
-    case RenderEmbeddedObject::PluginBlockedByContentSecurityPolicy:
-    case RenderEmbeddedObject::UnsupportedPlugin:
-    case RenderEmbeddedObject::PluginTooSmall:
-        ASSERT_NOT_REACHED();
-    }
-
-    m_uiClient->unavailablePluginButtonClicked(*this, pluginUnavailabilityReason, pluginInformation.get());
-}
-#endif // ENABLE(NETSCAPE_PLUGIN_API)
 
 #if ENABLE(WEBGL)
 void WebPageProxy::webGLPolicyForURL(URL&& url, Messages::WebPageProxy::WebGLPolicyForURL::DelayedReply&& reply)
@@ -7550,9 +7421,6 @@ void WebPageProxy::resetStateAfterProcessTermination(ProcessTerminationReason re
 
     resetStateAfterProcessExited(reason);
     stopAllURLSchemeTasks(m_process.ptr());
-#if ENABLE(UI_PROCESS_PDF_HUD)
-    pageClient().removeAllPDFHUDs();
-#endif
 
     // For bringup of process swapping, NavigationSwap termination will not go out to clients.
     // If it does *during* process swapping, and the client triggers a reload, that causes bizarre WebKit re-entry.
@@ -8577,22 +8445,6 @@ Color WebPageProxy::platformUnderPageBackgroundColor() const
 }
 
 #endif // !PLATFORM(COCOA)
-
-#if ENABLE(NETSCAPE_PLUGIN_API)
-void WebPageProxy::didFailToInitializePlugin(const String& mimeType, const String& frameURLString, const String& pageURLString)
-{
-    m_navigationClient->didFailToInitializePlugIn(*this, createPluginInformationDictionary(mimeType, frameURLString, pageURLString).get());
-}
-
-void WebPageProxy::didBlockInsecurePluginVersion(const String& mimeType, const String& pluginURLString, const String& frameURLString, const String& pageURLString, bool replacementObscured)
-{
-    String newMimeType = mimeType;
-    PluginModuleInfo plugin = m_process->processPool().pluginInfoStore().findPlugin(newMimeType, URL(URL(), pluginURLString));
-    auto pluginInformation = createPluginInformationDictionary(plugin, frameURLString, mimeType, pageURLString, String(), String(), replacementObscured);
-
-    m_navigationClient->didBlockInsecurePluginVersion(*this, pluginInformation.get());
-}
-#endif // ENABLE(NETSCAPE_PLUGIN_API)
 
 bool WebPageProxy::willHandleHorizontalScrollEvents() const
 {

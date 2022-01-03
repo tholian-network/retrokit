@@ -35,7 +35,6 @@
 #include "InjectedBundleScriptWorld.h"
 #include "NetworkConnectionToWebProcessMessages.h"
 #include "NetworkProcessConnection.h"
-#include "PluginView.h"
 #include "WKAPICast.h"
 #include "WKBundleAPICast.h"
 #include "WebChromeClient.h"
@@ -73,7 +72,6 @@
 #include <WebCore/JSFile.h>
 #include <WebCore/JSRange.h>
 #include <WebCore/Page.h>
-#include <WebCore/PluginDocument.h>
 #include <WebCore/RenderLayerCompositor.h>
 #include <WebCore/RenderTreeAsText.h>
 #include <WebCore/RenderView.h>
@@ -511,7 +509,7 @@ bool WebFrame::allowsFollowingLink(const URL& url) const
 {
     if (!m_coreFrame)
         return true;
-        
+
     return m_coreFrame->document()->securityOrigin().canDisplay(url);
 }
 
@@ -531,30 +529,18 @@ JSGlobalContextRef WebFrame::jsContextForWorld(InjectedBundleScriptWorld* world)
     return toGlobalRef(m_coreFrame->script().globalObject(world->coreWorld()));
 }
 
-bool WebFrame::handlesPageScaleGesture() const
-{
-    auto* pluginView = WebPage::pluginViewForFrame(m_coreFrame.get());
-    return pluginView && pluginView->handlesPageScaleFactor();
-}
-
-bool WebFrame::requiresUnifiedScaleFactor() const
-{
-    auto* pluginView = WebPage::pluginViewForFrame(m_coreFrame.get());
-    return pluginView && pluginView->requiresUnifiedScaleFactor();
-}
-
 void WebFrame::setAccessibleName(const String& accessibleName)
 {
     if (!AXObjectCache::accessibilityEnabled())
         return;
-    
+
     if (!m_coreFrame)
         return;
 
     auto* document = m_coreFrame->document();
     if (!document)
         return;
-    
+
     auto* rootObject = document->axObjectCache()->rootObject();
     if (!rootObject)
         return;
@@ -563,14 +549,14 @@ void WebFrame::setAccessibleName(const String& accessibleName)
 }
 
 IntRect WebFrame::contentBounds() const
-{    
+{
     if (!m_coreFrame)
         return IntRect();
-    
+
     FrameView* view = m_coreFrame->view();
     if (!view)
         return IntRect();
-    
+
     return IntRect(0, 0, view->contentsWidth(), view->contentsHeight());
 }
 

@@ -119,9 +119,6 @@ private:
     void willReplaceMultipartContent() final;
     void didReplaceMultipartContent() final;
 
-    void committedLoad(DocumentLoader*, const uint8_t*, int) final;
-    void finishedLoading(DocumentLoader*) final;
-
     ResourceError cancelledError(const ResourceRequest&) const final;
     ResourceError blockedError(const ResourceRequest&) const final;
     ResourceError blockedByContentBlockerError(const ResourceRequest&) const final;
@@ -172,7 +169,6 @@ private:
     void didRunInsecureContent(SecurityOrigin&, const URL&) final;
     void didDetectXSS(const URL&, bool) final;
     RefPtr<Frame> createFrame(const String&, HTMLFrameOwnerElement&) final;
-    RefPtr<Widget> createPlugin(const IntSize&, HTMLPlugInElement&, const URL&, const Vector<String>&, const Vector<String>&, const String&, bool) final;
 
     ObjectContentType objectContentType(const URL&, const String&) final;
     String overrideMediaType() const final;

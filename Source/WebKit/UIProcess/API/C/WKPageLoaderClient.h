@@ -29,7 +29,6 @@
 #include <WebKit/WKBase.h>
 #include <WebKit/WKErrorRef.h>
 #include <WebKit/WKPageLoadTypes.h>
-#include <WebKit/WKPluginLoadPolicy.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -65,17 +64,10 @@ typedef bool (*WKPageShouldGoToBackForwardListItemCallback)(WKPageRef page, WKBa
 typedef bool (*WKPageShouldKeepCurrentBackForwardListItemInListCallback)(WKPageRef page, WKBackForwardListItemRef item, const void *clientInfo);
 typedef void (*WKPageWillGoToBackForwardListItemCallback)(WKPageRef page, WKBackForwardListItemRef item, WKTypeRef userData, const void *clientInfo);
 typedef void (*WKPageDidLayoutCallback)(WKPageRef page, WKLayoutMilestones milestones, WKTypeRef userData, const void *clientInfo);
-typedef WKPluginLoadPolicy (*WKPagePluginLoadPolicyCallback)(WKPageRef page, WKPluginLoadPolicy currentPluginLoadPolicy, WKDictionaryRef pluginInfoDictionary, WKStringRef* unavailabilityDescription, const void* clientInfo);
-typedef void (*WKPagePluginDidFailCallback)(WKPageRef page, uint32_t errorCode, WKDictionaryRef pluginInfoDictionary, const void* clientInfo);
 typedef WKWebGLLoadPolicy (*WKPageWebGLLoadPolicyCallback)(WKPageRef page, WKStringRef url, const void* clientInfo);
 typedef void (*WKPageNavigationGestureDidBeginCallback)(WKPageRef page, const void* clientInfo);
 typedef void (*WKPageNavigationGestureWillEndCallback)(WKPageRef page, bool willNavigate, WKBackForwardListItemRef item, const void* clientInfo);
 typedef void (*WKPageNavigationGestureDidEndCallback)(WKPageRef page, bool willNavigate, WKBackForwardListItemRef item, const void* clientInfo);
-
-// Deprecated
-typedef void (*WKPageDidFailToInitializePluginCallback_deprecatedForUseWithV0)(WKPageRef page, WKStringRef mimeType, const void* clientInfo);
-typedef void (*WKPagePluginDidFailCallback_deprecatedForUseWithV1)(WKPageRef page, uint32_t errorCode, WKStringRef mimeType, WKStringRef pluginIdentifier, WKStringRef pluginVersion, const void* clientInfo);
-typedef WKPluginLoadPolicy (*WKPagePluginLoadPolicyCallback_deprecatedForUseWithV2)(WKPageRef page, WKPluginLoadPolicy currentPluginLoadPolicy, WKDictionaryRef pluginInfoDictionary, const void* clientInfo);
 
 typedef struct WKPageLoaderClientBase {
     int                                                                 version;
@@ -114,7 +106,6 @@ typedef struct WKPageLoaderClientV0 {
     WKPageLoaderClientCallback                                          processDidCrash;
     WKPageDidChangeBackForwardListCallback                              didChangeBackForwardList;
     WKPageShouldGoToBackForwardListItemCallback                         shouldGoToBackForwardListItem;
-    WKPageDidFailToInitializePluginCallback_deprecatedForUseWithV0      didFailToInitializePlugin_deprecatedForUseWithV0;
 } WKPageLoaderClientV0;
 
 typedef struct WKPageLoaderClientV1 {
@@ -149,7 +140,6 @@ typedef struct WKPageLoaderClientV1 {
     WKPageLoaderClientCallback                                          processDidCrash;
     WKPageDidChangeBackForwardListCallback                              didChangeBackForwardList;
     WKPageShouldGoToBackForwardListItemCallback                         shouldGoToBackForwardListItem;
-    WKPageDidFailToInitializePluginCallback_deprecatedForUseWithV0      didFailToInitializePlugin_deprecatedForUseWithV0;
 
     // Version 1.
     WKPageDidDetectXSSForFrameCallback                                  didDetectXSSForFrame;
@@ -159,7 +149,6 @@ typedef struct WKPageLoaderClientV1 {
     WKPageWillGoToBackForwardListItemCallback                           willGoToBackForwardListItem;
 
     WKPageLoaderClientCallback                                          interactionOccurredWhileProcessUnresponsive;
-    WKPagePluginDidFailCallback_deprecatedForUseWithV1                  pluginDidFail_deprecatedForUseWithV1;
 } WKPageLoaderClientV1;
 
 typedef struct WKPageLoaderClientV2 {
@@ -194,7 +183,6 @@ typedef struct WKPageLoaderClientV2 {
     WKPageLoaderClientCallback                                          processDidCrash;
     WKPageDidChangeBackForwardListCallback                              didChangeBackForwardList;
     WKPageShouldGoToBackForwardListItemCallback                         shouldGoToBackForwardListItem;
-    WKPageDidFailToInitializePluginCallback_deprecatedForUseWithV0      didFailToInitializePlugin_deprecatedForUseWithV0;
 
     // Version 1.
     WKPageDidDetectXSSForFrameCallback                                  didDetectXSSForFrame;
@@ -204,15 +192,12 @@ typedef struct WKPageLoaderClientV2 {
     WKPageWillGoToBackForwardListItemCallback                           willGoToBackForwardListItem;
 
     WKPageLoaderClientCallback                                          interactionOccurredWhileProcessUnresponsive;
-    WKPagePluginDidFailCallback_deprecatedForUseWithV1                  pluginDidFail_deprecatedForUseWithV1;
 
     // Version 2.
     void                                                                (*didReceiveIntentForFrame_unavailable)(void);
     void                                                                (*registerIntentServiceForFrame_unavailable)(void);
 
     WKPageDidLayoutCallback                                             didLayout;
-    WKPagePluginLoadPolicyCallback_deprecatedForUseWithV2               pluginLoadPolicy_deprecatedForUseWithV2;
-    WKPagePluginDidFailCallback                                         pluginDidFail;
 } WKPageLoaderClientV2;
 
 typedef struct WKPageLoaderClientV3 {
@@ -247,7 +232,6 @@ typedef struct WKPageLoaderClientV3 {
     WKPageLoaderClientCallback                                          processDidCrash;
     WKPageDidChangeBackForwardListCallback                              didChangeBackForwardList;
     WKPageShouldGoToBackForwardListItemCallback                         shouldGoToBackForwardListItem;
-    WKPageDidFailToInitializePluginCallback_deprecatedForUseWithV0      didFailToInitializePlugin_deprecatedForUseWithV0;
 
     // Version 1.
     WKPageDidDetectXSSForFrameCallback                                  didDetectXSSForFrame;
@@ -257,18 +241,13 @@ typedef struct WKPageLoaderClientV3 {
     WKPageWillGoToBackForwardListItemCallback                           willGoToBackForwardListItem;
 
     WKPageLoaderClientCallback                                          interactionOccurredWhileProcessUnresponsive;
-    WKPagePluginDidFailCallback_deprecatedForUseWithV1                  pluginDidFail_deprecatedForUseWithV1;
 
     // Version 2.
     void                                                                (*didReceiveIntentForFrame_unavailable)(void);
     void                                                                (*registerIntentServiceForFrame_unavailable)(void);
 
     WKPageDidLayoutCallback                                             didLayout;
-    WKPagePluginLoadPolicyCallback_deprecatedForUseWithV2               pluginLoadPolicy_deprecatedForUseWithV2;
-    WKPagePluginDidFailCallback                                         pluginDidFail;
 
-    // Version 3.
-    WKPagePluginLoadPolicyCallback                                      pluginLoadPolicy;
 } WKPageLoaderClientV3;
 
 typedef struct WKPageLoaderClientV4 {
@@ -303,7 +282,6 @@ typedef struct WKPageLoaderClientV4 {
     WKPageLoaderClientCallback                                          processDidCrash;
     WKPageDidChangeBackForwardListCallback                              didChangeBackForwardList;
     WKPageShouldGoToBackForwardListItemCallback                         shouldGoToBackForwardListItem;
-    WKPageDidFailToInitializePluginCallback_deprecatedForUseWithV0      didFailToInitializePlugin_deprecatedForUseWithV0;
     
     // Version 1.
     WKPageDidDetectXSSForFrameCallback                                  didDetectXSSForFrame;
@@ -313,18 +291,14 @@ typedef struct WKPageLoaderClientV4 {
     WKPageWillGoToBackForwardListItemCallback                           willGoToBackForwardListItem;
     
     WKPageLoaderClientCallback                                          interactionOccurredWhileProcessUnresponsive;
-    WKPagePluginDidFailCallback_deprecatedForUseWithV1                  pluginDidFail_deprecatedForUseWithV1;
     
     // Version 2.
     void                                                                (*didReceiveIntentForFrame_unavailable)(void);
     void                                                                (*registerIntentServiceForFrame_unavailable)(void);
     
     WKPageDidLayoutCallback                                             didLayout;
-    WKPagePluginLoadPolicyCallback_deprecatedForUseWithV2               pluginLoadPolicy_deprecatedForUseWithV2;
-    WKPagePluginDidFailCallback                                         pluginDidFail;
     
     // Version 3.
-    WKPagePluginLoadPolicyCallback                                      pluginLoadPolicy;
     
     // Version 4
     WKPageWebGLLoadPolicyCallback                                       webGLLoadPolicy;
@@ -363,7 +337,6 @@ typedef struct WKPageLoaderClientV5 {
     WKPageLoaderClientCallback                                          processDidCrash;
     WKPageDidChangeBackForwardListCallback                              didChangeBackForwardList;
     WKPageShouldGoToBackForwardListItemCallback                         shouldGoToBackForwardListItem;
-    WKPageDidFailToInitializePluginCallback_deprecatedForUseWithV0      didFailToInitializePlugin_deprecatedForUseWithV0;
 
     // Version 1.
     WKPageDidDetectXSSForFrameCallback                                  didDetectXSSForFrame;
@@ -373,18 +346,14 @@ typedef struct WKPageLoaderClientV5 {
     WKPageWillGoToBackForwardListItemCallback                           willGoToBackForwardListItem;
 
     WKPageLoaderClientCallback                                          interactionOccurredWhileProcessUnresponsive;
-    WKPagePluginDidFailCallback_deprecatedForUseWithV1                  pluginDidFail_deprecatedForUseWithV1;
 
     // Version 2.
     void                                                                (*didReceiveIntentForFrame_unavailable)(void);
     void                                                                (*registerIntentServiceForFrame_unavailable)(void);
 
     WKPageDidLayoutCallback                                             didLayout;
-    WKPagePluginLoadPolicyCallback_deprecatedForUseWithV2               pluginLoadPolicy_deprecatedForUseWithV2;
-    WKPagePluginDidFailCallback                                         pluginDidFail;
 
     // Version 3.
-    WKPagePluginLoadPolicyCallback                                      pluginLoadPolicy;
 
     // Version 4.
     WKPageWebGLLoadPolicyCallback                                       webGLLoadPolicy;
@@ -426,7 +395,6 @@ typedef struct WKPageLoaderClientV6 {
     WKPageLoaderClientCallback                                          processDidCrash;
     WKPageDidChangeBackForwardListCallback                              didChangeBackForwardList;
     WKPageShouldGoToBackForwardListItemCallback                         shouldGoToBackForwardListItem;
-    WKPageDidFailToInitializePluginCallback_deprecatedForUseWithV0      didFailToInitializePlugin_deprecatedForUseWithV0;
 
     // Version 1.
     WKPageDidDetectXSSForFrameCallback                                  didDetectXSSForFrame;
@@ -436,18 +404,14 @@ typedef struct WKPageLoaderClientV6 {
     WKPageWillGoToBackForwardListItemCallback                           willGoToBackForwardListItem;
 
     WKPageLoaderClientCallback                                          interactionOccurredWhileProcessUnresponsive;
-    WKPagePluginDidFailCallback_deprecatedForUseWithV1                  pluginDidFail_deprecatedForUseWithV1;
 
     // Version 2.
     void                                                                (*didReceiveIntentForFrame_unavailable)(void);
     void                                                                (*registerIntentServiceForFrame_unavailable)(void);
 
     WKPageDidLayoutCallback                                             didLayout;
-    WKPagePluginLoadPolicyCallback_deprecatedForUseWithV2               pluginLoadPolicy_deprecatedForUseWithV2;
-    WKPagePluginDidFailCallback                                         pluginDidFail;
 
     // Version 3.
-    WKPagePluginLoadPolicyCallback                                      pluginLoadPolicy;
 
     // Version 4.
     WKPageWebGLLoadPolicyCallback                                       webGLLoadPolicy;

@@ -226,7 +226,6 @@ namespace WebCore {
 #endif
 
 #if PLATFORM(COCOA)
-    WEBCORE_EXPORT String builtInPDFPluginName();
     WEBCORE_EXPORT String pdfDocumentTypeDescription();
     WEBCORE_EXPORT String postScriptDocumentTypeDescription();
     String keygenMenuItem2048();
@@ -303,8 +302,6 @@ namespace WebCore {
 
     String snapshottedPlugInLabelTitle();
     String snapshottedPlugInLabelSubtitle();
-
-    WEBCORE_EXPORT String useBlockedPlugInContextMenuTitle();
 
 #if ENABLE(WEB_CRYPTO)
     String webCryptoMasterKeyKeychainLabel(const String& localizedApplicationName);

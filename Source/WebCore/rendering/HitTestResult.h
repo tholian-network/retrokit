@@ -103,7 +103,6 @@ public:
     WEBCORE_EXPORT Image* image() const;
     WEBCORE_EXPORT IntRect imageRect() const;
     WEBCORE_EXPORT URL absoluteImageURL() const;
-    WEBCORE_EXPORT URL absolutePDFURL() const;
     WEBCORE_EXPORT URL absoluteMediaURL() const;
     WEBCORE_EXPORT URL absoluteLinkURL() const;
     WEBCORE_EXPORT String textContent() const;

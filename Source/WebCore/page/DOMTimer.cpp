@@ -27,11 +27,9 @@
 #include "config.h"
 #include "DOMTimer.h"
 
-#include "HTMLPlugInElement.h"
 #include "InspectorInstrumentation.h"
 #include "Logging.h"
 #include "Page.h"
-#include "PluginViewBase.h"
 #include "ScheduledAction.h"
 #include "ScriptExecutionContext.h"
 #include "Settings.h"
@@ -260,17 +258,6 @@ void DOMTimer::updateThrottlingStateIfNecessary(const DOMTimerFireState& fireSta
             updateTimerIntervalIfNecessary();
         }
     }
-}
-
-void DOMTimer::scriptDidInteractWithPlugin(HTMLPlugInElement& pluginElement)
-{
-    if (!DOMTimerFireState::current)
-        return;
-
-    if (pluginElement.isUserObservable())
-        DOMTimerFireState::current->setScriptMadeUserObservableChanges();
-    else
-        DOMTimerFireState::current->setScriptMadeNonUserObservableChanges();
 }
 
 void DOMTimer::fired()

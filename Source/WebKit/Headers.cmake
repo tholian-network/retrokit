@@ -21,7 +21,6 @@ set(WebKit_PUBLIC_FRAMEWORK_HEADERS
     Shared/API/c/WKPageLoadTypes.h
     Shared/API/c/WKPageLoadTypesPrivate.h
     Shared/API/c/WKPageVisibilityTypes.h
-    Shared/API/c/WKPluginInformation.h
     Shared/API/c/WKSecurityOriginRef.h
     Shared/API/c/WKSerializedScriptValue.h
     Shared/API/c/WKString.h
@@ -90,7 +89,6 @@ set(WebKit_PUBLIC_FRAMEWORK_HEADERS
     UIProcess/API/C/WKPageRenderingProgressEvents.h
     UIProcess/API/C/WKPageStateClient.h
     UIProcess/API/C/WKPageUIClient.h
-    UIProcess/API/C/WKPluginLoadPolicy.h
     UIProcess/API/C/WKPreferencesRef.h
     UIProcess/API/C/WKPreferencesRefPrivate.h
     UIProcess/API/C/WKProcessTerminationReason.h

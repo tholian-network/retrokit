@@ -70,16 +70,6 @@ public:
     };
     static const WTF::String& webKitPolicyErrorDomain();
 
-    enum Plugin {
-        CannotFindPlugIn = 200,
-        CannotLoadPlugIn = 201,
-        JavaUnavailable = 202,
-        PlugInCancelledConnection = 203,
-        PlugInWillHandleLoad = 204,
-        InsecurePlugInVersion = 205
-    };
-    static const WTF::String& webKitPluginErrorDomain();
-
 #if USE(SOUP)
     enum Download {
         Transport = 499,

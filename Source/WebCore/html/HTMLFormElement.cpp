@@ -44,7 +44,6 @@
 #include "HTMLImageElement.h"
 #include "HTMLInputElement.h"
 #include "HTMLNames.h"
-#include "HTMLObjectElement.h"
 #include "HTMLParserIdioms.h"
 #include "HTMLTableElement.h"
 #include "InputTypeNames.h"
@@ -583,7 +582,7 @@ unsigned HTMLFormElement::formElementIndex(FormAssociatedElement* associatedElem
     for (auto& element : descendants) {
         if (&element == &associatedHTMLElement)
             return i;
-        if (!is<HTMLFormControlElement>(element) && !is<HTMLObjectElement>(element))
+        if (!is<HTMLFormControlElement>(element))
             continue;
         if (element.form() != this)
             continue;

@@ -34,8 +34,6 @@
 namespace Messages {
 namespace TestWithLegacyReceiver {
 
-using GetPluginProcessConnectionDelayedReply = CompletionHandler<void(const IPC::Connection::Handle& connectionHandle)>;
-
 using TestMultipleAttributesDelayedReply = CompletionHandler<void()>;
 
 } // namespace TestWithLegacyReceiver

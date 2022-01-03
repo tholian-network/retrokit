@@ -42,8 +42,6 @@ typedef struct WKContextStatistics WKContextStatistics;
 
 WK_EXPORT void WKContextGetGlobalStatistics(WKContextStatistics* statistics);
 
-WK_EXPORT void WKContextSetAdditionalPluginsDirectory(WKContextRef context, WKStringRef pluginsDirectory);
-
 WK_EXPORT void WKContextRegisterURLSchemeAsEmptyDocument(WKContextRef context, WKStringRef urlScheme);
 
 WK_EXPORT void WKContextSetAlwaysUsesComplexTextCodePath(WKContextRef context, bool alwaysUseComplexTextCodePath);
@@ -93,9 +91,6 @@ WK_EXPORT void WKContextSetMemoryCacheDisabled(WKContextRef, bool disabled);
 WK_EXPORT void WKContextSetFontAllowList(WKContextRef, WKArrayRef);
 
 WK_EXPORT void WKContextPreconnectToServer(WKContextRef context, WKURLRef serverURL) WK_C_API_DEPRECATED;
-
-WK_EXPORT void WKContextAddSupportedPlugin(WKContextRef context, WKStringRef domain, WKStringRef name, WKArrayRef mimeTypes, WKArrayRef extensions);
-WK_EXPORT void WKContextClearSupportedPlugins(WKContextRef context);
 
 WK_EXPORT void WKContextClearCurrentModifierStateForTesting(WKContextRef context);
 

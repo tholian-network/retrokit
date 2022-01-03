@@ -72,10 +72,6 @@ $(PROJECT_DIR)/NetworkProcess/webrtc/NetworkMDNSRegister.messages.in
 $(PROJECT_DIR)/NetworkProcess/webrtc/NetworkRTCMonitor.messages.in
 $(PROJECT_DIR)/NetworkProcess/webrtc/NetworkRTCProvider.messages.in
 $(PROJECT_DIR)/NetworkProcess/webrtc/RTCDataChannelRemoteManagerProxy.messages.in
-$(PROJECT_DIR)/PluginProcess/PluginControllerProxy.messages.in
-$(PROJECT_DIR)/PluginProcess/PluginProcess.messages.in
-$(PROJECT_DIR)/PluginProcess/WebProcessConnection.messages.in
-$(PROJECT_DIR)/PluginProcess/mac/com.apple.WebKit.plugin-common.sb.in
 $(PROJECT_DIR)/Resources/SandboxProfiles/ios/com.apple.WebKit.WebContent.sb.in
 $(PROJECT_DIR)/Scripts/PreferencesTemplates/WebPageUpdatePreferences.cpp.erb
 $(PROJECT_DIR)/Scripts/PreferencesTemplates/WebPreferencesDefinitions.h.erb
@@ -95,7 +91,6 @@ $(PROJECT_DIR)/Shared/API/Cocoa/RemoteObjectRegistry.messages.in
 $(PROJECT_DIR)/Shared/Authentication/AuthenticationManager.messages.in
 $(PROJECT_DIR)/Shared/AuxiliaryProcess.messages.in
 $(PROJECT_DIR)/Shared/HTTPSUpgrade/HTTPSUpgradeList.txt
-$(PROJECT_DIR)/Shared/Plugins/NPObjectMessageReceiver.messages.in
 $(PROJECT_DIR)/Shared/WebConnection.messages.in
 $(PROJECT_DIR)/UIProcess/Automation/Automation.json
 $(PROJECT_DIR)/UIProcess/Automation/WebAutomationSession.messages.in
@@ -110,7 +105,6 @@ $(PROJECT_DIR)/UIProcess/Inspector/WebInspectorUIProxy.messages.in
 $(PROJECT_DIR)/UIProcess/Media/AudioSessionRoutingArbitratorProxy.messages.in
 $(PROJECT_DIR)/UIProcess/Media/RemoteMediaSessionCoordinatorProxy.messages.in
 $(PROJECT_DIR)/UIProcess/Network/NetworkProcessProxy.messages.in
-$(PROJECT_DIR)/UIProcess/Plugins/PluginProcessProxy.messages.in
 $(PROJECT_DIR)/UIProcess/RemoteLayerTree/RemoteLayerTreeDrawingAreaProxy.messages.in
 $(PROJECT_DIR)/UIProcess/SpeechRecognitionRemoteRealtimeMediaSourceManager.messages.in
 $(PROJECT_DIR)/UIProcess/SpeechRecognitionServer.messages.in
@@ -169,9 +163,6 @@ $(PROJECT_DIR)/WebProcess/Network/webrtc/WebMDNSRegister.messages.in
 $(PROJECT_DIR)/WebProcess/Network/webrtc/WebRTCMonitor.messages.in
 $(PROJECT_DIR)/WebProcess/Network/webrtc/WebRTCResolver.messages.in
 $(PROJECT_DIR)/WebProcess/Notifications/WebNotificationManager.messages.in
-$(PROJECT_DIR)/WebProcess/Plugins/PluginProcessConnection.messages.in
-$(PROJECT_DIR)/WebProcess/Plugins/PluginProcessConnectionManager.messages.in
-$(PROJECT_DIR)/WebProcess/Plugins/PluginProxy.messages.in
 $(PROJECT_DIR)/WebProcess/Speech/SpeechRecognitionRealtimeMediaSourceManager.messages.in
 $(PROJECT_DIR)/WebProcess/Storage/WebSWClientConnection.messages.in
 $(PROJECT_DIR)/WebProcess/Storage/WebSWContextManagerConnection.messages.in

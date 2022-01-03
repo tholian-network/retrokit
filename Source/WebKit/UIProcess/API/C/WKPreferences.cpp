@@ -25,7 +25,6 @@
 
 #include "config.h"
 
-#include "PluginProcessManager.h"
 #include "WKPreferencesRef.h"
 #include "WKPreferencesRefPrivate.h"
 #include "WKAPICast.h"
@@ -203,36 +202,6 @@ void WKPreferencesSetFrameFlatteningEnabled(WKPreferencesRef preferencesRef, boo
 bool WKPreferencesGetFrameFlatteningEnabled(WKPreferencesRef preferencesRef)
 {
     return toImpl(preferencesRef)->frameFlatteningEnabled();
-}
-
-void WKPreferencesSetPluginsEnabled(WKPreferencesRef preferencesRef, bool pluginsEnabled)
-{
-    toImpl(preferencesRef)->setPluginsEnabled(pluginsEnabled);
-}
-
-bool WKPreferencesGetPluginsEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->pluginsEnabled();
-}
-
-void WKPreferencesSetJavaEnabled(WKPreferencesRef preferencesRef, bool javaEnabled)
-{
-    toImpl(preferencesRef)->setJavaEnabled(javaEnabled);
-}
-
-bool WKPreferencesGetJavaEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->javaEnabled();
-}
-
-void WKPreferencesSetJavaEnabledForLocalFiles(WKPreferencesRef preferencesRef, bool javaEnabledForLocalFiles)
-{
-    toImpl(preferencesRef)->setJavaEnabledForLocalFiles(javaEnabledForLocalFiles);
-}
-
-bool WKPreferencesGetJavaEnabledForLocalFiles(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->javaEnabledForLocalFiles();
 }
 
 void WKPreferencesSetJavaScriptCanOpenWindowsAutomatically(WKPreferencesRef preferencesRef, bool javaScriptCanOpenWindowsAutomatically)
@@ -1047,9 +1016,6 @@ bool WKPreferencesGetPlugInSnapshottingEnabled(WKPreferencesRef preferencesRef)
 
 void WKPreferencesSetPluginSandboxProfilesEnabledForAllPlugins(WKPreferencesRef preferencesRef, bool enabled)
 {
-#if ENABLE(NETSCAPE_PLUGIN_API) && PLATFORM(MAC)
-    WebKit::PluginProcessManager::singleton().setExperimentalPlugInSandboxProfilesEnabled(enabled);
-#endif
     toImpl(preferencesRef)->setExperimentalPlugInSandboxProfilesEnabled(enabled);
 }
 
@@ -1083,16 +1049,6 @@ void WKPreferencesSetPrimaryPlugInSnapshotDetectionEnabled(WKPreferencesRef pref
 bool WKPreferencesGetPrimaryPlugInSnapshotDetectionEnabled(WKPreferencesRef preferencesRef)
 {
     return false;
-}
-
-void WKPreferencesSetPDFPluginEnabled(WKPreferencesRef preferencesRef, bool enabled)
-{
-    toImpl(preferencesRef)->setPDFPluginEnabled(enabled);
-}
-
-bool WKPreferencesGetPDFPluginEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->pdfPluginEnabled();
 }
 
 void WKPreferencesSetEncodingDetectorEnabled(WKPreferencesRef preferencesRef, bool enabled)

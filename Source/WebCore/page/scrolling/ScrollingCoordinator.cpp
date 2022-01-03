@@ -34,7 +34,6 @@
 #include "GraphicsLayer.h"
 #include "Page.h"
 #include "PlatformWheelEvent.h"
-#include "PluginViewBase.h"
 #include "Region.h"
 #include "RenderLayerCompositor.h"
 #include "RenderView.h"
@@ -138,16 +137,12 @@ EventTrackingRegions ScrollingCoordinator::absoluteEventTrackingRegionsForFrame(
     }
 
     for (auto& widget : frameView->widgetsInRenderTree()) {
-        if (!is<PluginViewBase>(*widget))
-            continue;
-        if (!downcast<PluginViewBase>(*widget).wantsWheelEvents())
-            continue;
         auto* renderWidget = RenderWidget::find(*widget);
         if (!renderWidget)
             continue;
         nonFastScrollableRegion.unite(renderWidget->absoluteBoundingBoxRect());
     }
-    
+
     EventTrackingRegions eventTrackingRegions;
 
     // FIXME: if we've already accounted for this subframe as a scrollable area, we can avoid recursing into it here.

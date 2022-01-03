@@ -45,7 +45,6 @@
 #include "HTMLLinkElement.h"
 #include "HTMLMetaCharsetParser.h"
 #include "HTMLNames.h"
-#include "HTMLObjectElement.h"
 #include "HTMLStyleElement.h"
 #include "HTTPParsers.h"
 #include "Image.h"
@@ -90,8 +89,7 @@ static bool shouldIgnoreElement(const Element& element)
 
 static const QualifiedName& frameOwnerURLAttributeName(const HTMLFrameOwnerElement& frameOwner)
 {
-    // FIXME: We should support all frame owners including applets.
-    return is<HTMLObjectElement>(frameOwner) ? HTMLNames::dataAttr : HTMLNames::srcAttr;
+    return HTMLNames::srcAttr;
 }
 
 class PageSerializer::SerializerMarkupAccumulator final : public MarkupAccumulator {

@@ -106,10 +106,7 @@ struct ResourceLoadStatistics {
     enum class NavigatorAPI : uint64_t {
         AppVersion = 1 << 0,
         UserAgent = 1 << 1,
-        Plugins = 1 << 2,
-        MimeTypes = 1 << 3,
         CookieEnabled = 1 << 4,
-        JavaEnabled = 1 << 5,
     };
     enum class ScreenAPI : uint64_t {
         Height = 1 << 0,
@@ -132,10 +129,7 @@ template<> struct EnumTraits<WebCore::ResourceLoadStatistics::NavigatorAPI> {
         WebCore::ResourceLoadStatistics::NavigatorAPI,
         WebCore::ResourceLoadStatistics::NavigatorAPI::AppVersion,
         WebCore::ResourceLoadStatistics::NavigatorAPI::UserAgent,
-        WebCore::ResourceLoadStatistics::NavigatorAPI::Plugins,
-        WebCore::ResourceLoadStatistics::NavigatorAPI::MimeTypes,
         WebCore::ResourceLoadStatistics::NavigatorAPI::CookieEnabled,
-        WebCore::ResourceLoadStatistics::NavigatorAPI::JavaEnabled
     >;
 };
 

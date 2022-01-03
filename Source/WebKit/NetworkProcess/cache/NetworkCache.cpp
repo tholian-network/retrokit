@@ -300,7 +300,7 @@ static StoreDecision makeStoreDecision(const WebCore::ResourceRequest& originalR
             return StoreDecision::NoDueToUnlikelyToReuse;
     }
 
-    // Media loaded via XHR is likely being used for MSE streaming (YouTube and Netflix for example).
+    // Media loaded via XHR is likely being used for MSE streaming.
     // Streaming media fills the cache quickly and is unlikely to be reused.
     // FIXME: We should introduce a separate media cache partition that doesn't affect other resources.
     // FIXME: We should also make sure make the MSE paths are copy-free so we can use mapped buffers from disk effectively.

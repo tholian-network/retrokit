@@ -48,11 +48,6 @@ Ref<WebPreferences> WebPreferences::create(const String& identifier, const Strin
 Ref<WebPreferences> WebPreferences::createWithLegacyDefaults(const String& identifier, const String& keyPrefix, const String& globalDebugKeyPrefix)
 {
     auto preferences = WebPreferences::create(identifier, keyPrefix, globalDebugKeyPrefix);
-    // FIXME: The registerDefault...ValueForKey machinery is unnecessarily heavyweight and complicated.
-    // We can just compute different defaults for modern and legacy APIs in WebPreferencesDefinitions.h macros.
-    preferences->registerDefaultBoolValueForKey(WebPreferencesKey::javaEnabledKey(), true);
-    preferences->registerDefaultBoolValueForKey(WebPreferencesKey::javaEnabledForLocalFilesKey(), true);
-    preferences->registerDefaultBoolValueForKey(WebPreferencesKey::pluginsEnabledKey(), true);
     preferences->registerDefaultUInt32ValueForKey(WebPreferencesKey::storageBlockingPolicyKey(), static_cast<uint32_t>(WebCore::StorageBlockingPolicy::AllowAll));
     return preferences;
 }

@@ -31,7 +31,6 @@ G_BEGIN_DECLS
 
 #define WEBKIT_NETWORK_ERROR             webkit_network_error_quark ()
 #define WEBKIT_POLICY_ERROR              webkit_policy_error_quark ()
-#define WEBKIT_PLUGIN_ERROR              webkit_plugin_error_quark ()
 #define WEBKIT_DOWNLOAD_ERROR            webkit_download_error_quark ()
 #define WEBKIT_PRINT_ERROR               webkit_print_error_quark ()
 #define WEBKIT_JAVASCRIPT_ERROR          webkit_javascript_error_quark ()
@@ -73,26 +72,6 @@ typedef enum {
     WEBKIT_POLICY_ERROR_FRAME_LOAD_INTERRUPTED_BY_POLICY_CHANGE = 102,
     WEBKIT_POLICY_ERROR_CANNOT_USE_RESTRICTED_PORT = 103
 } WebKitPolicyError;
-
-/**
- * WebKitPluginError:
- * @WEBKIT_PLUGIN_ERROR_FAILED: Generic plugin load failure. Deprecated 2.32
- * @WEBKIT_PLUGIN_ERROR_CANNOT_FIND_PLUGIN: Load failure due to missing plugin. Deprecated 2.32
- * @WEBKIT_PLUGIN_ERROR_CANNOT_LOAD_PLUGIN: Load failure due to inability to load plugin. Deprecated 2.32
- * @WEBKIT_PLUGIN_ERROR_JAVA_UNAVAILABLE: Load failure due to missing Java support that is required to load plugin. Deprecated 2.32
- * @WEBKIT_PLUGIN_ERROR_CONNECTION_CANCELLED: Load failure due to connection cancellation. Deprecated 2.32
- * @WEBKIT_PLUGIN_ERROR_WILL_HANDLE_LOAD: Preliminary load failure for media content types. A new load will be started to perform the media load.
- *
- * Enum values used to denote the various plugin and multimedia errors.
- **/
-typedef enum {
-    WEBKIT_PLUGIN_ERROR_FAILED = 299,
-    WEBKIT_PLUGIN_ERROR_CANNOT_FIND_PLUGIN = 200,
-    WEBKIT_PLUGIN_ERROR_CANNOT_LOAD_PLUGIN = 201,
-    WEBKIT_PLUGIN_ERROR_JAVA_UNAVAILABLE = 202,
-    WEBKIT_PLUGIN_ERROR_CONNECTION_CANCELLED = 203,
-    WEBKIT_PLUGIN_ERROR_WILL_HANDLE_LOAD = 204,
-} WebKitPluginError;
 
 /**
  * WebKitDownloadError:
@@ -159,9 +138,6 @@ webkit_network_error_quark             (void);
 
 WEBKIT_API GQuark
 webkit_policy_error_quark              (void);
-
-WEBKIT_API GQuark
-webkit_plugin_error_quark              (void);
 
 WEBKIT_API GQuark
 webkit_download_error_quark            (void);

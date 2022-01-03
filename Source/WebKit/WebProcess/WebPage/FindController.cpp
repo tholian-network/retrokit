@@ -27,7 +27,6 @@
 #include "FindController.h"
 
 #include "DrawingArea.h"
-#include "PluginView.h"
 #include "ShareableBitmap.h"
 #include "WKPage.h"
 #include "WebCoreArgumentCoders.h"
@@ -44,7 +43,6 @@
 #include <WebCore/PageOverlayController.h>
 #include <WebCore/PathUtilities.h>
 #include <WebCore/PlatformMouseEvent.h>
-#include <WebCore/PluginDocument.h>
 #include <WebCore/Range.h>
 #include <WebCore/SimpleRange.h>
 
@@ -84,16 +82,9 @@ void FindController::countStringMatches(const String& string, OptionSet<FindOpti
 {
     if (maxMatchCount == std::numeric_limits<unsigned>::max())
         --maxMatchCount;
-    
-    auto* pluginView = WebPage::pluginViewForFrame(m_webPage->mainFrame());
-    
-    unsigned matchCount;
-    if (pluginView)
-        matchCount = pluginView->countFindMatches(string, core(options), maxMatchCount + 1);
-    else {
-        matchCount = m_webPage->corePage()->countFindMatches(string, core(options), maxMatchCount + 1);
-        m_webPage->corePage()->unmarkAllTextMatches();
-    }
+
+    unsigned matchCount = m_webPage->corePage()->countFindMatches(string, core(options), maxMatchCount + 1);
+    m_webPage->corePage()->unmarkAllTextMatches();
 
     if (matchCount > maxMatchCount)
         matchCount = static_cast<unsigned>(kWKMoreThanMaximumMatchCount);
@@ -135,14 +126,10 @@ static Frame* frameWithSelection(Page* page)
 void FindController::updateFindUIAfterPageScroll(bool found, const String& string, OptionSet<FindOptions> options, unsigned maxMatchCount, DidWrap didWrap, FindUIOriginator originator)
 {
     Frame* selectedFrame = frameWithSelection(m_webPage->corePage());
-    
-    auto* pluginView = WebPage::pluginViewForFrame(m_webPage->mainFrame());
 
     bool shouldShowOverlay = false;
 
     if (!found) {
-        if (!pluginView)
-            m_webPage->corePage()->unmarkAllTextMatches();
 
         if (selectedFrame)
             selectedFrame->selection().clear();
@@ -159,24 +146,15 @@ void FindController::updateFindUIAfterPageScroll(bool found, const String& strin
         unsigned matchCount = 1;
 
         if (shouldDetermineMatchIndex) {
-            if (pluginView)
-                matchCount = pluginView->countFindMatches(string, core(options), maxMatchCount + 1);
-            else
-                matchCount = m_webPage->corePage()->countFindMatches(string, core(options), maxMatchCount + 1);
+            matchCount = m_webPage->corePage()->countFindMatches(string, core(options), maxMatchCount + 1);
         }
 
         if (shouldShowOverlay || shouldShowHighlight) {
             if (maxMatchCount == std::numeric_limits<unsigned>::max())
                 --maxMatchCount;
 
-            if (pluginView) {
-                if (!shouldDetermineMatchIndex)
-                    matchCount = pluginView->countFindMatches(string, core(options), maxMatchCount + 1);
-                shouldShowOverlay = false;
-            } else {
-                m_webPage->corePage()->unmarkAllTextMatches();
-                matchCount = m_webPage->corePage()->markAllMatchesForText(string, core(options), shouldShowHighlight, maxMatchCount + 1);
-            }
+            m_webPage->corePage()->unmarkAllTextMatches();
+            matchCount = m_webPage->corePage()->markAllMatchesForText(string, core(options), shouldShowHighlight, maxMatchCount + 1);
 
             // If we have a large number of matches, we don't want to take the time to paint the overlay.
             if (matchCount > maxMatchCount) {
@@ -227,7 +205,6 @@ void FindController::updateFindUIAfterPageScroll(bool found, const String& strin
 
 void FindController::findString(const String& string, OptionSet<FindOptions> options, unsigned maxMatchCount, CompletionHandler<void(bool)>&& completionHandler)
 {
-    auto* pluginView = WebPage::pluginViewForFrame(m_webPage->mainFrame());
 
     WebCore::FindOptions coreOptions = core(options);
 
@@ -241,25 +218,19 @@ void FindController::findString(const String& string, OptionSet<FindOptions> opt
     willFindString();
 
     bool foundStringStartsAfterSelection = false;
-    if (!pluginView) {
-        if (Frame* selectedFrame = frameWithSelection(m_webPage->corePage())) {
-            if (selectedFrame->selection().selectionBounds().isEmpty()) {
-                auto result = m_webPage->corePage()->findTextMatches(string, coreOptions, maxMatchCount);
-                m_findMatches = WTFMove(result.ranges);
-                m_foundStringMatchIndex = result.indexForSelection;
-                foundStringStartsAfterSelection = true;
-            }
+    if (Frame* selectedFrame = frameWithSelection(m_webPage->corePage())) {
+        if (selectedFrame->selection().selectionBounds().isEmpty()) {
+            auto result = m_webPage->corePage()->findTextMatches(string, coreOptions, maxMatchCount);
+            m_findMatches = WTFMove(result.ranges);
+            m_foundStringMatchIndex = result.indexForSelection;
+            foundStringStartsAfterSelection = true;
         }
     }
 
     m_findMatches.clear();
 
-    bool found;
     DidWrap didWrap = DidWrap::No;
-    if (pluginView)
-        found = pluginView->findString(string, coreOptions, maxMatchCount);
-    else
-        found = m_webPage->corePage()->findString(string, coreOptions, &didWrap);
+    bool found = m_webPage->corePage()->findString(string, coreOptions, &didWrap);
 
     if (found) {
         didFindString();
@@ -360,11 +331,8 @@ void FindController::hideFindUI()
     if (m_findPageOverlay)
         m_webPage->corePage()->pageOverlayController().uninstallPageOverlay(*m_findPageOverlay, PageOverlay::FadeMode::Fade);
 
-    if (auto* pluginView = WebPage::pluginViewForFrame(m_webPage->mainFrame()))
-        pluginView->findString(emptyString(), { }, 0);
-    else
-        m_webPage->corePage()->unmarkAllTextMatches();
-    
+    m_webPage->corePage()->unmarkAllTextMatches();
+
     hideFindIndicator();
     resetMatchIndex();
 }

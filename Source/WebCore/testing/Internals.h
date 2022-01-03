@@ -652,11 +652,6 @@ public:
     ExceptionOr<Ref<DOMRect>> selectionBounds();
     void setSelectionWithoutValidation(Ref<Node> baseNode, unsigned baseOffset, RefPtr<Node> extentNode, unsigned extentOffset);
 
-    ExceptionOr<bool> isPluginUnavailabilityIndicatorObscured(Element&);
-    ExceptionOr<String> unavailablePluginReplacementText(Element&);
-    bool isPluginSnapshotted(Element&);
-    bool pluginIsBelowSizeThreshold(Element&);
-
 #if ENABLE(MEDIA_SOURCE)
     WEBCORE_TESTSUPPORT_EXPORT void initializeMockMediaSource();
     using BufferedSamplesPromise = DOMPromiseDeferred<IDLSequence<IDLDOMString>>;
@@ -731,7 +726,6 @@ public:
     void setPageMediaVolume(float);
 
     String userVisibleString(const DOMURL&);
-    void setShowAllPlugins(bool);
 
     String resourceLoadStatisticsForURL(const DOMURL&);
     void setResourceLoadStatisticsEnabled(bool);
@@ -947,8 +941,6 @@ public:
     void reloadWithoutContentExtensions();
 
     void setUseSystemAppearance(bool);
-
-    size_t pluginCount();
 
     void notifyResourceLoadObserver();
 

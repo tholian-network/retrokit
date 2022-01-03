@@ -49,7 +49,6 @@
     <xi:include href="xml/WebKitDOMFile.xml"/>
     <xi:include href="xml/WebKitDOMFileList.xml"/>
     <xi:include href="xml/WebKitDOMHTMLAnchorElement.xml"/>
-    <xi:include href="xml/WebKitDOMHTMLAppletElement.xml"/>
     <xi:include href="xml/WebKitDOMHTMLAreaElement.xml"/>
     <xi:include href="xml/WebKitDOMHTMLBRElement.xml"/>
     <xi:include href="xml/WebKitDOMHTMLBaseElement.xml"/>
@@ -62,7 +61,6 @@
     <xi:include href="xml/WebKitDOMHTMLDivElement.xml"/>
     <xi:include href="xml/WebKitDOMHTMLDocument.xml"/>
     <xi:include href="xml/WebKitDOMHTMLElement.xml"/>
-    <xi:include href="xml/WebKitDOMHTMLEmbedElement.xml"/>
     <xi:include href="xml/WebKitDOMHTMLFieldSetElement.xml"/>
     <xi:include href="xml/WebKitDOMHTMLFontElement.xml"/>
     <xi:include href="xml/WebKitDOMHTMLFormElement.xml"/>
@@ -85,7 +83,6 @@
     <xi:include href="xml/WebKitDOMHTMLMetaElement.xml"/>
     <xi:include href="xml/WebKitDOMHTMLModElement.xml"/>
     <xi:include href="xml/WebKitDOMHTMLOListElement.xml"/>
-    <xi:include href="xml/WebKitDOMHTMLObjectElement.xml"/>
     <xi:include href="xml/WebKitDOMHTMLOptGroupElement.xml"/>
     <xi:include href="xml/WebKitDOMHTMLOptionElement.xml"/>
     <xi:include href="xml/WebKitDOMHTMLOptionsCollection.xml"/>

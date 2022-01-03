@@ -42,8 +42,6 @@
 #include "MediaList.h"
 #include "MediaPlayer.h"
 #include "Page.h"
-#include "PluginData.h"
-#include "PluginDocument.h"
 #include "SVGDocument.h"
 #include "SVGNames.h"
 #include "SecurityOrigin.h"
@@ -160,17 +158,6 @@ Ref<Document> DOMImplementation::createDocument(const String& contentType, Frame
     if (MediaPlayer::supportsType(parameters) != MediaPlayer::SupportsType::IsNotSupported)
         return MediaDocument::create(frame, settings, url);
 #endif
-
-    if (frame && frame->loader().client().shouldAlwaysUsePluginDocument(contentType))
-        return PluginDocument::create(*frame, url);
-
-    // The following is the relatively costly lookup that requires initializing the plug-in database.
-    if (frame && frame->page()) {
-        auto allowedPluginTypes = frame->arePluginsEnabled()
-            ? PluginData::AllPlugins : PluginData::OnlyApplicationPlugins;
-        if (frame->page()->pluginData().supportsWebVisibleMimeType(contentType, allowedPluginTypes))
-            return PluginDocument::create(*frame, url);
-    }
 
     // Items listed here, after the plug-in checks, can be overridden by plug-ins.
     // For example, plug-ins can take over support for PDF or SVG.

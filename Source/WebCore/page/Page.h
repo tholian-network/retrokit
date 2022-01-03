@@ -127,9 +127,6 @@ class PerformanceLogging;
 class PerformanceLoggingClient;
 class PerformanceMonitor;
 class PermissionController;
-class PluginData;
-class PluginInfoProvider;
-class PluginViewBase;
 class PointerCaptureController;
 class PointerLockController;
 class ProgressTracker;
@@ -254,10 +251,6 @@ public:
 
     const std::optional<ViewportArguments>& overrideViewportArguments() const { return m_overrideViewportArguments; }
     WEBCORE_EXPORT void setOverrideViewportArguments(const std::optional<ViewportArguments>&);
-
-    static void refreshPlugins(bool reload);
-    WEBCORE_EXPORT PluginData& pluginData();
-    void clearPluginData();
 
     WEBCORE_EXPORT void setCanStartMedia(bool);
     bool canStartMedia() const { return m_canStartMedia; }
@@ -655,11 +648,6 @@ public:
 
     AlternativeTextClient* alternativeTextClient() const { return m_alternativeTextClient.get(); }
 
-    bool hasSeenPlugin(const String& serviceType) const;
-    WEBCORE_EXPORT bool hasSeenAnyPlugin() const;
-    void sawPlugin(const String& serviceType);
-    void resetSeenPlugins();
-
     bool hasSeenMediaEngine(const String& engineName) const;
     bool hasSeenAnyMediaEngine() const;
     void sawMediaEngine(const String& engineName);
@@ -698,8 +686,6 @@ public:
     CookieJar& cookieJar() { return m_cookieJar.get(); }
 
     StorageNamespaceProvider& storageNamespaceProvider() { return m_storageNamespaceProvider.get(); }
-
-    PluginInfoProvider& pluginInfoProvider();
 
     WEBCORE_EXPORT UserContentProvider& userContentProvider();
     WEBCORE_EXPORT void setUserContentProvider(Ref<UserContentProvider>&&);
@@ -772,9 +758,6 @@ public:
     IDBClient::IDBConnectionToServer& idbConnection();
     WEBCORE_EXPORT IDBClient::IDBConnectionToServer* optionalIDBConnection();
     WEBCORE_EXPORT void clearIDBConnection();
-
-    void setShowAllPlugins(bool showAll) { m_showAllPlugins = showAll; }
-    bool showAllPlugins() const;
 
     WEBCORE_EXPORT void setDOMTimerAlignmentIntervalIncreaseLimit(Seconds);
 
@@ -885,8 +868,6 @@ private:
     void playbackControlsManagerUpdateTimerFired();
 #endif
 
-    Vector<Ref<PluginViewBase>> pluginViews();
-
     void handleLowModePowerChange(bool);
 
     enum class TimerThrottlingState { Disabled, Enabled, EnabledIncreasing };
@@ -934,8 +915,6 @@ private:
 
     const std::unique_ptr<BackForwardController> m_backForwardController;
     Ref<Frame> m_mainFrame;
-
-    RefPtr<PluginData> m_pluginData;
 
     UniqueRef<EditorClient> m_editorClient;
     std::unique_ptr<ValidationMessageClient> m_validationMessageClient;
@@ -1061,7 +1040,6 @@ private:
 
     RefPtr<IDBClient::IDBConnectionToServer> m_idbConnectionToServer;
 
-    HashSet<String> m_seenPlugins;
     HashSet<String> m_seenMediaEngines;
 
     unsigned m_lastSpatialNavigationCandidatesCount { 0 };
@@ -1073,7 +1051,6 @@ private:
     Ref<ApplicationCacheStorage> m_applicationCacheStorage;
     Ref<CacheStorageProvider> m_cacheStorageProvider;
     Ref<DatabaseProvider> m_databaseProvider;
-    Ref<PluginInfoProvider> m_pluginInfoProvider;
     Ref<StorageNamespaceProvider> m_storageNamespaceProvider;
     Ref<UserContentProvider> m_userContentProvider;
     Ref<VisitedLinkStore> m_visitedLinkStore;
@@ -1101,7 +1078,6 @@ private:
 
     bool m_allowsMediaDocumentInlinePlayback { false };
     bool m_allowsPlaybackControlsForAutoplayingAudio { false };
-    bool m_showAllPlugins { false };
     bool m_controlledByAutomation { false };
     bool m_resourceCachingDisabledByWebInspector { false };
     bool m_isUtilityPage;

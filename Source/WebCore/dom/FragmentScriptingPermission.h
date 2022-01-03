@@ -30,7 +30,6 @@
 namespace WebCore {
 
 enum ParserContentPolicy {
-    DisallowScriptingAndPluginContent,
     DisallowScriptingContent,
     AllowScriptingContent,
     AllowScriptingContentAndDoNotMarkAlreadyStarted,
@@ -44,18 +43,6 @@ static inline bool scriptingContentIsAllowed(ParserContentPolicy parserContentPo
 static inline ParserContentPolicy disallowScriptingContent(ParserContentPolicy parserContentPolicy)
 {
     if (!scriptingContentIsAllowed(parserContentPolicy))
-        return parserContentPolicy;
-    return DisallowScriptingContent;
-}
-
-static inline bool pluginContentIsAllowed(ParserContentPolicy parserContentPolicy)
-{
-    return parserContentPolicy != DisallowScriptingAndPluginContent;
-}
-
-static inline ParserContentPolicy allowPluginContent(ParserContentPolicy parserContentPolicy)
-{
-    if (pluginContentIsAllowed(parserContentPolicy))
         return parserContentPolicy;
     return DisallowScriptingContent;
 }

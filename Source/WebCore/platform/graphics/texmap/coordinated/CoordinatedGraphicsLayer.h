@@ -149,7 +149,6 @@ public:
                 m_layer->requestBackingStoreUpdate();
         }
 
-        void layerWillBeDestroyed() { m_layer = nullptr; }
     private:
         explicit AnimatedBackingStoreHost(CoordinatedGraphicsLayer& layer)
             : m_layer(&layer)

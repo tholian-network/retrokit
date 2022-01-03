@@ -34,7 +34,6 @@
 #include "MessageReceiver.h"
 #include "MessageReceiverMap.h"
 #include "NetworkProcessProxy.h"
-#include "PluginInfoStore.h"
 #include "ProcessThrottler.h"
 #include "VisitedLinkStore.h"
 #include "WebContextClient.h"
@@ -226,13 +225,6 @@ public:
 
     void handleMemoryPressureWarning(Critical);
 
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    void setAdditionalPluginsDirectory(const String&);
-    void refreshPlugins();
-
-    PluginInfoStore& pluginInfoStore() { return m_pluginInfoStore; }
-#endif
-
 #if HAVE(CVDISPLAYLINK)
     std::optional<WebCore::FramesPerSecond> nominalFramesPerSecondForDisplay(WebCore::PlatformDisplayID);
     void startDisplayLink(IPC::Connection&, DisplayLinkObserverID, WebCore::PlatformDisplayID, WebCore::FramesPerSecond);
@@ -242,9 +234,6 @@ public:
 
     void setDisplayLinkForDisplayWantsFullSpeedUpdates(IPC::Connection&, WebCore::PlatformDisplayID, bool wantsFullSpeedUpdates);
 #endif
-
-    void addSupportedPlugin(String&& matchingDomain, String&& name, HashSet<String>&& mimeTypes, HashSet<String> extensions);
-    void clearSupportedPlugins();
 
     ProcessID prewarmedProcessIdentifier();
     void activePagesOriginsInWebProcessForTesting(ProcessID, CompletionHandler<void(Vector<String>&&)>&&);
@@ -607,9 +596,6 @@ private:
 
     RefPtr<WebAutomationSession> m_automationSession;
 
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    PluginInfoStore m_pluginInfoStore;
-#endif
     Ref<VisitedLinkStore> m_visitedLinkStore;
     bool m_visitedLinksPopulated { false };
 

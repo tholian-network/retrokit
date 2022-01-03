@@ -57,7 +57,6 @@ namespace WebCore {
 class CachedScriptFetcher;
 class Frame;
 class HTMLDocument;
-class HTMLPlugInElement;
 class LoadableModuleScript;
 class ModuleFetchParameters;
 class ScriptSourceCode;
@@ -150,7 +149,6 @@ public:
 
     void updatePlatformScriptObjects();
 
-    RefPtr<JSC::Bindings::Instance>  createScriptInstanceForWidget(Widget*);
     WEBCORE_EXPORT JSC::Bindings::RootObject* bindingRootObject();
     JSC::Bindings::RootObject* cacheableBindingRootObject();
     JSC::Bindings::RootObject* existingCacheableBindingRootObject() const { return m_cacheableBindingRootObject.get(); }
@@ -162,12 +160,6 @@ public:
 #if PLATFORM(COCOA)
     WEBCORE_EXPORT WebScriptObject* windowScriptObject();
     WEBCORE_EXPORT JSContext *javaScriptContext();
-#endif
-
-    WEBCORE_EXPORT JSC::JSObject* jsObjectForPluginElement(HTMLPlugInElement*);
-    
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    WEBCORE_EXPORT NPObject* windowScriptNPObject();
 #endif
 
     void initScriptForWindowProxy(JSWindowProxy&);
@@ -192,17 +184,11 @@ private:
     bool m_paused;
     bool m_willReplaceWithResultOfExecutingJavascriptURL { false };
 
-    // The root object used for objects bound outside the context of a plugin, such
-    // as NPAPI plugins. The plugins using these objects prevent a page from being cached so they
-    // are safe to invalidate() when WebKit navigates away from the page that contains them.
     RefPtr<JSC::Bindings::RootObject> m_bindingRootObject;
     // Unlike m_bindingRootObject these objects are used in pages that are cached, so they are not invalidate()'d.
     // This ensures they are still available when the page is restored.
     RefPtr<JSC::Bindings::RootObject> m_cacheableBindingRootObject;
     RootObjectMap m_rootObjects;
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    NPObject* m_windowScriptNPObject;
-#endif
 #if PLATFORM(COCOA)
     RetainPtr<WebScriptObject> m_windowScriptObject;
 #endif

@@ -39,7 +39,6 @@
 #include "FrameLoaderStateMachine.h"
 #include "FrameView.h"
 #include "MIMETypeRegistry.h"
-#include "PluginDocument.h"
 #include "RawDataDocumentParser.h"
 #include "ScriptController.h"
 #include "ScriptableDocumentParser.h"
@@ -109,8 +108,6 @@ bool DocumentWriter::begin()
 
 Ref<Document> DocumentWriter::createDocument(const URL& url)
 {
-    if (!m_frame->loader().stateMachine().isDisplayingInitialEmptyDocument() && m_frame->loader().client().shouldAlwaysUsePluginDocument(m_mimeType))
-        return PluginDocument::create(*m_frame, url);
 #if PLATFORM(IOS_FAMILY)
     if (MIMETypeRegistry::isPDFMIMEType(m_mimeType) && (m_frame->isMainFrame() || !m_frame->settings().useImageDocumentForSubframePDF()))
         return SinkDocument::create(*m_frame, url);
@@ -130,11 +127,6 @@ bool DocumentWriter::begin(const URL& urlReference, bool dispatch, Document* own
     // Create a new document before clearing the frame, because it may need to
     // inherit an aliased security context.
     Ref<Document> document = createDocument(url);
-    
-    // If the new document is for a Plugin but we're supposed to be sandboxed from Plugins,
-    // then replace the document with one whose parser will ignore the incoming data (bug 39323)
-    if (document->isPluginDocument() && document->isSandboxed(SandboxPlugins))
-        document = SinkDocument::create(*m_frame, url);
 
     // FIXME: Do we need to consult the content security policy here about blocked plug-ins?
 

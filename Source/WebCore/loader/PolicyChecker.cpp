@@ -45,7 +45,6 @@
 #include "FrameLoaderClient.h"
 #include "HTMLFormElement.h"
 #include "HTMLFrameOwnerElement.h"
-#include "HTMLPlugInElement.h"
 #include "Logging.h"
 #include "ThreadableBlobRegistry.h"
 #include <wtf/CompletionHandler.h>
@@ -71,8 +70,6 @@ static bool isAllowedByContentSecurityPolicy(const URL& url, const Element* owne
     auto redirectResponseReceived = didReceiveRedirectResponse ? ContentSecurityPolicy::RedirectResponseReceived::Yes : ContentSecurityPolicy::RedirectResponseReceived::No;
 
     ASSERT(ownerElement->document().contentSecurityPolicy());
-    if (is<HTMLPlugInElement>(ownerElement))
-        return ownerElement->document().contentSecurityPolicy()->allowObjectFromSource(url, redirectResponseReceived);
     return ownerElement->document().contentSecurityPolicy()->allowChildFrameFromSource(url, redirectResponseReceived);
 }
 

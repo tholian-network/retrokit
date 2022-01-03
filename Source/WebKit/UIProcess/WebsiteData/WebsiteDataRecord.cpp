@@ -90,14 +90,6 @@ void WebsiteDataRecord::addCookieHostName(const String& hostName)
     cookieHostNames.add(hostName);
 }
 
-#if ENABLE(NETSCAPE_PLUGIN_API)
-void WebsiteDataRecord::addPluginDataHostName(const String& hostName)
-{
-    types.add(WebsiteDataType::PlugInData);
-    pluginDataHostNames.add(hostName);
-}
-#endif
-
 void WebsiteDataRecord::addHSTSCacheHostname(const String& hostName)
 {
     types.add(WebsiteDataType::HSTSCache);
@@ -157,17 +149,12 @@ String WebsiteDataRecord::topPrivatelyControlledDomain()
 #if ENABLE(PUBLIC_SUFFIX_LIST)
     if (!cookieHostNames.isEmpty())
         return WebCore::topPrivatelyControlledDomain(cookieHostNames.takeAny());
-    
+
     if (!origins.isEmpty())
         return WebCore::topPrivatelyControlledDomain(origins.takeAny().securityOrigin().get().host());
-    
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    if (!pluginDataHostNames.isEmpty())
-        return WebCore::topPrivatelyControlledDomain(pluginDataHostNames.takeAny());
-#endif
-    
+
 #endif // ENABLE(PUBLIC_SUFFIX_LIST)
-    
+
     return emptyString();
 }
 
@@ -179,9 +166,6 @@ WebsiteDataRecord WebsiteDataRecord::isolatedCopy() const
         size,
         crossThreadCopy(origins),
         crossThreadCopy(cookieHostNames),
-#if ENABLE(NETSCAPE_PLUGIN_API)
-        crossThreadCopy(pluginDataHostNames),
-#endif
         crossThreadCopy(HSTSCacheHostNames),
         crossThreadCopy(alternativeServicesHostNames),
 #if ENABLE(RESOURCE_LOAD_STATISTICS)

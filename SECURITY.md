@@ -76,16 +76,34 @@ These legacy APIs that are no longer of relevance to a modern Web View.
 - [ ] Remove System Sleep Listener (`SystemSleepListener`)
 - [x] Remove Legacy Custom Protocol Manager Support (`LEGACY_CUSTOM_PROTOCOL_MANAGER`, `LegacyCustomProtocol`, `LegacyCustomProtocolManager`, `registerSchemeForLegacyCustomProtocol`, `unregisterSchemeForLegacyCustomProtocol`, `LegacySchemeRegistry`, `CustomProtocolManagerClient`)
 - [ ] Remove Legacy Encrypted Media API (`LEGACY_ENCRYPTED_MEDIA`)
-- [ ] Remove Legacy Netscape Plugin API (`NETSCAPE_PLUGIN_API`)
+- [ ] Remove `WebFrameLoaderClient::createPlugin` and `WebFrameLoaderClient::redirectDataToPlugin`, `pluginSupportsExtension`
 - [ ] Remove Webkit InjectedBundle API (`InjectedBundle`, `WKBundle*`)
 - [ ] Remove WebKit WebExtension API (`WebKitWebExtension`, `webkit_web_extension*`)
 - [ ] Remove `AllowsInlineMediaPlayback` Hacks (`AllowsInlineMediaPlayback`, `MEDIA_PLAYBACK_ALLOWS_INLINE`) and default playback behaviour to no-autoplay.
-- [ ] Remove `QuickTimePluginReplacement`
-- [ ] Remove `YouTubePluginReplacement`
 - [ ] Remove `bmalloc` and prefer system allocator (`USE_SYSTEM_MALLOC`)
+- [ ] Remove Quick Look Integration (`QUICK_LOOK`)
 - [ ] *Undecided* Remove WebKit Content Extensions API (`CONTENT_EXTENSIONS`)
 - [ ] *Undecided* Remove Arbitrary User Gestures (`ArbitraryUserGesture`)
 
+
+## Legacy Plugins
+
+Web Browser Plugins are using the old and outdated `navigator.plugins` API,
+and are the #1 reason for a Web Browser to be exploited (Thanks, Adobe and
+Skype for this lesson!). These APIs serve only as an unnecessary attack
+surface, that's why they're removed.
+
+- [x] Remove Legacy Netscape Plugin API (`NETSCAPE_PLUGIN_API`, `NPAPI`, `NPIdentifier`, `NPMethod`, `NPObject`, `NPRemote`, `NPRuntimeUtilities`, `NPRuntimeObjectMap`, `NPVariant`, `NetscapeBrowserFuncs`, `NetscapePlugin`, `PlugInData`, `PluginData.h`, `PluginProcess`, `WKContextSetAdditionalPluginsDirectory`, `WKContextRefreshPlugIns`, `canPluginHandleResponse`, `addSupportedPlugin`, `clearSupportedPlugin`)
+- [x] Remove PDFKit Plugin Integration (`PDFKIT_PLUGIN`, `UI_PROCESS_PDF_HUD`, `PDFHUD`)
+- [x] Remove QuickTime Plugin Replacement (`QuickTimePlugin`)
+- [x] Remove YouTube Flash Plugin Replacement (`YouTubePlugin`, `YouTubeEmbedShadowElement`)
+- [x] Remove Java Plugin Support (`enable_java`, `JavaEnabled`)
+- [x] Remove WebKit Plugin Support (`WebKitPlugin`, `WebKitMimeInfo`, `PluginsEnabled`)
+- [x] Remove Plugin DOM API (`DOMMimeType`, `DOMMimeTypeArray`, `DOMPlugin`, `DOMPluginArray`)
+- [x] Remove Plugin Injected Script and Stylesheet (`plugInExtraScript`, `plugInExtraStyleSheet`, `PlugInStartLabelTitle`, `PlugInStartLabelSubtitle`, `plugInsJavascript`, `ensurePlugInsInjectedScript`)
+- [x] Modify Plugin Content Security Policies (`pluginContentIsAllowed`, `allowPluginContent`, `allowPluginType`)
+- [x] Remove Plugin Document Wrappers (`PluginDocument`, `PluginLoadClientPolicy`, `PluginModuleLoadPolicy`)
+- [x] Remove Plugin Renderer Integration (`RenderEmbeddedObject`)
 
 ## Legacy Quirks
 
@@ -243,6 +261,11 @@ list of Web APIs that are removed.
 - [ ] Remove `preconnect` Support (`SERVER_PRECONNECT`)
 - [ ] Remove `preload` Support
 - [ ] Remove `prerender` Support
+- [x] Remove `<plug-in>` (`PlugInElement`, `HTMLPlugInElement`, `JSPluginElement`, `jsObjectForPluginElement`)
+- [x] Remove `<applet>` Element (`appletTag`, `AppletElement` and `HTMLAppletElement`)
+- [x] Remove `<embed>` Element (`embedTag`, `EmbedElement` and `HTMLEmbedElement`, `EmbeddedObject`, `RenderEmbeddedObject`)
+- [x] Remove `<object>` Element (`objectTag`, `ObjectElement` and `HTMLObjectElement`)
+- [ ] Remove `<foreignObject>` SVG Element (`foreignObjectTag`)
 
 
 ## CSS Features

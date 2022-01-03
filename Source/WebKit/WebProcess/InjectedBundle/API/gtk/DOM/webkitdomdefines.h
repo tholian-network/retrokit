@@ -106,9 +106,6 @@ typedef struct _WebKitDOMFileListClass WebKitDOMFileListClass;
 typedef struct _WebKitDOMHTMLAnchorElement WebKitDOMHTMLAnchorElement;
 typedef struct _WebKitDOMHTMLAnchorElementClass WebKitDOMHTMLAnchorElementClass;
 
-typedef struct _WebKitDOMHTMLAppletElement WebKitDOMHTMLAppletElement;
-typedef struct _WebKitDOMHTMLAppletElementClass WebKitDOMHTMLAppletElementClass;
-
 typedef struct _WebKitDOMHTMLAreaElement WebKitDOMHTMLAreaElement;
 typedef struct _WebKitDOMHTMLAreaElementClass WebKitDOMHTMLAreaElementClass;
 
@@ -144,9 +141,6 @@ typedef struct _WebKitDOMHTMLDocumentClass WebKitDOMHTMLDocumentClass;
 
 typedef struct _WebKitDOMHTMLElement WebKitDOMHTMLElement;
 typedef struct _WebKitDOMHTMLElementClass WebKitDOMHTMLElementClass;
-
-typedef struct _WebKitDOMHTMLEmbedElement WebKitDOMHTMLEmbedElement;
-typedef struct _WebKitDOMHTMLEmbedElementClass WebKitDOMHTMLEmbedElementClass;
 
 typedef struct _WebKitDOMHTMLFieldSetElement WebKitDOMHTMLFieldSetElement;
 typedef struct _WebKitDOMHTMLFieldSetElementClass WebKitDOMHTMLFieldSetElementClass;
@@ -213,9 +207,6 @@ typedef struct _WebKitDOMHTMLModElementClass WebKitDOMHTMLModElementClass;
 
 typedef struct _WebKitDOMHTMLOListElement WebKitDOMHTMLOListElement;
 typedef struct _WebKitDOMHTMLOListElementClass WebKitDOMHTMLOListElementClass;
-
-typedef struct _WebKitDOMHTMLObjectElement WebKitDOMHTMLObjectElement;
-typedef struct _WebKitDOMHTMLObjectElementClass WebKitDOMHTMLObjectElementClass;
 
 typedef struct _WebKitDOMHTMLOptGroupElement WebKitDOMHTMLOptGroupElement;
 typedef struct _WebKitDOMHTMLOptGroupElementClass WebKitDOMHTMLOptGroupElementClass;

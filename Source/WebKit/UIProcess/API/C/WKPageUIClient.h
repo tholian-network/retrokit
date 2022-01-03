@@ -41,13 +41,6 @@ enum {
 typedef uint32_t WKFocusDirection;
 
 enum {
-    kWKPluginUnavailabilityReasonPluginMissing,
-    kWKPluginUnavailabilityReasonPluginCrashed,
-    kWKPluginUnavailabilityReasonInsecurePluginVersion
-};
-typedef uint32_t WKPluginUnavailabilityReason;
-
-enum {
     kWKAutoplayEventDidPreventFromAutoplaying,
     kWKAutoplayEventDidPlayMediaWithUserGesture,
     kWKAutoplayEventDidAutoplayMediaPastThresholdWithoutUserInterference,
@@ -119,7 +112,6 @@ typedef void (*WKPageSaveDataToFileInDownloadsFolderCallback)(WKPageRef page, WK
 typedef void (*WKPageDecidePolicyForNotificationPermissionRequestCallback)(WKPageRef page, WKSecurityOriginRef origin, WKNotificationPermissionRequestRef permissionRequest, const void *clientInfo);
 typedef void (*WKPageShowColorPickerCallback)(WKPageRef page, WKStringRef initialColor, WKColorPickerResultListenerRef listener, const void* clientInfo);
 typedef void (*WKPageHideColorPickerCallback)(WKPageRef page, const void* clientInfo);
-typedef void (*WKPageUnavailablePluginButtonClickedCallback)(WKPageRef page, WKPluginUnavailabilityReason pluginUnavailabilityReason, WKDictionaryRef pluginInfoDictionary, const void* clientInfo);
 typedef void (*WKPagePinnedStateDidChangeCallback)(WKPageRef page, const void* clientInfo);
 typedef void (*WKPageIsPlayingAudioDidChangeCallback)(WKPageRef page, const void* clientInfo);
 typedef void (*WKPageDecidePolicyForUserMediaPermissionRequestCallback)(WKPageRef page, WKFrameRef frame, WKSecurityOriginRef userMediaDocumentOrigin, WKSecurityOriginRef topLevelDocumentOrigin, WKUserMediaPermissionRequestRef permissionRequest, const void* clientInfo);
@@ -139,8 +131,6 @@ typedef void (*WKPageDecidePolicyForMediaKeySystemPermissionRequestCallback)(WKP
 // Deprecated
 typedef WKPageRef (*WKPageCreateNewPageCallback_deprecatedForUseWithV0)(WKPageRef page, WKDictionaryRef features, WKEventModifiers modifiers, WKEventMouseButton mouseButton, const void* clientInfo);
 typedef void      (*WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0)(WKPageRef page, WKEventModifiers modifiers, WKTypeRef userData, const void *clientInfo);
-typedef void (*WKPageMissingPluginButtonClickedCallback_deprecatedForUseWithV0)(WKPageRef page, WKStringRef mimeType, WKStringRef url, WKStringRef pluginsPageURL, const void* clientInfo);
-typedef void (*WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1)(WKPageRef page, WKPluginUnavailabilityReason pluginUnavailabilityReason, WKStringRef mimeType, WKStringRef url, WKStringRef pluginsPageURL, const void* clientInfo);
 typedef void (*WKPageRunJavaScriptAlertCallback_deprecatedForUseWithV0)(WKPageRef page, WKStringRef alertText, WKFrameRef frame, const void *clientInfo);
 typedef bool (*WKPageRunJavaScriptConfirmCallback_deprecatedForUseWithV0)(WKPageRef page, WKStringRef message, WKFrameRef frame, const void *clientInfo);
 typedef WKStringRef (*WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV0)(WKPageRef page, WKStringRef message, WKStringRef defaultValue, WKFrameRef frame, const void *clientInfo);
@@ -170,7 +160,6 @@ typedef struct WKPageUIClientV0 {
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV0            runJavaScriptPrompt;
     WKPageSetStatusTextCallback                                         setStatusText;
     WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0        mouseDidMoveOverElement_deprecatedForUseWithV0;
-    WKPageMissingPluginButtonClickedCallback_deprecatedForUseWithV0     missingPluginButtonClicked_deprecatedForUseWithV0;
     WKPageDidNotHandleKeyEventCallback                                  didNotHandleKeyEvent;
     WKPageDidNotHandleWheelEventCallback                                didNotHandleWheelEvent;
     WKPageGetToolbarsAreVisibleCallback                                 toolbarsAreVisible;
@@ -214,7 +203,6 @@ typedef struct WKPageUIClientV1 {
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV0            runJavaScriptPrompt;
     WKPageSetStatusTextCallback                                         setStatusText;
     WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0        mouseDidMoveOverElement_deprecatedForUseWithV0;
-    WKPageMissingPluginButtonClickedCallback_deprecatedForUseWithV0     missingPluginButtonClicked_deprecatedForUseWithV0;
     WKPageDidNotHandleKeyEventCallback                                  didNotHandleKeyEvent;
     WKPageDidNotHandleWheelEventCallback                                didNotHandleWheelEvent;
     WKPageGetToolbarsAreVisibleCallback                                 toolbarsAreVisible;
@@ -246,7 +234,6 @@ typedef struct WKPageUIClientV1 {
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
-    WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
 } WKPageUIClientV1;
 
 typedef struct WKPageUIClientV2 {
@@ -264,7 +251,6 @@ typedef struct WKPageUIClientV2 {
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV0            runJavaScriptPrompt;
     WKPageSetStatusTextCallback                                         setStatusText;
     WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0        mouseDidMoveOverElement_deprecatedForUseWithV0;
-    WKPageMissingPluginButtonClickedCallback_deprecatedForUseWithV0     missingPluginButtonClicked_deprecatedForUseWithV0;
     WKPageDidNotHandleKeyEventCallback                                  didNotHandleKeyEvent;
     WKPageDidNotHandleWheelEventCallback                                didNotHandleWheelEvent;
     WKPageGetToolbarsAreVisibleCallback                                 toolbarsAreVisible;
@@ -296,12 +282,10 @@ typedef struct WKPageUIClientV2 {
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
-    WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
 
     // Version 2.
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
-    WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
 } WKPageUIClientV2;
 
 typedef struct WKPageUIClientV3 {
@@ -319,7 +303,6 @@ typedef struct WKPageUIClientV3 {
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV0            runJavaScriptPrompt;
     WKPageSetStatusTextCallback                                         setStatusText;
     WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0        mouseDidMoveOverElement_deprecatedForUseWithV0;
-    WKPageMissingPluginButtonClickedCallback_deprecatedForUseWithV0     missingPluginButtonClicked_deprecatedForUseWithV0;
     WKPageDidNotHandleKeyEventCallback                                  didNotHandleKeyEvent;
     WKPageDidNotHandleWheelEventCallback                                didNotHandleWheelEvent;
     WKPageGetToolbarsAreVisibleCallback                                 toolbarsAreVisible;
@@ -351,12 +334,10 @@ typedef struct WKPageUIClientV3 {
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
-    WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
 
     // Version 2.
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
-    WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
 
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;
@@ -377,7 +358,6 @@ typedef struct WKPageUIClientV4 {
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV0            runJavaScriptPrompt;
     WKPageSetStatusTextCallback                                         setStatusText;
     WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0        mouseDidMoveOverElement_deprecatedForUseWithV0;
-    WKPageMissingPluginButtonClickedCallback_deprecatedForUseWithV0     missingPluginButtonClicked_deprecatedForUseWithV0;
     WKPageDidNotHandleKeyEventCallback                                  didNotHandleKeyEvent;
     WKPageDidNotHandleWheelEventCallback                                didNotHandleWheelEvent;
     WKPageGetToolbarsAreVisibleCallback                                 toolbarsAreVisible;
@@ -409,12 +389,10 @@ typedef struct WKPageUIClientV4 {
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
-    WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
 
     // Version 2.
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
-    WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
 
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;
@@ -441,7 +419,6 @@ typedef struct WKPageUIClientV5 {
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV0            runJavaScriptPrompt_deprecatedForUseWithV0;
     WKPageSetStatusTextCallback                                         setStatusText;
     WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0        mouseDidMoveOverElement_deprecatedForUseWithV0;
-    WKPageMissingPluginButtonClickedCallback_deprecatedForUseWithV0     missingPluginButtonClicked_deprecatedForUseWithV0;
     WKPageDidNotHandleKeyEventCallback                                  didNotHandleKeyEvent;
     WKPageDidNotHandleWheelEventCallback                                didNotHandleWheelEvent;
     WKPageGetToolbarsAreVisibleCallback                                 toolbarsAreVisible;
@@ -473,12 +450,10 @@ typedef struct WKPageUIClientV5 {
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
-    WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
 
     // Version 2.
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
-    WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
 
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;
@@ -513,7 +488,6 @@ typedef struct WKPageUIClientV6 {
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV0            runJavaScriptPrompt_deprecatedForUseWithV0;
     WKPageSetStatusTextCallback                                         setStatusText;
     WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0        mouseDidMoveOverElement_deprecatedForUseWithV0;
-    WKPageMissingPluginButtonClickedCallback_deprecatedForUseWithV0     missingPluginButtonClicked_deprecatedForUseWithV0;
     WKPageDidNotHandleKeyEventCallback                                  didNotHandleKeyEvent;
     WKPageDidNotHandleWheelEventCallback                                didNotHandleWheelEvent;
     WKPageGetToolbarsAreVisibleCallback                                 toolbarsAreVisible;
@@ -545,12 +519,10 @@ typedef struct WKPageUIClientV6 {
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage_deprecatedForUseWithV1;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
-    WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
 
     // Version 2.
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
-    WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
 
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;
@@ -592,7 +564,6 @@ typedef struct WKPageUIClientV7 {
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV0            runJavaScriptPrompt_deprecatedForUseWithV0;
     WKPageSetStatusTextCallback                                         setStatusText;
     WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0        mouseDidMoveOverElement_deprecatedForUseWithV0;
-    WKPageMissingPluginButtonClickedCallback_deprecatedForUseWithV0     missingPluginButtonClicked_deprecatedForUseWithV0;
     WKPageDidNotHandleKeyEventCallback                                  didNotHandleKeyEvent;
     WKPageDidNotHandleWheelEventCallback                                didNotHandleWheelEvent;
     WKPageGetToolbarsAreVisibleCallback                                 toolbarsAreVisible;
@@ -624,12 +595,10 @@ typedef struct WKPageUIClientV7 {
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage_deprecatedForUseWithV1;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
-    WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
 
     // Version 2.
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
-    WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
 
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;
@@ -674,7 +643,6 @@ typedef struct WKPageUIClientV8 {
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV0            runJavaScriptPrompt_deprecatedForUseWithV0;
     WKPageSetStatusTextCallback                                         setStatusText;
     WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0        mouseDidMoveOverElement_deprecatedForUseWithV0;
-    WKPageMissingPluginButtonClickedCallback_deprecatedForUseWithV0     missingPluginButtonClicked_deprecatedForUseWithV0;
     WKPageDidNotHandleKeyEventCallback                                  didNotHandleKeyEvent;
     WKPageDidNotHandleWheelEventCallback                                didNotHandleWheelEvent;
     WKPageGetToolbarsAreVisibleCallback                                 toolbarsAreVisible;
@@ -706,12 +674,10 @@ typedef struct WKPageUIClientV8 {
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage_deprecatedForUseWithV1;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
-    WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
 
     // Version 2.
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
-    WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
 
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;
@@ -760,7 +726,6 @@ typedef struct WKPageUIClientV9 {
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV0            runJavaScriptPrompt_deprecatedForUseWithV0;
     WKPageSetStatusTextCallback                                         setStatusText;
     WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0        mouseDidMoveOverElement_deprecatedForUseWithV0;
-    WKPageMissingPluginButtonClickedCallback_deprecatedForUseWithV0     missingPluginButtonClicked_deprecatedForUseWithV0;
     WKPageDidNotHandleKeyEventCallback                                  didNotHandleKeyEvent;
     WKPageDidNotHandleWheelEventCallback                                didNotHandleWheelEvent;
     WKPageGetToolbarsAreVisibleCallback                                 toolbarsAreVisible;
@@ -792,12 +757,10 @@ typedef struct WKPageUIClientV9 {
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage_deprecatedForUseWithV1;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
-    WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
 
     // Version 2.
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
-    WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
 
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;
@@ -849,7 +812,6 @@ typedef struct WKPageUIClientV10 {
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV0            runJavaScriptPrompt_deprecatedForUseWithV0;
     WKPageSetStatusTextCallback                                         setStatusText;
     WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0        mouseDidMoveOverElement_deprecatedForUseWithV0;
-    WKPageMissingPluginButtonClickedCallback_deprecatedForUseWithV0     missingPluginButtonClicked_deprecatedForUseWithV0;
     WKPageDidNotHandleKeyEventCallback                                  didNotHandleKeyEvent;
     WKPageDidNotHandleWheelEventCallback                                didNotHandleWheelEvent;
     WKPageGetToolbarsAreVisibleCallback                                 toolbarsAreVisible;
@@ -881,12 +843,10 @@ typedef struct WKPageUIClientV10 {
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage_deprecatedForUseWithV1;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
-    WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
 
     // Version 2.
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
-    WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
 
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;
@@ -941,7 +901,6 @@ typedef struct WKPageUIClientV11 {
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV0            runJavaScriptPrompt_deprecatedForUseWithV0;
     WKPageSetStatusTextCallback                                         setStatusText;
     WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0        mouseDidMoveOverElement_deprecatedForUseWithV0;
-    WKPageMissingPluginButtonClickedCallback_deprecatedForUseWithV0     missingPluginButtonClicked_deprecatedForUseWithV0;
     WKPageDidNotHandleKeyEventCallback                                  didNotHandleKeyEvent;
     WKPageDidNotHandleWheelEventCallback                                didNotHandleWheelEvent;
     WKPageGetToolbarsAreVisibleCallback                                 toolbarsAreVisible;
@@ -973,12 +932,10 @@ typedef struct WKPageUIClientV11 {
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage_deprecatedForUseWithV1;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
-    WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
 
     // Version 2.
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
-    WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
 
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;
@@ -1036,7 +993,6 @@ typedef struct WKPageUIClientV12 {
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV0            runJavaScriptPrompt_deprecatedForUseWithV0;
     WKPageSetStatusTextCallback                                         setStatusText;
     WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0        mouseDidMoveOverElement_deprecatedForUseWithV0;
-    WKPageMissingPluginButtonClickedCallback_deprecatedForUseWithV0     missingPluginButtonClicked_deprecatedForUseWithV0;
     WKPageDidNotHandleKeyEventCallback                                  didNotHandleKeyEvent;
     WKPageDidNotHandleWheelEventCallback                                didNotHandleWheelEvent;
     WKPageGetToolbarsAreVisibleCallback                                 toolbarsAreVisible;
@@ -1068,12 +1024,10 @@ typedef struct WKPageUIClientV12 {
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage_deprecatedForUseWithV1;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
-    WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
 
     // Version 2.
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
-    WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
 
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;
@@ -1134,7 +1088,6 @@ typedef struct WKPageUIClientV13 {
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV0            runJavaScriptPrompt_deprecatedForUseWithV0;
     WKPageSetStatusTextCallback                                         setStatusText;
     WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0        mouseDidMoveOverElement_deprecatedForUseWithV0;
-    WKPageMissingPluginButtonClickedCallback_deprecatedForUseWithV0     missingPluginButtonClicked_deprecatedForUseWithV0;
     WKPageDidNotHandleKeyEventCallback                                  didNotHandleKeyEvent;
     WKPageDidNotHandleWheelEventCallback                                didNotHandleWheelEvent;
     WKPageGetToolbarsAreVisibleCallback                                 toolbarsAreVisible;
@@ -1166,12 +1119,10 @@ typedef struct WKPageUIClientV13 {
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage_deprecatedForUseWithV1;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
-    WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
 
     // Version 2.
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
-    WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
 
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;
@@ -1233,7 +1184,6 @@ typedef struct WKPageUIClientV14 {
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV0            runJavaScriptPrompt_deprecatedForUseWithV0;
     WKPageSetStatusTextCallback                                         setStatusText;
     WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0        mouseDidMoveOverElement_deprecatedForUseWithV0;
-    WKPageMissingPluginButtonClickedCallback_deprecatedForUseWithV0     missingPluginButtonClicked_deprecatedForUseWithV0;
     WKPageDidNotHandleKeyEventCallback                                  didNotHandleKeyEvent;
     WKPageDidNotHandleWheelEventCallback                                didNotHandleWheelEvent;
     WKPageGetToolbarsAreVisibleCallback                                 toolbarsAreVisible;
@@ -1265,12 +1215,10 @@ typedef struct WKPageUIClientV14 {
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage_deprecatedForUseWithV1;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
-    WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
 
     // Version 2.
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
-    WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
 
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;
@@ -1334,7 +1282,6 @@ typedef struct WKPageUIClientV15 {
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV0            runJavaScriptPrompt_deprecatedForUseWithV0;
     WKPageSetStatusTextCallback                                         setStatusText;
     WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0        mouseDidMoveOverElement_deprecatedForUseWithV0;
-    WKPageMissingPluginButtonClickedCallback_deprecatedForUseWithV0     missingPluginButtonClicked_deprecatedForUseWithV0;
     WKPageDidNotHandleKeyEventCallback                                  didNotHandleKeyEvent;
     WKPageDidNotHandleWheelEventCallback                                didNotHandleWheelEvent;
     WKPageGetToolbarsAreVisibleCallback                                 toolbarsAreVisible;
@@ -1366,12 +1313,10 @@ typedef struct WKPageUIClientV15 {
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage_deprecatedForUseWithV1;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
-    WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
 
     // Version 2.
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
-    WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
 
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;
@@ -1439,7 +1384,6 @@ typedef struct WKPageUIClientV16 {
     WKPageRunJavaScriptPromptCallback_deprecatedForUseWithV0            runJavaScriptPrompt_deprecatedForUseWithV0;
     WKPageSetStatusTextCallback                                         setStatusText;
     WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0        mouseDidMoveOverElement_deprecatedForUseWithV0;
-    WKPageMissingPluginButtonClickedCallback_deprecatedForUseWithV0     missingPluginButtonClicked_deprecatedForUseWithV0;
     WKPageDidNotHandleKeyEventCallback                                  didNotHandleKeyEvent;
     WKPageDidNotHandleWheelEventCallback                                didNotHandleWheelEvent;
     WKPageGetToolbarsAreVisibleCallback                                 toolbarsAreVisible;
@@ -1471,12 +1415,10 @@ typedef struct WKPageUIClientV16 {
     WKPageCreateNewPageCallback_deprecatedForUseWithV1                  createNewPage_deprecatedForUseWithV1;
     WKPageMouseDidMoveOverElementCallback                               mouseDidMoveOverElement;
     WKPageDecidePolicyForNotificationPermissionRequestCallback          decidePolicyForNotificationPermissionRequest;
-    WKPageUnavailablePluginButtonClickedCallback_deprecatedForUseWithV1 unavailablePluginButtonClicked_deprecatedForUseWithV1;
 
     // Version 2.
     WKPageShowColorPickerCallback                                       showColorPicker;
     WKPageHideColorPickerCallback                                       hideColorPicker;
-    WKPageUnavailablePluginButtonClickedCallback                        unavailablePluginButtonClicked;
 
     // Version 3.
     WKPagePinnedStateDidChangeCallback                                  pinnedStateDidChange;

@@ -48,7 +48,6 @@
 #include <webkitdom/WebKitDOMFile.h>
 #include <webkitdom/WebKitDOMFileList.h>
 #include <webkitdom/WebKitDOMHTMLAnchorElement.h>
-#include <webkitdom/WebKitDOMHTMLAppletElement.h>
 #include <webkitdom/WebKitDOMHTMLAreaElement.h>
 #include <webkitdom/WebKitDOMHTMLBRElement.h>
 #include <webkitdom/WebKitDOMHTMLBaseElement.h>
@@ -61,7 +60,6 @@
 #include <webkitdom/WebKitDOMHTMLDivElement.h>
 #include <webkitdom/WebKitDOMHTMLDocument.h>
 #include <webkitdom/WebKitDOMHTMLElement.h>
-#include <webkitdom/WebKitDOMHTMLEmbedElement.h>
 #include <webkitdom/WebKitDOMHTMLFieldSetElement.h>
 #include <webkitdom/WebKitDOMHTMLFontElement.h>
 #include <webkitdom/WebKitDOMHTMLFormElement.h>
@@ -84,7 +82,6 @@
 #include <webkitdom/WebKitDOMHTMLMetaElement.h>
 #include <webkitdom/WebKitDOMHTMLModElement.h>
 #include <webkitdom/WebKitDOMHTMLOListElement.h>
-#include <webkitdom/WebKitDOMHTMLObjectElement.h>
 #include <webkitdom/WebKitDOMHTMLOptGroupElement.h>
 #include <webkitdom/WebKitDOMHTMLOptionElement.h>
 #include <webkitdom/WebKitDOMHTMLOptionsCollection.h>

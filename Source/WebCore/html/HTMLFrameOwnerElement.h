@@ -44,9 +44,6 @@ public:
 
     void disconnectContentFrame();
 
-    // Most subclasses use RenderWidget (either RenderEmbeddedObject or RenderIFrame)
-    // except for HTMLObjectElement and HTMLEmbedElement which may return any
-    // RenderElement when using fallback content.
     RenderWidget* renderWidget() const;
 
     ExceptionOr<Document&> getSVGDocument() const;

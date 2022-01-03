@@ -55,7 +55,6 @@
 #include <webkit2/WebKitJavascriptResult.h>
 #include <webkit2/WebKitMediaKeySystemPermissionRequest.h>
 #include <webkit2/WebKitMemoryPressureSettings.h>
-#include <webkit2/WebKitMimeInfo.h>
 #include <webkit2/WebKitNavigationAction.h>
 #include <webkit2/WebKitNavigationPolicyDecision.h>
 #include <webkit2/WebKitNetworkProxySettings.h>
@@ -64,7 +63,6 @@
 #include <webkit2/WebKitOptionMenu.h>
 #include <webkit2/WebKitOptionMenuItem.h>
 #include <webkit2/WebKitPermissionRequest.h>
-#include <webkit2/WebKitPlugin.h>
 #include <webkit2/WebKitPointerLockPermissionRequest.h>
 #include <webkit2/WebKitPrintCustomWidget.h>
 #include <webkit2/WebKitPrintOperation.h>

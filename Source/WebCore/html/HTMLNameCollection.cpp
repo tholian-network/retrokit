@@ -24,12 +24,10 @@
 #include "HTMLNameCollection.h"
 
 #include "Element.h"
-#include "HTMLEmbedElement.h"
 #include "HTMLFormElement.h"
 #include "HTMLIFrameElement.h"
 #include "HTMLImageElement.h"
 #include "HTMLNames.h"
-#include "HTMLObjectElement.h"
 #include "NodeRareData.h"
 #include "NodeTraversal.h"
 #include <wtf/IsoMallocInlines.h>
@@ -43,10 +41,7 @@ WTF_MAKE_ISO_ALLOCATED_IMPL(DocumentNameCollection);
 
 bool WindowNameCollection::elementMatchesIfNameAttributeMatch(const Element& element)
 {
-    return is<HTMLEmbedElement>(element)
-        || is<HTMLFormElement>(element)
-        || is<HTMLImageElement>(element)
-        || is<HTMLObjectElement>(element);
+    return is<HTMLFormElement>(element) || is<HTMLImageElement>(element);
 }
 
 bool WindowNameCollection::elementMatches(const Element& element, const AtomStringImpl* name)
@@ -56,25 +51,14 @@ bool WindowNameCollection::elementMatches(const Element& element, const AtomStri
         || element.getIdAttribute() == name;
 }
 
-static inline bool isObjectElementForDocumentNameCollection(const Element& element)
-{
-    return is<HTMLObjectElement>(element) && downcast<HTMLObjectElement>(element).isExposed();
-}
-
 bool DocumentNameCollection::elementMatchesIfIdAttributeMatch(const Element& element)
 {
-    // FIXME: We need to fix HTMLImageElement to update the hash map for us when the name attribute is removed.
-    return isObjectElementForDocumentNameCollection(element)
-        || (is<HTMLImageElement>(element) && element.hasName() && !element.getNameAttribute().isEmpty());
+    return (is<HTMLImageElement>(element) && element.hasName() && !element.getNameAttribute().isEmpty());
 }
 
 bool DocumentNameCollection::elementMatchesIfNameAttributeMatch(const Element& element)
 {
-    return isObjectElementForDocumentNameCollection(element)
-        || is<HTMLEmbedElement>(element)
-        || is<HTMLFormElement>(element)
-        || is<HTMLIFrameElement>(element)
-        || is<HTMLImageElement>(element);
+    return is<HTMLFormElement>(element) || is<HTMLIFrameElement>(element) || is<HTMLImageElement>(element);
 }
 
 bool DocumentNameCollection::elementMatches(const Element& element, const AtomStringImpl* name)

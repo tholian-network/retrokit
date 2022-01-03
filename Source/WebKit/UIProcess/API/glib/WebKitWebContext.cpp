@@ -1122,65 +1122,6 @@ WebKitSecurityManager* webkit_web_context_get_security_manager(WebKitWebContext*
 }
 
 /**
- * webkit_web_context_set_additional_plugins_directory:
- * @context: a #WebKitWebContext
- * @directory: the directory to add
- *
- * Set an additional directory where WebKit will look for plugins.
- *
- * Deprecated: 2.32
- */
-void webkit_web_context_set_additional_plugins_directory(WebKitWebContext*, const char*)
-{
-    g_warning("webkit_web_context_set_additional_plugins_directory is deprecated and does nothing. Netscape plugins are no longer supported.");
-}
-
-/**
- * webkit_web_context_get_plugins:
- * @context: a #WebKitWebContext
- * @cancellable: (allow-none): a #GCancellable or %NULL to ignore
- * @callback: (scope async): a #GAsyncReadyCallback to call when the request is satisfied
- * @user_data: (closure): the data to pass to callback function
- *
- * Asynchronously get the list of installed plugins.
- *
- * When the operation is finished, @callback will be called. You can then call
- * webkit_web_context_get_plugins_finish() to get the result of the operation.
- *
- * Deprecated: 2.32
- */
-void webkit_web_context_get_plugins(WebKitWebContext* context, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer userData)
-{
-    g_return_if_fail(WEBKIT_IS_WEB_CONTEXT(context));
-
-    g_warning("webkit_web_context_get_plugins is deprecated and always returns an empty list. Netscape plugins are no longer supported.");
-
-    GRefPtr<GTask> task = adoptGRef(g_task_new(context, cancellable, callback, userData));
-    g_task_return_pointer(task.get(), nullptr, nullptr);
-}
-
-/**
- * webkit_web_context_get_plugins_finish:
- * @context: a #WebKitWebContext
- * @result: a #GAsyncResult
- * @error: return location for error or %NULL to ignore
- *
- * Finish an asynchronous operation started with webkit_web_context_get_plugins.
- *
- * Returns: (element-type WebKitPlugin) (transfer full): a #GList of #WebKitPlugin. You must free the #GList with
- *    g_list_free() and unref the #WebKitPlugin<!-- -->s with g_object_unref() when you're done with them.
- *
- * Deprecated: 2.32
- */
-GList* webkit_web_context_get_plugins_finish(WebKitWebContext* context, GAsyncResult* result, GError** error)
-{
-    g_return_val_if_fail(WEBKIT_IS_WEB_CONTEXT(context), nullptr);
-    g_return_val_if_fail(g_task_is_valid(result, context), nullptr);
-
-    return static_cast<GList*>(g_task_propagate_pointer(G_TASK(result), error));
-}
-
-/**
  * webkit_web_context_register_uri_scheme:
  * @context: a #WebKitWebContext
  * @scheme: the network scheme to register

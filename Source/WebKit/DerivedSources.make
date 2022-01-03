@@ -37,10 +37,7 @@ VPATH = \
     $(WebKit2)/NetworkProcess/IndexedDB \
     $(WebKit2)/NetworkProcess/ServiceWorker \
     $(WebKit2)/NetworkProcess/WebStorage \
-    $(WebKit2)/PluginProcess \
-    $(WebKit2)/PluginProcess/mac \
     $(WebKit2)/Resources/SandboxProfiles/ios \
-    $(WebKit2)/Shared/Plugins \
     $(WebKit2)/Shared \
     $(WebKit2)/Shared/API/Cocoa \
     $(WebKit2)/Shared/Authentication \
@@ -65,7 +62,6 @@ VPATH = \
     $(WebKit2)/WebProcess/Network/webrtc \
     $(WebKit2)/WebProcess/Notifications \
     $(WebKit2)/WebProcess/OriginData \
-    $(WebKit2)/WebProcess/Plugins \
     $(WebKit2)/WebProcess/ResourceCache \
 	$(WebKit2)/WebProcess/Speech \
     $(WebKit2)/WebProcess/Storage \
@@ -93,7 +89,6 @@ VPATH = \
     $(WebKit2)/UIProcess/Network \
     $(WebKit2)/UIProcess/Network/CustomProtocols \
     $(WebKit2)/UIProcess/Notifications \
-    $(WebKit2)/UIProcess/Plugins \
     $(WebKit2)/UIProcess/RemoteLayerTree \
     $(WebKit2)/UIProcess/Storage \
     $(WebKit2)/UIProcess/UserContent \
@@ -132,7 +127,6 @@ MESSAGE_RECEIVERS = \
 	NetworkProcess/webrtc/NetworkRTCMonitor \
 	NetworkProcess/webrtc/RTCDataChannelRemoteManagerProxy \
 	NetworkProcess/Cookies/WebCookieManager \
-	Shared/Plugins/NPObjectMessageReceiver \
 	Shared/AuxiliaryProcess \
 	Shared/API/Cocoa/RemoteObjectRegistry \
 	Shared/Authentication/AuthenticationManager \
@@ -146,7 +140,6 @@ MESSAGE_RECEIVERS = \
 	UIProcess/Inspector/WebInspectorUIProxy \
 	UIProcess/Inspector/RemoteWebInspectorUIProxy \
 	UIProcess/Inspector/WebInspectorUIExtensionControllerProxy \
-	UIProcess/Plugins/PluginProcessProxy \
 	UIProcess/DrawingAreaProxy \
 	UIProcess/Network/NetworkProcessProxy \
 	UIProcess/WebPageProxy \
@@ -191,9 +184,6 @@ MESSAGE_RECEIVERS = \
 	WebProcess/Inspector/WebInspector \
 	WebProcess/Inspector/RemoteWebInspectorUI \
 	WebProcess/MediaSession/RemoteMediaSessionCoordinator \
-	WebProcess/Plugins/PluginProcessConnectionManager \
-	WebProcess/Plugins/PluginProxy \
-	WebProcess/Plugins/PluginProcessConnection \
 	WebProcess/Network/WebSocketChannel \
 	WebProcess/Network/NetworkProcessConnection \
 	WebProcess/Network/WebSocketStream \
@@ -223,9 +213,6 @@ MESSAGE_RECEIVERS = \
 	WebProcess/WebPage/Cocoa/TextCheckingControllerProxy \
 	WebProcess/WebPage/ViewUpdateDispatcher \
 	WebProcess/WebAuthentication/WebAuthnProcessConnection \
-	PluginProcess/WebProcessConnection \
-	PluginProcess/PluginControllerProxy \
-	PluginProcess/PluginProcess \
 	GPUProcess/GPUConnectionToWebProcess \
 	GPUProcess/graphics/RemoteRenderingBackend \
 	GPUProcess/graphics/RemoteGraphicsContextGL \

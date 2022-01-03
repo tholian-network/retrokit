@@ -79,7 +79,6 @@
 #include "PlatformEvent.h"
 #include "PlatformKeyboardEvent.h"
 #include "PlatformWheelEvent.h"
-#include "PluginDocument.h"
 #include "Range.h"
 #include "RenderFrameSet.h"
 #include "RenderLayer.h"

@@ -46,7 +46,6 @@ namespace WebKit {
 
 struct WebHitTestResultData {
     String absoluteImageURL;
-    String absolutePDFURL;
     String absoluteLinkURL;
     String absoluteMediaURL;
     String linkLabel;

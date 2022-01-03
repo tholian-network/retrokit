@@ -59,7 +59,6 @@
 #include "HTMLImageElement.h"
 #include "HTMLInputElement.h"
 #include "HTMLParserIdioms.h"
-#include "HTMLPlugInElement.h"
 #include "HitTestRequest.h"
 #include "HitTestResult.h"
 #include "Image.h"
@@ -68,8 +67,6 @@
 #include "Page.h"
 #include "Pasteboard.h"
 #include "PlatformKeyboardEvent.h"
-#include "PluginDocument.h"
-#include "PluginViewBase.h"
 #include "Position.h"
 #include "PromisedAttachmentInfo.h"
 #include "Range.h"
@@ -496,17 +493,7 @@ std::optional<DragOperation> DragController::operationForLoad(const DragData& dr
 {
     Document* document = m_page.mainFrame().documentAtPoint(dragData.clientPosition());
 
-    bool pluginDocumentAcceptsDrags = false;
-
-    if (is<PluginDocument>(document)) {
-        const Widget* widget = downcast<PluginDocument>(*document).pluginWidget();
-        const PluginViewBase* pluginView = is<PluginViewBase>(widget) ? downcast<PluginViewBase>(widget) : nullptr;
-
-        if (pluginView)
-            pluginDocumentAcceptsDrags = pluginView->shouldAllowNavigationFromDrags();
-    }
-
-    if (document && (m_didInitiateDrag || (is<PluginDocument>(*document) && !pluginDocumentAcceptsDrags) || document->hasEditableStyle()))
+    if (document && (m_didInitiateDrag || document->hasEditableStyle()))
         return std::nullopt;
     return dragOperation(dragData);
 }

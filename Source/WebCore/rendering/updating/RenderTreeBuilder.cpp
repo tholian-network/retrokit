@@ -33,7 +33,6 @@
 #include "RenderCounter.h"
 #include "RenderDescendantIterator.h"
 #include "RenderElement.h"
-#include "RenderEmbeddedObject.h"
 #include "RenderGrid.h"
 #include "RenderHTMLCanvas.h"
 #include "RenderLineBreak.h"
@@ -971,7 +970,7 @@ void RenderTreeBuilder::reportVisuallyNonEmptyContent(const RenderElement& paren
         }
         return;
     }
-    if (is<RenderHTMLCanvas>(child) || is<RenderEmbeddedObject>(child)) {
+    if (is<RenderHTMLCanvas>(child)) {
         // Actual size is not known yet, report the default intrinsic size for replaced elements.
         auto& replacedRenderer = downcast<RenderReplaced>(child);
         m_view.frameView().incrementVisuallyNonEmptyPixelCount(roundedIntSize(replacedRenderer.intrinsicSize()));

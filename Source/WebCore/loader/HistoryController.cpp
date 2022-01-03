@@ -42,7 +42,6 @@
 #include "FrameLoaderStateMachine.h"
 #include "FrameTree.h"
 #include "FrameView.h"
-#include "HTMLObjectElement.h"
 #include "HistoryItem.h"
 #include "Logging.h"
 #include "Page.h"
@@ -710,11 +709,7 @@ Ref<HistoryItem> FrameLoader::HistoryController::createItemTree(Frame& targetFra
             FrameLoader& childLoader = child->loader();
             bool hasChildLoaded = childLoader.frameHasLoaded();
 
-            // If the child is a frame corresponding to an <object> element that never loaded,
-            // we don't want to create a history item, because that causes fallback content
-            // to be ignored on reload.
-            
-            if (!(!hasChildLoaded && child->ownerElement() && is<HTMLObjectElement>(child->ownerElement())))
+            if (hasChildLoaded)
                 bfItem->addChildItem(childLoader.history().createItemTree(targetFrame, clipAtTarget));
         }
     }

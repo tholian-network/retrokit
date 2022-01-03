@@ -513,9 +513,6 @@ bool AccessibilityNodeObject::isNativeImage() const
     if (is<HTMLImageElement>(*node))
         return true;
 
-    if (node->hasTagName(appletTag) || node->hasTagName(embedTag) || node->hasTagName(objectTag))
-        return true;
-
     if (is<HTMLInputElement>(*node)) {
         HTMLInputElement& input = downcast<HTMLInputElement>(*node);
         return input.isImageButton();

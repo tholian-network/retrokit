@@ -48,7 +48,6 @@
 #include "HTMLImageElement.h"
 #include "HTMLInputElement.h"
 #include "HTMLNames.h"
-#include "HTMLPlugInElement.h"
 #include "HTMLSlotElement.h"
 #include "HTMLTextAreaElement.h"
 #include "HitTestResult.h"
@@ -502,7 +501,7 @@ bool FocusController::advanceFocusInDocumentOrder(FocusDirection direction, Keyb
         return true;
     }
 
-    if (is<HTMLFrameOwnerElement>(*element) && (!is<HTMLPlugInElement>(*element) || !element->isKeyboardFocusable(event))) {
+    if (is<HTMLFrameOwnerElement>(*element) && !element->isKeyboardFocusable(event)) {
         // We focus frames rather than frame owners.
         // FIXME: We should not focus frames that have no scrollbars, as focusing them isn't useful to the user.
         HTMLFrameOwnerElement& owner = downcast<HTMLFrameOwnerElement>(*element);
@@ -513,7 +512,7 @@ bool FocusController::advanceFocusInDocumentOrder(FocusDirection direction, Keyb
         setFocusedFrame(owner.contentFrame());
         return true;
     }
-    
+
     // FIXME: It would be nice to just be able to call setFocusedElement(node) here, but we can't do
     // that because some elements (e.g. HTMLInputElement and HTMLTextAreaElement) do extra work in
     // their focus() methods.

@@ -30,11 +30,9 @@
 #include "CachedImage.h"
 #include "DocumentFragment.h"
 #include "Frame.h"
-#include "HTMLEmbedElement.h"
 #include "HTMLImageElement.h"
 #include "HTMLInputElement.h"
 #include "HTMLNames.h"
-#include "HTMLObjectElement.h"
 #include "HTMLParserIdioms.h"
 #include "Pasteboard.h"
 #include "RenderImage.h"
@@ -70,8 +68,6 @@ static const AtomString& elementURL(Element& element)
         return element.attributeWithoutSynchronization(HTMLNames::srcAttr);
     if (is<SVGImageElement>(element))
         return element.attributeWithoutSynchronization(XLinkNames::hrefAttr);
-    if (is<HTMLEmbedElement>(element) || is<HTMLObjectElement>(element))
-        return element.imageSourceURL();
     return nullAtom();
 }
 

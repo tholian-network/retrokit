@@ -45,7 +45,6 @@
 #include "PopupMenu.h"
 #include "PopupMenuClient.h"
 #include "RegistrableDomain.h"
-#include "RenderEmbeddedObject.h"
 #include "ScrollTypes.h"
 #include "ScrollingCoordinator.h"
 #include "SearchPopupMenu.h"
@@ -226,8 +225,6 @@ public:
     virtual void scrollContainingScrollViewsToRevealRect(const IntRect&) const { }; // Currently only Mac has a non empty implementation.
     virtual void scrollMainFrameToRevealRect(const IntRect&) const { };
 
-    virtual bool shouldUnavailablePluginMessageBeButton(RenderEmbeddedObject::PluginUnavailabilityReason) const { return false; }
-    virtual void unavailablePluginButtonClicked(Element&, RenderEmbeddedObject::PluginUnavailabilityReason) const { }
     virtual void mouseDidMoveOverElement(const HitTestResult&, unsigned modifierFlags, const String& toolTip, TextDirection) = 0;
 
     virtual void print(Frame&, const StringWithDirection&) = 0;
@@ -454,11 +451,6 @@ public:
     virtual FloatSize minimumWindowSize() const { return FloatSize(100, 100); };
 
     virtual bool isEmptyChromeClient() const { return false; }
-
-    virtual String plugInStartLabelTitle(const String& mimeType) const { UNUSED_PARAM(mimeType); return String(); }
-    virtual String plugInStartLabelSubtitle(const String& mimeType) const { UNUSED_PARAM(mimeType); return String(); }
-    virtual String plugInExtraStyleSheet() const { return String(); }
-    virtual String plugInExtraScript() const { return String(); }
 
     virtual void didAssociateFormControls(const Vector<RefPtr<Element>>&, Frame&) { };
     virtual bool shouldNotifyOnFormChanges() { return false; };

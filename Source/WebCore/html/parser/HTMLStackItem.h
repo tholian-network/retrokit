@@ -203,7 +203,6 @@ inline bool isSpecialNode(const HTMLStackItem& item)
     const AtomString& tagName = item.localName();
     if (item.namespaceURI() == HTMLNames::xhtmlNamespaceURI) {
         return tagName == HTMLNames::addressTag
-            || tagName == HTMLNames::appletTag
             || tagName == HTMLNames::areaTag
             || tagName == HTMLNames::articleTag
             || tagName == HTMLNames::asideTag
@@ -225,7 +224,6 @@ inline bool isSpecialNode(const HTMLStackItem& item)
             || tagName == HTMLNames::divTag
             || tagName == HTMLNames::dlTag
             || tagName == HTMLNames::dtTag
-            || tagName == HTMLNames::embedTag
             || tagName == HTMLNames::fieldsetTag
             || tagName == HTMLNames::figcaptionTag
             || tagName == HTMLNames::figureTag
@@ -258,7 +256,6 @@ inline bool isSpecialNode(const HTMLStackItem& item)
             || tagName == HTMLNames::noembedTag
             || tagName == HTMLNames::noframesTag
             || tagName == HTMLNames::noscriptTag
-            || tagName == HTMLNames::objectTag
             || tagName == HTMLNames::olTag
             || tagName == HTMLNames::pTag
             || tagName == HTMLNames::paramTag

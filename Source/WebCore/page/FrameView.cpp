@@ -54,15 +54,12 @@
 #include "FrameTree.h"
 #include "GraphicsContext.h"
 #include "HTMLBodyElement.h"
-#include "HTMLEmbedElement.h"
 #include "HTMLFrameElement.h"
 #include "HTMLFrameSetElement.h"
 #include "HTMLHtmlElement.h"
 #include "HTMLIFrameElement.h"
 #include "HTMLNames.h"
-#include "HTMLObjectElement.h"
 #include "HTMLParserIdioms.h"
-#include "HTMLPlugInImageElement.h"
 #include "ImageDocument.h"
 #include "InspectorClient.h"
 #include "InspectorController.h"
@@ -75,7 +72,6 @@
 #include "PageOverlayController.h"
 #include "PerformanceLoggingClient.h"
 #include "ProgressTracker.h"
-#include "RenderEmbeddedObject.h"
 #include "RenderIFrame.h"
 #include "RenderInline.h"
 #include "RenderLayer.h"
@@ -145,9 +141,6 @@ WTF_MAKE_ISO_ALLOCATED_IMPL(FrameView);
 
 MonotonicTime FrameView::sCurrentPaintTimeStamp { };
 
-// The maximum number of updateEmbeddedObjects iterations that should be done before returning.
-static const unsigned maxUpdateEmbeddedObjectsIterations = 2;
-
 static constexpr unsigned defaultSignificantRenderedTextCharacterThreshold = 3000;
 static constexpr float defaultSignificantRenderedTextMeanLength = 50;
 static constexpr unsigned mainArticleSignificantRenderedTextCharacterThreshold = 1500;
@@ -183,7 +176,6 @@ Pagination::Mode paginationModeForRenderStyle(const RenderStyle& style)
 FrameView::FrameView(Frame& frame)
     : m_frame(frame)
     , m_layoutContext(*this)
-    , m_updateEmbeddedObjectsTimer(*this, &FrameView::updateEmbeddedObjectsTimerFired)
     , m_updateWidgetPositionsTimer(*this, &FrameView::updateWidgetPositionsTimerFired)
     , m_delayedScrollEventTimer(*this, &FrameView::scheduleScrollEvent)
     , m_delayedScrollToFocusedElementTimer(*this, &FrameView::scrollToFocusedElementTimerFired)
@@ -246,7 +238,6 @@ void FrameView::reset()
     m_cannotBlitToWindow = false;
     m_isOverlapped = false;
     m_contentIsOpaque = false;
-    m_updateEmbeddedObjectsTimer.stop();
     m_wasScrolledByUser = false;
     m_delayedScrollEventTimer.stop();
     m_shouldScrollToFocusedElement = false;
@@ -569,10 +560,6 @@ void FrameView::didDestroyRenderTree()
 {
     ASSERT(!layoutContext().subtreeLayoutRoot());
     ASSERT(m_widgetsInRenderTree.isEmpty());
-
-    // If the render tree is destroyed below FrameView::updateEmbeddedObjects(), there will still be a null sentinel in the set.
-    // Everything else should have removed itself as the tree was felled.
-    ASSERT(!m_embeddedObjectsToUpdate || m_embeddedObjectsToUpdate->isEmpty() || (m_embeddedObjectsToUpdate->size() == 1 && m_embeddedObjectsToUpdate->first() == nullptr));
 
     ASSERT(!m_viewportConstrainedObjects || m_viewportConstrainedObjects->computesEmpty());
     ASSERT(!m_slowRepaintObjects || m_slowRepaintObjects->computesEmpty());
@@ -1212,14 +1199,6 @@ void FrameView::forceLayoutParentViewIfNeeded()
 
     LOG(Layout, "FrameView %p forceLayoutParentViewIfNeeded scheduling layout on parent FrameView %p", this, &ownerRenderer->view().frameView());
 
-    // If the embedded SVG document appears the first time, the ownerRenderer has already finished
-    // layout without knowing about the existence of the embedded SVG document, because RenderReplaced
-    // embeddedContentBox() returns nullptr, as long as the embedded document isn't loaded yet. Before
-    // bothering to lay out the SVG document, mark the ownerRenderer needing layout and ask its
-    // FrameView for a layout. After that the RenderEmbeddedObject (ownerRenderer) carries the
-    // correct size, which RenderSVGRoot::computeReplacedLogicalWidth/Height rely on, when laying
-    // out for the first time, or when the RenderSVGRoot size has changed dynamically (eg. via <script>).
-
     ownerRenderer->setNeedsLayoutAndPrefWidthsRecalc();
     ownerRenderer->view().frameView().layoutContext().scheduleLayout();
 }
@@ -1337,26 +1316,6 @@ RenderBox* FrameView::embeddedContentBox() const
         return downcast<RenderSVGRoot>(firstChild);
 
     return nullptr;
-}
-
-void FrameView::addEmbeddedObjectToUpdate(RenderEmbeddedObject& embeddedObject)
-{
-    if (!m_embeddedObjectsToUpdate)
-        m_embeddedObjectsToUpdate = makeUnique<ListHashSet<RenderEmbeddedObject*>>();
-
-    auto& element = embeddedObject.frameOwnerElement();
-    if (is<HTMLPlugInImageElement>(element))
-        downcast<HTMLPlugInImageElement>(element).setNeedsWidgetUpdate(true);
-
-    m_embeddedObjectsToUpdate->add(&embeddedObject);
-}
-
-void FrameView::removeEmbeddedObjectToUpdate(RenderEmbeddedObject& embeddedObject)
-{
-    if (!m_embeddedObjectsToUpdate)
-        return;
-
-    m_embeddedObjectsToUpdate->remove(&embeddedObject);
 }
 
 void FrameView::setMediaType(const String& mediaType)
@@ -3226,68 +3185,9 @@ void FrameView::scrollToAnchor()
     m_delayedScrollToFocusedElementTimer.stop();
 }
 
-void FrameView::updateEmbeddedObject(RenderEmbeddedObject& embeddedObject)
-{
-    // No need to update if it's already crashed or known to be missing.
-    if (embeddedObject.isPluginUnavailable())
-        return;
-
-    auto& element = embeddedObject.frameOwnerElement();
-
-    auto weakRenderer = makeWeakPtr(embeddedObject);
-
-    if (is<HTMLPlugInImageElement>(element)) {
-        auto& pluginElement = downcast<HTMLPlugInImageElement>(element);
-        if (pluginElement.needsWidgetUpdate())
-            pluginElement.updateWidget(CreatePlugins::Yes);
-    } else
-        ASSERT_NOT_REACHED();
-
-    // It's possible the renderer was destroyed below updateWidget() since loading a plugin may execute arbitrary JavaScript.
-    if (!weakRenderer)
-        return;
-
-    auto ignoreWidgetState = embeddedObject.updateWidgetPosition();
-    UNUSED_PARAM(ignoreWidgetState);
-}
-
-bool FrameView::updateEmbeddedObjects()
-{
-    SetForScope<bool> inUpdateEmbeddedObjects(m_inUpdateEmbeddedObjects, true);
-    if (layoutContext().isLayoutNested() || !m_embeddedObjectsToUpdate || m_embeddedObjectsToUpdate->isEmpty())
-        return true;
-
-    WidgetHierarchyUpdatesSuspensionScope suspendWidgetHierarchyUpdates;
-
-    // Insert a marker for where we should stop.
-    ASSERT(!m_embeddedObjectsToUpdate->contains(nullptr));
-    m_embeddedObjectsToUpdate->add(nullptr);
-
-    while (!m_embeddedObjectsToUpdate->isEmpty()) {
-        auto embeddedObject = m_embeddedObjectsToUpdate->takeFirst();
-        if (!embeddedObject)
-            break;
-        updateEmbeddedObject(*embeddedObject);
-    }
-
-    return m_embeddedObjectsToUpdate->isEmpty();
-}
-
-void FrameView::updateEmbeddedObjectsTimerFired()
-{
-    RefPtr<FrameView> protectedThis(this);
-    m_updateEmbeddedObjectsTimer.stop();
-    for (unsigned i = 0; i < maxUpdateEmbeddedObjectsIterations; i++) {
-        if (updateEmbeddedObjects())
-            break;
-    }
-}
-
 void FrameView::flushAnyPendingPostLayoutTasks()
 {
     layoutContext().flushAsynchronousTasks();
-    if (m_updateEmbeddedObjectsTimer.isActive())
-        updateEmbeddedObjectsTimerFired();
 }
 
 void FrameView::queuePostLayoutCallback(Function<void()>&& callback)
@@ -3337,8 +3237,6 @@ void FrameView::performPostLayoutTasks()
     updateWidgetPositions();
 
     updateSnapOffsets();
-
-    m_updateEmbeddedObjectsTimer.startOneShot(0_s);
 
     if (auto scrollingCoordinator = this->scrollingCoordinator())
         scrollingCoordinator->frameViewLayoutUpdated(*this);

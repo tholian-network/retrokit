@@ -210,7 +210,6 @@ public:
     virtual bool isAttributeNode() const { return false; }
     bool isCharacterDataNode() const { return hasNodeFlag(NodeFlag::IsCharacterData); }
     virtual bool isFrameOwnerElement() const { return false; }
-    virtual bool isPluginElement() const { return false; }
 
     bool isDocumentNode() const { return hasNodeFlag(NodeFlag::IsDocumentNode); }
     bool isTreeScope() const { return hasNodeFlag(NodeFlag::IsDocumentNode) || hasNodeFlag(NodeFlag::IsShadowRoot); }

@@ -50,7 +50,6 @@ public:
     static Ref<HitTestResult> create(const WebKit::WebHitTestResultData&);
 
     WTF::String absoluteImageURL() const { return m_data.absoluteImageURL; }
-    WTF::String absolutePDFURL() const { return m_data.absolutePDFURL; }
     WTF::String absoluteLinkURL() const { return m_data.absoluteLinkURL; }
     WTF::String absoluteMediaURL() const { return m_data.absoluteMediaURL; }
 

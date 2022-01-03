@@ -204,10 +204,6 @@ WK_EXPORT void WKPreferencesSetMockScrollbarsEnabled(WKPreferencesRef preference
 WK_EXPORT bool WKPreferencesGetMockScrollbarsEnabled(WKPreferencesRef preferencesRef);
 
 // Defaults to true.
-WK_EXPORT void WKPreferencesSetJavaEnabledForLocalFiles(WKPreferencesRef preferences, bool javaEnabled);
-WK_EXPORT bool WKPreferencesGetJavaEnabledForLocalFiles(WKPreferencesRef preferences);
-
-// Defaults to true.
 WK_EXPORT void WKPreferencesSetRequestAnimationFrameEnabled(WKPreferencesRef, bool);
 WK_EXPORT bool WKPreferencesGetRequestAnimationFrameEnabled(WKPreferencesRef);
 
@@ -242,10 +238,6 @@ WK_EXPORT bool WKPreferencesGetScrollingPerformanceLoggingEnabled(WKPreferencesR
 // Defaults to true
 WK_EXPORT void WKPreferencesSetCookieEnabled(WKPreferencesRef preferences, bool enabled);
 WK_EXPORT bool WKPreferencesGetCookieEnabled(WKPreferencesRef preferences);
-
-// Defaults to true on Mac, false elsewhere
-WK_EXPORT void WKPreferencesSetPDFPluginEnabled(WKPreferencesRef preferences, bool enabled);
-WK_EXPORT bool WKPreferencesGetPDFPluginEnabled(WKPreferencesRef preferences);
 
 // Defaults to false
 WK_EXPORT void WKPreferencesSetAggressiveTileRetentionEnabled(WKPreferencesRef preferences, bool enabled);

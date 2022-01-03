@@ -41,7 +41,6 @@ WebHitTestResultData::WebHitTestResultData()
 
 WebHitTestResultData::WebHitTestResultData(const WebCore::HitTestResult& hitTestResult, const String& toolTipText)
     : absoluteImageURL(hitTestResult.absoluteImageURL().string())
-    , absolutePDFURL(hitTestResult.absolutePDFURL().string())
     , absoluteLinkURL(hitTestResult.absoluteLinkURL().string())
     , absoluteMediaURL(hitTestResult.absoluteMediaURL().string())
     , linkLabel(hitTestResult.textContent())
@@ -63,7 +62,6 @@ WebHitTestResultData::WebHitTestResultData(const WebCore::HitTestResult& hitTest
 
 WebHitTestResultData::WebHitTestResultData(const WebCore::HitTestResult& hitTestResult, bool includeImage)
     : absoluteImageURL(hitTestResult.absoluteImageURL().string())
-    , absolutePDFURL(hitTestResult.absolutePDFURL().string())
     , absoluteLinkURL(hitTestResult.absoluteLinkURL().string())
     , absoluteMediaURL(hitTestResult.absoluteMediaURL().string())
     , linkLabel(hitTestResult.textContent())
@@ -104,7 +102,6 @@ WebHitTestResultData::~WebHitTestResultData()
 void WebHitTestResultData::encode(IPC::Encoder& encoder) const
 {
     encoder << absoluteImageURL;
-    encoder << absolutePDFURL;
     encoder << absoluteLinkURL;
     encoder << absoluteMediaURL;
     encoder << linkLabel;
@@ -143,7 +140,6 @@ void WebHitTestResultData::encode(IPC::Encoder& encoder) const
 bool WebHitTestResultData::decode(IPC::Decoder& decoder, WebHitTestResultData& hitTestResultData)
 {
     if (!decoder.decode(hitTestResultData.absoluteImageURL)
-        || !decoder.decode(hitTestResultData.absolutePDFURL)
         || !decoder.decode(hitTestResultData.absoluteLinkURL)
         || !decoder.decode(hitTestResultData.absoluteMediaURL)
         || !decoder.decode(hitTestResultData.linkLabel)

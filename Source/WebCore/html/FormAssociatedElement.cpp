@@ -32,7 +32,6 @@
 #include "HTMLFormControlElement.h"
 #include "HTMLFormElement.h"
 #include "HTMLNames.h"
-#include "HTMLObjectElement.h"
 #include "IdTargetObserver.h"
 
 namespace WebCore {

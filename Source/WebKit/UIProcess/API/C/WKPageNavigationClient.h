@@ -29,7 +29,6 @@
 #include <WebKit/WKBase.h>
 #include <WebKit/WKPageLoadTypes.h>
 #include <WebKit/WKPageRenderingProgressEvents.h>
-#include <WebKit/WKPluginLoadPolicy.h>
 #include <WebKit/WKProcessTerminationReason.h>
 
 #ifdef __cplusplus
@@ -78,8 +77,6 @@ typedef void (*WKPageNavigationResponseDidBecomeDownloadCallback)(WKPageRef page
 
 typedef void (*WKPageNavigationContextMenuDidCreateDownloadCallback)(WKPageRef page, WKDownloadRef download, const void* clientInfo);
 
-typedef WKPluginLoadPolicy (*WKPageNavigationDecidePolicyForPluginLoadCallback)(WKPageRef page, WKPluginLoadPolicy currentPluginLoadPolicy, WKDictionaryRef pluginInfoDictionary, WKStringRef* unavailabilityDescription, const void* clientInfo);
-
 typedef void (*WKPageNavigationDidBeginNavigationGesture)(WKPageRef page, const void* clientInfo);
 
 typedef void (*WKPageNavigationWillEndNavigationGesture)(WKPageRef page, WKBackForwardListItemRef backForwardListItem, const void* clientInfo);
@@ -101,7 +98,6 @@ typedef struct WKPageNavigationClientV0 {
     // Version 0.
     WKPageNavigationDecidePolicyForNavigationActionCallback decidePolicyForNavigationAction;
     WKPageNavigationDecidePolicyForNavigationResponseCallback decidePolicyForNavigationResponse;
-    WKPageNavigationDecidePolicyForPluginLoadCallback decidePolicyForPluginLoad;
     WKPageNavigationDidStartProvisionalNavigationCallback didStartProvisionalNavigation;
     WKPageNavigationDidReceiveServerRedirectForProvisionalNavigationCallback didReceiveServerRedirectForProvisionalNavigation;
     WKPageNavigationDidFailProvisionalNavigationCallback didFailProvisionalNavigation;
@@ -128,7 +124,6 @@ typedef struct WKPageNavigationClientV1 {
     // Version 0.
     WKPageNavigationDecidePolicyForNavigationActionCallback decidePolicyForNavigationAction;
     WKPageNavigationDecidePolicyForNavigationResponseCallback decidePolicyForNavigationResponse;
-    WKPageNavigationDecidePolicyForPluginLoadCallback decidePolicyForPluginLoad;
     WKPageNavigationDidStartProvisionalNavigationCallback didStartProvisionalNavigation;
     WKPageNavigationDidReceiveServerRedirectForProvisionalNavigationCallback didReceiveServerRedirectForProvisionalNavigation;
     WKPageNavigationDidFailProvisionalNavigationCallback didFailProvisionalNavigation;
@@ -158,7 +153,6 @@ typedef struct WKPageNavigationClientV2 {
     // Version 0.
     WKPageNavigationDecidePolicyForNavigationActionCallback decidePolicyForNavigationAction;
     WKPageNavigationDecidePolicyForNavigationResponseCallback decidePolicyForNavigationResponse;
-    WKPageNavigationDecidePolicyForPluginLoadCallback decidePolicyForPluginLoad;
     WKPageNavigationDidStartProvisionalNavigationCallback didStartProvisionalNavigation;
     WKPageNavigationDidReceiveServerRedirectForProvisionalNavigationCallback didReceiveServerRedirectForProvisionalNavigation;
     WKPageNavigationDidFailProvisionalNavigationCallback didFailProvisionalNavigation;
@@ -191,7 +185,6 @@ typedef struct WKPageNavigationClientV3 {
     // Version 0.
     WKPageNavigationDecidePolicyForNavigationActionCallback decidePolicyForNavigationAction;
     WKPageNavigationDecidePolicyForNavigationResponseCallback decidePolicyForNavigationResponse;
-    WKPageNavigationDecidePolicyForPluginLoadCallback decidePolicyForPluginLoad;
     WKPageNavigationDidStartProvisionalNavigationCallback didStartProvisionalNavigation;
     WKPageNavigationDidReceiveServerRedirectForProvisionalNavigationCallback didReceiveServerRedirectForProvisionalNavigation;
     WKPageNavigationDidFailProvisionalNavigationCallback didFailProvisionalNavigation;

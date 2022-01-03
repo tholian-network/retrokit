@@ -32,11 +32,9 @@
 #include "GestureTypes.h"
 #endif
 #include "MessageNames.h"
-#include "Plugin.h"
 #include "TestWithLegacyReceiverMessagesReplies.h"
 #include <WebCore/GraphicsLayer.h>
 #include <WebCore/KeyboardEvent.h>
-#include <WebCore/PluginData.h>
 #include <utility>
 #include <wtf/Forward.h>
 #include <wtf/HashMap.h>
@@ -276,30 +274,6 @@ private:
     Arguments m_arguments;
 };
 
-class CreatePlugin {
-public:
-    using Arguments = std::tuple<uint64_t, const WebKit::Plugin::Parameters&>;
-
-    static IPC::MessageName name() { return IPC::MessageName::TestWithLegacyReceiver_CreatePlugin; }
-    static constexpr bool isSync = true;
-
-    static constexpr auto callbackThread = WTF::CompletionHandlerCallThread::ConstructionThread;
-    using Reply = std::tuple<bool&>;
-    using ReplyArguments = std::tuple<bool>;
-    CreatePlugin(uint64_t pluginInstanceID, const WebKit::Plugin::Parameters& parameters)
-        : m_arguments(pluginInstanceID, parameters)
-    {
-    }
-
-    const Arguments& arguments() const
-    {
-        return m_arguments;
-    }
-
-private:
-    Arguments m_arguments;
-};
-
 class RunJavaScriptAlert {
 public:
     using Arguments = std::tuple<uint64_t, const String&>;
@@ -312,56 +286,6 @@ public:
     using ReplyArguments = std::tuple<>;
     RunJavaScriptAlert(uint64_t frameID, const String& message)
         : m_arguments(frameID, message)
-    {
-    }
-
-    const Arguments& arguments() const
-    {
-        return m_arguments;
-    }
-
-private:
-    Arguments m_arguments;
-};
-
-class GetPlugins {
-public:
-    using Arguments = std::tuple<bool>;
-
-    static IPC::MessageName name() { return IPC::MessageName::TestWithLegacyReceiver_GetPlugins; }
-    static constexpr bool isSync = true;
-
-    static constexpr auto callbackThread = WTF::CompletionHandlerCallThread::ConstructionThread;
-    using Reply = std::tuple<Vector<WebCore::PluginInfo>&>;
-    using ReplyArguments = std::tuple<Vector<WebCore::PluginInfo>>;
-    explicit GetPlugins(bool refresh)
-        : m_arguments(refresh)
-    {
-    }
-
-    const Arguments& arguments() const
-    {
-        return m_arguments;
-    }
-
-private:
-    Arguments m_arguments;
-};
-
-class GetPluginProcessConnection {
-public:
-    using Arguments = std::tuple<const String&>;
-
-    static IPC::MessageName name() { return IPC::MessageName::TestWithLegacyReceiver_GetPluginProcessConnection; }
-    static constexpr bool isSync = true;
-
-    using DelayedReply = GetPluginProcessConnectionDelayedReply;
-    static constexpr auto callbackThread = WTF::CompletionHandlerCallThread::ConstructionThread;
-    static void send(UniqueRef<IPC::Encoder>&&, IPC::Connection&, const IPC::Connection::Handle& connectionHandle);
-    using Reply = std::tuple<IPC::Connection::Handle&>;
-    using ReplyArguments = std::tuple<IPC::Connection::Handle>;
-    explicit GetPluginProcessConnection(const String& pluginPath)
-        : m_arguments(pluginPath)
     {
     }
 

@@ -41,7 +41,6 @@
 #include "NetworkConnectionToWebProcessMessages.h"
 #include "NetworkProcessConnection.h"
 #include "NetworkResourceLoadParameters.h"
-#include "PluginView.h"
 #include "SharedBufferDataReference.h"
 #include "UserData.h"
 #include "WKBundleAPICast.h"
@@ -80,8 +79,6 @@
 #include <WebCore/MouseEvent.h>
 #include <WebCore/NotImplemented.h>
 #include <WebCore/Page.h>
-#include <WebCore/PluginData.h>
-#include <WebCore/PluginDocument.h>
 #include <WebCore/PolicyChecker.h>
 #include <WebCore/ProgressTracker.h>
 #include <WebCore/ResourceError.h>
@@ -571,7 +568,7 @@ void WebFrameLoaderClient::dispatchDidCommitLoad(std::optional<HasInsecureConten
         usedLegacyTLS = usedLegacyTLSFromPageCache == UsedLegacyTLS::Yes;
     
     // Notify the UIProcess.
-    webPage->send(Messages::WebPageProxy::DidCommitLoadForFrame(m_frame->frameID(), m_frame->info(), documentLoader.request(), documentLoader.navigationID(), documentLoader.response().mimeType(), m_frameHasCustomContentProvider, m_frame->coreFrame()->loader().loadType(), valueOrCompute(documentLoader.response().certificateInfo(), [] { return CertificateInfo(); }), usedLegacyTLS, m_frame->coreFrame()->document()->isPluginDocument(), hasInsecureContent, documentLoader.mouseEventPolicy(), UserData(WebProcess::singleton().transformObjectsToHandles(userData.get()).get())));
+    webPage->send(Messages::WebPageProxy::DidCommitLoadForFrame(m_frame->frameID(), m_frame->info(), documentLoader.request(), documentLoader.navigationID(), documentLoader.response().mimeType(), m_frameHasCustomContentProvider, m_frame->coreFrame()->loader().loadType(), valueOrCompute(documentLoader.response().certificateInfo(), [] { return CertificateInfo(); }), usedLegacyTLS, hasInsecureContent, documentLoader.mouseEventPolicy(), UserData(WebProcess::singleton().transformObjectsToHandles(userData.get()).get())));
     webPage->didCommitLoad(m_frame.ptr());
 }
 
@@ -1102,12 +1099,6 @@ void WebFrameLoaderClient::revertToProvisionalState(DocumentLoader*)
 
 void WebFrameLoaderClient::setMainDocumentError(DocumentLoader*, const ResourceError& error)
 {
-    if (!m_pluginView)
-        return;
-    
-    m_pluginView->manualLoadDidFail(error);
-    m_pluginView = nullptr;
-    m_hasSentResponseToPluginView = false;
 }
 
 void WebFrameLoaderClient::setMainFrameDocumentReady(bool)
@@ -1144,65 +1135,6 @@ void WebFrameLoaderClient::didReplaceMultipartContent()
     if (!webPage)
         return;
     webPage->didReplaceMultipartContent(m_frame);
-}
-
-void WebFrameLoaderClient::committedLoad(DocumentLoader* loader, const uint8_t* data, int length)
-{
-    if (!m_pluginView)
-        loader->commitData(data, length);
-
-    // If the document is a stand-alone media document, now is the right time to cancel the WebKit load.
-    // FIXME: This code should be shared across all ports. <http://webkit.org/b/48762>.
-#if ENABLE(VIDEO)
-    if (is<MediaDocument>(m_frame->coreFrame()->document()))
-        loader->cancelMainResourceLoad(pluginWillHandleLoadError(loader->response()));
-#endif
-
-    // Calling commitData did not create the plug-in view.
-    if (!m_pluginView)
-        return;
-
-    if (!m_hasSentResponseToPluginView) {
-        m_pluginView->manualLoadDidReceiveResponse(loader->response());
-        // manualLoadDidReceiveResponse sets up a new stream to the plug-in. on a full-page plug-in, a failure in
-        // setting up this stream can cause the main document load to be cancelled, setting m_pluginView
-        // to null
-        if (!m_pluginView)
-            return;
-        m_hasSentResponseToPluginView = true;
-    }
-    m_pluginView->manualLoadDidReceiveData(data, length);
-}
-
-void WebFrameLoaderClient::finishedLoading(DocumentLoader* loader)
-{
-    if (!m_pluginView) {
-        if (m_frameHasCustomContentProvider) {
-            WebPage* webPage = m_frame->page();
-            if (!webPage)
-                return;
-
-            RefPtr<SharedBuffer> mainResourceData = loader->mainResourceData();
-            IPC::DataReference dataReference(mainResourceData ? mainResourceData->data() : nullptr, mainResourceData ? mainResourceData->size() : 0);
-            webPage->send(Messages::WebPageProxy::DidFinishLoadingDataForCustomContentProvider(loader->response().suggestedFilename(), dataReference));
-        }
-
-        return;
-    }
-
-    // If we just received an empty response without any data, we won't have sent a response to the plug-in view.
-    // Make sure to do this before calling manualLoadDidFinishLoading.
-    if (!m_hasSentResponseToPluginView) {
-        m_pluginView->manualLoadDidReceiveResponse(loader->response());
-
-        // Protect against the above call nulling out the plug-in (by trying to cancel the load for example).
-        if (!m_pluginView)
-            return;
-    }
-
-    m_pluginView->manualLoadDidFinishLoading();
-    m_pluginView = nullptr;
-    m_hasSentResponseToPluginView = false;
 }
 
 void WebFrameLoaderClient::updateGlobalHistory()
@@ -1610,39 +1542,6 @@ RefPtr<Frame> WebFrameLoaderClient::createFrame(const String& name, HTMLFrameOwn
     return coreSubframe;
 }
 
-RefPtr<Widget> WebFrameLoaderClient::createPlugin(const IntSize&, HTMLPlugInElement& pluginElement, const URL& url, const Vector<String>& paramNames, const Vector<String>& paramValues, const String& mimeType, bool loadManually)
-{
-    ASSERT(paramNames.size() == paramValues.size());
-    ASSERT(m_frame->page());
-
-    Plugin::Parameters parameters;
-    parameters.url = url;
-    parameters.names = paramNames;
-    parameters.values = paramValues;
-    parameters.mimeType = mimeType;
-    parameters.isFullFramePlugin = loadManually;
-    parameters.shouldUseManualLoader = parameters.isFullFramePlugin && !m_frameCameFromBackForwardCache;
-#if PLATFORM(COCOA)
-    parameters.layerHostingMode = m_frame->page()->layerHostingMode();
-#endif
-
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    auto plugin = m_frame->page()->createPlugin(m_frame.ptr(), &pluginElement, parameters, parameters.mimeType);
-    if (!plugin)
-        return nullptr;
-
-    return PluginView::create(pluginElement, plugin.releaseNonNull(), parameters);
-#else
-    UNUSED_PARAM(pluginElement);
-    return nullptr;
-#endif
-}
-
-void WebFrameLoaderClient::redirectDataToPlugin(Widget& pluginWidget)
-{
-    m_pluginView = static_cast<PluginView*>(&pluginWidget);
-}
-
 #if ENABLE(WEBGL)
 
 WebCore::WebGLLoadPolicy WebFrameLoaderClient::webGLPolicyForURL(const URL& url) const
@@ -1662,16 +1561,6 @@ WebCore::WebGLLoadPolicy WebFrameLoaderClient::resolveWebGLPolicyForURL(const UR
 }
 
 #endif
-
-static bool pluginSupportsExtension(const PluginData& pluginData, const String& extension)
-{
-    ASSERT(extension.convertToASCIILowercase() == extension);
-    for (auto& type : pluginData.webVisibleMimeTypes()) {
-        if (type.extensions.contains(extension))
-            return true;
-    }
-    return false;
-}
 
 ObjectContentType WebFrameLoaderClient::objectContentType(const URL& url, const String& mimeTypeIn)
 {
@@ -1699,13 +1588,6 @@ ObjectContentType WebFrameLoaderClient::objectContentType(const URL& url, const 
 
     if (MIMETypeRegistry::isSupportedImageMIMEType(mimeType))
         return ObjectContentType::Image;
-
-    if (WebPage* webPage = m_frame->page()) {
-        auto allowedPluginTypes = webFrame().coreFrame()->arePluginsEnabled()
-            ? PluginData::AllPlugins : PluginData::OnlyApplicationPlugins;
-        if (webPage->corePage()->pluginData().supportsMimeType(mimeType, allowedPluginTypes))
-            return ObjectContentType::PlugIn;
-    }
 
     if (MIMETypeRegistry::isSupportedNonImageMIMEType(mimeType))
         return ObjectContentType::Frame;
@@ -1953,14 +1835,6 @@ void WebFrameLoaderClient::notifyPageOfAppBoundBehavior()
         return;
 
     webPage->notifyPageOfAppBoundBehavior();
-}
-#endif
-
-#if ENABLE(PDFKIT_PLUGIN)
-bool WebFrameLoaderClient::shouldUsePDFPlugin(const String& contentType, StringView path) const
-{
-    auto* page = m_frame->page();
-    return page && page->shouldUsePDFPlugin(contentType, path);
 }
 #endif
 

@@ -40,7 +40,6 @@ class FixedPositionViewportConstraints;
 class GraphicsLayer;
 class GraphicsLayerUpdater;
 class LayerOverlapMap;
-class RenderEmbeddedObject;
 class RenderVideo;
 class RenderWidget;
 class ScrollingCoordinator;

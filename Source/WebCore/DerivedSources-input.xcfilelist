@@ -224,9 +224,6 @@ $(PROJECT_DIR)/Modules/permissions/PermissionName.idl
 $(PROJECT_DIR)/Modules/permissions/PermissionState.idl
 $(PROJECT_DIR)/Modules/permissions/PermissionStatus.idl
 $(PROJECT_DIR)/Modules/permissions/Permissions.idl
-$(PROJECT_DIR)/Modules/plugins/QuickTimePluginReplacement.css
-$(PROJECT_DIR)/Modules/plugins/QuickTimePluginReplacement.idl
-$(PROJECT_DIR)/Modules/plugins/QuickTimePluginReplacement.js
 $(PROJECT_DIR)/Modules/remoteplayback/HTMLMediaElement+RemotePlayback.idl
 $(PROJECT_DIR)/Modules/remoteplayback/RemotePlayback.idl
 $(PROJECT_DIR)/Modules/remoteplayback/RemotePlaybackAvailabilityCallback.idl
@@ -708,7 +705,6 @@ $(PROJECT_DIR)/html/HTMLDivElement.idl
 $(PROJECT_DIR)/html/HTMLDocument.idl
 $(PROJECT_DIR)/html/HTMLElement+CSSOMView.idl
 $(PROJECT_DIR)/html/HTMLElement.idl
-$(PROJECT_DIR)/html/HTMLEmbedElement.idl
 $(PROJECT_DIR)/html/HTMLFieldSetElement.idl
 $(PROJECT_DIR)/html/HTMLFontElement.idl
 $(PROJECT_DIR)/html/HTMLFormControlsCollection.idl
@@ -739,7 +735,6 @@ $(PROJECT_DIR)/html/HTMLMetaElement.idl
 $(PROJECT_DIR)/html/HTMLMeterElement.idl
 $(PROJECT_DIR)/html/HTMLModElement.idl
 $(PROJECT_DIR)/html/HTMLOListElement.idl
-$(PROJECT_DIR)/html/HTMLObjectElement.idl
 $(PROJECT_DIR)/html/HTMLOptGroupElement.idl
 $(PROJECT_DIR)/html/HTMLOptionElement.idl
 $(PROJECT_DIR)/html/HTMLOptionsCollection.idl
@@ -925,7 +920,6 @@ $(PROJECT_DIR)/page/NavigatorCookies.idl
 $(PROJECT_DIR)/page/NavigatorID.idl
 $(PROJECT_DIR)/page/NavigatorLanguage.idl
 $(PROJECT_DIR)/page/NavigatorOnLine.idl
-$(PROJECT_DIR)/page/NavigatorPlugins.idl
 $(PROJECT_DIR)/page/NavigatorServiceWorker.idl
 $(PROJECT_DIR)/page/NavigatorShare.idl
 $(PROJECT_DIR)/page/Performance+NavigationTiming.idl
@@ -978,10 +972,6 @@ $(PROJECT_DIR)/page/WorkerNavigator.idl
 $(PROJECT_DIR)/platform/ColorData.gperf
 $(PROJECT_DIR)/platform/network/HTTPHeaderNames.in
 $(PROJECT_DIR)/platform/network/create-http-header-name-table
-$(PROJECT_DIR)/plugins/DOMMimeType.idl
-$(PROJECT_DIR)/plugins/DOMMimeTypeArray.idl
-$(PROJECT_DIR)/plugins/DOMPlugin.idl
-$(PROJECT_DIR)/plugins/DOMPluginArray.idl
 $(PROJECT_DIR)/preprocess-localizable-strings.pl
 $(PROJECT_DIR)/storage/Storage.idl
 $(PROJECT_DIR)/storage/StorageEvent.idl

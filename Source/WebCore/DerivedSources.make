@@ -250,7 +250,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/Modules/permissions/PermissionState.idl \
     $(WebCore)/Modules/permissions/PermissionStatus.idl \
     $(WebCore)/Modules/permissions/Permissions.idl \
-    $(WebCore)/Modules/plugins/QuickTimePluginReplacement.idl \
     $(WebCore)/Modules/remoteplayback/HTMLMediaElement+RemotePlayback.idl \
     $(WebCore)/Modules/remoteplayback/RemotePlayback.idl \
     $(WebCore)/Modules/remoteplayback/RemotePlaybackAvailabilityCallback.idl \
@@ -655,7 +654,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/html/HTMLDocument.idl \
     $(WebCore)/html/HTMLElement+CSSOMView.idl \
     $(WebCore)/html/HTMLElement.idl \
-    $(WebCore)/html/HTMLEmbedElement.idl \
     $(WebCore)/html/HTMLFieldSetElement.idl \
     $(WebCore)/html/HTMLFontElement.idl \
     $(WebCore)/html/HTMLFormControlsCollection.idl \
@@ -686,7 +684,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/html/HTMLMeterElement.idl \
     $(WebCore)/html/HTMLModElement.idl \
     $(WebCore)/html/HTMLOListElement.idl \
-    $(WebCore)/html/HTMLObjectElement.idl \
     $(WebCore)/html/HTMLOptGroupElement.idl \
     $(WebCore)/html/HTMLOptionElement.idl \
     $(WebCore)/html/HTMLOptionsCollection.idl \
@@ -863,7 +860,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/page/NavigatorID.idl \
     $(WebCore)/page/NavigatorLanguage.idl \
     $(WebCore)/page/NavigatorOnLine.idl \
-    $(WebCore)/page/NavigatorPlugins.idl \
     $(WebCore)/page/NavigatorServiceWorker.idl \
     $(WebCore)/page/NavigatorShare.idl \
     $(WebCore)/page/Performance+NavigationTiming.idl \
@@ -911,10 +907,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/page/WindowOrWorkerGlobalScope.idl \
     $(WebCore)/page/WindowSessionStorage.idl \
     $(WebCore)/page/WorkerNavigator.idl \
-    $(WebCore)/plugins/DOMMimeType.idl \
-    $(WebCore)/plugins/DOMMimeTypeArray.idl \
-    $(WebCore)/plugins/DOMPlugin.idl \
-    $(WebCore)/plugins/DOMPluginArray.idl \
     $(WebCore)/storage/Storage.idl \
     $(WebCore)/storage/StorageEvent.idl \
     $(WebCore)/svg/Document+SVG.idl \
@@ -1200,7 +1192,6 @@ all : \
     JSSVGElementWrapperFactory.cpp \
     JSSVGElementWrapperFactory.h \
     LocalizableAdditions.strings.out \
-    PlugInsResources.h \
     SVGElementFactory.cpp \
     SVGElementFactory.h \
     SVGElementTypeHelpers.h \
@@ -1350,13 +1341,10 @@ USER_AGENT_STYLE_SHEETS = \
     $(WebCore)/css/legacyFormControlsIOS.css \
     $(WebCore)/css/mathml.css \
     $(WebCore)/css/mediaControls.css \
-    $(WebCore)/css/plugIns.css \
     $(WebCore)/css/quirks.css \
     $(WebCore)/css/svg.css \
     $(WebCore)/html/shadow/imageOverlay.css \
     $(WebCore)/html/shadow/meterElementShadow.css \
-    $(WebCore)/Modules/plugins/QuickTimePluginReplacement.css \
-    ModernMediaControls.css \
 #
 
 UserAgentStyleSheets.h : $(WebCore)/css/make-css-file-arrays.pl $(WebCore)/bindings/scripts/preprocessor.pm $(USER_AGENT_STYLE_SHEETS) $(FEATURE_AND_PLATFORM_DEFINE_DEPENDENCIES)
@@ -1367,8 +1355,6 @@ UserAgentStyleSheets.h : $(WebCore)/css/make-css-file-arrays.pl $(WebCore)/bindi
 # user agent scripts
 
 USER_AGENT_SCRIPTS = \
-    $(WebCore)/Modules/plugins/QuickTimePluginReplacement.js \
-    ModernMediaControls.js \
 #
 
 USER_AGENT_SCRIPTS_FILES = \
@@ -1381,15 +1367,6 @@ all : $(USER_AGENT_SCRIPTS_FILES)
 
 $(USER_AGENT_SCRIPTS_FILES_PATTERNS) : $(JavaScriptCore_SCRIPTS_DIR)/make-js-file-arrays.py $(USER_AGENT_SCRIPTS)
 	$(PYTHON) $(JavaScriptCore_SCRIPTS_DIR)/make-js-file-arrays.py -n WebCore --fail-if-non-ascii $(USER_AGENT_SCRIPTS_FILES) $(USER_AGENT_SCRIPTS)
-
-# --------
-
-# plug-ins resources
-
-PLUG_INS_RESOURCES = $(WebCore)/Resources/plugIns.js
-
-PlugInsResources.h : $(WebCore)/css/make-css-file-arrays.pl $(WebCore)/bindings/scripts/preprocessor.pm $(PLUG_INS_RESOURCES) $(FEATURE_AND_PLATFORM_DEFINE_DEPENDENCIES)
-	$(PERL) $< --defines "$(FEATURE_AND_PLATFORM_DEFINES)" $@ PlugInsResourcesData.cpp $(PLUG_INS_RESOURCES)
 
 # --------
 

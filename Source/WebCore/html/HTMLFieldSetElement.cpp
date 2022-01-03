@@ -30,7 +30,6 @@
 #include "HTMLFormControlsCollection.h"
 #include "HTMLLegendElement.h"
 #include "HTMLNames.h"
-#include "HTMLObjectElement.h"
 #include "NodeRareData.h"
 #include "RenderElement.h"
 #include "ScriptDisallowedScope.h"

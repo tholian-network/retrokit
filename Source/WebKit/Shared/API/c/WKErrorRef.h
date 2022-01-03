@@ -40,12 +40,6 @@ enum {
     kWKErrorCodeFrameLoadBlockedByContentBlocker =               104,
     kWKErrorCodeFrameLoadBlockedByContentFilter =                105,
     kWKErrorCodeFrameLoadBlockedByRestrictions =                 106,
-    kWKErrorCodeCannotFindPlugIn =                               200,
-    kWKErrorCodeCannotLoadPlugIn =                               201,
-    kWKErrorCodeJavaUnavailable =                                202,
-    kWKErrorCodePlugInCancelledConnection =                      203,
-    kWKErrorCodePlugInWillHandleLoad =                           204,
-    kWKErrorCodeInsecurePlugInVersion =                          205,
     kWKErrorInternal =                                           300,
 };
 

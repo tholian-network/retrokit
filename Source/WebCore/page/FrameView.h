@@ -65,7 +65,6 @@ class HTMLFrameOwnerElement;
 class Page;
 class RenderBox;
 class RenderElement;
-class RenderEmbeddedObject;
 class RenderLayer;
 class RenderLayerModelObject;
 class RenderObject;
@@ -360,9 +359,6 @@ public:
     WEBCORE_EXPORT void setWasScrolledByUser(bool);
 
     bool safeToPropagateScrollToParent() const;
-
-    void addEmbeddedObjectToUpdate(RenderEmbeddedObject&);
-    void removeEmbeddedObjectToUpdate(RenderEmbeddedObject&);
 
     WEBCORE_EXPORT void paintContents(GraphicsContext&, const IntRect& dirtyRect, SecurityOriginPaintPolicy = SecurityOriginPaintPolicy::AnyOrigin, EventRegionContext* = nullptr) final;
 
@@ -678,8 +674,6 @@ public:
 
     WEBCORE_EXPORT void scrollToPositionWithAnimation(const ScrollPosition&, ScrollType = ScrollType::Programmatic, ScrollClamping = ScrollClamping::Clamped);
 
-    bool inUpdateEmbeddedObjects() const { return m_inUpdateEmbeddedObjects; }
-
     String debugDescription() const final;
 
     // ScrollView
@@ -801,10 +795,6 @@ private:
     void enableSpeculativeTilingIfNeeded();
     void speculativeTilingEnableTimerFired();
 
-    void updateEmbeddedObjectsTimerFired();
-    bool updateEmbeddedObjects();
-    void updateEmbeddedObject(RenderEmbeddedObject&);
-
     void updateWidgetPositionsTimerFired();
 
     bool scrollToFragmentInternal(StringView);
@@ -865,7 +855,6 @@ private:
 #endif
 
     HashSet<Widget*> m_widgetsInRenderTree;
-    std::unique_ptr<ListHashSet<RenderEmbeddedObject*>> m_embeddedObjectsToUpdate;
     std::unique_ptr<WeakHashSet<RenderElement>> m_slowRepaintObjects;
 
     RefPtr<ContainerNode> m_maintainScrollPositionAnchor;
@@ -874,7 +863,6 @@ private:
     // Renderer to hold our custom scroll corner.
     RenderPtr<RenderScrollbarPart> m_scrollCorner;
 
-    Timer m_updateEmbeddedObjectsTimer;
     Timer m_updateWidgetPositionsTimer;
     Timer m_delayedScrollEventTimer;
     Timer m_delayedScrollToFocusedElementTimer;
@@ -981,7 +969,6 @@ private:
     bool m_inAutoSize { false };
     // True if autosize has been run since m_shouldAutoSize was set.
     bool m_didRunAutosize { false };
-    bool m_inUpdateEmbeddedObjects { false };
 };
 
 inline void FrameView::incrementVisuallyNonEmptyPixelCount(const IntSize& size)

@@ -30,8 +30,6 @@ namespace WebCore {
 
 class Blob;
 class DeferredPromise;
-class DOMMimeTypeArray;
-class DOMPluginArray;
 class ShareDataReader;
 
 class Navigator final : public NavigatorBase, public ScriptWrappable, public DOMWindowProperty, public Supplementable<Navigator> {
@@ -41,10 +39,7 @@ public:
     virtual ~Navigator();
 
     String appVersion() const;
-    DOMPluginArray& plugins();
-    DOMMimeTypeArray& mimeTypes();
     bool cookieEnabled() const;
-    bool javaEnabled() const;
     const String& userAgent() const final;
     String platform() const final;
     void userAgentChanged();
@@ -68,12 +63,8 @@ private:
     void showShareData(ExceptionOr<ShareDataWithParsedURL&>, Ref<DeferredPromise>&&);
     explicit Navigator(ScriptExecutionContext*, DOMWindow&);
 
-    void initializePluginAndMimeTypeArrays();
-
     mutable RefPtr<ShareDataReader> m_loader;
     mutable bool m_hasPendingShare { false };
-    mutable RefPtr<DOMPluginArray> m_plugins;
-    mutable RefPtr<DOMMimeTypeArray> m_mimeTypes;
     mutable String m_userAgent;
     mutable String m_platform;
 };

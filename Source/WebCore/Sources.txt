@@ -471,7 +471,6 @@ bindings/js/JSPaintRenderingContext2DCustom.cpp
 bindings/js/JSPaintWorkletGlobalScopeCustom.cpp
 bindings/js/JSPerformanceEntryCustom.cpp
 bindings/js/JSPerformanceObserverCustom.cpp
-bindings/js/JSPluginElementFunctions.cpp
 bindings/js/JSPopStateEventCustom.cpp
 bindings/js/JSPromiseRejectionEventCustom.cpp
 bindings/js/JSRTCRtpSFrameTransformCustom.cpp
@@ -1061,7 +1060,6 @@ html/HTMLDirectoryElement.cpp
 html/HTMLDivElement.cpp
 html/HTMLDocument.cpp
 html/HTMLElement.cpp
-html/HTMLEmbedElement.cpp
 html/HTMLFieldSetElement.cpp
 html/HTMLFontElement.cpp
 html/HTMLFormControlElement.cpp
@@ -1095,7 +1093,6 @@ html/HTMLMeterElement.cpp
 html/HTMLModElement.cpp
 html/HTMLNameCollection.cpp
 html/HTMLOListElement.cpp
-html/HTMLObjectElement.cpp
 html/HTMLOptGroupElement.cpp
 html/HTMLOptionElement.cpp
 html/HTMLOptionsCollection.cpp
@@ -1103,8 +1100,6 @@ html/HTMLOutputElement.cpp
 html/HTMLParagraphElement.cpp
 html/HTMLParamElement.cpp
 html/HTMLPictureElement.cpp
-html/HTMLPlugInElement.cpp
-html/HTMLPlugInImageElement.cpp
 html/HTMLPreElement.cpp
 html/HTMLProgressElement.cpp
 html/HTMLQuoteElement.cpp
@@ -1156,7 +1151,6 @@ html/MonthInputType.cpp
 html/NumberInputType.cpp
 html/OffscreenCanvas.cpp
 html/PasswordInputType.cpp
-html/PluginDocument.cpp
 html/PublicURLManager.cpp
 html/RadioInputType.cpp
 html/RadioNodeList.cpp
@@ -1472,7 +1466,6 @@ loader/MediaResourceLoader.cpp
 loader/MixedContentChecker.cpp
 loader/NavigationAction.cpp
 loader/NavigationScheduler.cpp
-loader/NetscapePlugInStreamLoader.cpp
 loader/PingLoader.cpp
 loader/PolicyChecker.cpp
 loader/ProgressTracker.cpp
@@ -2072,12 +2065,6 @@ platform/text/TextCodecUserDefined.cpp
 platform/text/TextEncoding.cpp
 platform/text/TextEncodingDetectorICU.cpp
 platform/text/TextEncodingRegistry.cpp
-plugins/DOMMimeType.cpp
-plugins/DOMMimeTypeArray.cpp
-plugins/DOMPlugin.cpp
-plugins/DOMPluginArray.cpp
-plugins/PluginData.cpp
-plugins/PluginInfoProvider.cpp
 rendering/AutoTableLayout.cpp
 rendering/BidiRun.cpp
 rendering/BorderEdge.cpp
@@ -2126,7 +2113,6 @@ rendering/RenderCounter.cpp
 rendering/RenderDeprecatedFlexibleBox.cpp
 rendering/RenderDetailsMarker.cpp
 rendering/RenderElement.cpp
-rendering/RenderEmbeddedObject.cpp
 rendering/RenderFileUploadControl.cpp
 rendering/RenderFlexibleBox.cpp
 rendering/RenderFragmentContainer.cpp
@@ -2624,7 +2610,6 @@ JSHTMLElementWrapperFactory.cpp
 JSMathMLElementWrapperFactory.cpp
 JSSVGElementWrapperFactory.cpp
 MathMLElementFactory.cpp
-PlugInsResourcesData.cpp
 SVGElementFactory.cpp
 StyleBuilderGenerated.cpp
 StylePropertyShorthandFunctions.cpp
@@ -2813,11 +2798,7 @@ JSDOMMatrix.cpp
 JSDOMMatrix2DInit.cpp
 JSDOMMatrixInit.cpp
 JSDOMMatrixReadOnly.cpp
-JSDOMMimeType.cpp
-JSDOMMimeTypeArray.cpp
 JSDOMParser.cpp
-JSDOMPlugin.cpp
-JSDOMPluginArray.cpp
 JSDOMPoint.cpp
 JSDOMPointInit.cpp
 JSDOMPointReadOnly.cpp
@@ -2939,7 +2920,6 @@ JSHTMLDirectoryElement.cpp
 JSHTMLDivElement.cpp
 JSHTMLDocument.cpp
 JSHTMLElement.cpp
-JSHTMLEmbedElement.cpp
 JSHTMLFieldSetElement.cpp
 JSHTMLFontElement.cpp
 JSHTMLFormControlsCollection.cpp
@@ -2969,7 +2949,6 @@ JSHTMLMeterElement.cpp
 JSHTMLModElement.cpp
 JSHTMLModelElement.cpp
 JSHTMLOListElement.cpp
-JSHTMLObjectElement.cpp
 JSHTMLOptGroupElement.cpp
 JSHTMLOptionElement.cpp
 JSHTMLOptionsCollection.cpp

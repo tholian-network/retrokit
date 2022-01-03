@@ -31,7 +31,6 @@
 
 namespace WebKit {
 
-class PluginView;
 class WebFrame;
 struct WebsitePoliciesData;
     
@@ -152,9 +151,6 @@ private:
     void willReplaceMultipartContent() final;
     void didReplaceMultipartContent() final;
 
-    void committedLoad(WebCore::DocumentLoader*, const uint8_t*, int) final;
-    void finishedLoading(WebCore::DocumentLoader*) final;
-    
     void updateGlobalHistory() final;
     void updateGlobalHistoryRedirectLinks() final;
     
@@ -215,9 +211,6 @@ private:
 
     RefPtr<WebCore::Frame> createFrame(const String& name, WebCore::HTMLFrameOwnerElement&) final;
 
-    RefPtr<WebCore::Widget> createPlugin(const WebCore::IntSize&, WebCore::HTMLPlugInElement&, const URL&, const Vector<String>&, const Vector<String>&, const String&, bool loadManually) final;
-    void redirectDataToPlugin(WebCore::Widget&) final;
-    
 #if ENABLE(WEBGL)
     WebCore::WebGLLoadPolicy webGLPolicyForURL(const URL&) const final;
     WebCore::WebGLLoadPolicy resolveWebGLPolicyForURL(const URL&) const final;
@@ -275,8 +268,6 @@ private:
 #endif
 
     Ref<WebFrame> m_frame;
-    RefPtr<PluginView> m_pluginView;
-    bool m_hasSentResponseToPluginView { false };
     bool m_didCompletePageTransition { false };
     bool m_frameHasCustomContentProvider { false };
     bool m_frameCameFromBackForwardCache { false };
@@ -288,10 +279,6 @@ private:
 #if ENABLE(APP_BOUND_DOMAINS)
     bool shouldEnableInAppBrowserPrivacyProtections() const final;
     void notifyPageOfAppBoundBehavior() final;
-#endif
-
-#if ENABLE(PDFKIT_PLUGIN)
-    bool shouldUsePDFPlugin(const String& contentType, StringView path) const final;
 #endif
 
     bool isParentProcessAFullWebBrowser() const final;

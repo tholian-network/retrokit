@@ -208,7 +208,6 @@ public:
     virtual bool isQuote() const { return false; }
 
     virtual bool isDetailsMarker() const { return false; }
-    virtual bool isEmbeddedObject() const { return false; }
     bool isFieldset() const;
     virtual bool isFileUploadControl() const { return false; }
     virtual bool isFrame() const { return false; }

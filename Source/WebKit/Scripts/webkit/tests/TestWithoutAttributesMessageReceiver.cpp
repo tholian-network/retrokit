@@ -39,7 +39,6 @@
 #if PLATFORM(MAC)
 #include "MachPort.h"
 #endif
-#include "Plugin.h"
 #include "TestWithoutAttributesMessages.h"
 #include "WebCoreArgumentCoders.h"
 #include "WebPreferencesStore.h"
@@ -50,7 +49,6 @@
 #if PLATFORM(MAC)
 #include <WebCore/KeyboardEvent.h>
 #endif
-#include <WebCore/PluginData.h>
 #include <utility>
 #include <wtf/HashMap.h>
 #if PLATFORM(MAC)
@@ -62,12 +60,6 @@
 namespace Messages {
 
 namespace TestWithoutAttributes {
-
-void GetPluginProcessConnection::send(UniqueRef<IPC::Encoder>&& encoder, IPC::Connection& connection, const IPC::Connection::Handle& connectionHandle)
-{
-    encoder.get() << connectionHandle;
-    connection.sendSyncReply(WTFMove(encoder));
-}
 
 void TestMultipleAttributes::send(UniqueRef<IPC::Encoder>&& encoder, IPC::Connection& connection)
 {
@@ -141,14 +133,8 @@ void TestWithoutAttributes::didReceiveMessage(IPC::Connection& connection, IPC::
 bool TestWithoutAttributes::didReceiveSyncMessage(IPC::Connection& connection, IPC::Decoder& decoder, UniqueRef<IPC::Encoder>& replyEncoder)
 {
     auto protectedThis = makeRef(*this);
-    if (decoder.messageName() == Messages::TestWithoutAttributes::CreatePlugin::name())
-        return IPC::handleMessage<Messages::TestWithoutAttributes::CreatePlugin>(decoder, *replyEncoder, this, &TestWithoutAttributes::createPlugin);
     if (decoder.messageName() == Messages::TestWithoutAttributes::RunJavaScriptAlert::name())
         return IPC::handleMessage<Messages::TestWithoutAttributes::RunJavaScriptAlert>(decoder, *replyEncoder, this, &TestWithoutAttributes::runJavaScriptAlert);
-    if (decoder.messageName() == Messages::TestWithoutAttributes::GetPlugins::name())
-        return IPC::handleMessage<Messages::TestWithoutAttributes::GetPlugins>(decoder, *replyEncoder, this, &TestWithoutAttributes::getPlugins);
-    if (decoder.messageName() == Messages::TestWithoutAttributes::GetPluginProcessConnection::name())
-        return IPC::handleMessageSynchronous<Messages::TestWithoutAttributes::GetPluginProcessConnection>(connection, decoder, replyEncoder, this, &TestWithoutAttributes::getPluginProcessConnection);
     if (decoder.messageName() == Messages::TestWithoutAttributes::TestMultipleAttributes::name())
         return IPC::handleMessageSynchronousWantsConnection<Messages::TestWithoutAttributes::TestMultipleAttributes>(connection, decoder, replyEncoder, this, &TestWithoutAttributes::testMultipleAttributes);
 #if PLATFORM(MAC)

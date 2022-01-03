@@ -45,7 +45,6 @@
 #include "HTMLMediaElement.h"
 #include "HTMLModelElement.h"
 #include "HTMLNames.h"
-#include "HTMLPlugInElement.h"
 #include "InspectorInstrumentation.h"
 #include "KeyframeList.h"
 #include "LayerAncestorClippingStack.h"
@@ -54,9 +53,7 @@
 #include "NullGraphicsContext.h"
 #include "Page.h"
 #include "PerformanceLoggingClient.h"
-#include "PluginViewBase.h"
 #include "ProgressTracker.h"
-#include "RenderEmbeddedObject.h"
 #include "RenderFragmentContainer.h"
 #include "RenderFragmentedFlow.h"
 #include "RenderHTMLCanvas.h"
@@ -551,15 +548,6 @@ void RenderLayerBacking::createPrimaryGraphicsLayer()
 }
 
 #if PLATFORM(IOS_FAMILY)
-void RenderLayerBacking::layerWillBeDestroyed()
-{
-    auto& renderer = this->renderer();
-    if (is<RenderEmbeddedObject>(renderer) && downcast<RenderEmbeddedObject>(renderer).allowsAcceleratedCompositing()) {
-        auto* pluginViewBase = downcast<PluginViewBase>(downcast<RenderWidget>(renderer).widget());
-        if (pluginViewBase && m_graphicsLayer->contentsLayerForMedia())
-            pluginViewBase->detachPluginLayer();
-    }
-}
 
 bool RenderLayerBacking::needsIOSDumpRenderTreeMainFrameRenderViewLayerIsAlwaysOpaqueHack(const GraphicsLayer& layer) const
 {
@@ -1041,18 +1029,6 @@ bool RenderLayerBacking::updateConfiguration(const RenderLayer* compositingAnces
     if (contentsInfo.isDirectlyCompositedImage())
         updateImageContents(contentsInfo);
 
-    if (is<RenderEmbeddedObject>(renderer()) && downcast<RenderEmbeddedObject>(renderer()).allowsAcceleratedCompositing()) {
-        auto* pluginViewBase = downcast<PluginViewBase>(downcast<RenderWidget>(renderer()).widget());
-#if PLATFORM(IOS_FAMILY)
-        if (pluginViewBase && !m_graphicsLayer->contentsLayerForMedia()) {
-            pluginViewBase->detachPluginLayer();
-            pluginViewBase->attachPluginLayer();
-        }
-#else
-        if (!pluginViewBase->shouldNotAddLayer())
-            m_graphicsLayer->setContentsToPlatformLayer(pluginViewBase->platformLayer(), GraphicsLayer::ContentsLayerPurpose::Plugin);
-#endif
-    }
 #if ENABLE(VIDEO)
     else if (is<RenderVideo>(renderer()) && downcast<RenderVideo>(renderer()).shouldDisplayVideo()) {
         auto* mediaElement = downcast<HTMLMediaElement>(renderer().element());
@@ -2681,11 +2657,6 @@ bool RenderLayerBacking::paintsContent(RenderLayer::PaintedContentRequest& reque
     return paintsContent;
 }
 
-static bool isCompositedPlugin(RenderObject& renderer)
-{
-    return is<RenderEmbeddedObject>(renderer) && downcast<RenderEmbeddedObject>(renderer).allowsAcceleratedCompositing();
-}
-
 // A "simple container layer" is a RenderLayer which has no visible content to render.
 // It may have no children, or all its children may be themselves composited.
 // This is a useful optimization, because it allows us to avoid allocating backing store.
@@ -2697,7 +2668,7 @@ bool RenderLayerBacking::isSimpleContainerCompositingLayer(PaintedContentsInfo& 
     if (hasBackingSharingLayers())
         return false;
 
-    if (renderer().isRenderReplaced() && !isCompositedPlugin(renderer()))
+    if (renderer().isRenderReplaced())
         return false;
 
     if (renderer().isTextControl())
@@ -2708,7 +2679,7 @@ bool RenderLayerBacking::isSimpleContainerCompositingLayer(PaintedContentsInfo& 
 
     if (renderer().style().backgroundClip() == FillBox::Text)
         return false;
-    
+
     if (renderer().isDocumentElementRenderer() && m_owningLayer.isolatesCompositedBlending())
         return false;
 

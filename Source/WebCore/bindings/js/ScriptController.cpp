@@ -31,7 +31,6 @@
 #include "Frame.h"
 #include "FrameLoader.h"
 #include "FrameLoaderClient.h"
-#include "HTMLPlugInElement.h"
 #include "InspectorInstrumentation.h"
 #include "JSDOMBindingSecurity.h"
 #include "JSDOMExceptionHandling.h"
@@ -42,11 +41,9 @@
 #include "Logging.h"
 #include "ModuleFetchFailureKind.h"
 #include "ModuleFetchParameters.h"
-#include "NP_jsobject.h"
 #include "Page.h"
 #include "PageConsoleClient.h"
 #include "PageGroup.h"
-#include "PluginViewBase.h"
 #include "RunJavaScriptParameters.h"
 #include "RuntimeApplicationChecks.h"
 #include "RuntimeEnabledFeatures.h"
@@ -95,9 +92,6 @@ ScriptController::ScriptController(Frame& frame)
     : m_frame(frame)
     , m_sourceURL(0)
     , m_paused(false)
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    , m_windowScriptNPObject(0)
-#endif
 #if PLATFORM(COCOA)
     , m_windowScriptObject(0)
 #endif
@@ -469,57 +463,6 @@ void ScriptController::collectIsolatedContexts(Vector<std::pair<JSC::JSGlobalObj
     }
 }
 
-#if ENABLE(NETSCAPE_PLUGIN_API)
-NPObject* ScriptController::windowScriptNPObject()
-{
-    if (!m_windowScriptNPObject) {
-        JSLockHolder lock(commonVM());
-        if (canExecuteScripts(NotAboutToExecuteScript)) {
-            // JavaScript is enabled, so there is a JavaScript window object.
-            // Return an NPObject bound to the window object.
-            auto* window = jsWindowProxy(pluginWorld()).window();
-            ASSERT(window);
-            Bindings::RootObject* root = bindingRootObject();
-            m_windowScriptNPObject = _NPN_CreateScriptObject(0, window, root);
-        } else {
-            // JavaScript is not enabled, so we cannot bind the NPObject to the JavaScript window object.
-            // Instead, we create an NPObject of a different class, one which is not bound to a JavaScript object.
-            m_windowScriptNPObject = _NPN_CreateNoScriptObject();
-        }
-    }
-
-    return m_windowScriptNPObject;
-}
-#endif
-
-#if !PLATFORM(COCOA)
-RefPtr<JSC::Bindings::Instance> ScriptController::createScriptInstanceForWidget(Widget* widget)
-{
-    if (!is<PluginViewBase>(*widget))
-        return nullptr;
-
-    return downcast<PluginViewBase>(*widget).bindingInstance();
-}
-#endif
-
-JSObject* ScriptController::jsObjectForPluginElement(HTMLPlugInElement* plugin)
-{
-    // Can't create JSObjects when JavaScript is disabled
-    if (!canExecuteScripts(NotAboutToExecuteScript))
-        return nullptr;
-
-    JSLockHolder lock(commonVM());
-
-    // Create a JSObject bound to this element
-    auto* globalObj = globalObject(pluginWorld());
-    // FIXME: is normal okay? - used for NP plugins?
-    JSValue jsElementValue = toJS(globalObj, globalObj, plugin);
-    if (!jsElementValue || !jsElementValue.isObject())
-        return nullptr;
-    
-    return jsElementValue.getObject();
-}
-
 #if !PLATFORM(COCOA)
 
 void ScriptController::updatePlatformScriptObjects()
@@ -556,15 +499,6 @@ void ScriptController::clearScriptObjects()
         m_bindingRootObject = nullptr;
     }
 
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    if (m_windowScriptNPObject) {
-        // Call _NPN_DeallocateObject() instead of _NPN_ReleaseObject() so that we don't leak if a plugin fails to release the window
-        // script object properly.
-        // This shouldn't cause any problems for plugins since they should have already been stopped and destroyed at this point.
-        _NPN_DeallocateObject(m_windowScriptNPObject);
-        m_windowScriptNPObject = nullptr;
-    }
-#endif
 }
 
 JSC::JSValue ScriptController::executeScriptIgnoringException(const String& script, bool forceUserGesture)

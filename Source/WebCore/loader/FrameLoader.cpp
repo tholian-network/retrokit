@@ -76,7 +76,6 @@
 #include "HTMLFormElement.h"
 #include "HTMLInputElement.h"
 #include "HTMLNames.h"
-#include "HTMLObjectElement.h"
 #include "HTMLParserIdioms.h"
 #include "HTTPHeaderNames.h"
 #include "HTTPHeaderValues.h"
@@ -99,8 +98,6 @@
 #include "Performance.h"
 #include "PerformanceLogging.h"
 #include "PlatformStrategies.h"
-#include "PluginData.h"
-#include "PluginDocument.h"
 #include "PolicyChecker.h"
 #include "ProgressTracker.h"
 #include "ResourceHandle.h"
@@ -3169,21 +3166,16 @@ void FrameLoader::receivedMainResourceError(const ResourceError& error)
     // FIXME: Don't want to do this if an entirely new load is going, so should check
     // that both data sources on the frame are either this or nil.
     stop();
-    if (m_client->shouldFallBack(error)) {
-        HTMLFrameOwnerElement* owner = m_frame.ownerElement();
-        if (is<HTMLObjectElement>(owner))
-            downcast<HTMLObjectElement>(*owner).renderFallbackContent();
-    }
 
     if (m_state == FrameState::Provisional && m_provisionalDocumentLoader) {
         if (m_submittedFormURL == m_provisionalDocumentLoader->originalRequestCopy().url())
             m_submittedFormURL = URL();
-            
+
         // We might have made a back/forward cache item, but now we're bailing out due to an error before we ever
         // transitioned to the new page (before WebFrameState == commit).  The goal here is to restore any state
         // so that the existing view (that wenever got far enough to replace) can continue being used.
         history().invalidateCurrentItemCachedPage();
-        
+
         // Call clientRedirectCancelledOrFinished here so that the frame load delegate is notified that the redirect's
         // status has changed, if there was a redirect. The frame load delegate may have saved some state about
         // the redirect in its -webView:willPerformClientRedirectToURL:delay:fireDate:forFrame:. Since we are definitely

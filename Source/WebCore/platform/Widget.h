@@ -72,7 +72,6 @@ enum WidgetNotification { WillPaintFlattened, DidPaintFlattened };
 // The Widget class serves as a base class for three kinds of objects:
 // (1) Scrollable areas (ScrollView)
 // (2) Scrollbars (Scrollbar)
-// (3) Plugins (PluginView)
 //
 // A widget may or may not be backed by a platform-specific object (e.g., HWND on Windows, NSView on Mac, QWidget on Qt).
 //
@@ -129,9 +128,6 @@ public:
     void setIsSelected(bool);
 
     virtual bool isFrameView() const { return false; }
-    virtual bool isPluginView() const { return false; }
-    // FIXME: The Mac plug-in code should inherit from PluginView. When this happens PluginViewBase and PluginView can become one class.
-    virtual bool isPluginViewBase() const { return false; }
     virtual bool isScrollbar() const { return false; }
     virtual bool isScrollView() const { return false; }
 

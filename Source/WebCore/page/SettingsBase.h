@@ -121,7 +121,6 @@ protected:
     void setNeedsRelayoutAllFrames();
     void mediaTypeOverrideChanged();
     void imagesEnabledChanged();
-    void pluginsEnabledChanged();
     void userStyleSheetLocationChanged();
     void usesBackForwardCacheChanged();
     void dnsPrefetchingEnabledChanged();

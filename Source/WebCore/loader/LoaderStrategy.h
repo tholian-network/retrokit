@@ -40,8 +40,6 @@ class ContentSecurityPolicy;
 class Frame;
 class FrameLoader;
 class HTTPHeaderMap;
-class NetscapePlugInStreamLoader;
-class NetscapePlugInStreamLoaderClient;
 struct NetworkTransactionInformation;
 class NetworkLoadMetrics;
 class Page;

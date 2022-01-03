@@ -116,8 +116,6 @@ enum {
     PROP_ENABLE_HTML5_DATABASE,
     PROP_ENABLE_XSS_AUDITOR,
     PROP_ENABLE_FRAME_FLATTENING,
-    PROP_ENABLE_PLUGINS,
-    PROP_ENABLE_JAVA,
     PROP_JAVASCRIPT_CAN_OPEN_WINDOWS_AUTOMATICALLY,
     PROP_ENABLE_HYPERLINK_AUDITING,
     PROP_DEFAULT_FONT_FAMILY,
@@ -225,11 +223,6 @@ static void webKitSettingsSetProperty(GObject* object, guint propId, const GValu
         break;
     case PROP_ENABLE_FRAME_FLATTENING:
         webkit_settings_set_enable_frame_flattening(settings, g_value_get_boolean(value));
-        break;
-    case PROP_ENABLE_PLUGINS:
-        break;
-    case PROP_ENABLE_JAVA:
-        webkit_settings_set_enable_java(settings, g_value_get_boolean(value));
         break;
     case PROP_JAVASCRIPT_CAN_OPEN_WINDOWS_AUTOMATICALLY:
         webkit_settings_set_javascript_can_open_windows_automatically(settings, g_value_get_boolean(value));
@@ -424,12 +417,6 @@ static void webKitSettingsGetProperty(GObject* object, guint propId, GValue* val
         break;
     case PROP_ENABLE_FRAME_FLATTENING:
         g_value_set_boolean(value, webkit_settings_get_enable_frame_flattening(settings));
-        break;
-    case PROP_ENABLE_PLUGINS:
-        g_value_set_boolean(value, FALSE);
-        break;
-    case PROP_ENABLE_JAVA:
-        g_value_set_boolean(value, webkit_settings_get_enable_java(settings));
         break;
     case PROP_JAVASCRIPT_CAN_OPEN_WINDOWS_AUTOMATICALLY:
         g_value_set_boolean(value, webkit_settings_get_javascript_can_open_windows_automatically(settings));
@@ -718,34 +705,6 @@ static void webkit_settings_class_init(WebKitSettingsClass* klass)
             _("Enable frame flattening"),
             _("Whether to enable frame flattening."),
             FALSE,
-            readWriteConstructParamFlags);
-
-    /**
-     * WebKitSettings:enable-plugins:
-     *
-     * Determines whether or not plugins on the page are enabled.
-     *
-     * Deprecated: 2.32
-     */
-    sObjProperties[PROP_ENABLE_PLUGINS] =
-        g_param_spec_boolean(
-            "enable-plugins",
-            _("Enable plugins"),
-            _("Enable embedded plugin objects."),
-            FALSE,
-            readWriteConstructParamFlags);
-
-    /**
-     * WebKitSettings:enable-java:
-     *
-     * Determines whether or not Java is enabled on the page.
-     */
-    sObjProperties[PROP_ENABLE_JAVA] =
-        g_param_spec_boolean(
-            "enable-java",
-            _("Enable Java"),
-            _("Whether Java support should be enabled."),
-            TRUE,
             readWriteConstructParamFlags);
 
     /**
@@ -1847,77 +1806,6 @@ void webkit_settings_set_enable_frame_flattening(WebKitSettings* settings, gbool
 
     priv->preferences->setFrameFlatteningEnabled(enabled);
     g_object_notify_by_pspec(G_OBJECT(settings), sObjProperties[PROP_ENABLE_FRAME_FLATTENING]);
-}
-
-/**
- * webkit_settings_get_enable_plugins:
- * @settings: a #WebKitSettings
- *
- * Get the #WebKitSettings:enable-plugins property.
- *
- * Returns: %TRUE If plugins are enabled or %FALSE otherwise.
- *
- * Deprecated: 2.32
- */
-gboolean webkit_settings_get_enable_plugins(WebKitSettings* settings)
-{
-    g_return_val_if_fail(WEBKIT_IS_SETTINGS(settings), FALSE);
-
-    g_warning("webkit_settings_get_enable_plugins is deprecated and always returns FALSE. Plugins are no longer supported.");
-
-    return FALSE;
-}
-
-/**
- * webkit_settings_set_enable_plugins:
- * @settings: a #WebKitSettings
- * @enabled: Value to be set
- *
- * Set the #WebKitSettings:enable-plugins property.
- *
- * Deprecated: 2.32
- */
-void webkit_settings_set_enable_plugins(WebKitSettings* settings, gboolean enabled)
-{
-    g_return_if_fail(WEBKIT_IS_SETTINGS(settings));
-
-    if (enabled)
-        g_warning("webkit_settings_set_enable_plugins is deprecated and does nothing. Plugins are no longer supported.");
-}
-
-/**
- * webkit_settings_get_enable_java:
- * @settings: a #WebKitSettings
- *
- * Get the #WebKitSettings:enable-java property.
- *
- * Returns: %TRUE If Java is enabled or %FALSE otherwise.
- */
-gboolean webkit_settings_get_enable_java(WebKitSettings* settings)
-{
-    g_return_val_if_fail(WEBKIT_IS_SETTINGS(settings), FALSE);
-
-    return settings->priv->preferences->javaEnabled();
-}
-
-/**
- * webkit_settings_set_enable_java:
- * @settings: a #WebKitSettings
- * @enabled: Value to be set
- *
- * Set the #WebKitSettings:enable-java property.
- */
-void webkit_settings_set_enable_java(WebKitSettings* settings, gboolean enabled)
-{
-    g_return_if_fail(WEBKIT_IS_SETTINGS(settings));
-
-    WebKitSettingsPrivate* priv = settings->priv;
-    bool currentValue = priv->preferences->javaEnabled();
-    if (currentValue == enabled)
-        return;
-
-    priv->preferences->setJavaEnabled(enabled);
-    g_object_notify_by_pspec(G_OBJECT(settings), sObjProperties[PROP_ENABLE_JAVA]);
 }
 
 /**

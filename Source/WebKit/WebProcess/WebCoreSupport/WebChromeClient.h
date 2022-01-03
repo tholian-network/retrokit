@@ -132,9 +132,6 @@ private:
     void scrollContainingScrollViewsToRevealRect(const WebCore::IntRect&) const final; // Currently only Mac has a non empty implementation.
     void scrollMainFrameToRevealRect(const WebCore::IntRect&) const final;
 
-    bool shouldUnavailablePluginMessageBeButton(WebCore::RenderEmbeddedObject::PluginUnavailabilityReason) const final;
-    void unavailablePluginButtonClicked(WebCore::Element&, WebCore::RenderEmbeddedObject::PluginUnavailabilityReason) const final;
-
     void mouseDidMoveOverElement(const WebCore::HitTestResult&, unsigned modifierFlags, const String& toolTip, WebCore::TextDirection) final;
 
     void print(WebCore::Frame&, const WebCore::StringWithDirection&) final;
@@ -248,7 +245,6 @@ private:
         return static_cast<CompositingTriggerFlags>(
             ThreeDTransformTrigger |
             VideoTrigger |
-            PluginTrigger|
             CanvasTrigger |
 #if PLATFORM(COCOA) || USE(NICOSIA)
             ScrollableNonMainFrameTrigger |
@@ -303,17 +299,12 @@ private:
     void themeColorChanged() const final;
     void pageExtendedBackgroundColorDidChange() const final;
     void sampledPageTopColorChanged() const final;
-    
+
 #if ENABLE(APP_HIGHLIGHTS)
     WebCore::HighlightVisibility appHighlightsVisiblility() const final;
 #endif
-    
-    void wheelEventHandlersChanged(bool) final;
 
-    String plugInStartLabelTitle(const String& mimeType) const final;
-    String plugInStartLabelSubtitle(const String& mimeType) const final;
-    String plugInExtraStyleSheet() const final;
-    String plugInExtraScript() const final;
+    void wheelEventHandlersChanged(bool) final;
 
     void didAddHeaderLayer(WebCore::GraphicsLayer&) final;
     void didAddFooterLayer(WebCore::GraphicsLayer&) final;

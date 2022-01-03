@@ -125,7 +125,6 @@ enum {
     DOM_DOCUMENT_PROP_FORMS,
     DOM_DOCUMENT_PROP_ANCHORS,
     DOM_DOCUMENT_PROP_EMBEDS,
-    DOM_DOCUMENT_PROP_PLUGINS,
     DOM_DOCUMENT_PROP_SCRIPTS,
     DOM_DOCUMENT_PROP_LAST_MODIFIED,
     DOM_DOCUMENT_PROP_CHARSET,
@@ -267,9 +266,6 @@ static void webkit_dom_document_get_property(GObject* object, guint propertyId, 
         break;
     case DOM_DOCUMENT_PROP_EMBEDS:
         g_value_set_object(value, webkit_dom_document_get_embeds(self));
-        break;
-    case DOM_DOCUMENT_PROP_PLUGINS:
-        g_value_set_object(value, webkit_dom_document_get_plugins(self));
         break;
     case DOM_DOCUMENT_PROP_SCRIPTS:
         g_value_set_object(value, webkit_dom_document_get_scripts(self));
@@ -596,16 +592,6 @@ void webkitDOMDocumentInstallProperties(GObjectClass* gobjectClass)
             "embeds",
             "Document:embeds",
             "read-only WebKitDOMHTMLCollection* Document:embeds",
-            WEBKIT_DOM_TYPE_HTML_COLLECTION,
-            WEBKIT_PARAM_READABLE));
-
-    g_object_class_install_property(
-        gobjectClass,
-        DOM_DOCUMENT_PROP_PLUGINS,
-        g_param_spec_object(
-            "plugins",
-            "Document:plugins",
-            "read-only WebKitDOMHTMLCollection* Document:plugins",
             WEBKIT_DOM_TYPE_HTML_COLLECTION,
             WEBKIT_PARAM_READABLE));
 
@@ -1621,15 +1607,6 @@ WebKitDOMHTMLCollection* webkit_dom_document_get_embeds(WebKitDOMDocument* self)
     g_return_val_if_fail(WEBKIT_DOM_IS_DOCUMENT(self), 0);
     WebCore::Document* item = WebKit::core(self);
     RefPtr<WebCore::HTMLCollection> gobjectResult = WTF::getPtr(item->embeds());
-    return WebKit::kit(gobjectResult.get());
-}
-
-WebKitDOMHTMLCollection* webkit_dom_document_get_plugins(WebKitDOMDocument* self)
-{
-    WebCore::JSMainThreadNullState state;
-    g_return_val_if_fail(WEBKIT_DOM_IS_DOCUMENT(self), 0);
-    WebCore::Document* item = WebKit::core(self);
-    RefPtr<WebCore::HTMLCollection> gobjectResult = WTF::getPtr(item->plugins());
     return WebKit::kit(gobjectResult.get());
 }
 

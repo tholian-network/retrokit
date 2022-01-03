@@ -38,7 +38,6 @@
 #include <WebCore/HTMLDirectoryElement.h>
 #include <WebCore/HTMLDivElement.h>
 #include <WebCore/HTMLElement.h>
-#include <WebCore/HTMLEmbedElement.h>
 #include <WebCore/HTMLFieldSetElement.h>
 #include <WebCore/HTMLFontElement.h>
 #include <WebCore/HTMLFormElement.h>
@@ -63,7 +62,6 @@
 #include <WebCore/HTMLModElement.h>
 #include <WebCore/HTMLNames.h>
 #include <WebCore/HTMLOListElement.h>
-#include <WebCore/HTMLObjectElement.h>
 #include <WebCore/HTMLOptGroupElement.h>
 #include <WebCore/HTMLOptionElement.h>
 #include <WebCore/HTMLParagraphElement.h>
@@ -94,7 +92,6 @@
 #include "WebKitDOMHTMLDirectoryElementPrivate.h"
 #include "WebKitDOMHTMLDivElementPrivate.h"
 #include "WebKitDOMHTMLElementPrivate.h"
-#include "WebKitDOMHTMLEmbedElementPrivate.h"
 #include "WebKitDOMHTMLFieldSetElementPrivate.h"
 #include "WebKitDOMHTMLFontElementPrivate.h"
 #include "WebKitDOMHTMLFormElementPrivate.h"
@@ -117,7 +114,6 @@
 #include "WebKitDOMHTMLMetaElementPrivate.h"
 #include "WebKitDOMHTMLModElementPrivate.h"
 #include "WebKitDOMHTMLOListElementPrivate.h"
-#include "WebKitDOMHTMLObjectElementPrivate.h"
 #include "WebKitDOMHTMLOptGroupElementPrivate.h"
 #include "WebKitDOMHTMLOptionElementPrivate.h"
 #include "WebKitDOMHTMLParagraphElementPrivate.h"
@@ -161,7 +157,6 @@ using namespace WebCore::HTMLNames;
     macro(dir, Directory) \
     macro(div, Div) \
     macro(dl, DList) \
-    macro(embed, Embed) \
     macro(fieldset, FieldSet) \
     macro(font, Font) \
     macro(form, Form) \
@@ -182,7 +177,6 @@ using namespace WebCore::HTMLNames;
     macro(marquee, Marquee) \
     macro(menu, Menu) \
     macro(meta, Meta) \
-    macro(object, Object) \
     macro(ol, OList) \
     macro(optgroup, OptGroup) \
     macro(option, Option) \

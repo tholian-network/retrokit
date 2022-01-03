@@ -65,7 +65,6 @@
 #include <WebCore/LengthBox.h>
 #include <WebCore/MediaSelectionOption.h>
 #include <WebCore/Pasteboard.h>
-#include <WebCore/PluginData.h>
 #include <WebCore/PromisedAttachmentInfo.h>
 #include <WebCore/ProtectionSpace.h>
 #include <WebCore/RectEdges.h>
@@ -889,45 +888,6 @@ std::optional<MimeClassInfo> ArgumentCoder<MimeClassInfo>::decode(Decoder& decod
     return mimeClassInfo;
 }
 
-
-void ArgumentCoder<PluginInfo>::encode(Encoder& encoder, const PluginInfo& pluginInfo)
-{
-    encoder << pluginInfo.name;
-    encoder << pluginInfo.file;
-    encoder << pluginInfo.desc;
-    encoder << pluginInfo.mimes;
-    encoder << pluginInfo.isApplicationPlugin;
-    encoder << pluginInfo.clientLoadPolicy;
-    encoder << pluginInfo.bundleIdentifier;
-#if PLATFORM(MAC)
-    encoder << pluginInfo.versionString;
-#endif
-}
-
-std::optional<WebCore::PluginInfo> ArgumentCoder<PluginInfo>::decode(Decoder& decoder)
-{
-    PluginInfo pluginInfo;
-    if (!decoder.decode(pluginInfo.name))
-        return std::nullopt;
-    if (!decoder.decode(pluginInfo.file))
-        return std::nullopt;
-    if (!decoder.decode(pluginInfo.desc))
-        return std::nullopt;
-    if (!decoder.decode(pluginInfo.mimes))
-        return std::nullopt;
-    if (!decoder.decode(pluginInfo.isApplicationPlugin))
-        return std::nullopt;
-    if (!decoder.decode(pluginInfo.clientLoadPolicy))
-        return std::nullopt;
-    if (!decoder.decode(pluginInfo.bundleIdentifier))
-        return std::nullopt;
-#if PLATFORM(MAC)
-    if (!decoder.decode(pluginInfo.versionString))
-        return std::nullopt;
-#endif
-
-    return pluginInfo;
-}
 
 void ArgumentCoder<AuthenticationChallenge>::encode(Encoder& encoder, const AuthenticationChallenge& challenge)
 {

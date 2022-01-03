@@ -36,7 +36,6 @@
 #include "FrameLoader.h"
 #include "FrameLoaderClient.h"
 #include "HTMLBodyElement.h"
-#include "HTMLEmbedElement.h"
 #include "HTMLHeadElement.h"
 #include "HTMLHtmlElement.h"
 #include "HTMLMetaElement.h"
@@ -60,7 +59,6 @@ WTF_MAKE_ISO_ALLOCATED_IMPL(MediaDocument);
 
 using namespace HTMLNames;
 
-// FIXME: Share more code with PluginDocumentParser.
 class MediaDocumentParser final : public RawDataDocumentParser {
 public:
     static Ref<MediaDocumentParser> create(MediaDocument& document)
@@ -211,32 +209,6 @@ void MediaDocument::defaultEventHandler(Event& event)
                 video->pause();
             keyboardEvent.setDefaultHandled();
         }
-    }
-}
-
-void MediaDocument::replaceMediaElementTimerFired()
-{
-    auto htmlBody = makeRefPtr(bodyOrFrameset());
-    if (!htmlBody)
-        return;
-
-    // Set body margin width and height to 0 as that is what a PluginDocument uses.
-    htmlBody->setAttributeWithoutSynchronization(marginwidthAttr, AtomString("0", AtomString::ConstructFromLiteral));
-    htmlBody->setAttributeWithoutSynchronization(marginheightAttr, AtomString("0", AtomString::ConstructFromLiteral));
-
-    if (auto videoElement = makeRefPtr(descendantVideoElement(*htmlBody))) {
-        auto embedElement = HTMLEmbedElement::create(*this);
-
-        embedElement->setAttributeWithoutSynchronization(widthAttr, AtomString("100%", AtomString::ConstructFromLiteral));
-        embedElement->setAttributeWithoutSynchronization(heightAttr, AtomString("100%", AtomString::ConstructFromLiteral));
-        embedElement->setAttributeWithoutSynchronization(nameAttr, AtomString("plugin", AtomString::ConstructFromLiteral));
-        embedElement->setAttributeWithoutSynchronization(srcAttr, url().string());
-
-        ASSERT(loader());
-        if (auto loader = makeRefPtr(this->loader()))
-            embedElement->setAttributeWithoutSynchronization(typeAttr, loader->writer().mimeType());
-
-        videoElement->parentNode()->replaceChild(embedElement, *videoElement);
     }
 }
 

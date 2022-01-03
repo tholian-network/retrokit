@@ -66,7 +66,7 @@ public:
     void hideFindUI();
     void countStringMatches(const String&, OptionSet<FindOptions>, unsigned maxMatchCount);
     uint32_t replaceMatches(const Vector<uint32_t>& matchIndices, const String& replacementText, bool selectionOnly);
-    
+
     void hideFindIndicator();
     void resetMatchIndex();
     void showFindIndicatorInSelection();
@@ -95,7 +95,7 @@ private:
     void didFindString();
     void didFailToFindString();
     void didHideFindIndicator();
-    
+
     unsigned findIndicatorRadius() const;
     bool shouldHideFindIndicatorOnScroll() const;
     void didScrollAffectingFindIndicatorPosition();

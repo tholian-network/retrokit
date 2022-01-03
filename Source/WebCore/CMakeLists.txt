@@ -46,7 +46,6 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${WEBCORE_DIR}/Modules/notifications"
     "${WEBCORE_DIR}/Modules/permissions"
     "${WEBCORE_DIR}/Modules/pictureinpicture"
-    "${WEBCORE_DIR}/Modules/plugins"
     "${WEBCORE_DIR}/Modules/remoteplayback"
     "${WEBCORE_DIR}/Modules/speech"
     "${WEBCORE_DIR}/Modules/streams"
@@ -142,7 +141,6 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${WEBCORE_DIR}/platform/sql"
     "${WEBCORE_DIR}/platform/text"
     "${WEBCORE_DIR}/platform/xr"
-    "${WEBCORE_DIR}/plugins"
     "${WEBCORE_DIR}/rendering"
     "${WEBCORE_DIR}/rendering/line"
     "${WEBCORE_DIR}/rendering/mathml"
@@ -175,7 +173,6 @@ set(WebCore_IDL_INCLUDES
     html
     inspector
     page
-    plugins
     storage
     svg
     workers
@@ -854,7 +851,6 @@ set(WebCore_NON_SVG_IDL_FILES
     html/HTMLDocument.idl
     html/HTMLElement+CSSOMView.idl
     html/HTMLElement.idl
-    html/HTMLEmbedElement.idl
     html/HTMLFieldSetElement.idl
     html/HTMLFontElement.idl
     html/HTMLFormControlsCollection.idl
@@ -885,7 +881,6 @@ set(WebCore_NON_SVG_IDL_FILES
     html/HTMLMeterElement.idl
     html/HTMLModElement.idl
     html/HTMLOListElement.idl
-    html/HTMLObjectElement.idl
     html/HTMLOptGroupElement.idl
     html/HTMLOptionElement.idl
     html/HTMLOptionsCollection.idl
@@ -1013,7 +1008,6 @@ set(WebCore_NON_SVG_IDL_FILES
     page/NavigatorID.idl
     page/NavigatorLanguage.idl
     page/NavigatorOnLine.idl
-    page/NavigatorPlugins.idl
     page/NavigatorServiceWorker.idl
     page/NavigatorShare.idl
     page/Performance+NavigationTiming.idl
@@ -1058,11 +1052,6 @@ set(WebCore_NON_SVG_IDL_FILES
     page/WindowOrWorkerGlobalScope.idl
     page/WindowSessionStorage.idl
     page/WorkerNavigator.idl
-
-    plugins/DOMMimeType.idl
-    plugins/DOMMimeTypeArray.idl
-    plugins/DOMPlugin.idl
-    plugins/DOMPluginArray.idl
 
     storage/Storage.idl
     storage/StorageEvent.idl
@@ -1273,15 +1262,10 @@ set(WebCore_USER_AGENT_STYLE_SHEETS
     ${WEBCORE_DIR}/css/html.css
     ${WEBCORE_DIR}/css/mathml.css
     ${WEBCORE_DIR}/css/mediaControls.css
-    ${WEBCORE_DIR}/css/plugIns.css
     ${WEBCORE_DIR}/css/quirks.css
     ${WEBCORE_DIR}/css/svg.css
     ${WEBCORE_DIR}/html/shadow/imageOverlay.css
     ${WEBCORE_DIR}/html/shadow/meterElementShadow.css
-)
-
-set(WebCore_PLUG_INS_RESOURCES
-    ${WEBCORE_DIR}/Resources/plugIns.js
 )
 
 set(WebCore_LIBRARIES
@@ -1828,15 +1812,7 @@ if (WebCore_USER_AGENT_SCRIPTS)
     list(APPEND WebCore_SOURCES ${WebCore_DERIVED_SOURCES_DIR}/UserAgentScriptsData.cpp)
 endif ()
 
-# Generate plug-in resources
-add_custom_command(
-    OUTPUT ${WebCore_DERIVED_SOURCES_DIR}/PlugInsResourcesData.cpp ${WebCore_DERIVED_SOURCES_DIR}/PlugInsResources.h
-    MAIN_DEPENDENCY ${WEBCORE_DIR}/css/make-css-file-arrays.pl
-    DEPENDS ${WebCore_PLUG_INS_RESOURCES} ${WEBCORE_DIR}/bindings/scripts/preprocessor.pm
-    COMMAND ${PERL_EXECUTABLE} ${WEBCORE_DIR}/css/make-css-file-arrays.pl --defines "${FEATURE_DEFINES_WITH_SPACE_SEPARATOR}" --preprocessor "${CODE_GENERATOR_PREPROCESSOR}" ${WebCore_DERIVED_SOURCES_DIR}/PlugInsResources.h ${WebCore_DERIVED_SOURCES_DIR}/PlugInsResourcesData.cpp ${WebCore_PLUG_INS_RESOURCES}
-    VERBATIM)
-list(APPEND WebCore_SOURCES ${WebCore_DERIVED_SOURCES_DIR}/PlugInsResourcesData.cpp)
-ADD_SOURCE_WEBCORE_DERIVED_DEPENDENCIES(${WEBCORE_DIR}/css/StyleResolver.cpp PlugInsResourcesData.cpp PlugInsResources.h)
+ADD_SOURCE_WEBCORE_DERIVED_DEPENDENCIES(${WEBCORE_DIR}/css/StyleResolver.cpp)
 
 set(FEATURE_DEFINES_JAVASCRIPT "LANGUAGE_JAVASCRIPT ${FEATURE_DEFINES_WITH_SPACE_SEPARATOR}")
 

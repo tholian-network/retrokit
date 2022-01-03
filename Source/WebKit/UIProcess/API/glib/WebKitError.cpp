@@ -45,11 +45,6 @@ GQuark webkit_policy_error_quark()
     return g_quark_from_static_string(reinterpret_cast<const char*>(API::Error::webKitPolicyErrorDomain().characters8()));
 }
 
-GQuark webkit_plugin_error_quark()
-{
-    return g_quark_from_static_string(reinterpret_cast<const char*>(API::Error::webKitPluginErrorDomain().characters8()));
-}
-
 GQuark webkit_download_error_quark()
 {
     return g_quark_from_static_string(reinterpret_cast<const char*>(API::Error::webKitDownloadErrorDomain().characters8()));

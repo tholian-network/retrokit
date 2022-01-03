@@ -47,7 +47,6 @@
 #include "NodeList.h"
 #include "Page.h"
 #include "PageOverlayController.h"
-#include "RenderEmbeddedObject.h"
 #include "RenderFragmentedFlow.h"
 #include "RenderGeometryMap.h"
 #include "RenderIFrame.h"
@@ -3120,10 +3119,6 @@ bool RenderLayerCompositor::requiresCompositingForModel(RenderLayerModelObject& 
 bool RenderLayerCompositor::requiresCompositingForPlugin(RenderLayerModelObject& renderer, RequiresCompositingData& queryData) const
 {
     if (!(m_compositingTriggers & ChromeClient::PluginTrigger))
-        return false;
-
-    bool isCompositedPlugin = is<RenderEmbeddedObject>(renderer) && downcast<RenderEmbeddedObject>(renderer).allowsAcceleratedCompositing();
-    if (!isCompositedPlugin)
         return false;
 
     auto& pluginRenderer = downcast<RenderWidget>(renderer);

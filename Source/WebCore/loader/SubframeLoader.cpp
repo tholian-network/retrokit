@@ -42,14 +42,10 @@
 #include "HTMLFrameElement.h"
 #include "HTMLIFrameElement.h"
 #include "HTMLNames.h"
-#include "HTMLObjectElement.h"
 #include "MIMETypeRegistry.h"
 #include "MixedContentChecker.h"
 #include "NavigationScheduler.h"
 #include "Page.h"
-#include "PluginData.h"
-#include "PluginDocument.h"
-#include "RenderEmbeddedObject.h"
 #include "RenderView.h"
 #include "ScriptController.h"
 #include "SecurityOrigin.h"
@@ -68,7 +64,6 @@ FrameLoader::SubframeLoader::SubframeLoader(Frame& frame)
 
 void FrameLoader::SubframeLoader::clear()
 {
-    m_containsPlugins = false;
 }
 
 bool FrameLoader::SubframeLoader::requestFrame(HTMLFrameOwnerElement& ownerElement, const String& urlString, const AtomString& frameName, LockHistory lockHistory, LockBackForwardList lockBackForwardList)
@@ -108,134 +103,6 @@ bool FrameLoader::SubframeLoader::requestFrame(HTMLFrameOwnerElement& ownerEleme
     }
 
     return true;
-}
-    
-bool FrameLoader::SubframeLoader::resourceWillUsePlugin(const String& url, const String& mimeType)
-{
-    URL completedURL;
-    if (!url.isEmpty())
-        completedURL = completeURL(url);
-
-    bool useFallback;
-    return shouldUsePlugin(completedURL, mimeType, false, useFallback);
-}
-
-bool FrameLoader::SubframeLoader::pluginIsLoadable(const URL& url, const String& mimeType)
-{
-    auto* document = m_frame.document();
-
-    if (MIMETypeRegistry::isJavaAppletMIMEType(mimeType)) {
-        if (!m_frame.settings().isJavaEnabled())
-            return false;
-        if (document && document->securityOrigin().isLocal() && !m_frame.settings().isJavaEnabledForLocalFiles())
-            return false;
-    }
-
-    if (document) {
-        if (document->isSandboxed(SandboxPlugins))
-            return false;
-
-        if (!document->securityOrigin().canDisplay(url)) {
-            FrameLoader::reportLocalLoadFailed(&m_frame, url.string());
-            return false;
-        }
-
-        if (!portAllowed(url)) {
-            FrameLoader::reportBlockedLoadFailed(m_frame, url);
-            return false;
-        }
-
-        if (!MixedContentChecker::canRunInsecureContent(m_frame, document->securityOrigin(), url))
-            return false;
-    }
-
-    return true;
-}
-
-static String findPluginMIMETypeFromURL(Page& page, const URL& url)
-{
-    auto lastPathComponent = url.lastPathComponent();
-    size_t dotIndex = lastPathComponent.reverseFind('.');
-    if (dotIndex == notFound)
-        return { };
-
-    auto extensionFromURL = lastPathComponent.substring(dotIndex + 1);
-
-    for (auto& type : page.pluginData().webVisibleMimeTypes()) {
-        for (auto& extension : type.extensions) {
-            if (equalIgnoringASCIICase(extensionFromURL, extension))
-                return type.type;
-        }
-    }
-
-    return { };
-}
-
-bool FrameLoader::SubframeLoader::requestPlugin(HTMLPlugInImageElement& ownerElement, const URL& url, const String& explicitMIMEType, const Vector<String>& paramNames, const Vector<String>& paramValues, bool useFallback)
-{
-    String mimeType = explicitMIMEType;
-    if (mimeType.isEmpty()) {
-        if (auto page = ownerElement.document().page())
-            mimeType = findPluginMIMETypeFromURL(*page, url);
-    }
-
-    // Application plug-ins are plug-ins implemented by the user agent, for example Qt plug-ins,
-    // as opposed to third-party code such as Flash. The user agent decides whether or not they are
-    // permitted, rather than WebKit.
-    if (!(m_frame.arePluginsEnabled() || MIMETypeRegistry::isApplicationPluginMIMEType(mimeType)))
-        return false;
-
-    if (!pluginIsLoadable(url, explicitMIMEType))
-        return false;
-
-    ASSERT(ownerElement.hasTagName(objectTag) || ownerElement.hasTagName(embedTag));
-    return loadPlugin(ownerElement, url, explicitMIMEType, paramNames, paramValues, useFallback);
-}
-
-static void logPluginRequest(Page* page, const String& mimeType, const URL& url)
-{
-    if (!page)
-        return;
-
-    String newMIMEType = mimeType;
-    if (!newMIMEType) {
-        // Try to figure out the MIME type from the URL extension.
-        newMIMEType = findPluginMIMETypeFromURL(*page, url);
-        if (!newMIMEType)
-            return;
-    }
-
-    String pluginFile = page->pluginData().pluginFileForWebVisibleMimeType(newMIMEType);
-    String description = !pluginFile ? newMIMEType : pluginFile;
-    page->sawPlugin(description);
-}
-
-bool FrameLoader::SubframeLoader::requestObject(HTMLPlugInImageElement& ownerElement, const String& url, const AtomString& frameName, const String& mimeType, const Vector<String>& paramNames, const Vector<String>& paramValues)
-{
-    if (url.isEmpty() && mimeType.isEmpty())
-        return false;
-
-    auto& document = ownerElement.document();
-
-    URL completedURL;
-    if (!url.isEmpty())
-        completedURL = completeURL(url);
-
-    document.contentSecurityPolicy()->upgradeInsecureRequestIfNeeded(completedURL, ContentSecurityPolicy::InsecureRequestType::Load);
-
-    bool hasFallbackContent = is<HTMLObjectElement>(ownerElement) && downcast<HTMLObjectElement>(ownerElement).hasFallbackContent();
-
-    bool useFallback;
-    if (shouldUsePlugin(completedURL, mimeType, hasFallbackContent, useFallback)) {
-        bool success = requestPlugin(ownerElement, completedURL, mimeType, paramNames, paramValues, useFallback);
-        logPluginRequest(document.page(), mimeType, completedURL);
-        return success;
-    }
-
-    // If the plug-in element already contains a subframe, loadOrRedirectSubframe will re-use it. Otherwise,
-    // it will create a new frame and set it as the RenderWidget's Widget, causing what was previously 
-    // in the widget to be torn down.
-    return loadOrRedirectSubframe(ownerElement, completedURL, frameName, LockHistory::Yes, LockBackForwardList::Yes);
 }
 
 Frame* FrameLoader::SubframeLoader::loadOrRedirectSubframe(HTMLFrameOwnerElement& ownerElement, const URL& requestURL, const AtomString& frameName, LockHistory lockHistory, LockBackForwardList lockBackForwardList)
@@ -334,61 +201,6 @@ RefPtr<Frame> FrameLoader::SubframeLoader::loadSubframe(HTMLFrameOwnerElement& o
         return nullptr;
 
     return frame;
-}
-
-bool FrameLoader::SubframeLoader::shouldUsePlugin(const URL& url, const String& mimeType, bool hasFallback, bool& useFallback)
-{
-    if (m_frame.loader().client().shouldAlwaysUsePluginDocument(mimeType)) {
-        useFallback = false;
-        return true;
-    }
-
-    ObjectContentType objectType = m_frame.loader().client().objectContentType(url, mimeType);
-    // If an object's content can't be handled and it has no fallback, let
-    // it be handled as a plugin to show the broken plugin icon.
-    useFallback = objectType == ObjectContentType::None && hasFallback;
-
-    return objectType == ObjectContentType::None || objectType == ObjectContentType::PlugIn;
-}
-
-bool FrameLoader::SubframeLoader::loadPlugin(HTMLPlugInImageElement& pluginElement, const URL& url, const String& mimeType, const Vector<String>& paramNames, const Vector<String>& paramValues, bool useFallback)
-{
-    if (useFallback)
-        return false;
-
-    auto& document = pluginElement.document();
-    auto* renderer = pluginElement.renderEmbeddedObject();
-
-    // FIXME: This code should not depend on renderer!
-    if (!renderer)
-        return false;
-
-    IntSize contentSize = roundedIntSize(LayoutSize(renderer->contentWidth(), renderer->contentHeight()));
-    bool loadManually = is<PluginDocument>(document) && !m_containsPlugins && downcast<PluginDocument>(document).shouldLoadPluginManually();
-
-#if PLATFORM(IOS_FAMILY)
-    // On iOS, we only tell the plugin to be in full page mode if the containing plugin document is the top level document.
-    if (document.ownerElement())
-        loadManually = false;
-#endif
-
-    auto weakRenderer = makeWeakPtr(*renderer);
-
-    auto widget = m_frame.loader().client().createPlugin(contentSize, pluginElement, url, paramNames, paramValues, mimeType, loadManually);
-
-    // The call to createPlugin *may* cause this renderer to disappear from underneath.
-    if (!weakRenderer)
-        return false;
-
-    if (!widget) {
-        if (!renderer->isPluginUnavailable())
-            renderer->setPluginUnavailabilityReason(RenderEmbeddedObject::PluginMissing);
-        return false;
-    }
-
-    renderer->setWidget(WTFMove(widget));
-    m_containsPlugins = true;
-    return true;
 }
 
 URL FrameLoader::SubframeLoader::completeURL(const String& url) const

@@ -917,11 +917,6 @@ WI.NativePrototypeFunctionParameters = {
         __proto__: null,
     },
 
-    HTMLObjectElement: {
-        setCustomValidity: "error",
-        __proto__: null,
-    },
-
     HTMLOptionsCollection: {
         add: "element, [before]",
         namedItem: "[name]",
@@ -1249,11 +1244,6 @@ WI.NativePrototypeFunctionParameters = {
 
     PositionErrorCallback: {
         handleEvent: "error",
-        __proto__: null,
-    },
-
-    QuickTimePluginReplacement: {
-        postEvent: "eventName",
         __proto__: null,
     },
 

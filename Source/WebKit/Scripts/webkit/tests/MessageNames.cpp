@@ -44,8 +44,6 @@ const char* description(MessageName name)
         return "TestWithLegacyReceiver_AddEvent";
     case MessageName::TestWithLegacyReceiver_Close:
         return "TestWithLegacyReceiver_Close";
-    case MessageName::TestWithLegacyReceiver_CreatePlugin:
-        return "TestWithLegacyReceiver_CreatePlugin";
     case MessageName::TestWithLegacyReceiver_DeprecatedOperation:
         return "TestWithLegacyReceiver_DeprecatedOperation";
     case MessageName::TestWithLegacyReceiver_DidCreateWebProcessConnection:
@@ -54,8 +52,6 @@ const char* description(MessageName name)
         return "TestWithLegacyReceiver_DidReceivePolicyDecision";
     case MessageName::TestWithLegacyReceiver_ExperimentalOperation:
         return "TestWithLegacyReceiver_ExperimentalOperation";
-    case MessageName::TestWithLegacyReceiver_GetPlugins:
-        return "TestWithLegacyReceiver_GetPlugins";
     case MessageName::TestWithLegacyReceiver_InterpretKeyEvent:
         return "TestWithLegacyReceiver_InterpretKeyEvent";
     case MessageName::TestWithLegacyReceiver_LoadSomething:
@@ -110,8 +106,6 @@ const char* description(MessageName name)
         return "TestWithoutAttributes_AddEvent";
     case MessageName::TestWithoutAttributes_Close:
         return "TestWithoutAttributes_Close";
-    case MessageName::TestWithoutAttributes_CreatePlugin:
-        return "TestWithoutAttributes_CreatePlugin";
     case MessageName::TestWithoutAttributes_DeprecatedOperation:
         return "TestWithoutAttributes_DeprecatedOperation";
     case MessageName::TestWithoutAttributes_DidCreateWebProcessConnection:
@@ -120,8 +114,6 @@ const char* description(MessageName name)
         return "TestWithoutAttributes_DidReceivePolicyDecision";
     case MessageName::TestWithoutAttributes_ExperimentalOperation:
         return "TestWithoutAttributes_ExperimentalOperation";
-    case MessageName::TestWithoutAttributes_GetPlugins:
-        return "TestWithoutAttributes_GetPlugins";
     case MessageName::TestWithoutAttributes_InterpretKeyEvent:
         return "TestWithoutAttributes_InterpretKeyEvent";
     case MessageName::TestWithoutAttributes_LoadSomething:
@@ -164,16 +156,12 @@ const char* description(MessageName name)
         return "TestWithSuperclass_TestAsyncMessageWithMultipleArgumentsReply";
     case MessageName::TestWithSuperclass_TestAsyncMessageWithNoArgumentsReply:
         return "TestWithSuperclass_TestAsyncMessageWithNoArgumentsReply";
-    case MessageName::TestWithLegacyReceiver_GetPluginProcessConnection:
-        return "TestWithLegacyReceiver_GetPluginProcessConnection";
     case MessageName::TestWithLegacyReceiver_TestMultipleAttributes:
         return "TestWithLegacyReceiver_TestMultipleAttributes";
     case MessageName::TestWithSuperclass_TestSyncMessage:
         return "TestWithSuperclass_TestSyncMessage";
     case MessageName::TestWithSuperclass_TestSynchronousMessage:
         return "TestWithSuperclass_TestSynchronousMessage";
-    case MessageName::TestWithoutAttributes_GetPluginProcessConnection:
-        return "TestWithoutAttributes_GetPluginProcessConnection";
     case MessageName::TestWithoutAttributes_TestMultipleAttributes:
         return "TestWithoutAttributes_TestMultipleAttributes";
     case MessageName::WrappedAsyncMessageForTesting:
@@ -196,12 +184,10 @@ ReceiverName receiverName(MessageName messageName)
         return ReceiverName::TestWithImageData;
     case MessageName::TestWithLegacyReceiver_AddEvent:
     case MessageName::TestWithLegacyReceiver_Close:
-    case MessageName::TestWithLegacyReceiver_CreatePlugin:
     case MessageName::TestWithLegacyReceiver_DeprecatedOperation:
     case MessageName::TestWithLegacyReceiver_DidCreateWebProcessConnection:
     case MessageName::TestWithLegacyReceiver_DidReceivePolicyDecision:
     case MessageName::TestWithLegacyReceiver_ExperimentalOperation:
-    case MessageName::TestWithLegacyReceiver_GetPlugins:
     case MessageName::TestWithLegacyReceiver_InterpretKeyEvent:
     case MessageName::TestWithLegacyReceiver_LoadSomething:
     case MessageName::TestWithLegacyReceiver_LoadSomethingElse:
@@ -234,12 +220,10 @@ ReceiverName receiverName(MessageName messageName)
         return ReceiverName::TestWithSuperclass;
     case MessageName::TestWithoutAttributes_AddEvent:
     case MessageName::TestWithoutAttributes_Close:
-    case MessageName::TestWithoutAttributes_CreatePlugin:
     case MessageName::TestWithoutAttributes_DeprecatedOperation:
     case MessageName::TestWithoutAttributes_DidCreateWebProcessConnection:
     case MessageName::TestWithoutAttributes_DidReceivePolicyDecision:
     case MessageName::TestWithoutAttributes_ExperimentalOperation:
-    case MessageName::TestWithoutAttributes_GetPlugins:
     case MessageName::TestWithoutAttributes_InterpretKeyEvent:
     case MessageName::TestWithoutAttributes_LoadSomething:
     case MessageName::TestWithoutAttributes_LoadSomethingElse:
@@ -264,13 +248,11 @@ ReceiverName receiverName(MessageName messageName)
     case MessageName::TestWithSuperclass_TestAsyncMessageWithMultipleArgumentsReply:
     case MessageName::TestWithSuperclass_TestAsyncMessageWithNoArgumentsReply:
         return ReceiverName::AsyncReply;
-    case MessageName::TestWithLegacyReceiver_GetPluginProcessConnection:
     case MessageName::TestWithLegacyReceiver_TestMultipleAttributes:
         return ReceiverName::TestWithLegacyReceiver;
     case MessageName::TestWithSuperclass_TestSyncMessage:
     case MessageName::TestWithSuperclass_TestSynchronousMessage:
         return ReceiverName::TestWithSuperclass;
-    case MessageName::TestWithoutAttributes_GetPluginProcessConnection:
     case MessageName::TestWithoutAttributes_TestMultipleAttributes:
         return ReceiverName::TestWithoutAttributes;
     case MessageName::WrappedAsyncMessageForTesting:
@@ -308,8 +290,6 @@ bool isValidMessageName(MessageName messageName)
 #endif
     if (messageName == IPC::MessageName::TestWithLegacyReceiver_Close)
         return true;
-    if (messageName == IPC::MessageName::TestWithLegacyReceiver_CreatePlugin)
-        return true;
 #if ENABLE(DEPRECATED_FEATURE)
     if (messageName == IPC::MessageName::TestWithLegacyReceiver_DeprecatedOperation)
         return true;
@@ -324,8 +304,6 @@ bool isValidMessageName(MessageName messageName)
     if (messageName == IPC::MessageName::TestWithLegacyReceiver_ExperimentalOperation)
         return true;
 #endif
-    if (messageName == IPC::MessageName::TestWithLegacyReceiver_GetPlugins)
-        return true;
 #if PLATFORM(MAC)
     if (messageName == IPC::MessageName::TestWithLegacyReceiver_InterpretKeyEvent)
         return true;
@@ -404,8 +382,6 @@ bool isValidMessageName(MessageName messageName)
 #endif
     if (messageName == IPC::MessageName::TestWithoutAttributes_Close)
         return true;
-    if (messageName == IPC::MessageName::TestWithoutAttributes_CreatePlugin)
-        return true;
 #if ENABLE(DEPRECATED_FEATURE)
     if (messageName == IPC::MessageName::TestWithoutAttributes_DeprecatedOperation)
         return true;
@@ -420,8 +396,6 @@ bool isValidMessageName(MessageName messageName)
     if (messageName == IPC::MessageName::TestWithoutAttributes_ExperimentalOperation)
         return true;
 #endif
-    if (messageName == IPC::MessageName::TestWithoutAttributes_GetPlugins)
-        return true;
 #if PLATFORM(MAC)
     if (messageName == IPC::MessageName::TestWithoutAttributes_InterpretKeyEvent)
         return true;
@@ -482,15 +456,11 @@ bool isValidMessageName(MessageName messageName)
     if (messageName == IPC::MessageName::TestWithSuperclass_TestAsyncMessageWithNoArgumentsReply)
         return true;
 #endif
-    if (messageName == IPC::MessageName::TestWithLegacyReceiver_GetPluginProcessConnection)
-        return true;
     if (messageName == IPC::MessageName::TestWithLegacyReceiver_TestMultipleAttributes)
         return true;
     if (messageName == IPC::MessageName::TestWithSuperclass_TestSyncMessage)
         return true;
     if (messageName == IPC::MessageName::TestWithSuperclass_TestSynchronousMessage)
-        return true;
-    if (messageName == IPC::MessageName::TestWithoutAttributes_GetPluginProcessConnection)
         return true;
     if (messageName == IPC::MessageName::TestWithoutAttributes_TestMultipleAttributes)
         return true;

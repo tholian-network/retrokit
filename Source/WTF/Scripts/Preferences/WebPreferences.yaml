@@ -277,14 +277,6 @@ AsynchronousPluginInitializationEnabled:
     WebKit:
       default: false
 
-AsynchronousPluginInitializationEnabledForAllPlugins:
-  type: bool
-  webcoreBinding: none
-  exposed: [ WebKit ]
-  defaultValue:
-    WebKit:
-      default: false
-
 AsynchronousSpellCheckingEnabled:
   type: bool
   defaultValue:
@@ -317,17 +309,6 @@ AuthorAndUserStylesEnabled:
       default: true
     WebCore:
       default: true
-
-BackForwardCacheSupportsPlugins:
-  type: bool
-  webKitLegacyPreferenceKey: WebKitPageCacheSupportsPluginsPreferenceKey
-  defaultValue:
-    WebKitLegacy:
-      default: true
-    WebKit:
-      default: true
-    WebCore:
-      default: false
 
 BackspaceKeyNavigationEnabled:
   type: bool
@@ -998,29 +979,6 @@ ItpDebugModeEnabled:
     WebKit:
       default: false
 
-JavaEnabled:
-  type: bool
-  webcoreGetter: isJavaEnabled
-  defaultValue:
-    WebKitLegacy:
-      "PLATFORM(IOS_FAMILY)": false
-      default: true
-    WebKit:
-      default: false
-    WebCore:
-      default: false
-
-JavaEnabledForLocalFiles:
-  type: bool
-  webcoreGetter: isJavaEnabledForLocalFiles
-  defaultValue:
-    WebKitLegacy:
-      default: true
-    WebKit:
-      default: false
-    WebCore:
-      default: true
-
 JavaScriptCanAccessClipboard:
   type: bool
   defaultValue:
@@ -1513,15 +1471,6 @@ OfflineWebApplicationCacheEnabled:
     WebCore:
       default: false
 
-PDFPluginEnabled:
-  type: bool
-  webcoreBinding: none
-  condition: PLATFORM(COCOA)
-  exposed: [ WebKit ]
-  defaultValue:
-    WebKit:
-      default: true
-
 PageVisibilityBasedProcessSuppressionEnabled:
   type: bool
   webcoreBinding: none
@@ -1614,18 +1563,6 @@ PitchCorrectionAlgorithm:
     WebKit:
       "PLATFORM(COCOA)": static_cast<uint32_t>(WebCore::MediaPlayerEnums::PitchCorrectionAlgorithm::BestForSpeech)
       default: static_cast<uint32_t>(WebCore::MediaPlayerEnums::PitchCorrectionAlgorithm::BestAllAround)
-
-PluginsEnabled:
-  type: bool
-  webcoreGetter: arePluginsEnabled
-  webcoreOnChange: pluginsEnabledChanged
-  defaultValue:
-    WebKitLegacy:
-      default: true
-    WebKit:
-      default: false
-    WebCore:
-      default: false
 
 PrivateClickMeasurementEnabled:
   type: bool

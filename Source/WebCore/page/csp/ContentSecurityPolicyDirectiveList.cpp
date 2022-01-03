@@ -349,10 +349,6 @@ void ContentSecurityPolicyDirectiveList::parse(const String& policy, ContentSecu
                         m_policy.reportInvalidDirectiveInHTTPEquivMeta(directive->name);
                         continue;
                     }
-                } else if (policyFrom == ContentSecurityPolicy::PolicyFrom::InheritedForPluginDocument) {
-                    if (!equalIgnoringASCIICase(directive->name, ContentSecurityPolicyDirectiveNames::pluginTypes)
-                        && !equalIgnoringASCIICase(directive->name, ContentSecurityPolicyDirectiveNames::reportURI))
-                        continue;
                 }
                 addDirective(WTFMove(*directive));
             }

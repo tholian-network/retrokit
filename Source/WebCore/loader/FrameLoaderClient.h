@@ -81,14 +81,12 @@ class FrameLoader;
 class FrameNetworkingContext;
 class HTMLFormElement;
 class HTMLFrameOwnerElement;
-class HTMLPlugInElement;
 class HistoryItem;
 class IntSize;
 class LegacyPreviewLoaderClient;
 class MessageEvent;
 class NavigationAction;
 class Page;
-class PluginViewBase;
 class ProtectionSpace;
 class RegistrableDomain;
 class RTCPeerConnectionHandler;
@@ -213,9 +211,6 @@ public:
     virtual void willReplaceMultipartContent() = 0;
     virtual void didReplaceMultipartContent() = 0;
 
-    virtual void committedLoad(DocumentLoader*, const uint8_t*, int) = 0;
-    virtual void finishedLoading(DocumentLoader*) = 0;
-    
     virtual void updateGlobalHistory() = 0;
     virtual void updateGlobalHistoryRedirectLinks() = 0;
 
@@ -285,8 +280,6 @@ public:
     virtual void convertMainResourceLoadToDownload(DocumentLoader*, const ResourceRequest&, const ResourceResponse&) = 0;
 
     virtual RefPtr<Frame> createFrame(const String& name, HTMLFrameOwnerElement&) = 0;
-    virtual RefPtr<Widget> createPlugin(const IntSize&, HTMLPlugInElement&, const URL&, const Vector<String>&, const Vector<String>&, const String&, bool loadManually) = 0;
-    virtual void redirectDataToPlugin(Widget&) = 0;
 
     virtual ObjectContentType objectContentType(const URL&, const String& mimeType) = 0;
     virtual String overrideMediaType() const = 0;
@@ -307,7 +300,6 @@ public:
     virtual bool shouldCacheResponse(DocumentLoader*, unsigned long identifier, const ResourceResponse&, const unsigned char* data, unsigned long long length) = 0;
 #endif
 
-    virtual bool shouldAlwaysUsePluginDocument(const String& /*mimeType*/) const { return false; }
     virtual bool shouldLoadMediaElementURL(const URL&) const { return true; }
 
     virtual void didChangeScrollOffset() { }
@@ -381,10 +373,6 @@ public:
     virtual void notifyPageOfAppBoundBehavior() { }
 #endif
 
-#if ENABLE(PDFKIT_PLUGIN)
-    virtual bool shouldUsePDFPlugin(const String&, StringView) const { return false; }
-#endif
-    
     virtual bool isParentProcessAFullWebBrowser() const { return false; }
 };
 

@@ -28,7 +28,6 @@
 #include "DataReference.h"
 #include "IdentifierTypes.h"
 #include "LayerTreeContext.h"
-#include "PDFPluginIdentifier.h"
 #include "PasteboardAccessIntent.h"
 #include "SameDocumentNavigationType.h"
 #include "ShareableBitmap.h"
@@ -55,7 +54,6 @@
 #include <wtf/WeakPtr.h>
 
 #if PLATFORM(COCOA)
-#include "PluginComplexTextInputState.h"
 #include "RemoteLayerTreeNode.h"
 #include "WKFoundation.h"
 
@@ -254,13 +252,6 @@ public:
     virtual void didFailProvisionalLoadForMainFrame() { };
     virtual void didCommitLoadForMainFrame(const String& mimeType, bool useCustomContentProvider) = 0;
 
-#if ENABLE(UI_PROCESS_PDF_HUD)
-    virtual void createPDFHUD(PDFPluginIdentifier, const WebCore::IntRect&) = 0;
-    virtual void updatePDFHUDLocation(PDFPluginIdentifier, const WebCore::IntRect&) = 0;
-    virtual void removePDFHUD(PDFPluginIdentifier) = 0;
-    virtual void removeAllPDFHUDs() = 0;
-#endif
-    
     virtual void handleDownloadRequest(DownloadProxy&) = 0;
 
     virtual bool handleRunOpenPanel(WebPageProxy*, WebFrameProxy*, const FrameInfoData&, API::OpenPanelParameters*, WebOpenPanelResultListenerProxy*) { return false; }
@@ -272,7 +263,7 @@ public:
     virtual void showSafeBrowsingWarning(const SafeBrowsingWarning&, CompletionHandler<void(Variant<ContinueUnsafeLoad, URL>&&)>&& completionHandler) { completionHandler(ContinueUnsafeLoad::Yes); }
     virtual void clearSafeBrowsingWarning() { }
     virtual void clearSafeBrowsingWarningIfForMainFrameNavigation() { }
-    
+
 #if ENABLE(DRAG_SUPPORT)
 #if PLATFORM(GTK)
     virtual void startDrag(WebCore::SelectionData&&, OptionSet<WebCore::DragOperation>, RefPtr<ShareableBitmap>&& dragImage) = 0;
@@ -409,8 +400,6 @@ public:
 #endif
 
 #if PLATFORM(MAC)
-    virtual void pluginFocusOrWindowFocusChanged(uint64_t pluginComplexTextInputIdentifier, bool pluginHasFocusAndWindowHasFocus) = 0;
-    virtual void setPluginComplexTextInputState(uint64_t pluginComplexTextInputIdentifier, PluginComplexTextInputState) = 0;
     virtual void showCorrectionPanel(WebCore::AlternativeTextType, const WebCore::FloatRect& boundingBoxOfReplacedString, const String& replacedString, const String& replacementString, const Vector<String>& alternativeReplacementStrings) = 0;
     virtual void dismissCorrectionPanel(WebCore::ReasonForDismissingAlternativeText) = 0;
     virtual String dismissCorrectionPanelSoon(WebCore::ReasonForDismissingAlternativeText) = 0;

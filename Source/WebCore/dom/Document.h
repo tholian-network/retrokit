@@ -279,7 +279,6 @@ enum DocumentClass {
     HTMLDocumentClass = 1,
     XHTMLDocumentClass = 1 << 1,
     ImageDocumentClass = 1 << 2,
-    PluginDocumentClass = 1 << 3,
     MediaDocumentClass = 1 << 4,
     SVGDocumentClass = 1 << 5,
     TextDocumentClass = 1 << 6,
@@ -499,9 +498,6 @@ public:
     WEBCORE_EXPORT ExceptionOr<Ref<Node>> adoptNode(Node& source);
 
     WEBCORE_EXPORT Ref<HTMLCollection> images();
-    WEBCORE_EXPORT Ref<HTMLCollection> embeds();
-    WEBCORE_EXPORT Ref<HTMLCollection> plugins(); // an alias for embeds() required for the JS DOM bindings.
-    WEBCORE_EXPORT Ref<HTMLCollection> applets();
     WEBCORE_EXPORT Ref<HTMLCollection> links();
     WEBCORE_EXPORT Ref<HTMLCollection> forms();
     WEBCORE_EXPORT Ref<HTMLCollection> anchors();
@@ -519,7 +515,6 @@ public:
     bool isXMLDocument() const { return m_documentClasses & XMLDocumentClass; }
     bool isImageDocument() const { return m_documentClasses & ImageDocumentClass; }
     bool isSVGDocument() const { return m_documentClasses & SVGDocumentClass; }
-    bool isPluginDocument() const { return m_documentClasses & PluginDocumentClass; }
     bool isMediaDocument() const { return m_documentClasses & MediaDocumentClass; }
     bool isTextDocument() const { return m_documentClasses & TextDocumentClass; }
     bool hasSVGRootNode() const;
@@ -1340,8 +1335,6 @@ public:
 
     Ref<FontFaceSet> fonts();
 
-    void ensurePlugInsInjectedScript(DOMWrapperWorld&);
-
     void setVisualUpdatesAllowedByClient(bool);
 
 #if ENABLE(WEB_CRYPTO)
@@ -2061,7 +2054,6 @@ private:
     bool m_sawElementsInKnownNamespaces { false };
     bool m_isSrcdocDocument { false };
 
-    bool m_hasInjectedPlugInsScript { false };
     bool m_renderTreeBeingDestroyed { false };
     bool m_hasPreparedForDestruction { false };
 

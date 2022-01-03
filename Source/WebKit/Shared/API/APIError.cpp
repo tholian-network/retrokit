@@ -58,16 +58,6 @@ const WTF::String& Error::webKitPolicyErrorDomain()
 #endif
 }
 
-const WTF::String& Error::webKitPluginErrorDomain()
-{
-#if USE(GLIB)
-    static NeverDestroyed<WTF::String> webKitErrorDomainString(MAKE_STATIC_STRING_IMPL("WebKitPluginError"));
-    return webKitErrorDomainString;
-#else
-    return webKitErrorDomain();
-#endif
-}
-
 #if USE(SOUP)
 const WTF::String& Error::webKitDownloadErrorDomain()
 {

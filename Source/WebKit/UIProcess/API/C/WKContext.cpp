@@ -330,25 +330,6 @@ void WKContextSetShouldUseFontSmoothing(WKContextRef contextRef, bool useFontSmo
     WebKit::toImpl(contextRef)->setShouldUseFontSmoothing(useFontSmoothing);
 }
 
-void WKContextSetAdditionalPluginsDirectory(WKContextRef contextRef, WKStringRef pluginsDirectory)
-{
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    WebKit::toImpl(contextRef)->setAdditionalPluginsDirectory(WebKit::toImpl(pluginsDirectory)->string());
-#else
-    UNUSED_PARAM(contextRef);
-    UNUSED_PARAM(pluginsDirectory);
-#endif
-}
-
-void WKContextRefreshPlugIns(WKContextRef context)
-{
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    WebKit::toImpl(context)->refreshPlugins();
-#else
-    UNUSED_PARAM(context);
-#endif
-}
-
 void WKContextRegisterURLSchemeAsEmptyDocument(WKContextRef contextRef, WKStringRef urlScheme)
 {
     WebKit::toImpl(contextRef)->registerURLSchemeAsEmptyDocument(WebKit::toImpl(urlScheme)->string());
@@ -542,30 +523,6 @@ void WKContextSetFontAllowList(WKContextRef contextRef, WKArrayRef arrayRef)
 void WKContextTerminateServiceWorkers(WKContextRef context)
 {
     WebKit::toImpl(context)->terminateServiceWorkers();
-}
-
-void WKContextAddSupportedPlugin(WKContextRef contextRef, WKStringRef domainRef, WKStringRef nameRef, WKArrayRef mimeTypesRef, WKArrayRef extensionsRef)
-{
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    HashSet<String> mimeTypes;
-    HashSet<String> extensions;
-
-    size_t count = WKArrayGetSize(mimeTypesRef);
-    for (size_t i = 0; i < count; ++i)
-        mimeTypes.add(WebKit::toWTFString(static_cast<WKStringRef>(WKArrayGetItemAtIndex(mimeTypesRef, i))));
-    count = WKArrayGetSize(extensionsRef);
-    for (size_t i = 0; i < count; ++i)
-        extensions.add(WebKit::toWTFString(static_cast<WKStringRef>(WKArrayGetItemAtIndex(extensionsRef, i))));
-
-    WebKit::toImpl(contextRef)->addSupportedPlugin(WebKit::toWTFString(domainRef), WebKit::toWTFString(nameRef), WTFMove(mimeTypes), WTFMove(extensions));
-#endif
-}
-
-void WKContextClearSupportedPlugins(WKContextRef contextRef)
-{
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    WebKit::toImpl(contextRef)->clearSupportedPlugins();
-#endif
 }
 
 void WKContextClearCurrentModifierStateForTesting(WKContextRef contextRef)

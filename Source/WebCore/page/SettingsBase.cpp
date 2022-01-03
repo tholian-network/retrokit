@@ -255,11 +255,6 @@ void SettingsBase::imageLoadingSettingsTimerFired()
     }
 }
 
-void SettingsBase::pluginsEnabledChanged()
-{
-    Page::refreshPlugins(false);
-}
-
 void SettingsBase::iceCandidateFilteringEnabledChanged()
 {
     if (!m_page)

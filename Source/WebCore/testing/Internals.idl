@@ -707,7 +707,6 @@ enum AutoplayPolicy {
     boolean isSelectPopupVisible(HTMLSelectElement element);
 
     boolean isPluginUnavailabilityIndicatorObscured(Element element);
-    DOMString unavailablePluginReplacementText(Element element);
     boolean isPluginSnapshotted(Element element);
     boolean pluginIsBelowSizeThreshold(Element element);
 
@@ -781,8 +780,6 @@ enum AutoplayPolicy {
 
     DOMString userVisibleString(DOMURL url);
     undefined setPageMediaVolume(float volume);
-
-    undefined setShowAllPlugins(boolean showAll);
 
     [CallWith=GlobalObject] any cloneArrayBuffer(any buffer, any srcByteOffset, any byteLength);
     [CallWith=GlobalObject] boolean isReadableStreamDisturbed(any stream);

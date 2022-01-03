@@ -37,7 +37,6 @@ namespace WebCore {
 
 class DOMTimerFireState;
 class Document;
-class HTMLPlugInElement;
 class ScheduledAction;
 
 class DOMTimer final : public RefCounted<DOMTimer>, public SuspendableTimerBase {
@@ -60,8 +59,6 @@ public:
     // Notify that the interval may need updating (e.g. because the minimum interval
     // setting for the context has changed).
     void updateTimerIntervalIfNecessary();
-
-    static void scriptDidInteractWithPlugin(HTMLPlugInElement&);
 
 private:
     DOMTimer(ScriptExecutionContext&, std::unique_ptr<ScheduledAction>, Seconds interval, bool singleShot);

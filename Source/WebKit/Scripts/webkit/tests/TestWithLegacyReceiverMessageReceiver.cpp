@@ -39,7 +39,6 @@
 #if PLATFORM(MAC)
 #include "MachPort.h"
 #endif
-#include "Plugin.h"
 #include "TestWithLegacyReceiverMessages.h"
 #include "WebCoreArgumentCoders.h"
 #include "WebPreferencesStore.h"
@@ -50,7 +49,6 @@
 #if PLATFORM(MAC)
 #include <WebCore/KeyboardEvent.h>
 #endif
-#include <WebCore/PluginData.h>
 #include <utility>
 #include <wtf/HashMap.h>
 #if PLATFORM(MAC)
@@ -62,12 +60,6 @@
 namespace Messages {
 
 namespace TestWithLegacyReceiver {
-
-void GetPluginProcessConnection::send(UniqueRef<IPC::Encoder>&& encoder, IPC::Connection& connection, const IPC::Connection::Handle& connectionHandle)
-{
-    encoder.get() << connectionHandle;
-    connection.sendSyncReply(WTFMove(encoder));
-}
 
 void TestMultipleAttributes::send(UniqueRef<IPC::Encoder>&& encoder, IPC::Connection& connection)
 {
@@ -141,14 +133,8 @@ void TestWithLegacyReceiver::didReceiveTestWithLegacyReceiverMessage(IPC::Connec
 bool TestWithLegacyReceiver::didReceiveSyncTestWithLegacyReceiverMessage(IPC::Connection& connection, IPC::Decoder& decoder, UniqueRef<IPC::Encoder>& replyEncoder)
 {
     auto protectedThis = makeRef(*this);
-    if (decoder.messageName() == Messages::TestWithLegacyReceiver::CreatePlugin::name())
-        return IPC::handleMessage<Messages::TestWithLegacyReceiver::CreatePlugin>(decoder, *replyEncoder, this, &TestWithLegacyReceiver::createPlugin);
     if (decoder.messageName() == Messages::TestWithLegacyReceiver::RunJavaScriptAlert::name())
         return IPC::handleMessage<Messages::TestWithLegacyReceiver::RunJavaScriptAlert>(decoder, *replyEncoder, this, &TestWithLegacyReceiver::runJavaScriptAlert);
-    if (decoder.messageName() == Messages::TestWithLegacyReceiver::GetPlugins::name())
-        return IPC::handleMessage<Messages::TestWithLegacyReceiver::GetPlugins>(decoder, *replyEncoder, this, &TestWithLegacyReceiver::getPlugins);
-    if (decoder.messageName() == Messages::TestWithLegacyReceiver::GetPluginProcessConnection::name())
-        return IPC::handleMessageSynchronous<Messages::TestWithLegacyReceiver::GetPluginProcessConnection>(connection, decoder, replyEncoder, this, &TestWithLegacyReceiver::getPluginProcessConnection);
     if (decoder.messageName() == Messages::TestWithLegacyReceiver::TestMultipleAttributes::name())
         return IPC::handleMessageSynchronousWantsConnection<Messages::TestWithLegacyReceiver::TestMultipleAttributes>(connection, decoder, replyEncoder, this, &TestWithLegacyReceiver::testMultipleAttributes);
 #if PLATFORM(MAC)

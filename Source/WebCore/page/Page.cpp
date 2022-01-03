@@ -101,9 +101,6 @@
 #include "PlatformMediaSessionManager.h"
 #include "PlatformScreen.h"
 #include "PlatformStrategies.h"
-#include "PluginData.h"
-#include "PluginInfoProvider.h"
-#include "PluginViewBase.h"
 #include "PointerCaptureController.h"
 #include "PointerLockController.h"
 #include "ProgressTracker.h"
@@ -288,7 +285,6 @@ Page::Page(PageConfiguration&& pageConfiguration)
     , m_applicationCacheStorage(*WTFMove(pageConfiguration.applicationCacheStorage))
     , m_cacheStorageProvider(WTFMove(pageConfiguration.cacheStorageProvider))
     , m_databaseProvider(*WTFMove(pageConfiguration.databaseProvider))
-    , m_pluginInfoProvider(*WTFMove(pageConfiguration.pluginInfoProvider))
     , m_storageNamespaceProvider(*WTFMove(pageConfiguration.storageNamespaceProvider))
     , m_userContentProvider(WTFMove(pageConfiguration.userContentProvider))
     , m_visitedLinkStore(*WTFMove(pageConfiguration.visitedLinkStore))
@@ -322,7 +318,6 @@ Page::Page(PageConfiguration&& pageConfiguration)
 {
     updateTimerThrottlingState();
 
-    m_pluginInfoProvider->addPage(*this);
     m_userContentProvider->addPage(*this);
     m_visitedLinkStore->addPage(*this);
 
@@ -401,7 +396,6 @@ Page::~Page()
     pageCounter.decrement();
 #endif
 
-    m_pluginInfoProvider->removePage(*this);
     m_userContentProvider->removePage(*this);
     m_visitedLinkStore->removePage(*this);
 }
@@ -636,40 +630,6 @@ void Page::setNeedsRecalcStyleInAllFrames()
     forEachDocument([] (Document& document) {
         document.styleScope().didChangeStyleSheetEnvironment();
     });
-}
-
-void Page::refreshPlugins(bool reload)
-{
-    HashSet<PluginInfoProvider*> pluginInfoProviders;
-
-    for (auto* page : allPages())
-        pluginInfoProviders.add(&page->pluginInfoProvider());
-
-    for (auto& pluginInfoProvider : pluginInfoProviders)
-        pluginInfoProvider->refresh(reload);
-}
-
-PluginData& Page::pluginData()
-{
-    if (!m_pluginData)
-        m_pluginData = PluginData::create(*this);
-    return *m_pluginData;
-}
-
-void Page::clearPluginData()
-{
-    m_pluginData = nullptr;
-}
-
-bool Page::showAllPlugins() const
-{
-    if (m_showAllPlugins)
-        return true;
-
-    if (Document* document = mainFrame().document())
-        return document->securityOrigin().isLocal();
-
-    return false;
 }
 
 inline std::optional<std::pair<MediaCanStartListener&, Document&>>  Page::takeAnyMediaCanStartListener()
@@ -1281,7 +1241,6 @@ void Page::didCommitLoad()
     setUseDarkAppearanceOverride(std::nullopt);
 #endif
 
-    resetSeenPlugins();
     resetSeenMediaEngines();
 
 #if ENABLE(IMAGE_ANALYSIS)
@@ -2123,31 +2082,11 @@ void Page::dnsPrefetchingStateChanged()
     });
 }
 
-Vector<Ref<PluginViewBase>> Page::pluginViews()
-{
-    Vector<Ref<PluginViewBase>> views;
-    for (Frame* frame = &mainFrame(); frame; frame = frame->tree().traverseNext()) {
-        auto* view = frame->view();
-        if (!view)
-            break;
-        for (auto& widget : view->children()) {
-            if (is<PluginViewBase>(widget))
-                views.append(downcast<PluginViewBase>(widget.get()));
-        }
-    }
-    return views;
-}
-
 void Page::storageBlockingStateChanged()
 {
     forEachDocument([] (Document& document) {
         document.storageBlockingStateDidChange();
     });
-
-    // Collect the PluginViews in to a vector to ensure that action the plug-in takes
-    // from below storageBlockingStateChanged does not affect their lifetime.
-    for (auto& view : pluginViews())
-        view->storageBlockingStateChanged();
 }
 
 void Page::updateIsPlayingMedia()
@@ -2735,26 +2674,6 @@ void Page::resumeActiveDOMObjectsAndAnimations()
     resumeAnimatingImages();
 }
 
-bool Page::hasSeenAnyPlugin() const
-{
-    return !m_seenPlugins.isEmpty();
-}
-
-bool Page::hasSeenPlugin(const String& serviceType) const
-{
-    return m_seenPlugins.contains(serviceType);
-}
-
-void Page::sawPlugin(const String& serviceType)
-{
-    m_seenPlugins.add(serviceType);
-}
-
-void Page::resetSeenPlugins()
-{
-    m_seenPlugins.clear();
-}
-
 bool Page::hasSeenAnyMediaEngine() const
 {
     return !m_seenMediaEngines.isEmpty();
@@ -2885,11 +2804,6 @@ void Page::mainFrameLoadStarted(const URL& destinationURL, FrameLoadType type)
     logNavigation(navigation);
 }
 
-PluginInfoProvider& Page::pluginInfoProvider()
-{
-    return m_pluginInfoProvider;
-}
-
 UserContentProvider& Page::userContentProvider()
 {
     return m_userContentProvider;
@@ -2955,11 +2869,6 @@ void Page::setSessionID(PAL::SessionID sessionID)
         document.privateBrowsingStateDidChange(m_sessionID);
     });
 
-    // Collect the PluginViews in to a vector to ensure that action the plug-in takes
-    // from below privateBrowsingStateChanged does not affect their lifetime.
-
-    for (auto& view : pluginViews())
-        view->privateBrowsingStateChanged(sessionID.isEphemeral());
 }
 
 #if ENABLE(WIRELESS_PLAYBACK_TARGET)

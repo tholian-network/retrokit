@@ -118,43 +118,12 @@ _expected_model_base = {
             'conditions': (None),
         },
         {
-            'name': 'CreatePlugin',
-            'parameters': (
-                ('uint64_t', 'pluginInstanceID'),
-                ('WebKit::Plugin::Parameters', 'parameters')
-            ),
-            'reply_parameters': (
-                ('bool', 'result'),
-            ),
-            'conditions': (None),
-        },
-        {
             'name': 'RunJavaScriptAlert',
             'parameters': (
                 ('uint64_t', 'frameID'),
                 ('String', 'message')
             ),
             'reply_parameters': (),
-            'conditions': (None),
-        },
-        {
-            'name': 'GetPlugins',
-            'parameters': (
-                ('bool', 'refresh'),
-            ),
-            'reply_parameters': (
-                ('Vector<WebCore::PluginInfo>', 'plugins'),
-            ),
-            'conditions': (None),
-        },
-        {
-            'name': 'GetPluginProcessConnection',
-            'parameters': (
-                ('String', 'pluginPath'),
-            ),
-            'reply_parameters': (
-                ('IPC::Connection::Handle', 'connectionHandle'),
-            ),
             'conditions': (None),
         },
         {

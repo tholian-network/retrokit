@@ -48,14 +48,10 @@
 #include "MediaKeySystemPermissionRequestManager.h"
 #include "MediaPlaybackState.h"
 #include "MediaRecorderProvider.h"
-#include "NetscapePlugin.h"
 #include "NetworkConnectionToWebProcessMessages.h"
 #include "NetworkProcessConnection.h"
 #include "NotificationPermissionRequestManager.h"
 #include "PageBanner.h"
-#include "PluginProcessAttributes.h"
-#include "PluginProxy.h"
-#include "PluginView.h"
 #include "PrintInfo.h"
 #include "RemoteRenderingBackendProxy.h"
 #include "RemoteWebInspectorUI.h"
@@ -116,7 +112,6 @@
 #include "WebPageProxyMessages.h"
 #include "WebPerformanceLoggingClient.h"
 #include "WebPermissionController.h"
-#include "WebPluginInfoProvider.h"
 #include "WebPopupMenu.h"
 #include "WebPreferencesDefinitions.h"
 #include "WebPreferencesKeys.h"
@@ -186,7 +181,6 @@
 #include <WebCore/HTMLInputElement.h>
 #include <WebCore/HTMLMenuElement.h>
 #include <WebCore/HTMLMenuItemElement.h>
-#include <WebCore/HTMLPlugInElement.h>
 #include <WebCore/HTMLSelectElement.h>
 #include <WebCore/HTMLTextFormControlElement.h>
 #include <WebCore/Highlight.h>
@@ -209,7 +203,6 @@
 #include <WebCore/PlatformKeyboardEvent.h>
 #include <WebCore/PlatformMediaSessionManager.h>
 #include <WebCore/PlatformStrategies.h>
-#include <WebCore/PluginDocument.h>
 #include <WebCore/PointerCaptureController.h>
 #include <WebCore/PrintContext.h>
 #include <WebCore/PromisedAttachmentInfo.h>
@@ -284,7 +277,6 @@
 #if PLATFORM(COCOA)
 #include "DefaultWebBrowserChecks.h"
 #include "InsertTextOptions.h"
-#include "PDFPlugin.h"
 #include "PlaybackSessionManager.h"
 #include "RemoteLayerTreeTransaction.h"
 #include "RemoteObjectRegistryMessages.h"
@@ -578,7 +570,6 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
 
     pageConfiguration.applicationCacheStorage = &WebProcess::singleton().applicationCacheStorage();
     pageConfiguration.databaseProvider = WebDatabaseProvider::getOrCreate(m_pageGroup->pageGroupID());
-    pageConfiguration.pluginInfoProvider = &WebPluginInfoProvider::singleton();
     pageConfiguration.storageNamespaceProvider = WebStorageNamespaceProvider::getOrCreate(*m_pageGroup);
     pageConfiguration.visitedLinkStore = VisitedLinkTableController::getOrCreate(parameters.visitedLinkTableID);
 
@@ -983,11 +974,9 @@ WebPage::~WebPage()
     }
 
     platformDetach();
-    
+
     m_sandboxExtensionTracker.invalidate();
 
-    for (auto* pluginView : m_pluginViews)
-        pluginView->webPageDestroyed();
 
 #if !PLATFORM(IOS_FAMILY)
     if (m_headerBanner)
@@ -1098,50 +1087,6 @@ void WebPage::setInjectedBundleUIClient(std::unique_ptr<API::InjectedBundle::Pag
     m_uiClient = WTFMove(uiClient);
 }
 
-#if ENABLE(NETSCAPE_PLUGIN_API)
-
-RefPtr<Plugin> WebPage::createPlugin(WebFrame* frame, HTMLPlugInElement* pluginElement, const Plugin::Parameters& parameters, String& newMIMEType)
-{
-    String frameURLString = frame->coreFrame()->loader().documentLoader()->responseURL().string();
-    String pageURLString = m_page->mainFrame().loader().documentLoader()->responseURL().string();
-
-    bool allowOnlyApplicationPlugins = !frame->coreFrame()->arePluginsEnabled();
-
-    uint64_t pluginProcessToken;
-    uint32_t pluginLoadPolicy;
-    String unavailabilityDescription;
-    bool isUnsupported;
-    if (!sendSync(Messages::WebPageProxy::FindPlugin(parameters.mimeType, parameters.url.string(), frameURLString, pageURLString, allowOnlyApplicationPlugins), Messages::WebPageProxy::FindPlugin::Reply(pluginProcessToken, newMIMEType, pluginLoadPolicy, unavailabilityDescription, isUnsupported)))
-        return nullptr;
-
-    PluginModuleLoadPolicy loadPolicy = static_cast<PluginModuleLoadPolicy>(pluginLoadPolicy);
-    bool isBlockedPlugin = (loadPolicy == PluginModuleBlockedForSecurity) || (loadPolicy == PluginModuleBlockedForCompatibility);
-
-    if (isUnsupported || isBlockedPlugin || !pluginProcessToken) {
-#if ENABLE(PDFKIT_PLUGIN)
-        if (shouldUsePDFPlugin(parameters.mimeType, parameters.url.path()))
-            return PDFPlugin::create(*frame);
-#endif
-    }
-
-    if (isUnsupported) {
-        pluginElement->setReplacement(RenderEmbeddedObject::UnsupportedPlugin, unavailabilityDescription);
-        return nullptr;
-    }
-
-    if (isBlockedPlugin) {
-        bool isReplacementObscured = pluginElement->setReplacement(RenderEmbeddedObject::InsecurePluginVersion, unavailabilityDescription);
-        send(Messages::WebPageProxy::DidBlockInsecurePluginVersion(parameters.mimeType, parameters.url.string(), frameURLString, pageURLString, isReplacementObscured));
-        return nullptr;
-    }
-
-    if (!pluginProcessToken)
-        return nullptr;
-
-    return PluginProxy::create(pluginProcessToken);
-}
-#endif // ENABLE(NETSCAPE_PLUGIN_API)
-
 #if ENABLE(WEBGL) && !PLATFORM(MAC)
 WebCore::WebGLLoadPolicy WebPage::webGLPolicyForURL(WebFrame*, const URL&)
 {
@@ -1165,15 +1110,6 @@ EditorState WebPage::editorState(ShouldPerformLayout shouldPerformLayout) const
     Ref<Frame> frame = m_page->focusController().focusedOrMainFrame();
 
     EditorState result;
-
-    if (PluginView* pluginView = focusedPluginViewForFrame(frame)) {
-        if (!pluginView->getSelectionString().isNull()) {
-            result.selectionIsNone = false;
-            result.selectionIsRange = true;
-            result.isInPlugin = true;
-            return result;
-        }
-    }
 
     const VisibleSelection& selection = frame->selection().selection();
     auto& editor = frame->editor();
@@ -1349,38 +1285,11 @@ Ref<API::Array> WebPage::trackedRepaintRects()
     return API::Array::create(WTFMove(repaintRects));
 }
 
-PluginView* WebPage::focusedPluginViewForFrame(Frame& frame)
-{
-    if (!is<PluginDocument>(frame.document()))
-        return nullptr;
-
-    auto& pluginDocument = downcast<PluginDocument>(*frame.document());
-    if (pluginDocument.focusedElement() != pluginDocument.pluginElement())
-        return nullptr;
-
-    return pluginViewForFrame(&frame);
-}
-
-PluginView* WebPage::pluginViewForFrame(Frame* frame)
-{
-    if (!frame || !is<PluginDocument>(frame->document()))
-        return nullptr;
-
-    auto& document = downcast<PluginDocument>(*frame->document());
-    return static_cast<PluginView*>(document.pluginWidget());
-}
-
 void WebPage::executeEditingCommand(const String& commandName, const String& argument)
 {
     platformWillPerformEditingCommand();
 
     auto& frame = m_page->focusController().focusedOrMainFrame();
-
-    if (PluginView* pluginView = focusedPluginViewForFrame(frame)) {
-        pluginView->handleEditingCommand(commandName, argument);
-        return;
-    }
-    
     frame.editor().command(commandName).execute(argument);
 }
 
@@ -1421,9 +1330,6 @@ bool WebPage::isEditingCommandEnabled(const String& commandName)
 {
     Frame& frame = m_page->focusController().focusedOrMainFrame();
 
-    if (PluginView* pluginView = focusedPluginViewForFrame(frame))
-        return pluginView->isEditingCommandEnabled(commandName);
-    
     Editor::Command command = frame.editor().command(commandName);
     return command.isSupported() && command.isEnabled();
 }
@@ -1958,13 +1864,6 @@ void WebPage::drawRect(GraphicsContext& graphicsContext, const IntRect& rect)
 
 double WebPage::textZoomFactor() const
 {
-    PluginView* pluginView = pluginViewForFrame(&m_page->mainFrame());
-    if (pluginView && pluginView->requiresUnifiedScaleFactor()) {
-        if (pluginView->handlesPageScaleFactor())
-            return pluginView->pageScaleFactor();
-        return pageScaleFactor();
-    }
-
     Frame* frame = m_mainFrame->coreFrame();
     if (!frame)
         return 1;
@@ -1973,15 +1872,6 @@ double WebPage::textZoomFactor() const
 
 void WebPage::setTextZoomFactor(double zoomFactor)
 {
-    PluginView* pluginView = pluginViewForFrame(&m_page->mainFrame());
-    if (pluginView && pluginView->requiresUnifiedScaleFactor()) {
-        if (pluginView->handlesPageScaleFactor())
-            pluginView->setPageScaleFactor(zoomFactor, IntPoint());
-        else
-            scalePage(zoomFactor, IntPoint());
-        return;
-    }
-
     Frame* frame = m_mainFrame->coreFrame();
     if (!frame)
         return;
@@ -1990,13 +1880,6 @@ void WebPage::setTextZoomFactor(double zoomFactor)
 
 double WebPage::pageZoomFactor() const
 {
-    PluginView* pluginView = pluginViewForFrame(&m_page->mainFrame());
-    if (pluginView && pluginView->requiresUnifiedScaleFactor()) {
-        if (pluginView->handlesPageScaleFactor())
-            return pluginView->pageScaleFactor();
-        return pageScaleFactor();
-    }
-
     Frame* frame = m_mainFrame->coreFrame();
     if (!frame)
         return 1;
@@ -2005,15 +1888,6 @@ double WebPage::pageZoomFactor() const
 
 void WebPage::setPageZoomFactor(double zoomFactor)
 {
-    PluginView* pluginView = pluginViewForFrame(&m_page->mainFrame());
-    if (pluginView && pluginView->requiresUnifiedScaleFactor()) {
-        if (pluginView->handlesPageScaleFactor())
-            pluginView->setPageScaleFactor(zoomFactor, IntPoint());
-        else
-            scalePage(zoomFactor, IntPoint());
-        return;
-    }
-
     Frame* frame = m_mainFrame->coreFrame();
     if (!frame)
         return;
@@ -2086,15 +1960,6 @@ void WebPage::clearHistory()
 
 void WebPage::setPageAndTextZoomFactors(double pageZoomFactor, double textZoomFactor)
 {
-    PluginView* pluginView = pluginViewForFrame(&m_page->mainFrame());
-    if (pluginView && pluginView->requiresUnifiedScaleFactor()) {
-        if (pluginView->handlesPageScaleFactor())
-            pluginView->setPageScaleFactor(pageZoomFactor, IntPoint());
-        else
-            scalePage(pageZoomFactor, IntPoint());
-        return;
-    }
-
     Frame* frame = m_mainFrame->coreFrame();
     if (!frame)
         return;
@@ -2122,28 +1987,12 @@ void WebPage::scalePage(double scale, const IntPoint& origin)
         m_scaleWasSetByUIProcess = false;
     }
 #endif
-    PluginView* pluginView = pluginViewForFrame(&m_page->mainFrame());
-    if (pluginView && pluginView->handlesPageScaleFactor()) {
-        // If the main-frame plugin wants to handle the page scale factor, make sure to reset WebCore's page scale.
-        // Otherwise, we can end up with an immutable but non-1 page scale applied by WebCore on top of whatever the plugin does.
-        if (m_page->pageScaleFactor() != 1) {
-            m_page->setPageScaleFactor(1, origin);
-            for (auto* pluginView : m_pluginViews)
-                pluginView->pageScaleFactorDidChange();
-        }
-
-        pluginView->setPageScaleFactor(totalScale, origin);
-        return;
-    }
 
     m_page->setPageScaleFactor(totalScale, origin);
 
     // We can't early return before setPageScaleFactor because the origin might be different.
     if (!willChangeScaleFactor)
         return;
-
-    for (auto* pluginView : m_pluginViews)
-        pluginView->pageScaleFactorDidChange();
 
 #if USE(COORDINATED_GRAPHICS) || USE(TEXTURE_MAPPER)
     m_drawingArea->deviceOrPageScaleFactorChanged();
@@ -2175,10 +2024,6 @@ void WebPage::scalePageInViewCoordinates(double scale, IntPoint centerInViewCoor
 
 double WebPage::totalScaleFactor() const
 {
-    PluginView* pluginView = pluginViewForFrame(&m_page->mainFrame());
-    if (pluginView && pluginView->handlesPageScaleFactor())
-        return pluginView->pageScaleFactor();
-
     return m_page->pageScaleFactor();
 }
 
@@ -2216,14 +2061,6 @@ void WebPage::setDeviceScaleFactor(float scaleFactor)
         return;
 
     m_page->setDeviceScaleFactor(scaleFactor);
-
-    // Tell all our plug-in views that the device scale factor changed.
-#if PLATFORM(MAC)
-    for (auto* pluginView : m_pluginViews)
-        pluginView->setDeviceScaleFactor(scaleFactor);
-
-    updateHeaderAndFooterLayersForDeviceScaleChange(scaleFactor);
-#endif
 
     if (findController().isShowingOverlay()) {
         // We must have updated layout to get the selection rects right.
@@ -3032,13 +2869,9 @@ void WebPage::validateCommand(const String& commandName, CompletionHandler<void(
     bool isEnabled = false;
     int32_t state = 0;
     Frame& frame = m_page->focusController().focusedOrMainFrame();
-    if (PluginView* pluginView = focusedPluginViewForFrame(frame))
-        isEnabled = pluginView->isEditingCommandEnabled(commandName);
-    else {
-        Editor::Command command = frame.editor().command(commandName);
-        state = (command.state() != TriState::False);
-        isEnabled = command.isSupported() && command.isEnabled();
-    }
+    Editor::Command command = frame.editor().command(commandName);
+    state = (command.state() != TriState::False);
+    isEnabled = command.isSupported() && command.isEnabled();
 
     completionHandler(isEnabled, state);
 }
@@ -3312,9 +3145,6 @@ void WebPage::setTopContentInset(float contentInset)
         return;
 
     m_page->setTopContentInset(contentInset);
-
-    for (auto* pluginView : m_pluginViews)
-        pluginView->topContentInsetDidChange();
 }
 
 void WebPage::viewWillStartLiveResize()
@@ -3418,9 +3248,6 @@ void WebPage::setActivityState(OptionSet<ActivityState::Flag> activityState, Act
         SetForScope<OptionSet<ActivityState::Flag>> currentlyChangingActivityState { m_lastActivityStateChanges, changed };
         m_page->setActivityState(activityState);
     }
-    
-    for (auto* pluginView : m_pluginViews)
-        pluginView->activityStateDidChange(changed);
 
     m_drawingArea->activityStateDidChange(changed, activityStateChangeID, WTFMove(callback));
     WebProcess::singleton().pageActivityStateDidChange(m_identifier, changed);
@@ -3437,9 +3264,6 @@ void WebPage::setLayerHostingMode(LayerHostingMode layerHostingMode)
     m_layerHostingMode = layerHostingMode;
 
     m_drawingArea->setLayerHostingMode(m_layerHostingMode);
-
-    for (auto* pluginView : m_pluginViews)
-        pluginView->setLayerHostingMode(m_layerHostingMode);
 }
 
 void WebPage::didReceivePolicyDecision(FrameIdentifier frameID, uint64_t listenerID, PolicyDecision&& policyDecision, const Vector<SandboxExtension::Handle>& networkExtensionsHandles)
@@ -3751,12 +3575,8 @@ void WebPage::getMainResourceDataOfFrame(FrameIdentifier frameID, CompletionHand
 {
     RefPtr<SharedBuffer> buffer;
     if (WebFrame* frame = WebProcess::singleton().webFrame(frameID)) {
-        if (PluginView* pluginView = pluginViewForFrame(frame->coreFrame()))
-            buffer = pluginView->liveResourceData();
-        if (!buffer) {
-            if (DocumentLoader* loader = frame->coreFrame()->loader().documentLoader())
-                buffer = loader->mainResourceData();
-        }
+        if (DocumentLoader* loader = frame->coreFrame()->loader().documentLoader())
+            buffer = loader->mainResourceData();
     }
 
     IPC::SharedBufferDataReference dataReference;
@@ -3865,19 +3685,12 @@ void WebPage::updatePreferences(const WebPreferencesStore& store)
     DatabaseManager::singleton().setIsAvailable(store.getBoolValueForKey(WebPreferencesKey::databasesEnabledKey()));
 
     m_tabToLinks = store.getBoolValueForKey(WebPreferencesKey::tabsToLinksKey());
-    m_asynchronousPluginInitializationEnabled = store.getBoolValueForKey(WebPreferencesKey::asynchronousPluginInitializationEnabledKey());
-    m_asynchronousPluginInitializationEnabledForAllPlugins = store.getBoolValueForKey(WebPreferencesKey::asynchronousPluginInitializationEnabledForAllPluginsKey());
-    m_artificialPluginInitializationDelayEnabled = store.getBoolValueForKey(WebPreferencesKey::artificialPluginInitializationDelayEnabledKey());
 
     bool isAppNapEnabled = store.getBoolValueForKey(WebPreferencesKey::pageVisibilityBasedProcessSuppressionEnabledKey());
     if (m_isAppNapEnabled != isAppNapEnabled) {
         m_isAppNapEnabled = isAppNapEnabled;
         updateThrottleState();
     }
-
-#if PLATFORM(COCOA)
-    m_pdfPluginEnabled = store.getBoolValueForKey(WebPreferencesKey::pdfPluginEnabledKey());
-#endif
 
 #if PLATFORM(IOS_FAMILY)
     setForceAlwaysUserScalable(m_forceAlwaysUserScalable || store.getBoolValueForKey(WebPreferencesKey::forceAlwaysUserScalableKey()));
@@ -4791,21 +4604,6 @@ void WebPage::mainFrameDidLayout()
 #endif
 }
 
-void WebPage::addPluginView(PluginView* pluginView)
-{
-    ASSERT(!m_pluginViews.contains(pluginView));
-
-    m_pluginViews.add(pluginView);
-    m_hasSeenPlugin = true;
-}
-
-void WebPage::removePluginView(PluginView* pluginView)
-{
-    ASSERT(m_pluginViews.contains(pluginView));
-
-    m_pluginViews.remove(pluginView);
-}
-
 void WebPage::sendSetWindowFrame(const FloatRect& windowFrame)
 {
 #if PLATFORM(COCOA)
@@ -4821,10 +4619,6 @@ void WebPage::windowAndViewFramesChanged(const FloatRect& windowFrameInScreenCoo
     m_windowFrameInUnflippedScreenCoordinates = windowFrameInUnflippedScreenCoordinates;
     m_viewFrameInWindowCoordinates = viewFrameInWindowCoordinates;
     m_accessibilityPosition = accessibilityViewCoordinates;
-    
-    // Tell all our plug-in views that the window and view frames have changed.
-    for (auto* pluginView : m_pluginViews)
-        pluginView->windowAndViewFramesChanged(enclosingIntRect(windowFrameInScreenCoordinates), enclosingIntRect(viewFrameInWindowCoordinates));
 
     m_hasCachedWindowFrame = !m_windowFrameInUnflippedScreenCoordinates.isEmpty();
 }
@@ -5048,24 +4842,6 @@ void WebPage::speak(const String& string)
 void WebPage::stopSpeaking()
 {
     send(Messages::WebPageProxy::StopSpeaking());
-}
-
-#endif
-
-#if PLATFORM(MAC)
-
-RetainPtr<PDFDocument> WebPage::pdfDocumentForPrintingFrame(Frame* coreFrame)
-{
-    PluginView* pluginView = pluginViewForFrame(coreFrame);
-    if (!pluginView)
-        return nullptr;
-
-    return pluginView->pdfDocumentForPrinting();
-}
-
-void WebPage::setUseSystemAppearance(bool useSystemAppearance)
-{
-    corePage()->setUseSystemAppearance(useSystemAppearance);
 }
 
 #endif
@@ -5338,18 +5114,6 @@ void WebPage::drawPagesForPrinting(FrameIdentifier frameID, const PrintInfo& pri
 }
 #endif
 
-#if ENABLE(PDFKIT_PLUGIN) && !ENABLE(UI_PROCESS_PDF_HUD)
-void WebPage::savePDFToFileInDownloadsFolder(const String& suggestedFilename, const URL& originatingURL, const uint8_t* data, unsigned long size)
-{
-    send(Messages::WebPageProxy::SavePDFToFileInDownloadsFolder(suggestedFilename, originatingURL, IPC::DataReference(data, size)));
-}
-
-void WebPage::savePDFToTemporaryFolderAndOpenWithNativeApplication(const String& suggestedFilename, FrameInfoData&& frameInfo, const uint8_t* data, unsigned long size, const String& pdfUUID)
-{
-    send(Messages::WebPageProxy::SavePDFToTemporaryFolderAndOpenWithNativeApplication(suggestedFilename, frameInfo, IPC::DataReference(data, size), pdfUUID));
-}
-#endif
-
 void WebPage::addResourceRequest(unsigned long identifier, const WebCore::ResourceRequest& request)
 {
     if (!request.url().protocolIsInHTTPFamily())
@@ -5561,37 +5325,13 @@ FrameView* WebPage::mainFrameView() const
     return nullptr;
 }
 
-bool WebPage::canPluginHandleResponse(const ResourceResponse& response)
-{
-#if ENABLE(NETSCAPE_PLUGIN_API)
-    uint32_t pluginLoadPolicy;
-    bool allowOnlyApplicationPlugins = !m_mainFrame->coreFrame()->arePluginsEnabled();
-
-    uint64_t pluginProcessToken;
-    String newMIMEType;
-    String unavailabilityDescription;
-    bool isUnsupported = false;
-    if (!sendSync(Messages::WebPageProxy::FindPlugin(response.mimeType(), response.url().string(), response.url().string(), response.url().string(), allowOnlyApplicationPlugins), Messages::WebPageProxy::FindPlugin::Reply(pluginProcessToken, newMIMEType, pluginLoadPolicy, unavailabilityDescription, isUnsupported)))
-        return false;
-
-    ASSERT(!isUnsupported);
-    bool isBlockedPlugin = (pluginLoadPolicy == PluginModuleBlockedForSecurity) || (pluginLoadPolicy == PluginModuleBlockedForCompatibility);
-    return !isUnsupported && !isBlockedPlugin && pluginProcessToken;
-#else
-    UNUSED_PARAM(response);
-    return false;
-#endif
-}
-
 bool WebPage::shouldUseCustomContentProviderForResponse(const ResourceResponse& response)
 {
     auto& mimeType = response.mimeType();
     if (mimeType.isNull())
         return false;
 
-    // If a plug-in exists that claims to support this response, it should take precedence over the custom content provider.
-    // canPluginHandleResponse() is called last because it performs synchronous IPC.
-    return m_mimeTypesWithCustomContentProviders.contains(mimeType) && !canPluginHandleResponse(response);
+    return m_mimeTypesWithCustomContentProviders.contains(mimeType);
 }
 
 #if PLATFORM(COCOA)
@@ -6063,33 +5803,12 @@ void WebPage::setSelectTrailingWhitespaceEnabled(bool enabled)
     }
 }
 
-bool WebPage::canShowResponse(const WebCore::ResourceResponse& response) const
-{
-    return canShowMIMEType(response.mimeType(), [&](auto& mimeType, auto allowedPlugins) {
-        return m_page->pluginData().supportsWebVisibleMimeTypeForURL(mimeType, allowedPlugins, response.url());
-    });
-}
-
 bool WebPage::canShowMIMEType(const String& mimeType) const
-{
-    return canShowMIMEType(mimeType, [&](auto& mimeType, auto allowedPlugins) {
-        return m_page->pluginData().supportsWebVisibleMimeType(mimeType, allowedPlugins);
-    });
-}
-
-bool WebPage::canShowMIMEType(const String& mimeType, const Function<bool(const String&, PluginData::AllowedPluginTypes)>& pluginsSupport) const
 {
     if (MIMETypeRegistry::canShowMIMEType(mimeType))
         return true;
 
     if (!mimeType.isNull() && m_mimeTypesWithCustomContentProviders.contains(mimeType))
-        return true;
-
-    if (corePage()->mainFrame().arePluginsEnabled() && pluginsSupport(mimeType, PluginData::AllPlugins))
-        return true;
-
-    // We can use application plugins even if plugins aren't enabled.
-    if (pluginsSupport(mimeType, PluginData::OnlyApplicationPlugins))
         return true;
 
     return false;
@@ -6184,17 +5903,6 @@ void WebPage::didCommitLoad(WebFrame* frame)
     // Only restore the scale factor for standard frame loads (of the main frame).
     if (frame->coreFrame()->loader().loadType() == FrameLoadType::Standard) {
         Page* page = frame->coreFrame()->page();
-
-#if PLATFORM(MAC)
-        // As a very special case, we disable non-default layout modes in WKView for main-frame PluginDocuments.
-        // Ideally we would only worry about this in WKView or the WKViewLayoutStrategies, but if we allow
-        // a round-trip to the UI process, you'll see the wrong scale temporarily. So, we reset it here, and then
-        // again later from the UI process.
-        if (frame->coreFrame()->document()->isPluginDocument()) {
-            scaleView(1);
-            setUseFixedLayout(false);
-        }
-#endif
 
         if (page && page->pageScaleFactor() != 1)
             scalePage(1, IntPoint());

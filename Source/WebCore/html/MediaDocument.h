@@ -50,8 +50,6 @@ private:
 
     void defaultEventHandler(Event&) override;
 
-    void replaceMediaElementTimerFired();
-
     String m_outgoingReferrer;
 };
 

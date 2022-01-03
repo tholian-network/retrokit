@@ -39,11 +39,9 @@ class Frame;
 class FrameLoaderClient;
 class HTMLFrameOwnerElement;
 class HTMLMediaElement;
-class HTMLPlugInImageElement;
 class IntSize;
 class Widget;
 
-// This is a slight misnomer. It handles the higher level logic of loading both subframes and plugins.
 class FrameLoader::SubframeLoader {
     WTF_MAKE_NONCOPYABLE(SubframeLoader); WTF_MAKE_FAST_ALLOCATED;
 public:
@@ -52,27 +50,15 @@ public:
     void clear();
 
     bool requestFrame(HTMLFrameOwnerElement&, const String& url, const AtomString& frameName, LockHistory = LockHistory::Yes, LockBackForwardList = LockBackForwardList::Yes);
-    bool requestObject(HTMLPlugInImageElement&, const String& url, const AtomString& frameName,
-        const String& serviceType, const Vector<String>& paramNames, const Vector<String>& paramValues);
-
-    bool containsPlugins() const { return m_containsPlugins; }
-    
-    bool resourceWillUsePlugin(const String& url, const String& mimeType);
 
 private:
-    bool requestPlugin(HTMLPlugInImageElement&, const URL&, const String& serviceType, const Vector<String>& paramNames, const Vector<String>& paramValues, bool useFallback);
     Frame* loadOrRedirectSubframe(HTMLFrameOwnerElement&, const URL&, const AtomString& frameName, LockHistory, LockBackForwardList);
     RefPtr<Frame> loadSubframe(HTMLFrameOwnerElement&, const URL&, const String& name, const String& referrer);
-    bool loadPlugin(HTMLPlugInImageElement&, const URL&, const String& mimeType, const Vector<String>& paramNames, const Vector<String>& paramValues, bool useFallback);
-
-    bool shouldUsePlugin(const URL&, const String& mimeType, bool hasFallback, bool& useFallback);
-    bool pluginIsLoadable(const URL&, const String& mimeType);
 
     URL completeURL(const String&) const;
 
     bool shouldConvertInvalidURLsToBlank() const;
 
-    bool m_containsPlugins { false };
     Frame& m_frame;
 };
 

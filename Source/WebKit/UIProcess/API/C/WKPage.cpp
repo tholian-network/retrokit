@@ -64,13 +64,11 @@
 #include "NavigationActionData.h"
 #include "NotificationPermissionRequest.h"
 #include "PageClient.h"
-#include "PluginInformation.h"
 #include "PrintInfo.h"
 #include "SpeechRecognitionPermissionRequest.h"
 #include "WKAPICast.h"
 #include "WKPagePolicyClientInternal.h"
 #include "WKPageRenderingProgressEventsInternal.h"
-#include "WKPluginInformation.h"
 #include "WebBackForwardList.h"
 #include "WebFormClient.h"
 #include "WebImage.h"
@@ -1168,17 +1166,12 @@ void WKPageSetPageLoaderClient(WKPageRef pageRef, const WKPageLoaderClientBase* 
             RELEASE_ASSERT(!m_client.processDidBecomeUnresponsive);
             RELEASE_ASSERT(!m_client.processDidBecomeResponsive);
             RELEASE_ASSERT(!m_client.shouldGoToBackForwardListItem);
-            RELEASE_ASSERT(!m_client.didFailToInitializePlugin_deprecatedForUseWithV0);
             RELEASE_ASSERT(!m_client.didDetectXSSForFrame);
             RELEASE_ASSERT(!m_client.didNewFirstVisuallyNonEmptyLayout_unavailable);
             RELEASE_ASSERT(!m_client.willGoToBackForwardListItem);
             RELEASE_ASSERT(!m_client.interactionOccurredWhileProcessUnresponsive);
-            RELEASE_ASSERT(!m_client.pluginDidFail_deprecatedForUseWithV1);
             RELEASE_ASSERT(!m_client.didReceiveIntentForFrame_unavailable);
             RELEASE_ASSERT(!m_client.registerIntentServiceForFrame_unavailable);
-            RELEASE_ASSERT(!m_client.pluginLoadPolicy_deprecatedForUseWithV2);
-            RELEASE_ASSERT(!m_client.pluginDidFail);
-            RELEASE_ASSERT(!m_client.pluginLoadPolicy);
             RELEASE_ASSERT(!m_client.webGLLoadPolicy);
             RELEASE_ASSERT(!m_client.resolveWebGLLoadPolicy);
             RELEASE_ASSERT(!m_client.navigationGestureDidBegin);
@@ -1786,37 +1779,6 @@ void WKPageSetPageUIClient(WKPageRef pageRef, const WKPageUIClientBase* wkClient
             auto apiHitTestResult = API::HitTestResult::create(data);
             m_client.mouseDidMoveOverElement(toAPI(&page), toAPI(apiHitTestResult.ptr()), toAPI(modifiers), toAPI(userData), m_client.base.clientInfo);
         }
-
-#if ENABLE(NETSCAPE_PLUGIN_API)
-        void unavailablePluginButtonClicked(WebPageProxy& page, WKPluginUnavailabilityReason pluginUnavailabilityReason, API::Dictionary& pluginInformation) final
-        {
-            if (pluginUnavailabilityReason == kWKPluginUnavailabilityReasonPluginMissing) {
-                if (m_client.missingPluginButtonClicked_deprecatedForUseWithV0)
-                    m_client.missingPluginButtonClicked_deprecatedForUseWithV0(
-                        toAPI(&page),
-                        toAPI(pluginInformation.get<API::String>(pluginInformationMIMETypeKey())),
-                        toAPI(pluginInformation.get<API::String>(pluginInformationPluginURLKey())),
-                        toAPI(pluginInformation.get<API::String>(pluginInformationPluginspageAttributeURLKey())),
-                        m_client.base.clientInfo);
-            }
-
-            if (m_client.unavailablePluginButtonClicked_deprecatedForUseWithV1)
-                m_client.unavailablePluginButtonClicked_deprecatedForUseWithV1(
-                    toAPI(&page),
-                    pluginUnavailabilityReason,
-                    toAPI(pluginInformation.get<API::String>(pluginInformationMIMETypeKey())),
-                    toAPI(pluginInformation.get<API::String>(pluginInformationPluginURLKey())),
-                    toAPI(pluginInformation.get<API::String>(pluginInformationPluginspageAttributeURLKey())),
-                    m_client.base.clientInfo);
-
-            if (m_client.unavailablePluginButtonClicked)
-                m_client.unavailablePluginButtonClicked(
-                    toAPI(&page),
-                    pluginUnavailabilityReason,
-                    toAPI(&pluginInformation),
-                    m_client.base.clientInfo);
-        }
-#endif // ENABLE(NETSCAPE_PLUGIN_API)
 
         void didNotHandleKeyEvent(WebPageProxy* page, const NativeWebKeyboardEvent& event) final
         {
