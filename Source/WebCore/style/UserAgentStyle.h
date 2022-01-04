@@ -45,7 +45,6 @@ public:
     static StyleSheetContents* mathMLStyleSheet;
     static StyleSheetContents* mediaControlsStyleSheet;
     static StyleSheetContents* fullscreenStyleSheet;
-    static StyleSheetContents* plugInsStyleSheet;
 #if ENABLE(DATALIST_ELEMENT)
     static StyleSheetContents* dataListStyleSheet;
 #endif

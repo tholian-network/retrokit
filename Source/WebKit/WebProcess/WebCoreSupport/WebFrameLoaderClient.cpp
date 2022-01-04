@@ -834,7 +834,7 @@ void WebFrameLoaderClient::dispatchDecidePolicyForResponse(const ResourceRespons
         return;
     }
 
-    bool canShowMIMEType = webPage->canShowMIMEType(response);
+    bool canShowMIMEType = webPage->canShowMIMEType(response.mimeType());
     auto* coreFrame = m_frame->coreFrame();
     auto* policyDocumentLoader = coreFrame ? coreFrame->loader().provisionalDocumentLoader() : nullptr;
     auto navigationID = policyDocumentLoader ? static_cast<WebDocumentLoader&>(*policyDocumentLoader).navigationID() : 0;
@@ -1143,7 +1143,7 @@ void WebFrameLoaderClient::committedLoad(DocumentLoader* loader, const uint8_t* 
 
 #if ENABLE(VIDEO)
     if (is<MediaDocument>(m_frame->coreFrame()->document()))
-        loader->cancelMainResourceLoad(WebKit::blockedError(ResourceResponse& loader->response()));
+        loader->cancelMainResourceLoad(WebKit::cannotShowURLError(loader->response()));
 #endif
 
 }

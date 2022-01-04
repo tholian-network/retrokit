@@ -52,6 +52,11 @@ ResourceError cannotShowURLError(const ResourceRequest& request)
     return ResourceError(API::Error::webKitPolicyErrorDomain(), API::Error::Policy::CannotShowURL, request.url(), WEB_UI_STRING("The URL can’t be shown", "WebKitErrorCannotShowURL description"));
 }
 
+ResourceError cannotShowURLError(const ResourceResponse& response)
+{
+    return ResourceError(API::Error::webKitPolicyErrorDomain(), API::Error::Policy::CannotShowURL, response.url(), WEB_UI_STRING("The URL can’t be shown", "WebKitErrorCannotShowURL description"));
+}
+
 ResourceError wasBlockedByRestrictionsError(const ResourceRequest& request)
 {
     return ResourceError(API::Error::webKitPolicyErrorDomain(), API::Error::Policy::FrameLoadBlockedByRestrictions, request.url(), WEB_UI_STRING("The URL was blocked by device restrictions", "WebKitErrorFrameLoadBlockedByRestrictions description"));
