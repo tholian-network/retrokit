@@ -40,12 +40,7 @@ accessibility/mac/AccessibilityObjectMac.mm
 accessibility/mac/WebAccessibilityObjectWrapperBase.mm @no-unify
 accessibility/mac/WebAccessibilityObjectWrapperMac.mm @no-unify
 bindings/js/ScriptControllerMac.mm
-bridge/objc/ObjCRuntimeObject.mm @no-unify
 bridge/objc/WebScriptObject.mm @no-unify
-bridge/objc/objc_class.mm @no-unify
-bridge/objc/objc_instance.mm @no-unify
-bridge/objc/objc_runtime.mm @no-unify
-bridge/objc/objc_utility.mm @no-unify
 crypto/CommonCryptoUtilities.cpp
 crypto/mac/CommonCryptoDERUtilities.cpp
 crypto/mac/CryptoAlgorithmAES_CBCMac.cpp

@@ -188,7 +188,6 @@ std::unique_ptr<Page> createPageForSanitizingWebContent()
 #endif
     page->settings().setScriptEnabled(false);
     page->settings().setHTMLParserScriptingFlagPolicy(HTMLParserScriptingFlagPolicy::Enabled);
-    page->settings().setPluginsEnabled(false);
     page->settings().setAcceleratedCompositingEnabled(false);
 
     Frame& frame = page->mainFrame();
@@ -214,7 +213,7 @@ String sanitizeMarkup(const String& rawHTML, MSOListQuirks msoListQuirks, std::o
     Document* stagingDocument = page->mainFrame().document();
     ASSERT(stagingDocument);
 
-    auto fragment = createFragmentFromMarkup(*stagingDocument, rawHTML, emptyString(), DisallowScriptingAndPluginContent);
+    auto fragment = createFragmentFromMarkup(*stagingDocument, rawHTML, emptyString(), DisallowScriptingContent);
 
     if (fragmentSanitizer)
         (*fragmentSanitizer)(fragment);

@@ -169,10 +169,13 @@ bool HTMLMetaCharsetParser::checkForMetaCharset(const char* data, size_t length)
                 }
             }
 
-            if (tagName != scriptTag && tagName != noscriptTag
-                && tagName != styleTag && tagName != linkTag
-                && tagName != metaTag && tagName != objectTag
-                && tagName != titleTag && tagName != baseTag
+            if (tagName != scriptTag
+                && tagName != noscriptTag
+                && tagName != styleTag
+                && tagName != linkTag
+                && tagName != metaTag
+                && tagName != titleTag
+                && tagName != baseTag
                 && (isEnd || tagName != htmlTag)
                 && (isEnd || tagName != headTag)) {
                 m_inHeadSection = false;

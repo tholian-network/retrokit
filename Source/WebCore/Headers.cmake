@@ -277,6 +277,13 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     bindings/js/WindowProxy.h
     bindings/js/WorkerScriptFetcher.h
 
+    bridge/Bridge.h
+    bridge/IdentifierRep.h
+    bridge/runtime_method.h
+    bridge/runtime_object.h
+    bridge/runtime_root.h
+    bridge/jsc/BridgeJSC.h
+
     contentextensions/CombinedFiltersAlphabet.h
     contentextensions/CombinedURLFilters.h
     contentextensions/CompiledContentExtension.h

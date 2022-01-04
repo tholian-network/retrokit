@@ -518,6 +518,12 @@ bindings/js/WebCoreTypedArrayController.cpp
 bindings/js/WorkerModuleScriptLoader.cpp
 bindings/js/WindowProxy.cpp
 bindings/js/WritableStream.cpp
+bridge/IdentifierRep.cpp
+bridge/jsc/BridgeJSC.cpp
+bridge/runtime_array.cpp
+bridge/runtime_method.cpp
+bridge/runtime_object.cpp
+bridge/runtime_root.cpp
 contentextensions/CombinedFiltersAlphabet.cpp
 contentextensions/CombinedURLFilters.cpp
 contentextensions/CompiledContentExtension.cpp

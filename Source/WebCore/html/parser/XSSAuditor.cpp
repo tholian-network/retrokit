@@ -387,20 +387,21 @@ bool XSSAuditor::filterStartToken(const FilterTokenRequest& request)
         didBlockScript |= filterScriptToken(request);
         ASSERT(request.shouldAllowCDATA || !m_scriptTagNestingLevel);
         m_scriptTagNestingLevel++;
-    else if (hasName(request.token, paramTag))
+    } else if (hasName(request.token, paramTag)) {
         didBlockScript |= filterParamToken(request);
-    else if (hasName(request.token, iframeTag) || hasName(request.token, frameTag))
+    } else if (hasName(request.token, iframeTag) || hasName(request.token, frameTag)) {
         didBlockScript |= filterFrameToken(request);
-    else if (hasName(request.token, metaTag))
+    } else if (hasName(request.token, metaTag)) {
         didBlockScript |= filterMetaToken(request);
-    else if (hasName(request.token, baseTag))
+    } else if (hasName(request.token, baseTag)) {
         didBlockScript |= filterBaseToken(request);
-    else if (hasName(request.token, formTag))
+    } else if (hasName(request.token, formTag)) {
         didBlockScript |= filterFormToken(request);
-    else if (hasName(request.token, inputTag))
+    } else if (hasName(request.token, inputTag)) {
         didBlockScript |= filterInputToken(request);
-    else if (hasName(request.token, buttonTag))
+    } else if (hasName(request.token, buttonTag)) {
         didBlockScript |= filterButtonToken(request);
+    }
 
     return didBlockScript;
 }

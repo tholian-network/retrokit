@@ -565,16 +565,6 @@ bool WKPreferencesGetPageCacheEnabled(WKPreferencesRef preferencesRef)
     return toImpl(preferencesRef)->usesBackForwardCache();
 }
 
-void WKPreferencesSetPageCacheSupportsPlugins(WKPreferencesRef preferencesRef, bool backForwardCacheSupportsPlugins)
-{
-    toImpl(preferencesRef)->setBackForwardCacheSupportsPlugins(backForwardCacheSupportsPlugins);
-}
-
-bool WKPreferencesGetPageCacheSupportsPlugins(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->backForwardCacheSupportsPlugins();
-}
-
 void WKPreferencesSetPaginateDuringLayoutEnabled(WKPreferencesRef preferencesRef, bool enabled)
 {
     toImpl(preferencesRef)->setPaginateDuringLayoutEnabled(enabled);

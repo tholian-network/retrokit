@@ -54,7 +54,6 @@
 #include "UserGestureIndicator.h"
 #include "WebCoreJITOperations.h"
 #include "WebCoreJSClientData.h"
-#include "npruntime_impl.h"
 #include "runtime_root.h"
 #include <JavaScriptCore/Debugger.h>
 #include <JavaScriptCore/Heap.h>

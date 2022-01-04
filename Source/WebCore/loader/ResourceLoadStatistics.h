@@ -106,7 +106,7 @@ struct ResourceLoadStatistics {
     enum class NavigatorAPI : uint64_t {
         AppVersion = 1 << 0,
         UserAgent = 1 << 1,
-        CookieEnabled = 1 << 4,
+        CookieEnabled = 1 << 2,
     };
     enum class ScreenAPI : uint64_t {
         Height = 1 << 0,
@@ -129,7 +129,7 @@ template<> struct EnumTraits<WebCore::ResourceLoadStatistics::NavigatorAPI> {
         WebCore::ResourceLoadStatistics::NavigatorAPI,
         WebCore::ResourceLoadStatistics::NavigatorAPI::AppVersion,
         WebCore::ResourceLoadStatistics::NavigatorAPI::UserAgent,
-        WebCore::ResourceLoadStatistics::NavigatorAPI::CookieEnabled,
+        WebCore::ResourceLoadStatistics::NavigatorAPI::CookieEnabled
     >;
 };
 

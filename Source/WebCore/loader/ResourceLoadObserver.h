@@ -48,7 +48,7 @@ public:
     WEBCORE_EXPORT static ResourceLoadObserver& shared();
     WEBCORE_EXPORT static ResourceLoadObserver* sharedIfExists();
     WEBCORE_EXPORT static void setShared(ResourceLoadObserver&);
-    
+
     virtual ~ResourceLoadObserver() { }
 
     virtual void logSubresourceLoading(const Frame*, const ResourceRequest& /* newRequest */, const ResourceResponse& /* redirectResponse */, FetchDestinationIsScriptLike) { }
@@ -64,7 +64,7 @@ public:
     virtual String statisticsForURL(const URL&) { return { }; }
     virtual void updateCentralStatisticsStore(CompletionHandler<void()>&& completionHandler) { completionHandler(); }
     virtual void clearState() { }
-    
+
     virtual bool hasStatistics() const { return false; }
 
     virtual void setDomainsWithUserInteraction(HashSet<RegistrableDomain>&&) { }
@@ -72,5 +72,5 @@ public:
     virtual bool hasCrossPageStorageAccess(const SubResourceDomain&, const TopFrameDomain&) const { return false; }
     virtual bool hasHadUserInteraction(const RegistrableDomain&) const { return false; }
 };
-    
+
 } // namespace WebCore
