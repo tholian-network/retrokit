@@ -824,6 +824,14 @@ void EmptyFrameLoaderClient::didReplaceMultipartContent()
 {
 }
 
+void EmptyFrameLoaderClient::committedLoad(DocumentLoader*, const uint8_t*, int)
+{
+}
+
+void EmptyFrameLoaderClient::finishedLoading(DocumentLoader*)
+{
+}
+
 ResourceError EmptyFrameLoaderClient::cancelledError(const ResourceRequest&) const
 {
     return { ResourceError::Type::Cancellation };
@@ -864,11 +872,6 @@ ResourceError EmptyFrameLoaderClient::cannotShowMIMETypeError(const ResourceResp
 }
 
 ResourceError EmptyFrameLoaderClient::fileDoesNotExistError(const ResourceResponse&) const
-{
-    return { };
-}
-
-ResourceError EmptyFrameLoaderClient::pluginWillHandleLoadError(const ResourceResponse&) const
 {
     return { };
 }
@@ -996,18 +999,9 @@ void EmptyFrameLoaderClient::didDetectXSS(const URL&, bool)
 {
 }
 
-ObjectContentType EmptyFrameLoaderClient::objectContentType(const URL&, const String&)
-{
-    return ObjectContentType::None;
-}
-
 String EmptyFrameLoaderClient::overrideMediaType() const
 {
     return { };
-}
-
-void EmptyFrameLoaderClient::redirectDataToPlugin(Widget&)
-{
 }
 
 void EmptyFrameLoaderClient::dispatchDidClearWindowObjectInWorld(DOMWrapperWorld&)

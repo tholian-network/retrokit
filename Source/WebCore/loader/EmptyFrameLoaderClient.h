@@ -119,6 +119,9 @@ private:
     void willReplaceMultipartContent() final;
     void didReplaceMultipartContent() final;
 
+    void committedLoad(DocumentLoader*, const uint8_t*, int) final;
+    void finishedLoading(DocumentLoader*) final;
+
     ResourceError cancelledError(const ResourceRequest&) const final;
     ResourceError blockedError(const ResourceRequest&) const final;
     ResourceError blockedByContentBlockerError(const ResourceRequest&) const final;
@@ -130,7 +133,6 @@ private:
 
     ResourceError cannotShowMIMETypeError(const ResourceResponse&) const final;
     ResourceError fileDoesNotExistError(const ResourceResponse&) const final;
-    ResourceError pluginWillHandleLoadError(const ResourceResponse&) const final;
 
     bool shouldFallBack(const ResourceError&) const final;
 
@@ -170,10 +172,8 @@ private:
     void didDetectXSS(const URL&, bool) final;
     RefPtr<Frame> createFrame(const String&, HTMLFrameOwnerElement&) final;
 
-    ObjectContentType objectContentType(const URL&, const String&) final;
     String overrideMediaType() const final;
 
-    void redirectDataToPlugin(Widget&) final;
     void dispatchDidClearWindowObjectInWorld(DOMWrapperWorld&) final;
 
 #if PLATFORM(COCOA)

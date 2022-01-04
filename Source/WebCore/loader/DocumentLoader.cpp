@@ -1198,6 +1198,7 @@ void DocumentLoader::commitLoad(const uint8_t* data, int length)
     if (ArchiveFactory::isArchiveMIMEType(response().mimeType()))
         return;
 #endif
+    frameLoader->client().committedLoad(this, data, length);
 
     if (isMultipartReplacingLoad())
         frameLoader->client().didReplaceMultipartContent();

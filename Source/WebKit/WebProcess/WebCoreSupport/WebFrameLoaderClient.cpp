@@ -1099,6 +1099,7 @@ void WebFrameLoaderClient::revertToProvisionalState(DocumentLoader*)
 
 void WebFrameLoaderClient::setMainDocumentError(DocumentLoader*, const ResourceError& error)
 {
+    notImplemented();
 }
 
 void WebFrameLoaderClient::setMainFrameDocumentReady(bool)
@@ -1135,6 +1136,35 @@ void WebFrameLoaderClient::didReplaceMultipartContent()
     if (!webPage)
         return;
     webPage->didReplaceMultipartContent(m_frame);
+}
+
+void WebFrameLoaderClient::committedLoad(DocumentLoader* loader, const uint8_t* data, int length)
+{
+    loader->commitData(data, length);
+
+    // If the document is a stand-alone media document, now is the right time to cancel the WebKit load.
+    // FIXME: This code should be shared across all ports. <http://webkit.org/b/48762>.
+#if ENABLE(VIDEO)
+    if (is<MediaDocument>(m_frame->coreFrame()->document()))
+        loader->cancelMainResourceLoad(loader->response());
+#endif
+
+}
+
+void WebFrameLoaderClient::finishedLoading(DocumentLoader* loader)
+{
+    if (m_frameHasCustomContentProvider) {
+        WebPage* webPage = m_frame->page();
+        if (!webPage)
+            return;
+
+        RefPtr<SharedBuffer> mainResourceData = loader->mainResourceData();
+        IPC::DataReference dataReference(mainResourceData ? mainResourceData->data() : nullptr, mainResourceData ? mainResourceData->size() : 0);
+        webPage->send(Messages::WebPageProxy::DidFinishLoadingDataForCustomContentProvider(loader->response().suggestedFilename(), dataReference));
+    }
+
+    return;
+
 }
 
 void WebFrameLoaderClient::updateGlobalHistory()
@@ -1267,20 +1297,11 @@ ResourceError WebFrameLoaderClient::fileDoesNotExistError(const ResourceResponse
     return WebKit::fileDoesNotExistError(response);
 }
 
-ResourceError WebFrameLoaderClient::pluginWillHandleLoadError(const ResourceResponse& response) const
-{
-    return WebKit::pluginWillHandleLoadError(response);
-}
-
 bool WebFrameLoaderClient::shouldFallBack(const ResourceError& error) const
 {
     static NeverDestroyed<const ResourceError> cancelledError(this->cancelledError(ResourceRequest()));
-    static NeverDestroyed<const ResourceError> pluginWillHandleLoadError(this->pluginWillHandleLoadError(ResourceResponse()));
 
     if (error.errorCode() == cancelledError.get().errorCode() && error.domain() == cancelledError.get().domain())
-        return false;
-
-    if (error.errorCode() == pluginWillHandleLoadError.get().errorCode() && error.domain() == pluginWillHandleLoadError.get().domain())
         return false;
 
     return true;
@@ -1562,45 +1583,6 @@ WebCore::WebGLLoadPolicy WebFrameLoaderClient::resolveWebGLPolicyForURL(const UR
 
 #endif
 
-ObjectContentType WebFrameLoaderClient::objectContentType(const URL& url, const String& mimeTypeIn)
-{
-    // FIXME: This should eventually be merged with WebCore::FrameLoader::defaultObjectContentType.
-
-    String mimeType = mimeTypeIn;
-    if (mimeType.isEmpty()) {
-        auto path = url.path();
-        auto dotPosition = path.reverseFind('.');
-        if (dotPosition == notFound)
-            return ObjectContentType::Frame;
-        auto extension = path.substring(dotPosition + 1).convertToASCIILowercase();
-
-        // Try to guess the MIME type from the extension.
-        mimeType = MIMETypeRegistry::mimeTypeForExtension(extension);
-        if (mimeType.isEmpty()) {
-            // Check if there's a plug-in around that can handle the extension.
-            if (auto* webPage = m_frame->page()) {
-                if (pluginSupportsExtension(webPage->corePage()->pluginData(), extension))
-                    return ObjectContentType::PlugIn;
-            }
-            return ObjectContentType::Frame;
-        }
-    }
-
-    if (MIMETypeRegistry::isSupportedImageMIMEType(mimeType))
-        return ObjectContentType::Image;
-
-    if (MIMETypeRegistry::isSupportedNonImageMIMEType(mimeType))
-        return ObjectContentType::Frame;
-
-#if PLATFORM(IOS_FAMILY)
-    // iOS can render PDF in <object>/<embed> via PDFDocumentImage.
-    if (MIMETypeRegistry::isPDFOrPostScriptMIMEType(mimeType))
-        return ObjectContentType::Image;
-#endif
-
-    return ObjectContentType::None;
-}
-
 String WebFrameLoaderClient::overrideMediaType() const
 {
     if (auto* page = m_frame->page())
@@ -1717,8 +1699,6 @@ bool WebFrameLoaderClient::allowScript(bool enabledPerSettings)
     if (!enabledPerSettings)
         return false;
 
-    auto* pluginView = WebPage::pluginViewForFrame(m_frame->coreFrame());
-    return !pluginView || !pluginView->shouldAllowScripting();
 }
 
 bool WebFrameLoaderClient::shouldForceUniversalAccessFromLocalURL(const URL& url)

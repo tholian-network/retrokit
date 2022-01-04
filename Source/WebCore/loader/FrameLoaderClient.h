@@ -211,6 +211,9 @@ public:
     virtual void willReplaceMultipartContent() = 0;
     virtual void didReplaceMultipartContent() = 0;
 
+    virtual void committedLoad(DocumentLoader*, const uint8_t*, int) = 0;
+    virtual void finishedLoading(DocumentLoader*) = 0;
+
     virtual void updateGlobalHistory() = 0;
     virtual void updateGlobalHistoryRedirectLinks() = 0;
 
@@ -242,7 +245,6 @@ public:
 
     virtual ResourceError cannotShowMIMETypeError(const ResourceResponse&) const = 0;
     virtual ResourceError fileDoesNotExistError(const ResourceResponse&) const = 0;
-    virtual ResourceError pluginWillHandleLoadError(const ResourceResponse&) const = 0;
 
     virtual bool shouldFallBack(const ResourceError&) const = 0;
 
@@ -266,7 +268,7 @@ public:
     virtual String userAgent(const URL&) const = 0;
 
     virtual String overrideContentSecurityPolicy() const { return String(); }
-    
+
     virtual void savePlatformDataToCachedFrame(CachedFrame*) = 0;
     virtual void transitionToCommittedFromCachedFrame(CachedFrame*) = 0;
 #if PLATFORM(IOS_FAMILY)
@@ -281,7 +283,6 @@ public:
 
     virtual RefPtr<Frame> createFrame(const String& name, HTMLFrameOwnerElement&) = 0;
 
-    virtual ObjectContentType objectContentType(const URL&, const String& mimeType) = 0;
     virtual String overrideMediaType() const = 0;
 
     virtual void dispatchDidClearWindowObjectInWorld(DOMWrapperWorld&) = 0;

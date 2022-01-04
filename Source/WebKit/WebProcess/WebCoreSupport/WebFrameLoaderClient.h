@@ -127,33 +127,36 @@ private:
 
     WebCore::Frame* dispatchCreatePage(const WebCore::NavigationAction&, WebCore::NewFrameOpenerPolicy) final;
     void dispatchShow() final;
-    
+
     void dispatchDecidePolicyForResponse(const WebCore::ResourceResponse&, const WebCore::ResourceRequest&, WebCore::PolicyCheckIdentifier, const String&, WebCore::BrowsingContextGroupSwitchDecision, WebCore::FramePolicyFunction&&) final;
     void dispatchDecidePolicyForNewWindowAction(const WebCore::NavigationAction&, const WebCore::ResourceRequest&, WebCore::FormState*, const String& frameName, WebCore::PolicyCheckIdentifier, WebCore::FramePolicyFunction&&) final;
     void dispatchDecidePolicyForNavigationAction(const WebCore::NavigationAction&, const WebCore::ResourceRequest&, const WebCore::ResourceResponse& redirectResponse, WebCore::FormState*, WebCore::PolicyDecisionMode, WebCore::PolicyCheckIdentifier, WebCore::FramePolicyFunction&&) final;
     void cancelPolicyCheck() final;
-    
+
     void dispatchUnableToImplementPolicy(const WebCore::ResourceError&) final;
-    
+
     void dispatchWillSendSubmitEvent(Ref<WebCore::FormState>&&) final;
     void dispatchWillSubmitForm(WebCore::FormState&, CompletionHandler<void()>&&) final;
-    
+
     void revertToProvisionalState(WebCore::DocumentLoader*) final;
     void setMainDocumentError(WebCore::DocumentLoader*, const WebCore::ResourceError&) final;
-    
+
     void setMainFrameDocumentReady(bool) final;
-    
+
     void startDownload(const WebCore::ResourceRequest&, const String& suggestedName = String()) final;
-    
+
     void willChangeTitle(WebCore::DocumentLoader*) final;
     void didChangeTitle(WebCore::DocumentLoader*) final;
 
     void willReplaceMultipartContent() final;
     void didReplaceMultipartContent() final;
 
+    void committedLoad(WebCore::DocumentLoader*, const uint8_t*, int) final;
+    void finishedLoading(WebCore::DocumentLoader*) final;
+
     void updateGlobalHistory() final;
     void updateGlobalHistoryRedirectLinks() final;
-    
+
     bool shouldGoToHistoryItem(WebCore::HistoryItem&) const final;
 
     void didDisplayInsecureContent() final;
@@ -168,31 +171,30 @@ private:
 #if ENABLE(CONTENT_FILTERING)
     WebCore::ResourceError blockedByContentFilterError(const WebCore::ResourceRequest&) const final;
 #endif
-    
+
     WebCore::ResourceError cannotShowMIMETypeError(const WebCore::ResourceResponse&) const final;
     WebCore::ResourceError fileDoesNotExistError(const WebCore::ResourceResponse&) const final;
-    WebCore::ResourceError pluginWillHandleLoadError(const WebCore::ResourceResponse&) const final;
-    
+
     bool shouldFallBack(const WebCore::ResourceError&) const final;
-    
+
     bool canHandleRequest(const WebCore::ResourceRequest&) const final;
     bool canShowMIMEType(const String& MIMEType) const final;
     bool canShowMIMETypeAsHTML(const String& MIMEType) const final;
     bool representationExistsForURLScheme(const String& URLScheme) const final;
     String generatedMIMETypeForURLScheme(const String& URLScheme) const final;
-    
+
     void frameLoadCompleted() final;
     void saveViewStateToItem(WebCore::HistoryItem&) final;
     void restoreViewState() final;
     void provisionalLoadStarted() final;
     void didFinishLoad() final;
     void prepareForDataSourceReplacement() final;
-    
+
     Ref<WebCore::DocumentLoader> createDocumentLoader(const WebCore::ResourceRequest&, const WebCore::SubstituteData&) final;
     void updateCachedDocumentLoader(WebCore::DocumentLoader&) final;
 
     void setTitle(const WebCore::StringWithDirection&, const URL&) final;
-    
+
     String userAgent(const URL&) const final;
 
     String overrideContentSecurityPolicy() const final;
@@ -216,11 +218,10 @@ private:
     WebCore::WebGLLoadPolicy resolveWebGLPolicyForURL(const URL&) const final;
 #endif // ENABLE(WEBGL)
 
-    WebCore::ObjectContentType objectContentType(const URL&, const String& mimeType) final;
     String overrideMediaType() const final;
 
     void dispatchDidClearWindowObjectInWorld(WebCore::DOMWrapperWorld&) final;
-    
+
     void dispatchGlobalObjectAvailable(WebCore::DOMWrapperWorld&) final;
     void dispatchWillDisconnectDOMWindowExtensionFromGlobalObject(WebCore::DOMWindowExtension*) final;
     void dispatchDidReconnectDOMWindowExtensionToGlobalObject(WebCore::DOMWindowExtension*) final;
@@ -230,7 +231,7 @@ private:
 
 #if PLATFORM(COCOA)
     RemoteAXObjectRef accessibilityRemoteObject() final;
-    
+
     void willCacheResponse(WebCore::DocumentLoader*, unsigned long identifier, NSCachedURLResponse*, CompletionHandler<void(NSCachedURLResponse *)>&&) const final;
 
     NSDictionary *dataDetectionContext() final;

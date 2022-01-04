@@ -79,11 +79,6 @@ ResourceError cannotShowMIMETypeError(const ResourceResponse& response)
     return ResourceError(API::Error::webKitPolicyErrorDomain(), API::Error::Policy::CannotShowMIMEType, response.url(), WEB_UI_STRING("Content with specified MIME type can’t be shown", "WebKitErrorCannotShowMIMEType description"));
 }
 
-ResourceError pluginWillHandleLoadError(const ResourceResponse& response)
-{
-    return ResourceError(API::Error::webKitPluginErrorDomain(), API::Error::Plugin::PlugInWillHandleLoad, response.url(), WEB_UI_STRING("Plug-in handled load", "WebKitErrorPlugInWillHandleLoad description"));
-}
-
 #if !PLATFORM(COCOA)
 ResourceError cancelledError(const ResourceRequest& request)
 {
