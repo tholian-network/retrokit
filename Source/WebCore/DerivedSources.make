@@ -1164,13 +1164,9 @@ JS_DOM_CLASSES=$(call get_bare_name,$(JS_BINDING_IDLS))
 JS_DOM_HEADERS=$(filter-out JSEventListener.h, $(JS_DOM_CLASSES:%=JS%.h))
 JS_DOM_IMPLEMENTATIONS=$(filter-out JSEventListener.cpp, $(JS_DOM_CLASSES:%=JS%.cpp))
 
-WEB_DOM_HEADERS :=
-
 all : \
     $(JS_DOM_HEADERS) \
     $(JS_DOM_IMPLEMENTATIONS) \
-    $(WEB_DOM_HEADERS) \
-    \
     CSSPropertyNames.cpp \
     CSSPropertyNames.h \
     CSSValueKeywords.cpp \

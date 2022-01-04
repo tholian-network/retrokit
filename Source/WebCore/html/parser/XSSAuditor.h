@@ -80,10 +80,7 @@ private:
     void filterEndToken(const FilterTokenRequest&);
     bool filterCharacterToken(const FilterTokenRequest&);
     bool filterScriptToken(const FilterTokenRequest&);
-    bool filterObjectToken(const FilterTokenRequest&);
     bool filterParamToken(const FilterTokenRequest&);
-    bool filterEmbedToken(const FilterTokenRequest&);
-    bool filterAppletToken(const FilterTokenRequest&);
     bool filterFrameToken(const FilterTokenRequest&);
     bool filterMetaToken(const FilterTokenRequest&);
     bool filterBaseToken(const FilterTokenRequest&);

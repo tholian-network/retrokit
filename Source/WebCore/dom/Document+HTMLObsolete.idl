@@ -32,7 +32,6 @@ partial interface Document {
     [CEReactions] attribute [LegacyNullToEmptyString] DOMString bgColor;
 
     [SameObject] readonly attribute HTMLCollection anchors;
-    [SameObject] readonly attribute HTMLCollection applets;
 
     undefined clear();
     undefined captureEvents();

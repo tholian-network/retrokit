@@ -265,7 +265,7 @@ bool SharingResolver::canShareStyleWithElement(const Context& context, const Sty
     if (candidateElement.hasTagName(HTMLNames::iframeTag) || candidateElement.hasTagName(HTMLNames::frameTag))
         return false;
 
-    if (candidateElement.hasTagName(HTMLNames::embedTag) || candidateElement.hasTagName(HTMLNames::objectTag) || candidateElement.hasTagName(HTMLNames::appletTag) || candidateElement.hasTagName(HTMLNames::canvasTag))
+    if (candidateElement.hasTagName(HTMLNames::canvasTag))
         return false;
 
     if (elementHasDirectionAuto(candidateElement))

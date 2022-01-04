@@ -112,7 +112,6 @@ static bool elementCannotHaveEndTag(const Node& node)
         bgsoundTag->localName().impl(),
         brTag->localName().impl(),
         colTag->localName().impl(),
-        embedTag->localName().impl(),
         frameTag->localName().impl(),
         hrTag->localName().impl(),
         imgTag->localName().impl(),

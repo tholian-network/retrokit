@@ -387,14 +387,8 @@ bool XSSAuditor::filterStartToken(const FilterTokenRequest& request)
         didBlockScript |= filterScriptToken(request);
         ASSERT(request.shouldAllowCDATA || !m_scriptTagNestingLevel);
         m_scriptTagNestingLevel++;
-    } else if (hasName(request.token, objectTag))
-        didBlockScript |= filterObjectToken(request);
     else if (hasName(request.token, paramTag))
         didBlockScript |= filterParamToken(request);
-    else if (hasName(request.token, embedTag))
-        didBlockScript |= filterEmbedToken(request);
-    else if (hasName(request.token, appletTag))
-        didBlockScript |= filterAppletToken(request);
     else if (hasName(request.token, iframeTag) || hasName(request.token, frameTag))
         didBlockScript |= filterFrameToken(request);
     else if (hasName(request.token, metaTag))
@@ -449,20 +443,6 @@ bool XSSAuditor::filterScriptToken(const FilterTokenRequest& request)
     return didBlockScript;
 }
 
-bool XSSAuditor::filterObjectToken(const FilterTokenRequest& request)
-{
-    ASSERT(request.token.type() == HTMLToken::StartTag);
-    ASSERT(hasName(request.token, objectTag));
-
-    bool didBlockScript = false;
-    if (isContainedInRequest(canonicalizedSnippetForTagName(request))) {
-        didBlockScript |= eraseAttributeIfInjected(request, dataAttr, aboutBlankURL().string(), TruncationStyle::SrcLikeAttribute);
-        didBlockScript |= eraseAttributeIfInjected(request, typeAttr);
-        didBlockScript |= eraseAttributeIfInjected(request, classidAttr);
-    }
-    return didBlockScript;
-}
-
 bool XSSAuditor::filterParamToken(const FilterTokenRequest& request)
 {
     ASSERT(request.token.type() == HTMLToken::StartTag);
@@ -477,33 +457,6 @@ bool XSSAuditor::filterParamToken(const FilterTokenRequest& request)
         return false;
 
     return eraseAttributeIfInjected(request, valueAttr, aboutBlankURL().string(), TruncationStyle::SrcLikeAttribute);
-}
-
-bool XSSAuditor::filterEmbedToken(const FilterTokenRequest& request)
-{
-    ASSERT(request.token.type() == HTMLToken::StartTag);
-    ASSERT(hasName(request.token, embedTag));
-
-    bool didBlockScript = false;
-    if (isContainedInRequest(canonicalizedSnippetForTagName(request))) {
-        didBlockScript |= eraseAttributeIfInjected(request, codeAttr, String(), TruncationStyle::SrcLikeAttribute);
-        didBlockScript |= eraseAttributeIfInjected(request, srcAttr, aboutBlankURL().string(), TruncationStyle::SrcLikeAttribute);
-        didBlockScript |= eraseAttributeIfInjected(request, typeAttr);
-    }
-    return didBlockScript;
-}
-
-bool XSSAuditor::filterAppletToken(const FilterTokenRequest& request)
-{
-    ASSERT(request.token.type() == HTMLToken::StartTag);
-    ASSERT(hasName(request.token, appletTag));
-
-    bool didBlockScript = false;
-    if (isContainedInRequest(canonicalizedSnippetForTagName(request))) {
-        didBlockScript |= eraseAttributeIfInjected(request, codeAttr, String(), TruncationStyle::SrcLikeAttribute);
-        didBlockScript |= eraseAttributeIfInjected(request, objectAttr);
-    }
-    return didBlockScript;
 }
 
 bool XSSAuditor::filterFrameToken(const FilterTokenRequest& request)
