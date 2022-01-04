@@ -290,8 +290,6 @@ public:
     void selfOnlyRef();
     void selfOnlyDeref();
 
-    WEBCORE_EXPORT bool arePluginsEnabled();
-
 private:
     friend class NavigationDisabler;
 

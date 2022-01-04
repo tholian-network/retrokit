@@ -31,7 +31,6 @@
 #include "DisplayLinkObserverID.h"
 #include "MessageReceiverMap.h"
 #include "NetworkProcessProxy.h"
-#include "PluginInfoStore.h"
 #include "ProcessLauncher.h"
 #include "ProcessTerminationReason.h"
 #include "ProcessThrottler.h"
@@ -74,7 +73,6 @@ class PageConfiguration;
 namespace WebCore {
 class DeferrableOneShotTimer;
 class ResourceRequest;
-struct PluginInfo;
 struct PrewarmInformation;
 struct SecurityOriginData;
 enum class ThirdPartyCookieBlockingMode : uint8_t;

@@ -706,10 +706,6 @@ enum AutoplayPolicy {
 
     boolean isSelectPopupVisible(HTMLSelectElement element);
 
-    boolean isPluginUnavailabilityIndicatorObscured(Element element);
-    boolean isPluginSnapshotted(Element element);
-    boolean pluginIsBelowSizeThreshold(Element element);
-
     DOMRect selectionBounds();
     undefined setSelectionWithoutValidation(Node baseNode, unsigned long baseOffset, Node? extentNode, unsigned long extentOffset);
 
@@ -932,8 +928,6 @@ enum AutoplayPolicy {
     undefined reloadWithoutContentExtensions();
 
     undefined setUseSystemAppearance(boolean value);
-
-    unsigned long pluginCount();
 
     undefined notifyResourceLoadObserver();
 

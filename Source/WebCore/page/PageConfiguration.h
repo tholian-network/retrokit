@@ -59,7 +59,6 @@ class LibWebRTCProvider;
 class MediaRecorderProvider;
 class PerformanceLoggingClient;
 class PermissionController;
-class PluginInfoProvider;
 class ProgressTrackerClient;
 class SocketProvider;
 class SpeechRecognitionProvider;
@@ -116,7 +115,6 @@ public:
     RefPtr<ApplicationCacheStorage> applicationCacheStorage;
     RefPtr<DatabaseProvider> databaseProvider;
     Ref<CacheStorageProvider> cacheStorageProvider;
-    RefPtr<PluginInfoProvider> pluginInfoProvider;
     RefPtr<StorageNamespaceProvider> storageNamespaceProvider;
     Ref<UserContentProvider> userContentProvider;
     RefPtr<VisitedLinkStore> visitedLinkStore;

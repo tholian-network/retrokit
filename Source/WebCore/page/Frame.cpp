@@ -1100,11 +1100,6 @@ TextStream& operator<<(TextStream& ts, const Frame& frame)
     return ts;
 }
 
-bool Frame::arePluginsEnabled()
-{
-    return settings().arePluginsEnabled();
-}
-
 void Frame::resetScript()
 {
     resetWindowProxy();

@@ -800,17 +800,6 @@ WEBKIT_DEPRECATED WebKitDOMHTMLCollection*
 webkit_dom_document_get_images(WebKitDOMDocument* self);
 
 /**
- * webkit_dom_document_get_applets:
- * @self: A #WebKitDOMDocument
- *
- * Returns: (transfer full): A #WebKitDOMHTMLCollection
- *
- * Deprecated: 2.22: Use JavaScriptCore API instead
-**/
-WEBKIT_DEPRECATED WebKitDOMHTMLCollection*
-webkit_dom_document_get_applets(WebKitDOMDocument* self);
-
-/**
  * webkit_dom_document_get_links:
  * @self: A #WebKitDOMDocument
  *
@@ -842,19 +831,6 @@ webkit_dom_document_get_forms(WebKitDOMDocument* self);
 **/
 WEBKIT_DEPRECATED WebKitDOMHTMLCollection*
 webkit_dom_document_get_anchors(WebKitDOMDocument* self);
-
-/**
- * webkit_dom_document_get_embeds:
- * @self: A #WebKitDOMDocument
- *
- * Returns: (transfer full): A #WebKitDOMHTMLCollection
- *
- * Since: 2.14
- *
- * Deprecated: 2.22: Use JavaScriptCore API instead
-**/
-WEBKIT_DEPRECATED WebKitDOMHTMLCollection*
-webkit_dom_document_get_embeds(WebKitDOMDocument* self);
 
 /**
  * webkit_dom_document_get_scripts:

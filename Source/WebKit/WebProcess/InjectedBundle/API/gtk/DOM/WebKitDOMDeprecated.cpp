@@ -193,18 +193,6 @@ gchar* webkit_dom_html_document_get_compat_mode(WebKitDOMHTMLDocument* self)
     return webkit_dom_document_get_compat_mode(WEBKIT_DOM_DOCUMENT(self));
 }
 
-WebKitDOMHTMLCollection* webkit_dom_html_document_get_embeds(WebKitDOMHTMLDocument* self)
-{
-    g_return_val_if_fail(WEBKIT_DOM_IS_HTML_DOCUMENT(self), nullptr);
-    return webkit_dom_document_get_embeds(WEBKIT_DOM_DOCUMENT(self));
-}
-
-WebKitDOMHTMLCollection* webkit_dom_html_document_get_plugins(WebKitDOMHTMLDocument* self)
-{
-    g_return_val_if_fail(WEBKIT_DOM_IS_HTML_DOCUMENT(self), nullptr);
-    return webkit_dom_document_get_plugins(WEBKIT_DOM_DOCUMENT(self));
-}
-
 WebKitDOMHTMLCollection* webkit_dom_html_document_get_scripts(WebKitDOMHTMLDocument* self)
 {
     g_return_val_if_fail(WEBKIT_DOM_IS_HTML_DOCUMENT(self), nullptr);

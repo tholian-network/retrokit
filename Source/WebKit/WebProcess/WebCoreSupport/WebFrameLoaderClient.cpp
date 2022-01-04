@@ -834,8 +834,7 @@ void WebFrameLoaderClient::dispatchDecidePolicyForResponse(const ResourceRespons
         return;
     }
 
-    bool canShowResponse = webPage->canShowResponse(response);
-
+    bool canShowMIMEType = webPage->canShowMIMEType(response);
     auto* coreFrame = m_frame->coreFrame();
     auto* policyDocumentLoader = coreFrame ? coreFrame->loader().provisionalDocumentLoader() : nullptr;
     auto navigationID = policyDocumentLoader ? static_cast<WebDocumentLoader&>(*policyDocumentLoader).navigationID() : 0;
@@ -845,7 +844,7 @@ void WebFrameLoaderClient::dispatchDecidePolicyForResponse(const ResourceRespons
     bool wasAllowedByInjectedBundle = policy == WKBundlePagePolicyActionUse;
     auto protector = m_frame.copyRef();
     uint64_t listenerID = m_frame->setUpPolicyListener(identifier, WTFMove(function), WebFrame::ForNavigationAction::No);
-    if (!webPage->send(Messages::WebPageProxy::DecidePolicyForResponse(m_frame->frameID(), m_frame->info(), identifier, navigationID, response, request, canShowResponse, downloadAttribute, wasAllowedByInjectedBundle, browsingContextGroupSwitchDecision, mainResourceLoadIdentifier, listenerID, UserData(WebProcess::singleton().transformObjectsToHandles(userData.get()).get())))) {
+    if (!webPage->send(Messages::WebPageProxy::DecidePolicyForResponse(m_frame->frameID(), m_frame->info(), identifier, navigationID, response, request, canShowMIMEType, downloadAttribute, wasAllowedByInjectedBundle, browsingContextGroupSwitchDecision, mainResourceLoadIdentifier, listenerID, UserData(WebProcess::singleton().transformObjectsToHandles(userData.get()).get())))) {
         WEBFRAMELOADERCLIENT_RELEASE_LOG(Network, "dispatchDecidePolicyForResponse: ignoring because WebPageProxy::DecidePolicyForResponse failed");
         m_frame->didReceivePolicyDecision(listenerID, PolicyDecision { identifier, std::nullopt, PolicyAction::Ignore, 0, { }, { } });
     }
@@ -1142,11 +1141,9 @@ void WebFrameLoaderClient::committedLoad(DocumentLoader* loader, const uint8_t* 
 {
     loader->commitData(data, length);
 
-    // If the document is a stand-alone media document, now is the right time to cancel the WebKit load.
-    // FIXME: This code should be shared across all ports. <http://webkit.org/b/48762>.
 #if ENABLE(VIDEO)
     if (is<MediaDocument>(m_frame->coreFrame()->document()))
-        loader->cancelMainResourceLoad(loader->response());
+        loader->cancelMainResourceLoad(WebKit::blockedError(ResourceResponse& loader->response()));
 #endif
 
 }

@@ -870,25 +870,6 @@ bool ArgumentCoder<VelocityData>::decode(Decoder& decoder, VelocityData& velocit
     return true;
 }
 
-void ArgumentCoder<MimeClassInfo>::encode(Encoder& encoder, const MimeClassInfo& mimeClassInfo)
-{
-    encoder << mimeClassInfo.type << mimeClassInfo.desc << mimeClassInfo.extensions;
-}
-
-std::optional<MimeClassInfo> ArgumentCoder<MimeClassInfo>::decode(Decoder& decoder)
-{
-    MimeClassInfo mimeClassInfo;
-    if (!decoder.decode(mimeClassInfo.type))
-        return std::nullopt;
-    if (!decoder.decode(mimeClassInfo.desc))
-        return std::nullopt;
-    if (!decoder.decode(mimeClassInfo.extensions))
-        return std::nullopt;
-
-    return mimeClassInfo;
-}
-
-
 void ArgumentCoder<AuthenticationChallenge>::encode(Encoder& encoder, const AuthenticationChallenge& challenge)
 {
     encoder << challenge.protectionSpace() << challenge.proposedCredential() << challenge.previousFailureCount() << challenge.failureResponse() << challenge.error();

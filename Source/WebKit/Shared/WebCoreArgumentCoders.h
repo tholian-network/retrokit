@@ -151,7 +151,6 @@ struct ShareData;
 struct ShareDataWithParsedURL;
 struct Length;
 struct GrammarDetail;
-struct MimeClassInfo;
 struct PasteboardImage;
 struct PasteboardURL;
 struct PromisedAttachmentInfo;
@@ -370,11 +369,6 @@ template<> struct ArgumentCoder<WebCore::Length> {
 template<> struct ArgumentCoder<WebCore::VelocityData> {
     static void encode(Encoder&, const WebCore::VelocityData&);
     static WARN_UNUSED_RETURN bool decode(Decoder&, WebCore::VelocityData&);
-};
-
-template<> struct ArgumentCoder<WebCore::MimeClassInfo> {
-    static void encode(Encoder&, const WebCore::MimeClassInfo&);
-    static std::optional<WebCore::MimeClassInfo> decode(Decoder&);
 };
 
 template<> struct ArgumentCoder<WebCore::AuthenticationChallenge> {

@@ -30,6 +30,7 @@
 #include "ShareableBitmap.h"
 #include "WKPage.h"
 #include "WebCoreArgumentCoders.h"
+#include "WebFrame.h"
 #include "WebPage.h"
 #include "WebPageProxyMessages.h"
 #include <WebCore/DocumentMarkerController.h>

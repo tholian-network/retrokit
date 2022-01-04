@@ -823,10 +823,6 @@ bool HTMLElement::rendererIsEverNeeded()
         RefPtr<Frame> frame = document().frame();
         if (frame && frame->script().canExecuteScripts(NotAboutToExecuteScript))
             return false;
-    } else if (hasTagName(noembedTag)) {
-        RefPtr<Frame> frame = document().frame();
-        if (frame && frame->arePluginsEnabled())
-            return false;
     }
     return StyledElement::rendererIsEverNeeded();
 }

@@ -241,17 +241,6 @@ WEBKIT_DEPRECATED_FOR(webkit_dom_document_get_compat_mode) gchar*
 webkit_dom_html_document_get_compat_mode(WebKitDOMHTMLDocument* self);
 
 /**
- * webkit_dom_html_document_get_embeds:
- * @self: A #WebKitDOMHTMLDocument
- *
- * Returns: (transfer full): A #WebKitDOMHTMLCollection
- *
- * Deprecated: 2.14: Use webkit_dom_document_get_embeds() instead.
- */
-WEBKIT_DEPRECATED_FOR(webkit_dom_document_get_embeds) WebKitDOMHTMLCollection*
-webkit_dom_html_document_get_embeds(WebKitDOMHTMLDocument* self);
-
-/**
  * webkit_dom_html_document_get_scripts:
  * @self: A #WebKitDOMHTMLDocument
  *

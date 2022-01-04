@@ -120,11 +120,9 @@ enum {
     DOM_DOCUMENT_PROP_BODY,
     DOM_DOCUMENT_PROP_HEAD,
     DOM_DOCUMENT_PROP_IMAGES,
-    DOM_DOCUMENT_PROP_APPLETS,
     DOM_DOCUMENT_PROP_LINKS,
     DOM_DOCUMENT_PROP_FORMS,
     DOM_DOCUMENT_PROP_ANCHORS,
-    DOM_DOCUMENT_PROP_EMBEDS,
     DOM_DOCUMENT_PROP_SCRIPTS,
     DOM_DOCUMENT_PROP_LAST_MODIFIED,
     DOM_DOCUMENT_PROP_CHARSET,
@@ -252,9 +250,6 @@ static void webkit_dom_document_get_property(GObject* object, guint propertyId, 
     case DOM_DOCUMENT_PROP_IMAGES:
         g_value_set_object(value, webkit_dom_document_get_images(self));
         break;
-    case DOM_DOCUMENT_PROP_APPLETS:
-        g_value_set_object(value, webkit_dom_document_get_applets(self));
-        break;
     case DOM_DOCUMENT_PROP_LINKS:
         g_value_set_object(value, webkit_dom_document_get_links(self));
         break;
@@ -263,9 +258,6 @@ static void webkit_dom_document_get_property(GObject* object, guint propertyId, 
         break;
     case DOM_DOCUMENT_PROP_ANCHORS:
         g_value_set_object(value, webkit_dom_document_get_anchors(self));
-        break;
-    case DOM_DOCUMENT_PROP_EMBEDS:
-        g_value_set_object(value, webkit_dom_document_get_embeds(self));
         break;
     case DOM_DOCUMENT_PROP_SCRIPTS:
         g_value_set_object(value, webkit_dom_document_get_scripts(self));
@@ -547,16 +539,6 @@ void webkitDOMDocumentInstallProperties(GObjectClass* gobjectClass)
 
     g_object_class_install_property(
         gobjectClass,
-        DOM_DOCUMENT_PROP_APPLETS,
-        g_param_spec_object(
-            "applets",
-            "Document:applets",
-            "read-only WebKitDOMHTMLCollection* Document:applets",
-            WEBKIT_DOM_TYPE_HTML_COLLECTION,
-            WEBKIT_PARAM_READABLE));
-
-    g_object_class_install_property(
-        gobjectClass,
         DOM_DOCUMENT_PROP_LINKS,
         g_param_spec_object(
             "links",
@@ -582,16 +564,6 @@ void webkitDOMDocumentInstallProperties(GObjectClass* gobjectClass)
             "anchors",
             "Document:anchors",
             "read-only WebKitDOMHTMLCollection* Document:anchors",
-            WEBKIT_DOM_TYPE_HTML_COLLECTION,
-            WEBKIT_PARAM_READABLE));
-
-    g_object_class_install_property(
-        gobjectClass,
-        DOM_DOCUMENT_PROP_EMBEDS,
-        g_param_spec_object(
-            "embeds",
-            "Document:embeds",
-            "read-only WebKitDOMHTMLCollection* Document:embeds",
             WEBKIT_DOM_TYPE_HTML_COLLECTION,
             WEBKIT_PARAM_READABLE));
 
@@ -1565,15 +1537,6 @@ WebKitDOMHTMLCollection* webkit_dom_document_get_images(WebKitDOMDocument* self)
     return WebKit::kit(gobjectResult.get());
 }
 
-WebKitDOMHTMLCollection* webkit_dom_document_get_applets(WebKitDOMDocument* self)
-{
-    WebCore::JSMainThreadNullState state;
-    g_return_val_if_fail(WEBKIT_DOM_IS_DOCUMENT(self), 0);
-    WebCore::Document* item = WebKit::core(self);
-    RefPtr<WebCore::HTMLCollection> gobjectResult = WTF::getPtr(item->applets());
-    return WebKit::kit(gobjectResult.get());
-}
-
 WebKitDOMHTMLCollection* webkit_dom_document_get_links(WebKitDOMDocument* self)
 {
     WebCore::JSMainThreadNullState state;
@@ -1598,15 +1561,6 @@ WebKitDOMHTMLCollection* webkit_dom_document_get_anchors(WebKitDOMDocument* self
     g_return_val_if_fail(WEBKIT_DOM_IS_DOCUMENT(self), 0);
     WebCore::Document* item = WebKit::core(self);
     RefPtr<WebCore::HTMLCollection> gobjectResult = WTF::getPtr(item->anchors());
-    return WebKit::kit(gobjectResult.get());
-}
-
-WebKitDOMHTMLCollection* webkit_dom_document_get_embeds(WebKitDOMDocument* self)
-{
-    WebCore::JSMainThreadNullState state;
-    g_return_val_if_fail(WEBKIT_DOM_IS_DOCUMENT(self), 0);
-    WebCore::Document* item = WebKit::core(self);
-    RefPtr<WebCore::HTMLCollection> gobjectResult = WTF::getPtr(item->embeds());
     return WebKit::kit(gobjectResult.get());
 }
 

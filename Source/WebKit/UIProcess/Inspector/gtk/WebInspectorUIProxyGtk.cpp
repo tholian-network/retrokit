@@ -200,7 +200,6 @@ WebPageProxy* WebInspectorUIProxy::platformCreateFrontendPage()
         nullptr, // runJavaScriptPrompt
         nullptr, // setStatusText
         nullptr, // mouseDidMoveOverElement_deprecatedForUseWithV0
-        nullptr, // missingPluginButtonClicked_deprecatedForUseWithV0
         nullptr, // didNotHandleKeyEvent
         nullptr, // didNotHandleWheelEvent
         nullptr, // areToolbarsVisible
@@ -238,7 +237,6 @@ WebPageProxy* WebInspectorUIProxy::platformCreateFrontendPage()
         { 0, this },
         decidePolicyForNavigationAction,
         nullptr, // decidePolicyForNavigationResponse
-        nullptr, // decidePolicyForPluginLoad
         nullptr, // didStartProvisionalNavigation
         nullptr, // didReceiveServerRedirectForProvisionalNavigation
         nullptr, // didFailProvisionalNavigation

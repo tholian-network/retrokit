@@ -43,6 +43,8 @@ HTMLFrameOwnerElement::HTMLFrameOwnerElement(const QualifiedName& tagName, Docum
 
 RenderWidget* HTMLFrameOwnerElement::renderWidget() const
 {
+    if (!is<RenderWidget>(renderer()))
+        return nullptr;
     return downcast<RenderWidget>(renderer());
 }
 

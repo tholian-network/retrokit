@@ -30,7 +30,6 @@
 #include "AuthenticationChallengeDisposition.h"
 #include "AuthenticationChallengeProxy.h"
 #include "AuthenticationDecisionListener.h"
-#include "PluginModuleInfo.h"
 #include "ProcessTerminationReason.h"
 #include "SameDocumentNavigationType.h"
 #include "WebFramePolicyListenerProxy.h"

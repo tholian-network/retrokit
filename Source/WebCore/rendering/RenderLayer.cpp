@@ -577,7 +577,6 @@ bool RenderLayer::shouldBeNormalFlowOnly() const
     return renderer().hasNonVisibleOverflow()
         || renderer().isCanvas()
         || renderer().isVideo()
-        || renderer().isEmbeddedObject()
         || renderer().isRenderIFrame()
         || (renderer().style().specifiesColumns() && !isRenderViewLayer())
         || renderer().isRenderFragmentedFlow();
@@ -5172,7 +5171,6 @@ bool RenderLayer::shouldBeSelfPaintingLayer() const
         || renderer().isTableRow()
         || renderer().isCanvas()
         || renderer().isVideo()
-        || renderer().isEmbeddedObject()
         || renderer().isRenderIFrame()
         || renderer().isRenderFragmentedFlow();
 }

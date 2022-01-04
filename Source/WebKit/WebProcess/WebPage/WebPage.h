@@ -46,7 +46,6 @@
 #include "MessageReceiver.h"
 #include "MessageSender.h"
 #include "NetworkResourceLoadIdentifier.h"
-#include "Plugin.h"
 #include "PolicyDecision.h"
 #include "SandboxExtension.h"
 #include "ShareableBitmap.h"
@@ -589,7 +588,6 @@ public:
     void setLayerHostingMode(LayerHostingMode);
 
 #if PLATFORM(COCOA)
-    void updatePluginsActiveAndFocusedState();
     const WebCore::FloatRect& windowFrameInScreenCoordinates() const { return m_windowFrameInScreenCoordinates; }
     const WebCore::FloatRect& windowFrameInUnflippedScreenCoordinates() const { return m_windowFrameInUnflippedScreenCoordinates; }
     const WebCore::FloatRect& viewFrameInWindowCoordinates() const { return m_viewFrameInWindowCoordinates; }
@@ -853,10 +851,7 @@ public:
 #if PLATFORM(COCOA)
     void registerUIProcessAccessibilityTokens(const IPC::DataReference& elemenToken, const IPC::DataReference& windowToken);
     WKAccessibilityWebPageObject* accessibilityRemoteObject();
-    NSObject *accessibilityObjectForMainFramePlugin();
     const WebCore::FloatPoint& accessibilityPosition() const { return m_accessibilityPosition; }
-    
-    void sendComplexTextInputToPlugin(uint64_t pluginComplexTextInputIdentifier, const String& textInput);
 
     void setTextAsync(const String&);
     void insertTextAsync(const String& text, const EditingRange& replacementRange, InsertTextOptions&&);
@@ -1049,13 +1044,6 @@ public:
 #endif
 
     bool shouldUseCustomContentProviderForResponse(const WebCore::ResourceResponse&);
-
-    bool asynchronousPluginInitializationEnabled() const { return m_asynchronousPluginInitializationEnabled; }
-    void setAsynchronousPluginInitializationEnabled(bool enabled) { m_asynchronousPluginInitializationEnabled = enabled; }
-    bool asynchronousPluginInitializationEnabledForAllPlugins() const { return m_asynchronousPluginInitializationEnabledForAllPlugins; }
-    void setAsynchronousPluginInitializationEnabledForAllPlugins(bool enabled) { m_asynchronousPluginInitializationEnabledForAllPlugins = enabled; }
-    bool artificialPluginInitializationDelayEnabled() const { return m_artificialPluginInitializationDelayEnabled; }
-    void setArtificialPluginInitializationDelayEnabled(bool enabled) { m_artificialPluginInitializationDelayEnabled = enabled; }
 
 #if PLATFORM(COCOA)
     NSDictionary *dataDetectionContext() const { return m_dataDetectionContext.get(); }
@@ -1829,10 +1817,7 @@ private:
     bool m_isInRedo { false };
     bool m_isClosed { false };
     bool m_tabToLinks { false };
-    
-    bool m_asynchronousPluginInitializationEnabled { false };
-    bool m_asynchronousPluginInitializationEnabledForAllPlugins { false };
-    bool m_artificialPluginInitializationDelayEnabled { false };
+
     bool m_mainFrameIsScrollable { true };
 
     bool m_alwaysShowsHorizontalScroller { false };
@@ -1857,7 +1842,6 @@ private:
 #endif
 
 #if PLATFORM(COCOA)
-    bool m_pdfPluginEnabled { false };
     bool m_hasCachedWindowFrame { false };
 
     // The frame of the containing window in screen coordinates.

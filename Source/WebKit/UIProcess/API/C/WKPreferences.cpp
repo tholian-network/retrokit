@@ -945,36 +945,6 @@ bool WKPreferencesGetDiagnosticLoggingEnabled(WKPreferencesRef preferencesRef)
     return toImpl(preferencesRef)->diagnosticLoggingEnabled();
 }
 
-void WKPreferencesSetAsynchronousPluginInitializationEnabled(WKPreferencesRef preferencesRef, bool enabled)
-{
-    toImpl(preferencesRef)->setAsynchronousPluginInitializationEnabled(enabled);
-}
-
-bool WKPreferencesGetAsynchronousPluginInitializationEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->asynchronousPluginInitializationEnabled();
-}
-
-void WKPreferencesSetAsynchronousPluginInitializationEnabledForAllPlugins(WKPreferencesRef preferencesRef, bool enabled)
-{
-    toImpl(preferencesRef)->setAsynchronousPluginInitializationEnabledForAllPlugins(enabled);
-}
-
-bool WKPreferencesGetAsynchronousPluginInitializationEnabledForAllPlugins(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->asynchronousPluginInitializationEnabledForAllPlugins();
-}
-
-void WKPreferencesSetArtificialPluginInitializationDelayEnabled(WKPreferencesRef preferencesRef, bool enabled)
-{
-    toImpl(preferencesRef)->setArtificialPluginInitializationDelayEnabled(enabled);
-}
-
-bool WKPreferencesGetArtificialPluginInitializationDelayEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->artificialPluginInitializationDelayEnabled();
-}
-
 void WKPreferencesSetInteractiveFormValidationEnabled(WKPreferencesRef preferencesRef, bool enabled)
 {
     toImpl(preferencesRef)->setInteractiveFormValidationEnabled(enabled);
