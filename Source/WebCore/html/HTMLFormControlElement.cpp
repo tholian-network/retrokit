@@ -40,7 +40,6 @@
 #include "HTMLLegendElement.h"
 #include "HTMLParserIdioms.h"
 #include "HTMLTextAreaElement.h"
-#include "Quirks.h"
 #include "RenderBox.h"
 #include "RenderTheme.h"
 #include "ScriptDisallowedScope.h"

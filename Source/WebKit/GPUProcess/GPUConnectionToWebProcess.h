@@ -66,9 +66,7 @@ class RemoteAudioDestinationManager;
 class RemoteAudioHardwareListenerProxy;
 class RemoteAudioSessionProxy;
 class RemoteAudioSessionProxyManager;
-class RemoteCDMFactoryProxy;
 class RemoteImageDecoderAVFProxy;
-class RemoteLegacyCDMFactoryProxy;
 class RemoteMediaEngineConfigurationFactoryProxy;
 class RemoteMediaPlayerManagerProxy;
 class RemoteMediaResourceManager;
@@ -106,9 +104,6 @@ public:
     Logger& logger();
 
     const String& mediaCacheDirectory() const;
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    const String& mediaKeysStorageDirectory() const;
-#endif
 
 #if ENABLE(MEDIA_STREAM)
     void setOrientationForMediaCapture(uint64_t orientation);
@@ -128,13 +123,6 @@ public:
 
 #if HAVE(TASK_IDENTITY_TOKEN)
     task_id_token_t webProcessIdentityToken() const { return static_cast<task_id_token_t>(m_webProcessIdentityToken.sendRight()); }
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    RemoteCDMFactoryProxy& cdmFactoryProxy();
-#endif
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    RemoteLegacyCDMFactoryProxy& legacyCdmFactoryProxy();
 #endif
 
     RemoteMediaEngineConfigurationFactoryProxy& mediaEngineConfigurationFactoryProxy();
@@ -256,17 +244,11 @@ private:
     using RemoteGraphicsContextGLMap = HashMap<GraphicsContextGLIdentifier, IPC::ScopedActiveMessageReceiveQueue<RemoteGraphicsContextGL>>;
     RemoteGraphicsContextGLMap m_remoteGraphicsContextGLMap;
 #endif
-#if ENABLE(ENCRYPTED_MEDIA)
-    std::unique_ptr<RemoteCDMFactoryProxy> m_cdmFactoryProxy;
-#endif
 #if USE(AUDIO_SESSION)
     std::unique_ptr<RemoteAudioSessionProxy> m_audioSessionProxy;
 #endif
 #if PLATFORM(IOS_FAMILY)
     std::unique_ptr<RemoteMediaSessionHelperProxy> m_mediaSessionHelperProxy;
-#endif
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    std::unique_ptr<RemoteLegacyCDMFactoryProxy> m_legacyCdmFactoryProxy;
 #endif
 #if HAVE(AVASSETREADER)
     std::unique_ptr<RemoteImageDecoderAVFProxy> m_imageDecoderAVFProxy;

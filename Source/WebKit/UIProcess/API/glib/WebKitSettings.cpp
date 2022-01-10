@@ -146,7 +146,6 @@ enum {
     PROP_MEDIA_PLAYBACK_REQUIRES_USER_GESTURE,
     PROP_MEDIA_PLAYBACK_ALLOWS_INLINE,
     PROP_DRAW_COMPOSITING_INDICATORS,
-    PROP_ENABLE_SITE_SPECIFIC_QUIRKS,
     PROP_ENABLE_PAGE_CACHE,
     PROP_USER_AGENT,
     PROP_ENABLE_SMOOTH_SCROLLING,
@@ -156,7 +155,6 @@ enum {
     PROP_ENABLE_MOCK_CAPTURE_DEVICES,
     PROP_ENABLE_SPATIAL_NAVIGATION,
     PROP_ENABLE_MEDIASOURCE,
-    PROP_ENABLE_ENCRYPTED_MEDIA,
     PROP_ENABLE_MEDIA_CAPABILITIES,
     PROP_ALLOW_FILE_ACCESS_FROM_FILE_URLS,
     PROP_ALLOW_UNIVERSAL_ACCESS_FROM_FILE_URLS,
@@ -316,9 +314,6 @@ static void webKitSettingsSetProperty(GObject* object, guint propId, const GValu
             webkit_settings_set_draw_compositing_indicators(settings, showDebugVisuals);
         }
         break;
-    case PROP_ENABLE_SITE_SPECIFIC_QUIRKS:
-        webkit_settings_set_enable_site_specific_quirks(settings, g_value_get_boolean(value));
-        break;
     case PROP_ENABLE_PAGE_CACHE:
         webkit_settings_set_enable_page_cache(settings, g_value_get_boolean(value));
         break;
@@ -347,9 +342,6 @@ static void webKitSettingsSetProperty(GObject* object, guint propId, const GValu
         break;
     case PROP_ENABLE_MEDIASOURCE:
         webkit_settings_set_enable_mediasource(settings, g_value_get_boolean(value));
-        break;
-    case PROP_ENABLE_ENCRYPTED_MEDIA:
-        webkit_settings_set_enable_encrypted_media(settings, g_value_get_boolean(value));
         break;
     case PROP_ENABLE_MEDIA_CAPABILITIES:
         webkit_settings_set_enable_media_capabilities(settings, g_value_get_boolean(value));
@@ -503,9 +495,6 @@ static void webKitSettingsGetProperty(GObject* object, guint propId, GValue* val
     case PROP_DRAW_COMPOSITING_INDICATORS:
         g_value_set_boolean(value, webkit_settings_get_draw_compositing_indicators(settings));
         break;
-    case PROP_ENABLE_SITE_SPECIFIC_QUIRKS:
-        g_value_set_boolean(value, webkit_settings_get_enable_site_specific_quirks(settings));
-        break;
     case PROP_ENABLE_PAGE_CACHE:
         g_value_set_boolean(value, webkit_settings_get_enable_page_cache(settings));
         break;
@@ -534,9 +523,6 @@ static void webKitSettingsGetProperty(GObject* object, guint propId, GValue* val
         break;
     case PROP_ENABLE_MEDIASOURCE:
         g_value_set_boolean(value, webkit_settings_get_enable_mediasource(settings));
-        break;
-    case PROP_ENABLE_ENCRYPTED_MEDIA:
-        g_value_set_boolean(value, webkit_settings_get_enable_encrypted_media(settings));
         break;
     case PROP_ENABLE_MEDIA_CAPABILITIES:
         g_value_set_boolean(value, webkit_settings_get_enable_media_capabilities(settings));
@@ -1110,24 +1096,6 @@ static void webkit_settings_class_init(WebKitSettingsClass* klass)
             readWriteConstructParamFlags);
 
     /**
-     * WebKitSettings:enable-site-specific-quirks:
-     *
-     * Whether to turn on site-specific quirks. Turning this on will
-     * tell WebKit to use some site-specific workarounds for
-     * better web compatibility. For example, older versions of
-     * MediaWiki will incorrectly send to WebKit a CSS file with KHTML
-     * workarounds. By turning on site-specific quirks, WebKit will
-     * special-case this and other cases to make some specific sites work.
-     */
-    sObjProperties[PROP_ENABLE_SITE_SPECIFIC_QUIRKS] =
-        g_param_spec_boolean(
-            "enable-site-specific-quirks",
-            _("Enable Site Specific Quirks"),
-            _("Enables the site-specific compatibility workarounds"),
-            TRUE,
-            readWriteConstructParamFlags);
-
-    /**
      * WebKitSettings:enable-page-cache:
      *
      * Enable or disable the page cache. Disabling the page cache is
@@ -1289,26 +1257,6 @@ static void webkit_settings_class_init(WebKitSettingsClass* klass)
             _("Enable MediaSource"),
             _("Whether MediaSource should be enabled."),
             TRUE,
-            readWriteConstructParamFlags);
-
-   /**
-     * WebKitSettings:enable-encrypted-media:
-     *
-     * Enable or disable support for Encrypted Media API on pages.
-     * EncryptedMedia is an experimental JavaScript API for playing encrypted media in HTML.
-     * This property will only work as intended if the EncryptedMedia feature is enabled at build time
-     * with the ENABLE_ENCRYPTED_MEDIA flag.
-     *
-     * See https://www.w3.org/TR/encrypted-media/
-     *
-     * Since: 2.20
-     */
-    sObjProperties[PROP_ENABLE_ENCRYPTED_MEDIA] =
-        g_param_spec_boolean(
-            "enable-encrypted-media",
-            _("Enable EncryptedMedia"),
-            _("Whether EncryptedMedia should be enabled."),
-            FALSE,
             readWriteConstructParamFlags);
 
     /**
@@ -2805,41 +2753,6 @@ void webkit_settings_set_draw_compositing_indicators(WebKitSettings* settings, g
 }
 
 /**
- * webkit_settings_get_enable_site_specific_quirks:
- * @settings: a #WebKitSettings
- *
- * Get the #WebKitSettings:enable-site-specific-quirks property.
- *
- * Returns: %TRUE if site specific quirks are enabled or %FALSE otherwise.
- */
-gboolean webkit_settings_get_enable_site_specific_quirks(WebKitSettings* settings)
-{
-    g_return_val_if_fail(WEBKIT_IS_SETTINGS(settings), FALSE);
-
-    return settings->priv->preferences->needsSiteSpecificQuirks();
-}
-
-/**
- * webkit_settings_set_enable_site_specific_quirks:
- * @settings: a #WebKitSettings
- * @enabled: Value to be set
- *
- * Set the #WebKitSettings:enable-site-specific-quirks property.
- */
-void webkit_settings_set_enable_site_specific_quirks(WebKitSettings* settings, gboolean enabled)
-{
-    g_return_if_fail(WEBKIT_IS_SETTINGS(settings));
-
-    WebKitSettingsPrivate* priv = settings->priv;
-    bool currentValue = priv->preferences->needsSiteSpecificQuirks();
-    if (currentValue == enabled)
-        return;
-
-    priv->preferences->setNeedsSiteSpecificQuirks(enabled);
-    g_object_notify_by_pspec(G_OBJECT(settings), sObjProperties[PROP_ENABLE_SITE_SPECIFIC_QUIRKS]);
-}
-
-/**
  * webkit_settings_get_enable_page_cache:
  * @settings: a #WebKitSettings
  *
@@ -3204,46 +3117,6 @@ void webkit_settings_set_enable_mediasource(WebKitSettings* settings, gboolean e
 
     priv->preferences->setMediaSourceEnabled(enabled);
     g_object_notify_by_pspec(G_OBJECT(settings), sObjProperties[PROP_ENABLE_MEDIASOURCE]);
-}
-
-/**
- * webkit_settings_get_enable_encrypted_media:
- * @settings: a #WebKitSettings
- *
- * Get the #WebKitSettings:enable-encrypted-media property.
- *
- * Returns: %TRUE if EncryptedMedia support is enabled or %FALSE otherwise.
- *
- * Since: 2.20
- */
-gboolean webkit_settings_get_enable_encrypted_media(WebKitSettings* settings)
-{
-    g_return_val_if_fail(WEBKIT_IS_SETTINGS(settings), FALSE);
-
-    return settings->priv->preferences->encryptedMediaAPIEnabled();
-}
-
-
-/**
- * webkit_settings_set_enable_encrypted_media:
- * @settings: a #WebKitSettings
- * @enabled: Value to be set
- *
- * Set the #WebKitSettings:enable-encrypted-media property.
- *
- * Since: 2.20
- */
-void webkit_settings_set_enable_encrypted_media(WebKitSettings* settings, gboolean enabled)
-{
-    g_return_if_fail(WEBKIT_IS_SETTINGS(settings));
-
-    WebKitSettingsPrivate* priv = settings->priv;
-    bool currentValue = priv->preferences->encryptedMediaAPIEnabled();
-    if (currentValue == enabled)
-        return;
-
-    priv->preferences->setEncryptedMediaAPIEnabled(enabled);
-    g_object_notify_by_pspec(G_OBJECT(settings), sObjProperties[PROP_ENABLE_ENCRYPTED_MEDIA]);
 }
 
 /**

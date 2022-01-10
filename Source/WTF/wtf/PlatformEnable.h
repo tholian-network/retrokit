@@ -248,10 +248,6 @@
 #define ENABLE_DRAG_SUPPORT 1
 #endif
 
-#if !defined(ENABLE_ENCRYPTED_MEDIA)
-#define ENABLE_ENCRYPTED_MEDIA 0
-#endif
-
 #if !defined(ENABLE_FILTERS_LEVEL_2)
 #define ENABLE_FILTERS_LEVEL_2 0
 #endif
@@ -363,10 +359,6 @@
 
 #if !defined(ENABLE_OFFSCREEN_CANVAS_IN_WORKERS)
 #define ENABLE_OFFSCREEN_CANVAS_IN_WORKERS 0
-#endif
-
-#if !defined(ENABLE_THUNDER)
-#define ENABLE_THUNDER 0
 #endif
 
 #if OS(WINDOWS)

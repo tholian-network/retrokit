@@ -69,11 +69,6 @@ WTF::String WebsiteDataStore::defaultLocalStorageDirectory()
     return websiteDataDirectoryFileSystemRepresentation(BASE_DIRECTORY G_DIR_SEPARATOR_S "localstorage");
 }
 
-WTF::String WebsiteDataStore::defaultMediaKeysStorageDirectory()
-{
-    return websiteDataDirectoryFileSystemRepresentation(BASE_DIRECTORY G_DIR_SEPARATOR_S "mediakeys");
-}
-
 String WebsiteDataStore::defaultDeviceIdHashSaltsStorageDirectory()
 {
     return websiteDataDirectoryFileSystemRepresentation(BASE_DIRECTORY G_DIR_SEPARATOR_S "deviceidhashsalts");

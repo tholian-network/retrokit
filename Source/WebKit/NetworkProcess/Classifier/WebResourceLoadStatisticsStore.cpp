@@ -68,7 +68,6 @@ const OptionSet<WebsiteDataType>& WebResourceLoadStatisticsStore::monitoredDataT
         WebsiteDataType::DOMCache,
         WebsiteDataType::IndexedDBDatabases,
         WebsiteDataType::LocalStorage,
-        WebsiteDataType::MediaKeys,
         WebsiteDataType::OfflineWebApplicationCache,
         WebsiteDataType::SearchFieldRecentSearches,
         WebsiteDataType::SessionStorage,

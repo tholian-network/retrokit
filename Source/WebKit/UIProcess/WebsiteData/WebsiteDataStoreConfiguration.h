@@ -49,19 +49,16 @@ public:
 
     const String& applicationCacheDirectory() const { return m_applicationCacheDirectory; }
     void setApplicationCacheDirectory(String&& directory) { m_applicationCacheDirectory = WTFMove(directory); }
-    
+
     const String& mediaCacheDirectory() const { return m_mediaCacheDirectory; }
     void setMediaCacheDirectory(String&& directory) { m_mediaCacheDirectory = WTFMove(directory); }
-    
-    const String& mediaKeysStorageDirectory() const { return m_mediaKeysStorageDirectory; }
-    void setMediaKeysStorageDirectory(String&& directory) { m_mediaKeysStorageDirectory = WTFMove(directory); }
-    
+
     const String& alternativeServicesDirectory() const { return m_alternativeServicesDirectory; }
     void setAlternativeServicesDirectory(String&& directory) { m_alternativeServicesDirectory = WTFMove(directory); }
 
     const String& javaScriptConfigurationDirectory() const { return m_javaScriptConfigurationDirectory; }
     void setJavaScriptConfigurationDirectory(String&& directory) { m_javaScriptConfigurationDirectory = WTFMove(directory); }
-    
+
     const String& indexedDBDatabaseDirectory() const { return m_indexedDBDatabaseDirectory; }
     void setIndexedDBDatabaseDirectory(String&& directory) { m_indexedDBDatabaseDirectory = WTFMove(directory); }
 
@@ -200,7 +197,6 @@ private:
 #endif
     bool m_staleWhileRevalidateEnabled { true };
     String m_localStorageDirectory;
-    String m_mediaKeysStorageDirectory;
     String m_alternativeServicesDirectory;
     String m_deviceIdHashSaltsStorageDirectory;
     String m_resourceLoadStatisticsDirectory;

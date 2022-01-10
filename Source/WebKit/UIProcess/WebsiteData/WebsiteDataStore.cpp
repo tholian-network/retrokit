@@ -243,8 +243,6 @@ void WebsiteDataStore::resolveDirectoriesIfNecessary()
         m_resolvedConfiguration->setApplicationCacheDirectory(resolveAndCreateReadWriteDirectoryForSandboxExtension(m_configuration->applicationCacheDirectory()));
     if (!m_configuration->mediaCacheDirectory().isEmpty())
         m_resolvedConfiguration->setMediaCacheDirectory(resolveAndCreateReadWriteDirectoryForSandboxExtension(m_configuration->mediaCacheDirectory()));
-    if (!m_configuration->mediaKeysStorageDirectory().isEmpty())
-        m_resolvedConfiguration->setMediaKeysStorageDirectory(resolveAndCreateReadWriteDirectoryForSandboxExtension(m_configuration->mediaKeysStorageDirectory()));
     if (!m_configuration->webSQLDatabaseDirectory().isEmpty())
         m_resolvedConfiguration->setWebSQLDatabaseDirectory(resolveAndCreateReadWriteDirectoryForSandboxExtension(m_configuration->webSQLDatabaseDirectory()));
     if (!m_configuration->indexedDBDatabaseDirectory().isEmpty())
@@ -514,15 +512,6 @@ private:
         });
     }
 
-    if (dataTypes.contains(WebsiteDataType::MediaKeys) && isPersistent()) {
-        m_queue->dispatch([mediaKeysStorageDirectory = m_configuration->mediaKeysStorageDirectory().isolatedCopy(), callbackAggregator] {
-            WebsiteData websiteData;
-            for (auto& origin : mediaKeyOrigins(mediaKeysStorageDirectory))
-                websiteData.entries.append(WebsiteData::Entry { origin, WebsiteDataType::MediaKeys, 0 });
-            callbackAggregator->addWebsiteData(WTFMove(websiteData));
-        });
-    }
-
 }
 
 #if ENABLE(RESOURCE_LOAD_STATISTICS)
@@ -681,12 +670,6 @@ void WebsiteDataStore::removeData(OptionSet<WebsiteDataType> dataTypes, WallTime
         });
     }
 
-    if (dataTypes.contains(WebsiteDataType::MediaKeys) && isPersistent()) {
-        m_queue->dispatch([mediaKeysStorageDirectory = m_configuration->mediaKeysStorageDirectory().isolatedCopy(), callbackAggregator, modifiedSince] {
-            removeMediaKeys(mediaKeysStorageDirectory, modifiedSince);
-        });
-    }
-
     if (dataTypes.contains(WebsiteDataType::SearchFieldRecentSearches) && isPersistent()) {
         m_queue->dispatch([modifiedSince, callbackAggregator] {
             platformRemoveRecentSearches(modifiedSince);
@@ -813,18 +796,6 @@ void WebsiteDataStore::removeData(OptionSet<WebsiteDataType> dataTypes, const Ve
             auto databaseTracker = WebCore::DatabaseTracker::trackerWithDatabasePath(webSQLDatabaseDirectory);
             for (auto& origin : origins)
                 databaseTracker->deleteOrigin(origin);
-        });
-    }
-
-    if (dataTypes.contains(WebsiteDataType::MediaKeys) && isPersistent()) {
-        HashSet<WebCore::SecurityOriginData> origins;
-        for (const auto& dataRecord : dataRecords) {
-            for (const auto& origin : dataRecord.origins)
-                origins.add(crossThreadCopy(origin));
-        }
-
-        m_queue->dispatch([mediaKeysStorageDirectory = m_configuration->mediaKeysStorageDirectory().isolatedCopy(), callbackAggregator, origins = WTFMove(origins)] {
-            removeMediaKeys(mediaKeysStorageDirectory, origins);
         });
     }
 
@@ -1487,66 +1458,9 @@ HashSet<RefPtr<WebProcessPool>> WebsiteDataStore::ensureProcessPools() const
     return processPools;
 }
 
-static String computeMediaKeyFile(const String& mediaKeyDirectory)
-{
-    return FileSystem::pathByAppendingComponent(mediaKeyDirectory, "SecureStop.plist");
-}
-
 void WebsiteDataStore::allowSpecificHTTPSCertificateForHost(const WebCertificateInfo* certificate, const String& host)
 {
     networkProcess().send(Messages::NetworkProcess::AllowSpecificHTTPSCertificateForHost(certificate->certificateInfo(), host), 0);
-}
-
-Vector<WebCore::SecurityOriginData> WebsiteDataStore::mediaKeyOrigins(const String& mediaKeysStorageDirectory)
-{
-    ASSERT(!mediaKeysStorageDirectory.isEmpty());
-
-    Vector<WebCore::SecurityOriginData> origins;
-
-    for (const auto& mediaKeyIdentifier : FileSystem::listDirectory(mediaKeysStorageDirectory)) {
-        auto originPath = FileSystem::pathByAppendingComponent(mediaKeysStorageDirectory, mediaKeyIdentifier);
-        auto mediaKeyFile = computeMediaKeyFile(originPath);
-        if (!FileSystem::fileExists(mediaKeyFile))
-            continue;
-
-        if (auto securityOrigin = WebCore::SecurityOriginData::fromDatabaseIdentifier(mediaKeyIdentifier))
-            origins.append(*securityOrigin);
-    }
-
-    return origins;
-}
-
-void WebsiteDataStore::removeMediaKeys(const String& mediaKeysStorageDirectory, WallTime modifiedSince)
-{
-    ASSERT(!mediaKeysStorageDirectory.isEmpty());
-
-    for (const auto& directoryName : FileSystem::listDirectory(mediaKeysStorageDirectory)) {
-        auto mediaKeyDirectory = FileSystem::pathByAppendingComponent(mediaKeysStorageDirectory, directoryName);
-        auto mediaKeyFile = computeMediaKeyFile(mediaKeyDirectory);
-
-        auto modificationTime = FileSystem::fileModificationTime(mediaKeyFile);
-        if (!modificationTime)
-            continue;
-
-        if (modificationTime.value() < modifiedSince)
-            continue;
-
-        FileSystem::deleteFile(mediaKeyFile);
-        FileSystem::deleteEmptyDirectory(mediaKeyDirectory);
-    }
-}
-
-void WebsiteDataStore::removeMediaKeys(const String& mediaKeysStorageDirectory, const HashSet<WebCore::SecurityOriginData>& origins)
-{
-    ASSERT(!mediaKeysStorageDirectory.isEmpty());
-
-    for (const auto& origin : origins) {
-        auto mediaKeyDirectory = FileSystem::pathByAppendingComponent(mediaKeysStorageDirectory, origin.databaseIdentifier());
-        auto mediaKeyFile = computeMediaKeyFile(mediaKeyDirectory);
-
-        FileSystem::deleteFile(mediaKeyFile);
-        FileSystem::deleteEmptyDirectory(mediaKeyDirectory);
-    }
 }
 
 void WebsiteDataStore::getNetworkProcessConnection(WebProcessProxy& webProcessProxy, CompletionHandler<void(const NetworkProcessConnectionInfo&)>&& reply, ShouldRetryOnFailure shouldRetryOnFailure)

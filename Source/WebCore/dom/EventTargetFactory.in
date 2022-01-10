@@ -20,7 +20,6 @@ IDBRequest
 IDBTransaction
 MediaController conditional=VIDEO
 MediaDevices conditional=MEDIA_STREAM
-MediaKeySession conditional=ENCRYPTED_MEDIA
 MediaQueryList
 MediaSessionCoordinator conditional=MEDIA_SESSION_COORDINATOR
 MediaSource conditional=MEDIA_SOURCE
@@ -48,7 +47,6 @@ TextTrackList conditional=VIDEO
 VideoTrackList conditional=VIDEO
 VisualViewport
 WebAnimation
-WebKitMediaKeySession conditional=LEGACY_ENCRYPTED_MEDIA
 WebSocket
 Worker
 WorkletGlobalScope

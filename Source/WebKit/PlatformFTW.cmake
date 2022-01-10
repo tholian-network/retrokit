@@ -66,8 +66,6 @@ list(APPEND WebKit_SOURCES
 
     WebProcess/Inspector/win/WebInspectorUIWin.cpp
 
-    WebProcess/MediaCache/WebMediaKeyStorageManager.cpp
-
     WebProcess/WebCoreSupport/win/WebPopupMenuWin.cpp
 
     WebProcess/WebPage/AcceleratedSurface.cpp

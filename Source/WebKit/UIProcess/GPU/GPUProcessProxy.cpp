@@ -430,15 +430,6 @@ static inline GPUProcessSessionParameters gpuProcessSessionParameters(const Webs
             parameters.mediaCacheDirectorySandboxExtensionHandle = WTFMove(*handle);
     }
 
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    parameters.mediaKeysStorageDirectory = store.resolvedMediaKeysDirectory();
-    SandboxExtension::Handle mediaKeysStorageDirectorySandboxExtensionHandle;
-    if (!parameters.mediaKeysStorageDirectory.isEmpty()) {
-        if (auto handle = SandboxExtension::createHandleWithoutResolvingPath(parameters.mediaKeysStorageDirectory, SandboxExtension::Type::ReadWrite))
-            parameters.mediaKeysStorageDirectorySandboxExtensionHandle = WTFMove(*handle);
-    }
-#endif
-
     return parameters;
 }
 

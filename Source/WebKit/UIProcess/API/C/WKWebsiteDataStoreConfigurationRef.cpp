@@ -100,16 +100,6 @@ void WKWebsiteDataStoreConfigurationSetCacheStorageDirectory(WKWebsiteDataStoreC
     WebKit::toImpl(configuration)->setCacheStorageDirectory(WebKit::toImpl(directory)->string());
 }
 
-WKStringRef WKWebsiteDataStoreConfigurationCopyMediaKeysStorageDirectory(WKWebsiteDataStoreConfigurationRef configuration)
-{
-    return WebKit::toCopiedAPI(WebKit::toImpl(configuration)->mediaKeysStorageDirectory());
-}
-
-void WKWebsiteDataStoreConfigurationSetMediaKeysStorageDirectory(WKWebsiteDataStoreConfigurationRef configuration, WKStringRef directory)
-{
-    WebKit::toImpl(configuration)->setMediaKeysStorageDirectory(WebKit::toImpl(directory)->string());
-}
-
 WKStringRef WKWebsiteDataStoreConfigurationCopyResourceLoadStatisticsDirectory(WKWebsiteDataStoreConfigurationRef configuration)
 {
     return WebKit::toCopiedAPI(WebKit::toImpl(configuration)->resourceLoadStatisticsDirectory());

@@ -118,9 +118,6 @@ void JSDOMWindowBase::finishCreation(VM& vm, JSWindowProxy* proxy)
     ASSERT(inherits(vm, info()));
 
     initStaticGlobals(vm);
-
-    if (m_wrapped && m_wrapped->frame() && m_wrapped->frame()->settings().needsSiteSpecificQuirks())
-        setNeedsSiteSpecificQuirks(true);
 }
 
 void JSDOMWindowBase::destroy(JSCell* cell)

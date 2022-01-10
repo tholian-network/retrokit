@@ -324,14 +324,10 @@ onwaiting
 onwebkitanimationstart
 onwebkitanimationiteration
 onwebkitanimationend
-onwebkitkeyadded
-onwebkitkeyerror
-onwebkitkeymessage
 onwebkitmouseforcechanged
 onwebkitmouseforcedown
 onwebkitmouseforceup
 onwebkitmouseforcewillbegin
-onwebkitneedkey
 onwebkitsourceclose
 onwebkitsourceended
 onwebkitsourceopen

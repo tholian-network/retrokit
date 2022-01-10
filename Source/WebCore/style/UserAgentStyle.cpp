@@ -45,7 +45,6 @@
 #include "MathMLElement.h"
 #include "MediaQueryEvaluator.h"
 #include "Page.h"
-#include "Quirks.h"
 #include "RenderTheme.h"
 #include "RuleSet.h"
 #include "RuntimeEnabledFeatures.h"

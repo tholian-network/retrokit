@@ -34,13 +34,6 @@ GPUProcess/media/RemoteAudioHardwareListenerProxy.cpp
 GPUProcess/media/RemoteAudioSessionProxy.cpp
 GPUProcess/media/RemoteAudioSessionProxyManager.cpp
 GPUProcess/media/RemoteAudioTrackProxy.cpp
-GPUProcess/media/RemoteCDMFactoryProxy.cpp
-GPUProcess/media/RemoteCDMInstanceProxy.cpp
-GPUProcess/media/RemoteCDMInstanceSessionProxy.cpp
-GPUProcess/media/RemoteCDMProxy.cpp
-GPUProcess/media/RemoteLegacyCDMFactoryProxy.cpp
-GPUProcess/media/RemoteLegacyCDMProxy.cpp
-GPUProcess/media/RemoteLegacyCDMSessionProxy.cpp
 GPUProcess/media/RemoteMediaEngineConfigurationFactoryProxy.cpp
 GPUProcess/media/RemoteMediaPlayerManagerProxy.cpp
 GPUProcess/media/RemoteMediaPlayerProxy.cpp
@@ -267,8 +260,6 @@ UIProcess/DeviceIdHashSaltStorage.cpp
 UIProcess/DrawingAreaProxy.cpp
 UIProcess/FrameLoadState.cpp
 UIProcess/LegacyGlobalSettings.cpp
-UIProcess/MediaKeySystemPermissionRequestManagerProxy.cpp
-UIProcess/MediaKeySystemPermissionRequestProxy.cpp
 UIProcess/ModelElementController.cpp
 UIProcess/PageLoadState.cpp
 UIProcess/ProcessAssertion.cpp
@@ -368,7 +359,6 @@ UIProcess/API/C/WKHitTestResult.cpp
 UIProcess/API/C/WKIconDatabase.cpp
 UIProcess/API/C/WKInspector.cpp
 UIProcess/API/C/WKKeyValueStorageManager.cpp
-UIProcess/API/C/WKMediaKeySystemPermissionCallback.cpp
 UIProcess/API/C/WKMessageListener.cpp
 UIProcess/API/C/WKMockDisplay.cpp
 UIProcess/API/C/WKMockMediaDevice.cpp
@@ -479,8 +469,6 @@ WebProcess/Databases/WebDatabaseProvider.cpp
 
 WebProcess/Databases/IndexedDB/WebIDBConnectionToServer.cpp
 
-WebProcess/EncryptedMedia/MediaKeySystemPermissionRequestManager.cpp
-
 WebProcess/FileAPI/BlobRegistryProxy.cpp
 
 WebProcess/InjectedBundle/InjectedBundle.cpp
@@ -543,13 +531,6 @@ WebProcess/GPU/media/MediaSourcePrivateRemote.cpp
 WebProcess/GPU/media/RemoteAudioDestinationProxy.cpp
 WebProcess/GPU/media/RemoteAudioHardwareListener.cpp
 WebProcess/GPU/media/RemoteAudioSession.cpp
-WebProcess/GPU/media/RemoteCDM.cpp
-WebProcess/GPU/media/RemoteCDMFactory.cpp
-WebProcess/GPU/media/RemoteCDMInstance.cpp
-WebProcess/GPU/media/RemoteCDMInstanceSession.cpp
-WebProcess/GPU/media/RemoteLegacyCDM.cpp
-WebProcess/GPU/media/RemoteLegacyCDMFactory.cpp
-WebProcess/GPU/media/RemoteLegacyCDMSession.cpp
 WebProcess/GPU/media/RemoteMediaEngineConfigurationFactory.cpp
 WebProcess/GPU/media/RemoteMediaPlayerManager.cpp
 WebProcess/GPU/media/RemoteMediaPlayerMIMETypeCache.cpp @no-unify
@@ -597,7 +578,6 @@ WebProcess/WebCoreSupport/WebDiagnosticLoggingClient.cpp
 WebProcess/WebCoreSupport/WebDragClient.cpp
 WebProcess/WebCoreSupport/WebEditorClient.cpp
 WebProcess/WebCoreSupport/WebFrameLoaderClient.cpp
-WebProcess/WebCoreSupport/WebMediaKeySystemClient.cpp
 WebProcess/WebCoreSupport/WebMessagePortChannelProvider.cpp
 WebProcess/WebCoreSupport/WebNotificationClient.cpp
 WebProcess/WebCoreSupport/WebPerformanceLoggingClient.cpp

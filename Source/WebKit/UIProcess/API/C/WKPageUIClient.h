@@ -126,8 +126,6 @@ typedef void (*WKPageDidResignInputElementStrongPasswordAppearanceCallback)(WKPa
 typedef void (*WKPageRunWebAuthenticationPanelCallback)();
 typedef void (*WKPageDecidePolicyForSpeechRecognitionPermissionRequestCallback)(WKPageRef page, WKSecurityOriginRef topOrigin, WKSpeechRecognitionPermissionCallbackRef callback);
 
-typedef void (*WKPageDecidePolicyForMediaKeySystemPermissionRequestCallback)(WKPageRef page, WKSecurityOriginRef topOrigin, WKStringRef keySystem, WKMediaKeySystemPermissionCallbackRef callback);
-
 // Deprecated
 typedef WKPageRef (*WKPageCreateNewPageCallback_deprecatedForUseWithV0)(WKPageRef page, WKDictionaryRef features, WKEventModifiers modifiers, WKEventMouseButton mouseButton, const void* clientInfo);
 typedef void      (*WKPageMouseDidMoveOverElementCallback_deprecatedForUseWithV0)(WKPageRef page, WKEventModifiers modifiers, WKTypeRef userData, const void *clientInfo);
@@ -1468,9 +1466,6 @@ typedef struct WKPageUIClientV16 {
 
     // Version 14.
     WKPageDecidePolicyForSpeechRecognitionPermissionRequestCallback     decidePolicyForSpeechRecognitionPermissionRequest;
-
-    // Version 15.
-    WKPageDecidePolicyForMediaKeySystemPermissionRequestCallback        decidePolicyForMediaKeySystemPermissionRequest;
 
 } WKPageUIClientV16;
 

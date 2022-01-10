@@ -85,7 +85,6 @@ class MallocStatistics;
 class MediaStream;
 class MediaStreamTrack;
 class MemoryInfo;
-class MockCDMFactory;
 class MockContentFilterSettings;
 class MockPageOverlay;
 class NodeList;
@@ -107,11 +106,6 @@ class WebAnimation;
 class WebGLRenderingContext;
 class WindowProxy;
 class XMLHttpRequest;
-
-#if ENABLE(ENCRYPTED_MEDIA)
-class MediaKeys;
-class MediaKeySession;
-#endif
 
 #if ENABLE(VIDEO)
 class TextTrackCueGeneric;
@@ -570,14 +564,6 @@ public:
 
     void enableFixedWidthAutoSizeMode(bool enabled, int width, int height);
     void enableSizeToContentAutoSizeMode(bool enabled, int width, int height);
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    void initializeMockCDM();
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    Ref<MockCDMFactory> registerMockCDM();
-#endif
 
     void enableMockMediaCapabilities();
 
@@ -1051,11 +1037,6 @@ public:
 #if ENABLE(APP_HIGHLIGHTS)
     Vector<String> appHighlightContextMenuItemTitles() const;
     unsigned numberOfAppHighlights();
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    unsigned mediaKeysInternalInstanceObjectRefCount(const MediaKeys&) const;
-    unsigned mediaKeySessionInternalInstanceSessionObjectRefCount(const MediaKeySession&) const;
 #endif
 
     enum class ContentSizeCategory { L, XXXL };

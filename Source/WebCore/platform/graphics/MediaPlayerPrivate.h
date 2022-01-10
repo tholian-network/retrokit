@@ -225,24 +225,6 @@ public:
     virtual AudioSourceProvider* audioSourceProvider() { return 0; }
 #endif
 
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    virtual std::unique_ptr<LegacyCDMSession> createSession(const String&, LegacyCDMSessionClient*) { return nullptr; }
-    virtual void setCDM(LegacyCDM*) { }
-    virtual void setCDMSession(LegacyCDMSession*) { }
-    virtual void keyAdded() { }
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    virtual void cdmInstanceAttached(CDMInstance&) { }
-    virtual void cdmInstanceDetached(CDMInstance&) { }
-    virtual void attemptToDecryptWithInstance(CDMInstance&) { }
-    virtual bool waitingForKey() const { return false; }
-#endif
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA) && ENABLE(ENCRYPTED_MEDIA)
-    virtual void setShouldContinueAfterKeyNeeded(bool) { }
-#endif
-
     virtual bool requiresTextTrackRepresentation() const { return false; }
     virtual void setTextTrackRepresentation(TextTrackRepresentation*) { }
     virtual void syncTextTrackBounds() { };

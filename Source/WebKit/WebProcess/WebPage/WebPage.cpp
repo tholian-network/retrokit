@@ -44,7 +44,6 @@
 #include "InjectedBundleScriptWorld.h"
 #include "LoadParameters.h"
 #include "Logging.h"
-#include "MediaKeySystemPermissionRequestManager.h"
 #include "MediaPlaybackState.h"
 #include "NetworkConnectionToWebProcessMessages.h"
 #include "NetworkProcessConnection.h"
@@ -96,8 +95,6 @@
 #include "WebInspectorUIMessages.h"
 #include "WebKeyboardEvent.h"
 #include "WebLoaderStrategy.h"
-#include "WebMediaKeyStorageManager.h"
-#include "WebMediaKeySystemClient.h"
 #include "WebMediaStrategy.h"
 #include "WebMouseEvent.h"
 #include "WebNotificationClient.h"
@@ -330,12 +327,6 @@
 
 #if ENABLE(GPU_PROCESS)
 #include "RemoteMediaPlayerManager.h"
-#if ENABLE(ENCRYPTED_MEDIA)
-#include "RemoteCDMFactory.h"
-#endif
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-#include "RemoteLegacyCDMFactory.h"
-#endif
 #if HAVE(AVASSETREADER)
 #include "RemoteImageDecoderAVFManager.h"
 #endif
@@ -476,9 +467,6 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
     , m_userContentController(WebUserContentController::getOrCreate(parameters.userContentControllerParameters.identifier))
 #if ENABLE(MEDIA_STREAM)
     , m_userMediaPermissionRequestManager { makeUniqueRef<UserMediaPermissionRequestManager>(*this) }
-#endif
-#if ENABLE(ENCRYPTED_MEDIA)
-    , m_mediaKeySystemPermissionRequestManager { makeUniqueRef<MediaKeySystemPermissionRequestManager>(*this) }
 #endif
     , m_pageScrolledHysteresis([this](PAL::HysteresisState state) { if (state == PAL::HysteresisState::Stopped) pageStoppedScrolling(); }, pageScrollHysteresisDuration)
     , m_canRunBeforeUnloadConfirmPanel(parameters.canRunBeforeUnloadConfirmPanel)
@@ -661,9 +649,6 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
 #if ENABLE(MEDIA_STREAM)
     WebCore::provideUserMediaTo(m_page.get(), new WebUserMediaClient(*this));
 #endif
-#if ENABLE(ENCRYPTED_MEDIA)
-    WebCore::provideMediaKeySystemTo(*m_page.get(), *new WebMediaKeySystemClient(*this));
-#endif
 
     m_page->setControlledByAutomation(parameters.controlledByAutomation);
     m_page->setHasResourceLoadClient(parameters.hasResourceLoadClient);
@@ -764,10 +749,6 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
         m_mimeTypesWithCustomContentProviders.add(mimeType);
 
 
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    if (WebMediaKeyStorageManager* manager = webProcess.supplement<WebMediaKeyStorageManager>())
-        m_page->settings().setMediaKeysStorageDirectory(manager->mediaKeyStorageDirectory());
-#endif
     if (parameters.viewScaleFactor != 1)
         scaleView(parameters.viewScaleFactor);
 
@@ -4403,18 +4384,6 @@ void WebPage::captureDevicesChanged()
 
 #endif
 
-#if ENABLE(ENCRYPTED_MEDIA)
-void WebPage::mediaKeySystemWasGranted(MediaKeySystemRequestIdentifier mediaKeySystemID, CompletionHandler<void()>&& completionHandler)
-{
-    m_mediaKeySystemPermissionRequestManager->mediaKeySystemWasGranted(mediaKeySystemID, WTFMove(completionHandler));
-}
-
-void WebPage::mediaKeySystemWasDenied(MediaKeySystemRequestIdentifier mediaKeySystemID, String&& message)
-{
-    m_mediaKeySystemPermissionRequestManager->mediaKeySystemWasDenied(mediaKeySystemID, WTFMove(message));
-}
-#endif
-
 #if !PLATFORM(IOS_FAMILY)
 void WebPage::advanceToNextMisspelling(bool startBeforeSelection)
 {
@@ -5848,12 +5817,6 @@ void WebPage::didCommitLoad(WebFrame* frame)
     if (!frame->isMainFrame())
         return;
 
-    bool needsSiteSpecificViewportQuirks = frame->coreFrame()->settings().needsSiteSpecificQuirks();
-    if (m_needsSiteSpecificViewportQuirks != needsSiteSpecificViewportQuirks) {
-        m_needsSiteSpecificViewportQuirks = needsSiteSpecificViewportQuirks;
-        send(Messages::WebPageProxy::SetNeedsSiteSpecificViewportQuirks(needsSiteSpecificViewportQuirks));
-    }
-
     if (m_drawingArea)
         m_drawingArea->sendEnterAcceleratedCompositingModeIfNeeded();
 
@@ -5871,7 +5834,7 @@ void WebPage::didCommitLoad(WebFrame* frame)
 #if ENABLE(RESOURCE_LOAD_STATISTICS)
     clearLoadedSubresourceDomains();
 #endif
-    
+
     // If previous URL is invalid, then it's not a real page that's being navigated away from.
     // Most likely, this is actually the first load to be committed in this page.
     if (frame->coreFrame()->loader().previousURL().isValid())
@@ -5907,7 +5870,7 @@ void WebPage::didCommitLoad(WebFrame* frame)
 #if ENABLE(META_VIEWPORT)
     resetViewportDefaultConfiguration(frame);
     const Frame* coreFrame = frame->coreFrame();
-    
+
     bool viewportChanged = false;
 
     LOG_WITH_STREAM(VisibleRects, stream << "WebPage " << m_identifier.toUInt64() << " didCommitLoad setting content size to " << coreFrame->view()->contentsSize());

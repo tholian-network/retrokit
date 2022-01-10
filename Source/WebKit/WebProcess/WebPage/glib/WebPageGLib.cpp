@@ -159,7 +159,7 @@ void WebPage::setInputMethodState(Element* element)
 
 String WebPage::platformUserAgent(const URL& url) const
 {
-    if (url.isNull() || !m_page->settings().needsSiteSpecificQuirks())
+    if (url.isNull())
         return String();
 
     return WebCore::standardUserAgentForURL(url);

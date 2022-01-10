@@ -2342,7 +2342,6 @@ WI._handleDeviceSettingsTabBarButtonClicked = function(event)
                     {name: WI.UIString("JavaScript"), setting: InspectorBackend.Enum.Page.Setting.ScriptEnabled, value: false},
                 ],
                 [
-                    {name: WI.UIString("Site-specific Hacks"), setting: InspectorBackend.Enum.Page.Setting.NeedsSiteSpecificQuirks, value: false},
                     {name: WI.UIString("Cross-Origin Restrictions"), setting: InspectorBackend.Enum.Page.Setting.WebSecurityEnabled, value: false},
                 ]
             ],

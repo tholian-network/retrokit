@@ -147,18 +147,6 @@ void RemoteMediaPlayerManagerProxy::clearMediaCacheForOrigins(MediaPlayerEnums::
     engine->clearMediaCacheForOrigins(path, origins);
 }
 
-void RemoteMediaPlayerManagerProxy::supportsKeySystem(MediaPlayerEnums::MediaEngineIdentifier engineIdentifier, const String&& keySystem, const String&& mimeType, CompletionHandler<void(bool)>&& completionHandler)
-{
-    auto engine = MediaPlayer::mediaEngine(engineIdentifier);
-    if (!engine) {
-        WTFLogAlways("Failed to find media engine.");
-        return;
-    }
-
-    auto result = engine->supportsKeySystem(keySystem, mimeType);
-    completionHandler(result);
-}
-
 void RemoteMediaPlayerManagerProxy::didReceivePlayerMessage(IPC::Connection& connection, IPC::Decoder& decoder)
 {
     ASSERT(RunLoop::isMain());

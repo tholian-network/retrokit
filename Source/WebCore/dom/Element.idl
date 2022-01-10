@@ -70,7 +70,6 @@
     [CEReactions] Element? insertAdjacentElement(DOMString where, Element element); // Historical.
     undefined insertAdjacentText(DOMString where, DOMString data); // Historical.
 
-    
     // FIXME: Most of the following non-standard event handlers probably make more sense as part of the GlobalEventHandlers mixin.
 
     // Non-standard: Cannot find these in the latest specification (https://w3c.github.io/uievents/#events-focus-types).
@@ -84,9 +83,6 @@
 
     // Non-standard: https://developer.apple.com/reference/webkitjs/element/1633146-onbeforeload.
     [NotEnumerable] attribute EventHandler onbeforeload;
-
-    // Non-standard: https://developer.apple.com/reference/webkitjs/element/1634205-onwebkitneedkey.
-    [NotEnumerable, Conditional=LEGACY_ENCRYPTED_MEDIA, EnabledBySetting=LegacyEncryptedMediaAPI] attribute EventHandler onwebkitneedkey;
 
     // Non-standard: https://developer.apple.com/reference/webkitjs/element/1630042-onwebkitcurrentplaybacktargetisw.
     [NotEnumerable, Conditional=WIRELESS_PLAYBACK_TARGET] attribute EventHandler onwebkitcurrentplaybacktargetiswirelesschanged;

@@ -69,21 +69,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/Modules/credentialmanagement/CredentialRequestOptions.idl \
     $(WebCore)/Modules/credentialmanagement/CredentialsContainer.idl \
     $(WebCore)/Modules/credentialmanagement/Navigator+Credentials.idl \
-    $(WebCore)/Modules/encryptedmedia/MediaKeyEncryptionScheme.idl \
-    $(WebCore)/Modules/encryptedmedia/MediaKeyMessageEvent.idl \
-    $(WebCore)/Modules/encryptedmedia/MediaKeySession.idl \
-    $(WebCore)/Modules/encryptedmedia/MediaKeySessionType.idl \
-    $(WebCore)/Modules/encryptedmedia/MediaKeyStatusMap.idl \
-    $(WebCore)/Modules/encryptedmedia/MediaKeySystemAccess.idl \
-    $(WebCore)/Modules/encryptedmedia/MediaKeySystemConfiguration.idl \
-    $(WebCore)/Modules/encryptedmedia/MediaKeySystemMediaCapability.idl \
-    $(WebCore)/Modules/encryptedmedia/MediaKeys.idl \
-    $(WebCore)/Modules/encryptedmedia/MediaKeysRequirement.idl \
-    $(WebCore)/Modules/encryptedmedia/Navigator+EME.idl \
-    $(WebCore)/Modules/encryptedmedia/legacy/WebKitMediaKeyMessageEvent.idl \
-    $(WebCore)/Modules/encryptedmedia/legacy/WebKitMediaKeyNeededEvent.idl \
-    $(WebCore)/Modules/encryptedmedia/legacy/WebKitMediaKeySession.idl \
-    $(WebCore)/Modules/encryptedmedia/legacy/WebKitMediaKeys.idl \
     $(WebCore)/Modules/entriesapi/DOMFileSystem.idl \
     $(WebCore)/Modules/entriesapi/ErrorCallback.idl \
     $(WebCore)/Modules/entriesapi/FileCallback.idl \
@@ -655,7 +640,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/html/ImageData.idl \
     $(WebCore)/html/ImageDataSettings.idl \
     $(WebCore)/html/MediaController.idl \
-    $(WebCore)/html/MediaEncryptedEvent.idl \
     $(WebCore)/html/MediaError.idl \
     $(WebCore)/html/OffscreenCanvas.idl \
     $(WebCore)/html/RadioNodeList.idl \
@@ -665,7 +649,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/html/URLSearchParams.idl \
     $(WebCore)/html/ValidityState.idl \
     $(WebCore)/html/VoidCallback.idl \
-    $(WebCore)/html/WebKitMediaKeyError.idl \
     $(WebCore)/html/canvas/ANGLEInstancedArrays.idl \
     $(WebCore)/html/canvas/CanvasCompositing.idl \
     $(WebCore)/html/canvas/CanvasDirection.idl \
@@ -995,7 +978,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/testing/InternalsSetLike.idl \
     $(WebCore)/testing/MallocStatistics.idl \
     $(WebCore)/testing/MemoryInfo.idl \
-    $(WebCore)/testing/MockCDMFactory.idl \
     $(WebCore)/testing/MockContentFilterSettings.idl \
     $(WebCore)/testing/MockPageOverlay.idl \
     $(WebCore)/testing/MockWebAuthenticationConfiguration.idl \

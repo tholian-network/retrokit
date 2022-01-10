@@ -599,14 +599,6 @@ void JSFunction::reifyName(VM& vm, JSGlobalObject* globalObject, String name)
     unsigned initialAttributes = PropertyAttribute::DontEnum | PropertyAttribute::ReadOnly;
     const Identifier& propID = vm.propertyNames->name;
 
-    if (globalObject->needsSiteSpecificQuirks()) {
-        auto illegalCharMatcher = [] (UChar ch) -> bool {
-            return ch == ' ' || ch == '|';
-        };
-        if (name.find(illegalCharMatcher) != notFound)
-            name = String();
-    }
-    
     if (jsExecutable()->isGetter())
         name = makeString("get ", name);
     else if (jsExecutable()->isSetter())

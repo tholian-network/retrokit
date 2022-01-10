@@ -75,7 +75,7 @@ These legacy APIs that are no longer of relevance to a modern Web View.
 - [x] Remove Sleep Disablers (`SleepDisabler`, `SleepDisablerClient`, `sleepDisablers`, `shouldDisableSleep`, `isDisablingSleep`, `mediaPlayerShouldDisableSleep`, `elementIsBlockingDisplaySleep`)
 - [ ] Remove System Sleep Listener (`SystemSleepListener`)
 - [x] Remove Legacy Custom Protocol Manager Support (`LEGACY_CUSTOM_PROTOCOL_MANAGER`, `LegacyCustomProtocol`, `LegacyCustomProtocolManager`, `registerSchemeForLegacyCustomProtocol`, `unregisterSchemeForLegacyCustomProtocol`, `LegacySchemeRegistry`, `CustomProtocolManagerClient`)
-- [ ] Remove Legacy Encrypted Media API (`LEGACY_ENCRYPTED_MEDIA`)
+- [x] Remove Legacy Encrypted Media API (`LEGACY_ENCRYPTED_MEDIA`)
 - [ ] Remove `WebFrameLoaderClient::createPlugin` and `WebFrameLoaderClient::redirectDataToPlugin`, `pluginSupportsExtension`
 - [ ] Remove Webkit InjectedBundle API (`InjectedBundle`, `WKBundle*`)
 - [ ] Remove WebKit WebExtension API (`WebKitWebExtension`, `webkit_web_extension*`)
@@ -111,10 +111,10 @@ surface, that's why they're removed.
 These legacy Quirks are really dirty Hacks that are domain-specific and site-specific
 and are also no longer of relevance to a modern Web View.
 
-- [ ] Remove `needsSiteSpecificQuirks()`
-- [ ] Remove `shouldAutoplayForArbitraryUserGesture()` Quirk (`facebook.com`, `twitter.com`)
-- [ ] Remove `shouldAutoplayWebAudioForArbitraryUserGesture()` Quirk (`bing.com`, `zoom.us`)
-- [ ] Remove `hasBrokenEncryptedMediaAPISupportQuirk()` Quirk (`hulu.com`, `starz.com`, `youtube.com`)
+- [x] Remove `needsSiteSpecificQuirks()`
+- [x] Remove `shouldAutoplayForArbitraryUserGesture()` Quirk (`facebook.com`, `twitter.com`)
+- [x] Remove `shouldAutoplayWebAudioForArbitraryUserGesture()` Quirk (`bing.com`, `zoom.us`)
+- [x] Remove `hasBrokenEncryptedMediaAPISupportQuirk()` Quirk (`hulu.com`, `starz.com`, `youtube.com`)
 - [x] Remove `shouldIgnoreInvalidSignal()` Quirk
 - [x] Remove `needsFormControlToBeMouseFocusable()` Quirk (`ceac.state.gov`)
 - [x] Remove `needsAutoplayPlayPauseEvents()` Quirk
@@ -180,6 +180,18 @@ and are also no longer of relevance to a modern Web View.
 - [x] Remove `shouldOmitHTMLDocumentSupportedPropertyNames()` Quirk
 - [x] Remove `shouldBypassUserGestureRequirementForWebAuthn` Quirk (`dropbox.com`, `facebook.com`, `google.com`, `microsoft.com`, `twitter.com`)
 
+## Legacy User-Agent Quirks
+
+These legacy Quirks are really dirty Hacks that are domain-specific and site-specific
+and are also no longer of relevance to a modern Web View.
+
+- [x] Remove `quirksForURL()` Quirk
+- [x] Remove `stringForQuirk()` Quirk
+- [x] Remove `urlRequiresChromeBrowser()` Quirk
+- [x] Remove `urlRequiresFirefoxBrowser()` Quirk
+- [x] Remove `urlRequiresMacintoshPlatform()` Quirk
+- [x] Remove `urlRequiresUnbrandedUserAgent()` Quirk
+
 
 ## Library Dependencies
 
@@ -224,6 +236,8 @@ list of Web APIs that are removed.
 - [x] Remove Picture in Picture API (`PICTURE_IN_PICTURE_API`, `operationMatchesPictureinPicturePseudoClass`, `EnterPictureInPictureEvent`, `picture-in-picture`, `PictureInPictureElement`)
 - [x] Remove Video Presentation Mode (`VIDEO_PRESENTATION_MODE`, `ControlledElementID`, `EnhancedFullscreen`, `VideoPresentation`, `prepareForVideoFullscreen`, `webkitPresentationModeChanged`)
 - [x] Remove iFrame `allowfullscreen` Property
+- [x] Remove Encrypted Media API (`ENCRYPTED_MEDIA`, `LEGACY_ENCRYPTED_MEDIA`)
+- [x] Remove Encrypted Media Thunder API (`THUNDER`)
 - [x] Remove Media Recorder API (`MediaRecorder`)
 - [x] Remove Web RTC API (`WEB_RTC`, `RTC`, `PeerConnectionState`, `PeerMediaDescription`, `RTCBundle`, `RTCDataChannel`, `RTCPeer`, `RTCIce`, `createRTCProvider`)
 - [x] Remove Web RTC H264 Codec (`WebRTCH264LowLatencyCoderEnabled`, `WebRTCH264HardwareEncoderEnabled`, `WebRTCH264SimulcastEnabled`)
@@ -235,20 +249,21 @@ list of Web APIs that are removed.
 - [x] Remove Web RTC Sockets Proxying (`WebRTCSocketsProxyingEnabled`)
 - [x] Remove Web RTC VP9 Codec Profiles (`WebRTCVP9Profile0CodecEnabled`, `WebRTCVP9Profile2CodecEnabled`)
 - [x] Remove Web RTC MDNS ICE Candidates Support (`WebRTCMDNSICECandidatesEnabled`, `PeerConnectionEnabled`, `ICECandidateFiltering`)
-- [ ] Remove Media Screen Capture API (`getDisplayMedia`)
+- [ ] Remove Screen Capture API (`getDisplayMedia`)
+- [ ] Remove Media Capture API (`MEDIA_CAPTURE`)
 - [ ] Remove Media Session API (`MEDIA_SESSION`)
+- [ ] Remove Media Statistics API (`MEDIA_STATISTICS`)
 - [ ] Remove Media Stream API (`MEDIA_STREAM`, `getUserMedia`)
 - [ ] Remove Offsceen Canvas in Workers (`OFFSCREEN_CANVAS_IN_WORKERS`)
 - [ ] Remove Network Shareable Resource API (`SHAREABLE_RESOURCE`)
 - [ ] Remove 3D Model Element API (`MODEL_ELEMENT`)
-- [ ] Remove Encrypted Media API (`ENCRYPTED_MEDIA`, `LEGACY_ENCRYPTED_MEDIA`)
-- [ ] Remove Encrypted Media Thunder API (`THUNDER`)
 - [ ] Remove Web Assembly API (`WEBASSEMBLY`)
 - [ ] Remove Sandbox Extensions (`SANDBOX_EXTENSIONS`)
 - [ ] Remove Web NFC API
 - [ ] Remove Web Performance API
 - [ ] Remove Web Storage API
 - [ ] Remove Indexed Database API
+- [ ] Remove WebSQL Database API
 - [ ] Remove Canvas API (`OFFSCREEN_CANVAS`, `Canvas`, `DOMConvertWebGL`, `JSANGLEInstancedArray`, `CanvasActivityRecord`)
 - [ ] Remove WebGL API (`WEBGL`, `WebGL`, `JSANGLEInstancedArray`, `GraphicsContextGL`, `HighPerformanceGraphicsUsageSampler`)
 - [ ] Remove WebGL2 API (`WEBGL2`)

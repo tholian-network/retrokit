@@ -685,8 +685,6 @@ enum AutoplayPolicy {
 
     undefined setIsPlayingToBluetoothOverride(optional boolean? isPlaying = null);
 
-    [Conditional=LEGACY_ENCRYPTED_MEDIA] undefined initializeMockCDM();
-    [Conditional=ENCRYPTED_MEDIA] MockCDMFactory registerMockCDM();
     undefined enableMockMediaCapabilities();
 
     [Conditional=SPEECH_SYNTHESIS] undefined enableMockSpeechSynthesizer();
@@ -970,9 +968,6 @@ enum AutoplayPolicy {
 
     [Conditional=APP_HIGHLIGHTS] readonly attribute sequence<DOMString> appHighlightContextMenuItemTitles;
     [Conditional=APP_HIGHLIGHTS] unsigned long numberOfAppHighlights();
-
-    [Conditional=ENCRYPTED_MEDIA] unsigned long mediaKeysInternalInstanceObjectRefCount(MediaKeys mediaKeys);
-    [Conditional=ENCRYPTED_MEDIA] unsigned long mediaKeySessionInternalInstanceSessionObjectRefCount(MediaKeySession session);
 
     undefined setContentSizeCategory(ContentSizeCategory category);
 

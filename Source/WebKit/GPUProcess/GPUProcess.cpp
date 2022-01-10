@@ -355,15 +355,9 @@ void GPUProcess::addSession(PAL::SessionID sessionID, GPUProcessSessionParameter
 {
     ASSERT(!m_sessions.contains(sessionID));
     SandboxExtension::consumePermanently(parameters.mediaCacheDirectorySandboxExtensionHandle);
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    SandboxExtension::consumePermanently(parameters.mediaKeysStorageDirectorySandboxExtensionHandle);
-#endif
 
     m_sessions.add(sessionID, GPUSession {
         WTFMove(parameters.mediaCacheDirectory)
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-        , WTFMove(parameters.mediaKeysStorageDirectory)
-#endif
     });
 }
 
@@ -378,14 +372,6 @@ const String& GPUProcess::mediaCacheDirectory(PAL::SessionID sessionID) const
     ASSERT(m_sessions.contains(sessionID));
     return m_sessions.find(sessionID)->value.mediaCacheDirectory;
 }
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-const String& GPUProcess::mediaKeysStorageDirectory(PAL::SessionID sessionID) const
-{
-    ASSERT(m_sessions.contains(sessionID));
-    return m_sessions.find(sessionID)->value.mediaKeysStorageDirectory;
-}
-#endif
 
 NowPlayingManager& GPUProcess::nowPlayingManager()
 {

@@ -150,11 +150,6 @@
         "DelegateToSharedSyntheticAttribute": {
             "contextsAllowed": ["attribute"]
         },
-        "DisabledByQuirk": {
-            "contextsAllowed": ["interface", "dictionary", "enum", "attribute", "operation", "constant", "dictionary-member", "includes"],
-            "values": ["*"],
-            "supportsConjunction": true
-        },
         "DoNotCheckConstants": {
             "contextsAllowed": ["interface"]
         },
@@ -169,11 +164,6 @@
         },
         "DocumentEventHandler": {
             "contextsAllowed": ["attribute"]
-        },
-        "EnabledByQuirk": {
-            "contextsAllowed": ["interface", "dictionary", "enum", "attribute", "operation", "constant", "dictionary-member", "includes"],
-            "values": ["*"],
-            "supportsConjunction": true
         },
         "EnabledAtRuntime": {
             "contextsAllowed": ["interface", "namespace", "dictionary", "enum", "attribute", "operation", "constant", "iterable", "includes"],

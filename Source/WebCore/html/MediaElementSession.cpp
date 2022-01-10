@@ -45,7 +45,6 @@
 #include "NowPlayingInfo.h"
 #include "Page.h"
 #include "PlatformMediaSessionManager.h"
-#include "Quirks.h"
 #include "RenderMedia.h"
 #include "RenderView.h"
 #include "ScriptController.h"

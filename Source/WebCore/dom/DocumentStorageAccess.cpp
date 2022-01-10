@@ -38,7 +38,6 @@
 #include "JSDOMPromiseDeferred.h"
 #include "NetworkStorageSession.h"
 #include "Page.h"
-#include "Quirks.h"
 #include "RegistrableDomain.h"
 #include "SecurityOrigin.h"
 #include "Settings.h"
@@ -132,14 +131,6 @@ void DocumentStorageAccess::hasStorageAccess(Ref<DeferredPromise>&& promise)
     });
 }
 
-bool DocumentStorageAccess::hasStorageAccessForDocumentQuirk(Document& document)
-{
-    auto quickCheckResult = DocumentStorageAccess::from(document)->hasStorageAccessQuickCheck();
-    if (quickCheckResult)
-        return *quickCheckResult;
-    return false;
-}
-
 void DocumentStorageAccess::requestStorageAccess(Document& document, Ref<DeferredPromise>&& promise)
 {
     DocumentStorageAccess::from(document)->requestStorageAccess(WTFMove(promise));
@@ -222,73 +213,6 @@ void DocumentStorageAccess::requestStorageAccess(Ref<DeferredPromise>&& promise)
             if (result.promptWasShown == StorageAccessPromptWasShown::Yes)
                 setWasExplicitlyDeniedFrameSpecificStorageAccess();
             promise->reject();
-        }
-
-        if (shouldPreserveUserGesture) {
-            m_document.eventLoop().queueMicrotask([this, weakThis] {
-                if (weakThis)
-                    consumeTemporaryTimeUserGesture();
-            });
-        }
-    });
-}
-
-void DocumentStorageAccess::requestStorageAccessForDocumentQuirk(Document& document, CompletionHandler<void(StorageAccessWasGranted)>&& completionHandler)
-{
-    DocumentStorageAccess::from(document)->requestStorageAccessForDocumentQuirk(WTFMove(completionHandler));
-}
-
-void DocumentStorageAccess::requestStorageAccessForDocumentQuirk(CompletionHandler<void(StorageAccessWasGranted)>&& completionHandler)
-{
-    auto quickCheckResult = requestStorageAccessQuickCheck();
-    if (quickCheckResult) {
-        *quickCheckResult == StorageAccessQuickResult::Grant ? completionHandler(StorageAccessWasGranted::Yes) : completionHandler(StorageAccessWasGranted::No);
-        return;
-    }
-    requestStorageAccessQuirk(RegistrableDomain::uncheckedCreateFromHost(m_document.securityOrigin().host()), WTFMove(completionHandler));
-}
-
-void DocumentStorageAccess::requestStorageAccessForNonDocumentQuirk(Document& hostingDocument, RegistrableDomain&& requestingDomain, CompletionHandler<void(StorageAccessWasGranted)>&& completionHandler)
-{
-    DocumentStorageAccess::from(hostingDocument)->requestStorageAccessForNonDocumentQuirk(WTFMove(requestingDomain), WTFMove(completionHandler));
-}
-
-void DocumentStorageAccess::requestStorageAccessForNonDocumentQuirk(RegistrableDomain&& requestingDomain, CompletionHandler<void(StorageAccessWasGranted)>&& completionHandler)
-{
-    if (!m_document.frame() || !m_document.frame()->page() || !isAllowedToRequestStorageAccess()) {
-        completionHandler(StorageAccessWasGranted::No);
-        return;
-    }
-    requestStorageAccessQuirk(WTFMove(requestingDomain), WTFMove(completionHandler));
-}
-
-void DocumentStorageAccess::requestStorageAccessQuirk(RegistrableDomain&& requestingDomain, CompletionHandler<void(StorageAccessWasGranted)>&& completionHandler)
-{
-    ASSERT(m_document.settings().storageAccessAPIEnabled());
-    RELEASE_ASSERT(m_document.frame() && m_document.frame()->page());
-
-    auto topFrameDomain = RegistrableDomain(m_document.topDocument().url());
-
-    m_document.frame()->page()->chrome().client().requestStorageAccess(WTFMove(requestingDomain), WTFMove(topFrameDomain), *m_document.frame(), m_storageAccessScope, [this, weakThis = makeWeakPtr(*this), completionHandler = WTFMove(completionHandler)] (RequestStorageAccessResult result) mutable {
-        if (!weakThis)
-            return;
-
-        // Consume the user gesture only if the user explicitly denied access.
-        bool shouldPreserveUserGesture = result.wasGranted == StorageAccessWasGranted::Yes || result.promptWasShown == StorageAccessPromptWasShown::No;
-
-        if (shouldPreserveUserGesture) {
-            m_document.eventLoop().queueMicrotask([this, weakThis] {
-                if (weakThis)
-                    enableTemporaryTimeUserGesture();
-            });
-        }
-
-        if (result.wasGranted == StorageAccessWasGranted::Yes)
-            completionHandler(StorageAccessWasGranted::Yes);
-        else {
-            if (result.promptWasShown == StorageAccessPromptWasShown::Yes)
-                setWasExplicitlyDeniedFrameSpecificStorageAccess();
-            completionHandler(StorageAccessWasGranted::No);
         }
 
         if (shouldPreserveUserGesture) {

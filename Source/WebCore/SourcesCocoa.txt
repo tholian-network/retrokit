@@ -190,7 +190,6 @@ platform/cocoa/WebCoreNSErrorExtras.mm
 platform/graphics/MediaPlaybackTargetPicker.cpp
 platform/graphics/avfoundation/AVTrackPrivateAVFObjCImpl.mm @no-unify
 platform/graphics/avfoundation/AudioSourceProviderAVFObjC.mm @no-unify
-platform/graphics/avfoundation/CDMPrivateMediaSourceAVFObjC.mm @no-unify
 platform/graphics/avfoundation/ISOFairPlayStreamingPsshBox.cpp
 platform/graphics/avfoundation/InbandMetadataTextTrackPrivateAVF.cpp @no-unify
 platform/graphics/avfoundation/InbandTextTrackPrivateAVF.cpp @no-unify
@@ -206,10 +205,6 @@ platform/graphics/avfoundation/objc/AVRoutePickerViewTargetPicker.mm @no-unify
 platform/graphics/avfoundation/objc/AVStreamDataParserMIMETypeCache.mm @no-unify
 platform/graphics/avfoundation/objc/AudioTrackPrivateAVFObjC.mm @no-unify
 platform/graphics/avfoundation/objc/AudioTrackPrivateMediaSourceAVFObjC.cpp @no-unify
-platform/graphics/avfoundation/objc/CDMSessionAVContentKeySession.mm @no-unify
-platform/graphics/avfoundation/objc/CDMSessionAVFoundationObjC.mm @no-unify
-platform/graphics/avfoundation/objc/CDMSessionAVStreamSession.mm @no-unify
-platform/graphics/avfoundation/objc/CDMSessionMediaSourceAVFObjC.mm @no-unify
 platform/graphics/avfoundation/objc/ImageDecoderAVFObjC.mm @no-unify
 platform/graphics/avfoundation/objc/InbandTextTrackPrivateAVFObjC.mm @no-unify
 platform/graphics/avfoundation/objc/LocalSampleBufferDisplayLayer.mm @no-unify

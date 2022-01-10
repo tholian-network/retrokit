@@ -55,24 +55,6 @@ AtomString GStreamerMediaDescription::extractCodecName()
 {
     GRefPtr<GstCaps> originalCaps = m_caps;
 
-    if (areEncryptedCaps(originalCaps.get())) {
-        originalCaps = adoptGRef(gst_caps_copy(originalCaps.get()));
-        GstStructure* structure = gst_caps_get_structure(originalCaps.get(), 0);
-
-        if (!gst_structure_has_field(structure, "original-media-type"))
-            return AtomString();
-
-        gst_structure_set_name(structure, gst_structure_get_string(structure, "original-media-type"));
-        // Remove the DRM related fields from the caps.
-        for (int j = 0; j < gst_structure_n_fields(structure); ++j) {
-            const char* fieldName = gst_structure_nth_field_name(structure, j);
-
-            if (g_str_has_prefix(fieldName, "protection-system")
-                || g_str_has_prefix(fieldName, "original-media-type"))
-                gst_structure_remove_field(structure, fieldName);
-        }
-    }
-
     GUniquePtr<gchar> description(gst_pb_utils_get_codec_description(originalCaps.get()));
     String codecName(description.get());
 

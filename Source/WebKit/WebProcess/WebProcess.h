@@ -117,8 +117,6 @@ class InjectedBundle;
 class NetworkProcessConnection;
 class ObjCObjectGraph;
 class ProcessAssertion;
-class RemoteCDMFactory;
-class RemoteLegacyCDMFactory;
 class RemoteMediaEngineConfigurationFactory;
 struct ServiceWorkerInitializationData;
 class StorageAreaMap;
@@ -238,12 +236,6 @@ public:
 
 #if ENABLE(MEDIA_STREAM) && PLATFORM(COCOA)
     AudioMediaStreamTrackRendererInternalUnitManager& audioMediaStreamTrackRendererInternalUnitManager();
-#endif
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    RemoteLegacyCDMFactory& legacyCDMFactory();
-#endif
-#if ENABLE(ENCRYPTED_MEDIA)
-    RemoteCDMFactory& cdmFactory();
 #endif
     RemoteMediaEngineConfigurationFactory& mediaEngineConfigurationFactory();
 #endif // ENABLE(GPU_PROCESS)

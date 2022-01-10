@@ -448,8 +448,7 @@ if ($shouldCombineMain) {
     # Copy over the Images directory.
     ditto(File::Spec->catdir($uiRoot, 'Images'), File::Spec->catdir($targetResourcePath, 'Images'));
 
-    # Copy the Protocol/Legacy and Workers directories.
-    ditto(File::Spec->catfile($uiRoot, 'Protocol', 'Legacy'), File::Spec->catfile($protocolDir, 'Legacy'));
+    # Copy over the Workers directories.
     ditto(File::Spec->catfile($uiRoot, 'Workers'), $workersDir);
 
     # Remove console.assert calls from the Worker js files.
@@ -553,6 +552,4 @@ if ($shouldCombineTest) {
     copy(File::Spec->catfile($derivedSourcesDir, 'TestStub.html'), File::Spec->catfile($targetResourcePath, 'TestStub.html'));
     copy(File::Spec->catfile($derivedSourcesDir, 'TestStubCombined.js'), File::Spec->catfile($targetResourcePath, 'TestStubCombined.js'));
 
-    # Copy the Legacy directory.
-    ditto(File::Spec->catfile($uiRoot, 'Protocol', 'Legacy'), File::Spec->catfile($protocolDir, 'Legacy'));
 }

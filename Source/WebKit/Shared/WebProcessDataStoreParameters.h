@@ -42,8 +42,6 @@ struct WebProcessDataStoreParameters {
     String applicationCacheFlatFileSubdirectoryName;
     String mediaCacheDirectory;
     SandboxExtension::Handle mediaCacheDirectoryExtensionHandle;
-    String mediaKeyStorageDirectory;
-    SandboxExtension::Handle mediaKeyStorageDirectoryExtensionHandle;
     String javaScriptConfigurationDirectory;
     SandboxExtension::Handle javaScriptConfigurationDirectoryExtensionHandle;
 #if ENABLE(RESOURCE_LOAD_STATISTICS)
@@ -70,8 +68,6 @@ void WebProcessDataStoreParameters::encode(Encoder& encoder) const
     encoder << applicationCacheFlatFileSubdirectoryName;
     encoder << mediaCacheDirectory;
     encoder << mediaCacheDirectoryExtensionHandle;
-    encoder << mediaKeyStorageDirectory;
-    encoder << mediaKeyStorageDirectoryExtensionHandle;
     encoder << javaScriptConfigurationDirectory;
     encoder << javaScriptConfigurationDirectoryExtensionHandle;
 #if ENABLE(RESOURCE_LOAD_STATISTICS)
@@ -116,15 +112,6 @@ std::optional<WebProcessDataStoreParameters> WebProcessDataStoreParameters::deco
     if (!mediaCacheDirectoryExtensionHandle)
         return std::nullopt;
 
-    String mediaKeyStorageDirectory;
-    if (!decoder.decode(mediaKeyStorageDirectory))
-        return std::nullopt;
-
-    std::optional<SandboxExtension::Handle> mediaKeyStorageDirectoryExtensionHandle;
-    decoder >> mediaKeyStorageDirectoryExtensionHandle;
-    if (!mediaKeyStorageDirectoryExtensionHandle)
-        return std::nullopt;
-
     String javaScriptConfigurationDirectory;
     if (!decoder.decode(javaScriptConfigurationDirectory))
         return std::nullopt;
@@ -133,7 +120,7 @@ std::optional<WebProcessDataStoreParameters> WebProcessDataStoreParameters::deco
     decoder >> javaScriptConfigurationDirectoryExtensionHandle;
     if (!javaScriptConfigurationDirectoryExtensionHandle)
         return std::nullopt;
-        
+
 #if ENABLE(RESOURCE_LOAD_STATISTICS)
     std::optional<WebCore::ThirdPartyCookieBlockingMode> thirdPartyCookieBlockingMode;
     decoder >> thirdPartyCookieBlockingMode;
@@ -144,7 +131,7 @@ std::optional<WebProcessDataStoreParameters> WebProcessDataStoreParameters::deco
     decoder >> domainsWithUserInteraction;
     if (!domainsWithUserInteraction)
         return std::nullopt;
-    
+
     std::optional<HashMap<TopFrameDomain, SubResourceDomain>> domainsWithStorageAccessQuirk;
     decoder >> domainsWithStorageAccessQuirk;
     if (!domainsWithStorageAccessQuirk)
@@ -172,8 +159,6 @@ std::optional<WebProcessDataStoreParameters> WebProcessDataStoreParameters::deco
         WTFMove(applicationCacheFlatFileSubdirectoryName),
         WTFMove(mediaCacheDirectory),
         WTFMove(*mediaCacheDirectoryExtensionHandle),
-        WTFMove(mediaKeyStorageDirectory),
-        WTFMove(*mediaKeyStorageDirectoryExtensionHandle),
         WTFMove(javaScriptConfigurationDirectory),
         WTFMove(*javaScriptConfigurationDirectoryExtensionHandle),
 #if ENABLE(RESOURCE_LOAD_STATISTICS)

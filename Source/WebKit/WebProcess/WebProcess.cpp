@@ -44,7 +44,6 @@
 #include "ProcessAssertion.h"
 #include "RemoteAudioHardwareListener.h"
 #include "RemoteAudioSession.h"
-#include "RemoteLegacyCDMFactory.h"
 #include "RemoteMediaEngineConfigurationFactory.h"
 #include "RemoteRemoteCommandListener.h"
 #include "SpeechRecognitionRealtimeMediaSourceManager.h"
@@ -60,7 +59,6 @@
 #include "WebFrameNetworkingContext.h"
 #include "WebIDBConnectionToServer.h"
 #include "WebLoaderStrategy.h"
-#include "WebMediaKeyStorageManager.h"
 #include "WebMemorySampler.h"
 #include "WebMessagePortChannelProvider.h"
 #include "WebPage.h"
@@ -189,10 +187,6 @@
 #include "RemoteMediaPlayerManager.h"
 #endif
 
-#if ENABLE(ENCRYPTED_MEDIA)
-#include "RemoteCDMFactory.h"
-#endif
-
 #if PLATFORM(IOS_FAMILY)
 #include "RemoteMediaSessionHelper.h"
 #endif
@@ -276,10 +270,6 @@ WebProcess::WebProcess()
     addSupplement<WebNotificationManager>();
 #endif
 
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    addSupplement<WebMediaKeyStorageManager>();
-#endif
-
 #if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
     addSupplement<UserMediaCaptureManager>();
 #endif
@@ -290,14 +280,6 @@ WebProcess::WebProcess()
 
 #if ENABLE(GPU_PROCESS) && HAVE(AVASSETREADER)
     addSupplement<RemoteImageDecoderAVFManager>();
-#endif
-
-#if ENABLE(GPU_PROCESS) && ENABLE(ENCRYPTED_MEDIA)
-    addSupplement<RemoteCDMFactory>();
-#endif
-
-#if ENABLE(GPU_PROCESS) && ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    addSupplement<RemoteLegacyCDMFactory>();
 #endif
 
 #if ENABLE(ROUTING_ARBITRATION)
@@ -1953,15 +1935,6 @@ void WebProcess::setUseGPUProcessForMedia(bool useGPUProcessForMedia)
 
     m_useGPUProcessForMedia = useGPUProcessForMedia;
 
-#if ENABLE(ENCRYPTED_MEDIA)
-    auto& cdmFactories = CDMFactory::registeredFactories();
-    cdmFactories.clear();
-    if (useGPUProcessForMedia)
-        cdmFactory().registerFactory(cdmFactories);
-    else
-        CDMFactory::platformRegisterFactories(cdmFactories);
-#endif
-
 #if USE(AUDIO_SESSION)
     if (useGPUProcessForMedia)
         AudioSession::setSharedSession(RemoteAudioSession::create(*this));
@@ -1974,13 +1947,6 @@ void WebProcess::setUseGPUProcessForMedia(bool useGPUProcessForMedia)
         MediaSessionHelper::setSharedHelper(makeUniqueRef<RemoteMediaSessionHelper>(*this));
     else
         MediaSessionHelper::resetSharedHelper();
-#endif
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    if (useGPUProcessForMedia)
-        legacyCDMFactory().registerFactory();
-    else
-        LegacyCDM::resetFactories();
 #endif
 
     if (useGPUProcessForMedia)
@@ -2054,20 +2020,6 @@ SpeechRecognitionRealtimeMediaSourceManager& WebProcess::ensureSpeechRecognition
         m_speechRecognitionRealtimeMediaSourceManager = makeUnique<SpeechRecognitionRealtimeMediaSourceManager>(makeRef(*parentProcessConnection()));
 
     return *m_speechRecognitionRealtimeMediaSourceManager;
-}
-#endif
-
-#if ENABLE(GPU_PROCESS) && ENABLE(LEGACY_ENCRYPTED_MEDIA)
-RemoteLegacyCDMFactory& WebProcess::legacyCDMFactory()
-{
-    return *supplement<RemoteLegacyCDMFactory>();
-}
-#endif
-
-#if ENABLE(GPU_PROCESS) && ENABLE(ENCRYPTED_MEDIA)
-RemoteCDMFactory& WebProcess::cdmFactory()
-{
-    return *supplement<RemoteCDMFactory>();
 }
 #endif
 

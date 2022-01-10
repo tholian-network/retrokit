@@ -3050,29 +3050,6 @@ std::optional<WebCore::ScriptBuffer> ArgumentCoder<WebCore::ScriptBuffer>::decod
     return WebCore::ScriptBuffer { WTFMove(buffer) };
 }
 
-#if ENABLE(ENCRYPTED_MEDIA)
-void ArgumentCoder<WebCore::CDMInstanceSession::Message>::encode(Encoder& encoder, const WebCore::CDMInstanceSession::Message& message)
-{
-    encoder << message.first;
-
-    RefPtr<SharedBuffer> messageData = message.second.copyRef();
-    encoder << messageData;
-}
-
-std::optional<WebCore::CDMInstanceSession::Message>  ArgumentCoder<WebCore::CDMInstanceSession::Message>::decode(Decoder& decoder)
-{
-    WebCore::CDMInstanceSession::MessageType type;
-    if (!decoder.decode(type))
-        return std::nullopt;
-
-    RefPtr<SharedBuffer> buffer;
-    if (!decoder.decode(buffer) || !buffer)
-        return std::nullopt;
-
-    return std::make_optional<WebCore::CDMInstanceSession::Message>({ type, buffer.releaseNonNull() });
-}
-#endif // ENABLE(ENCRYPTED_MEDIA)
-
 #if ENABLE(GPU_PROCESS) && ENABLE(WEBGL)
 void ArgumentCoder<WebCore::GraphicsContextGLAttributes>::encode(Encoder& encoder, const WebCore::GraphicsContextGLAttributes& attributes)
 {

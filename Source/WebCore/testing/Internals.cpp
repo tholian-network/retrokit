@@ -126,8 +126,6 @@
 #include "MallocStatistics.h"
 #include "MediaDevices.h"
 #include "MediaEngineConfigurationFactory.h"
-#include "MediaKeySession.h"
-#include "MediaKeys.h"
 #include "MediaMetadata.h"
 #include "MediaPlayer.h"
 #include "MediaProducer.h"
@@ -237,15 +235,6 @@
 
 #if ENABLE(MOUSE_CURSOR_SCALE)
 #include <wtf/dtoa.h>
-#endif
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-#include "LegacyCDM.h"
-#include "LegacyMockCDM.h"
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-#include "MockCDMFactory.h"
 #endif
 
 #if ENABLE(VIDEO)
@@ -3550,25 +3539,6 @@ void Internals::enableSizeToContentAutoSizeMode(bool enabled, int width, int hei
     document->view()->enableSizeToContentAutoSizeMode(enabled, { width, height });
 }
 
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-
-void Internals::initializeMockCDM()
-{
-    LegacyCDM::registerCDMFactory([] (LegacyCDM* cdm) { return makeUnique<LegacyMockCDM>(cdm); },
-        LegacyMockCDM::supportsKeySystem, LegacyMockCDM::supportsKeySystemAndMimeType);
-}
-
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-
-Ref<MockCDMFactory> Internals::registerMockCDM()
-{
-    return MockCDMFactory::create();
-}
-
-#endif
-
 String Internals::markerTextForListItem(Element& element)
 {
     return WebCore::markerTextForListItem(&element);
@@ -5850,18 +5820,6 @@ String Internals::focusRingColor()
 {
     return serializationForCSS(RenderTheme::singleton().focusRingColor({ }));
 }
-
-#if ENABLE(ENCRYPTED_MEDIA)
-unsigned Internals::mediaKeysInternalInstanceObjectRefCount(const MediaKeys& mediaKeys) const
-{
-    return mediaKeys.internalInstanceObjectRefCount();
-}
-
-unsigned Internals::mediaKeySessionInternalInstanceSessionObjectRefCount(const MediaKeySession& mediaKeySession) const
-{
-    return mediaKeySession.internalInstanceSessionObjectRefCount();
-}
-#endif
 
 void Internals::setContentSizeCategory(Internals::ContentSizeCategory category)
 {

@@ -64,7 +64,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/WebProcess/Cache"
     "${WEBKIT_DIR}/WebProcess/Databases"
     "${WEBKIT_DIR}/WebProcess/Databases/IndexedDB"
-    "${WEBKIT_DIR}/WebProcess/EncryptedMedia"
     "${WEBKIT_DIR}/WebProcess/FileAPI"
     "${WEBKIT_DIR}/WebProcess/FullScreen"
     "${WEBKIT_DIR}/WebProcess/GPU"
@@ -109,13 +108,6 @@ set(WebKit_MESSAGES_IN_FILES
 
     GPUProcess/media/RemoteAudioDestinationManager
     GPUProcess/media/RemoteAudioSessionProxy
-    GPUProcess/media/RemoteCDMFactoryProxy
-    GPUProcess/media/RemoteCDMInstanceProxy
-    GPUProcess/media/RemoteCDMInstanceSessionProxy
-    GPUProcess/media/RemoteCDMProxy
-    GPUProcess/media/RemoteLegacyCDMFactoryProxy
-    GPUProcess/media/RemoteLegacyCDMProxy
-    GPUProcess/media/RemoteLegacyCDMSessionProxy
     GPUProcess/media/RemoteMediaEngineConfigurationFactoryProxy
     GPUProcess/media/RemoteMediaPlayerManagerProxy
     GPUProcess/media/RemoteMediaPlayerProxy
@@ -191,9 +183,6 @@ set(WebKit_MESSAGES_IN_FILES
     WebProcess/GPU/media/MediaSourcePrivateRemote
     WebProcess/GPU/media/RemoteAudioSession
     WebProcess/GPU/media/RemoteAudioSourceProviderManager
-    WebProcess/GPU/media/RemoteCDMInstance
-    WebProcess/GPU/media/RemoteCDMInstanceSession
-    WebProcess/GPU/media/RemoteLegacyCDMSession
     WebProcess/GPU/media/RemoteRemoteCommandListener
     WebProcess/GPU/media/SourceBufferPrivateRemote
 
@@ -243,12 +232,6 @@ endif ()
 set(WebProcess_LIBRARIES WebKit)
 set(NetworkProcess_LIBRARIES WebKit)
 set(GPUProcess_LIBRARIES WebKit)
-
-if (ENABLE_ENCRYPTED_MEDIA AND ENABLE_OPENCDM)
-  list(APPEND WebKit_SYSTEM_INCLUDE_DIRECTORIES
-      ${OPENCDM_INCLUDE_DIRS}
-  )
-endif ()
 
 # For platforms that want to use system-provided OpenGL (ES) / EGL headers,
 # these include directories, libraries or definitions need to be

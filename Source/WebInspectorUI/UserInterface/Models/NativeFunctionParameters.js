@@ -219,10 +219,6 @@ WI.NativeConstructorFunctionParameters = {
         __proto__: null,
     },
 
-    WebKitMediaKeysConstructor: {
-        isTypeSupported: "keySystem, [type]",
-        __proto__: null,
-    },
 };
 
 WI.NativePrototypeFunctionParameters = {
@@ -908,12 +904,8 @@ WI.NativePrototypeFunctionParameters = {
 
     HTMLMediaElement: {
         addTextTrack: "kind, [label], [language]",
-        canPlayType: "[type], [keySystem]",
+        canPlayType: "[type]",
         fastSeek: "time",
-        webkitAddKey: "keySystem, key, [initData], [sessionId]",
-        webkitCancelKeyRequest: "keySystem, [sessionId]",
-        webkitGenerateKeyRequest: "keySystem, [initData]",
-        webkitSetMediaKeys: "mediaKeys",
         __proto__: null,
     },
 
@@ -1947,16 +1939,6 @@ WI.NativePrototypeFunctionParameters = {
         skewX: "[angle]",
         skewY: "[angle]",
         translate: "[x], [y], [z]",
-        __proto__: null,
-    },
-
-    WebKitMediaKeySession: {
-        update: "key",
-        __proto__: null,
-    },
-
-    WebKitMediaKeys: {
-        createSession: "[type], [initData]",
         __proto__: null,
     },
 

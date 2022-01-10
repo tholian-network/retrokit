@@ -32,7 +32,6 @@
 #include "Cookie.h"
 #include "GraphicsTypesGL.h"
 #include "LayoutRect.h"
-#include "LegacyCDMSession.h"
 #include "MediaPlayerEnums.h"
 #include "MediaPlayerIdentifier.h"
 #include "NativeImage.h"
@@ -70,13 +69,10 @@ typedef struct __CVBuffer* CVPixelBufferRef;
 namespace WebCore {
 
 class AudioSourceProvider;
-class CDMInstance;
 class CachedResourceLoader;
 class GraphicsContextGL;
 class GraphicsContext;
 class InbandTextTrackPrivate;
-class LegacyCDM;
-class LegacyCDMSessionClient;
 class MediaPlaybackTarget;
 class MediaPlayer;
 class MediaPlayerFactory;
@@ -202,17 +198,6 @@ public:
     virtual GraphicsDeviceAdapter* mediaPlayerGraphicsDeviceAdapter() const { return nullptr; }
 #endif
 
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    virtual RefPtr<ArrayBuffer> mediaPlayerCachedKeyForKeyId(const String&) const { return nullptr; }
-    virtual void mediaPlayerKeyNeeded(Uint8Array*) { }
-    virtual String mediaPlayerMediaKeysStorageDirectory() const { return emptyString(); }
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    virtual void mediaPlayerInitializationDataEncountered(const String&, RefPtr<ArrayBuffer>&&) { }
-    virtual void mediaPlayerWaitingForKeyChanged() { }
-#endif
-    
 #if ENABLE(WIRELESS_PLAYBACK_TARGET)
     virtual void mediaPlayerCurrentPlaybackTargetIsWirelessChanged(bool) { };
 #endif
@@ -305,7 +290,6 @@ public:
     static HashSet<SecurityOriginData> originsInMediaCache(const String& path);
     static void clearMediaCache(const String& path, WallTime modifiedSince);
     static void clearMediaCacheForOrigins(const String& path, const HashSet<SecurityOriginData>&);
-    static bool supportsKeySystem(const String& keySystem, const String& mimeType);
 
     bool supportsScanning() const;
     bool canSaveMediaData() const;
@@ -328,7 +312,7 @@ public:
     IntSize size() const { return m_size; }
     void setSize(const IntSize& size);
 
-    bool load(const URL&, const ContentType&, const String& keySystem);
+    bool load(const URL&, const ContentType&);
 #if ENABLE(MEDIA_SOURCE)
     bool load(const URL&, const ContentType&, MediaSourcePrivateClient*);
 #endif
@@ -349,28 +333,6 @@ public:
 
     using MediaPlayerEnums::BufferingPolicy;
     void setBufferingPolicy(BufferingPolicy);
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    // Represents synchronous exceptions that can be thrown from the Encrypted Media methods.
-    // This is different from the asynchronous MediaKeyError.
-    enum MediaKeyException { NoError, InvalidPlayerState, KeySystemNotSupported };
-
-    std::unique_ptr<LegacyCDMSession> createSession(const String& keySystem, LegacyCDMSessionClient*);
-    void setCDM(LegacyCDM*);
-    void setCDMSession(LegacyCDMSession*);
-    void keyAdded();
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    void cdmInstanceAttached(CDMInstance&);
-    void cdmInstanceDetached(CDMInstance&);
-    void attemptToDecryptWithInstance(CDMInstance&);
-#endif
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA) && ENABLE(ENCRYPTED_MEDIA)
-    void setShouldContinueAfterKeyNeeded(bool);
-    bool shouldContinueAfterKeyNeeded() const { return m_shouldContinueAfterKeyNeeded; }
-#endif
 
     void queueTaskOnEventLoop(Function<void()>&&);
 
@@ -532,18 +494,6 @@ public:
     AudioSourceProvider* audioSourceProvider();
 #endif
 
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    RefPtr<ArrayBuffer> cachedKeyForKeyId(const String& keyId) const;
-    void keyNeeded(Uint8Array* initData);
-    String mediaKeysStorageDirectory() const;
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    void initializationDataEncountered(const String&, RefPtr<ArrayBuffer>&&);
-    void waitingForKeyChanged();
-    bool waitingForKey() const;
-#endif
-
     String referrer() const;
     String userAgent() const;
 
@@ -672,7 +622,6 @@ private:
     const MediaPlayerFactory* m_currentMediaEngine { nullptr };
     URL m_url;
     ContentType m_contentType;
-    String m_keySystem;
     std::optional<MediaPlayerEnums::MediaEngineIdentifier> m_activeEngineIdentifier;
     std::optional<MediaTime> m_pendingSeekRequest;
     IntSize m_size;
@@ -695,9 +644,6 @@ private:
 #if ENABLE(MEDIA_STREAM)
     RefPtr<MediaStreamPrivate> m_mediaStream;
 #endif
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA) && ENABLE(ENCRYPTED_MEDIA)
-    bool m_shouldContinueAfterKeyNeeded { false };
-#endif
 };
 
 class MediaPlayerFactory {
@@ -714,7 +660,6 @@ public:
     virtual HashSet<SecurityOriginData> originsInMediaCache(const String&) const { return { }; }
     virtual void clearMediaCache(const String&, WallTime) const { }
     virtual void clearMediaCacheForOrigins(const String&, const HashSet<SecurityOriginData>&) const { }
-    virtual bool supportsKeySystem(const String& /* keySystem */, const String& /* mimeType */) const { return false; }
 };
 
 using MediaEngineRegistrar = void(std::unique_ptr<MediaPlayerFactory>&&);

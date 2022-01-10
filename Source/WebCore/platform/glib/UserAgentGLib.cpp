@@ -28,7 +28,6 @@
 #include "UserAgent.h"
 
 #include "HTTPParsers.h"
-#include "UserAgentQuirks.h"
 #include <wtf/NeverDestroyed.h>
 #include <wtf/URL.h>
 #include <wtf/glib/ChassisType.h>
@@ -75,36 +74,16 @@ static const String platformVersionForUAString()
 #endif
 }
 
-static String buildUserAgentString(const UserAgentQuirks& quirks)
+static String buildUserAgentString()
 {
     StringBuilder uaString;
     uaString.append("Mozilla/5.0 (");
 
-    if (quirks.contains(UserAgentQuirks::NeedsMacintoshPlatform))
-        uaString.append(UserAgentQuirks::stringForQuirk(UserAgentQuirks::NeedsMacintoshPlatform));
-    else {
-        uaString.append(platformForUAString(), "; ");
-#if defined(USER_AGENT_BRANDING)
-        uaString.append(USER_AGENT_BRANDING "; ");
-#endif
-        uaString.append(platformVersionForUAString());
-    }
-
-    if (quirks.contains(UserAgentQuirks::NeedsFirefoxBrowser)) {
-        uaString.append(UserAgentQuirks::stringForQuirk(UserAgentQuirks::NeedsFirefoxBrowser));
-        return uaString.toString();
-    }
+    uaString.append(platformForUAString(), "; ");
+    uaString.append(platformVersionForUAString());
 
     uaString.append(") AppleWebKit/605.1.15 (KHTML, like Gecko) ");
-
-    // Note that Chrome UAs advertise *both* Chrome/X and Safari/X, but it does
-    // not advertise Version/X.
-    if (quirks.contains(UserAgentQuirks::NeedsChromeBrowser)) {
-        uaString.append(UserAgentQuirks::stringForQuirk(UserAgentQuirks::NeedsChromeBrowser), ' ');
-    // Version/X is mandatory *before* Safari/X to be a valid Safari UA. See
-    // https://bugs.webkit.org/show_bug.cgi?id=133403 for details.
-    } else
-        uaString.append("Version/15.0 ");
+    uaString.append("Version/15.0 ");
 
     if (chassisType() == WTF::ChassisType::Mobile)
         uaString.append("Mobile ");
@@ -115,7 +94,7 @@ static String buildUserAgentString(const UserAgentQuirks& quirks)
 
 static const String standardUserAgentStatic()
 {
-    static NeverDestroyed<const String> uaStatic(buildUserAgentString(UserAgentQuirks()));
+    static NeverDestroyed<const String> uaStatic(buildUserAgentString());
     return uaStatic;
 }
 
@@ -153,14 +132,7 @@ String standardUserAgent(const String& applicationName, const String& applicatio
 
 String standardUserAgentForURL(const URL& url)
 {
-    auto quirks = UserAgentQuirks::quirksForURL(url);
-    // The null string means we don't need a specific UA for the given URL.
-    // Note: UserAgentQuirks::NeedsUnbrandedUserAgent is implemented by simply
-    // not returning here.
-    if (quirks.isEmpty())
-        return String();
-
-    String userAgent(buildUserAgentString(quirks));
+    String userAgent(buildUserAgentString());
     ASSERT(isValidUserAgentHeaderValue(userAgent));
     return userAgent;
 }

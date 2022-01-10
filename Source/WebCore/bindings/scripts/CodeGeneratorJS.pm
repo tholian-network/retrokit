@@ -1934,8 +1934,6 @@ sub NeedsRuntimeCheck
         || $context->extendedAttributes->{EnabledForContext}
         || $context->extendedAttributes->{EnabledForWorld}
         || $context->extendedAttributes->{EnabledBySetting}
-        || $context->extendedAttributes->{EnabledByQuirk}
-        || $context->extendedAttributes->{DisabledByQuirk}
         || $context->extendedAttributes->{SecureContext}
         || $context->extendedAttributes->{CustomEnabled};
 }
@@ -1943,7 +1941,7 @@ sub NeedsRuntimeCheck
 sub NeedsRuntimeReadWriteCheck
 {
     my ($interface, $context) = @_;
-    
+
     return $context->extendedAttributes->{RuntimeConditionallyReadWrite}
         || $context->extendedAttributes->{SettingsConditionallyReadWrite}
 }
@@ -3985,34 +3983,6 @@ sub GenerateRuntimeEnableConditionalString
 
         my $className = "JS" . $interface->type->name;
         push(@conjuncts, "${className}" . $codeGenerator->WK_ucfirst($context->name) . "IsEnabled()");
-    }
-
-    if ($context->extendedAttributes->{EnabledByQuirk}) {
-        assert("Must specify value for EnabledByQuirk.") if $context->extendedAttributes->{DisabledByQuirk} eq "VALUE_IS_MISSING";
-
-        AddToImplIncludes("Document.h");
-        AddToImplIncludes("Quirks.h");
-
-        assert("EnabledByQuirk can only be used by interfaces only exposed to the Window") if $interface->extendedAttributes->{Exposed} && $interface->extendedAttributes->{Exposed} ne "Window";
-
-        my @flags = split(/&/, $context->extendedAttributes->{EnabledByQuirk});
-        foreach my $flag (@flags) {
-            push(@conjuncts, "downcast<Document>(jsCast<JSDOMGlobalObject*>(" . $globalObjectPtr . ")->scriptExecutionContext())->quirks()." . ToMethodName($flag) . "Quirk()");
-        }
-    }
-
-    if ($context->extendedAttributes->{DisabledByQuirk}) {
-        assert("Must specify value for DisabledByQuirk.") if $context->extendedAttributes->{DisabledByQuirk} eq "VALUE_IS_MISSING";
-
-        AddToImplIncludes("Document.h");
-        AddToImplIncludes("Quirks.h");
-
-        assert("DisabledByQuirk can only be used by interfaces only exposed to the Window") if $interface->extendedAttributes->{Exposed} && $interface->extendedAttributes->{Exposed} ne "Window";
-
-        my @flags = split(/&/, $context->extendedAttributes->{DisabledByQuirk});
-        foreach my $flag (@flags) {
-            push(@conjuncts, "!downcast<Document>(jsCast<JSDOMGlobalObject*>(" . $globalObjectPtr . ")->scriptExecutionContext())->quirks()." . ToMethodName($flag) . "Quirk()");
-        }
     }
 
     if ($context->extendedAttributes->{EnabledAtRuntime}) {

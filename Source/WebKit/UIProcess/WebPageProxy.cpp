@@ -8215,27 +8215,6 @@ void WebPageProxy::clearUserMediaState()
 #endif
 }
 
-void WebPageProxy::requestMediaKeySystemPermissionForFrame(MediaKeySystemRequestIdentifier mediaKeySystemID, FrameIdentifier frameID, const WebCore::SecurityOriginData& topLevelDocumentOriginData, const String& keySystem)
-{
-#if ENABLE(ENCRYPTED_MEDIA)
-    MESSAGE_CHECK(m_process, m_process->webFrame(frameID));
-
-    auto origin = API::SecurityOrigin::create(topLevelDocumentOriginData.securityOrigin());
-    auto request = mediaKeySystemPermissionRequestManager().createRequestForFrame(mediaKeySystemID, frameID, topLevelDocumentOriginData.securityOrigin(), keySystem);
-    m_uiClient->decidePolicyForMediaKeySystemPermissionRequest(*this, origin, keySystem, [request = WTFMove(request)](bool allowed) {
-        if (allowed)
-            request->allow();
-        else
-            request->deny();
-    });
-#else
-    UNUSED_PARAM(mediaKeySystemID);
-    UNUSED_PARAM(frameID);
-    UNUSED_PARAM(topLevelDocumentOriginData);
-    UNUSED_PARAM(keySystem);
-#endif
-}
-
 #if ENABLE(IMAGE_ANALYSIS)
 
 void WebPageProxy::requestTextRecognition(const URL& imageURL, const ShareableBitmap::Handle& imageData, CompletionHandler<void(WebCore::TextRecognitionResult&&)>&& completionHandler)
@@ -8259,17 +8238,6 @@ void WebPageProxy::updateWithTextRecognitionResult(TextRecognitionResult&& resul
 }
 
 #endif // ENABLE(IMAGE_ANALYSIS)
-
-#if ENABLE(ENCRYPTED_MEDIA)
-MediaKeySystemPermissionRequestManagerProxy& WebPageProxy::mediaKeySystemPermissionRequestManager()
-{
-    if (m_mediaKeySystemPermissionRequestManager)
-        return *m_mediaKeySystemPermissionRequestManager;
-
-    m_mediaKeySystemPermissionRequestManager = makeUnique<MediaKeySystemPermissionRequestManagerProxy>(*this);
-    return *m_mediaKeySystemPermissionRequestManager;
-}
-#endif
 
 #if ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
 
@@ -10324,11 +10292,6 @@ void WebPageProxy::requestUserMediaPermissionForSpeechRecognition(FrameIdentifie
 #else
     completionHandler(false);
 #endif
-}
-
-void WebPageProxy::requestMediaKeySystemPermissionByDefaultAction(const WebCore::SecurityOriginData& origin, CompletionHandler<void(bool)>&& completionHandler)
-{
-    completionHandler(true);
 }
 
 #if ENABLE(MEDIA_STREAM)

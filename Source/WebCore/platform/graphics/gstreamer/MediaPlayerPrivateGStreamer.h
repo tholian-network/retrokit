@@ -69,10 +69,6 @@ typedef struct _GstMpegtsSection GstMpegtsSection;
 #endif
 #endif
 
-#if ENABLE(ENCRYPTED_MEDIA)
-#include "CDMProxy.h"
-#endif
-
 typedef struct _GstStreamVolume GstStreamVolume;
 typedef struct _GstVideoInfo GstVideoInfo;
 
@@ -128,7 +124,6 @@ public:
 
     static void registerMediaEngine(MediaEngineRegistrar);
     static MediaPlayer::SupportsType extendedSupportsType(const MediaEngineSupportParameters&, MediaPlayer::SupportsType);
-    static bool supportsKeySystem(const String& keySystem, const String& mimeType);
 
     bool hasVideo() const final { return m_hasVideo; }
     bool hasAudio() const final { return m_hasAudio; }
@@ -195,15 +190,6 @@ public:
 #else
     bool supportsAcceleratedRendering() const override { return true; }
 #endif
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    void cdmInstanceAttached(CDMInstance&) final;
-    void cdmInstanceDetached(CDMInstance&) final;
-    void attemptToDecryptWithInstance(CDMInstance&) final;
-    bool waitingForKey() const final;
-
-    void handleProtectionEvent(GstEvent*);
 #endif
 
 #if USE(GSTREAMER_GL)
@@ -374,17 +360,6 @@ protected:
 
     ImageOrientation m_videoSourceOrientation;
 
-#if ENABLE(ENCRYPTED_MEDIA)
-    Lock m_cdmAttachmentLock;
-    Condition m_cdmAttachmentCondition;
-    RefPtr<CDMInstanceProxy> m_cdmInstance;
-
-    Lock m_protectionMutex; // Guards access to m_handledProtectionEvents.
-    HashSet<uint32_t> m_handledProtectionEvents;
-
-    bool m_isWaitingForKey { false };
-#endif
-
     std::optional<GstVideoDecoderPlatform> m_videoDecoderPlatform;
 
 private:
@@ -470,14 +445,6 @@ private:
     void videoSinkCapsChanged(GstPad*);
     void updateVideoSizeAndOrientationFromCaps(const GstCaps*);
     bool hasFirstVideoSampleReachedSink() const;
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    bool isCDMAttached() const { return m_cdmInstance; }
-    void attemptToDecryptWithLocalInstance();
-    void initializationDataEncountered(InitData&&);
-    InitData parseInitDataFromProtectionMessage(GstMessage*);
-    bool waitForCDMAttachment();
-#endif
 
     void configureMediaStreamAudioTracks();
     void invalidateCachedPositionOnNextIteration() const;

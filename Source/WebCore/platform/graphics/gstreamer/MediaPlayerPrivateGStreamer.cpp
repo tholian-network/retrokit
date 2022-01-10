@@ -63,14 +63,6 @@
 #include "WebKitMediaSourceGStreamer.h"
 #endif
 
-#if ENABLE(ENCRYPTED_MEDIA)
-#include "CDMInstance.h"
-#include "CDMProxyClearKey.h"
-#include "GStreamerEMEUtilities.h"
-#include "SharedBuffer.h"
-#include "WebKitCommonEncryptionDecryptorGStreamer.h"
-#endif
-
 #if ENABLE(WEB_AUDIO)
 #include "AudioSourceProviderGStreamer.h"
 #endif
@@ -242,13 +234,6 @@ MediaPlayerPrivateGStreamer::~MediaPlayerPrivateGStreamer()
     // waiting there, and ensure that any triggerRepaint call reaching the lock won't wait on m_drawCondition.
     cancelRepaint(true);
 
-#if ENABLE(ENCRYPTED_MEDIA)
-    {
-        Locker cdmAttachmentLocker { m_cdmAttachmentLock };
-        m_cdmAttachmentCondition.notifyAll();
-    }
-#endif
-
     // The change to GST_STATE_NULL state is always synchronous. So after this gets executed we don't need to worry
     // about handlers running in the GStreamer thread.
     if (m_pipeline)
@@ -282,10 +267,6 @@ private:
         return MediaPlayerPrivateGStreamer::supportsType(parameters);
     }
 
-    bool supportsKeySystem(const String& keySystem, const String& mimeType) const final
-    {
-        return MediaPlayerPrivateGStreamer::supportsKeySystem(keySystem, mimeType);
-    }
 };
 
 void MediaPlayerPrivateGStreamer::registerMediaEngine(MediaEngineRegistrar registrar)
@@ -1549,26 +1530,6 @@ bool MediaPlayerPrivateGStreamer::handleNeedContextMessage(GstMessage* message)
         gst_element_set_context(GST_ELEMENT(GST_MESSAGE_SRC(message)), context.get());
         return true;
     }
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    if (!g_strcmp0(contextType, "drm-preferred-decryption-system-id")) {
-        initializationDataEncountered(parseInitDataFromProtectionMessage(message));
-        bool isCDMAttached = waitForCDMAttachment();
-        if (isCDMAttached && !isPlayerShuttingDown() && !m_cdmInstance->keySystem().isEmpty()) {
-            const char* preferredKeySystemUuid = GStreamerEMEUtilities::keySystemToUuid(m_cdmInstance->keySystem());
-            GST_INFO_OBJECT(pipeline(), "working with key system %s, continuing with key system %s on %s", m_cdmInstance->keySystem().utf8().data(), preferredKeySystemUuid, GST_MESSAGE_SRC_NAME(message));
-
-            GRefPtr<GstContext> context = adoptGRef(gst_context_new("drm-preferred-decryption-system-id", FALSE));
-            GstStructure* contextStructure = gst_context_writable_structure(context.get());
-            gst_structure_set(contextStructure, "decryption-system-id", G_TYPE_STRING, preferredKeySystemUuid, nullptr);
-            gst_element_set_context(GST_ELEMENT(GST_MESSAGE_SRC(message)), context.get());
-            return true;
-        }
-
-        GST_WARNING_OBJECT(pipeline(), "waiting for a CDM failed, no CDM available");
-        return false;
-    }
-#endif // ENABLE(ENCRYPTED_MEDIA)
 
     GST_DEBUG_OBJECT(pipeline(), "Unhandled %s need-context message for %s", contextType, GST_MESSAGE_SRC_NAME(message));
     return false;
@@ -3531,162 +3492,6 @@ std::optional<VideoPlaybackQualityMetrics> MediaPlayerPrivateGStreamer::videoPla
         totalFrameDelay,
         displayCompositedVideoFrames,
     };
-}
-
-#if ENABLE(ENCRYPTED_MEDIA)
-InitData MediaPlayerPrivateGStreamer::parseInitDataFromProtectionMessage(GstMessage* message)
-{
-    ASSERT(!isMainThread());
-
-    InitData initData;
-    {
-        Locker locker { m_protectionMutex };
-        ProtectionSystemEvents protectionSystemEvents(message);
-        GST_TRACE_OBJECT(pipeline(), "found %zu protection events, %zu decryptors available", protectionSystemEvents.events().size(), protectionSystemEvents.availableSystems().size());
-
-        for (auto& event : protectionSystemEvents.events()) {
-            const char* eventKeySystemId = nullptr;
-            GstBuffer* data = nullptr;
-            gst_event_parse_protection(event.get(), &eventKeySystemId, &data, nullptr);
-
-            initData.append({eventKeySystemId, data});
-            m_handledProtectionEvents.add(GST_EVENT_SEQNUM(event.get()));
-        }
-    }
-
-    return initData;
-}
-
-bool MediaPlayerPrivateGStreamer::waitForCDMAttachment()
-{
-    if (isMainThread()) {
-        GST_ERROR_OBJECT(pipeline(), "can't block the main thread waiting for a CDM instance");
-        ASSERT_NOT_REACHED();
-        return false;
-    }
-
-    GST_INFO_OBJECT(pipeline(), "waiting for a CDM instance");
-
-    bool didCDMAttach = false;
-    {
-        Locker cdmAttachmentLocker { m_cdmAttachmentLock };
-        didCDMAttach = m_cdmAttachmentCondition.waitFor(m_cdmAttachmentLock, 4_s, [this]() {
-            assertIsHeld(m_cdmAttachmentLock);
-            return isCDMAttached();
-        });
-    }
-
-    return didCDMAttach;
-}
-
-void MediaPlayerPrivateGStreamer::initializationDataEncountered(InitData&& initData)
-{
-    ASSERT(!isMainThread());
-
-    RunLoop::main().dispatch([weakThis = makeWeakPtr(*this), initData = WTFMove(initData)] {
-        if (!weakThis)
-            return;
-
-        GST_DEBUG("scheduling initializationDataEncountered %s event of size %zu", initData.payloadContainerType().utf8().data(),
-            initData.payload()->size());
-        GST_MEMDUMP("init datas", reinterpret_cast<const uint8_t*>(initData.payload()->data()), initData.payload()->size());
-        weakThis->m_player->initializationDataEncountered(initData.payloadContainerType(), initData.payload()->tryCreateArrayBuffer());
-    });
-}
-
-void MediaPlayerPrivateGStreamer::cdmInstanceAttached(CDMInstance& instance)
-{
-    ASSERT(isMainThread());
-
-    if (m_cdmInstance == &instance)
-        return;
-
-    if (!m_pipeline) {
-        GST_ERROR("no pipeline yet");
-        ASSERT_NOT_REACHED();
-        return;
-    }
-
-    m_cdmInstance = reinterpret_cast<CDMInstanceProxy*>(&instance);
-    RELEASE_ASSERT(m_cdmInstance);
-    m_cdmInstance->setPlayer(m_player);
-
-    GRefPtr<GstContext> context = adoptGRef(gst_context_new("drm-cdm-proxy", FALSE));
-    GstStructure* contextStructure = gst_context_writable_structure(context.get());
-    gst_structure_set(contextStructure, "cdm-proxy", G_TYPE_POINTER, m_cdmInstance->proxy().get(), nullptr);
-    gst_element_set_context(GST_ELEMENT(m_pipeline.get()), context.get());
-
-    GST_DEBUG_OBJECT(m_pipeline.get(), "CDM proxy instance %p dispatched as context", m_cdmInstance->proxy().get());
-
-    Locker cdmAttachmentLocker { m_cdmAttachmentLock };
-    // We must notify all waiters, since several demuxers can be simultaneously waiting for a CDM.
-    m_cdmAttachmentCondition.notifyAll();
-}
-
-void MediaPlayerPrivateGStreamer::cdmInstanceDetached(CDMInstance& instance)
-{
-    UNUSED_PARAM(instance);
-    ASSERT(isMainThread());
-    ASSERT(m_pipeline);
-
-    if (!m_cdmInstance)
-        return;
-
-    ASSERT(m_cdmInstance == &instance);
-    GST_DEBUG_OBJECT(m_pipeline.get(), "detaching CDM instance %p, setting empty context", m_cdmInstance.get());
-    m_cdmInstance = nullptr;
-    GRefPtr<GstContext> context = adoptGRef(gst_context_new("drm-cdm-proxy", FALSE));
-    gst_element_set_context(GST_ELEMENT(m_pipeline.get()), context.get());
-}
-
-void MediaPlayerPrivateGStreamer::attemptToDecryptWithInstance(CDMInstance& instance)
-{
-    ASSERT(m_cdmInstance == &instance);
-    GST_TRACE("instance %p, current stored %p", &instance, m_cdmInstance.get());
-    attemptToDecryptWithLocalInstance();
-}
-
-void MediaPlayerPrivateGStreamer::attemptToDecryptWithLocalInstance()
-{
-    bool wasEventHandled = gst_element_send_event(pipeline(), gst_event_new_custom(GST_EVENT_CUSTOM_DOWNSTREAM_OOB, gst_structure_new_empty("attempt-to-decrypt")));
-    GST_DEBUG("attempting to decrypt, event handled %s", boolForPrinting(wasEventHandled));
-}
-
-void MediaPlayerPrivateGStreamer::handleProtectionEvent(GstEvent* event)
-{
-    {
-        Locker locker { m_protectionMutex };
-        if (m_handledProtectionEvents.contains(GST_EVENT_SEQNUM(event))) {
-            GST_DEBUG_OBJECT(pipeline(), "event %u already handled", GST_EVENT_SEQNUM(event));
-            return;
-        }
-    }
-    GST_DEBUG_OBJECT(pipeline(), "handling event %u from MSE", GST_EVENT_SEQNUM(event));
-    const char* eventKeySystemUUID = nullptr;
-    GstBuffer* initData = nullptr;
-    gst_event_parse_protection(event, &eventKeySystemUUID, &initData, nullptr);
-    initializationDataEncountered({eventKeySystemUUID, initData});
-}
-
-bool MediaPlayerPrivateGStreamer::waitingForKey() const
-{
-    if (!m_pipeline || !m_cdmInstance)
-        return false;
-
-    return m_cdmInstance->isWaitingForKey();
-}
-#endif
-
-bool MediaPlayerPrivateGStreamer::supportsKeySystem(const String& keySystem, const String& mimeType)
-{
-    bool result = false;
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    result = GStreamerEMEUtilities::isClearKeyKeySystem(keySystem);
-#endif
-
-    GST_DEBUG("checking for KeySystem support with %s and type %s: %s", keySystem.utf8().data(), mimeType.utf8().data(), boolForPrinting(result));
-    return result;
 }
 
 MediaPlayer::SupportsType MediaPlayerPrivateGStreamer::extendedSupportsType(const MediaEngineSupportParameters& parameters, MediaPlayer::SupportsType result)

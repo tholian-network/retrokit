@@ -75,9 +75,6 @@ void AppendPipeline::staticInitialization()
 static GstPadProbeReturn appendPipelinePadProbeDebugInformation(GstPad*, GstPadProbeInfo*, struct PadProbeInformation*);
 #endif
 
-#if ENABLE(ENCRYPTED_MEDIA)
-static GstPadProbeReturn appendPipelineAppsinkPadEventProbe(GstPad*, GstPadProbeInfo*, struct PadProbeInformation*);
-#endif
 static GstPadProbeReturn appendPipelineDemuxerBlackHolePadProbe(GstPad*, GstPadProbeInfo*, gpointer);
 static GstPadProbeReturn matroskademuxForceSegmentStartToEqualZero(GstPad*, GstPadProbeInfo*, void*);
 static GRefPtr<GstElement> createOptionalParserForFormat(const AtomString&, const GstCaps*);
@@ -229,9 +226,6 @@ AppendPipeline::~AppendPipeline()
         g_signal_handlers_disconnect_by_data(track->appsink.get(), this);
 #if !LOG_DISABLED
         gst_pad_remove_probe(appsinkPad.get(), track->appsinkDataEnteringPadProbeInformation.probeId);
-#endif
-#if ENABLE(ENCRYPTED_MEDIA)
-        gst_pad_remove_probe(appsinkPad.get(), track->appsinkPadEventProbeInformation.probeId);
 #endif
     }
 
@@ -800,12 +794,6 @@ void AppendPipeline::Track::initializeElements(AppendPipeline* appendPipeline, G
     appsinkDataEnteringPadProbeInformation.probeId = gst_pad_add_probe(appsinkPad.get(), GST_PAD_PROBE_TYPE_BUFFER, reinterpret_cast<GstPadProbeCallback>(appendPipelinePadProbeDebugInformation), &appsinkDataEnteringPadProbeInformation, nullptr);
 #endif
 
-#if ENABLE(ENCRYPTED_MEDIA)
-    appsinkPadEventProbeInformation.appendPipeline = appendPipeline;
-    appsinkPadEventProbeInformation.description = "appsink event probe";
-    appsinkPadEventProbeInformation.probeId = gst_pad_add_probe(appsinkPad.get(), GST_PAD_PROBE_TYPE_EVENT_DOWNSTREAM, reinterpret_cast<GstPadProbeCallback>(appendPipelineAppsinkPadEventProbe), &appsinkPadEventProbeInformation, nullptr);
-#endif
-
     // Some audio files unhelpfully omit the duration of frames in the container. We need to parse
     // the contained audio streams in order to know the duration of the frames.
     // If no parser is needed, a GstIdentity element will be created instead.
@@ -887,27 +875,6 @@ static GstPadProbeReturn appendPipelinePadProbeDebugInformation(GstPad*, GstPadP
     ASSERT(GST_PAD_PROBE_INFO_TYPE(info) & GST_PAD_PROBE_TYPE_BUFFER);
     GstBuffer* buffer = GST_PAD_PROBE_INFO_BUFFER(info);
     GST_TRACE("%s: buffer of size %" G_GSIZE_FORMAT " going thru", padProbeInformation->description, gst_buffer_get_size(buffer));
-    return GST_PAD_PROBE_OK;
-}
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-static GstPadProbeReturn appendPipelineAppsinkPadEventProbe(GstPad*, GstPadProbeInfo* info, struct PadProbeInformation *padProbeInformation)
-{
-    ASSERT(GST_PAD_PROBE_INFO_TYPE(info) & GST_PAD_PROBE_TYPE_EVENT_DOWNSTREAM);
-    GstEvent* event = gst_pad_probe_info_get_event(info);
-    GST_DEBUG("Handling event %s on append pipeline appsinkPad", GST_EVENT_TYPE_NAME(event));
-    AppendPipeline* appendPipeline = padProbeInformation->appendPipeline;
-
-    switch (GST_EVENT_TYPE(event)) {
-    case GST_EVENT_PROTECTION:
-        if (appendPipeline && appendPipeline->playerPrivate())
-            appendPipeline->playerPrivate()->handleProtectionEvent(event);
-        return GST_PAD_PROBE_DROP;
-    default:
-        break;
-    }
-
     return GST_PAD_PROBE_OK;
 }
 #endif

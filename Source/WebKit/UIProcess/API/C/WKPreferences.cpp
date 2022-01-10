@@ -465,11 +465,6 @@ bool WKPreferencesGetWebGLEnabled(WKPreferencesRef preferencesRef)
     return toImpl(preferencesRef)->webGLEnabled();
 }
 
-void WKPreferencesSetNeedsSiteSpecificQuirks(WKPreferencesRef preferencesRef, bool flag)
-{
-    toImpl(preferencesRef)->setNeedsSiteSpecificQuirks(flag);
-}
-
 bool WKPreferencesUseLegacyTextAlignPositionedElementBehavior(WKPreferencesRef preferencesRef)
 {
     return toImpl(preferencesRef)->useLegacyTextAlignPositionedElementBehavior();
@@ -478,11 +473,6 @@ bool WKPreferencesUseLegacyTextAlignPositionedElementBehavior(WKPreferencesRef p
 void WKPreferencesSetUseLegacyTextAlignPositionedElementBehavior(WKPreferencesRef preferencesRef, bool flag)
 {
     toImpl(preferencesRef)->setUseLegacyTextAlignPositionedElementBehavior(flag);
-}
-
-bool WKPreferencesGetNeedsSiteSpecificQuirks(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->needsSiteSpecificQuirks();
 }
 
 void WKPreferencesSetTabsToLinks(WKPreferencesRef preferencesRef, bool tabsToLinks)
@@ -1584,16 +1574,6 @@ void WKPreferencesSetMediaContentTypesRequiringHardwareSupport(WKPreferencesRef 
 WKStringRef WKPreferencesCopyMediaContentTypesRequiringHardwareSupport(WKPreferencesRef preferencesRef)
 {
     return toCopiedAPI(toImpl(preferencesRef)->mediaContentTypesRequiringHardwareSupport());
-}
-
-bool WKPreferencesGetLegacyEncryptedMediaAPIEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->legacyEncryptedMediaAPIEnabled();
-}
-
-void WKPreferencesSetLegacyEncryptedMediaAPIEnabled(WKPreferencesRef preferencesRef, bool enabled)
-{
-    return toImpl(preferencesRef)->setLegacyEncryptedMediaAPIEnabled(enabled);
 }
 
 bool WKPreferencesGetAllowMediaContentTypesRequiringHardwareSupportAsFallback(WKPreferencesRef preferencesRef)

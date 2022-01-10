@@ -75,15 +75,6 @@ messages -> MediaPlayerPrivateRemote NotRefCounted {
 
     ActiveSourceBuffersChanged()
 
-#if ENABLE(ENCRYPTED_MEDIA)
-    WaitingForKeyChanged(bool waitingForKey)
-    InitializationDataEncountered(String initDataType, IPC::DataReference initData)
-#endif
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    MediaPlayerKeyNeeded(IPC::DataReference message)
-#endif
-
 #if ENABLE(WIRELESS_PLAYBACK_TARGET)
     CurrentPlaybackTargetIsWirelessChanged(bool isCurrentPlaybackTargetWireless)
 #endif

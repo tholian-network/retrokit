@@ -22,7 +22,6 @@
 #pragma once
 
 #include "Document.h"
-#include "Quirks.h"
 #include "ThreadGlobalData.h"
 #include <array>
 #include <functional>
@@ -110,7 +109,6 @@ namespace WebCore {
     macro(drop) \
     macro(durationchange) \
     macro(emptied) \
-    macro(encrypted) \
     macro(end) \
     macro(endEvent) \
     macro(ended) \
@@ -270,7 +268,6 @@ namespace WebCore {
     macro(visibilitychange) \
     macro(volumechange) \
     macro(waiting) \
-    macro(waitingforkey) \
     macro(webglcontextchanged) \
     macro(webglcontextcreationerror) \
     macro(webglcontextlost) \
@@ -281,14 +278,10 @@ namespace WebCore {
     macro(webkitBeforeTextInserted) \
     macro(webkitTransitionEnd) \
     macro(webkitcurrentplaybacktargetiswirelesschanged) \
-    macro(webkitkeyadded) \
-    macro(webkitkeyerror) \
-    macro(webkitkeymessage) \
     macro(webkitmouseforcechanged) \
     macro(webkitmouseforcedown) \
     macro(webkitmouseforcewillbegin) \
     macro(webkitmouseforceup) \
-    macro(webkitneedkey) \
     macro(webkitnetworkinfochange) \
     macro(webkitplaybacktargetavailabilitychanged) \
     macro(webkitpresentationmodechanged) \

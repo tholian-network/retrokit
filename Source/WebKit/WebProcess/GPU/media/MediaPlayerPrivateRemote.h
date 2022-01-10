@@ -146,11 +146,6 @@ public:
 
     void activeSourceBuffersChanged();
 
-#if ENABLE(ENCRYPTED_MEDIA)
-    void waitingForKeyChanged(bool);
-    void initializationDataEncountered(const String&, IPC::DataReference&&);
-#endif
-
 #if ENABLE(MEDIA_SOURCE)
     RefPtr<AudioTrackPrivateRemote> audioTrackPrivateRemote(TrackPrivateRemoteIdentifier identifier) const { return m_audioTracks.get(identifier); }
     RefPtr<VideoTrackPrivateRemote> videoTrackPrivateRemote(TrackPrivateRemoteIdentifier identifier) const { return m_videoTracks.get(identifier); }
@@ -321,25 +316,6 @@ private:
 
 #if ENABLE(WEB_AUDIO)
     WebCore::AudioSourceProvider* audioSourceProvider() final;
-#endif
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    std::unique_ptr<WebCore::LegacyCDMSession> createSession(const String&, WebCore::LegacyCDMSessionClient*) final;
-    void setCDM(WebCore::LegacyCDM*) final;
-    void setCDMSession(WebCore::LegacyCDMSession*) final;
-    void keyAdded() final;
-    void mediaPlayerKeyNeeded(IPC::DataReference&&);
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    void cdmInstanceAttached(WebCore::CDMInstance&) final;
-    void cdmInstanceDetached(WebCore::CDMInstance&) final;
-    void attemptToDecryptWithInstance(WebCore::CDMInstance&) final;
-    bool waitingForKey() const final;
-#endif
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA) && ENABLE(ENCRYPTED_MEDIA)
-    void setShouldContinueAfterKeyNeeded(bool) final;
 #endif
 
     bool requiresTextTrackRepresentation() const final;

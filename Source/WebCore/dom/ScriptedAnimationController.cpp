@@ -30,7 +30,6 @@
 #include "InspectorInstrumentation.h"
 #include "Logging.h"
 #include "Page.h"
-#include "Quirks.h"
 #include "RequestAnimationFrameCallback.h"
 #include "Settings.h"
 #include "UserGestureIndicator.h"

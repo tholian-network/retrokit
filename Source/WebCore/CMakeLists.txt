@@ -25,8 +25,6 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${WEBCORE_DIR}/Modules/cache"
     "${WEBCORE_DIR}/Modules/contact-picker"
     "${WEBCORE_DIR}/Modules/credentialmanagement"
-    "${WEBCORE_DIR}/Modules/encryptedmedia"
-    "${WEBCORE_DIR}/Modules/encryptedmedia/legacy"
     "${WEBCORE_DIR}/Modules/entriesapi"
     "${WEBCORE_DIR}/Modules/fetch"
     "${WEBCORE_DIR}/Modules/highlight"
@@ -119,7 +117,6 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${WEBCORE_DIR}/platform/animation"
     "${WEBCORE_DIR}/platform/audio"
     "${WEBCORE_DIR}/platform/calc"
-    "${WEBCORE_DIR}/platform/encryptedmedia"
     "${WEBCORE_DIR}/platform/graphics"
     "${WEBCORE_DIR}/platform/graphics/cpu/arm"
     "${WEBCORE_DIR}/platform/graphics/cpu/arm/filters"
@@ -176,7 +173,6 @@ set(WebCore_IDL_INCLUDES
     Modules/airplay
     Modules/cache
     Modules/credentialmanagement
-    Modules/encryptedmedia/legacy
     Modules/entriesapi
     Modules/fetch
     Modules/highlight
@@ -229,18 +225,6 @@ set(WebCore_NON_SVG_IDL_FILES
     Modules/credentialmanagement/CredentialRequestOptions.idl
     Modules/credentialmanagement/CredentialsContainer.idl
     Modules/credentialmanagement/Navigator+Credentials.idl
-
-    Modules/encryptedmedia/MediaKeyEncryptionScheme.idl
-    Modules/encryptedmedia/MediaKeyMessageEvent.idl
-    Modules/encryptedmedia/MediaKeySession.idl
-    Modules/encryptedmedia/MediaKeySessionType.idl
-    Modules/encryptedmedia/MediaKeyStatusMap.idl
-    Modules/encryptedmedia/MediaKeySystemAccess.idl
-    Modules/encryptedmedia/MediaKeySystemConfiguration.idl
-    Modules/encryptedmedia/MediaKeySystemMediaCapability.idl
-    Modules/encryptedmedia/MediaKeys.idl
-    Modules/encryptedmedia/MediaKeysRequirement.idl
-    Modules/encryptedmedia/Navigator+EME.idl
 
     Modules/entriesapi/DOMFileSystem.idl
     Modules/entriesapi/ErrorCallback.idl
@@ -845,7 +829,6 @@ set(WebCore_NON_SVG_IDL_FILES
     html/ImageData.idl
     html/ImageDataSettings.idl
     html/MediaController.idl
-    html/MediaEncryptedEvent.idl
     html/MediaError.idl
     html/OffscreenCanvas.idl
     html/RadioNodeList.idl
@@ -1257,53 +1240,6 @@ endif ()
 set(WebCoreTestSupport_FRAMEWORKS ${WebCore_FRAMEWORKS})
 set(WebCoreTestSupport_DEPENDENCIES WebCoreTestSupportBindings)
 
-if (ENABLE_LEGACY_ENCRYPTED_MEDIA)
-    list(APPEND WebCore_SOURCES
-        Modules/encryptedmedia/legacy/LegacyCDM.cpp
-        Modules/encryptedmedia/legacy/LegacyCDMPrivateClearKey.cpp
-        Modules/encryptedmedia/legacy/LegacyCDMPrivateMediaPlayer.cpp
-        Modules/encryptedmedia/legacy/LegacyCDMSessionClearKey.cpp
-
-        Modules/encryptedmedia/legacy/WebKitMediaKeyMessageEvent.cpp
-        Modules/encryptedmedia/legacy/WebKitMediaKeyNeededEvent.cpp
-        Modules/encryptedmedia/legacy/WebKitMediaKeySession.cpp
-        Modules/encryptedmedia/legacy/WebKitMediaKeys.cpp
-    )
-    list(APPEND WebCoreTestSupport_SOURCES
-        testing/LegacyMockCDM.cpp
-    )
-endif ()
-
-list(APPEND WebCore_IDL_FILES
-    Modules/encryptedmedia/legacy/WebKitMediaKeyMessageEvent.idl
-    Modules/encryptedmedia/legacy/WebKitMediaKeyNeededEvent.idl
-    Modules/encryptedmedia/legacy/WebKitMediaKeySession.idl
-    Modules/encryptedmedia/legacy/WebKitMediaKeys.idl
-
-    html/WebKitMediaKeyError.idl
-)
-
-if (ENABLE_ENCRYPTED_MEDIA)
-    list(APPEND WebCore_SOURCES
-        Modules/encryptedmedia/CDM.cpp
-        Modules/encryptedmedia/InitDataRegistry.cpp
-        Modules/encryptedmedia/MediaKeyMessageEvent.cpp
-        Modules/encryptedmedia/MediaKeySession.cpp
-        Modules/encryptedmedia/MediaKeyStatusMap.cpp
-        Modules/encryptedmedia/MediaKeySystemAccess.cpp
-        Modules/encryptedmedia/MediaKeySystemController.cpp
-        Modules/encryptedmedia/MediaKeySystemRequest.cpp
-        Modules/encryptedmedia/MediaKeys.cpp
-        Modules/encryptedmedia/NavigatorEME.cpp
-
-        html/MediaEncryptedEvent.cpp
-    )
-
-    list(APPEND WebCore_PRIVATE_INCLUDE_DIRECTORIES
-        "${WEBCORE_DIR}/platform/encryptedmedia/clearkey"
-    )
-endif ()
-
 list(APPEND WebCore_CSS_VALUE_KEYWORDS
     ${WEBCORE_DIR}/css/SVGCSSValueKeywords.in
 )
@@ -1526,7 +1462,6 @@ set(WebCoreTestSupport_IDL_FILES
     testing/InternalsSetLike.idl
     testing/MallocStatistics.idl
     testing/MemoryInfo.idl
-    testing/MockCDMFactory.idl
     testing/MockContentFilterSettings.idl
     testing/MockPageOverlay.idl
     testing/ServiceWorkerInternals.idl
@@ -1539,7 +1474,6 @@ list(APPEND WebCoreTestSupport_SOURCES
     testing/Internals.cpp
     testing/InternalsMapLike.cpp
     testing/InternalsSetLike.cpp
-    testing/MockCDMFactory.cpp
     testing/MockPageOverlay.cpp
     testing/MockPageOverlayClient.cpp
     testing/ServiceWorkerInternals.cpp

@@ -56,13 +56,6 @@
 #include "GStreamerMediaStreamSource.h"
 #endif
 
-#if ENABLE(ENCRYPTED_MEDIA)
-#include "WebKitClearKeyDecryptorGStreamer.h"
-#if ENABLE(THUNDER)
-#include "WebKitThunderDecryptorGStreamer.h"
-#endif
-#endif
-
 #if ENABLE(VIDEO)
 #include "WebKitWebSourceGStreamer.h"
 #endif
@@ -95,33 +88,17 @@ bool getVideoSizeAndFormatFromCaps(const GstCaps* caps, WebCore::IntSize& size, 
         return false;
     }
 
-    if (areEncryptedCaps(caps)) {
-        GstStructure* structure = gst_caps_get_structure(caps, 0);
-        format = GST_VIDEO_FORMAT_ENCODED;
-        stride = 0;
-        int width = 0, height = 0;
-        gst_structure_get_int(structure, "width", &width);
-        gst_structure_get_int(structure, "height", &height);
-        if (!gst_structure_get_fraction(structure, "pixel-aspect-ratio", &pixelAspectRatioNumerator, &pixelAspectRatioDenominator)) {
-            pixelAspectRatioNumerator = 1;
-            pixelAspectRatioDenominator = 1;
-        }
+    GstVideoInfo info;
+    gst_video_info_init(&info);
+    if (!gst_video_info_from_caps(&info, caps))
+        return false;
 
-        size.setWidth(width);
-        size.setHeight(height);
-    } else {
-        GstVideoInfo info;
-        gst_video_info_init(&info);
-        if (!gst_video_info_from_caps(&info, caps))
-            return false;
-
-        format = GST_VIDEO_INFO_FORMAT(&info);
-        size.setWidth(GST_VIDEO_INFO_WIDTH(&info));
-        size.setHeight(GST_VIDEO_INFO_HEIGHT(&info));
-        pixelAspectRatioNumerator = GST_VIDEO_INFO_PAR_N(&info);
-        pixelAspectRatioDenominator = GST_VIDEO_INFO_PAR_D(&info);
-        stride = GST_VIDEO_INFO_PLANE_STRIDE(&info, 0);
-    }
+    format = GST_VIDEO_INFO_FORMAT(&info);
+    size.setWidth(GST_VIDEO_INFO_WIDTH(&info));
+    size.setHeight(GST_VIDEO_INFO_HEIGHT(&info));
+    pixelAspectRatioNumerator = GST_VIDEO_INFO_PAR_N(&info);
+    pixelAspectRatioDenominator = GST_VIDEO_INFO_PAR_D(&info);
+    stride = GST_VIDEO_INFO_PLANE_STRIDE(&info, 0);
 
     return true;
 }
@@ -136,22 +113,15 @@ std::optional<FloatSize> getVideoResolutionFromCaps(const GstCaps* caps)
     int width = 0, height = 0;
     int pixelAspectRatioNumerator = 1, pixelAspectRatioDenominator = 1;
 
-    if (areEncryptedCaps(caps)) {
-        GstStructure* structure = gst_caps_get_structure(caps, 0);
-        gst_structure_get_int(structure, "width", &width);
-        gst_structure_get_int(structure, "height", &height);
-        gst_structure_get_fraction(structure, "pixel-aspect-ratio", &pixelAspectRatioNumerator, &pixelAspectRatioDenominator);
-    } else {
-        GstVideoInfo info;
-        gst_video_info_init(&info);
-        if (!gst_video_info_from_caps(&info, caps))
-            return std::nullopt;
+    GstVideoInfo info;
+    gst_video_info_init(&info);
+    if (!gst_video_info_from_caps(&info, caps))
+        return std::nullopt;
 
-        width = GST_VIDEO_INFO_WIDTH(&info);
-        height = GST_VIDEO_INFO_HEIGHT(&info);
-        pixelAspectRatioNumerator = GST_VIDEO_INFO_PAR_N(&info);
-        pixelAspectRatioDenominator = GST_VIDEO_INFO_PAR_D(&info);
-    }
+    width = GST_VIDEO_INFO_WIDTH(&info);
+    height = GST_VIDEO_INFO_HEIGHT(&info);
+    pixelAspectRatioNumerator = GST_VIDEO_INFO_PAR_N(&info);
+    pixelAspectRatioDenominator = GST_VIDEO_INFO_PAR_D(&info);
 
     return std::make_optional(FloatSize(width, height * (static_cast<float>(pixelAspectRatioDenominator) / static_cast<float>(pixelAspectRatioNumerator))));
 }
@@ -182,10 +152,6 @@ const char* capsMediaType(const GstCaps* caps)
         GST_WARNING("caps are empty");
         return nullptr;
     }
-#if ENABLE(ENCRYPTED_MEDIA)
-    if (gst_structure_has_name(structure, "application/x-cenc") || gst_structure_has_name(structure, "application/x-cbcs") || gst_structure_has_name(structure, "application/x-webm-enc"))
-        return gst_structure_get_string(structure, "original-media-type");
-#endif
     return gst_structure_get_name(structure);
 }
 
@@ -197,22 +163,6 @@ bool doCapsHaveType(const GstCaps* caps, const char* type)
         return false;
     }
     return g_str_has_prefix(mediaType, type);
-}
-
-bool areEncryptedCaps(const GstCaps* caps)
-{
-    ASSERT(caps);
-#if ENABLE(ENCRYPTED_MEDIA)
-    GstStructure* structure = gst_caps_get_structure(caps, 0);
-    if (!structure) {
-        GST_WARNING("caps are empty");
-        return false;
-    }
-    return gst_structure_has_name(structure, "application/x-cenc") || gst_structure_has_name(structure, "application/x-webm-enc");
-#else
-    UNUSED_PARAM(caps);
-    return false;
-#endif
 }
 
 static std::optional<Vector<String>> s_UIProcessCommandLineOptions;
@@ -282,35 +232,12 @@ bool ensureGStreamerInitialized()
     return isGStreamerInitialized;
 }
 
-#if ENABLE(ENCRYPTED_MEDIA) && ENABLE(THUNDER)
-// WebM does not specify a protection system ID so it can happen that
-// the ClearKey decryptor is chosen instead of the Thunder one for
-// Widevine (and viceversa) which can can create chaos. This is an
-// environment variable to set in run time if we prefer to rank higher
-// Thunder or ClearKey. If we want to run tests with Thunder, we need
-// to set this environment variable to Thunder and that decryptor will
-// be ranked higher when there is no protection system set (as in
-// WebM).
-// FIXME: In https://bugs.webkit.org/show_bug.cgi?id=214826 we say we
-// should migrate to use GST_PLUGIN_FEATURE_RANK but we can't yet
-// because our lowest dependency is 1.16.
-bool isThunderRanked()
-{
-    const char* value = g_getenv("WEBKIT_GST_EME_RANK_PRIORITY");
-    return value && equalIgnoringASCIICase(value, "Thunder");
-}
-#endif
-
 void registerWebKitGStreamerElements()
 {
     static std::once_flag onceFlag;
     std::call_once(onceFlag, [] {
 #if USE(GSTREAMER_FULL)
         gst_init_static_plugins();
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-        gst_element_register(nullptr, "webkitclearkey", GST_RANK_PRIMARY + 200, WEBKIT_TYPE_MEDIA_CK_DECRYPT);
 #endif
 
 #if ENABLE(MEDIA_STREAM)

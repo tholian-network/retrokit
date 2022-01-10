@@ -53,7 +53,6 @@
 #include <webkit2/WebKitInputMethodContext.h>
 #include <webkit2/WebKitInstallMissingMediaPluginsPermissionRequest.h>
 #include <webkit2/WebKitJavascriptResult.h>
-#include <webkit2/WebKitMediaKeySystemPermissionRequest.h>
 #include <webkit2/WebKitMemoryPressureSettings.h>
 #include <webkit2/WebKitNavigationAction.h>
 #include <webkit2/WebKitNavigationPolicyDecision.h>

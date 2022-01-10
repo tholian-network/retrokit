@@ -67,16 +67,12 @@ bool getSampleVideoInfo(GstSample*, GstVideoInfo&);
 #endif
 const char* capsMediaType(const GstCaps*);
 bool doCapsHaveType(const GstCaps*, const char*);
-bool areEncryptedCaps(const GstCaps*);
 Vector<String> extractGStreamerOptionsFromCommandLine();
 void setGStreamerOptionsFromUIProcess(Vector<String>&&);
 bool ensureGStreamerInitialized();
 void registerWebKitGStreamerElements();
 unsigned getGstPlayFlag(const char* nick);
 uint64_t toGstUnsigned64Time(const MediaTime&);
-#if ENABLE(THUNDER)
-bool isThunderRanked();
-#endif
 
 inline GstClockTime toGstClockTime(const MediaTime &mediaTime)
 {

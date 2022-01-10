@@ -91,10 +91,6 @@ private:
         return MediaPlayerPrivateGStreamerMSE::supportsType(parameters);
     }
 
-    bool supportsKeySystem(const String& keySystem, const String& mimeType) const final
-    {
-        return MediaPlayerPrivateGStreamerMSE::supportsKeySystem(keySystem, mimeType);
-    }
 };
 
 void MediaPlayerPrivateGStreamerMSE::registerMediaEngine(MediaEngineRegistrar registrar)

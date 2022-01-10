@@ -72,14 +72,6 @@
 #include "RemoteGraphicsContextGL.h"
 #endif
 
-#if ENABLE(ENCRYPTED_MEDIA)
-#include "RemoteCDMFactoryProxy.h"
-#include "RemoteCDMFactoryProxyMessages.h"
-#include "RemoteCDMInstanceProxyMessages.h"
-#include "RemoteCDMInstanceSessionProxyMessages.h"
-#include "RemoteCDMProxyMessages.h"
-#endif
-
 // FIXME: <https://bugs.webkit.org/show_bug.cgi?id=211085>
 // UserMediaCaptureManagerProxy should not be platform specific
 #if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
@@ -101,13 +93,6 @@
 #if PLATFORM(IOS_FAMILY)
 #include "RemoteMediaSessionHelperProxy.h"
 #include "RemoteMediaSessionHelperProxyMessages.h"
-#endif
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-#include "RemoteLegacyCDMFactoryProxy.h"
-#include "RemoteLegacyCDMFactoryProxyMessages.h"
-#include "RemoteLegacyCDMProxyMessages.h"
-#include "RemoteLegacyCDMSessionProxyMessages.h"
 #endif
 
 #if HAVE(AVASSETREADER)
@@ -331,14 +316,6 @@ bool GPUConnectionToWebProcess::allowsExitUnderMemoryPressure() const
     if (m_imageDecoderAVFProxy && !m_imageDecoderAVFProxy->allowsExitUnderMemoryPressure())
         return false;
 #endif
-#if ENABLE(ENCRYPTED_MEDIA)
-    if (m_cdmFactoryProxy && !m_cdmFactoryProxy->allowsExitUnderMemoryPressure())
-        return false;
-#endif
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    if (m_legacyCdmFactoryProxy && !m_legacyCdmFactoryProxy->allowsExitUnderMemoryPressure())
-        return false;
-#endif
     return true;
 }
 
@@ -392,16 +369,6 @@ UserMediaCaptureManagerProxy& GPUConnectionToWebProcess::userMediaCaptureManager
         m_userMediaCaptureManagerProxy = makeUnique<UserMediaCaptureManagerProxy>(makeUniqueRef<GPUProxyForCapture>(*this));
 
     return *m_userMediaCaptureManagerProxy;
-}
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-RemoteCDMFactoryProxy& GPUConnectionToWebProcess::cdmFactoryProxy()
-{
-    if (!m_cdmFactoryProxy)
-        m_cdmFactoryProxy = makeUnique<RemoteCDMFactoryProxy>(*this);
-
-    return *m_cdmFactoryProxy;
 }
 #endif
 
@@ -517,16 +484,6 @@ void GPUConnectionToWebProcess::ensureMediaSessionHelper()
 }
 #endif
 
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-RemoteLegacyCDMFactoryProxy& GPUConnectionToWebProcess::legacyCdmFactoryProxy()
-{
-    if (!m_legacyCdmFactoryProxy)
-        m_legacyCdmFactoryProxy = makeUnique<RemoteLegacyCDMFactoryProxy>(*this);
-
-    return *m_legacyCdmFactoryProxy;
-}
-#endif
-
 #if ENABLE(GPU_PROCESS)
 RemoteMediaEngineConfigurationFactoryProxy& GPUConnectionToWebProcess::mediaEngineConfigurationFactoryProxy()
 {
@@ -605,27 +562,6 @@ bool GPUConnectionToWebProcess::dispatchMessage(IPC::Connection& connection, IPC
         return true;
     }
 #endif
-#if ENABLE(ENCRYPTED_MEDIA)
-    if (decoder.messageReceiverName() == Messages::RemoteCDMFactoryProxy::messageReceiverName()) {
-        cdmFactoryProxy().didReceiveMessageFromWebProcess(connection, decoder);
-        return true;
-    }
-
-    if (decoder.messageReceiverName() == Messages::RemoteCDMProxy::messageReceiverName()) {
-        cdmFactoryProxy().didReceiveCDMMessage(connection, decoder);
-        return true;
-    }
-
-    if (decoder.messageReceiverName() == Messages::RemoteCDMInstanceProxy::messageReceiverName()) {
-        cdmFactoryProxy().didReceiveCDMInstanceMessage(connection, decoder);
-        return true;
-    }
-
-    if (decoder.messageReceiverName() == Messages::RemoteCDMInstanceSessionProxy::messageReceiverName()) {
-        cdmFactoryProxy().didReceiveCDMInstanceSessionMessage(connection, decoder);
-        return true;
-    }
-#endif
 #if USE(AUDIO_SESSION)
     if (decoder.messageReceiverName() == Messages::RemoteAudioSessionProxy::messageReceiverName()) {
         audioSessionProxy().didReceiveMessage(connection, decoder);
@@ -635,22 +571,6 @@ bool GPUConnectionToWebProcess::dispatchMessage(IPC::Connection& connection, IPC
 #if PLATFORM(IOS_FAMILY)
     if (decoder.messageReceiverName() == Messages::RemoteMediaSessionHelperProxy::messageReceiverName()) {
         mediaSessionHelperProxy().didReceiveMessageFromWebProcess(connection, decoder);
-        return true;
-    }
-#endif
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    if (decoder.messageReceiverName() == Messages::RemoteLegacyCDMFactoryProxy::messageReceiverName()) {
-        legacyCdmFactoryProxy().didReceiveMessageFromWebProcess(connection, decoder);
-        return true;
-    }
-
-    if (decoder.messageReceiverName() == Messages::RemoteLegacyCDMProxy::messageReceiverName()) {
-        legacyCdmFactoryProxy().didReceiveCDMMessage(connection, decoder);
-        return true;
-    }
-
-    if (decoder.messageReceiverName() == Messages::RemoteLegacyCDMSessionProxy::messageReceiverName()) {
-        legacyCdmFactoryProxy().didReceiveCDMSessionMessage(connection, decoder);
         return true;
     }
 #endif
@@ -696,46 +616,9 @@ bool GPUConnectionToWebProcess::dispatchSyncMessage(IPC::Connection& connection,
         remoteMediaPlayerManagerProxy().didReceiveSyncPlayerMessage(connection, decoder, replyEncoder);
         return true;
     }
-#if ENABLE(ENCRYPTED_MEDIA)
-    if (decoder.messageReceiverName() == Messages::RemoteCDMFactoryProxy::messageReceiverName()) {
-        cdmFactoryProxy().didReceiveSyncMessageFromWebProcess(connection, decoder, replyEncoder);
-        return true;
-    }
-
-    if (decoder.messageReceiverName() == Messages::RemoteCDMProxy::messageReceiverName()) {
-        cdmFactoryProxy().didReceiveSyncCDMMessage(connection, decoder, replyEncoder);
-        return true;
-    }
-
-    if (decoder.messageReceiverName() == Messages::RemoteCDMInstanceProxy::messageReceiverName()) {
-        cdmFactoryProxy().didReceiveSyncCDMInstanceMessage(connection, decoder, replyEncoder);
-        return true;
-    }
-
-    if (decoder.messageReceiverName() == Messages::RemoteCDMInstanceSessionProxy::messageReceiverName()) {
-        cdmFactoryProxy().didReceiveSyncCDMInstanceSessionMessage(connection, decoder, replyEncoder);
-        return true;
-    }
-#endif
 #if USE(AUDIO_SESSION)
     if (decoder.messageReceiverName() == Messages::RemoteAudioSessionProxy::messageReceiverName()) {
         audioSessionProxy().didReceiveSyncMessage(connection, decoder, replyEncoder);
-        return true;
-    }
-#endif
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    if (decoder.messageReceiverName() == Messages::RemoteLegacyCDMFactoryProxy::messageReceiverName()) {
-        legacyCdmFactoryProxy().didReceiveSyncMessageFromWebProcess(connection, decoder, replyEncoder);
-        return true;
-    }
-
-    if (decoder.messageReceiverName() == Messages::RemoteLegacyCDMProxy::messageReceiverName()) {
-        legacyCdmFactoryProxy().didReceiveSyncCDMMessage(connection, decoder, replyEncoder);
-        return true;
-    }
-
-    if (decoder.messageReceiverName() == Messages::RemoteLegacyCDMSessionProxy::messageReceiverName()) {
-        legacyCdmFactoryProxy().didReceiveSyncCDMSessionMessage(connection, decoder, replyEncoder);
         return true;
     }
 #endif
@@ -757,13 +640,6 @@ const String& GPUConnectionToWebProcess::mediaCacheDirectory() const
 {
     return m_gpuProcess->mediaCacheDirectory(m_sessionID);
 }
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-const String& GPUConnectionToWebProcess::mediaKeysStorageDirectory() const
-{
-    return m_gpuProcess->mediaKeysStorageDirectory(m_sessionID);
-}
-#endif
 
 #if ENABLE(MEDIA_STREAM)
 void GPUConnectionToWebProcess::setOrientationForMediaCapture(uint64_t orientation)

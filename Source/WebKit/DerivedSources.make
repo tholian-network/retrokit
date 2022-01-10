@@ -159,10 +159,7 @@ MESSAGE_RECEIVERS = \
 	WebProcess/GPU/media/RemoteAudioHardwareListener \
 	WebProcess/GPU/media/RemoteAudioSession \
 	WebProcess/GPU/media/RemoteAudioSourceProviderManager \
-	WebProcess/GPU/media/RemoteCDMInstance \
-	WebProcess/GPU/media/RemoteCDMInstanceSession \
 	WebProcess/GPU/media/RemoteImageDecoderAVFManager \
-	WebProcess/GPU/media/RemoteLegacyCDMSession \
 	WebProcess/GPU/media/RemoteRemoteCommandListener \
 	WebProcess/GPU/media/SourceBufferPrivateRemote \
 	WebProcess/GPU/media/ios/RemoteMediaSessionHelper \
@@ -203,16 +200,9 @@ MESSAGE_RECEIVERS = \
 	GPUProcess/graphics/RemoteGraphicsContextGL \
 	GPUProcess/GPUProcess \
 	GPUProcess/media/RemoteImageDecoderAVFProxy \
-	GPUProcess/media/RemoteLegacyCDMSessionProxy \
-	GPUProcess/media/RemoteLegacyCDMFactoryProxy \
 	GPUProcess/media/RemoteAudioSessionProxy \
-	GPUProcess/media/RemoteCDMInstanceSessionProxy \
-	GPUProcess/media/RemoteCDMProxy \
 	GPUProcess/media/ios/RemoteMediaSessionHelperProxy \
 	GPUProcess/media/RemoteAudioDestinationManager \
-	GPUProcess/media/RemoteCDMFactoryProxy \
-	GPUProcess/media/RemoteCDMInstanceProxy \
-	GPUProcess/media/RemoteLegacyCDMProxy \
 	GPUProcess/media/RemoteMediaEngineConfigurationFactoryProxy \
 	GPUProcess/media/RemoteMediaPlayerManagerProxy \
 	GPUProcess/media/RemoteMediaPlayerProxy \

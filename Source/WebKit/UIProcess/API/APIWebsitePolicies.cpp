@@ -43,7 +43,6 @@ Ref<WebsitePolicies> WebsitePolicies::copy() const
     policies->setPopUpPolicy(m_popUpPolicy);
     policies->setWebsiteDataStore(m_websiteDataStore.get());
     policies->setCustomUserAgent(m_customUserAgent);
-    policies->setCustomUserAgentAsSiteSpecificQuirks(m_customUserAgentAsSiteSpecificQuirks);
     policies->setCustomNavigatorPlatform(m_customNavigatorPlatform);
     policies->setPreferredContentMode(m_preferredContentMode);
     policies->setMetaViewportPolicy(m_metaViewportPolicy);
@@ -54,7 +53,7 @@ Ref<WebsitePolicies> WebsitePolicies::copy() const
     policies->setWebsiteDataStore(m_websiteDataStore.get());
     policies->setUserContentController(m_userContentController.get());
     policies->setIdempotentModeAutosizingOnlyHonorsPercentages(m_idempotentModeAutosizingOnlyHonorsPercentages);
-    
+
     Vector<WebCore::HTTPHeaderField> legacyCustomHeaderFields;
     legacyCustomHeaderFields.reserveInitialCapacity(m_legacyCustomHeaderFields.size());
     for (auto& field : m_legacyCustomHeaderFields)
@@ -66,7 +65,6 @@ Ref<WebsitePolicies> WebsitePolicies::copy() const
     for (auto& field : m_customHeaderFields)
         customHeaderFields.uncheckedAppend(field);
     policies->setCustomHeaderFields(WTFMove(customHeaderFields));
-    policies->setAllowSiteSpecificQuirksToOverrideContentMode(m_allowSiteSpecificQuirksToOverrideContentMode);
     policies->setApplicationNameForDesktopUserAgent(m_applicationNameForDesktopUserAgent);
     policies->setAllowsContentJavaScript(m_allowsContentJavaScript);
     policies->setMouseEventPolicy(m_mouseEventPolicy);
@@ -104,7 +102,6 @@ WebKit::WebsitePoliciesData WebsitePolicies::data()
         WTFMove(customHeaderFields),
         popUpPolicy(),
         m_customUserAgent,
-        m_customUserAgentAsSiteSpecificQuirks,
         m_customNavigatorPlatform,
         m_metaViewportPolicy,
         m_mediaSourcePolicy,

@@ -35,14 +35,6 @@
 
 namespace WebCore {
 
-#if !LOG_DISABLED || ENABLE(ENCRYPTED_MEDIA)
-struct PadProbeInformation {
-    AppendPipeline* appendPipeline;
-    const char* description;
-    gulong probeId;
-};
-#endif
-
 class AppendPipeline {
     WTF_MAKE_FAST_ALLOCATED;
 public:
@@ -91,9 +83,6 @@ private:
 
 #if !LOG_DISABLED
         struct PadProbeInformation appsinkDataEnteringPadProbeInformation;
-#endif
-#if ENABLE(ENCRYPTED_MEDIA)
-        struct PadProbeInformation appsinkPadEventProbeInformation;
 #endif
 
         void initializeElements(AppendPipeline*, GstBin*);

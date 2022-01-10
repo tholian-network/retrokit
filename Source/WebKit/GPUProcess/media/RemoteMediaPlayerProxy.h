@@ -29,7 +29,6 @@
 
 #include "Connection.h"
 #include "MessageReceiver.h"
-#include "RemoteLegacyCDMSessionIdentifier.h"
 #include "RemoteMediaPlayerConfiguration.h"
 #include "RemoteMediaPlayerProxyConfiguration.h"
 #include "RemoteMediaPlayerState.h"
@@ -47,11 +46,6 @@
 #include <wtf/RunLoop.h>
 #include <wtf/Vector.h>
 #include <wtf/WeakPtr.h>
-
-#if ENABLE(ENCRYPTED_MEDIA)
-#include "RemoteCDMInstanceIdentifier.h"
-#include "RemoteCDMInstanceProxy.h"
-#endif
 
 #if ENABLE(MEDIA_SOURCE)
 #include "RemoteMediaSourceIdentifier.h"
@@ -115,7 +109,7 @@ public:
     void prepareForPlayback(bool privateMode, WebCore::MediaPlayerEnums::Preload, bool preservesPitch, bool prepareForRendering, float videoContentScale, WebCore::DynamicRangeMode, CompletionHandler<void(std::optional<LayerHostingContextID>&& inlineLayerHostingContextId)>&&);
     void prepareForRendering();
 
-    void load(URL&&, std::optional<SandboxExtension::Handle>&&, const WebCore::ContentType&, const String&, CompletionHandler<void(RemoteMediaPlayerConfiguration&&)>&&);
+    void load(URL&&, std::optional<SandboxExtension::Handle>&&, const WebCore::ContentType&, CompletionHandler<void(RemoteMediaPlayerConfiguration&&)>&&);
 #if ENABLE(MEDIA_SOURCE)
     void loadMediaSource(URL&&, const WebCore::ContentType&, bool webMParserEnabled, RemoteMediaSourceIdentifier, CompletionHandler<void(RemoteMediaPlayerConfiguration&&)>&&);
 #endif
@@ -153,21 +147,6 @@ public:
     void setShouldPlayToPlaybackTarget(bool);
     void setWirelessPlaybackTarget(WebCore::MediaPlaybackTargetContext&&);
     void mediaPlayerCurrentPlaybackTargetIsWirelessChanged(bool) final;
-#endif
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    void setLegacyCDMSession(std::optional<RemoteLegacyCDMSessionIdentifier>&& instanceId);
-    void keyAdded();
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    void cdmInstanceAttached(RemoteCDMInstanceIdentifier&&);
-    void cdmInstanceDetached(RemoteCDMInstanceIdentifier&&);
-    void attemptToDecryptWithInstance(RemoteCDMInstanceIdentifier&&);
-#endif
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA) && ENABLE(ENCRYPTED_MEDIA)
-    void setShouldContinueAfterKeyNeeded(bool);
 #endif
 
     void beginSimulatedHDCPError();
@@ -232,17 +211,6 @@ private:
 
     // Not implemented
     void mediaPlayerFirstVideoFrameAvailable() final;
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    RefPtr<ArrayBuffer> mediaPlayerCachedKeyForKeyId(const String&) const final;
-    void mediaPlayerKeyNeeded(Uint8Array*) final;
-    String mediaPlayerMediaKeysStorageDirectory() const final;
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    void mediaPlayerInitializationDataEncountered(const String&, RefPtr<ArrayBuffer>&&) final;
-    void mediaPlayerWaitingForKeyChanged() final;
-#endif
 
     String mediaPlayerReferrer() const final;
     String mediaPlayerUserAgent() const final;
@@ -336,11 +304,6 @@ private:
 
     bool m_bufferedChanged { true };
     bool m_renderingCanBeAccelerated { false };
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA) && ENABLE(ENCRYPTED_MEDIA)
-    bool m_shouldContinueAfterKeyNeeded { false };
-    std::optional<RemoteLegacyCDMSessionIdentifier> m_legacySession;
-#endif
 
 #if ENABLE(WEB_AUDIO) && PLATFORM(COCOA)
     RefPtr<RemoteAudioSourceProviderProxy> m_remoteAudioSourceProvider;

@@ -34,7 +34,7 @@ namespace WebKit {
 
 String WebPageProxy::userAgentForURL(const URL& url)
 {
-    if (url.isNull() || !preferences().needsSiteSpecificQuirks())
+    if (url.isNull())
         return this->userAgent();
 
     auto userAgent = WebCore::standardUserAgentForURL(url);

@@ -1107,7 +1107,6 @@ public:
     unsigned weakRandomInteger() { return m_weakRandom.getUint32(); }
     WeakRandom& weakRandom() { return m_weakRandom; }
 
-    bool needsSiteSpecificQuirks() const { return m_needsSiteSpecificQuirks; }
     JS_EXPORT_PRIVATE void exposeDollarVM(VM&);
 
 #if JSC_OBJC_API_ENABLED
@@ -1143,8 +1142,6 @@ protected:
     };
     JS_EXPORT_PRIVATE void addStaticGlobals(GlobalPropertyInfo*, int count);
 
-    void setNeedsSiteSpecificQuirks(bool needQuirks) { m_needsSiteSpecificQuirks = needQuirks; }
-
 private:
     friend class LLIntOffsetsExtractor;
 
@@ -1162,7 +1159,6 @@ private:
 
     JS_EXPORT_PRIVATE static void clearRareData(JSCell*);
 
-    bool m_needsSiteSpecificQuirks { false };
 #if JSC_OBJC_API_ENABLED
     RetainPtr<JSWrapperMap> m_wrapperMap;
 #endif

@@ -184,8 +184,6 @@ public:
         WebAuthenticationPanel,
 #endif
 
-        MediaKeySystemPermissionCallback,
-
         // Bundle types
         Bundle,
         BundleBackForwardList,
@@ -429,8 +427,6 @@ template<> struct EnumTraits<API::Object::Type> {
         API::Object::Type::WebAuthenticationAssertionResponse,
         API::Object::Type::WebAuthenticationPanel,
 #endif
-
-        API::Object::Type::MediaKeySystemPermissionCallback,
 
         // Bundle types
         API::Object::Type::Bundle,

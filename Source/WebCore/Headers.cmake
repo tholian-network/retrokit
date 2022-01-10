@@ -13,12 +13,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     Modules/contact-picker/ContactProperty.h
     Modules/contact-picker/ContactsRequestData.h
 
-    Modules/encryptedmedia/CDMClient.h
-    Modules/encryptedmedia/MediaKeySystemClient.h
-    Modules/encryptedmedia/MediaKeySystemController.h
-    Modules/encryptedmedia/MediaKeySystemRequest.h
-    Modules/encryptedmedia/MediaKeySystemRequestIdentifier.h
-
     Modules/fetch/FetchBodyConsumer.h
     Modules/fetch/FetchBodySource.h
     Modules/fetch/FetchRequestCredentials.h
@@ -1120,21 +1114,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/calc/CalcExpressionNode.h
     platform/calc/CalculationValue.h
 
-    platform/encryptedmedia/CDMEncryptionScheme.h
-    platform/encryptedmedia/CDMFactory.h
-    platform/encryptedmedia/CDMInstance.h
-    platform/encryptedmedia/CDMInstanceSession.h
-    platform/encryptedmedia/CDMKeyStatus.h
-    platform/encryptedmedia/CDMKeySystemConfiguration.h
-    platform/encryptedmedia/CDMMediaCapability.h
-    platform/encryptedmedia/CDMMessageType.h
-    platform/encryptedmedia/CDMPrivate.h
-    platform/encryptedmedia/CDMProxy.h
-    platform/encryptedmedia/CDMRequirement.h
-    platform/encryptedmedia/CDMRestrictions.h
-    platform/encryptedmedia/CDMSessionType.h
-    platform/encryptedmedia/CDMUtilities.h
-
     platform/graphics/AlphaPremultiplication.h
     platform/graphics/ANGLEWebKitBridge.h
     platform/graphics/AnimationFrameRate.h
@@ -1233,7 +1212,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/graphics/LayoutPoint.h
     platform/graphics/LayoutRect.h
     platform/graphics/LayoutSize.h
-    platform/graphics/LegacyCDMSession.h
     platform/graphics/MIMETypeCache.h
     platform/graphics/MediaPlaybackTarget.h
     platform/graphics/MediaPlaybackTargetClient.h
@@ -1705,6 +1683,3 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     ${WebCore_DERIVED_SOURCES_DIR}/WritableStreamInternalsBuiltins.h
 )
 
-if (ENABLE_OPENCDM)
-    list(APPEND WebCore_PRIVATE_FRAMEWORK_HEADERS platform/encryptedmedia/CDMOpenCDMTypes.h)
-endif ()

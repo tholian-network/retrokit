@@ -58,7 +58,6 @@
 #include "DownloadProxy.h"
 #include "LegacySessionStateCoding.h"
 #include "Logging.h"
-#include "MediaKeySystemPermissionRequest.h"
 #include "NativeWebKeyboardEvent.h"
 #include "NativeWebWheelEvent.h"
 #include "NavigationActionData.h"
@@ -2130,15 +2129,6 @@ void WKPageSetPageUIClient(WKPageRef pageRef, const WKPageUIClientBase* wkClient
             m_client.decidePolicyForSpeechRecognitionPermissionRequest(toAPI(&page), toAPI(&origin), toAPI(SpeechRecognitionPermissionCallback::create(WTFMove(completionHandler)).ptr()));
         }
 
-        void decidePolicyForMediaKeySystemPermissionRequest(WebPageProxy& page, API::SecurityOrigin& origin, const String& keySystem, CompletionHandler<void(bool)>&& completionHandler) final
-        {
-            if (!m_client.decidePolicyForMediaKeySystemPermissionRequest) {
-                completionHandler(false);
-                return;
-            }
-
-            m_client.decidePolicyForMediaKeySystemPermissionRequest(toAPI(&page), toAPI(&origin), toAPI(API::String::create(keySystem).ptr()), toAPI(MediaKeySystemPermissionCallback::create(WTFMove(completionHandler)).ptr()));
-        }
     };
 
     toImpl(pageRef)->setUIClient(makeUnique<UIClient>(wkClient));

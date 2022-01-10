@@ -27,8 +27,6 @@
 
 #if ENABLE(GPU_PROCESS)
 
-#include "RemoteLegacyCDMIdentifier.h"
-#include "RemoteLegacyCDMSessionIdentifier.h"
 #include "WebProcessSupplement.h"
 #include <WebCore/MediaEngineConfigurationFactory.h>
 #include <wtf/HashMap.h>

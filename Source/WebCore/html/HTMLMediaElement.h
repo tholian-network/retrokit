@@ -50,10 +50,6 @@
 #include "AudioSession.h"
 #endif
 
-#if ENABLE(ENCRYPTED_MEDIA)
-#include "CDMClient.h"
-#endif
-
 #ifndef NDEBUG
 #include <wtf/StringPrintStream.h>
 #endif
@@ -77,7 +73,6 @@ class MediaControls;
 class MediaControlsHost;
 class MediaElementAudioSourceNode;
 class MediaError;
-class MediaKeys;
 class MediaResourceLoader;
 class MediaSession;
 class MediaSource;
@@ -91,7 +86,6 @@ class TimeRanges;
 class VideoPlaybackQuality;
 class VideoTrackList;
 class VideoTrackPrivate;
-class WebKitMediaKeys;
 
 enum class DynamicRangeMode : uint8_t;
 
@@ -128,9 +122,6 @@ class HTMLMediaElement
     , private VideoTrackClient
 #if USE(AUDIO_SESSION) && PLATFORM(MAC)
     , private AudioSession::ConfigurationChangeObserver
-#endif
-#if ENABLE(ENCRYPTED_MEDIA)
-    , private CDMClient
 #endif
 #if !RELEASE_LOG_DISABLED
     , private LoggerHelper
@@ -282,19 +273,6 @@ public:
     void detachMediaSource();
     void incrementDroppedFrameCount() { ++m_droppedVideoFrames; }
     size_t maximumSourceBufferSize(const SourceBuffer&) const;
-#endif
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    WebKitMediaKeys* webkitKeys() const { return m_webKitMediaKeys.get(); }
-    void webkitSetMediaKeys(WebKitMediaKeys*);
-
-    void keyAdded();
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    MediaKeys* mediaKeys() const;
-
-    void setMediaKeys(MediaKeys*, Ref<DeferredPromise>&&);
 #endif
 
 // controls
@@ -634,28 +612,6 @@ private:
 
     void mediaPlayerCharacteristicChanged() final;
 
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    RefPtr<ArrayBuffer> mediaPlayerCachedKeyForKeyId(const String& keyId) const final;
-    void mediaPlayerKeyNeeded(Uint8Array*) final;
-    String mediaPlayerMediaKeysStorageDirectory() const final;
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    void mediaPlayerInitializationDataEncountered(const String&, RefPtr<ArrayBuffer>&&) final;
-    void mediaPlayerWaitingForKeyChanged() final;
-
-    void attemptToDecrypt();
-    void attemptToResumePlaybackIfNecessary();
-
-    // CDMClient
-    void cdmClientAttemptToResumePlaybackIfNecessary() final;
-    void cdmClientUnrequestedInitializationDataReceived(const String&, Ref<SharedBuffer>&&) final;
-#endif
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA) && ENABLE(ENCRYPTED_MEDIA)
-    void updateShouldContinueAfterNeedKey();
-#endif
-
 #if ENABLE(WIRELESS_PLAYBACK_TARGET)
     void mediaPlayerCurrentPlaybackTargetIsWirelessChanged(bool) final;
     void enqueuePlaybackTargetAvailabilityChangedEvent();
@@ -718,13 +674,13 @@ private:
     void finishSeek();
     void clearSeeking();
     void addPlayedRange(const MediaTime& start, const MediaTime& end);
-    
+
     void scheduleTimeupdateEvent(bool periodicEvent);
     virtual void scheduleResizeEvent() { }
     virtual void scheduleResizeEventIfSizeChanged() { }
 
     void selectMediaResource();
-    void loadResource(const URL&, ContentType&, const String& keySystem);
+    void loadResource(const URL&, ContentType&);
     void scheduleNextSourceChild();
     void loadNextSourceChild();
     void userCancelledLoad();
@@ -735,7 +691,7 @@ private:
     void waitForSourceChange();
     void prepareToPlay();
 
-    URL selectNextSourceChild(ContentType*, String* keySystem, InvalidURLAction);
+    URL selectNextSourceChild(ContentType*, InvalidURLAction);
 
     bool ignoreTrackDisplayUpdateRequests() const;
     void beginIgnoringTrackDisplayUpdateRequests();
@@ -1086,17 +1042,6 @@ private:
     RefPtr<Blob> m_blob;
     URL m_blobURLForReading;
     MediaProvider m_mediaProvider;
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    bool m_hasNeedkeyListener { false };
-    RefPtr<WebKitMediaKeys> m_webKitMediaKeys;
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    RefPtr<MediaKeys> m_mediaKeys;
-    bool m_attachingMediaKeys { false };
-    bool m_playbackBlockedWaitingForKey { false };
-#endif
 
 #if ENABLE(WIRELESS_PLAYBACK_TARGET)
     Ref<RemotePlayback> m_remote;

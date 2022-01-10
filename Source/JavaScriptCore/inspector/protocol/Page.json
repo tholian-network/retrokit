@@ -15,7 +15,6 @@
                 "ImagesEnabled",
                 "MediaCaptureRequiresSecureConnection",
                 "MockCaptureDevicesEnabled",
-                "NeedsSiteSpecificQuirks",
                 "ScriptEnabled",
                 "ShowDebugBorders",
                 "ShowRepaintCounter",

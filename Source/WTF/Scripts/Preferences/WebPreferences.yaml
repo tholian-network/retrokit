@@ -642,17 +642,6 @@ EnableInheritURIQueryComponent:
     WebCore:
       default: false
 
-EncryptedMediaAPIEnabled:
-  type: bool
-  condition: ENABLE(ENCRYPTED_MEDIA)
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      default: true
-    WebCore:
-      default: false
-
 ExtensibleSSOEnabled:
   type: bool
   getter: isExtensibleSSOEnabled
@@ -1043,19 +1032,6 @@ LayoutViewportHeightExpansionFactor:
     WebCore:
       default: 0
 
-LegacyEncryptedMediaAPIEnabled:
-  type: bool
-  humanReadableName: "Enable Legacy EME API"
-  humanReadableDescription: "Enable legacy EME API"
-  condition: ENABLE(LEGACY_ENCRYPTED_MEDIA)
-  defaultValue:
-    WebKitLegacy:
-      default: true
-    WebKit:
-      default: true
-    WebCore:
-      default: true
-
 LinkPreconnect:
   type: bool
   webcoreName: linkPreconnectEnabled
@@ -1401,18 +1377,6 @@ NeedsKeyboardEventDisambiguationQuirks:
       default: false
     WebKit:
       default: false
-    WebCore:
-      default: false
-
-NeedsSiteSpecificQuirks:
-  type: bool
-  webKitLegacyPreferenceKey: WebKitUseSiteSpecificSpoofing
-  inspectorOverride: true
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      default: true
     WebCore:
       default: false
 

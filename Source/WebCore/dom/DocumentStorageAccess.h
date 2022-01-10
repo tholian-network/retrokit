@@ -77,22 +77,14 @@ public:
     ~DocumentStorageAccess();
 
     static void hasStorageAccess(Document&, Ref<DeferredPromise>&&);
-    static bool hasStorageAccessForDocumentQuirk(Document&);
-
     static void requestStorageAccess(Document&, Ref<DeferredPromise>&&);
-    static void requestStorageAccessForDocumentQuirk(Document&, CompletionHandler<void(StorageAccessWasGranted)>&&);
-    static void requestStorageAccessForNonDocumentQuirk(Document& hostingDocument, RegistrableDomain&& requestingDomain, CompletionHandler<void(StorageAccessWasGranted)>&&);
 
 private:
     std::optional<bool> hasStorageAccessQuickCheck();
     void hasStorageAccess(Ref<DeferredPromise>&&);
-    bool hasStorageAccessQuirk();
 
     std::optional<StorageAccessQuickResult> requestStorageAccessQuickCheck();
     void requestStorageAccess(Ref<DeferredPromise>&&);
-    void requestStorageAccessForDocumentQuirk(CompletionHandler<void(StorageAccessWasGranted)>&&);
-    void requestStorageAccessForNonDocumentQuirk(RegistrableDomain&& requestingDomain, CompletionHandler<void(StorageAccessWasGranted)>&&);
-    void requestStorageAccessQuirk(RegistrableDomain&& requestingDomain, CompletionHandler<void(StorageAccessWasGranted)>&&);
 
     static DocumentStorageAccess* from(Document&);
     static const char* supplementName();

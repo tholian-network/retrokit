@@ -433,7 +433,7 @@ void MediaPlayer::invalidate()
     m_client = &nullMediaPlayerClient();
 }
 
-bool MediaPlayer::load(const URL& url, const ContentType& contentType, const String& keySystem)
+bool MediaPlayer::load(const URL& url, const ContentType& contentType)
 {
     ASSERT(!m_reloadTimer.isActive());
 
@@ -442,7 +442,6 @@ bool MediaPlayer::load(const URL& url, const ContentType& contentType, const Str
 
     m_contentType = contentType;
     m_url = url;
-    m_keySystem = keySystem.convertToASCIILowercase();
     m_contentMIMETypeWasInferredFromExtension = false;
 
 #if ENABLE(MEDIA_SOURCE)
@@ -484,7 +483,6 @@ bool MediaPlayer::load(const URL& url, const ContentType& contentType, MediaSour
     m_mediaSource = mediaSource;
     m_contentType = contentType;
     m_url = url;
-    m_keySystem = emptyString();
     m_contentMIMETypeWasInferredFromExtension = false;
     loadWithNextMediaEngine(nullptr);
     return m_currentMediaEngine;
@@ -497,7 +495,6 @@ bool MediaPlayer::load(MediaStreamPrivate& mediaStream)
     ASSERT(!m_reloadTimer.isActive());
 
     m_mediaStream = &mediaStream;
-    m_keySystem = emptyString();
     m_contentType = { };
     m_contentMIMETypeWasInferredFromExtension = false;
     loadWithNextMediaEngine(nullptr);
@@ -592,7 +589,7 @@ void MediaPlayer::loadWithNextMediaEngine(const MediaPlayerFactory* current)
             m_private->load(*m_mediaStream);
         else
 #endif
-        m_private->load(m_url, m_contentMIMETypeWasInferredFromExtension ? ContentType() : m_contentType, m_keySystem);
+        m_private->load(m_url, m_contentMIMETypeWasInferredFromExtension ? ContentType() : m_contentType);
     } else {
         m_private = makeUnique<NullMediaPlayerPrivate>(this);
         if (!m_activeEngineIdentifier && installedMediaEngines().size() > 1 && nextBestMediaEngine(m_currentMediaEngine))
@@ -650,57 +647,6 @@ void MediaPlayer::setBufferingPolicy(BufferingPolicy policy)
 {
     m_private->setBufferingPolicy(policy);
 }
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-
-std::unique_ptr<LegacyCDMSession> MediaPlayer::createSession(const String& keySystem, LegacyCDMSessionClient* client)
-{
-    return m_private->createSession(keySystem, client);
-}
-
-void MediaPlayer::setCDM(LegacyCDM* cdm)
-{
-    m_private->setCDM(cdm);
-}
-
-void MediaPlayer::setCDMSession(LegacyCDMSession* session)
-{
-    m_private->setCDMSession(session);
-}
-
-void MediaPlayer::keyAdded()
-{
-    m_private->keyAdded();
-}
-
-#endif
-    
-#if ENABLE(ENCRYPTED_MEDIA)
-
-void MediaPlayer::cdmInstanceAttached(CDMInstance& instance)
-{
-    m_private->cdmInstanceAttached(instance);
-}
-
-void MediaPlayer::cdmInstanceDetached(CDMInstance& instance)
-{
-    m_private->cdmInstanceDetached(instance);
-}
-
-void MediaPlayer::attemptToDecryptWithInstance(CDMInstance& instance)
-{
-    m_private->attemptToDecryptWithInstance(instance);
-}
-
-#endif
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA) && ENABLE(ENCRYPTED_MEDIA)
-void MediaPlayer::setShouldContinueAfterKeyNeeded(bool should)
-{
-    m_shouldContinueAfterKeyNeeded = should;
-    m_private->setShouldContinueAfterKeyNeeded(should);
-}
-#endif
 
 MediaTime MediaPlayer::duration() const
 {
@@ -1205,15 +1151,6 @@ void MediaPlayer::clearMediaCacheForOrigins(const String& path, const HashSet<Se
         engine->clearMediaCacheForOrigins(path, origins);
 }
 
-bool MediaPlayer::supportsKeySystem(const String& keySystem, const String& mimeType)
-{
-    for (auto& engine : installedMediaEngines()) {
-        if (engine->supportsKeySystem(keySystem, mimeType))
-            return true;
-    }
-    return false;
-}
-
 void MediaPlayer::setPrivateBrowsingMode(bool privateBrowsingMode)
 {
     m_privateBrowsing = privateBrowsingMode;
@@ -1310,45 +1247,6 @@ AudioSourceProvider* MediaPlayer::audioSourceProvider()
     return m_private->audioSourceProvider();
 }
 
-#endif
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-
-RefPtr<ArrayBuffer> MediaPlayer::cachedKeyForKeyId(const String& keyId) const
-{
-    return client().mediaPlayerCachedKeyForKeyId(keyId);
-}
-
-void MediaPlayer::keyNeeded(Uint8Array* initData)
-{
-    client().mediaPlayerKeyNeeded(initData);
-}
-
-String MediaPlayer::mediaKeysStorageDirectory() const
-{
-    return client().mediaPlayerMediaKeysStorageDirectory();
-}
-
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-
-void MediaPlayer::initializationDataEncountered(const String& initDataType, RefPtr<ArrayBuffer>&& initData)
-{
-    client().mediaPlayerInitializationDataEncountered(initDataType, WTFMove(initData));
-}
-
-void MediaPlayer::waitingForKeyChanged()
-{
-    client().mediaPlayerWaitingForKeyChanged();
-}
-
-bool MediaPlayer::waitingForKey() const
-{
-    if (!m_private)
-        return false;
-    return m_private->waitingForKey();
-}
 #endif
 
 String MediaPlayer::referrer() const

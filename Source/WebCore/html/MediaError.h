@@ -38,9 +38,6 @@ public:
         MEDIA_ERR_NETWORK,
         MEDIA_ERR_DECODE,
         MEDIA_ERR_SRC_NOT_SUPPORTED
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-        , MEDIA_ERR_ENCRYPTED
-#endif
     };
 
     static Ref<MediaError> create(Code code, String&& message)

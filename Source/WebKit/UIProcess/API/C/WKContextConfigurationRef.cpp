@@ -107,15 +107,6 @@ void WKContextConfigurationSetWebSQLDatabaseDirectory(WKContextConfigurationRef,
 {
 }
 
-WKStringRef WKContextConfigurationCopyMediaKeysStorageDirectory(WKContextConfigurationRef)
-{
-    return nullptr;
-}
-
-void WKContextConfigurationSetMediaKeysStorageDirectory(WKContextConfigurationRef, WKStringRef)
-{
-}
-
 WKStringRef WKContextConfigurationCopyResourceLoadStatisticsDirectory(WKContextConfigurationRef)
 {
     return nullptr;

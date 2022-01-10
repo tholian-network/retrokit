@@ -86,11 +86,6 @@ public:
         return m_manager.clearMediaCacheForOrigins(m_remoteEngineIdentifier, path, origins);
     }
 
-    bool supportsKeySystem(const String& keySystem, const String& mimeType) const final
-    {
-        return m_manager.supportsKeySystem(m_remoteEngineIdentifier, keySystem, mimeType);
-    }
-
 private:
     MediaPlayerEnums::MediaEngineIdentifier m_remoteEngineIdentifier;
     RemoteMediaPlayerManager& m_manager;
@@ -202,11 +197,6 @@ MediaPlayer::SupportsType RemoteMediaPlayerManager::supportsTypeAndCodecs(MediaP
         return MediaPlayer::SupportsType::IsNotSupported;
 #endif
     return typeCache(remoteEngineIdentifier).supportsTypeAndCodecs(parameters);
-}
-
-bool RemoteMediaPlayerManager::supportsKeySystem(MediaPlayerEnums::MediaEngineIdentifier, const String& keySystem, const String& mimeType)
-{
-    return false;
 }
 
 HashSet<SecurityOriginData> RemoteMediaPlayerManager::originsInMediaCache(MediaPlayerEnums::MediaEngineIdentifier remoteEngineIdentifier, const String& path)

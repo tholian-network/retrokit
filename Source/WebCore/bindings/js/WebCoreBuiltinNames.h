@@ -128,12 +128,6 @@ namespace WebCore {
     macro(MediaCapabilities) \
     macro(MediaCapabilitiesInfo) \
     macro(MediaDevices) \
-    macro(MediaEncryptedEvent) \
-    macro(MediaKeyMessageEvent) \
-    macro(MediaKeySession) \
-    macro(MediaKeyStatusMap) \
-    macro(MediaKeySystemAccess) \
-    macro(MediaKeys) \
     macro(MediaQueryListEvent) \
     macro(MediaSessionCoordinator) \
     macro(MediaSource) \
@@ -215,11 +209,6 @@ namespace WebCore {
     macro(WebGL2RenderingContext) \
     macro(WebGLVertexArrayObject) \
     macro(WebGLTransformFeedback) \
-    macro(WebKitMediaKeyError) \
-    macro(WebKitMediaKeyMessageEvent) \
-    macro(WebKitMediaKeyNeededEvent) \
-    macro(WebKitMediaKeySession) \
-    macro(WebKitMediaKeys) \
     macro(WebSocket) \
     macro(WindowClient) \
     macro(Worklet) \

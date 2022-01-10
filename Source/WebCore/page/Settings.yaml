@@ -355,12 +355,6 @@ MediaDeviceIdentifierStorageDirectory:
     WebCore:
       default: '{ }'
 
-MediaKeysStorageDirectory:
-  type: String
-  defaultValue:
-    WebCore:
-      default: '{ }'
-
 MediaTypeOverride:
   type: String
   webcoreOnChange: mediaTypeOverrideChanged

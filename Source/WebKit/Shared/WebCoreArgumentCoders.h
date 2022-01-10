@@ -53,11 +53,6 @@
 #include <WebCore/MediaPlaybackTargetContext.h>
 #endif
 
-#if ENABLE(ENCRYPTED_MEDIA)
-#include <WebCore/CDMInstance.h>
-#include <WebCore/CDMInstanceSession.h>
-#endif
-
 #if PLATFORM(IOS_FAMILY)
 #include <WebCore/InspectorOverlay.h>
 #endif
@@ -744,13 +739,6 @@ template<> struct ArgumentCoder<WebCore::DataDetectorElementInfo> {
 
 #endif
 
-#if ENABLE(ENCRYPTED_MEDIA)
-template<> struct ArgumentCoder<WebCore::CDMInstanceSession::Message> {
-    static void encode(Encoder&, const WebCore::CDMInstanceSession::Message&);
-    static std::optional<WebCore::CDMInstanceSession::Message> decode(Decoder&);
-};
-#endif
-
 #if ENABLE(GPU_PROCESS) && ENABLE(WEBGL)
 
 template<> struct ArgumentCoder<WebCore::GraphicsContextGLAttributes> {
@@ -917,30 +905,6 @@ template<> struct EnumTraits<WTFLogLevel> {
     WTFLogLevel::Debug
     >;
 };
-
-#if ENABLE(ENCRYPTED_MEDIA)
-template <> struct EnumTraits<WebCore::CDMInstanceSession::SessionLoadFailure> {
-    using values = EnumValues <
-    WebCore::CDMInstanceSession::SessionLoadFailure,
-    WebCore::CDMInstanceSession::SessionLoadFailure::None,
-    WebCore::CDMInstanceSession::SessionLoadFailure::NoSessionData,
-    WebCore::CDMInstanceSession::SessionLoadFailure::MismatchedSessionType,
-    WebCore::CDMInstanceSession::SessionLoadFailure::QuotaExceeded,
-    WebCore::CDMInstanceSession::SessionLoadFailure::Other
-    >;
-};
-
-template <> struct EnumTraits<WebCore::CDMInstance::HDCPStatus> {
-    using values = EnumValues <
-    WebCore::CDMInstance::HDCPStatus,
-    WebCore::CDMInstance::HDCPStatus::Unknown,
-    WebCore::CDMInstance::HDCPStatus::Valid,
-    WebCore::CDMInstance::HDCPStatus::OutputRestricted,
-    WebCore::CDMInstance::HDCPStatus::OutputDownscaled
-    >;
-};
-
-#endif
 
 #if ENABLE(GPU_PROCESS) && ENABLE(WEBGL)
 

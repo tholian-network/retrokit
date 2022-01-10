@@ -105,8 +105,6 @@ WebsiteDataProcessType WebsiteData::ownerProcess(WebsiteDataType dataType)
         return WebsiteDataProcessType::UI;
     case WebsiteDataType::IndexedDBDatabases:
         return WebsiteDataProcessType::Network;
-    case WebsiteDataType::MediaKeys:
-        return WebsiteDataProcessType::UI;
     case WebsiteDataType::HSTSCache:
         return WebsiteDataProcessType::Network;
     case WebsiteDataType::SearchFieldRecentSearches:

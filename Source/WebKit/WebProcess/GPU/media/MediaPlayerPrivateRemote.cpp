@@ -30,9 +30,6 @@
 
 #include "Logging.h"
 #include "RemoteAudioSourceProvider.h"
-#include "RemoteLegacyCDM.h"
-#include "RemoteLegacyCDMFactory.h"
-#include "RemoteLegacyCDMSession.h"
 #include "RemoteMediaPlayerManagerProxyMessages.h"
 #include "RemoteMediaPlayerProxyMessages.h"
 #include "RemoteMediaResourceManagerMessages.h"
@@ -64,14 +61,6 @@
 #include <WebCore/TextureMapperPlatformLayerProxyProvider.h>
 #elif USE(TEXTURE_MAPPER)
 #include <WebCore/TextureMapperPlatformLayer.h>
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-#include "RemoteCDMInstance.h"
-#endif
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-#include <WebCore/LegacyCDM.h>
 #endif
 
 #if ENABLE(MEDIA_SOURCE)
@@ -165,7 +154,7 @@ void MediaPlayerPrivateRemote::prepareForPlayback(bool privateMode, MediaPlayer:
     }, m_id);
 }
 
-void MediaPlayerPrivateRemote::load(const URL& url, const ContentType& contentType, const String& keySystem)
+void MediaPlayerPrivateRemote::load(const URL& url, const ContentType& contentType)
 {
     std::optional<SandboxExtension::Handle> sandboxExtensionHandle;
     if (url.isLocalFile()) {
@@ -200,7 +189,7 @@ void MediaPlayerPrivateRemote::load(const URL& url, const ContentType& contentTy
         sandboxExtensionHandle = WTFMove(handle);
     }
 
-    connection().sendWithAsyncReply(Messages::RemoteMediaPlayerProxy::Load(url, sandboxExtensionHandle, contentType, keySystem), [weakThis = makeWeakPtr(*this), this](auto&& configuration) {
+    connection().sendWithAsyncReply(Messages::RemoteMediaPlayerProxy::Load(url, sandboxExtensionHandle, contentType), [weakThis = makeWeakPtr(*this), this](auto&& configuration) {
         if (!weakThis)
             return;
 
@@ -1061,94 +1050,6 @@ AudioSourceProvider* MediaPlayerPrivateRemote::audioSourceProvider()
     notImplemented();
     return nullptr;
 #endif
-}
-#endif
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-std::unique_ptr<LegacyCDMSession> MediaPlayerPrivateRemote::createSession(const String&, LegacyCDMSessionClient*)
-{
-    notImplemented();
-    return nullptr;
-}
-
-void MediaPlayerPrivateRemote::setCDM(LegacyCDM* cdm)
-{
-    if (!cdm)
-        return;
-
-    auto remoteCDM = WebProcess::singleton().legacyCDMFactory().findCDM(cdm->cdmPrivate());
-    if (!remoteCDM)
-        return;
-
-    remoteCDM->setPlayerId(m_id);
-}
-
-void MediaPlayerPrivateRemote::setCDMSession(LegacyCDMSession* session)
-{
-    if (!session || session->type() != CDMSessionTypeRemote) {
-        connection().send(Messages::RemoteMediaPlayerProxy::SetLegacyCDMSession(std::nullopt), m_id);
-        return;
-    }
-
-    auto remoteSession = static_cast<RemoteLegacyCDMSession*>(session);
-    connection().send(Messages::RemoteMediaPlayerProxy::SetLegacyCDMSession(remoteSession->identifier()), m_id);
-}
-
-void MediaPlayerPrivateRemote::keyAdded()
-{
-    connection().send(Messages::RemoteMediaPlayerProxy::KeyAdded(), m_id);
-}
-
-void MediaPlayerPrivateRemote::mediaPlayerKeyNeeded(IPC::DataReference&& message)
-{
-    if (auto player = makeRefPtr(m_player.get()))
-        player->keyNeeded(Uint8Array::create(message.data(), message.size()).ptr());
-}
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-void MediaPlayerPrivateRemote::cdmInstanceAttached(CDMInstance& instance)
-{
-    if (is<RemoteCDMInstance>(instance))
-        connection().send(Messages::RemoteMediaPlayerProxy::CdmInstanceAttached(downcast<RemoteCDMInstance>(instance).identifier()), m_id);
-}
-
-void MediaPlayerPrivateRemote::cdmInstanceDetached(CDMInstance& instance)
-{
-    if (is<RemoteCDMInstance>(instance))
-        connection().send(Messages::RemoteMediaPlayerProxy::CdmInstanceDetached(downcast<RemoteCDMInstance>(instance).identifier()), m_id);
-}
-
-void MediaPlayerPrivateRemote::attemptToDecryptWithInstance(CDMInstance& instance)
-{
-    if (is<RemoteCDMInstance>(instance))
-        connection().send(Messages::RemoteMediaPlayerProxy::AttemptToDecryptWithInstance(downcast<RemoteCDMInstance>(instance).identifier()), m_id);
-}
-
-void MediaPlayerPrivateRemote::waitingForKeyChanged(bool waitingForKey)
-{
-    m_waitingForKey = waitingForKey;
-    if (auto player = makeRefPtr(m_player.get()))
-        player->waitingForKeyChanged();
-}
-
-void MediaPlayerPrivateRemote::initializationDataEncountered(const String& initDataType, IPC::DataReference&& initData)
-{
-    auto initDataBuffer = ArrayBuffer::create(initData.data(), initData.size());
-    if (auto player = makeRefPtr(m_player.get()))
-        player->initializationDataEncountered(initDataType, WTFMove(initDataBuffer));
-}
-
-bool MediaPlayerPrivateRemote::waitingForKey() const
-{
-    return m_waitingForKey;
-}
-#endif
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA) && ENABLE(ENCRYPTED_MEDIA)
-void MediaPlayerPrivateRemote::setShouldContinueAfterKeyNeeded(bool should)
-{
-    connection().send(Messages::RemoteMediaPlayerProxy::SetShouldContinueAfterKeyNeeded(should), m_id);
 }
 #endif
 

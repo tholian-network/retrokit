@@ -29,10 +29,6 @@ if (ENABLE_VIDEO OR ENABLE_WEB_AUDIO)
         platform/graphics/gstreamer/WebKitAudioSinkGStreamer.cpp
         platform/graphics/gstreamer/WebKitWebSourceGStreamer.cpp
 
-        platform/graphics/gstreamer/eme/GStreamerEMEUtilities.cpp
-        platform/graphics/gstreamer/eme/WebKitClearKeyDecryptorGStreamer.cpp
-        platform/graphics/gstreamer/eme/WebKitCommonEncryptionDecryptorGStreamer.cpp
-
         platform/graphics/gstreamer/mse/AppendPipeline.cpp
         platform/graphics/gstreamer/mse/GStreamerMediaDescription.cpp
         platform/graphics/gstreamer/mse/GStreamerRegistryScannerMSE.cpp
@@ -161,29 +157,6 @@ if (ENABLE_WEB_AUDIO)
 
         list(APPEND WebCore_LIBRARIES
             ${GSTREAMER_FFT_LIBRARIES}
-        )
-    endif ()
-endif ()
-
-if (ENABLE_ENCRYPTED_MEDIA)
-    list(APPEND WebCore_SOURCES
-        platform/graphics/gstreamer/eme/CDMFactoryGStreamer.cpp
-        platform/graphics/gstreamer/eme/CDMProxyClearKey.cpp
-    )
-
-    if (ENABLE_THUNDER)
-        list(APPEND WebCore_SYSTEM_INCLUDE_DIRECTORIES
-            ${THUNDER_INCLUDE_DIRS}
-        )
-
-        list(APPEND WebCore_LIBRARIES
-            ${THUNDER_LIBRARIES}
-        )
-
-        list(APPEND WebCore_SOURCES
-            platform/graphics/gstreamer/eme/CDMProxyThunder.cpp
-            platform/graphics/gstreamer/eme/CDMThunder.cpp
-            platform/graphics/gstreamer/eme/WebKitThunderDecryptorGStreamer.cpp
         )
     endif ()
 endif ()

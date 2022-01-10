@@ -35,8 +35,6 @@
 #include "MediaPlayerPrivateRemoteMessages.h"
 #include "RemoteAudioSourceProviderProxy.h"
 #include "RemoteAudioTrackProxy.h"
-#include "RemoteLegacyCDMFactoryProxy.h"
-#include "RemoteLegacyCDMSessionProxy.h"
 #include "RemoteMediaPlayerManagerProxy.h"
 #include "RemoteMediaPlayerProxyConfiguration.h"
 #include "RemoteMediaResource.h"
@@ -52,10 +50,6 @@
 #include <WebCore/MediaPlayer.h>
 #include <WebCore/MediaPlayerPrivate.h>
 #include <WebCore/NotImplemented.h>
-
-#if ENABLE(ENCRYPTED_MEDIA)
-#include "RemoteCDMFactoryProxy.h"
-#endif
 
 #if ENABLE(WIRELESS_PLAYBACK_TARGET)
 #include <WebCore/MediaPlaybackTargetCocoa.h>
@@ -128,7 +122,7 @@ void RemoteMediaPlayerProxy::getConfiguration(RemoteMediaPlayerConfiguration& co
     });
 }
 
-void RemoteMediaPlayerProxy::load(URL&& url, std::optional<SandboxExtension::Handle>&& sandboxExtensionHandle, const ContentType& contentType, const String& keySystem, CompletionHandler<void(RemoteMediaPlayerConfiguration&&)>&& completionHandler)
+void RemoteMediaPlayerProxy::load(URL&& url, std::optional<SandboxExtension::Handle>&& sandboxExtensionHandle, const ContentType& contentType, CompletionHandler<void(RemoteMediaPlayerConfiguration&&)>&& completionHandler)
 {
     RemoteMediaPlayerConfiguration configuration;
     if (sandboxExtensionHandle) {
@@ -138,8 +132,8 @@ void RemoteMediaPlayerProxy::load(URL&& url, std::optional<SandboxExtension::Han
         else
             WTFLogAlways("Unable to create sandbox extension for media url.\n");
     }
-    
-    m_player->load(url, contentType, keySystem);
+
+    m_player->load(url, contentType);
     getConfiguration(configuration);
     completionHandler(WTFMove(configuration));
 }
@@ -383,17 +377,6 @@ void RemoteMediaPlayerProxy::mediaPlayerEngineFailedToLoad() const
 {
     m_webProcessConnection->send(Messages::MediaPlayerPrivateRemote::EngineFailedToLoad(m_player->platformErrorCode()), m_id);
 }
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-String RemoteMediaPlayerProxy::mediaPlayerMediaKeysStorageDirectory() const
-{
-    ASSERT(m_manager && m_manager->gpuConnectionToWebProcess());
-    if (!m_manager || !m_manager->gpuConnectionToWebProcess())
-        return emptyString();
-
-    return m_manager->gpuConnectionToWebProcess()->mediaKeysStorageDirectory();
-}
-#endif
 
 String RemoteMediaPlayerProxy::mediaPlayerReferrer() const
 {
@@ -642,42 +625,6 @@ void RemoteMediaPlayerProxy::mediaPlayerActiveSourceBuffersChanged()
     m_webProcessConnection->send(Messages::MediaPlayerPrivateRemote::ActiveSourceBuffersChanged(), m_id);
 }
 
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-RefPtr<ArrayBuffer> RemoteMediaPlayerProxy::mediaPlayerCachedKeyForKeyId(const String& keyId) const
-{
-    ASSERT(m_manager && m_manager->gpuConnectionToWebProcess());
-    if (!m_manager || !m_manager->gpuConnectionToWebProcess())
-        return nullptr;
-
-    if (!m_legacySession)
-        return nullptr;
-
-    if (auto cdmSession = m_manager->gpuConnectionToWebProcess()->legacyCdmFactoryProxy().getSession(*m_legacySession))
-        return cdmSession->getCachedKeyForKeyId(keyId);
-    return nullptr;
-}
-
-void RemoteMediaPlayerProxy::mediaPlayerKeyNeeded(Uint8Array* message)
-{
-    IPC::DataReference messageReference;
-    if (message)
-        messageReference = { message->data(), message->byteLength() };
-    m_webProcessConnection->send(Messages::MediaPlayerPrivateRemote::MediaPlayerKeyNeeded(WTFMove(messageReference)), m_id);
-}
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-void RemoteMediaPlayerProxy::mediaPlayerInitializationDataEncountered(const String& initDataType, RefPtr<ArrayBuffer>&& initData)
-{
-    m_webProcessConnection->send(Messages::MediaPlayerPrivateRemote::InitializationDataEncountered(initDataType, IPC::DataReference(static_cast<uint8_t*>(initData->data()), initData->byteLength())), m_id);
-}
-
-void RemoteMediaPlayerProxy::mediaPlayerWaitingForKeyChanged()
-{
-    m_webProcessConnection->send(Messages::MediaPlayerPrivateRemote::WaitingForKeyChanged(m_player->waitingForKey()), m_id);
-}
-#endif
-
 #if ENABLE(WIRELESS_PLAYBACK_TARGET)
 void RemoteMediaPlayerProxy::mediaPlayerCurrentPlaybackTargetIsWirelessChanged(bool isCurrentPlaybackTargetWireless)
 {
@@ -824,79 +771,6 @@ void RemoteMediaPlayerProxy::sendCachedState()
     m_webProcessConnection->send(Messages::MediaPlayerPrivateRemote::UpdateCachedState(m_cachedState), m_id);
     m_cachedState.bufferedRanges.clear();
 }
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-void RemoteMediaPlayerProxy::setLegacyCDMSession(std::optional<RemoteLegacyCDMSessionIdentifier>&& instanceId)
-{
-    ASSERT(m_manager && m_manager->gpuConnectionToWebProcess());
-    if (!m_manager || !m_manager->gpuConnectionToWebProcess())
-        return;
-
-    if (m_legacySession == instanceId)
-        return;
-
-    if (m_legacySession) {
-        if (auto cdmSession = m_manager->gpuConnectionToWebProcess()->legacyCdmFactoryProxy().getSession(*m_legacySession)) {
-            m_player->setCDMSession(nullptr);
-            cdmSession->setPlayer(nullptr);
-        }
-    }
-
-    m_legacySession = instanceId;
-
-    if (m_legacySession) {
-        if (auto cdmSession = m_manager->gpuConnectionToWebProcess()->legacyCdmFactoryProxy().getSession(*m_legacySession)) {
-            m_player->setCDMSession(cdmSession->session());
-            cdmSession->setPlayer(makeWeakPtr(this));
-        }
-    }
-}
-
-void RemoteMediaPlayerProxy::keyAdded()
-{
-    m_player->keyAdded();
-}
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-void RemoteMediaPlayerProxy::cdmInstanceAttached(RemoteCDMInstanceIdentifier&& instanceId)
-{
-    ASSERT(m_manager && m_manager->gpuConnectionToWebProcess());
-    if (!m_manager || !m_manager->gpuConnectionToWebProcess())
-        return;
-
-    if (auto* instanceProxy = m_manager->gpuConnectionToWebProcess()->cdmFactoryProxy().getInstance(instanceId))
-        m_player->cdmInstanceAttached(instanceProxy->instance());
-}
-
-void RemoteMediaPlayerProxy::cdmInstanceDetached(RemoteCDMInstanceIdentifier&& instanceId)
-{
-    ASSERT(m_manager && m_manager->gpuConnectionToWebProcess());
-    if (!m_manager || !m_manager->gpuConnectionToWebProcess())
-        return;
-
-    if (auto* instanceProxy = m_manager->gpuConnectionToWebProcess()->cdmFactoryProxy().getInstance(instanceId))
-        m_player->cdmInstanceDetached(instanceProxy->instance());
-}
-
-void RemoteMediaPlayerProxy::attemptToDecryptWithInstance(RemoteCDMInstanceIdentifier&& instanceId)
-{
-    ASSERT(m_manager && m_manager->gpuConnectionToWebProcess());
-    if (!m_manager || !m_manager->gpuConnectionToWebProcess())
-        return;
-
-    if (auto* instanceProxy = m_manager->gpuConnectionToWebProcess()->cdmFactoryProxy().getInstance(instanceId))
-        m_player->attemptToDecryptWithInstance(instanceProxy->instance());
-}
-#endif
-
-
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA) && ENABLE(ENCRYPTED_MEDIA)
-void RemoteMediaPlayerProxy::setShouldContinueAfterKeyNeeded(bool should)
-{
-    m_player->setShouldContinueAfterKeyNeeded(should);
-}
-#endif
 
 void RemoteMediaPlayerProxy::beginSimulatedHDCPError()
 {

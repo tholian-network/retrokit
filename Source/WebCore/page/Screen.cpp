@@ -36,7 +36,6 @@
 #include "FrameView.h"
 #include "Page.h"
 #include "PlatformScreen.h"
-#include "Quirks.h"
 #include "ResourceLoadObserver.h"
 #include "RuntimeEnabledFeatures.h"
 #include <wtf/IsoMallocInlines.h>

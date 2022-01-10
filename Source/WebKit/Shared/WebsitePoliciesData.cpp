@@ -41,7 +41,6 @@ void WebsitePoliciesData::encode(IPC::Encoder& encoder) const
     encoder << customHeaderFields;
     encoder << popUpPolicy;
     encoder << customUserAgent;
-    encoder << customUserAgentAsSiteSpecificQuirks;
     encoder << customNavigatorPlatform;
     encoder << metaViewportPolicy;
     encoder << mediaSourcePolicy;
@@ -59,7 +58,7 @@ std::optional<WebsitePoliciesData> WebsitePoliciesData::decode(IPC::Decoder& dec
     decoder >> contentBlockersEnabled;
     if (!contentBlockersEnabled)
         return std::nullopt;
-    
+
     std::optional<WebsiteAutoplayPolicy> autoplayPolicy;
     decoder >> autoplayPolicy;
     if (!autoplayPolicy)
@@ -69,7 +68,7 @@ std::optional<WebsitePoliciesData> WebsitePoliciesData::decode(IPC::Decoder& dec
     decoder >> allowedAutoplayQuirks;
     if (!allowedAutoplayQuirks)
         return std::nullopt;
-    
+
     std::optional<Vector<WebCore::CustomHeaderFields>> customHeaderFields;
     decoder >> customHeaderFields;
     if (!customHeaderFields)
@@ -83,11 +82,6 @@ std::optional<WebsitePoliciesData> WebsitePoliciesData::decode(IPC::Decoder& dec
     std::optional<String> customUserAgent;
     decoder >> customUserAgent;
     if (!customUserAgent)
-        return std::nullopt;
-
-    std::optional<String> customUserAgentAsSiteSpecificQuirks;
-    decoder >> customUserAgentAsSiteSpecificQuirks;
-    if (!customUserAgentAsSiteSpecificQuirks)
         return std::nullopt;
 
     std::optional<String> customNavigatorPlatform;
@@ -104,7 +98,7 @@ std::optional<WebsitePoliciesData> WebsitePoliciesData::decode(IPC::Decoder& dec
     decoder >> mediaSourcePolicy;
     if (!mediaSourcePolicy)
         return std::nullopt;
-    
+
     std::optional<WebsiteSimulatedMouseEventsDispatchPolicy> simulatedMouseEventsDispatchPolicy;
     decoder >> simulatedMouseEventsDispatchPolicy;
     if (!simulatedMouseEventsDispatchPolicy)
@@ -142,7 +136,6 @@ std::optional<WebsitePoliciesData> WebsitePoliciesData::decode(IPC::Decoder& dec
         WTFMove(*customHeaderFields),
         WTFMove(*popUpPolicy),
         WTFMove(*customUserAgent),
-        WTFMove(*customUserAgentAsSiteSpecificQuirks),
         WTFMove(*customNavigatorPlatform),
         WTFMove(*metaViewportPolicy),
         WTFMove(*mediaSourcePolicy),
@@ -159,7 +152,6 @@ void WebsitePoliciesData::applyToDocumentLoader(WebsitePoliciesData&& websitePol
 {
     documentLoader.setCustomHeaderFields(WTFMove(websitePolicies.customHeaderFields));
     documentLoader.setCustomUserAgent(websitePolicies.customUserAgent);
-    documentLoader.setCustomUserAgentAsSiteSpecificQuirks(websitePolicies.customUserAgentAsSiteSpecificQuirks);
     documentLoader.setCustomNavigatorPlatform(websitePolicies.customNavigatorPlatform);
 
     // Only setUserContentExtensionsEnabled if it hasn't already been disabled by reloading without content blockers.
@@ -168,13 +160,13 @@ void WebsitePoliciesData::applyToDocumentLoader(WebsitePoliciesData&& websitePol
 
     OptionSet<WebCore::AutoplayQuirk> quirks;
     const auto& allowedQuirks = websitePolicies.allowedAutoplayQuirks;
-    
+
     if (allowedQuirks.contains(WebsiteAutoplayQuirk::InheritedUserGestures))
         quirks.add(WebCore::AutoplayQuirk::InheritedUserGestures);
-    
+
     if (allowedQuirks.contains(WebsiteAutoplayQuirk::SynthesizedPauseEvents))
         quirks.add(WebCore::AutoplayQuirk::SynthesizedPauseEvents);
-    
+
     if (allowedQuirks.contains(WebsiteAutoplayQuirk::ArbitraryUserGestures))
         quirks.add(WebCore::AutoplayQuirk::ArbitraryUserGestures);
 

@@ -72,7 +72,6 @@
 #include <WebCore/IntRect.h>
 #include <WebCore/IntSizeHash.h>
 #include <WebCore/MediaControlsContextMenuItem.h>
-#include <WebCore/MediaKeySystemRequest.h>
 #include <WebCore/Page.h>
 #include <WebCore/PageIdentifier.h>
 #include <WebCore/PageOverlay.h>
@@ -260,7 +259,6 @@ class FindController;
 class GPUProcessConnection;
 class LayerHostingContext;
 class MediaDeviceSandboxExtensions;
-class MediaKeySystemPermissionRequestManager;
 class NotificationPermissionRequestManager;
 class PageBanner;
 class RemoteMediaSessionCoordinator;
@@ -641,10 +639,6 @@ public:
 #if ENABLE(MEDIA_STREAM)
     UserMediaPermissionRequestManager& userMediaPermissionRequestManager() { return m_userMediaPermissionRequestManager; }
     void captureDevicesChanged();
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    MediaKeySystemPermissionRequestManager& mediaKeySystemPermissionRequestManager() { return m_mediaKeySystemPermissionRequestManager; }
 #endif
 
     void elementDidFocus(WebCore::Element&);
@@ -1652,11 +1646,6 @@ private:
     void userMediaAccessWasDenied(WebCore::UserMediaRequestIdentifier, uint64_t reason, String&& invalidConstraint);
 #endif
 
-#if ENABLE(ENCRYPTED_MEDIA)
-    void mediaKeySystemWasGranted(WebCore::MediaKeySystemRequestIdentifier, CompletionHandler<void()>&&);
-    void mediaKeySystemWasDenied(WebCore::MediaKeySystemRequestIdentifier, String&& message);
-#endif
-
     void requestMediaPlaybackState(CompletionHandler<void(WebKit::MediaPlaybackState)>&&);
 
     void pauseAllMediaPlayback(CompletionHandler<void()>&&);
@@ -1936,10 +1925,6 @@ private:
 
 #if ENABLE(MEDIA_STREAM)
     UniqueRef<UserMediaPermissionRequestManager> m_userMediaPermissionRequestManager;
-#endif
-
-#if ENABLE(ENCRYPTED_MEDIA)
-    UniqueRef<MediaKeySystemPermissionRequestManager> m_mediaKeySystemPermissionRequestManager;
 #endif
 
     std::unique_ptr<WebCore::PrintContext> m_printContext;

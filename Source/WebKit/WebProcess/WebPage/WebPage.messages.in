@@ -376,11 +376,6 @@ GenerateSyntheticEditingCommand(enum:uint8_t WebKit::SyntheticEditingCommandType
     CaptureDevicesChanged()
 #endif
 
-#if ENABLE(ENCRYPTED_MEDIA)
-    MediaKeySystemWasGranted(WebCore::MediaKeySystemRequestIdentifier mediaKeySystemID) -> () Async
-    MediaKeySystemWasDenied(WebCore::MediaKeySystemRequestIdentifier mediaKeySystemID, String message)
-#endif
-
     RequestMediaPlaybackState() -> (enum:uint8_t WebKit::MediaPlaybackState state) Async
     PauseAllMediaPlayback() -> () Async
     SuspendAllMediaPlayback() -> () Async
@@ -483,7 +478,7 @@ GenerateSyntheticEditingCommand(enum:uint8_t WebKit::SyntheticEditingCommandType
     GetBytecodeProfile() -> (String string) Async
 
     GetSamplingProfilerOutput() -> (String string) Async
-    
+
     TakeSnapshot(WebCore::IntRect snapshotRect, WebCore::IntSize bitmapSize, uint32_t options) -> (WebKit::ShareableBitmap::Handle image) Async
 #if PLATFORM(MAC)
     PerformImmediateActionHitTestAtLocation(WebCore::FloatPoint location)

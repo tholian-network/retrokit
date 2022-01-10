@@ -32,7 +32,6 @@ messages -> RemoteMediaPlayerManagerProxy NotRefCounted {
     OriginsInMediaCache(enum:uint8_t WebCore::MediaPlayerEnums::MediaEngineIdentifier remoteEngineIdentifier, String path) -> (HashSet<WebCore::SecurityOriginData> origins) Synchronous
     ClearMediaCache(enum:uint8_t WebCore::MediaPlayerEnums::MediaEngineIdentifier remoteEngineIdentifier, String path, WallTime modifiedSince)
     ClearMediaCacheForOrigins(enum:uint8_t WebCore::MediaPlayerEnums::MediaEngineIdentifier remoteEngineIdentifier, String path, HashSet<WebCore::SecurityOriginData> origins)
-    SupportsKeySystem(enum:uint8_t WebCore::MediaPlayerEnums::MediaEngineIdentifier remoteEngineIdentifier, String keySystem, String mimeType) -> (bool supports) Synchronous
 }
 
 #endif

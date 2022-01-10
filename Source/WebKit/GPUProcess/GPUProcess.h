@@ -73,9 +73,6 @@ public:
     GPUConnectionToWebProcess* webProcessConnection(WebCore::ProcessIdentifier) const;
 
     const String& mediaCacheDirectory(PAL::SessionID) const;
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-    const String& mediaKeysStorageDirectory(PAL::SessionID) const;
-#endif
 
 #if ENABLE(GPU_PROCESS) && USE(AUDIO_SESSION)
     RemoteAudioSessionProxyManager& audioSessionManager() const;
@@ -170,9 +167,6 @@ private:
 
     struct GPUSession {
         String mediaCacheDirectory;
-#if ENABLE(LEGACY_ENCRYPTED_MEDIA)
-        String mediaKeysStorageDirectory;
-#endif
     };
     HashMap<PAL::SessionID, GPUSession> m_sessions;
     WebCore::Timer m_idleExitTimer;

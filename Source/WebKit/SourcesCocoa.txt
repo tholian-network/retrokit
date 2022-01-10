@@ -581,8 +581,6 @@ WebProcess/InjectedBundle/mac/InjectedBundleMac.mm
 
 WebProcess/Inspector/mac/WebInspectorUIMac.mm
 
-WebProcess/MediaCache/WebMediaKeyStorageManager.cpp
-
 WebProcess/WebCoreSupport/WebCaptionPreferencesDelegate.cpp
 WebProcess/WebCoreSupport/WebPasteboardOverrides.cpp
 WebProcess/WebCoreSupport/WebValidationMessageClient.cpp
