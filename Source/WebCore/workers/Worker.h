@@ -46,8 +46,6 @@ class JSValue;
 
 namespace WebCore {
 
-class RTCRtpScriptTransform;
-class RTCRtpScriptTransformer;
 class ScriptExecutionContext;
 class WorkerGlobalScopeProxy;
 class WorkerScriptLoader;

@@ -40,8 +40,6 @@
 #include "JSIDBSerializationGlobalObject.h"
 #include "JSMediaStream.h"
 #include "JSMediaStreamTrack.h"
-#include "JSRTCIceCandidate.h"
-#include "JSRTCSessionDescription.h"
 #include "JSReadableStream.h"
 #include "JSRemoteDOMWindow.h"
 #include "JSWorkerGlobalScope.h"

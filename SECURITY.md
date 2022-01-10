@@ -253,7 +253,7 @@ list of Web APIs that are removed.
 - [ ] Remove WebGPU API
 - [ ] Remove Media Capture API
 - [ ] Remove Screen Capture API (`getDisplayMedia`)
-- [ ] Remove Media Stream API (`getUserMedia`)
+- [ ] Remove Media Stream API (`MEDIA_STREAM`, `getUserMedia`)
 - [ ] Remove Page Visibility API
 - [ ] Remove Pointer Lock API (`POINTER_LOCK`)
 - [ ] Remove Web Notifications API

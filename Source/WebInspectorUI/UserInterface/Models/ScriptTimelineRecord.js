@@ -263,8 +263,6 @@ WI.ScriptTimelineRecord.EventType.displayName = function(eventType, details, inc
         nameMap.set("gesturetap", "Gesture Tap");
         nameMap.set("gesturetapdown", "Gesture Tap Down");
         nameMap.set("hashchange", "Hash Change");
-        nameMap.set("icecandidate", "ICE Candidate");
-        nameMap.set("iceconnectionstatechange", "ICE Connection State Change");
         nameMap.set("keydown", "Key Down");
         nameMap.set("keypress", "Key Press");
         nameMap.set("keyup", "Key Up");
@@ -308,7 +306,6 @@ WI.ScriptTimelineRecord.EventType.displayName = function(eventType, details, inc
         nameMap.set("speechstart", "Speech Start");
         nameMap.set("textInput", "Text Input");
         nameMap.set("timeupdate", "Time Update");
-        nameMap.set("tonechange", "Tone Change");
         nameMap.set("touchcancel", "Touch Cancel");
         nameMap.set("touchend", "Touch End");
         nameMap.set("touchmove", "Touch Move");

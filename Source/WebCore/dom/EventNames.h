@@ -72,7 +72,6 @@ namespace WebCore {
     macro(blocked) \
     macro(blur) \
     macro(boundary) \
-    macro(bufferedamountlow) \
     macro(cached) \
     macro(cancel) \
     macro(canplay) \
@@ -97,7 +96,6 @@ namespace WebCore {
     macro(cuechange) \
     macro(cut) \
     macro(dataavailable) \
-    macro(datachannel) \
     macro(dblclick) \
     macro(devicechange) \
     macro(dischargingtimechange) \
@@ -126,7 +124,6 @@ namespace WebCore {
     macro(focusin) \
     macro(focusout) \
     macro(formdata) \
-    macro(gatheringstatechange) \
     macro(gesturechange) \
     macro(gestureend) \
     macro(gesturescrollend) \
@@ -137,10 +134,6 @@ namespace WebCore {
     macro(gesturetapdown) \
     macro(gotpointercapture) \
     macro(hashchange) \
-    macro(icecandidate) \
-    macro(icecandidateerror) \
-    macro(iceconnectionstatechange) \
-    macro(icegatheringstatechange) \
     macro(inactive) \
     macro(input) \
     macro(inputsourceschange) \
@@ -174,7 +167,6 @@ namespace WebCore {
     macro(mouseup) \
     macro(mousewheel) \
     macro(mute) \
-    macro(negotiationneeded) \
     macro(nexttrack) \
     macro(nomatch) \
     macro(noupdate) \
@@ -230,7 +222,6 @@ namespace WebCore {
     macro(shippingmethodselected) \
     macro(shippingoptionchange) \
     macro(show) \
-    macro(signalingstatechange) \
     macro(slotchange) \
     macro(soundend) \
     macro(soundstart) \
@@ -255,7 +246,6 @@ namespace WebCore {
     macro(timeout) \
     macro(timeupdate) \
     macro(toggle) \
-    macro(tonechange) \
     macro(touchcancel) \
     macro(touchend) \
     macro(touchforcechange) \

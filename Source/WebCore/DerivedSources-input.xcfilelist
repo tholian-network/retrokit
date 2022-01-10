@@ -1065,7 +1065,6 @@ $(PROJECT_DIR)/testing/MemoryInfo.idl
 $(PROJECT_DIR)/testing/MockCDMFactory.idl
 $(PROJECT_DIR)/testing/MockContentFilterSettings.idl
 $(PROJECT_DIR)/testing/MockPageOverlay.idl
-$(PROJECT_DIR)/testing/MockRTCRtpTransform.idl
 $(PROJECT_DIR)/testing/MockWebAuthenticationConfiguration.idl
 $(PROJECT_DIR)/testing/ServiceWorkerInternals.idl
 $(PROJECT_DIR)/testing/TypeConversions.idl
