@@ -29,7 +29,6 @@
 #include "APIFrameHandle.h"
 #include "APIPageGroupHandle.h"
 #include "APIPageHandle.h"
-#include "AudioMediaStreamTrackRendererInternalUnitManager.h"
 #include "AuthenticationManager.h"
 #include "AuxiliaryProcessMessages.h"
 #include "DrawingArea.h"
@@ -1216,15 +1215,6 @@ void WebProcess::gpuProcessConnectionClosed(GPUProcessConnection& connection)
         m_audioMediaStreamTrackRendererInternalUnitManager->gpuProcessConnectionClosed();
 #endif
 }
-
-#if ENABLE(MEDIA_STREAM) && PLATFORM(COCOA)
-AudioMediaStreamTrackRendererInternalUnitManager& WebProcess::audioMediaStreamTrackRendererInternalUnitManager()
-{
-    if (!m_audioMediaStreamTrackRendererInternalUnitManager)
-        m_audioMediaStreamTrackRendererInternalUnitManager = makeUnique<AudioMediaStreamTrackRendererInternalUnitManager>();
-    return *m_audioMediaStreamTrackRendererInternalUnitManager;
-}
-#endif
 
 #endif // ENABLE(GPU_PROCESS)
 

@@ -30,8 +30,6 @@
 #include "DownloadID.h"
 #include "NetworkActivityTracker.h"
 #include "NetworkConnectionToWebProcessMessagesReplies.h"
-#include "NetworkMDNSRegister.h"
-#include "NetworkRTCProvider.h"
 #include "NetworkResourceLoadIdentifier.h"
 #include "NetworkResourceLoadMap.h"
 #include "PolicyDecision.h"

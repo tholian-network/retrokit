@@ -67,9 +67,6 @@ $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkConnectionToWebProcessMessag
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkContentRuleListManagerMessageReceiver.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkContentRuleListManagerMessages.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkContentRuleListManagerMessagesReplies.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkMDNSRegisterMessageReceiver.cpp
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkMDNSRegisterMessages.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkMDNSRegisterMessagesReplies.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkProcessConnectionMessageReceiver.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkProcessConnectionMessages.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkProcessConnectionMessagesReplies.h
@@ -79,12 +76,6 @@ $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkProcessMessagesReplies.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkProcessProxyMessageReceiver.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkProcessProxyMessages.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkProcessProxyMessagesReplies.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkRTCMonitorMessageReceiver.cpp
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkRTCMonitorMessages.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkRTCMonitorMessagesReplies.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkRTCProviderMessageReceiver.cpp
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkRTCProviderMessages.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkRTCProviderMessagesReplies.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkResourceLoaderMessageReceiver.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkResourceLoaderMessages.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/NetworkResourceLoaderMessagesReplies.h
@@ -364,9 +355,6 @@ $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebInspectorUIMessagesReplies.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebInspectorUIProxyMessageReceiver.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebInspectorUIProxyMessages.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebInspectorUIProxyMessagesReplies.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebMDNSRegisterMessageReceiver.cpp
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebMDNSRegisterMessages.h
-$(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebMDNSRegisterMessagesReplies.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebNotificationManagerMessageReceiver.cpp
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebNotificationManagerMessages.h
 $(BUILT_PRODUCTS_DIR)/DerivedSources/WebKit2/WebNotificationManagerMessagesReplies.h

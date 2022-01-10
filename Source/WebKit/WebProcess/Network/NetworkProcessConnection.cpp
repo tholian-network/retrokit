@@ -39,7 +39,6 @@
 #include "WebIDBConnectionToServer.h"
 #include "WebIDBConnectionToServerMessages.h"
 #include "WebLoaderStrategy.h"
-#include "WebMDNSRegisterMessages.h"
 #include "WebPage.h"
 #include "WebPageMessages.h"
 #include "WebProcess.h"

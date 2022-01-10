@@ -64,7 +64,6 @@ WEBKIT_OPTION_DEFINE(USE_AVIF "Whether to enable support for AVIF images." PUBLI
 WEBKIT_OPTION_DEFINE(USE_GTK4 "Whether to enable usage of GTK4 instead of GTK3." PUBLIC OFF)
 WEBKIT_OPTION_DEFINE(USE_LCMS "Whether to enable support for image color management using libcms2." PUBLIC ON)
 WEBKIT_OPTION_DEFINE(USE_LIBHYPHEN "Whether to enable the default automatic hyphenation implementation." PUBLIC ON)
-WEBKIT_OPTION_DEFINE(USE_LIBNOTIFY "Whether to enable the default web notification implementation." PUBLIC ON)
 WEBKIT_OPTION_DEFINE(USE_OPENGL_OR_ES "Whether to use OpenGL or ES." PUBLIC ON)
 WEBKIT_OPTION_DEFINE(USE_OPENJPEG "Whether to enable support for JPEG2000 images." PUBLIC ON)
 WEBKIT_OPTION_DEFINE(USE_WOFF2 "Whether to enable support for WOFF2 Web Fonts." PUBLIC ON)
@@ -377,13 +376,6 @@ if (ENABLE_WAYLAND_TARGET)
 
     find_package(Wayland REQUIRED)
     find_package(WaylandProtocols 1.12 REQUIRED)
-endif ()
-
-if (USE_LIBNOTIFY)
-    find_package(LibNotify)
-    if (NOT LIBNOTIFY_FOUND)
-       message(FATAL_ERROR "libnotify is needed for USE_LIBNOTIFY.")
-    endif ()
 endif ()
 
 if (USE_LIBHYPHEN)

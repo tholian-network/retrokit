@@ -194,10 +194,10 @@ removed as well.
 - [x] Remove `SOUP2`
 - [ ] Switch to cURL (Remove `USE_SOUP` and insert `USE_CURL` from Windows Platform)
 - [x] Remove Geoclue Integration (`geoclue`) which leaks your geolocation to websites
-- [ ] Remove libhyphen Integration (`libhyphen`, `USE_LIBHYPHEN`)
-- [x] Remove libsecret Integration (`libsecret`, `USE_LIBSECRET`, `secret.h`)
-- [ ] Remove libnotify Integration (`libnotify`, `USE_LIBNOTIFY`) which is just annoying
-- [x] Remove libwebrtc Integration (`LIBWEBRTC`, `libWebRTC`)
+- [ ] Remove libhyphen Integration (`LIBHYPTHEN`, `libhyphen`)
+- [x] Remove libsecret Integration (`LIBSECRET`, `libsecret`, `secret.h`)
+- [x] Remove libnotify Integration (`LIBNOTIFY`, `libnotify`, `notify.h`)
+- [x] Remove libwebrtc Integration (`LIBWEBRTC`, `libWebRTC`, `libwebrtc`)
 - [x] Remove SystemD Integration (`libsystemd`, `USE_SYSTEMD`, `JOURNALD`)
 - [ ] Remove ARKIT Integration (`ARKIT`)
 - [x] Remove PASSKIT Integration (`PASSKIT`)
@@ -277,9 +277,9 @@ list of Web APIs that are removed.
 - [ ] Remove `preload` Support
 - [ ] Remove `prerender` Support
 - [x] Remove `<plug-in>` (`PlugInElement`, `HTMLPlugInElement`, `JSPluginElement`, `jsObjectForPluginElement`)
-- [x] Remove `<applet>` Element (`appletTag`, `AppletElement` and `HTMLAppletElement`)
-- [x] Remove `<embed>` Element (`embedTag`, `EmbedElement` and `HTMLEmbedElement`, `EmbeddedObject`, `RenderEmbeddedObject`)
-- [x] Remove `<object>` Element (`objectTag`, `ObjectElement` and `HTMLObjectElement`)
+- [x] Remove `<applet>` Element (`appletTag`, `AppletElement`, `HTMLAppletElement`)
+- [x] Remove `<embed>` Element (`embedTag`, `EmbedElement`, `HTMLEmbedElement`, `EmbeddedObject`, `RenderEmbeddedObject`)
+- [x] Remove `<object>` Element (`objectTag`, `ObjectElement`, `HTMLObjectElement`)
 - [ ] Remove `<foreignObject>` SVG Element (`foreignObjectTag`)
 
 

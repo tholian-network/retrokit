@@ -46,10 +46,6 @@
 #include <wtf/RunLoop.h>
 #include <wtf/text/StringBuilder.h>
 
-#if PLATFORM(COCOA)
-#include <notify.h>
-#endif
-
 namespace WebKit {
 namespace NetworkCache {
 

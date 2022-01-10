@@ -35,7 +35,6 @@
 #include "MediaSessionGroupIdentifier.h"
 #include "Pagination.h"
 #include "PlaybackTargetClientContextIdentifier.h"
-#include "RTCController.h"
 #include "Region.h"
 #include "RegistrableDomain.h"
 #include "ScrollTypes.h"

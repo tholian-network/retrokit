@@ -29,7 +29,6 @@
 #include <wtf/text/WTFString.h>
 
 #if PLATFORM(COCOA)
-#include <notify.h>
 #include <wtf/BlockPtr.h>
 #endif
 
