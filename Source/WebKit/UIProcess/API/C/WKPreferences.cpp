@@ -965,52 +965,6 @@ bool WKPreferencesGetScrollingPerformanceLoggingEnabled(WKPreferencesRef prefere
     return toImpl(preferencesRef)->scrollingPerformanceTestingEnabled();
 }
 
-void WKPreferencesSetPlugInSnapshottingEnabled(WKPreferencesRef, bool)
-{
-}
-
-bool WKPreferencesGetPlugInSnapshottingEnabled(WKPreferencesRef preferencesRef)
-{
-    return false;
-}
-
-void WKPreferencesSetPluginSandboxProfilesEnabledForAllPlugins(WKPreferencesRef preferencesRef, bool enabled)
-{
-    toImpl(preferencesRef)->setExperimentalPlugInSandboxProfilesEnabled(enabled);
-}
-
-bool WKPreferencesGetPluginSandboxProfilesEnabledForAllPlugins(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->experimentalPlugInSandboxProfilesEnabled();
-}
-
-void WKPreferencesSetSnapshotAllPlugIns(WKPreferencesRef, bool)
-{
-}
-
-bool WKPreferencesGetSnapshotAllPlugIns(WKPreferencesRef)
-{
-    return false;
-}
-
-void WKPreferencesSetAutostartOriginPlugInSnapshottingEnabled(WKPreferencesRef, bool)
-{
-}
-
-bool WKPreferencesGetAutostartOriginPlugInSnapshottingEnabled(WKPreferencesRef preferencesRef)
-{
-    return false;
-}
-
-void WKPreferencesSetPrimaryPlugInSnapshotDetectionEnabled(WKPreferencesRef preferencesRef, bool enabled)
-{
-}
-
-bool WKPreferencesGetPrimaryPlugInSnapshotDetectionEnabled(WKPreferencesRef preferencesRef)
-{
-    return false;
-}
-
 void WKPreferencesSetEncodingDetectorEnabled(WKPreferencesRef preferencesRef, bool enabled)
 {
     toImpl(preferencesRef)->setUsesEncodingDetector(enabled);

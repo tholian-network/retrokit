@@ -79,7 +79,6 @@ struct EditorState {
     bool isContentEditable { false };
     bool isContentRichlyEditable { false };
     bool isInPasswordField { false };
-    bool isInPlugin { false };
     bool hasComposition { false };
     bool triggeredByAccessibilitySelectionChange { false };
     bool isMissingPostLayoutData { true };

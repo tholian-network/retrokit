@@ -2584,7 +2584,6 @@ bool RenderLayerCompositor::requiresCompositingLayer(const RenderLayer& layer, R
         || requiresCompositingForVideo(renderer)
         || requiresCompositingForModel(renderer)
         || requiresCompositingForFrame(renderer, queryData)
-        || requiresCompositingForPlugin(renderer, queryData)
         || requiresCompositingForOverflowScrolling(*renderer.layer(), queryData);
 }
 
@@ -2626,7 +2625,6 @@ bool RenderLayerCompositor::requiresOwnBackingStore(const RenderLayer& layer, co
         || requiresCompositingForVideo(renderer)
         || requiresCompositingForModel(renderer)
         || requiresCompositingForFrame(renderer, queryData)
-        || requiresCompositingForPlugin(renderer, queryData)
         || requiresCompositingForOverflowScrolling(layer, queryData)
         || needsContentsCompositingLayer(layer)
         || renderer.isTransparent()
@@ -2676,8 +2674,6 @@ OptionSet<CompositingReason> RenderLayerCompositor::reasonsForCompositing(const 
         reasons.add(CompositingReason::Canvas);
     else if (requiresCompositingForModel(renderer))
         reasons.add(CompositingReason::Model);
-    else if (requiresCompositingForPlugin(renderer, queryData))
-        reasons.add(CompositingReason::Plugin);
     else if (requiresCompositingForFrame(renderer, queryData))
         reasons.add(CompositingReason::IFrame);
 
@@ -2761,7 +2757,6 @@ static const char* compositingReasonToString(CompositingReason reason)
     case CompositingReason::Transform3D: return "3D transform";
     case CompositingReason::Video: return "video";
     case CompositingReason::Canvas: return "canvas";
-    case CompositingReason::Plugin: return "plugin";
     case CompositingReason::IFrame: return "iframe";
     case CompositingReason::BackfaceVisibilityHidden: return "backface-visibility: hidden";
     case CompositingReason::ClipsCompositingDescendants: return "clips compositing descendants";
@@ -3116,26 +3111,6 @@ bool RenderLayerCompositor::requiresCompositingForModel(RenderLayerModelObject& 
     return false;
 }
 
-bool RenderLayerCompositor::requiresCompositingForPlugin(RenderLayerModelObject& renderer, RequiresCompositingData& queryData) const
-{
-    if (!(m_compositingTriggers & ChromeClient::PluginTrigger))
-        return false;
-
-    auto& pluginRenderer = downcast<RenderWidget>(renderer);
-    if (pluginRenderer.style().visibility() != Visibility::Visible)
-        return false;
-
-    // If we can't reliably know the size of the plugin yet, don't change compositing state.
-    if (queryData.layoutUpToDate == LayoutUpToDate::No) {
-        queryData.reevaluateAfterLayout = true;
-        return pluginRenderer.isComposited();
-    }
-
-    // Don't go into compositing mode if height or width are zero, or size is 1x1.
-    IntRect contentBox = snappedIntRect(pluginRenderer.contentBoxRect());
-    return (contentBox.height() * contentBox.width() > 1);
-}
-    
 bool RenderLayerCompositor::requiresCompositingForFrame(RenderLayerModelObject& renderer, RequiresCompositingData& queryData) const
 {
     if (!is<RenderWidget>(renderer))

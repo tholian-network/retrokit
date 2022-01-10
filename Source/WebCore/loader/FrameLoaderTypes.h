@@ -136,12 +136,12 @@ enum class NavigationType : uint8_t {
 enum class ShouldOpenExternalURLsPolicy : uint8_t {
     ShouldNotAllow,
     ShouldAllowExternalSchemesButNotAppLinks,
-    ShouldAllow,
+    ShouldAllow
 };
 
 enum class InitiatedByMainFrame : uint8_t {
     Yes,
-    Unknown,
+    Unknown
 };
 
 enum class ClearProvisionalItem : bool {
@@ -157,8 +157,7 @@ enum class StopLoadingPolicy {
 enum class ObjectContentType : uint8_t {
     None,
     Image,
-    Frame,
-    PlugIn,
+    Frame
 };
 
 enum class UnloadEventPolicy {
@@ -170,7 +169,7 @@ enum class UnloadEventPolicy {
 enum class BrowsingContextGroupSwitchDecision : uint8_t {
     StayInGroup,
     NewSharedGroup,
-    NewIsolatedGroup,
+    NewIsolatedGroup
 };
 
 // Passed to FrameLoader::urlSelected() and ScriptController::executeIfJavaScriptURL()

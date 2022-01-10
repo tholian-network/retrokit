@@ -420,7 +420,6 @@ UIProcess/Automation/WebAutomationSession.cpp @no-unify
 UIProcess/Downloads/DownloadProxy.cpp
 UIProcess/Downloads/DownloadProxyMap.cpp
 
-// TODO: This file should be "unified" once GTK's PluginProcess2 is removed.
 UIProcess/Launcher/ProcessLauncher.cpp @no-unify
 
 UIProcess/Network/NetworkProcessProxy.cpp

@@ -261,22 +261,6 @@ AppleMailPaginationQuirkEnabled:
     WebCore:
       default: false
 
-ArtificialPluginInitializationDelayEnabled:
-  type: bool
-  webcoreBinding: none
-  exposed: [ WebKit ]
-  defaultValue:
-    WebKit:
-      default: false
-
-AsynchronousPluginInitializationEnabled:
-  type: bool
-  webcoreBinding: none
-  exposed: [ WebKit ]
-  defaultValue:
-    WebKit:
-      default: false
-
 AsynchronousSpellCheckingEnabled:
   type: bool
   defaultValue:

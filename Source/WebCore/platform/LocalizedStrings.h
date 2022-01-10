@@ -300,9 +300,6 @@ namespace WebCore {
 #endif // USE(CF)
 #endif // ENABLE(VIDEO)
 
-    String snapshottedPlugInLabelTitle();
-    String snapshottedPlugInLabelSubtitle();
-
 #if ENABLE(WEB_CRYPTO)
     String webCryptoMasterKeyKeychainLabel(const String& localizedApplicationName);
     String webCryptoMasterKeyKeychainComment();

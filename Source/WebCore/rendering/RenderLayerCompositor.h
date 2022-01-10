@@ -57,7 +57,6 @@ enum class CompositingReason {
     Transform3D                            = 1 << 0,
     Video                                  = 1 << 1,
     Canvas                                 = 1 << 2,
-    Plugin                                 = 1 << 3,
     IFrame                                 = 1 << 4,
     BackfaceVisibilityHidden               = 1 << 5,
     ClipsCompositingDescendants            = 1 << 6,
@@ -499,7 +498,6 @@ private:
     bool requiresCompositingForModel(RenderLayerModelObject&) const;
 
     // Layout-dependent
-    bool requiresCompositingForPlugin(RenderLayerModelObject&, RequiresCompositingData&) const;
     bool requiresCompositingForFrame(RenderLayerModelObject&, RequiresCompositingData&) const;
     bool requiresCompositingForScrollableFrame(RequiresCompositingData&) const;
     bool requiresCompositingForPosition(RenderLayerModelObject&, const RenderLayer&, RequiresCompositingData&) const;

@@ -30,14 +30,6 @@
 
 namespace WebKit {
 
-void WebContextClient::plugInAutoStartOriginHashesChanged(WebProcessPool* processPool)
-{
-    if (!m_client.plugInAutoStartOriginHashesChanged)
-        return;
-
-    m_client.plugInAutoStartOriginHashesChanged(toAPI(processPool), m_client.base.clientInfo);
-}
-
 void WebContextClient::networkProcessDidCrash(WebProcessPool* processPool)
 {
     if (!m_client.networkProcessDidCrash)

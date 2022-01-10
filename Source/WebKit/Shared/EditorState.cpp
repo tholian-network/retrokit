@@ -43,7 +43,6 @@ void EditorState::encode(IPC::Encoder& encoder) const
     encoder << isContentEditable;
     encoder << isContentRichlyEditable;
     encoder << isInPasswordField;
-    encoder << isInPlugin;
     encoder << hasComposition;
     encoder << triggeredByAccessibilitySelectionChange;
     encoder << isMissingPostLayoutData;
@@ -78,9 +77,6 @@ bool EditorState::decode(IPC::Decoder& decoder, EditorState& result)
         return false;
 
     if (!decoder.decode(result.isInPasswordField))
-        return false;
-
-    if (!decoder.decode(result.isInPlugin))
         return false;
 
     if (!decoder.decode(result.hasComposition))
@@ -281,8 +277,6 @@ TextStream& operator<<(TextStream& ts, const EditorState& editorState)
         ts.dumpProperty("isContentRichlyEditable", editorState.isContentRichlyEditable);
     if (editorState.isInPasswordField)
         ts.dumpProperty("isInPasswordField", editorState.isInPasswordField);
-    if (editorState.isInPlugin)
-        ts.dumpProperty("isInPlugin", editorState.isInPlugin);
     if (editorState.hasComposition)
         ts.dumpProperty("hasComposition", editorState.hasComposition);
     if (editorState.triggeredByAccessibilitySelectionChange)

@@ -488,23 +488,6 @@ void WKContextSetJavaScriptGarbageCollectorTimerEnabled(WKContextRef contextRef,
     WebKit::toImpl(contextRef)->setJavaScriptGarbageCollectorTimerEnabled(enable);
 }
 
-WKDictionaryRef WKContextCopyPlugInAutoStartOriginHashes(WKContextRef)
-{
-    return nullptr;
-}
-
-void WKContextSetPlugInAutoStartOriginHashes(WKContextRef, WKDictionaryRef)
-{
-}
-
-void WKContextSetPlugInAutoStartOriginsFilteringOutEntriesAddedAfterTime(WKContextRef, WKDictionaryRef, double)
-{
-}
-
-void WKContextSetPlugInAutoStartOrigins(WKContextRef, WKArrayRef)
-{
-}
-
 void WKContextSetInvalidMessageFunction(WKContextInvalidMessageFunction invalidMessageFunction)
 {
     WebKit::WebProcessPool::setInvalidMessageCallback(invalidMessageFunction);

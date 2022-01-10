@@ -253,8 +253,6 @@ Protocol::ErrorStringOr<Ref<Protocol::LayerTree::CompositingReasons>> InspectorL
         compositingReasons->setVideo(true);
     else if (reasons.contains(CompositingReason::Canvas))
         compositingReasons->setCanvas(true);
-    else if (reasons.contains(CompositingReason::Plugin))
-        compositingReasons->setPlugin(true);
     else if (reasons.contains(CompositingReason::IFrame))
         compositingReasons->setIFrame(true);
     else if (reasons.contains(CompositingReason::Model))

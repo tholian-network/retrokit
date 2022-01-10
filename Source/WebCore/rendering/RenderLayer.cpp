@@ -5671,7 +5671,7 @@ TextStream& operator<<(TextStream& ts, const RenderLayer::ClipRectsContext& cont
     ts.dumpProperty("root layer:", context.rootLayer);
     ts.dumpProperty("type:", context.clipRectsType);
     ts.dumpProperty("overflow-clip:", context.respectOverflowClip == IgnoreOverflowClip ? "ignore" : "respect");
-    
+
     return ts;
 }
 
@@ -5846,7 +5846,7 @@ static void outputPaintOrderTreeRecursive(TextStream& stream, const WebCore::Ren
     if (layer.isComposited()) {
         auto& backing = *layer.backing();
         stream << " (layerID " << backing.graphicsLayer()->primaryLayerID() << ")";
-        
+
         if (layer.indirectCompositingReason() != WebCore::IndirectCompositingReason::None)
             stream << " " << layer.indirectCompositingReason();
 

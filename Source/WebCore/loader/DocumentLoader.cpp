@@ -369,7 +369,7 @@ void DocumentLoader::stopLoading()
         if (isLoadingMainResource()) {
             // Stop the main resource loader and let it send the cancelled message.
             cancelMainResourceLoad(frameLoader->cancelledError(m_request));
-        } else if (!m_subresourceLoaders.isEmpty() || !m_plugInStreamLoaders.isEmpty()) {
+        } else if (!m_subresourceLoaders.isEmpty()) {
             // The main resource loader already finished loading. Set the cancelled error on the
             // document and let the subresourceLoaders and pluginLoaders send individual cancelled messages below.
             setMainDocumentError(frameLoader->cancelledError(m_request));
@@ -385,10 +385,9 @@ void DocumentLoader::stopLoading()
     // in unexpected side effects such as erroneous event dispatch. ( http://webkit.org/b/117112 )
     if (Document* document = this->document())
         document->cancelParsing();
-    
+
     stopLoadingSubresources();
-    stopLoadingPlugIns();
-    
+
     m_isStopping = false;
 }
 
@@ -408,7 +407,7 @@ bool DocumentLoader::isLoading() const
     // http/tests/security/feed-urls-from-remote.html to timeout on Mac WK1
     // see http://webkit.org/b/110554 and http://webkit.org/b/110401
 
-    return isLoadingMainResource() || !m_subresourceLoaders.isEmpty() || !m_plugInStreamLoaders.isEmpty();
+    return isLoadingMainResource() || !m_subresourceLoaders.isEmpty();
 }
 
 void DocumentLoader::notifyFinished(CachedResource& resource, const NetworkLoadMetrics& metrics)
@@ -1360,15 +1359,14 @@ void DocumentLoader::setupForReplace()
         return;
 
     frameLoader()->client().willReplaceMultipartContent();
-    
+
     maybeFinishLoadingMultipartContent();
     maybeCreateArchive();
     m_writer.end();
     frameLoader()->setReplacing();
     m_gotFirstByte = false;
-    
+
     stopLoadingSubresources();
-    stopLoadingPlugIns();
 #if ENABLE(WEB_ARCHIVE) || ENABLE(MHTML)
     clearArchiveResources();
 #endif
@@ -1857,7 +1855,6 @@ void DocumentLoader::setDefersLoading(bool defers)
         mainResourceLoader()->setDefersLoading(defers);
 
     setAllDefersLoading(m_subresourceLoaders, defers);
-    setAllDefersLoading(m_plugInStreamLoaders, defers);
     if (!defers)
         deliverSubstituteResourcesAfterDelay();
 }
@@ -1866,11 +1863,6 @@ void DocumentLoader::setMainResourceDataBufferingPolicy(DataBufferingPolicy data
 {
     if (m_mainResource)
         m_mainResource->setDataBufferingPolicy(dataBufferingPolicy);
-}
-
-void DocumentLoader::stopLoadingPlugIns()
-{
-    cancelAll(m_plugInStreamLoaders);
 }
 
 void DocumentLoader::stopLoadingSubresources()
@@ -1927,23 +1919,6 @@ void DocumentLoader::removeSubresourceLoader(LoadCompletionType type, ResourceLo
     checkLoadComplete();
     if (m_frame)
         m_frame->loader().subresourceLoadDone(type);
-}
-
-void DocumentLoader::addPlugInStreamLoader(ResourceLoader& loader)
-{
-    ASSERT(loader.identifier());
-    ASSERT(!m_plugInStreamLoaders.contains(loader.identifier()));
-
-    m_plugInStreamLoaders.add(loader.identifier(), &loader);
-}
-
-void DocumentLoader::removePlugInStreamLoader(ResourceLoader& loader)
-{
-    ASSERT(loader.identifier());
-    ASSERT(&loader == m_plugInStreamLoaders.get(loader.identifier()));
-
-    m_plugInStreamLoaders.remove(loader.identifier());
-    checkLoadComplete();
 }
 
 bool DocumentLoader::isMultipartReplacingLoad() const

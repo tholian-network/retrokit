@@ -52,8 +52,6 @@ enum {
 typedef uint32_t WKCacheModel;
 
 // Context Client
-typedef void (*WKContextPlugInAutoStartOriginHashesChangedCallback)(WKContextRef context, const void *clientInfo);
-typedef void (*WKContextPlugInInformationBecameAvailableCallback)(WKContextRef context, WKArrayRef plugIn, const void *clientInfo);
 typedef WKDataRef (*WKContextCopyWebCryptoMasterKeyCallback)(WKContextRef context, const void *clientInfo);
 
 typedef void (*WKContextChildProcessDidCrashCallback)(WKContextRef context, const void *clientInfo);
@@ -70,18 +68,14 @@ typedef struct WKContextClientV0 {
     WKContextClientBase                                                 base;
 
     // Version 0.
-    WKContextPlugInAutoStartOriginHashesChangedCallback                 plugInAutoStartOriginHashesChanged;
     WKContextNetworkProcessDidCrashCallback                             networkProcessDidCrash;
-    WKContextPlugInInformationBecameAvailableCallback                   plugInInformationBecameAvailable;
 } WKContextClientV0;
 
 typedef struct WKContextClientV1 {
     WKContextClientBase                                                 base;
 
     // Version 0.
-    WKContextPlugInAutoStartOriginHashesChangedCallback                 plugInAutoStartOriginHashesChanged;
     WKContextNetworkProcessDidCrashCallback                             networkProcessDidCrash;
-    WKContextPlugInInformationBecameAvailableCallback                   plugInInformationBecameAvailable;
 
     // Version 1.
     void                                                                (*copyWebCryptoMasterKey_unavailable)(void);
@@ -91,9 +85,7 @@ typedef struct WKContextClientV2 {
     WKContextClientBase                                                 base;
 
     // Version 0.
-    WKContextPlugInAutoStartOriginHashesChangedCallback                 plugInAutoStartOriginHashesChanged;
     WKContextNetworkProcessDidCrashCallback                             networkProcessDidCrash;
-    WKContextPlugInInformationBecameAvailableCallback                   plugInInformationBecameAvailable;
 
     // Version 1.
     void                                                                (*copyWebCryptoMasterKey_unavailable)(void);
@@ -104,9 +96,7 @@ typedef struct WKContextClientV3 {
     WKContextClientBase                                                 base;
 
     // Version 0.
-    WKContextPlugInAutoStartOriginHashesChangedCallback                 plugInAutoStartOriginHashesChanged;
     WKContextNetworkProcessDidCrashCallback                             networkProcessDidCrash;
-    WKContextPlugInInformationBecameAvailableCallback                   plugInInformationBecameAvailable;
 
     // Version 1.
     void                                                                (*copyWebCryptoMasterKey_unavailable)(void);
@@ -181,12 +171,6 @@ WK_EXPORT bool WKContextJavaScriptConfigurationFileEnabled(WKContextRef context)
 WK_EXPORT void WKContextSetJavaScriptConfigurationFileEnabled(WKContextRef context, bool enable);
 WK_EXPORT void WKContextGarbageCollectJavaScriptObjects(WKContextRef context);
 WK_EXPORT void WKContextSetJavaScriptGarbageCollectorTimerEnabled(WKContextRef context, bool enable);
-
-WK_EXPORT WKDictionaryRef WKContextCopyPlugInAutoStartOriginHashes(WKContextRef context);
-WK_EXPORT void WKContextSetPlugInAutoStartOriginHashes(WKContextRef context, WKDictionaryRef dictionary);
-WK_EXPORT void WKContextSetPlugInAutoStartOrigins(WKContextRef contextRef, WKArrayRef arrayRef);
-WK_EXPORT void WKContextSetPlugInAutoStartOriginsFilteringOutEntriesAddedAfterTime(WKContextRef contextRef, WKDictionaryRef dictionaryRef, double time);
-WK_EXPORT void WKContextRefreshPlugIns(WKContextRef context);
 
 WK_EXPORT void WKContextSetCustomWebContentServiceBundleIdentifier(WKContextRef contextRef, WKStringRef name);
 

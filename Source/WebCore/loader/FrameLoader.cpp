@@ -2169,8 +2169,6 @@ void FrameLoader::transitionToCommitted(CachedPage* cachedPage)
 
     if (m_documentLoader)
         m_documentLoader->stopLoadingSubresources();
-    if (m_documentLoader)
-        m_documentLoader->stopLoadingPlugIns();
 
     // Setting our document loader invokes the unload event handler of our child frames.
     // Script can do anything. If the script initiates a new load, we need to abandon the

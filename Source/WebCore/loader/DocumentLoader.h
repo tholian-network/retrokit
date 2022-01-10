@@ -292,7 +292,6 @@ public:
     bool isLoadingMainResource() const { return m_loadingMainResource; }
     bool isLoadingMultipartContent() const { return m_isLoadingMultipartContent; }
 
-    void stopLoadingPlugIns();
     void stopLoadingSubresources();
     WEBCORE_EXPORT void stopLoadingAfterXFrameOptionsOrContentSecurityPolicyDenied(unsigned long identifier, const ResourceResponse&);
 
@@ -334,13 +333,11 @@ public:
 
     void addSubresourceLoader(ResourceLoader*);
     void removeSubresourceLoader(LoadCompletionType, ResourceLoader*);
-    void addPlugInStreamLoader(ResourceLoader&);
-    void removePlugInStreamLoader(ResourceLoader&);
 
     void subresourceLoaderFinishedLoadingOnePart(ResourceLoader*);
 
     void setDeferMainResourceDataLoad(bool defer) { m_deferMainResourceDataLoad = defer; }
-    
+
     void didTellClientAboutLoad(const String& url);
     bool haveToldClientAboutLoad(const String& url) { return m_resourcesClientKnowsAbout.contains(url); }
     void recordMemoryCacheLoadForFutureClientNotification(const ResourceRequest&);
@@ -527,8 +524,7 @@ private:
     CachedResourceHandle<CachedRawResource> m_mainResource;
     ResourceLoaderMap m_subresourceLoaders;
     ResourceLoaderMap m_multipartSubresourceLoaders;
-    ResourceLoaderMap m_plugInStreamLoaders;
-    
+
     mutable DocumentWriter m_writer;
 
     // A reference to actual request used to create the data source.
@@ -542,7 +538,7 @@ private:
     // A copy of the original request used to create the data source.
     // We have to copy the request because requests are mutable.
     ResourceRequest m_originalRequestCopy;
-    
+
     // The 'working' request. It may be mutated
     // several times from the original request to include additional
     // headers, cookie information, canonicalization and redirects.
@@ -583,7 +579,7 @@ private:
     bool m_stopRecordingResponses { false };
 
     std::optional<CrossOriginOpenerPolicyEnforcementResult> m_currentCoopEnforcementResult;
-    
+
     typedef HashMap<RefPtr<ResourceLoader>, RefPtr<SubstituteResource>> SubstituteResourceMap;
     SubstituteResourceMap m_pendingSubstituteResources;
     Timer m_substituteResourceDeliveryTimer;
@@ -596,7 +592,7 @@ private:
 
     HashSet<String> m_resourcesClientKnowsAbout;
     Vector<ResourceRequest> m_resourcesLoadedFromMemoryCacheForClientNotification;
-    
+
     String m_clientRedirectSourceForHistory;
     bool m_didCreateGlobalHistoryEntry { false };
 

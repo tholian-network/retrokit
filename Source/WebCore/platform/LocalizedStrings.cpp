@@ -1135,16 +1135,6 @@ String addAudioTrackKindCommentarySuffix(const String& text)
 
 #endif // ENABLE(VIDEO)
 
-String snapshottedPlugInLabelTitle()
-{
-    return WEB_UI_STRING("Snapshotted Plug-In", "Title of the label to show on a snapshotted plug-in");
-}
-
-String snapshottedPlugInLabelSubtitle()
-{
-    return WEB_UI_STRING("Click to restart", "Subtitle of the label to show on a snapshotted plug-in");
-}
-
 #if ENABLE(WEB_CRYPTO)
 
 String webCryptoMasterKeyKeychainLabel(const String& localizedApplicationName)

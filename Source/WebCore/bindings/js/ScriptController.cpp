@@ -474,16 +474,6 @@ void ScriptController::disconnectPlatformScriptObjects()
 
 #endif
 
-void ScriptController::cleanupScriptObjectsForPlugin(void* nativeHandle)
-{
-    auto it = m_rootObjects.find(nativeHandle);
-    if (it == m_rootObjects.end())
-        return;
-
-    it->value->invalidate();
-    m_rootObjects.remove(it);
-}
-
 void ScriptController::clearScriptObjects()
 {
     JSLockHolder lock(commonVM());

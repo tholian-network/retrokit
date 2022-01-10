@@ -145,8 +145,6 @@ public:
     void namedItemRemoved(HTMLDocument*, const AtomString&) { }
 
     void clearScriptObjects();
-    WEBCORE_EXPORT void cleanupScriptObjectsForPlugin(void*);
-
     void updatePlatformScriptObjects();
 
     WEBCORE_EXPORT JSC::Bindings::RootObject* bindingRootObject();

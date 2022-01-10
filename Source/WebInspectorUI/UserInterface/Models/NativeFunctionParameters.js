@@ -1224,19 +1224,6 @@ WI.NativePrototypeFunctionParameters = {
         __proto__: null,
     },
 
-    Plugin: {
-        item: "[index]",
-        namedItem: "[name]",
-        __proto__: null,
-    },
-
-    PluginArray: {
-        item: "[index]",
-        namedItem: "[name]",
-        refresh: "[reload]",
-        __proto__: null,
-    },
-
     PositionCallback: {
         handleEvent: "position",
         __proto__: null,
