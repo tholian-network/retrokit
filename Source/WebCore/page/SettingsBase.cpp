@@ -255,17 +255,6 @@ void SettingsBase::imageLoadingSettingsTimerFired()
     }
 }
 
-void SettingsBase::iceCandidateFilteringEnabledChanged()
-{
-    if (!m_page)
-        return;
-
-    if (m_page->settings().iceCandidateFilteringEnabled())
-        m_page->enableICECandidateFiltering();
-    else
-        m_page->disableICECandidateFiltering();
-}
-
 #if ENABLE(TEXT_AUTOSIZING)
 
 void SettingsBase::shouldEnableTextAutosizingBoostChanged()

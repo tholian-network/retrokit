@@ -664,13 +664,6 @@ bool MediaStreamTrack::isCapturingAudio() const
     return !ended() && !muted();
 }
 
-#if !RELEASE_LOG_DISABLED
-WTFLogChannel& MediaStreamTrack::logChannel() const
-{
-    return LogWebRTC;
-}
-#endif
-
 } // namespace WebCore
 
 #endif // ENABLE(MEDIA_STREAM)

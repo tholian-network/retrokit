@@ -43,18 +43,6 @@ if (ENABLE_VIDEO OR ENABLE_WEB_AUDIO)
         platform/graphics/gstreamer/mse/TrackQueue.cpp
         platform/graphics/gstreamer/mse/WebKitMediaSourceGStreamer.cpp
 
-        platform/mediastream/libwebrtc/LibWebRTCAudioModule.cpp
-
-        platform/mediastream/libwebrtc/gstreamer/GStreamerVideoCommon.cpp
-        platform/mediastream/libwebrtc/gstreamer/GStreamerVideoDecoderFactory.cpp
-        platform/mediastream/libwebrtc/gstreamer/GStreamerVideoEncoderFactory.cpp
-        platform/mediastream/libwebrtc/gstreamer/GStreamerVideoFrameLibWebRTC.cpp
-        platform/mediastream/libwebrtc/gstreamer/LibWebRTCProviderGStreamer.cpp
-        platform/mediastream/libwebrtc/gstreamer/RealtimeIncomingAudioSourceLibWebRTC.cpp
-        platform/mediastream/libwebrtc/gstreamer/RealtimeIncomingVideoSourceLibWebRTC.cpp
-        platform/mediastream/libwebrtc/gstreamer/RealtimeOutgoingAudioSourceLibWebRTC.cpp
-        platform/mediastream/libwebrtc/gstreamer/RealtimeOutgoingVideoSourceLibWebRTC.cpp
-
         platform/mediastream/gstreamer/GStreamerAudioCaptureSource.cpp
         platform/mediastream/gstreamer/GStreamerAudioCapturer.cpp
         platform/mediastream/gstreamer/GStreamerCaptureDeviceManager.cpp
@@ -74,10 +62,6 @@ if (ENABLE_VIDEO OR ENABLE_WEB_AUDIO)
         platform/graphics/gstreamer/GStreamerCommon.h
         platform/graphics/gstreamer/GUniquePtrGStreamer.h
         platform/graphics/gstreamer/MediaPlayerRequestInstallMissingPluginsCallback.h
-
-        platform/mediastream/libwebrtc/gstreamer/GStreamerVideoDecoderFactory.h
-        platform/mediastream/libwebrtc/gstreamer/GStreamerVideoEncoderFactory.h
-        platform/mediastream/libwebrtc/gstreamer/LibWebRTCProviderGStreamer.h
     )
 
     if (USE_GSTREAMER_FULL)
@@ -145,7 +129,7 @@ if (ENABLE_VIDEO)
         )
     endif ()
 
-    if (ENABLE_MEDIA_STREAM OR ENABLE_WEB_RTC)
+    if (ENABLE_MEDIA_STREAM)
         list(APPEND WebCore_SYSTEM_INCLUDE_DIRECTORIES
             ${GSTREAMER_CODECPARSERS_INCLUDE_DIRS}
         )

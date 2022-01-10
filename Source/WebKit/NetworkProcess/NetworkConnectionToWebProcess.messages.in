@@ -88,11 +88,6 @@ messages -> NetworkConnectionToWebProcess LegacyReceiver {
     CloseSWContextConnection()
 #endif
 
-    CreateRTCProvider() -> () Async
-#if ENABLE(WEB_RTC)
-    ConnectToRTCDataChannelRemoteSource(struct WebCore::RTCDataChannelIdentifier source, struct WebCore::RTCDataChannelIdentifier handler) -> (std::optional<bool> result) Async
-#endif
-
     UpdateQuotaBasedOnSpaceUsageForTesting(struct WebCore::ClientOrigin origin)
     CreateNewMessagePortChannel(struct WebCore::MessagePortIdentifier port1, struct WebCore::MessagePortIdentifier port2)
     EntangleLocalPortInThisProcessToRemote(struct WebCore::MessagePortIdentifier local, struct WebCore::MessagePortIdentifier remote)

@@ -371,7 +371,6 @@ Protocol::ErrorStringOr<void> InspectorPageAgent::disable()
 
     auto& inspectedPageSettings = m_inspectedPage.settings();
     inspectedPageSettings.setAuthorAndUserStylesEnabledInspectorOverride(std::nullopt);
-    inspectedPageSettings.setICECandidateFilteringEnabledInspectorOverride(std::nullopt);
     inspectedPageSettings.setImagesEnabledInspectorOverride(std::nullopt);
     inspectedPageSettings.setMediaCaptureRequiresSecureConnectionInspectorOverride(std::nullopt);
     inspectedPageSettings.setMockCaptureDevicesEnabledInspectorOverride(std::nullopt);
@@ -379,7 +378,6 @@ Protocol::ErrorStringOr<void> InspectorPageAgent::disable()
     inspectedPageSettings.setScriptEnabledInspectorOverride(std::nullopt);
     inspectedPageSettings.setShowDebugBordersInspectorOverride(std::nullopt);
     inspectedPageSettings.setShowRepaintCounterInspectorOverride(std::nullopt);
-    inspectedPageSettings.setWebRTCEncryptionEnabledInspectorOverride(std::nullopt);
     inspectedPageSettings.setWebSecurityEnabledInspectorOverride(std::nullopt);
 
     m_client->setDeveloperPreferenceOverride(InspectorClient::DeveloperPreference::PrivateClickMeasurementDebugModeEnabled, std::nullopt);
@@ -439,10 +437,6 @@ Protocol::ErrorStringOr<void> InspectorPageAgent::overrideSetting(Protocol::Page
         inspectedPageSettings.setAuthorAndUserStylesEnabledInspectorOverride(value);
         return { };
 
-    case Protocol::Page::Setting::ICECandidateFilteringEnabled:
-        inspectedPageSettings.setICECandidateFilteringEnabledInspectorOverride(value);
-        return { };
-
     case Protocol::Page::Setting::ITPDebugModeEnabled:
         m_client->setDeveloperPreferenceOverride(InspectorClient::DeveloperPreference::ITPDebugModeEnabled, value);
         return { };
@@ -474,10 +468,6 @@ Protocol::ErrorStringOr<void> InspectorPageAgent::overrideSetting(Protocol::Page
 
     case Protocol::Page::Setting::ShowRepaintCounter:
         inspectedPageSettings.setShowRepaintCounterInspectorOverride(value);
-        return { };
-
-    case Protocol::Page::Setting::WebRTCEncryptionEnabled:
-        inspectedPageSettings.setWebRTCEncryptionEnabledInspectorOverride(value);
         return { };
 
     case Protocol::Page::Setting::WebSecurityEnabled:

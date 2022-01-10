@@ -117,8 +117,6 @@ namespace WebCore {
     M(Viewports) \
     M(WebAudio) \
     M(WebGL) \
-    M(WebRTC) \
-    M(WebRTCStats) \
     M(XR) \
     M(WheelEventTestMonitor) \
 

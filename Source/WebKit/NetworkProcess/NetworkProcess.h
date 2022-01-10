@@ -385,10 +385,6 @@ public:
     void clearAppPrivacyReportTestingData(PAL::SessionID, CompletionHandler<void()>&&);
 #endif
 
-#if ENABLE(WEB_RTC)
-    RTCDataChannelRemoteManagerProxy& rtcDataChannelProxy();
-#endif
-
 private:
     void platformInitializeNetworkProcess(const NetworkProcessCreationParameters&);
 
@@ -584,7 +580,7 @@ private:
     HashMap<PAL::SessionID, RefPtr<WebIDBServer>> m_webIDBServers;
     bool m_shouldSuspendIDBServers { false };
     uint64_t m_suspensionIdentifier { 0 };
-    
+
 #if ENABLE(SERVICE_WORKER)
     struct ServiceWorkerInfo {
         String databasePath;
@@ -592,10 +588,6 @@ private:
     };
     HashMap<PAL::SessionID, ServiceWorkerInfo> m_serviceWorkerInfo;
     HashMap<PAL::SessionID, std::unique_ptr<WebCore::SWServer>> m_swServers;
-#endif
-    
-#if ENABLE(WEB_RTC)
-    RefPtr<RTCDataChannelRemoteManagerProxy> m_rtcDataChannelProxy;
 #endif
 
     Lock m_sessionStorageQuotaManagersLock;

@@ -736,15 +736,6 @@ enum AutoplayPolicy {
 
     [Conditional=WEB_AUDIO] undefined useMockAudioDestinationCocoa();
 
-    [Conditional=WEB_RTC] undefined emulateRTCPeerConnectionPlatformEvent(RTCPeerConnection connection, DOMString action);
-    [Conditional=WEB_RTC] undefined useMockRTCPeerConnectionFactory(DOMString testCase);
-    [Conditional=WEB_RTC] undefined setICECandidateFiltering(boolean enabled);
-    [Conditional=WEB_RTC] undefined setEnumeratingAllNetworkInterfacesEnabled(boolean enabled);
-    [Conditional=WEB_RTC] undefined stopPeerConnection(RTCPeerConnection connection);
-    [Conditional=WEB_RTC] undefined clearPeerConnectionFactory();
-    [Conditional=WEB_RTC] undefined setEnableWebRTCEncryption(boolean enabled);
-    [Conditional=WEB_RTC] undefined setUseDTLS10(boolean use);
-
     [Conditional=VIDEO] undefined simulateSystemSleep();
     [Conditional=VIDEO] undefined simulateSystemWake();
     [Conditional=VIDEO] boolean isPlayerVisibleInViewport(HTMLMediaElement element);
@@ -827,15 +818,6 @@ enum AutoplayPolicy {
     undefined setPageIsFocusedAndActive(boolean isFocused);
     undefined setPageIsInWindow(boolean isInWindow);
     boolean isPageActive();
-
-    [Conditional=WEB_RTC] undefined setH264HardwareEncoderAllowed(boolean allowed);
-    [Conditional=WEB_RTC] undefined applyRotationForOutgoingVideoSources(RTCPeerConnection connection);
-    [Conditional=WEB_RTC] undefined setWebRTCH265Support(boolean allowed);
-    [Conditional=WEB_RTC] undefined setWebRTCVP9Support(boolean supportVP9Profile0, boolean supportVP9Profile2);
-    [Conditional=WEB_RTC] undefined setWebRTCVP9VTBSupport(boolean allowed);
-    [Conditional=WEB_RTC] undefined setSFrameCounter(RTCRtpSFrameTransform transform, DOMString counter);
-    [Conditional=WEB_RTC] unsigned long long sframeCounter(RTCRtpSFrameTransform transform);
-    [Conditional=WEB_RTC] unsigned long long sframeKeyId(RTCRtpSFrameTransform transform);
 
     [Conditional=MEDIA_STREAM] undefined setMockAudioTrackChannelNumber(MediaStreamTrack track, unsigned short count);
     [Conditional=MEDIA_STREAM] undefined setShouldInterruptAudioOnPageVisibilityChange(boolean shouldInterrupt);

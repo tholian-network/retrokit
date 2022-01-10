@@ -240,20 +240,6 @@ FrameFlatteningEnabled:
       "PLATFORM(IOS_FAMILY)": true
       default: false
 
-ICECandidateFilteringEnabled:
-  type: bool
-  webcoreOnChange: iceCandidateFilteringEnabledChanged
-  inspectorOverride: true
-  humanReadableName: "Enable ICE Candidate Filtering"
-  humanReadableDescription: "Enable ICE Candidate Filtering"
-  defaultValue:
-    WebKitLegacy:
-      default: true
-    WebKit:
-      default: true
-    WebCore:
-      default: true
-
 IOSFormControlRefreshEnabled:
   type: bool
   humanReadableName: "iOS Form Control Refresh"
@@ -754,58 +740,6 @@ WebAPIStatisticsEnabled:
       default: false
     WebKit:
       default: false
-
-# FIXME: Is this implemented for WebKitLegacy? If not, this should be excluded from WebKitLegacy entirely.
-WebRTCDTMFEnabled:
-  type: bool
-  humanReadableName: "WebRTC DTMF"
-  humanReadableDescription: "Enable WebRTC DTMF"
-  webcoreBinding: RuntimeEnabledFeatures
-  condition: ENABLE(WEB_RTC)
-  defaultValue:
-    WebKitLegacy:
-      default: true
-    WebKit:
-      default: true
-
-# FIXME: Is this implemented for WebKitLegacy? If not, this should be excluded from WebKitLegacy entirely.
-WebRTCH264HardwareEncoderEnabled:
-  type: bool
-  humanReadableName: "WebRTC H264 Hardware encoder"
-  humanReadableDescription: "Enable H264 Hardware encoder"
-  webcoreBinding: none
-  condition: ENABLE(WEB_RTC)
-  defaultValue:
-    WebKitLegacy:
-      default: true
-    WebKit:
-      default: true
-
-# FIXME: Is this implemented for WebKitLegacy? If not, this should be excluded from WebKitLegacy entirely.
-WebRTCH264SimulcastEnabled:
-  type: bool
-  humanReadableName: "WebRTC H264 Simulcast"
-  humanReadableDescription: "Enable WebRTC H264 Simulcast"
-  webcoreBinding: RuntimeEnabledFeatures
-  condition: ENABLE(WEB_RTC)
-  defaultValue:
-    WebKitLegacy:
-      default: true
-    WebKit:
-      default: true
-
-# FIXME: Is this implemented for WebKitLegacy? If not, this should be excluded from WebKitLegacy entirely.
-WebRTCMDNSICECandidatesEnabled:
-  type: bool
-  humanReadableName: "WebRTC mDNS ICE candidates"
-  humanReadableDescription: "Enable WebRTC mDNS ICE candidates"
-  webcoreBinding: RuntimeEnabledFeatures
-  condition: ENABLE(WEB_RTC)
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      default: true
 
 WebSQLEnabled:
   type: bool

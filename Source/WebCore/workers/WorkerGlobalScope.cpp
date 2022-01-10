@@ -180,17 +180,6 @@ SocketProvider* WorkerGlobalScope::socketProvider()
     return m_socketProvider.get();
 }
 
-RefPtr<RTCDataChannelRemoteHandlerConnection> WorkerGlobalScope::createRTCDataChannelRemoteHandlerConnection()
-{
-    RefPtr<RTCDataChannelRemoteHandlerConnection> connection;
-    callOnMainThreadAndWait([workerThread = makeRef(thread()), &connection]() mutable {
-        connection = workerThread->workerLoaderProxy().createRTCDataChannelRemoteHandlerConnection();
-    });
-    ASSERT(connection);
-
-    return connection;
-}
-
 IDBClient::IDBConnectionProxy* WorkerGlobalScope::idbConnectionProxy()
 {
     return m_connectionProxy.get();

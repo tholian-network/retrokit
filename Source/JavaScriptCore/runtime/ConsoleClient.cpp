@@ -95,9 +95,6 @@ static void appendMessagePrefix(StringBuilder& builder, MessageSource source, Me
     case MessageSource::MediaSource:
         sourceString = "MEDIASOURCE"_s;
         break;
-    case MessageSource::WebRTC:
-        sourceString = "WEBRTC"_s;
-        break;
     case MessageSource::ITPDebug:
         sourceString = "ITPDEBUG"_s;
         break;

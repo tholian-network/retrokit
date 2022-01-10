@@ -27,9 +27,7 @@
 #include "NetworkProcessConnection.h"
 
 #include "DataReference.h"
-#include "LibWebRTCNetwork.h"
 #include "NetworkConnectionToWebProcessMessages.h"
-#include "RTCDataChannelRemoteManager.h"
 #include "StorageAreaMap.h"
 #include "StorageAreaMapMessages.h"
 #include "WebBroadcastChannelRegistry.h"
@@ -45,9 +43,6 @@
 #include "WebPage.h"
 #include "WebPageMessages.h"
 #include "WebProcess.h"
-#include "WebRTCMonitor.h"
-#include "WebRTCMonitorMessages.h"
-#include "WebRTCResolverMessages.h"
 #include "WebResourceLoaderMessages.h"
 #include "WebSWClientConnection.h"
 #include "WebSWClientConnectionMessages.h"
@@ -74,9 +69,6 @@ NetworkProcessConnection::NetworkProcessConnection(IPC::Connection::Identifier c
     , m_cookieAcceptPolicy(cookieAcceptPolicy)
 {
     m_connection->open();
-
-    if (LibWebRTCProvider::webRTCAvailable())
-        WebProcess::singleton().libWebRTCNetwork().setConnection(m_connection.copyRef());
 }
 
 NetworkProcessConnection::~NetworkProcessConnection()
@@ -114,35 +106,6 @@ void NetworkProcessConnection::didReceiveMessage(IPC::Connection& connection, IP
             storageAreaMap->didReceiveMessage(connection, decoder);
         return;
     }
-
-#if USE(LIBWEBRTC)
-    if (decoder.messageReceiverName() == Messages::WebRTCMonitor::messageReceiverName()) {
-        auto& network = WebProcess::singleton().libWebRTCNetwork();
-        if (network.isActive())
-            network.monitor().didReceiveMessage(connection, decoder);
-        else
-            RELEASE_LOG_ERROR(WebRTC, "Received WebRTCMonitor message while libWebRTCNetwork is not active");
-        return;
-    }
-    if (decoder.messageReceiverName() == Messages::WebRTCResolver::messageReceiverName()) {
-        auto& network = WebProcess::singleton().libWebRTCNetwork();
-        if (network.isActive())
-            network.resolver(makeObjectIdentifier<LibWebRTCResolverIdentifierType>(decoder.destinationID())).didReceiveMessage(connection, decoder);
-        else
-            RELEASE_LOG_ERROR(WebRTC, "Received WebRTCResolver message while libWebRTCNetwork is not active");
-        return;
-    }
-#endif
-#if ENABLE(WEB_RTC)
-    if (decoder.messageReceiverName() == Messages::WebMDNSRegister::messageReceiverName()) {
-        auto& network = WebProcess::singleton().libWebRTCNetwork();
-        if (network.isActive())
-            network.mdnsRegister().didReceiveMessage(connection, decoder);
-        else
-            RELEASE_LOG_ERROR(WebRTC, "Received WebMDNSRegister message while libWebRTCNetwork is not active");
-        return;
-    }
-#endif
 
     if (decoder.messageReceiverName() == Messages::WebIDBConnectionToServer::messageReceiverName()) {
         if (m_webIDBConnection)
@@ -299,12 +262,5 @@ void NetworkProcessConnection::broadcastConsoleMessage(MessageSource source, Mes
             frame->addConsoleMessage(source, level, message);
     }
 }
-
-#if ENABLE(WEB_RTC)
-void NetworkProcessConnection::connectToRTCDataChannelRemoteSource(WebCore::RTCDataChannelIdentifier localIdentifier, WebCore::RTCDataChannelIdentifier remoteIdentifier, CompletionHandler<void(std::optional<bool>)>&& callback)
-{
-    callback(RTCDataChannelRemoteManager::sharedManager().connectToRemoteSource(localIdentifier, remoteIdentifier));
-}
-#endif
 
 } // namespace WebKit

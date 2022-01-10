@@ -93,7 +93,6 @@ private:
     bool postTaskForModeToWorkerOrWorkletGlobalScope(ScriptExecutionContext::Task&&, const String& mode) final;
     void postTaskToLoader(ScriptExecutionContext::Task&&) final;
     RefPtr<CacheStorageConnection> createCacheStorageConnection() final;
-    RefPtr<RTCDataChannelRemoteHandlerConnection> createRTCDataChannelRemoteHandlerConnection() final;
 
     // WorkerDebuggerProxy
     void postMessageToDebugger(const String&) final;

@@ -691,23 +691,22 @@ public:
     IDBClient::IDBConnectionProxy* idbConnectionProxy() final;
     RefPtr<PermissionController> permissionController() final;
     SocketProvider* socketProvider() final;
-    RefPtr<RTCDataChannelRemoteHandlerConnection> createRTCDataChannelRemoteHandlerConnection() final;
 
     bool canNavigate(Frame* targetFrame, const URL& destinationURL = URL());
 
     bool usesStyleBasedEditability() const;
     void setHasElementUsingStyleBasedEditability();
-    
+
     virtual Ref<DocumentParser> createParser();
     DocumentParser* parser() const { return m_parser.get(); }
     ScriptableDocumentParser* scriptableDocumentParser() const;
-    
+
     bool printing() const { return m_printing; }
     void setPrinting(bool p) { m_printing = p; }
 
     bool paginatedForScreen() const { return m_paginatedForScreen; }
     void setPaginatedForScreen(bool p) { m_paginatedForScreen = p; }
-    
+
     bool paginated() const { return printing() || paginatedForScreen(); }
 
     void setCompatibilityMode(DocumentCompatibilityMode);

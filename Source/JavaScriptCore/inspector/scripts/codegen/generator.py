@@ -53,7 +53,6 @@ _ENUM_IDENTIFIER_RENAME_MAP = {
     'webgl2': 'WebGL2',  # Canvas.ContextType.webgl2
     'bitmaprenderer': 'BitmapRenderer',  # Canvas.ContextType.bitmaprenderer
     'mediasource': 'MediaSource',  # Console.ChannelSource.mediasource
-    'webrtc': 'WebRTC',  # Console.ChannelSource.webrtc
     'itp-debug': 'ITPDebug',  # Console.ChannelSource.itp-debug
     'webkit': 'WebKit',  # CPUProfiler.ThreadInfo.type
 }

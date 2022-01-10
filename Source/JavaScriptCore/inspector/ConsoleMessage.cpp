@@ -189,7 +189,6 @@ static Protocol::Console::ChannelSource messageSourceValue(MessageSource source)
     case MessageSource::ContentBlocker: return Protocol::Console::ChannelSource::ContentBlocker;
     case MessageSource::Media: return Protocol::Console::ChannelSource::Media;
     case MessageSource::MediaSource: return Protocol::Console::ChannelSource::MediaSource;
-    case MessageSource::WebRTC: return Protocol::Console::ChannelSource::WebRTC;
     case MessageSource::ITPDebug: return Protocol::Console::ChannelSource::ITPDebug;
     case MessageSource::PrivateClickMeasurement: return Protocol::Console::ChannelSource::PrivateClickMeasurement;
     case MessageSource::Other: return Protocol::Console::ChannelSource::Other;

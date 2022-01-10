@@ -1116,20 +1116,6 @@ RealtimeMediaSource::Observer::~Observer()
 {
 }
 
-#if !RELEASE_LOG_DISABLED
-void RealtimeMediaSource::setLogger(const Logger& newLogger, const void* newLogIdentifier)
-{
-    m_logger = &newLogger;
-    m_logIdentifier = newLogIdentifier;
-    ALWAYS_LOG(LOGIDENTIFIER, m_type, ", ", m_name, ", ", m_hashedID);
-}
-
-WTFLogChannel& RealtimeMediaSource::logChannel() const
-{
-    return LogWebRTC;
-}
-#endif
-
 String convertEnumerationToString(RealtimeMediaSource::Type enumerationValue)
 {
     static const NeverDestroyed<String> values[] = {

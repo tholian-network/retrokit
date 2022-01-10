@@ -112,7 +112,6 @@ WI.LogContentView = class LogContentView extends WI.ContentView
                 new WI.ScopeBarItem(WI.LogContentView.Scopes.AllChannels, WI.UIString("All"), {exclusive: true}),
                 new WI.ScopeBarItem(WI.LogContentView.Scopes.Media, WI.UIString("Media"), {className: "media"}),
                 new WI.ScopeBarItem(WI.LogContentView.Scopes.MediaSource, WI.UIString("MediaSource"), {className: "mediasource"}),
-                new WI.ScopeBarItem(WI.LogContentView.Scopes.WebRTC, WI.UIString("WebRTC"), {className: "webrtc"}),
             ];
 
             this._messageSourceBar = new WI.ScopeBar("message-channel-scope-bar", messageChannelBarItems, messageChannelBarItems[0]);
@@ -423,8 +422,6 @@ WI.LogContentView = class LogContentView extends WI.ContentView
         switch (source) {
         case WI.ConsoleMessage.MessageSource.Media:
             return WI.LogContentView.Scopes.Media;
-        case WI.ConsoleMessage.MessageSource.WebRTC:
-            return WI.LogContentView.Scopes.WebRTC;
         case WI.ConsoleMessage.MessageSource.MediaSource:
             return WI.LogContentView.Scopes.MediaSource;
         }
@@ -1274,7 +1271,6 @@ WI.LogContentView.Scopes = {
     AllChannels: "log-all-channels",
     Media: "log-media",
     MediaSource: "log-mediasource",
-    WebRTC: "log-webrtc",
 };
 
 WI.LogContentView.ItemWrapperStyleClassName = "console-item";

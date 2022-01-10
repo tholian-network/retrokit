@@ -30,7 +30,6 @@
 #include "AuxiliaryProcess.h"
 #include "SandboxExtension.h"
 #include "WebPageProxyIdentifier.h"
-#include <WebCore/LibWebRTCEnumTraits.h>
 #include <WebCore/Timer.h>
 #include <pal/SessionID.h>
 #include <wtf/Function.h>
@@ -86,9 +85,6 @@ public:
 
 #if ENABLE(MEDIA_STREAM) && PLATFORM(COCOA)
     WorkQueue& videoMediaStreamTrackRendererQueue();
-#endif
-#if USE(LIBWEBRTC) && PLATFORM(COCOA)
-    WorkQueue& libWebRTCCodecsQueue();
 #endif
 
 #if ENABLE(VP9)
@@ -170,9 +166,6 @@ private:
     RefPtr<WorkQueue> m_videoMediaStreamTrackRendererQueue;
 #endif
     uint64_t m_orientation { 0 };
-#endif
-#if USE(LIBWEBRTC) && PLATFORM(COCOA)
-    RefPtr<WorkQueue> m_libWebRTCCodecsQueue;
 #endif
 
     struct GPUSession {

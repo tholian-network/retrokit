@@ -109,8 +109,7 @@ void GStreamerCaptureDeviceManager::addDevice(GRefPtr<GstDevice>&& device)
     if (type == CaptureDevice::DeviceType::Camera && !deviceClass.startsWith("Video"))
         return;
 
-    // This isn't really a UID but should be good enough (libwebrtc
-    // itself does that at least for pulseaudio devices).
+    // This isn't really a UID but should be good enough
     GUniquePtr<char> deviceName(gst_device_get_display_name(device.get()));
     GST_INFO("Registering device %s", deviceName.get());
     gboolean isDefault = FALSE;

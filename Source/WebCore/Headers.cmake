@@ -1384,11 +1384,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/mediastream/VideoPreset.h
     platform/mediastream/WebAudioSourceProvider.h
 
-    platform/mediastream/libwebrtc/LibWebRTCEnumTraits.h
-    platform/mediastream/libwebrtc/LibWebRTCMacros.h
-    platform/mediastream/libwebrtc/LibWebRTCProvider.h
-    platform/mediastream/libwebrtc/LibWebRTCSocketIdentifier.h
-
     platform/mock/MediaPlaybackTargetMock.h
     platform/mock/MediaPlaybackTargetPickerMock.h
     platform/mock/MockMediaDevice.h

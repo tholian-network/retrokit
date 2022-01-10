@@ -36,8 +36,6 @@
 #include "GPUProcessMessages.h"
 #include "GPUProcessProxyMessages.h"
 #include "LayerHostingContext.h"
-#include "LibWebRTCCodecsProxy.h"
-#include "LibWebRTCCodecsProxyMessages.h"
 #include "Logging.h"
 #include "MediaOverridesForTesting.h"
 #include "RemoteAudioHardwareListenerProxy.h"
@@ -207,9 +205,6 @@ GPUConnectionToWebProcess::GPUConnectionToWebProcess(GPUProcess& gpuProcess, Web
 #endif
     , m_remoteMediaPlayerManagerProxy(makeUniqueRef<RemoteMediaPlayerManagerProxy>(*this))
     , m_sessionID(sessionID)
-#if PLATFORM(COCOA) && USE(LIBWEBRTC)
-    , m_libWebRTCCodecsProxy(LibWebRTCCodecsProxy::create(*this))
-#endif
 #if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
     , m_sampleBufferDisplayLayerManager(RemoteSampleBufferDisplayLayerManager::create(*this))
 #endif
@@ -244,9 +239,6 @@ GPUConnectionToWebProcess::~GPUConnectionToWebProcess()
 
 #if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
     m_sampleBufferDisplayLayerManager->close();
-#endif
-#if PLATFORM(COCOA) && USE(LIBWEBRTC)
-    m_libWebRTCCodecsProxy->close();
 #endif
 }
 
@@ -354,10 +346,6 @@ bool GPUConnectionToWebProcess::allowsExitUnderMemoryPressure() const
 #endif
 #if ENABLE(LEGACY_ENCRYPTED_MEDIA)
     if (m_legacyCdmFactoryProxy && !m_legacyCdmFactoryProxy->allowsExitUnderMemoryPressure())
-        return false;
-#endif
-#if PLATFORM(COCOA) && USE(LIBWEBRTC)
-    if (!m_libWebRTCCodecsProxy->allowsExitUnderMemoryPressure())
         return false;
 #endif
     return true;

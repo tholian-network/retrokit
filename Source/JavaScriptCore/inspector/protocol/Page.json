@@ -11,7 +11,6 @@
             "enum": [
                 "PrivateClickMeasurementDebugModeEnabled",
                 "AuthorAndUserStylesEnabled",
-                "ICECandidateFilteringEnabled",
                 "ITPDebugModeEnabled",
                 "ImagesEnabled",
                 "MediaCaptureRequiresSecureConnection",
@@ -20,7 +19,6 @@
                 "ScriptEnabled",
                 "ShowDebugBorders",
                 "ShowRepaintCounter",
-                "WebRTCEncryptionEnabled",
                 "WebSecurityEnabled"
             ]
         },

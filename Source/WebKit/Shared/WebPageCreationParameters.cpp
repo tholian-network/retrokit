@@ -142,8 +142,6 @@ void WebPageCreationParameters::encode(IPC::Encoder& encoder) const
     encoder << applicationManifest;
 #endif
     encoder << needsFontAttributes;
-    encoder << iceCandidateFilteringEnabled;
-    encoder << enumeratingAllNetworkInterfacesEnabled;
     encoder << userContentControllerParameters;
     encoder << backgroundColor;
     encoder << oldPageID;
@@ -468,12 +466,6 @@ std::optional<WebPageCreationParameters> WebPageCreationParameters::decode(IPC::
     parameters.applicationManifest = WTFMove(*applicationManifest);
 #endif
     if (!decoder.decode(parameters.needsFontAttributes))
-        return std::nullopt;
-
-    if (!decoder.decode(parameters.iceCandidateFilteringEnabled))
-        return std::nullopt;
-
-    if (!decoder.decode(parameters.enumeratingAllNetworkInterfacesEnabled))
         return std::nullopt;
 
     std::optional<UserContentControllerParameters> userContentControllerParameters;

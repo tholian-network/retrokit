@@ -35,10 +35,6 @@
 #include "InspectorInstrumentation.h"
 #include "LoaderStrategy.h"
 #include "PlatformStrategies.h"
-#if ENABLE(WEB_RTC)
-#include "RTCRtpScriptTransform.h"
-#include "RTCRtpScriptTransformer.h"
-#endif
 #include "ResourceResponse.h"
 #include "SecurityOrigin.h"
 #include "StructuredSerializeOptions.h"
@@ -244,24 +240,5 @@ void Worker::dispatchEvent(Event& event)
         scriptExecutionContext()->reportException(errorEvent.message(), errorEvent.lineno(), errorEvent.colno(), errorEvent.filename(), nullptr, nullptr);
     }
 }
-
-#if ENABLE(WEB_RTC)
-void Worker::createRTCRtpScriptTransformer(RTCRtpScriptTransform& transform, MessageWithMessagePorts&& options)
-{
-    if (!scriptExecutionContext())
-        return;
-
-    m_contextProxy.postTaskToWorkerGlobalScope([transform = makeRef(transform), options = WTFMove(options)](auto& context) mutable {
-        if (auto transformer = downcast<DedicatedWorkerGlobalScope>(context).createRTCRtpScriptTransformer(WTFMove(options)))
-            transform->setTransformer(*transformer);
-    });
-
-}
-
-void Worker::postTaskToWorkerGlobalScope(Function<void(ScriptExecutionContext&)>&& task)
-{
-    m_contextProxy.postTaskToWorkerGlobalScope(WTFMove(task));
-}
-#endif
 
 } // namespace WebCore

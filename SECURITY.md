@@ -84,6 +84,7 @@ These legacy APIs that are no longer of relevance to a modern Web View.
 - [ ] Remove Quick Look Integration (`QUICK_LOOK`)
 - [ ] *Undecided* Remove WebKit Content Extensions API (`CONTENT_EXTENSIONS`)
 - [ ] *Undecided* Remove Arbitrary User Gestures (`ArbitraryUserGesture`)
+- [ ] *Undecided* Remove Release Log (`RELEASE_LOG_DISABLED`)
 
 
 ## Legacy Plugins
@@ -196,6 +197,7 @@ removed as well.
 - [ ] Remove libhyphen Integration (`libhyphen`, `USE_LIBHYPHEN`)
 - [x] Remove libsecret Integration (`libsecret`, `USE_LIBSECRET`, `secret.h`)
 - [ ] Remove libnotify Integration (`libnotify`, `USE_LIBNOTIFY`) which is just annoying
+- [x] Remove libwebrtc Integration (`LIBWEBRTC`, `libWebRTC`)
 - [x] Remove SystemD Integration (`libsystemd`, `USE_SYSTEMD`, `JOURNALD`)
 - [ ] Remove ARKIT Integration (`ARKIT`)
 - [x] Remove PASSKIT Integration (`PASSKIT`)
@@ -222,16 +224,28 @@ list of Web APIs that are removed.
 - [x] Remove Picture in Picture API (`PICTURE_IN_PICTURE_API`, `operationMatchesPictureinPicturePseudoClass`, `EnterPictureInPictureEvent`, `picture-in-picture`, `PictureInPictureElement`)
 - [x] Remove Video Presentation Mode (`VIDEO_PRESENTATION_MODE`, `ControlledElementID`, `EnhancedFullscreen`, `VideoPresentation`, `prepareForVideoFullscreen`, `webkitPresentationModeChanged`)
 - [x] Remove iFrame `allowfullscreen` Property
+- [x] Remove Web RTC API (`WEB_RTC`, `RTC`, `PeerConnectionState`, `PeerMediaDescription`, `RTCBundle`, `RTCDataChannel`, `RTCPeer`, `RTCIce`, `createRTCProvider`)
+- [x] Remove Web RTC H264 Codec (`WebRTCH264LowLatencyCoderEnabled`, `WebRTCH264HardwareEncoderEnabled`, `WebRTCH264SimulcastEnabled`)
+- [x] Remove Web RTC H265 Codec (`WebRTCH256CodecEnabled`)
+- [x] Remove Web RTC DTMF Codec (`WebRTCDTMFEnabled`)
+- [x] Remove Web RTC Insertable Streams (`WebRTCInsertableStreamsEnabled`)
+- [x] Remove Web RTC Platform Codecs (`WebRTCPlatformCodecsInGPUProcessEnabled`)
+- [x] Remove Web RTC Platform Sockets (`WebRTCPlatformTCPSocketsEnabled`, `WebRTCPlatformUDPSocketsEnabled`)
+- [x] Remove Web RTC Sockets Proxying (`WebRTCSocketsProxyingEnabled`)
+- [x] Remove Web RTC VP9 Codec Profiles (`WebRTCVP9Profile0CodecEnabled`, `WebRTCVP9Profile2CodecEnabled`)
+- [x] Remove Web RTC MDNS ICE Candidates Support (`WebRTCMDNSICECandidatesEnabled`, `PeerConnectionEnabled`, `ICECandidateFiltering`)
 - [ ] Remove Network Shareable Resource API (`SHAREABLE_RESOURCE`)
 - [ ] Remove 3D Model Element API (`MODEL_ELEMENT`)
 - [ ] Remove Encrypted Media API (`ENCRYPTED_MEDIA`, `LEGACY_ENCRYPTED_MEDIA`)
 - [ ] Remove Encrypted Media Thunder API (`THUNDER`)
-- [ ] Remove Web RTC API (`WEB_RTC`, `RTC`)
+- [ ] Remove Web Assembly API (`WEBASSEMBLY`)
+- [ ] Remove Sandbox Extensions (`SANDBOX_EXTENSIONS`)
 - [ ] Remove Web NFC API
 - [ ] Remove Web Performance API
 - [ ] Remove Web Storage API
 - [ ] Remove Indexed Database API
 - [ ] Remove Canvas API (`OFFSCREEN_CANVAS`, `Canvas`, `DOMConvertWebGL`, `JSANGLEInstancedArray`, `CanvasActivityRecord`)
+- [ ] Remove Offsceen Canvas in Workers (`OFFSCREEN_CANVAS_IN_WORKERS`)
 - [ ] Remove WebGL API (`WEBGL`, `WebGL`, `JSANGLEInstancedArray`, `GraphicsContextGL`, `HighPerformanceGraphicsUsageSampler`)
 - [ ] Remove WebGL2 API (`WEBGL2`)
 - [ ] Remove GPU Process for WebGL (`GPU_PROCESS`)
@@ -252,8 +266,9 @@ list of Web APIs that are removed.
 - [ ] *Undecided* Remove Custom Protocol Manager Support (`CustomProtocol`, `CustomProtocolManager`)
 - [ ] *Undecided* Remove Web Midi API
 - [ ] *Undecided* Remove Web Workers API
-- [ ] *Undecided* Remove Service Worker API
+- [ ] *Undecided* Remove Service Worker API (`SERVICE_WORKER`)
 - [ ] *Undecided* Remove Content Change Observer (`CONTENT_CHANGE_OBSERVER`)
+- [ ] *Undecided* Remove Incremental PDF API (`INCREMENTAL_PDF_APIS`)
 
 
 ## HTML Features

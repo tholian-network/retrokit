@@ -30,8 +30,6 @@
 
 #include "DataReference.h"
 #include "GPUConnectionToWebProcessMessages.h"
-#include "LibWebRTCCodecs.h"
-#include "LibWebRTCCodecsMessages.h"
 #include "Logging.h"
 #include "MediaOverridesForTesting.h"
 #include "MediaPlayerPrivateRemoteMessages.h"

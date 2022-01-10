@@ -130,7 +130,6 @@ protected:
     void hiddenPageDOMTimerThrottlingStateChanged();
     void hiddenPageCSSAnimationSuspensionEnabledChanged();
     void resourceUsageOverlayVisibleChanged();
-    void iceCandidateFilteringEnabledChanged();
 #if ENABLE(TEXT_AUTOSIZING)
     void shouldEnableTextAutosizingBoostChanged();
     void textAutosizingUsesIdempotentModeChanged();

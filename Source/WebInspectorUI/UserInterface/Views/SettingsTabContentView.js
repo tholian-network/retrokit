@@ -357,7 +357,6 @@ WI.SettingsTabContentView = class SettingsTabContentView extends WI.TabContentVi
             const editorLabels = {
                 [WI.ConsoleMessage.MessageSource.Media]: WI.UIString("Media Logging:"),
                 [WI.ConsoleMessage.MessageSource.MediaSource]: WI.UIString("MSE Logging:"),
-                [WI.ConsoleMessage.MessageSource.WebRTC]: WI.UIString("WebRTC Logging:"),
             };
 
             let channels = WI.consoleManager.customLoggingChannels;

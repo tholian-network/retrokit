@@ -135,9 +135,6 @@ bool UserMediaProcessManager::willCreateMediaStream(UserMediaPermissionRequestMa
             // FIXME: Is it correct to ensure that the corresponding entries in `handles` and `ids` are in reverse order?
         }
 
-        for (const auto& id : ids)
-            RELEASE_LOG(WebRTC, "UserMediaProcessManager::willCreateMediaStream - granting extension %s", id.utf8().data());
-
         if (needsAudioSandboxExtension)
             process.grantAudioCaptureExtension();
         if (needsVideoSandboxExtension)
@@ -194,9 +191,6 @@ void UserMediaProcessManager::revokeSandboxExtensionsIfNeeded(WebProcessProxy& p
 
     if (params.isEmpty())
         return;
-
-    for (const auto& id : params)
-        RELEASE_LOG(WebRTC, "UserMediaProcessManager::endedCaptureSession - revoking extension %s", id.utf8().data());
 
     process.send(Messages::WebProcess::RevokeUserMediaDeviceSandboxExtensions(params), 0);
 #endif

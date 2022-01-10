@@ -67,7 +67,7 @@ private:
     Vector<CaptureDevice> m_speakerDevices;
 };
 
-static GStreamerAudioCaptureSourceFactory& libWebRTCAudioCaptureSourceFactory()
+static GStreamerAudioCaptureSourceFactory& AudioCaptureSourceFactory()
 {
     static NeverDestroyed<GStreamerAudioCaptureSourceFactory> factory;
     return factory.get();
@@ -92,7 +92,7 @@ CaptureSourceOrError GStreamerAudioCaptureSource::create(String&& deviceID, Stri
 
 AudioCaptureFactory& GStreamerAudioCaptureSource::factory()
 {
-    return libWebRTCAudioCaptureSourceFactory();
+    return AudioCaptureSourceFactory();
 }
 
 GStreamerAudioCaptureSource::GStreamerAudioCaptureSource(GStreamerCaptureDevice device, String&& hashSalt)

@@ -54,7 +54,6 @@
 #include "WebUserContentController.h"
 #include <WebCore/EditorClient.h>
 #include <WebCore/EmptyClients.h>
-#include <WebCore/LibWebRTCProvider.h>
 #include <WebCore/MessageWithMessagePorts.h>
 #include <WebCore/PageConfiguration.h>
 #include <WebCore/RuntimeEnabledFeatures.h>
@@ -73,17 +72,6 @@
 namespace WebKit {
 using namespace PAL;
 using namespace WebCore;
-
-
-#if ENABLE(WEB_RTC)
-class ServiceWorkerLibWebRTCProvider final : public WebCore::LibWebRTCProvider {
-public:
-    ServiceWorkerLibWebRTCProvider() = default;
-
-private:
-    RefPtr<WebCore::RTCDataChannelRemoteHandlerConnection> createRTCDataChannelRemoteHandlerConnection() final { return &RTCDataChannelRemoteManager::sharedManager().remoteHandlerConnection(); }
-};
-#endif
 
 ServiceWorkerFrameLoaderClient::ServiceWorkerFrameLoaderClient(WebPageProxyIdentifier webPageProxyID, PageIdentifier pageID, FrameIdentifier frameID, const String& userAgent)
     : m_webPageProxyID(webPageProxyID)
@@ -148,9 +136,6 @@ void WebSWContextManagerConnection::installServiceWorker(ServiceWorkerContextDat
     pageConfiguration.databaseProvider = WebDatabaseProvider::getOrCreate(m_pageGroupID);
     pageConfiguration.socketProvider = WebSocketProvider::create(m_webPageProxyID);
     pageConfiguration.userContentProvider = m_userContentController;
-#if ENABLE(WEB_RTC)
-    pageConfiguration.libWebRTCProvider = makeUniqueRef<ServiceWorkerLibWebRTCProvider>();
-#endif
 
     auto effectiveUserAgent =  WTFMove(userAgent);
     if (effectiveUserAgent.isNull())
@@ -161,7 +146,7 @@ void WebSWContextManagerConnection::installServiceWorker(ServiceWorkerContextDat
 #if !RELEASE_LOG_DISABLED
     auto serviceWorkerIdentifier = data.serviceWorkerIdentifier;
 #endif
-    
+
     auto lastNavigationWasAppInitiated = data.lastNavigationWasAppInitiated;
     auto serviceWorkerThreadProxy = ServiceWorkerThreadProxy::create(WTFMove(pageConfiguration), WTFMove(data), WTFMove(effectiveUserAgent), WebProcess::singleton().cacheStorageProvider(), m_storageBlockingPolicy);
 

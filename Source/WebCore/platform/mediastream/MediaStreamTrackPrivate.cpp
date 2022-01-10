@@ -38,8 +38,6 @@
 
 #if PLATFORM(COCOA)
 #include "MediaStreamTrackAudioSourceProviderCocoa.h"
-#elif ENABLE(WEB_AUDIO) && ENABLE(MEDIA_STREAM) && USE(LIBWEBRTC) && USE(GSTREAMER)
-#include "AudioSourceProviderGStreamer.h"
 #else
 #include "WebAudioSourceProvider.h"
 #endif
@@ -199,8 +197,6 @@ RefPtr<WebAudioSourceProvider> MediaStreamTrackPrivate::createAudioSourceProvide
 
 #if PLATFORM(COCOA)
     return MediaStreamTrackAudioSourceProviderCocoa::create(*this);
-#elif USE(LIBWEBRTC) && USE(GSTREAMER)
-    return AudioSourceProviderGStreamer::create(*this);
 #else
     return nullptr;
 #endif
@@ -291,13 +287,6 @@ void MediaStreamTrackPrivate::audioUnitWillStart()
     if (!m_isEnded)
         PlatformMediaSessionManager::sharedManager().sessionCanProduceAudioChanged();
 }
-
-#if !RELEASE_LOG_DISABLED
-WTFLogChannel& MediaStreamTrackPrivate::logChannel() const
-{
-    return LogWebRTC;
-}
-#endif
 
 } // namespace WebCore
 

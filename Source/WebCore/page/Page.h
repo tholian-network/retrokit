@@ -112,7 +112,6 @@ class ImageOverlayController;
 class InspectorClient;
 class InspectorController;
 class IntSize;
-class LibWebRTCProvider;
 class LowPowerModeNotifier;
 class MediaCanStartListener;
 class MediaPlaybackTarget;
@@ -309,11 +308,6 @@ public:
 #if ENABLE(POINTER_LOCK)
     PointerLockController& pointerLockController() const { return *m_pointerLockController; }
 #endif
-    LibWebRTCProvider& libWebRTCProvider() { return m_libWebRTCProvider.get(); }
-    RTCController& rtcController() { return m_rtcController; }
-    WEBCORE_EXPORT void disableICECandidateFiltering();
-    WEBCORE_EXPORT void enableICECandidateFiltering();
-    bool shouldEnableICECandidateFilteringByDefault() const { return m_shouldEnableICECandidateFilteringByDefault; }
 
     void didChangeMainDocument();
     void mainFrameDidChangeToNonInitialEmptyDocument();
@@ -932,8 +926,6 @@ private:
     UniqueRef<SpeechRecognitionProvider> m_speechRecognitionProvider;
 
     UniqueRef<MediaRecorderProvider> m_mediaRecorderProvider;
-    UniqueRef<LibWebRTCProvider> m_libWebRTCProvider;
-    RTCController m_rtcController;
 
     PlatformDisplayID m_displayID { 0 };
     std::optional<FramesPerSecond> m_displayNominalFramesPerSecond;
@@ -1081,7 +1073,6 @@ private:
     bool m_controlledByAutomation { false };
     bool m_resourceCachingDisabledByWebInspector { false };
     bool m_isUtilityPage;
-    bool m_shouldEnableICECandidateFilteringByDefault { true };
     bool m_mediaPlaybackIsSuspended { false };
     bool m_mediaBufferingIsSuspended { false };
     bool m_hasResourceLoadClient { false };

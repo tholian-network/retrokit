@@ -501,13 +501,6 @@ if (LIBNOTIFY_FOUND)
     )
 endif ()
 
-if (USE_LIBWEBRTC)
-    list(APPEND WebKit_SYSTEM_INCLUDE_DIRECTORIES
-        "${THIRDPARTY_DIR}/libwebrtc/Source/"
-        "${THIRDPARTY_DIR}/libwebrtc/Source/webrtc"
-    )
-endif ()
-
 if (ENABLE_MEDIA_STREAM)
     list(APPEND WebKit_SOURCES
         UIProcess/glib/UserMediaPermissionRequestManagerProxyGLib.cpp

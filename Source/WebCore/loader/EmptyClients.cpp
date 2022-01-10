@@ -56,7 +56,6 @@
 #include "HistoryItem.h"
 #include "IDBConnectionToServer.h"
 #include "InspectorClient.h"
-#include "LibWebRTCProvider.h"
 #include "MediaRecorderPrivate.h"
 #include "MediaRecorderProvider.h"
 #include "NetworkStorageSession.h"
@@ -1134,7 +1133,6 @@ PageConfiguration pageConfigurationWithEmptyClients(PAL::SessionID sessionID)
         sessionID,
         makeUniqueRef<EmptyEditorClient>(),
         SocketProvider::create(),
-        LibWebRTCProvider::create(),
         CacheStorageProvider::create(),
         adoptRef(*new EmptyUserContentProvider),
         adoptRef(*new EmptyBackForwardClient),

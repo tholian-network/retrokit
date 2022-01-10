@@ -50,8 +50,6 @@ public:
     // Creates a cache storage connection to be used on the main thread. Method must be called on the main thread.
     virtual RefPtr<CacheStorageConnection> createCacheStorageConnection() = 0;
 
-    virtual RefPtr<RTCDataChannelRemoteHandlerConnection> createRTCDataChannelRemoteHandlerConnection() = 0;
-
     // Posts a task to the thread which runs the loading code (normally, the main thread).
     virtual void postTaskToLoader(ScriptExecutionContext::Task&&) = 0;
 

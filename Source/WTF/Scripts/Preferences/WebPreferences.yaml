@@ -653,14 +653,6 @@ EncryptedMediaAPIEnabled:
     WebCore:
       default: false
 
-EnumeratingAllNetworkInterfacesEnabled:
-  type: bool
-  webcoreBinding: none
-  exposed: [ WebKit ]
-  defaultValue:
-    WebKit:
-      default: false
-
 ExtensibleSSOEnabled:
   type: bool
   getter: isExtensibleSSOEnabled
@@ -1510,17 +1502,6 @@ PasswordEchoEnabled:
       default: false
     WebCore:
       default: false
-
-PeerConnectionEnabled:
-  type: bool
-  condition: ENABLE(WEB_RTC)
-  defaultValue:
-    WebKitLegacy:
-      default: true
-    WebKit:
-      default: WebCore::LibWebRTCProvider::webRTCAvailable()
-    WebCore:
-      default: true
 
 PictographFontFamily:
   type: String

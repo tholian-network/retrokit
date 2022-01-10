@@ -760,22 +760,6 @@
         "category": "html"
     },
     {
-        "name": "WebRTC",
-        "status": {
-            "status": "Supported"
-        },
-        "url": "http://www.w3.org/TR/webrtc/",
-        "webkit-url": "https://bugs.webkit.org/show_bug.cgi?id=124288",
-        "keywords": ["webrtc"],
-        "category": "webapps",
-        "description": "An API to facilitate real-time communication for browser-to-browser applications.",
-        "contact": {
-            "name": "Jon Davis",
-            "twitter": "@jonathandavis",
-            "email": "web-evangelist@apple.com"
-        }
-    },
-    {
         "name": "Worklets Level 1",
         "status": {
             "status": "Under Consideration"

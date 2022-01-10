@@ -104,7 +104,6 @@ extern "C" {
     M(VisibleRects) \
     M(WebAuthn) \
     M(WebGL) \
-    M(WebRTC) \
     M(WheelEvents) \
     M(XR) \
 

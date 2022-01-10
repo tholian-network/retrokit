@@ -27,13 +27,11 @@ VPATH = \
     $(WebKit2)/GPUProcess/mac \
     $(WebKit2)/GPUProcess/media \
     $(WebKit2)/GPUProcess/media/ios \
-    $(WebKit2)/GPUProcess/webrtc \
     $(WebKit2)/NetworkProcess \
     $(WebKit2)/NetworkProcess/Cookies \
     $(WebKit2)/NetworkProcess/cache \
     $(WebKit2)/NetworkProcess/CustomProtocols \
     $(WebKit2)/NetworkProcess/mac \
-    $(WebKit2)/NetworkProcess/webrtc \
     $(WebKit2)/NetworkProcess/IndexedDB \
     $(WebKit2)/NetworkProcess/ServiceWorker \
     $(WebKit2)/NetworkProcess/WebStorage \
@@ -52,14 +50,12 @@ VPATH = \
     $(WebKit2)/WebProcess/GPU/graphics \
     $(WebKit2)/WebProcess/GPU/media \
     $(WebKit2)/WebProcess/GPU/media/ios \
-    $(WebKit2)/WebProcess/GPU/webrtc \
     $(WebKit2)/WebProcess/IconDatabase \
     $(WebKit2)/WebProcess/Inspector \
     $(WebKit2)/WebProcess/MediaCache \
     $(WebKit2)/WebProcess/MediaSession \
     $(WebKit2)/WebProcess/MediaStream \
     $(WebKit2)/WebProcess/Network \
-    $(WebKit2)/WebProcess/Network/webrtc \
     $(WebKit2)/WebProcess/Notifications \
     $(WebKit2)/WebProcess/OriginData \
     $(WebKit2)/WebProcess/ResourceCache \
@@ -122,10 +118,6 @@ MESSAGE_RECEIVERS = \
 	NetworkProcess/NetworkSocketStream \
 	NetworkProcess/NetworkProcess \
 	NetworkProcess/NetworkResourceLoader \
-	NetworkProcess/webrtc/NetworkMDNSRegister \
-	NetworkProcess/webrtc/NetworkRTCProvider \
-	NetworkProcess/webrtc/NetworkRTCMonitor \
-	NetworkProcess/webrtc/RTCDataChannelRemoteManagerProxy \
 	NetworkProcess/Cookies/WebCookieManager \
 	Shared/AuxiliaryProcess \
 	Shared/API/Cocoa/RemoteObjectRegistry \
@@ -162,8 +154,6 @@ MESSAGE_RECEIVERS = \
 	WebProcess/GPU/GPUProcessConnection \
 	WebProcess/GPU/graphics/RemoteRenderingBackendProxy \
 	WebProcess/GPU/graphics/RemoteGraphicsContextGLProxy \
-	WebProcess/GPU/webrtc/LibWebRTCCodecs \
-	WebProcess/GPU/webrtc/SampleBufferDisplayLayer \
 	WebProcess/GPU/media/MediaPlayerPrivateRemote \
 	WebProcess/GPU/media/MediaSourcePrivateRemote \
 	WebProcess/GPU/media/RemoteAudioHardwareListener \
@@ -188,11 +178,6 @@ MESSAGE_RECEIVERS = \
 	WebProcess/Network/NetworkProcessConnection \
 	WebProcess/Network/WebSocketStream \
 	WebProcess/Network/WebResourceLoader \
-	WebProcess/Network/webrtc/LibWebRTCNetwork \
-	WebProcess/Network/webrtc/RTCDataChannelRemoteManager \
-	WebProcess/Network/webrtc/WebRTCMonitor \
-	WebProcess/Network/webrtc/WebMDNSRegister \
-	WebProcess/Network/webrtc/WebRTCResolver \
 	WebProcess/WebCoreSupport/WebBroadcastChannelRegistry \
 	WebProcess/WebCoreSupport/WebSpeechRecognitionConnection \
 	WebProcess/Speech/SpeechRecognitionRealtimeMediaSourceManager \
@@ -216,12 +201,6 @@ MESSAGE_RECEIVERS = \
 	GPUProcess/GPUConnectionToWebProcess \
 	GPUProcess/graphics/RemoteRenderingBackend \
 	GPUProcess/graphics/RemoteGraphicsContextGL \
-	GPUProcess/webrtc/LibWebRTCCodecsProxy \
-	GPUProcess/webrtc/RemoteSampleBufferDisplayLayerManager \
-	GPUProcess/webrtc/RemoteMediaRecorderManager \
-	GPUProcess/webrtc/RemoteSampleBufferDisplayLayer \
-	GPUProcess/webrtc/RemoteMediaRecorder \
-	GPUProcess/webrtc/RemoteAudioMediaStreamTrackRendererInternalUnitManager \
 	GPUProcess/GPUProcess \
 	GPUProcess/media/RemoteImageDecoderAVFProxy \
 	GPUProcess/media/RemoteLegacyCDMSessionProxy \

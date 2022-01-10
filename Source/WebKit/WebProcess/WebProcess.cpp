@@ -36,7 +36,6 @@
 #include "EventDispatcher.h"
 #include "GPUProcessConnectionParameters.h"
 #include "InjectedBundle.h"
-#include "LibWebRTCNetwork.h"
 #include "Logging.h"
 #include "NetworkConnectionToWebProcessMessages.h"
 #include "NetworkProcessConnection.h"
@@ -189,10 +188,6 @@
 
 #if ENABLE(GPU_PROCESS)
 #include "RemoteMediaPlayerManager.h"
-#endif
-
-#if USE(LIBWEBRTC) && PLATFORM(COCOA) && ENABLE(GPU_PROCESS)
-#include "LibWebRTCCodecs.h"
 #endif
 
 #if ENABLE(ENCRYPTED_MEDIA)
@@ -1137,9 +1132,6 @@ void WebProcess::networkProcessConnectionClosed(NetworkProcessConnection* connec
     WebSocketStream::networkProcessCrashed();
     m_webSocketChannelManager.networkProcessCrashed();
 
-    if (m_libWebRTCNetwork)
-        m_libWebRTCNetwork->networkProcessCrashed();
-
     for (auto& page : m_pageMap.values()) {
         page->stopAllURLSchemeTasks();
     }
@@ -1224,15 +1216,6 @@ void WebProcess::gpuProcessConnectionClosed(GPUProcessConnection& connection)
         m_audioMediaStreamTrackRendererInternalUnitManager->gpuProcessConnectionClosed();
 #endif
 }
-
-#if PLATFORM(COCOA) && USE(LIBWEBRTC)
-LibWebRTCCodecs& WebProcess::libWebRTCCodecs()
-{
-    if (!m_libWebRTCCodecs)
-        m_libWebRTCCodecs = LibWebRTCCodecs::create();
-    return *m_libWebRTCCodecs;
-}
-#endif
 
 #if ENABLE(MEDIA_STREAM) && PLATFORM(COCOA)
 AudioMediaStreamTrackRendererInternalUnitManager& WebProcess::audioMediaStreamTrackRendererInternalUnitManager()
@@ -1812,13 +1795,6 @@ void WebProcess::clearCachedPage(BackForwardItemIdentifier backForwardItemID, Co
     completionHandler();
 }
 
-LibWebRTCNetwork& WebProcess::libWebRTCNetwork()
-{
-    if (!m_libWebRTCNetwork)
-        m_libWebRTCNetwork = makeUnique<LibWebRTCNetwork>();
-    return *m_libWebRTCNetwork;
-}
-
 #if ENABLE(SERVICE_WORKER)
 void WebProcess::establishWorkerContextConnectionToNetworkProcess(PageGroupIdentifier pageGroupID, WebPageProxyIdentifier webPageProxyID, PageIdentifier pageID, const WebPreferencesStore& store, RegistrableDomain&& registrableDomain, ServiceWorkerInitializationData&& initializationData, CompletionHandler<void()>&& completionHandler)
 {
@@ -1869,7 +1845,7 @@ void WebProcess::grantUserMediaDeviceSandboxExtensions(MediaDeviceSandboxExtensi
     for (size_t i = 0; i < extensions.size(); i++) {
         const auto& extension = extensions[i];
         extension.second->consume();
-        WEBPROCESS_RELEASE_LOG(WebRTC, "grantUserMediaDeviceSandboxExtensions: granted extension %s", extension.first.utf8().data());
+        WEBPROCESS_RELEASE_LOG(Process, "grantUserMediaDeviceSandboxExtensions: granted extension %s", extension.first.utf8().data());
         m_mediaCaptureSandboxExtensions.add(extension.first, extension.second.copyRef());
     }
 }
@@ -1900,7 +1876,7 @@ void WebProcess::revokeUserMediaDeviceSandboxExtensions(const Vector<String>& ex
         ASSERT(extension || MockRealtimeMediaSourceCenter::mockRealtimeMediaSourceCenterEnabled());
         if (extension) {
             extension->revoke();
-            WEBPROCESS_RELEASE_LOG(WebRTC, "revokeUserMediaDeviceSandboxExtensions: revoked extension %s", extensionID.utf8().data());
+            WEBPROCESS_RELEASE_LOG(Process, "revokeUserMediaDeviceSandboxExtensions: revoked extension %s", extensionID.utf8().data());
         }
     }
 }

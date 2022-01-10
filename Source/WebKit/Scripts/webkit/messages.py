@@ -284,7 +284,6 @@ def types_that_cannot_be_forward_declared():
         'WebCore::FrameIdentifier',
         'WebCore::GraphicsContextGLAttributes',
         'WebCore::ImageDecoderIdentifier',
-        'WebCore::LibWebRTCSocketIdentifier',
         'WebCore::MediaKeySystemRequestIdentifier',
         'WebCore::MediaPlayerIdentifier',
         'WebCore::MediaSessionIdentifier',
@@ -316,7 +315,6 @@ def types_that_cannot_be_forward_declared():
         'WebKit::GraphicsContextGLIdentifier',
         'WebKit::ImageBufferBackendHandle',
         'WebKit::LayerHostingContextID',
-        'WebKit::LibWebRTCResolverIdentifier',
         'WebKit::MDNSRegisterIdentifier',
         'WebKit::MediaRecorderIdentifier',
         'WebKit::PageGroupIdentifier',
@@ -785,7 +783,6 @@ def headers_for_type(type):
         'struct WebKit::WebUserScriptData': ['"WebUserContentControllerDataTypes.h"'],
         'struct WebKit::WebUserStyleSheetData': ['"WebUserContentControllerDataTypes.h"'],
         'struct WebKit::WebScriptMessageHandlerData': ['"WebUserContentControllerDataTypes.h"'],
-        'webrtc::WebKitEncodedFrameInfo': ['<webrtc/sdk/WebKit/WebKitEncoder.h>', '<WebCore/LibWebRTCEnumTraits.h>'],
         'WebCore::DynamicRangeMode': ['<WebCore/PlatformScreen.h>'],
     }
 

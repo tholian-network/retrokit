@@ -103,7 +103,6 @@ public:
 #endif
 #if PLATFORM(COCOA)
             std::optional<bool> allowInsecureMediaCapture;
-            std::optional<bool> suppressICECandidateFiltering;
 #endif
         };
 

@@ -202,9 +202,7 @@ bool defaultCaptureAudioInGPUProcessEnabled()
     bool defaultValue = false;
 #endif
 
-#if PLATFORM(MAC)
-    return isFeatureFlagEnabled("gpu_process_webrtc", defaultValue);
-#elif PLATFORM(IOS_FAMILY)
+#if PLATFORM(IOS_FAMILY)
     return isFeatureFlagEnabled("gpu_process_media", defaultValue);
 #else
     return defaultValue;
@@ -223,30 +221,13 @@ bool defaultCaptureAudioInUIProcessEnabled()
 bool defaultCaptureVideoInGPUProcessEnabled()
 {
 #if ENABLE(GPU_PROCESS_BY_DEFAULT)
-    bool defaultValue = true;
+    return true;
 #else
-    bool defaultValue = false;
+    return false;
 #endif
-
-    return isFeatureFlagEnabled("gpu_process_webrtc", defaultValue);
 }
 
 #endif // ENABLE(MEDIA_STREAM)
-
-#if ENABLE(WEB_RTC)
-
-bool defaultWebRTCCodecsInGPUProcess()
-{
-#if ENABLE(GPU_PROCESS_BY_DEFAULT)
-    bool defaultValue = true;
-#else
-    bool defaultValue = false;
-#endif
-
-    return isFeatureFlagEnabled("gpu_process_webrtc", defaultValue);
-}
-
-#endif // ENABLE(WEB_RTC)
 
 #if HAVE(INCREMENTAL_PDF_APIS)
 bool defaultIncrementalPDFEnabled()

@@ -111,7 +111,6 @@ WI.ConsoleMessage.MessageSource = {
     Security: "security",
     Media: "media",
     MediaSource: "mediasource",
-    WebRTC: "webrtc",
     ITPDebug: "itp-debug",
     PrivateClickMeasurement: "private-click-measurement",
     Other: "other",

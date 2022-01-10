@@ -1175,26 +1175,6 @@ bool WKPreferencesGetMediaStreamEnabled(WKPreferencesRef preferencesRef)
     return toImpl(preferencesRef)->mediaStreamEnabled();
 }
 
-void WKPreferencesSetPeerConnectionEnabled(WKPreferencesRef preferencesRef, bool enabled)
-{
-    toImpl(preferencesRef)->setPeerConnectionEnabled(enabled);
-}
-
-bool WKPreferencesGetPeerConnectionEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->peerConnectionEnabled();
-}
-
-void WKPreferencesSetWebRTCMDNSICECandidatesEnabled(WKPreferencesRef preferencesRef, bool enabled)
-{
-    toImpl(preferencesRef)->setWebRTCMDNSICECandidatesEnabled(enabled);
-}
-
-bool WKPreferencesGetWebRTCMDNSICECandidatesEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->webRTCMDNSICECandidatesEnabled();
-}
-
 void WKPreferencesSetSpatialNavigationEnabled(WKPreferencesRef preferencesRef, bool enabled)
 {
     toImpl(preferencesRef)->setSpatialNavigationEnabled(enabled);
@@ -1376,26 +1356,6 @@ bool WKPreferencesGetMockCaptureDevicesEnabled(WKPreferencesRef preferencesRef)
     return toImpl(preferencesRef)->mockCaptureDevicesEnabled();
 }
 
-void WKPreferencesSetICECandidateFilteringEnabled(WKPreferencesRef preferencesRef, bool enabled)
-{
-    toImpl(preferencesRef)->setICECandidateFilteringEnabled(enabled);
-}
-
-bool WKPreferencesGetICECandidateFilteringEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->iceCandidateFilteringEnabled();
-}
-
-void WKPreferencesSetEnumeratingAllNetworkInterfacesEnabled(WKPreferencesRef preferencesRef, bool enabled)
-{
-    toImpl(preferencesRef)->setEnumeratingAllNetworkInterfacesEnabled(enabled);
-}
-
-bool WKPreferencesGetEnumeratingAllNetworkInterfacesEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->enumeratingAllNetworkInterfacesEnabled();
-}
-
 void WKPreferencesSetMediaCaptureRequiresSecureConnection(WKPreferencesRef preferencesRef, bool enabled)
 {
     toImpl(preferencesRef)->setMediaCaptureRequiresSecureConnection(enabled);
@@ -1514,16 +1474,6 @@ void WKPreferencesSetIsNSURLSessionWebSocketEnabled(WKPreferencesRef preferences
 bool WKPreferencesGetIsNSURLSessionWebSocketEnabled(WKPreferencesRef preferencesRef)
 {
     return toImpl(preferencesRef)->isNSURLSessionWebSocketEnabled();
-}
-
-void WKPreferencesSetWebRTCPlatformCodecsInGPUProcessEnabled(WKPreferencesRef preferencesRef, bool flag)
-{
-    toImpl(preferencesRef)->setWebRTCPlatformCodecsInGPUProcessEnabled(flag);
-}
-
-bool WKPreferencesGetWebRTCPlatformCodecsInGPUProcessEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->webRTCPlatformCodecsInGPUProcessEnabled();
 }
 
 WK_EXPORT void WKPreferencesSetIsAccessibilityIsolatedTreeEnabled(WKPreferencesRef preferencesRef, bool flag)
@@ -1893,15 +1843,6 @@ void WKPreferencesSetIgnoreViewportScalingConstraints(WKPreferencesRef, bool)
 }
 
 bool WKPreferencesGetIgnoreViewportScalingConstraints(WKPreferencesRef)
-{
-    return false;
-}
-
-void WKPreferencesSetWebRTCLegacyAPIEnabled(WKPreferencesRef, bool)
-{
-}
-
-bool WKPreferencesGetWebRTCLegacyAPIEnabled(WKPreferencesRef)
 {
     return false;
 }

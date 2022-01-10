@@ -114,8 +114,6 @@ class AudioMediaStreamTrackRendererInternalUnitManager;
 class EventDispatcher;
 class GPUProcessConnection;
 class InjectedBundle;
-class LibWebRTCCodecs;
-class LibWebRTCNetwork;
 class NetworkProcessConnection;
 class ObjCObjectGraph;
 class ProcessAssertion;
@@ -238,9 +236,6 @@ public:
     void gpuProcessConnectionClosed(GPUProcessConnection&);
     GPUProcessConnection* existingGPUProcessConnection() { return m_gpuProcessConnection.get(); }
 
-#if PLATFORM(COCOA) && USE(LIBWEBRTC)
-    LibWebRTCCodecs& libWebRTCCodecs();
-#endif
 #if ENABLE(MEDIA_STREAM) && PLATFORM(COCOA)
     AudioMediaStreamTrackRendererInternalUnitManager& audioMediaStreamTrackRendererInternalUnitManager();
 #endif
@@ -258,8 +253,6 @@ public:
     void webAuthnProcessConnectionClosed(WebAuthnProcessConnection*);
     WebAuthnProcessConnection* existingWebAuthnProcessConnection() { return m_webAuthnProcessConnection.get(); }
 #endif
-
-    LibWebRTCNetwork& libWebRTCNetwork();
 
     void setCacheModel(CacheModel);
 
@@ -625,9 +618,6 @@ private:
 
 #if ENABLE(GPU_PROCESS)
     RefPtr<GPUProcessConnection> m_gpuProcessConnection;
-#if PLATFORM(COCOA) && USE(LIBWEBRTC)
-    RefPtr<LibWebRTCCodecs> m_libWebRTCCodecs;
-#endif
 #if ENABLE(MEDIA_STREAM) && PLATFORM(COCOA)
     std::unique_ptr<AudioMediaStreamTrackRendererInternalUnitManager> m_audioMediaStreamTrackRendererInternalUnitManager;
 #endif
@@ -641,8 +631,6 @@ private:
     Ref<WebBroadcastChannelRegistry> m_broadcastChannelRegistry;
     Ref<WebCookieJar> m_cookieJar;
     WebSocketChannelManager m_webSocketChannelManager;
-
-    std::unique_ptr<LibWebRTCNetwork> m_libWebRTCNetwork;
 
     HashSet<String> m_dnsPrefetchedHosts;
     PAL::HysteresisActivity m_dnsPrefetchHystereris;

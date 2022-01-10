@@ -121,8 +121,6 @@ public:
 
     virtual SocketProvider* socketProvider() = 0;
 
-    virtual RefPtr<RTCDataChannelRemoteHandlerConnection> createRTCDataChannelRemoteHandlerConnection() { return nullptr; }
-
     virtual String resourceRequestIdentifier() const { return String(); };
 
     bool canIncludeErrorDetails(CachedScript*, const String& sourceURL);

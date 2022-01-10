@@ -930,7 +930,7 @@
         {
             "id": "ChannelSource",
             "type": "string",
-            "enum": ["xml", "javascript", "network", "console-api", "storage", "appcache", "rendering", "css", "security", "content-blocker", "media", "mediasource", "webrtc", "other"],
+            "enum": ["xml", "javascript", "network", "console-api", "storage", "appcache", "rendering", "css", "security", "content-blocker", "media", "mediasource", "other"],
             "description": "Channels for different types of log messages."
         },
         {
@@ -3340,7 +3340,6 @@
             "description": "List of settings able to be overridden by WebInspector. Keep this in sync with FOR_EACH_INSPECTOR_OVERRIDE_SETTING.",
             "enum": [
                 "AuthorAndUserStylesEnabled",
-                "ICECandidateFilteringEnabled",
                 "ImagesEnabled",
                 "MediaCaptureRequiresSecureConnection",
                 "MockCaptureDevicesEnabled",
@@ -3348,7 +3347,6 @@
                 "ScriptEnabled",
                 "ShowDebugBorders",
                 "ShowRepaintCounter",
-                "WebRTCEncryptionEnabled",
                 "WebSecurityEnabled"
             ]
         },

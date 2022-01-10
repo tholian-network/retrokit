@@ -542,10 +542,6 @@
 #define ENABLE_WEB_AUTHN 1
 #endif
 
-#if !defined(ENABLE_WEB_RTC) && !PLATFORM(MACCATALYST) && !PLATFORM(APPLETV)
-#define ENABLE_WEB_RTC 1
-#endif
-
 #if !defined(ENABLE_WEB_CRYPTO)
 #define ENABLE_WEB_CRYPTO 1
 #endif

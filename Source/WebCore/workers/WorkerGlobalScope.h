@@ -168,7 +168,6 @@ private:
     EventTarget* errorEventTarget() final;
     String resourceRequestIdentifier() const final { return m_identifier; }
     SocketProvider* socketProvider() final;
-    RefPtr<RTCDataChannelRemoteHandlerConnection> createRTCDataChannelRemoteHandlerConnection() final;
 
     bool shouldBypassMainWorldContentSecurityPolicy() const final { return m_shouldBypassMainWorldContentSecurityPolicy; }
 

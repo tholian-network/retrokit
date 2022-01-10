@@ -412,15 +412,6 @@ WorkQueue& GPUProcess::videoMediaStreamTrackRendererQueue()
 }
 #endif
 
-#if USE(LIBWEBRTC) && PLATFORM(COCOA)
-WorkQueue& GPUProcess::libWebRTCCodecsQueue()
-{
-    if (!m_libWebRTCCodecsQueue)
-        m_libWebRTCCodecsQueue = WorkQueue::create("LibWebRTCCodecsQueue", WorkQueue::Type::Serial, WorkQueue::QOS::UserInitiated);
-    return *m_libWebRTCCodecsQueue;
-}
-#endif
-
 #if ENABLE(VP9)
 void GPUProcess::enableVP9Decoders(bool shouldEnableVP8Decoder, bool shouldEnableVP9Decoder, bool shouldEnableVP9SWDecoder)
 {

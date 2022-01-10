@@ -189,9 +189,6 @@ static void webKitSettingsConstructed(GObject* object)
 #if ENABLE(MEDIA_STREAM)
     prefs->setMediaDevicesEnabled(true);
     prefs->setMediaStreamEnabled(true);
-#if ENABLE(WEB_RTC)
-    prefs->setPeerConnectionEnabled(true);
-#endif
 #endif
 }
 
@@ -3087,7 +3084,6 @@ void webkit_settings_set_enable_media_stream(WebKitSettings* settings, gboolean 
 
     priv->preferences->setMediaDevicesEnabled(enabled);
     priv->preferences->setMediaStreamEnabled(enabled);
-    priv->preferences->setPeerConnectionEnabled(enabled);
     g_object_notify_by_pspec(G_OBJECT(settings), sObjProperties[PROP_ENABLE_MEDIA_STREAM]);
 }
 

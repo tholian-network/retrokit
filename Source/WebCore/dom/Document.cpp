@@ -135,7 +135,6 @@
 #include "LayoutDisallowedScope.h"
 #include "LazyLoadImageObserver.h"
 #include "LegacySchemeRegistry.h"
-#include "LibWebRTCProvider.h"
 #include "LoaderStrategy.h"
 #include "Logging.h"
 #include "MediaCanStartListener.h"
@@ -2538,14 +2537,6 @@ void Document::willBeRemovedFromFrame()
     if (m_hasPreparedForDestruction)
         return;
 
-#if USE(LIBWEBRTC)
-    // FIXME: This should be moved to Modules/mediastream.
-    if (LibWebRTCProvider::webRTCAvailable()) {
-        if (auto* page = this->page())
-            page->libWebRTCProvider().unregisterMDNSNames(identifier());
-    }
-#endif
-
 #if ENABLE(SERVICE_WORKER)
     setActiveServiceWorker(nullptr);
     setServiceWorkerConnection(nullptr);
@@ -3476,15 +3467,6 @@ RefPtr<PermissionController> Document::permissionController()
 SocketProvider* Document::socketProvider()
 {
     return m_socketProvider.get();
-}
-
-RefPtr<RTCDataChannelRemoteHandlerConnection> Document::createRTCDataChannelRemoteHandlerConnection()
-{
-    ASSERT(isMainThread());
-    auto* page = this->page();
-    if (!page)
-        return nullptr;
-    return page->libWebRTCProvider().createRTCDataChannelRemoteHandlerConnection();
 }
 
 bool Document::canNavigate(Frame* targetFrame, const URL& destinationURL)
@@ -5505,14 +5487,6 @@ void Document::suspend(ReasonForSuspension reason)
         if (view->usesCompositing())
             view->compositor().cancelCompositingLayerUpdate();
     }
-
-#if USE(LIBWEBRTC)
-    // FIXME: This should be moved to Modules/mediastream.
-    if (LibWebRTCProvider::webRTCAvailable()) {
-        if (auto* page = this->page())
-            page->libWebRTCProvider().unregisterMDNSNames(identifier());
-    }
-#endif
 
 #if ENABLE(SERVICE_WORKER)
     if (RuntimeEnabledFeatures::sharedFeatures().serviceWorkerEnabled() && reason == ReasonForSuspension::BackForwardCache)
@@ -8355,14 +8329,10 @@ RefPtr<HTMLAttachmentElement> Document::attachmentForIdentifier(const String& id
 static MessageSource messageSourceForWTFLogChannel(const WTFLogChannel& channel)
 {
     static const NeverDestroyed<String> mediaChannel = MAKE_STATIC_STRING_IMPL("media");
-    static const NeverDestroyed<String> webrtcChannel = MAKE_STATIC_STRING_IMPL("webrtc");
     static const NeverDestroyed<String> mediaSourceChannel = MAKE_STATIC_STRING_IMPL("mediasource");
 
     if (equalIgnoringASCIICase(mediaChannel, channel.name))
         return MessageSource::Media;
-
-    if (equalIgnoringASCIICase(webrtcChannel, channel.name))
-        return MessageSource::WebRTC;
 
     if (equalIgnoringASCIICase(mediaSourceChannel, channel.name))
         return MessageSource::MediaSource;

@@ -321,10 +321,6 @@ public:
 
     virtual void willInjectUserScript(DOMWrapperWorld&) { }
 
-#if ENABLE(WEB_RTC)
-    virtual void dispatchWillStartUsingPeerConnectionHandler(RTCPeerConnectionHandler*) { }
-#endif
-
 #if ENABLE(WEBGL)
     virtual bool allowWebGL(bool enabledPerSettings) { return enabledPerSettings; }
     // Informs the embedder that a WebGL canvas inside this frame received a lost context

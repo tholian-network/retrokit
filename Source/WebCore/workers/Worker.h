@@ -77,11 +77,6 @@ public:
 
     void dispatchEvent(Event&) final;
 
-#if ENABLE(WEB_RTC)
-    void createRTCRtpScriptTransformer(RTCRtpScriptTransform&, MessageWithMessagePorts&&);
-    void postTaskToWorkerGlobalScope(Function<void(ScriptExecutionContext&)>&&);
-#endif
-
     WorkerType type() const { return m_type; }
 
 private:
@@ -114,9 +109,6 @@ private:
     JSC::RuntimeFlags m_runtimeFlags;
     Deque<RefPtr<Event>> m_pendingEvents;
     bool m_wasTerminated { false };
-#if ENABLE(WEB_RTC)
-    HashSet<String> m_transformers;
-#endif
     WorkerType m_type { WorkerType::Classic };
     FetchRequestCredentials m_credentials { FetchRequestCredentials::SameOrigin };
 };

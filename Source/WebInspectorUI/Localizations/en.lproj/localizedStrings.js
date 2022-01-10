@@ -1695,8 +1695,6 @@ localizedStrings["Web Inspector Reference"] = "Web Inspector Reference";
 localizedStrings["Web Page"] = "Web Page";
 localizedStrings["WebKit Threads"] = "WebKit Threads";
 localizedStrings["WebP"] = "WebP";
-localizedStrings["WebRTC"] = "WebRTC";
-localizedStrings["WebRTC Logging:"] = "WebRTC Logging:";
 localizedStrings["WebSocket Connection Established"] = "WebSocket Connection Established";
 /* Property title for `font-weight`. */
 localizedStrings["Weight @ Font Details Sidebar Property"] = "Weight";

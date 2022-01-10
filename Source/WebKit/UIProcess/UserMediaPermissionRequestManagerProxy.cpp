@@ -909,18 +909,6 @@ void UserMediaPermissionRequestManagerProxy::watchdogTimerFired()
     m_hasFilteredDeviceList = false;
 }
 
-#if !RELEASE_LOG_DISABLED
-WTFLogChannel& UserMediaPermissionRequestManagerProxy::logChannel() const
-{
-    return JOIN_LOG_CHANNEL_WITH_PREFIX(LOG_CHANNEL_PREFIX, WebRTC);
-}
-
-const Logger& UserMediaPermissionRequestManagerProxy::logger() const
-{
-    return m_page.logger();
-}
-#endif
-
 String convertEnumerationToString(UserMediaPermissionRequestManagerProxy::RequestAction enumerationValue)
 {
     static const NeverDestroyed<String> values[] = {

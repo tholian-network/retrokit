@@ -2795,16 +2795,6 @@ void NetworkProcess::clearAppPrivacyReportTestingData(PAL::SessionID sessionID, 
 }
 #endif
 
-#if ENABLE(WEB_RTC)
-RTCDataChannelRemoteManagerProxy& NetworkProcess::rtcDataChannelProxy()
-{
-    ASSERT(isMainRunLoop());
-    if (!m_rtcDataChannelProxy)
-        m_rtcDataChannelProxy = RTCDataChannelRemoteManagerProxy::create();
-    return *m_rtcDataChannelProxy;
-}
-#endif
-
 void NetworkProcess::prepareLoadForWebProcessTransfer(WebCore::ProcessIdentifier sourceProcessIdentifier, uint64_t resourceLoadIdentifier, CompletionHandler<void(std::optional<NetworkResourceLoadIdentifier>)>&& completionHandler)
 {
     ASSERT(resourceLoadIdentifier);

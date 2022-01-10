@@ -122,10 +122,6 @@ class TextTrackCueGeneric;
 class ServiceWorker;
 #endif
 
-#if ENABLE(WEB_RTC)
-class RTCRtpSFrameTransform;
-#endif
-
 #if ENABLE(MEDIA_SESSION)
 class MediaSession;
 struct MediaSessionActionDetails;
@@ -595,24 +591,6 @@ public:
     void setCustomPrivateRecorderCreator();
 #endif
 
-#if ENABLE(WEB_RTC)
-    void emulateRTCPeerConnectionPlatformEvent(RTCPeerConnection&, const String& action);
-    void useMockRTCPeerConnectionFactory(const String&);
-    void setICECandidateFiltering(bool);
-    void setEnumeratingAllNetworkInterfacesEnabled(bool);
-    void stopPeerConnection(RTCPeerConnection&);
-    void clearPeerConnectionFactory();
-    void applyRotationForOutgoingVideoSources(RTCPeerConnection&);
-    void setWebRTCH265Support(bool);
-    void setWebRTCVP9Support(bool supportVP9Profile0, bool supportVP9Profile2);
-    void setWebRTCVP9VTBSupport(bool);
-    void setSFrameCounter(RTCRtpSFrameTransform&, const String&);
-    uint64_t sframeCounter(const RTCRtpSFrameTransform&);
-    uint64_t sframeKeyId(const RTCRtpSFrameTransform&);
-    void setEnableWebRTCEncryption(bool);
-    void setUseDTLS10(bool);
-#endif
-
     String getImageSourceURL(Element&);
 
 #if ENABLE(VIDEO)
@@ -790,10 +768,6 @@ public:
     void setPageIsFocusedAndActive(bool);
     void setPageIsInWindow(bool);
     bool isPageActive() const;
-
-#if ENABLE(WEB_RTC)
-    void setH264HardwareEncoderAllowed(bool allowed);
-#endif
 
 #if ENABLE(MEDIA_STREAM)
     void stopObservingRealtimeMediaSource();

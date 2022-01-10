@@ -15,7 +15,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/GPUProcess"
     "${WEBKIT_DIR}/GPUProcess/graphics"
     "${WEBKIT_DIR}/GPUProcess/media"
-    "${WEBKIT_DIR}/GPUProcess/webrtc"
     "${WEBKIT_DIR}/NetworkProcess"
     "${WEBKIT_DIR}/NetworkProcess/Classifier"
     "${WEBKIT_DIR}/NetworkProcess/Cookies"
@@ -27,7 +26,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/NetworkProcess/WebStorage"
     "${WEBKIT_DIR}/NetworkProcess/cache"
     "${WEBKIT_DIR}/NetworkProcess/watchos"
-    "${WEBKIT_DIR}/NetworkProcess/webrtc"
     "${WEBKIT_DIR}/Platform"
     "${WEBKIT_DIR}/Platform/IPC"
     "${WEBKIT_DIR}/Shared"
@@ -72,7 +70,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/WebProcess/GPU"
     "${WEBKIT_DIR}/WebProcess/GPU/graphics"
     "${WEBKIT_DIR}/WebProcess/GPU/media"
-    "${WEBKIT_DIR}/WebProcess/GPU/webrtc"
     "${WEBKIT_DIR}/WebProcess/IconDatabase"
     "${WEBKIT_DIR}/WebProcess/InjectedBundle"
     "${WEBKIT_DIR}/WebProcess/InjectedBundle/API"
@@ -83,7 +80,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/WebProcess/MediaCache"
     "${WEBKIT_DIR}/WebProcess/MediaStream"
     "${WEBKIT_DIR}/WebProcess/Network"
-    "${WEBKIT_DIR}/WebProcess/Network/webrtc"
     "${WEBKIT_DIR}/WebProcess/Notifications"
     "${WEBKIT_DIR}/WebProcess/OriginData"
     "${WEBKIT_DIR}/WebProcess/ResourceCache"
@@ -128,13 +124,6 @@ set(WebKit_MESSAGES_IN_FILES
     GPUProcess/media/RemoteRemoteCommandListenerProxy
     GPUProcess/media/RemoteSourceBufferProxy
 
-    GPUProcess/webrtc/LibWebRTCCodecsProxy
-    GPUProcess/webrtc/RemoteAudioMediaStreamTrackRendererInternalUnitManager
-    GPUProcess/webrtc/RemoteMediaRecorder
-    GPUProcess/webrtc/RemoteMediaRecorderManager
-    GPUProcess/webrtc/RemoteSampleBufferDisplayLayer
-    GPUProcess/webrtc/RemoteSampleBufferDisplayLayerManager
-
     NetworkProcess/Cookies/WebCookieManager
 
     NetworkProcess/IndexedDB/WebIDBServer
@@ -154,11 +143,6 @@ set(WebKit_MESSAGES_IN_FILES
     NetworkProcess/WebStorage/StorageManagerSet
 
     NetworkProcess/cache/CacheStorageEngineConnection
-
-    NetworkProcess/webrtc/NetworkMDNSRegister
-    NetworkProcess/webrtc/NetworkRTCMonitor
-    NetworkProcess/webrtc/NetworkRTCProvider
-    NetworkProcess/webrtc/RTCDataChannelRemoteManagerProxy
 
     Shared/AuxiliaryProcess
     Shared/WebConnection
@@ -213,22 +197,12 @@ set(WebKit_MESSAGES_IN_FILES
     WebProcess/GPU/media/RemoteRemoteCommandListener
     WebProcess/GPU/media/SourceBufferPrivateRemote
 
-    WebProcess/GPU/webrtc/AudioMediaStreamTrackRendererInternalUnitManager
-    WebProcess/GPU/webrtc/LibWebRTCCodecs
-    WebProcess/GPU/webrtc/SampleBufferDisplayLayer
-
     WebProcess/Inspector/RemoteWebInspectorUI
     WebProcess/Inspector/WebInspector
     WebProcess/Inspector/WebInspectorInterruptDispatcher
     WebProcess/Inspector/WebInspectorUI
 
     WebProcess/MediaSession/RemoteMediaSessionCoordinator
-
-    WebProcess/Network/webrtc/LibWebRTCNetwork
-    WebProcess/Network/webrtc/RTCDataChannelRemoteManager
-    WebProcess/Network/webrtc/WebMDNSRegister
-    WebProcess/Network/webrtc/WebRTCMonitor
-    WebProcess/Network/webrtc/WebRTCResolver
 
     WebProcess/Network/NetworkProcessConnection
     WebProcess/Network/WebResourceLoader
@@ -315,13 +289,6 @@ else ()
         )
         add_definitions(${EGL_DEFINITIONS})
     endif ()
-endif ()
-
-if (USE_LIBWEBRTC)
-    list(APPEND WebKit_SYSTEM_INCLUDE_DIRECTORIES "${THIRDPARTY_DIR}/libwebrtc/Source/"
-        "${THIRDPARTY_DIR}/libwebrtc/Source/webrtc"
-        "${THIRDPARTY_DIR}/libwebrtc/Source/third_party/abseil-cpp")
-    list(APPEND WebKit_LIBRARIES webrtc)
 endif ()
 
 if (ATOMICS_REQUIRE_LIBATOMIC)

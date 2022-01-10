@@ -73,10 +73,6 @@ bool defaultCaptureAudioInUIProcessEnabled();
 bool defaultCaptureVideoInGPUProcessEnabled();
 #endif
 
-#if ENABLE(WEB_RTC)
-bool defaultWebRTCCodecsInGPUProcess();
-#endif
-
 #if HAVE(INCREMENTAL_PDF_APIS)
 bool defaultIncrementalPDFEnabled();
 #endif

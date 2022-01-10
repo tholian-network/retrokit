@@ -209,10 +209,6 @@ struct WebPageCreationParameters {
 
     bool needsFontAttributes { false };
 
-    // WebRTC members.
-    bool iceCandidateFilteringEnabled { true };
-    bool enumeratingAllNetworkInterfacesEnabled { false };
-
     UserContentControllerParameters userContentControllerParameters;
 
     std::optional<WebCore::Color> backgroundColor;

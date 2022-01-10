@@ -151,7 +151,7 @@ InspectorBackend.activateDomain("Canvas", ["page", "web-page"]);
 
 // Console
 InspectorBackend.registerDomain("Console", ["itml", "javascript", "page", "service-worker", "worker"]);
-InspectorBackend.registerEnum("Console.ChannelSource", {XML: "xml", JavaScript: "javascript", Network: "network", ConsoleAPI: "console-api", Storage: "storage", Appcache: "appcache", Rendering: "rendering", CSS: "css", Security: "security", ContentBlocker: "content-blocker", Media: "media", MediaSource: "mediasource", WebRTC: "webrtc", ITPDebug: "itp-debug", AdClickAttribution: "ad-click-attribution", Other: "other"});
+InspectorBackend.registerEnum("Console.ChannelSource", {XML: "xml", JavaScript: "javascript", Network: "network", ConsoleAPI: "console-api", Storage: "storage", Appcache: "appcache", Rendering: "rendering", CSS: "css", Security: "security", ContentBlocker: "content-blocker", Media: "media", MediaSource: "mediasource", ITPDebug: "itp-debug", AdClickAttribution: "ad-click-attribution", Other: "other"});
 InspectorBackend.registerEnum("Console.ChannelLevel", {Off: "off", Basic: "basic", Verbose: "verbose"});
 InspectorBackend.registerEnum("Console.ConsoleMessageLevel", {Log: "log", Info: "info", Warning: "warning", Error: "error", Debug: "debug"});
 InspectorBackend.registerEnum("Console.ConsoleMessageType", {Log: "log", Dir: "dir", DirXML: "dirxml", Table: "table", Trace: "trace", Clear: "clear", StartGroup: "startGroup", StartGroupCollapsed: "startGroupCollapsed", EndGroup: "endGroup", Assert: "assert", Timing: "timing", Profile: "profile", ProfileEnd: "profileEnd", Image: "image"});
@@ -429,7 +429,7 @@ InspectorBackend.activateDomain("Network", ["itml", "page", "service-worker", "w
 
 // Page
 InspectorBackend.registerDomain("Page", ["itml", "page"]);
-InspectorBackend.registerEnum("Page.Setting", {AdClickAttributionDebugModeEnabled: "AdClickAttributionDebugModeEnabled", AuthorAndUserStylesEnabled: "AuthorAndUserStylesEnabled", ICECandidateFilteringEnabled: "ICECandidateFilteringEnabled", ITPDebugModeEnabled: "ITPDebugModeEnabled", ImagesEnabled: "ImagesEnabled", MediaCaptureRequiresSecureConnection: "MediaCaptureRequiresSecureConnection", MockCaptureDevicesEnabled: "MockCaptureDevicesEnabled", NeedsSiteSpecificQuirks: "NeedsSiteSpecificQuirks", ScriptEnabled: "ScriptEnabled", ShowDebugBorders: "ShowDebugBorders", ShowRepaintCounter: "ShowRepaintCounter", WebRTCEncryptionEnabled: "WebRTCEncryptionEnabled", WebSecurityEnabled: "WebSecurityEnabled"});
+InspectorBackend.registerEnum("Page.Setting", {AdClickAttributionDebugModeEnabled: "AdClickAttributionDebugModeEnabled", AuthorAndUserStylesEnabled: "AuthorAndUserStylesEnabled", ITPDebugModeEnabled: "ITPDebugModeEnabled", ImagesEnabled: "ImagesEnabled", MediaCaptureRequiresSecureConnection: "MediaCaptureRequiresSecureConnection", MockCaptureDevicesEnabled: "MockCaptureDevicesEnabled", NeedsSiteSpecificQuirks: "NeedsSiteSpecificQuirks", ScriptEnabled: "ScriptEnabled", ShowDebugBorders: "ShowDebugBorders", ShowRepaintCounter: "ShowRepaintCounter", WebSecurityEnabled: "WebSecurityEnabled"});
 InspectorBackend.registerEnum("Page.ResourceType", {Document: "Document", StyleSheet: "StyleSheet", Image: "Image", Font: "Font", Script: "Script", XHR: "XHR", Fetch: "Fetch", Ping: "Ping", Beacon: "Beacon", WebSocket: "WebSocket", Other: "Other"});
 InspectorBackend.registerEnum("Page.CoordinateSystem", {Viewport: "Viewport", Page: "Page"});
 InspectorBackend.registerEnum("Page.CookieSameSitePolicy", {None: "None", Lax: "Lax", Strict: "Strict"});

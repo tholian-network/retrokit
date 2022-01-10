@@ -80,7 +80,6 @@
 #include "InspectorInstrumentation.h"
 #include "LayoutDisallowedScope.h"
 #include "LegacySchemeRegistry.h"
-#include "LibWebRTCProvider.h"
 #include "LoaderStrategy.h"
 #include "LogInitialization.h"
 #include "Logging.h"
@@ -269,7 +268,6 @@ Page::Page(PageConfiguration&& pageConfiguration)
 #endif
     , m_speechRecognitionProvider((WTFMove(pageConfiguration.speechRecognitionProvider)))
     , m_mediaRecorderProvider((WTFMove(pageConfiguration.mediaRecorderProvider)))
-    , m_libWebRTCProvider(WTFMove(pageConfiguration.libWebRTCProvider))
     , m_verticalScrollElasticity(ScrollElasticityAllowed)
     , m_horizontalScrollElasticity(ScrollElasticityAllowed)
     , m_domTimerAlignmentInterval(DOMTimer::defaultAlignmentInterval())
@@ -346,11 +344,6 @@ Page::Page(PageConfiguration&& pageConfiguration)
 
 #if PLATFORM(COCOA)
     platformInitialize();
-#endif
-
-#if USE(LIBWEBRTC)
-    m_libWebRTCProvider->setH265Support(RuntimeEnabledFeatures::sharedFeatures().webRTCH265CodecEnabled());
-    m_libWebRTCProvider->setVP9Support(RuntimeEnabledFeatures::sharedFeatures().webRTCVP9Profile0CodecEnabled(), RuntimeEnabledFeatures::sharedFeatures().webRTCVP9Profile2CodecEnabled());
 #endif
 
     if (!pageConfiguration.userScriptsShouldWaitUntilNotification)
@@ -3144,27 +3137,8 @@ void Page::setUseDarkAppearanceOverride(std::optional<bool> valueOverride)
 #endif
 }
 
-void Page::disableICECandidateFiltering()
-{
-    m_shouldEnableICECandidateFilteringByDefault = false;
-#if ENABLE(WEB_RTC)
-    m_rtcController.disableICECandidateFilteringForAllOrigins();
-#endif
-}
-
-void Page::enableICECandidateFiltering()
-{
-    m_shouldEnableICECandidateFilteringByDefault = true;
-#if ENABLE(WEB_RTC)
-    m_rtcController.enableICECandidateFiltering();
-#endif
-}
-
 void Page::didChangeMainDocument()
 {
-#if ENABLE(WEB_RTC)
-    m_rtcController.reset(m_shouldEnableICECandidateFilteringByDefault);
-#endif
     m_pointerCaptureController->reset();
 
     if (m_sampledPageTopColor) {
@@ -3226,12 +3200,10 @@ void Page::applicationWillResignActive()
 
 void Page::applicationDidEnterBackground()
 {
-    m_libWebRTCProvider->setActive(false);
 }
 
 void Page::applicationWillEnterForeground()
 {
-    m_libWebRTCProvider->setActive(true);
 }
 
 void Page::applicationDidBecomeActive()
@@ -3311,11 +3283,6 @@ void Page::configureLoggingChannel(const String& channelName, WTFLogChannelState
     if (auto* channel = getLogChannel(channelName)) {
         channel->state = state;
         channel->level = level;
-
-#if USE(LIBWEBRTC)
-        if (channel == &LogWebRTC && m_mainFrame->document() && !sessionID().isEphemeral())
-            libWebRTCProvider().setLoggingLevel(LogWebRTC.level);
-#endif
     }
 
     chrome().client().configureLoggingChannel(channelName, state, level);

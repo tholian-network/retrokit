@@ -311,13 +311,6 @@ void MediaStreamPrivate::trackEnded(MediaStreamTrackPrivate& track)
     characteristicsChanged();
 }
 
-#if !RELEASE_LOG_DISABLED
-WTFLogChannel& MediaStreamPrivate::logChannel() const
-{
-    return LogWebRTC;
-}
-#endif
-
 } // namespace WebCore
 
 #endif // ENABLE(MEDIA_STREAM)

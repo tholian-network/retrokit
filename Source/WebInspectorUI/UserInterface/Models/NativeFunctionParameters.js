@@ -1234,41 +1234,6 @@ WI.NativePrototypeFunctionParameters = {
         __proto__: null,
     },
 
-    RTCDTMFSender: {
-        insertDTMF: "tones, [duration], [interToneGap]",
-        __proto__: null,
-    },
-
-    RTCDataChannel: {
-        send: "data",
-        __proto__: null,
-    },
-
-    RTCPeerConnectionErrorCallback: {
-        handleEvent: "error",
-        __proto__: null,
-    },
-
-    RTCSessionDescriptionCallback: {
-        handleEvent: "sdp",
-        __proto__: null,
-    },
-
-    RTCStatsCallback: {
-        handleEvent: "response",
-        __proto__: null,
-    },
-
-    RTCStatsReport: {
-        stat: "name",
-        __proto__: null,
-    },
-
-    RTCStatsResponse: {
-        namedItem: "[name]",
-        __proto__: null,
-    },
-
     Range: {
         collapse: "[toStart]",
         compareBoundaryPoints: "[how], [sourceRange]",
@@ -2119,22 +2084,6 @@ WI.NativePrototypeFunctionParameters = {
         addTrack: "track",
         getTrackById: "trackId",
         removeTrack: "track",
-        __proto__: null,
-    },
-
-    webkitRTCPeerConnection: {
-        addIceCandidate: "candidate, successCallback, failureCallback",
-        addStream: "stream",
-        createAnswer: "successCallback, failureCallback, [answerOptions]",
-        createDTMFSender: "track",
-        createDataChannel: "label, [options]",
-        createOffer: "successCallback, failureCallback, [offerOptions]",
-        getStats: "successCallback, failureCallback, [selector]",
-        getStreamById: "streamId",
-        removeStream: "stream",
-        setLocalDescription: "description, successCallback, failureCallback",
-        setRemoteDescription: "description, successCallback, failureCallback",
-        updateIce: "configuration",
         __proto__: null,
     },
 

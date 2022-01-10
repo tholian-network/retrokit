@@ -140,27 +140,6 @@ public:
     bool userGesturePromisePropagationEnabled() const { return m_userGesturePromisePropagationEnabled; }
     void setUserGesturePromisePropagationEnabled(bool isEnabled) { m_userGesturePromisePropagationEnabled = isEnabled; }
 
-#if ENABLE(WEB_RTC)
-    bool webRTCDTMFEnabled() const { return m_isWebRTCDTMFEnabled; }
-    void setWebRTCDTMFEnabled(bool isEnabled) { m_isWebRTCDTMFEnabled = isEnabled; }
-    bool webRTCH265CodecEnabled() const { return m_isWebRTCH265CodecEnabled; }
-    void setWebRTCH265CodecEnabled(bool isEnabled) { m_isWebRTCH265CodecEnabled = isEnabled; }
-    bool webRTCVP9Profile0CodecEnabled() const { return m_isWebRTCVP9Profile0CodecEnabled; }
-    void setWebRTCVP9Profile0CodecEnabled(bool isEnabled) { m_isWebRTCVP9Profile0CodecEnabled = isEnabled; }
-    bool webRTCVP9Profile2CodecEnabled() const { return m_isWebRTCVP9Profile2CodecEnabled; }
-    void setWebRTCVP9Profile2CodecEnabled(bool isEnabled) { m_isWebRTCVP9Profile2CodecEnabled = isEnabled; }
-    bool webRTCH264LowLatencyEncoderEnabled() const { return m_isWebRTCH264LowLatencyEncoderEnabled; }
-    void setWebRTCH264LowLatencyEncoderEnabled(bool isEnabled) { m_isWebRTCH264LowLatencyEncoderEnabled = isEnabled; }
-    bool webRTCMDNSICECandidatesEnabled() const { return m_isWebRTCMDNSICECandidatesEnabled; }
-    void setWebRTCMDNSICECandidatesEnabled(bool isEnabled) { m_isWebRTCMDNSICECandidatesEnabled = isEnabled; }
-    bool webRTCH264SimulcastEnabled() const { return m_isWebRTCH264SimulcastEnabled; }
-    void setWebRTCH264SimulcastEnabled(bool isEnabled) { m_isWebRTCH264SimulcastEnabled = isEnabled; }
-    bool webRTCPlatformTCPSocketsEnabled() const { return m_isWebRTCPlatformTCPSocketsEnabled; }
-    void setWebRTCPlatformTCPSocketsEnabled(bool isEnabled) { m_isWebRTCPlatformTCPSocketsEnabled = isEnabled; }
-    bool webRTCPlatformUDPSocketsEnabled() const { return m_isWebRTCPlatformUDPSocketsEnabled; }
-    void setWebRTCPlatformUDPSocketsEnabled(bool isEnabled) { m_isWebRTCPlatformUDPSocketsEnabled = isEnabled; }
-#endif
-
 #if ENABLE(DATALIST_ELEMENT)
     bool dataListElementEnabled() const { return m_isDataListElementEnabled; }
     void setDataListElementEnabled(bool isEnabled) { m_isDataListElementEnabled = isEnabled; }
@@ -302,18 +281,6 @@ private:
 #endif
 
     bool m_userGesturePromisePropagationEnabled { true };
-
-#if ENABLE(WEB_RTC)
-    bool m_isWebRTCDTMFEnabled { true };
-    bool m_isWebRTCH264SimulcastEnabled { true };
-    bool m_isWebRTCMDNSICECandidatesEnabled { false };
-    bool m_isWebRTCH265CodecEnabled { false };
-    bool m_isWebRTCVP9Profile0CodecEnabled { false };
-    bool m_isWebRTCVP9Profile2CodecEnabled { false };
-    bool m_isWebRTCH264LowLatencyEncoderEnabled { false };
-    bool m_isWebRTCPlatformTCPSocketsEnabled { false };
-    bool m_isWebRTCPlatformUDPSocketsEnabled { false };
-#endif
 
 #if ENABLE(DATALIST_ELEMENT)
     bool m_isDataListElementEnabled { false };

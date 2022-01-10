@@ -605,13 +605,6 @@ WebGLErrorsToConsoleEnabled:
     WebCore:
       default: true
 
-WebRTCEncryptionEnabled:
-  type: bool
-  inspectorOverride: true
-  defaultValue:
-    WebCore:
-      default: true
-
 WebkitImageReadyEventEnabled:
   type: bool
   defaultValue:

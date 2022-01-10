@@ -120,7 +120,6 @@
 #include "JSDOMPromiseDeferred.h"
 #include "JSImageData.h"
 #include "LegacySchemeRegistry.h"
-#include "LibWebRTCProvider.h"
 #include "LoaderStrategy.h"
 #include "LocalizedStrings.h"
 #include "Location.h"
@@ -141,7 +140,6 @@
 #include "MemoryCache.h"
 #include "MemoryInfo.h"
 #include "MockAudioDestinationCocoa.h"
-#include "MockLibWebRTCPeerConnection.h"
 #include "MockPageOverlay.h"
 #include "MockPageOverlayClient.h"
 #include "NavigatorBeacon.h"
@@ -276,10 +274,6 @@
 #include "MediaRecorderPrivateMock.h"
 #include "MediaStream.h"
 #include "MockRealtimeMediaSourceCenter.h"
-#endif
-
-#if ENABLE(WEB_RTC)
-#include "RTCPeerConnection.h"
 #endif
 
 #if ENABLE(MEDIA_SOURCE)
@@ -563,15 +557,6 @@ void Internals::resetToConsistentState(Page& page)
 #endif
 
     printContextForTesting() = nullptr;
-
-#if USE(LIBWEBRTC)
-    auto& rtcProvider = page.libWebRTCProvider();
-    WebCore::useRealRTCPeerConnectionFactory(rtcProvider);
-    rtcProvider.disableNonLocalhostConnections();
-    LibWebRTCProvider::setH264HardwareEncoderAllowed(true);
-    RuntimeEnabledFeatures::sharedFeatures().setWebRTCH265CodecEnabled(true);
-    page.settings().setWebRTCEncryptionEnabled(true);
-#endif
 
     MediaEngineConfigurationFactory::disableMock();
 
@@ -1467,144 +1452,6 @@ void Internals::enableMockSpeechSynthesizer()
         return;
 
     synthesis->setPlatformSynthesizer(makeUnique<PlatformSpeechSynthesizerMock>(synthesis));
-}
-
-#endif
-
-#if ENABLE(WEB_RTC)
-
-void Internals::emulateRTCPeerConnectionPlatformEvent(RTCPeerConnection& connection, const String& action)
-{
-    if (!LibWebRTCProvider::webRTCAvailable())
-        return;
-
-    connection.emulatePlatformEvent(action);
-}
-
-void Internals::useMockRTCPeerConnectionFactory(const String& testCase)
-{
-    if (!LibWebRTCProvider::webRTCAvailable())
-        return;
-
-#if USE(LIBWEBRTC)
-    Document* document = contextDocument();
-    LibWebRTCProvider* provider = (document && document->page()) ? &document->page()->libWebRTCProvider() : nullptr;
-    WebCore::useMockRTCPeerConnectionFactory(provider, testCase);
-#else
-    UNUSED_PARAM(testCase);
-#endif
-}
-
-void Internals::setICECandidateFiltering(bool enabled)
-{
-    auto* page = contextDocument()->page();
-    if (!page)
-        return;
-
-    auto& rtcController = page->rtcController();
-    if (enabled)
-        rtcController.enableICECandidateFiltering();
-    else
-        rtcController.disableICECandidateFilteringForAllOrigins();
-}
-
-void Internals::setEnumeratingAllNetworkInterfacesEnabled(bool enabled)
-{
-#if USE(LIBWEBRTC)
-    Document* document = contextDocument();
-    auto* page = document->page();
-    if (!page)
-        return;
-    auto& rtcProvider = page->libWebRTCProvider();
-    if (enabled)
-        rtcProvider.enableEnumeratingAllNetworkInterfaces();
-    else
-        rtcProvider.disableEnumeratingAllNetworkInterfaces();
-#else
-    UNUSED_PARAM(enabled);
-#endif
-}
-
-void Internals::stopPeerConnection(RTCPeerConnection& connection)
-{
-    ActiveDOMObject& object = connection;
-    object.stop();
-}
-
-void Internals::clearPeerConnectionFactory()
-{
-#if USE(LIBWEBRTC)
-    if (auto* page = contextDocument()->page())
-        page->libWebRTCProvider().clearFactory();
-#endif
-}
-
-void Internals::applyRotationForOutgoingVideoSources(RTCPeerConnection& connection)
-{
-    connection.applyRotationForOutgoingVideoSources();
-}
-void Internals::setWebRTCH265Support(bool value)
-{
-#if USE(LIBWEBRTC)
-    if (auto* page = contextDocument()->page()) {
-        page->libWebRTCProvider().setH265Support(value);
-        page->libWebRTCProvider().clearFactory();
-    }
-#endif
-}
-
-void Internals::setWebRTCVP9Support(bool supportVP9Profile0, bool supportVP9Profile2)
-{
-#if USE(LIBWEBRTC)
-    if (auto* page = contextDocument()->page()) {
-        page->libWebRTCProvider().setVP9Support(supportVP9Profile0, supportVP9Profile2);
-        page->libWebRTCProvider().clearFactory();
-    }
-#endif
-}
-
-void Internals::setWebRTCVP9VTBSupport(bool value)
-{
-#if USE(LIBWEBRTC)
-    if (auto* page = contextDocument()->page()) {
-        page->libWebRTCProvider().setVP9VTBSupport(value);
-        page->libWebRTCProvider().clearFactory();
-    }
-#endif
-}
-
-void Internals::setSFrameCounter(RTCRtpSFrameTransform& transform, const String& counter)
-{
-    if (auto value = parseInteger<uint64_t>(counter))
-        transform.setCounterForTesting(*value);
-}
-
-uint64_t Internals::sframeCounter(const RTCRtpSFrameTransform& transform)
-{
-    return transform.counterForTesting();
-}
-
-uint64_t Internals::sframeKeyId(const RTCRtpSFrameTransform& transform)
-{
-    return transform.keyIdForTesting();
-}
-
-void Internals::setEnableWebRTCEncryption(bool value)
-{
-#if USE(LIBWEBRTC)
-    if (auto* page = contextDocument()->page())
-        page->settings().setWebRTCEncryptionEnabled(value);
-#endif
-}
-
-void Internals::setUseDTLS10(bool useDTLS10)
-{
-#if USE(LIBWEBRTC)
-    auto* document = contextDocument();
-    if (!document || !document->page())
-        return;
-    document->page()->libWebRTCProvider().setUseDTLS10(useDTLS10);
-#endif
 }
 
 #endif
@@ -5183,13 +5030,6 @@ bool Internals::isPageActive() const
     auto& page = *document->page();
     return page.activityState().contains(ActivityState::WindowIsActive);
 }
-
-#if ENABLE(WEB_RTC)
-void Internals::setH264HardwareEncoderAllowed(bool allowed)
-{
-    LibWebRTCProvider::setH264HardwareEncoderAllowed(allowed);
-}
-#endif
 
 #if ENABLE(MEDIA_STREAM)
 void Internals::setMockAudioTrackChannelNumber(MediaStreamTrack& track, unsigned short channelNumber)

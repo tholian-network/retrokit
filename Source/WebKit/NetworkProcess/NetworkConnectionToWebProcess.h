@@ -252,11 +252,6 @@ private:
     void unregisterSWConnection();
 #endif
 
-    void createRTCProvider(CompletionHandler<void()>&&);
-#if ENABLE(WEB_RTC)
-    void connectToRTCDataChannelRemoteSource(WebCore::RTCDataChannelIdentifier source, WebCore::RTCDataChannelIdentifier handler, CompletionHandler<void(std::optional<bool>)>&&);
-#endif
-
     void createNewMessagePortChannel(const WebCore::MessagePortIdentifier& port1, const WebCore::MessagePortIdentifier& port2);
     void entangleLocalPortInThisProcessToRemote(const WebCore::MessagePortIdentifier& local, const WebCore::MessagePortIdentifier& remote);
     void messagePortDisentangled(const WebCore::MessagePortIdentifier&);
@@ -270,15 +265,6 @@ private:
 
 #if PLATFORM(MAC)
     void updateActivePages(const String& name, const Vector<String>& activePagesOrigins, audit_token_t);
-#endif
-
-#if USE(LIBWEBRTC)
-    NetworkRTCProvider& rtcProvider();
-#endif
-#if ENABLE(WEB_RTC)
-    NetworkMDNSRegister& mdnsRegister() { return m_mdnsRegister; }
-    void registerToRTCDataChannelProxy();
-    void unregisterToRTCDataChannelProxy();
 #endif
 
     CacheStorageEngineConnection& cacheStorageConnection();
@@ -359,12 +345,6 @@ private:
     HashMap<ResourceLoadIdentifier, std::unique_ptr<WebCore::NetworkLoadInformation>> m_networkLoadInformationByID;
 
 
-#if USE(LIBWEBRTC)
-    RefPtr<NetworkRTCProvider> m_rtcProvider;
-#endif
-#if ENABLE(WEB_RTC)
-    NetworkMDNSRegister m_mdnsRegister;
-#endif
 #if HAVE(COOKIE_CHANGE_LISTENER_API)
     HashSet<String> m_hostsWithCookieListeners;
 #endif
@@ -376,10 +356,6 @@ private:
 #if ENABLE(SERVICE_WORKER)
     WeakPtr<WebSWServerConnection> m_swConnection;
     std::unique_ptr<WebSWServerToContextConnection> m_swContextConnection;
-#endif
-
-#if ENABLE(WEB_RTC)
-    bool m_isRegisteredToRTCDataChannelProxy { false };
 #endif
 
     const WebCore::ProcessIdentifier m_webProcessIdentifier;

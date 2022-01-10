@@ -102,9 +102,6 @@ NetworkConnectionToWebProcess::NetworkConnectionToWebProcess(NetworkProcess& net
     , m_networkProcess(networkProcess)
     , m_sessionID(sessionID)
     , m_networkResourceLoaders([this](bool hasUpload) { hasUploadStateChanged(hasUpload); })
-#if ENABLE(WEB_RTC)
-    , m_mdnsRegister(*this)
-#endif
     , m_webProcessIdentifier(webProcessIdentifier)
     , m_schemeRegistry(NetworkSchemeRegistry::create())
 {
@@ -136,14 +133,6 @@ NetworkConnectionToWebProcess::~NetworkConnectionToWebProcess()
 #if HAVE(COOKIE_CHANGE_LISTENER_API)
     if (auto* networkStorageSession = storageSession())
         networkStorageSession->stopListeningForCookieChangeNotifications(*this, m_hostsWithCookieListeners);
-#endif
-
-#if USE(LIBWEBRTC)
-    if (m_rtcProvider)
-        m_rtcProvider->close();
-#endif
-#if ENABLE(WEB_RTC)
-    unregisterToRTCDataChannelProxy();
 #endif
 
 #if ENABLE(SERVICE_WORKER)
@@ -219,24 +208,11 @@ void NetworkConnectionToWebProcess::didReceiveMessage(IPC::Connection& connectio
         return;
     }
 
-#if USE(LIBWEBRTC)
-    if (decoder.messageReceiverName() == Messages::NetworkRTCMonitor::messageReceiverName()) {
-        rtcProvider().didReceiveNetworkRTCMonitorMessage(connection, decoder);
-        return;
-    }
-#endif
-#if ENABLE(WEB_RTC)
-    if (decoder.messageReceiverName() == Messages::NetworkMDNSRegister::messageReceiverName()) {
-        mdnsRegister().didReceiveMessage(connection, decoder);
-        return;
-    }
-#endif
-
     if (decoder.messageReceiverName() == Messages::CacheStorageEngineConnection::messageReceiverName()) {
         cacheStorageConnection().didReceiveMessage(connection, decoder);
         return;
     }
-    
+
 #if ENABLE(SERVICE_WORKER)
     if (decoder.messageReceiverName() == Messages::WebSWServerConnection::messageReceiverName()) {
         if (m_swConnection)
@@ -259,51 +235,6 @@ void NetworkConnectionToWebProcess::didReceiveMessage(IPC::Connection& connectio
     WTFLogAlways("Unhandled network process message '%s'", description(decoder.messageName()));
     ASSERT_NOT_REACHED();
 }
-
-#if USE(LIBWEBRTC)
-NetworkRTCProvider& NetworkConnectionToWebProcess::rtcProvider()
-{
-    if (!m_rtcProvider)
-        m_rtcProvider = NetworkRTCProvider::create(*this);
-    return *m_rtcProvider;
-}
-#endif
-
-void NetworkConnectionToWebProcess::createRTCProvider(CompletionHandler<void()>&& callback)
-{
-#if USE(LIBWEBRTC)
-    rtcProvider();
-#endif
-    callback();
-}
-
-#if ENABLE(WEB_RTC)
-void NetworkConnectionToWebProcess::connectToRTCDataChannelRemoteSource(WebCore::RTCDataChannelIdentifier localIdentifier, WebCore::RTCDataChannelIdentifier remoteIdentifier, CompletionHandler<void(std::optional<bool>)>&& callback)
-{
-    auto* connectionToWebProcess = m_networkProcess->webProcessConnection(remoteIdentifier.processIdentifier);
-    if (!connectionToWebProcess) {
-        callback(false);
-        return;
-    }
-    registerToRTCDataChannelProxy();
-    connectionToWebProcess->registerToRTCDataChannelProxy();
-    connectionToWebProcess->connection().sendWithAsyncReply(Messages::NetworkProcessConnection::ConnectToRTCDataChannelRemoteSource { remoteIdentifier, localIdentifier }, WTFMove(callback), 0);
-}
-
-void NetworkConnectionToWebProcess::registerToRTCDataChannelProxy()
-{
-    if (m_isRegisteredToRTCDataChannelProxy)
-        return;
-    m_isRegisteredToRTCDataChannelProxy = true;
-    m_networkProcess->rtcDataChannelProxy().registerConnectionToWebProcess(*this);
-}
-
-void NetworkConnectionToWebProcess::unregisterToRTCDataChannelProxy()
-{
-    if (m_isRegisteredToRTCDataChannelProxy)
-        m_networkProcess->rtcDataChannelProxy().unregisterConnectionToWebProcess(*this);
-}
-#endif
 
 CacheStorageEngineConnection& NetworkConnectionToWebProcess::cacheStorageConnection()
 {
@@ -371,13 +302,6 @@ void NetworkConnectionToWebProcess::didClose(IPC::Connection& connection)
 
     m_networkProcess->removeNetworkConnectionToWebProcess(*this);
 
-#if USE(LIBWEBRTC)
-    if (m_rtcProvider) {
-        m_rtcProvider->close();
-        m_rtcProvider = nullptr;
-    }
-#endif
-
 #if ENABLE(SERVICE_WORKER)
     unregisterSWConnection();
 #endif
@@ -415,21 +339,11 @@ void NetworkConnectionToWebProcess::removeSocketChannel(WebSocketIdentifier iden
 
 void NetworkConnectionToWebProcess::cleanupForSuspension(Function<void()>&& completionHandler)
 {
-#if USE(LIBWEBRTC)
-    if (m_rtcProvider) {
-        m_rtcProvider->closeListeningSockets(WTFMove(completionHandler));
-        return;
-    }
-#endif
     completionHandler();
 }
 
 void NetworkConnectionToWebProcess::endSuspension()
 {
-#if USE(LIBWEBRTC)
-    if (m_rtcProvider)
-        m_rtcProvider->authorizeListeningSockets();
-#endif
 }
 
 NetworkSession* NetworkConnectionToWebProcess::networkSession()

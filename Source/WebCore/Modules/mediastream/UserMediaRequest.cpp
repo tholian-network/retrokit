@@ -276,10 +276,6 @@ void UserMediaRequest::allow(CaptureDevice&& audioDevice, CaptureDevice&& videoD
         if (!m_scriptExecutionContext)
             return;
 
-#if ENABLE(WEB_RTC)
-        if (auto* page = document.page())
-            page->rtcController().disableICECandidateFilteringForDocument(document);
-#endif
     });
 }
 

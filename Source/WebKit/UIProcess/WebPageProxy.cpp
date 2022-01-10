@@ -7879,8 +7879,7 @@ WebPageCreationParameters WebPageProxy::creationParameters(WebProcessProxy& proc
 #if PLATFORM(COCOA)
     parameters.smartInsertDeleteEnabled = m_isSmartInsertDeleteEnabled;
     parameters.additionalSupportedImageTypes = m_configuration->additionalSupportedImageTypes();
-    
-    // Allow microphone access if either preference is set because WebRTC requires microphone access.
+
     bool needWebProcessExtensions = !preferences().useGPUProcessForMediaEnabled()
         || !preferences().captureAudioInGPUProcessEnabled()
         || !preferences().captureVideoInGPUProcessEnabled();
@@ -7923,15 +7922,6 @@ WebPageCreationParameters WebPageProxy::creationParameters(WebProcessProxy& proc
 
     for (auto& iterator : m_urlSchemeHandlersByScheme)
         parameters.urlSchemeHandlers.set(iterator.key, iterator.value->identifier());
-
-#if ENABLE(WEB_RTC)
-    // FIXME: This is also being passed over the to WebProcess via the PreferencesStore.
-    parameters.iceCandidateFilteringEnabled = m_preferences->iceCandidateFilteringEnabled();
-#if USE(LIBWEBRTC)
-    // FIXME: This is also being passed over the to WebProcess via the PreferencesStore.
-    parameters.enumeratingAllNetworkInterfacesEnabled = m_preferences->enumeratingAllNetworkInterfacesEnabled();
-#endif
-#endif
 
 #if ENABLE(APPLICATION_MANIFEST)
     parameters.applicationManifest = m_configuration->applicationManifest() ? std::optional<WebCore::ApplicationManifest>(m_configuration->applicationManifest()->applicationManifest()) : std::nullopt;
@@ -9132,8 +9122,6 @@ void WebPageProxy::updateReportedMediaCaptureState()
 
     if (!haveReportedCapture && willReportCapture)
         m_updateReportedMediaCaptureStateTimer.startOneShot(m_mediaCaptureReportingDelay);
-
-    WEBPAGEPROXY_RELEASE_LOG(WebRTC, "updateReportedMediaCaptureState: from %d to %d", m_reportedMediaCaptureState.toRaw(), activeCaptureState.toRaw());
 
     bool microphoneCaptureChanged = (m_reportedMediaCaptureState & MediaProducer::AudioCaptureMask) != (activeCaptureState & MediaProducer::AudioCaptureMask);
     bool cameraCaptureChanged = (m_reportedMediaCaptureState & MediaProducer::VideoCaptureMask) != (activeCaptureState & MediaProducer::VideoCaptureMask);

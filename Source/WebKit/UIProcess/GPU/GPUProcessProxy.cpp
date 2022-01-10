@@ -204,41 +204,12 @@ void GPUProcessProxy::setOrientationForMediaCapture(uint64_t orientation)
 
 static inline bool addCameraSandboxExtensions(Vector<SandboxExtension::Handle>& extensions)
 {
-    auto sandboxExtensionHandle = SandboxExtension::createHandleForGenericExtension("com.apple.webkit.camera"_s);
-    if (!sandboxExtensionHandle) {
-        RELEASE_LOG_ERROR(WebRTC, "Unable to create com.apple.webkit.camera sandbox extension");
-        return false;
-    }
-#if HAVE(AUDIT_TOKEN)
-        if (shouldCreateAppleCameraServiceSandboxExtension()) {
-            auto appleCameraServicePathSandboxExtensionHandle = SandboxExtension::createHandleForMachLookup("com.apple.applecamerad"_s, std::nullopt);
-            if (!appleCameraServicePathSandboxExtensionHandle) {
-                RELEASE_LOG_ERROR(WebRTC, "Unable to create com.apple.applecamerad sandbox extension");
-                return false;
-            }
-#if HAVE(ADDITIONAL_APPLE_CAMERA_SERVICE)
-            auto additionalAppleCameraServicePathSandboxExtensionHandle = SandboxExtension::createHandleForMachLookup("com.apple.appleh13camerad"_s, std::nullopt);
-            if (!additionalAppleCameraServicePathSandboxExtensionHandle) {
-                RELEASE_LOG_ERROR(WebRTC, "Unable to create com.apple.appleh13camerad sandbox extension");
-                return false;
-            }
-            extensions.append(WTFMove(*additionalAppleCameraServicePathSandboxExtensionHandle));
-#endif
-            extensions.append(WTFMove(*appleCameraServicePathSandboxExtensionHandle));
-        }
-#endif // HAVE(AUDIT_TOKEN)
-
     extensions.append(WTFMove(*sandboxExtensionHandle));
     return true;
 }
 
 static inline bool addMicrophoneSandboxExtension(Vector<SandboxExtension::Handle>& extensions)
 {
-    auto sandboxExtensionHandle = SandboxExtension::createHandleForGenericExtension("com.apple.webkit.microphone"_s);
-    if (!sandboxExtensionHandle) {
-        RELEASE_LOG_ERROR(WebRTC, "Unable to create com.apple.webkit.microphone sandbox extension");
-        return false;
-    }
     extensions.append(WTFMove(*sandboxExtensionHandle));
     return true;
 }
@@ -246,11 +217,6 @@ static inline bool addMicrophoneSandboxExtension(Vector<SandboxExtension::Handle
 #if PLATFORM(IOS)
 static inline bool addTCCDSandboxExtension(Vector<SandboxExtension::Handle>& extensions)
 {
-    auto handle = SandboxExtension::createHandleForMachLookup("com.apple.tccd"_s, std::nullopt);
-    if (!handle) {
-        RELEASE_LOG_ERROR(WebRTC, "Unable to create com.apple.tccd sandbox extension");
-        return false;
-    }
     extensions.append(WTFMove(*handle));
     return true;
 }

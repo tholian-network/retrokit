@@ -1173,7 +1173,6 @@
                 "content-blocker",
                 "media",
                 "mediasource",
-                "webrtc",
                 "itp-debug",
                 "private-click-measurement",
                 "other"
@@ -3703,7 +3702,6 @@
             "enum": [
                 "PrivateClickMeasurementDebugModeEnabled",
                 "AuthorAndUserStylesEnabled",
-                "ICECandidateFilteringEnabled",
                 "ITPDebugModeEnabled",
                 "ImagesEnabled",
                 "MediaCaptureRequiresSecureConnection",
@@ -3712,7 +3710,6 @@
                 "ScriptEnabled",
                 "ShowDebugBorders",
                 "ShowRepaintCounter",
-                "WebRTCEncryptionEnabled",
                 "WebSecurityEnabled"
             ]
         },

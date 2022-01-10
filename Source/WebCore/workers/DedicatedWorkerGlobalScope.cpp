@@ -122,16 +122,4 @@ void DedicatedWorkerGlobalScope::cancelAnimationFrame(CallbackId callbackId)
 }
 #endif
 
-#if ENABLE(WEB_RTC)
-RefPtr<RTCRtpScriptTransformer> DedicatedWorkerGlobalScope::createRTCRtpScriptTransformer(MessageWithMessagePorts&& options)
-{
-    auto transformerOrException = RTCRtpScriptTransformer::create(*this, WTFMove(options));
-    if (transformerOrException.hasException())
-        return nullptr;
-    auto transformer = transformerOrException.releaseReturnValue();
-    dispatchEvent(RTCTransformEvent::create(eventNames().rtctransformEvent, transformer.copyRef(), Event::IsTrusted::Yes));
-    return transformer;
-}
-#endif
-
 } // namespace WebCore

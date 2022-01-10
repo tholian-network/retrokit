@@ -53,8 +53,6 @@
 #include "JSImageData.h"
 #include "JSMessagePort.h"
 #include "JSNavigator.h"
-#include "JSRTCCertificate.h"
-#include "JSRTCDataChannel.h"
 #include "ScriptExecutionContext.h"
 #include "ScriptState.h"
 #include "SharedBuffer.h"
@@ -177,9 +175,6 @@ enum SerializationTag {
     DOMMatrixTag = 41,
     DOMQuadTag = 42,
     ImageBitmapTransferTag = 43,
-#if ENABLE(WEB_RTC)
-    RTCCertificateTag = 44,
-#endif
     ImageBitmapTag = 45,
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
     OffscreenCanvasTransferTag = 46,
@@ -188,9 +183,6 @@ enum SerializationTag {
     BigIntObjectTag = 48,
 #if ENABLE(WEBASSEMBLY)
     WasmMemoryTag = 49,
-#endif
-#if ENABLE(WEB_RTC)
-    RTCDataChannelTransferTag = 50,
 #endif
     DOMExceptionTag = 51,
     ErrorTag = 255
@@ -385,11 +377,9 @@ static const unsigned StringDataIs8BitFlag = 0x80000000;
  *    | DOMMatrix
  *    | DOMQuad
  *    | ImageBitmapTransferTag <value:uint32_t>
- *    | RTCCertificateTag
  *    | ImageBitmapTag <originClean:uint8_t> <logicalWidth:int32_t> <logicalHeight:int32_t> <resolutionScale:double> <byteLength:uint32_t>(<imageByteData:uint8_t>)
  *    | OffscreenCanvasTransferTag <value:uint32_t>
  *    | WasmMemoryTag <value:uint32_t>
- *    | RTCDataChannelTransferTag <processIdentifier:uint64_t><rtcDataChannelIdentifier:uint64_t><label:String>
  *    | DOMExceptionTag <message:String> <name:String>
  *
  * Inside certificate, data is serialized in this format as per spec:
@@ -593,9 +583,6 @@ public:
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
             const Vector<RefPtr<OffscreenCanvas>>& offscreenCanvases,
 #endif
-#if ENABLE(WEB_RTC)
-            const Vector<Ref<RTCDataChannel>>& rtcDataChannels,
-#endif
 #if ENABLE(WEBASSEMBLY)
             WasmModuleArray& wasmModules,
             WasmMemoryHandleArray& wasmMemoryHandles,
@@ -605,9 +592,6 @@ public:
         CloneSerializer serializer(lexicalGlobalObject, messagePorts, arrayBuffers, imageBitmaps,
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
             offscreenCanvases,
-#endif
-#if ENABLE(WEB_RTC)
-            rtcDataChannels,
 #endif
 #if ENABLE(WEBASSEMBLY)
             wasmModules,
@@ -640,9 +624,6 @@ private:
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
             const Vector<RefPtr<OffscreenCanvas>>& offscreenCanvases,
 #endif
-#if ENABLE(WEB_RTC)
-            const Vector<Ref<RTCDataChannel>>& rtcDataChannels,
-#endif
 #if ENABLE(WEBASSEMBLY)
             WasmModuleArray& wasmModules,
             WasmMemoryHandleArray& wasmMemoryHandles,
@@ -665,9 +646,6 @@ private:
         fillTransferMap(imageBitmaps, m_transferredImageBitmaps);
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
         fillTransferMap(offscreenCanvases, m_transferredOffscreenCanvases);
-#endif
-#if ENABLE(WEB_RTC)
-        fillTransferMap(rtcDataChannels, m_transferredRTCDataChannels);
 #endif
     }
 
@@ -1120,20 +1098,6 @@ private:
     }
 #endif
 
-#if ENABLE(WEB_RTC)
-    void dumpRTCDataChannel(JSObject* obj, SerializationReturnCode& code)
-    {
-        auto index = m_transferredRTCDataChannels.find(obj);
-        if (index != m_transferredRTCDataChannels.end()) {
-            write(RTCDataChannelTransferTag);
-            write(index->value);
-            return;
-        }
-
-        code = SerializationReturnCode::DataCloneError;
-    }
-#endif
-
     void dumpDOMException(JSObject* obj, SerializationReturnCode& code)
     {
         if (auto* exception = JSDOMException::toWrapped(m_lexicalGlobalObject->vm(), obj)) {
@@ -1309,9 +1273,6 @@ private:
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
                     { },
 #endif
-#if ENABLE(WEB_RTC)
-                    { },
-#endif
 #if ENABLE(WEBASSEMBLY)
                     dummyModules,
                     dummyMemoryHandles,
@@ -1322,21 +1283,6 @@ private:
                 if (!wrapCryptoKey(m_lexicalGlobalObject, serializedKey, wrappedKey))
                     return false;
                 write(wrappedKey);
-                return true;
-            }
-#endif
-#if ENABLE(WEB_RTC)
-            if (auto* rtcCertificate = JSRTCCertificate::toWrapped(vm, obj)) {
-                write(RTCCertificateTag);
-                write(rtcCertificate->expires());
-                write(rtcCertificate->pemCertificate());
-                write(rtcCertificate->origin().toString());
-                write(rtcCertificate->pemPrivateKey());
-                write(static_cast<unsigned>(rtcCertificate->getFingerprints().size()));
-                for (const auto& fingerprint : rtcCertificate->getFingerprints()) {
-                    write(fingerprint.algorithm);
-                    write(fingerprint.value);
-                }
                 return true;
             }
 #endif
@@ -1390,12 +1336,6 @@ private:
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
             if (obj->inherits(vm, JSOffscreenCanvas::info())) {
                 dumpOffscreenCanvas(obj, code);
-                return true;
-            }
-#endif
-#if ENABLE(WEB_RTC)
-            if (obj->inherits(vm, JSRTCDataChannel::info())) {
-                dumpRTCDataChannel(obj, code);
                 return true;
             }
 #endif
@@ -1768,9 +1708,6 @@ private:
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
     ObjectPool m_transferredOffscreenCanvases;
 #endif
-#if ENABLE(WEB_RTC)
-    ObjectPool m_transferredRTCDataChannels;
-#endif
     typedef HashMap<RefPtr<UniquedStringImpl>, uint32_t, IdentifierRepHash> StringConstantPool;
     StringConstantPool m_constantPool;
     Identifier m_emptyIdentifier;
@@ -2066,9 +2003,6 @@ public:
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
         , Vector<std::unique_ptr<DetachedOffscreenCanvas>>&& detachedOffscreenCanvases
 #endif
-#if ENABLE(WEB_RTC)
-        , Vector<std::unique_ptr<DetachedRTCDataChannel>>&& detachedRTCDataChannels
-#endif
         , ArrayBufferContentsArray* arrayBufferContentsArray, const Vector<uint8_t>& buffer, const Vector<String>& blobURLs, const Vector<String> blobFilePaths, ArrayBufferContentsArray* sharedBuffers
 #if ENABLE(WEBASSEMBLY)
         , WasmModuleArray* wasmModules
@@ -2081,9 +2015,6 @@ public:
         CloneDeserializer deserializer(lexicalGlobalObject, globalObject, messagePorts, arrayBufferContentsArray, buffer, blobURLs, blobFilePaths, sharedBuffers, WTFMove(backingStores)
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
             , WTFMove(detachedOffscreenCanvases)
-#endif
-#if ENABLE(WEB_RTC)
-            , WTFMove(detachedRTCDataChannels)
 #endif
 #if ENABLE(WEBASSEMBLY)
             , wasmModules
@@ -2139,9 +2070,6 @@ private:
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
         , Vector<std::unique_ptr<DetachedOffscreenCanvas>>&& detachedOffscreenCanvases = { }
 #endif
-#if ENABLE(WEB_RTC)
-        , Vector<std::unique_ptr<DetachedRTCDataChannel>>&& detachedRTCDataChannels = { }
-#endif
 #if ENABLE(WEBASSEMBLY)
         , WasmModuleArray* wasmModules = nullptr
         , WasmMemoryHandleArray* wasmMemoryHandles = nullptr
@@ -2163,10 +2091,6 @@ private:
         , m_detachedOffscreenCanvases(WTFMove(detachedOffscreenCanvases))
         , m_offscreenCanvases(m_detachedOffscreenCanvases.size())
 #endif
-#if ENABLE(WEB_RTC)
-        , m_detachedRTCDataChannels(WTFMove(detachedRTCDataChannels))
-        , m_rtcDataChannels(m_detachedRTCDataChannels.size())
-#endif
 #if ENABLE(WEBASSEMBLY)
         , m_wasmModules(wasmModules)
         , m_wasmMemoryHandles(wasmMemoryHandles)
@@ -2179,9 +2103,6 @@ private:
     CloneDeserializer(JSGlobalObject* lexicalGlobalObject, JSGlobalObject* globalObject, const Vector<RefPtr<MessagePort>>& messagePorts, ArrayBufferContentsArray* arrayBufferContents, const Vector<uint8_t>& buffer, const Vector<String>& blobURLs, const Vector<String> blobFilePaths, ArrayBufferContentsArray* sharedBuffers, Vector<std::optional<ImageBitmapBacking>>&& backingStores
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
         , Vector<std::unique_ptr<DetachedOffscreenCanvas>>&& detachedOffscreenCanvases
-#endif
-#if ENABLE(WEB_RTC)
-        , Vector<std::unique_ptr<DetachedRTCDataChannel>>&& detachedRTCDataChannels
 #endif
 #if ENABLE(WEBASSEMBLY)
         , WasmModuleArray* wasmModules
@@ -2206,10 +2127,6 @@ private:
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
         , m_detachedOffscreenCanvases(WTFMove(detachedOffscreenCanvases))
         , m_offscreenCanvases(m_detachedOffscreenCanvases.size())
-#endif
-#if ENABLE(WEB_RTC)
-        , m_detachedRTCDataChannels(WTFMove(detachedRTCDataChannels))
-        , m_rtcDataChannels(m_detachedRTCDataChannels.size())
 #endif
 #if ENABLE(WEBASSEMBLY)
         , m_wasmModules(wasmModules)
@@ -3092,70 +3009,6 @@ private:
     }
 #endif
 
-#if ENABLE(WEB_RTC)
-    JSValue readRTCCertificate()
-    {
-        double expires;
-        if (!read(expires)) {
-            fail();
-            return JSValue();
-        }
-        CachedStringRef certificate;
-        if (!readStringData(certificate)) {
-            fail();
-            return JSValue();
-        }
-        CachedStringRef origin;
-        if (!readStringData(origin)) {
-            fail();
-            return JSValue();
-        }
-        CachedStringRef keyedMaterial;
-        if (!readStringData(keyedMaterial)) {
-            fail();
-            return JSValue();
-        }
-        unsigned size = 0;
-        if (!read(size))
-            return JSValue();
-
-        Vector<RTCCertificate::DtlsFingerprint> fingerprints;
-        fingerprints.reserveInitialCapacity(size);
-        for (unsigned i = 0; i < size; i++) {
-            CachedStringRef algorithm;
-            if (!readStringData(algorithm))
-                return JSValue();
-            CachedStringRef value;
-            if (!readStringData(value))
-                return JSValue();
-            fingerprints.uncheckedAppend(RTCCertificate::DtlsFingerprint { algorithm->string(), value->string() });
-        }
-
-        if (!m_canCreateDOMObject)
-            return constructEmptyObject(m_lexicalGlobalObject, m_globalObject->objectPrototype());
-
-        auto rtcCertificate = RTCCertificate::create(SecurityOrigin::createFromString(origin->string()), expires, WTFMove(fingerprints), certificate->takeString(), keyedMaterial->takeString());
-        return toJSNewlyCreated(m_lexicalGlobalObject, jsCast<JSDOMGlobalObject*>(m_globalObject), WTFMove(rtcCertificate));
-    }
-
-    JSValue readRTCDataChannel()
-    {
-        uint32_t index;
-        bool indexSuccessfullyRead = read(index);
-        if (!indexSuccessfullyRead || index >= m_detachedRTCDataChannels.size()) {
-            fail();
-            return JSValue();
-        }
-
-        if (!m_rtcDataChannels[index]) {
-            auto detachedChannel = WTFMove(m_detachedRTCDataChannels.at(index));
-            m_rtcDataChannels[index] = RTCDataChannel::create(*scriptExecutionContextFromExecState(m_lexicalGlobalObject), detachedChannel->identifier, WTFMove(detachedChannel->label), WTFMove(detachedChannel->options), detachedChannel->state);
-        }
-
-        return getJSValue(m_rtcDataChannels[index].get());
-    }
-#endif
-
     JSValue readImageBitmap()
     {
         uint8_t serializationState;
@@ -3633,20 +3486,11 @@ private:
             return readDOMQuad();
         case ImageBitmapTransferTag:
             return readTransferredImageBitmap();
-#if ENABLE(WEB_RTC)
-        case RTCCertificateTag:
-            return readRTCCertificate();
-
-#endif
         case ImageBitmapTag:
             return readImageBitmap();
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
         case OffscreenCanvasTransferTag:
             return readOffscreenCanvas();
-#endif
-#if ENABLE(WEB_RTC)
-        case RTCDataChannelTransferTag:
-            return readRTCDataChannel();
 #endif
         case DOMExceptionTag:
             return readDOMException();
@@ -3684,10 +3528,6 @@ private:
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
     Vector<std::unique_ptr<DetachedOffscreenCanvas>> m_detachedOffscreenCanvases;
     Vector<RefPtr<OffscreenCanvas>> m_offscreenCanvases;
-#endif
-#if ENABLE(WEB_RTC)
-    Vector<std::unique_ptr<DetachedRTCDataChannel>> m_detachedRTCDataChannels;
-    Vector<RefPtr<RTCDataChannel>> m_rtcDataChannels;
 #endif
 #if ENABLE(WEBASSEMBLY)
     WasmModuleArray* m_wasmModules;
@@ -3902,15 +3742,9 @@ SerializedScriptValue::SerializedScriptValue(Vector<uint8_t>&& buffer)
 }
 
 SerializedScriptValue::SerializedScriptValue(Vector<uint8_t>&& buffer, std::unique_ptr<ArrayBufferContentsArray>&& arrayBufferContentsArray
-#if ENABLE(WEB_RTC)
-        , Vector<std::unique_ptr<DetachedRTCDataChannel>>&& detachedRTCDataChannels
-#endif
         )
     : m_data(WTFMove(buffer))
     , m_arrayBufferContentsArray(WTFMove(arrayBufferContentsArray))
-#if ENABLE(WEB_RTC)
-    , m_detachedRTCDataChannels(WTFMove(detachedRTCDataChannels))
-#endif
 {
     m_memoryCost = computeMemoryCost();
 }
@@ -3918,9 +3752,6 @@ SerializedScriptValue::SerializedScriptValue(Vector<uint8_t>&& buffer, std::uniq
 SerializedScriptValue::SerializedScriptValue(Vector<uint8_t>&& buffer, const Vector<BlobURLHandle>& blobHandles, std::unique_ptr<ArrayBufferContentsArray> arrayBufferContentsArray, std::unique_ptr<ArrayBufferContentsArray> sharedBufferContentsArray, Vector<std::optional<ImageBitmapBacking>>&& backingStores
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
         , Vector<std::unique_ptr<DetachedOffscreenCanvas>>&& detachedOffscreenCanvases
-#endif
-#if ENABLE(WEB_RTC)
-        , Vector<std::unique_ptr<DetachedRTCDataChannel>>&& detachedRTCDataChannels
 #endif
 #if ENABLE(WEBASSEMBLY)
         , std::unique_ptr<WasmModuleArray> wasmModulesArray
@@ -3933,9 +3764,6 @@ SerializedScriptValue::SerializedScriptValue(Vector<uint8_t>&& buffer, const Vec
     , m_backingStores(WTFMove(backingStores))
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
     , m_detachedOffscreenCanvases(WTFMove(detachedOffscreenCanvases))
-#endif
-#if ENABLE(WEB_RTC)
-    , m_detachedRTCDataChannels(WTFMove(detachedRTCDataChannels))
 #endif
 #if ENABLE(WEBASSEMBLY)
     , m_wasmModulesArray(WTFMove(wasmModulesArray))
@@ -3969,12 +3797,6 @@ size_t SerializedScriptValue::computeMemoryCost() const
     for (auto& canvas : m_detachedOffscreenCanvases) {
         if (canvas)
             cost += canvas->memoryCost();
-    }
-#endif
-#if ENABLE(WEB_RTC)
-    for (auto& channel : m_detachedRTCDataChannels) {
-        if (channel)
-            cost += channel->memoryCost();
     }
 #endif
 
@@ -4071,9 +3893,6 @@ RefPtr<SerializedScriptValue> SerializedScriptValue::create(JSGlobalObject& lexi
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
     Vector<RefPtr<OffscreenCanvas>> dummyOffscreenCanvases;
 #endif
-#if ENABLE(WEB_RTC)
-    Vector<Ref<RTCDataChannel>> dummyRTCDataChannels;
-#endif
     Vector<RefPtr<JSC::ArrayBuffer>> dummyArrayBuffers;
 #if ENABLE(WEBASSEMBLY)
     WasmModuleArray dummyModules;
@@ -4083,9 +3902,6 @@ RefPtr<SerializedScriptValue> SerializedScriptValue::create(JSGlobalObject& lexi
     auto code = CloneSerializer::serialize(&lexicalGlobalObject, value, dummyMessagePorts, dummyArrayBuffers, dummyImageBitmaps,
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
         dummyOffscreenCanvases,
-#endif
-#if ENABLE(WEB_RTC)
-        dummyRTCDataChannels,
 #endif
 #if ENABLE(WEBASSEMBLY)
         dummyModules,
@@ -4132,21 +3948,6 @@ static bool canOffscreenCanvasesDetach(const Vector<RefPtr<OffscreenCanvas>>& of
 }
 #endif
 
-#if ENABLE(WEB_RTC)
-static bool canDetachRTCDataChannels(const Vector<Ref<RTCDataChannel>>& channels)
-{
-    HashSet<RTCDataChannel*> visited;
-    for (auto& channel : channels) {
-        if (!channel->canDetach())
-            return false;
-        // Check the return value of add, we should not encounter duplicates.
-        if (!visited.add(channel.ptr()))
-            return false;
-    }
-    return true;
-}
-#endif
-
 ExceptionOr<Ref<SerializedScriptValue>> SerializedScriptValue::create(JSGlobalObject& lexicalGlobalObject, JSValue value, Vector<JSC::Strong<JSC::JSObject>>&& transferList, Vector<RefPtr<MessagePort>>& messagePorts, SerializationContext context)
 {
     VM& vm = lexicalGlobalObject.vm();
@@ -4154,9 +3955,6 @@ ExceptionOr<Ref<SerializedScriptValue>> SerializedScriptValue::create(JSGlobalOb
     Vector<RefPtr<ImageBitmap>> imageBitmaps;
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
     Vector<RefPtr<OffscreenCanvas>> offscreenCanvases;
-#endif
-#if ENABLE(WEB_RTC)
-    Vector<Ref<RTCDataChannel>> dataChannels;
 #endif
     HashSet<JSC::JSObject*> uniqueTransferables;
     for (auto& transferable : transferList) {
@@ -4195,13 +3993,6 @@ ExceptionOr<Ref<SerializedScriptValue>> SerializedScriptValue::create(JSGlobalOb
         }
 #endif
 
-#if ENABLE(WEB_RTC)
-        if (auto channel = JSRTCDataChannel::toWrapped(vm, transferable.get())) {
-            dataChannels.append(*channel);
-            continue;
-        }
-#endif
-
         return Exception { DataCloneError };
     }
 
@@ -4210,10 +4001,6 @@ ExceptionOr<Ref<SerializedScriptValue>> SerializedScriptValue::create(JSGlobalOb
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
     if (!canOffscreenCanvasesDetach(offscreenCanvases))
         return Exception { InvalidStateError };
-#endif
-#if ENABLE(WEB_RTC)
-    if (!canDetachRTCDataChannels(dataChannels))
-        return Exception { DataCloneError };
 #endif
 
     Vector<uint8_t> buffer;
@@ -4226,9 +4013,6 @@ ExceptionOr<Ref<SerializedScriptValue>> SerializedScriptValue::create(JSGlobalOb
     auto code = CloneSerializer::serialize(&lexicalGlobalObject, value, messagePorts, arrayBuffers, imageBitmaps,
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
         offscreenCanvases,
-#endif
-#if ENABLE(WEB_RTC)
-        dataChannels,
 #endif
 #if ENABLE(WEBASSEMBLY)
         wasmModules,
@@ -4250,18 +4034,10 @@ ExceptionOr<Ref<SerializedScriptValue>> SerializedScriptValue::create(JSGlobalOb
     for (auto offscreenCanvas : offscreenCanvases)
         detachedCanvases.append(offscreenCanvas->detach());
 #endif
-#if ENABLE(WEB_RTC)
-    Vector<std::unique_ptr<DetachedRTCDataChannel>> detachedRTCDataChannels;
-    for (auto& channel : dataChannels)
-        detachedRTCDataChannels.append(channel->detach());
-#endif
 
     return adoptRef(*new SerializedScriptValue(WTFMove(buffer), blobHandles, arrayBufferContentsArray.releaseReturnValue(), context == SerializationContext::WorkerPostMessage ? WTFMove(sharedBuffers) : nullptr, WTFMove(backingStores)
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
                 , WTFMove(detachedCanvases)
-#endif
-#if ENABLE(WEB_RTC)
-                , WTFMove(detachedRTCDataChannels)
 #endif
 #if ENABLE(WEBASSEMBLY)
                 , makeUnique<WasmModuleArray>(wasmModules)
@@ -4319,9 +4095,6 @@ JSValue SerializedScriptValue::deserialize(JSGlobalObject& lexicalGlobalObject, 
     DeserializationResult result = CloneDeserializer::deserialize(&lexicalGlobalObject, globalObject, messagePorts, WTFMove(m_backingStores)
 #if ENABLE(OFFSCREEN_CANVAS_IN_WORKERS)
         , WTFMove(m_detachedOffscreenCanvases)
-#endif
-#if ENABLE(WEB_RTC)
-        , WTFMove(m_detachedRTCDataChannels)
 #endif
         , m_arrayBufferContentsArray.get(), m_data, blobURLs, blobFilePaths, m_sharedBufferContentsArray.get()
 #if ENABLE(WEBASSEMBLY)

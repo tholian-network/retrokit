@@ -40,7 +40,6 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${WEBCORE_DIR}/Modules/mediasession"
     "${WEBCORE_DIR}/Modules/mediasource"
     "${WEBCORE_DIR}/Modules/mediastream"
-    "${WEBCORE_DIR}/Modules/mediastream/libwebrtc"
     "${WEBCORE_DIR}/Modules/model-element"
     "${WEBCORE_DIR}/Modules/navigatorcontentutils"
     "${WEBCORE_DIR}/Modules/notifications"
@@ -133,7 +132,6 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${WEBCORE_DIR}/platform/mediacapabilities"
     "${WEBCORE_DIR}/platform/mediarecorder"
     "${WEBCORE_DIR}/platform/mediastream"
-    "${WEBCORE_DIR}/platform/mediastream/libwebrtc"
     "${WEBCORE_DIR}/platform/mock"
     "${WEBCORE_DIR}/platform/mock/mediasource"
     "${WEBCORE_DIR}/platform/network"
@@ -1574,24 +1572,6 @@ if (USE_XDGMIME)
     list(APPEND WebCore_LIBRARIES xdgmime)
 endif ()
 
-if (USE_LIBWEBRTC)
-    list(APPEND WebCore_SYSTEM_INCLUDE_DIRECTORIES "${THIRDPARTY_DIR}/libwebrtc/Source/"
-        "${THIRDPARTY_DIR}/libwebrtc/Source/webrtc"
-        "${THIRDPARTY_DIR}/libwebrtc/Source/third_party/libvpx/source/libvpx"
-        "${THIRDPARTY_DIR}/libwebrtc/Source/third_party/abseil-cpp")
-    list(APPEND WebCore_LIBRARIES webrtc)
-    list(APPEND WebCore_SOURCES
-        Modules/mediastream/libwebrtc/LibWebRTCDataChannelHandler.cpp
-        Modules/mediastream/libwebrtc/LibWebRTCMediaEndpoint.cpp
-        Modules/mediastream/libwebrtc/LibWebRTCPeerConnectionBackend.cpp
-        Modules/mediastream/libwebrtc/LibWebRTCRtpReceiverBackend.cpp
-        Modules/mediastream/libwebrtc/LibWebRTCRtpSenderBackend.cpp
-        Modules/mediastream/libwebrtc/LibWebRTCRtpTransceiverBackend.cpp
-        Modules/mediastream/libwebrtc/LibWebRTCStatsCollector.cpp
-        Modules/mediastream/libwebrtc/LibWebRTCUtils.cpp
-    )
-endif ()
-
 if (HAVE_OS_DARK_MODE_SUPPORT)
     set(FEATURE_DEFINES_WITH_SPACE_SEPARATOR "${FEATURE_DEFINES_WITH_SPACE_SEPARATOR} HAVE_OS_DARK_MODE_SUPPORT")
 endif ()
@@ -1629,7 +1609,6 @@ list(APPEND WebCoreTestSupport_SOURCES
     testing/InternalsMapLike.cpp
     testing/InternalsSetLike.cpp
     testing/MockCDMFactory.cpp
-    testing/MockLibWebRTCPeerConnection.cpp
     testing/MockPageOverlay.cpp
     testing/MockPageOverlayClient.cpp
     testing/ServiceWorkerInternals.cpp

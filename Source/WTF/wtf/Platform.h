@@ -152,11 +152,6 @@
 #define HAVE_RSA_PSS 1
 #endif
 
-/* FIXME: Remove dependence on ENABLE(WEB_RTC). */
-#if PLATFORM(COCOA) && ENABLE(WEB_RTC)
-#define USE_LIBWEBRTC 1
-#endif
-
 #if PLATFORM(COCOA) && ENABLE(WEBGL)
 #define USE_ANGLE 1
 #ifndef GL_SILENCE_DEPRECATION

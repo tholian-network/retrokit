@@ -355,13 +355,6 @@ bool MediaStream::virtualHasPendingActivity() const
     return m_isActive;
 }
 
-#if !RELEASE_LOG_DISABLED
-WTFLogChannel& MediaStream::logChannel() const
-{
-    return LogWebRTC;
-}
-#endif
-    
 } // namespace WebCore
 
 #endif // ENABLE(MEDIA_STREAM)

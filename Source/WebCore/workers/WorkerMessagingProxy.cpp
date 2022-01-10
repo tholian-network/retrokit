@@ -37,7 +37,6 @@
 #include "ErrorEvent.h"
 #include "EventNames.h"
 #include "FetchRequestCredentials.h"
-#include "LibWebRTCProvider.h"
 #include "MessageEvent.h"
 #include "Page.h"
 #include "ScriptExecutionContext.h"
@@ -170,15 +169,6 @@ RefPtr<CacheStorageConnection> WorkerMessagingProxy::createCacheStorageConnectio
     ASSERT(isMainThread());
     auto& document = downcast<Document>(*m_scriptExecutionContext);
     return document.page()->cacheStorageProvider().createCacheStorageConnection();
-}
-
-RefPtr<RTCDataChannelRemoteHandlerConnection> WorkerMessagingProxy::createRTCDataChannelRemoteHandlerConnection()
-{
-    ASSERT(isMainThread());
-    auto& document = downcast<Document>(*m_scriptExecutionContext);
-    if (!document.page())
-        return nullptr;
-    return document.page()->libWebRTCProvider().createRTCDataChannelRemoteHandlerConnection();
 }
 
 bool WorkerMessagingProxy::postTaskForModeToWorkerOrWorkletGlobalScope(ScriptExecutionContext::Task&& task, const String& mode)
