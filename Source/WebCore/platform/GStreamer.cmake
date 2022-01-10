@@ -51,7 +51,6 @@ if (ENABLE_VIDEO OR ENABLE_WEB_AUDIO)
         platform/mediastream/gstreamer/GStreamerMediaStreamSource.cpp
         platform/mediastream/gstreamer/GStreamerVideoCaptureSource.cpp
         platform/mediastream/gstreamer/GStreamerVideoCapturer.cpp
-        platform/mediastream/gstreamer/GStreamerVideoEncoder.cpp
         platform/mediastream/gstreamer/MockRealtimeAudioSourceGStreamer.cpp
         platform/mediastream/gstreamer/MockRealtimeVideoSourceGStreamer.cpp
         platform/mediastream/gstreamer/RealtimeMediaSourceCenterGStreamer.cpp

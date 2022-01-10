@@ -90,7 +90,6 @@ class MockContentFilterSettings;
 class MockPageOverlay;
 class NodeList;
 class Page;
-class RTCPeerConnection;
 class Range;
 class RenderedDocumentMarker;
 class SVGSVGElement;

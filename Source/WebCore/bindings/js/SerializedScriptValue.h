@@ -27,7 +27,6 @@
 #pragma once
 
 #include "Blob.h"
-#include "DetachedRTCDataChannel.h"
 #include "ExceptionOr.h"
 #include <JavaScriptCore/ArrayBuffer.h>
 #include <JavaScriptCore/JSCJSValue.h>

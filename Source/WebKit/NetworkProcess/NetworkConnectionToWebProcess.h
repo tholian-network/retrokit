@@ -48,7 +48,6 @@
 #include <WebCore/NetworkStorageSession.h>
 #include <WebCore/PageIdentifier.h>
 #include <WebCore/ProcessIdentifier.h>
-#include <WebCore/RTCDataChannelIdentifier.h>
 #include <WebCore/RegistrableDomain.h>
 #include <WebCore/WebSocketIdentifier.h>
 #include <wtf/OptionSet.h>

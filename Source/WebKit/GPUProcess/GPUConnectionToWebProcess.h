@@ -64,7 +64,6 @@ class LayerHostingContext;
 class LocalAudioSessionRoutingArbitrator;
 class RemoteAudioDestinationManager;
 class RemoteAudioHardwareListenerProxy;
-class RemoteAudioMediaStreamTrackRendererInternalUnitManager;
 class RemoteAudioSessionProxy;
 class RemoteAudioSessionProxyManager;
 class RemoteCDMFactoryProxy;
@@ -170,7 +169,6 @@ private:
 #endif
 #if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
     UserMediaCaptureManagerProxy& userMediaCaptureManagerProxy();
-    RemoteAudioMediaStreamTrackRendererInternalUnitManager& audioMediaStreamTrackRendererInternalUnitManager();
 #endif
 #if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM) && HAVE(AVASSETWRITERDELEGATE)
     RemoteMediaRecorderManager& mediaRecorderManager();
@@ -248,7 +246,6 @@ private:
     PAL::SessionID m_sessionID;
 #if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
     std::unique_ptr<UserMediaCaptureManagerProxy> m_userMediaCaptureManagerProxy;
-    std::unique_ptr<RemoteAudioMediaStreamTrackRendererInternalUnitManager> m_audioMediaStreamTrackRendererInternalUnitManager;
     Ref<RemoteSampleBufferDisplayLayerManager> m_sampleBufferDisplayLayerManager;
 #endif
 #if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM) && HAVE(AVASSETWRITERDELEGATE)

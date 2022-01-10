@@ -33,7 +33,6 @@
 #include "Logging.h"
 #include "NetworkConnectionToWebProcessMessages.h"
 #include "NetworkProcessMessages.h"
-#include "RTCDataChannelRemoteManager.h"
 #include "ServiceWorkerFetchTaskMessages.h"
 #include "ServiceWorkerInitializationData.h"
 #include "WebCacheStorageProvider.h"

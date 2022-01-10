@@ -175,8 +175,6 @@ Shared/NavigationActionData.cpp
 Shared/PersistencyUtils.cpp
 Shared/PlatformPopupMenuData.cpp
 Shared/PrintInfo.cpp
-Shared/RTCNetwork.cpp
-Shared/RTCPacketOptions.cpp
 Shared/ServiceWorkerInitializationData.cpp
 Shared/SessionState.cpp
 Shared/ShareableBitmap.cpp @no-unify
@@ -639,9 +637,6 @@ WebProcess/WebStorage/StorageNamespaceImpl.cpp
 WebProcess/WebStorage/WebStorageNamespaceProvider.cpp
 
 NetworkBroadcastChannelRegistryMessageReceiver.cpp
-RTCDataChannelRemoteManagerMessageReceiver.cpp
-RTCDataChannelRemoteManagerProxyMessageReceiver.cpp
-RemoteAudioMediaStreamTrackRendererInternalUnitManagerMessageReceiver.cpp
 RemoteGraphicsContextGLMessageReceiver.cpp
 RemoteGraphicsContextGLProxyMessageReceiver.cpp
 WebBroadcastChannelRegistryMessageReceiver.cpp

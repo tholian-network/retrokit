@@ -178,68 +178,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/Modules/mediastream/Navigator+MediaDevices.idl \
     $(WebCore)/Modules/mediastream/OverconstrainedError.idl \
     $(WebCore)/Modules/mediastream/OverconstrainedErrorEvent.idl \
-    $(WebCore)/Modules/mediastream/RTCAnswerOptions.idl \
-    $(WebCore)/Modules/mediastream/RTCCertificate.idl \
-    $(WebCore)/Modules/mediastream/RTCConfiguration.idl \
-    $(WebCore)/Modules/mediastream/RTCDTMFSender.idl \
-    $(WebCore)/Modules/mediastream/RTCDTMFToneChangeEvent.idl \
-    $(WebCore)/Modules/mediastream/RTCDataChannel.idl \
-    $(WebCore)/Modules/mediastream/RTCDataChannelEvent.idl \
-    $(WebCore)/Modules/mediastream/RTCDegradationPreference.idl \
-    $(WebCore)/Modules/mediastream/RTCDtlsTransport.idl \
-    $(WebCore)/Modules/mediastream/RTCDtlsTransportState.idl \
-    $(WebCore)/Modules/mediastream/RTCDtxStatus.idl \
-    $(WebCore)/Modules/mediastream/RTCEncodedAudioFrame.idl \
-    $(WebCore)/Modules/mediastream/RTCEncodedVideoFrame.idl \
-    $(WebCore)/Modules/mediastream/RTCIceCandidate.idl \
-    $(WebCore)/Modules/mediastream/RTCIceCandidateInit.idl \
-    $(WebCore)/Modules/mediastream/RTCIceCandidateType.idl \
-    $(WebCore)/Modules/mediastream/RTCIceComponent.idl \
-    $(WebCore)/Modules/mediastream/RTCIceConnectionState.idl \
-    $(WebCore)/Modules/mediastream/RTCIceGatheringState.idl \
-    $(WebCore)/Modules/mediastream/RTCIceProtocol.idl \
-    $(WebCore)/Modules/mediastream/RTCIceServer.idl \
-    $(WebCore)/Modules/mediastream/RTCIceTcpCandidateType.idl \
-    $(WebCore)/Modules/mediastream/RTCIceTransport.idl \
-    $(WebCore)/Modules/mediastream/RTCIceTransportState.idl \
-    $(WebCore)/Modules/mediastream/RTCOfferAnswerOptions.idl \
-    $(WebCore)/Modules/mediastream/RTCOfferOptions.idl \
-    $(WebCore)/Modules/mediastream/RTCPeerConnection.idl \
-    $(WebCore)/Modules/mediastream/RTCPeerConnectionIceEvent.idl \
-    $(WebCore)/Modules/mediastream/RTCPeerConnectionIceErrorEvent.idl \
-    $(WebCore)/Modules/mediastream/RTCPeerConnectionState.idl \
-    $(WebCore)/Modules/mediastream/RTCPriorityType.idl \
-    $(WebCore)/Modules/mediastream/RTCRtcpParameters.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpCapabilities.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpCodecCapability.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpCodecParameters.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpCodingParameters.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpContributingSource.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpEncodingParameters.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpFecParameters.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpHeaderExtensionParameters.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpParameters.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpReceiver.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpReceiver+Transform.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpRtxParameters.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpSendParameters.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpSender.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpSender+Transform.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpSFrameTransform.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpSFrameTransformErrorEvent.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpScriptTransform.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpScriptTransformProvider.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpScriptTransformer.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpSynchronizationSource.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpTransceiver.idl \
-    $(WebCore)/Modules/mediastream/RTCRtpTransceiverDirection.idl \
-    $(WebCore)/Modules/mediastream/RTCSdpType.idl \
-    $(WebCore)/Modules/mediastream/RTCSessionDescription.idl \
-    $(WebCore)/Modules/mediastream/RTCSessionDescriptionInit.idl \
-    $(WebCore)/Modules/mediastream/RTCSignalingState.idl \
-    $(WebCore)/Modules/mediastream/RTCStatsReport.idl \
-    $(WebCore)/Modules/mediastream/RTCTrackEvent.idl \
-    $(WebCore)/Modules/mediastream/RTCTransformEvent.idl \
     $(WebCore)/Modules/model-element/HTMLModelElement.idl \
     $(WebCore)/Modules/notifications/Notification.idl \
     $(WebCore)/Modules/notifications/NotificationPermission.idl \

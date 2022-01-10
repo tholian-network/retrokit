@@ -142,7 +142,6 @@ namespace WebCore {
     macro(MediaSource) \
     macro(MediaStream) \
     macro(MediaStreamTrack) \
-    macro(MockRTCRtpTransform) \
     macro(NavigatorCredentials) \
     macro(NavigatorMediaDevices) \
     macro(NavigatorPermissions) \
@@ -175,30 +174,6 @@ namespace WebCore {
     macro(PublicKeyCredential) \
     macro(ResizeObserver) \
     macro(ResizeObserverEntry) \
-    macro(RTCCertificate) \
-    macro(RTCDTMFSender) \
-    macro(RTCDTMFToneChangeEvent) \
-    macro(RTCDataChannel) \
-    macro(RTCDataChannelEvent) \
-    macro(RTCDtlsTransport) \
-    macro(RTCEncodedAudioFrame) \
-    macro(RTCEncodedVideoFrame) \
-    macro(RTCIceCandidate) \
-    macro(RTCIceTransport) \
-    macro(RTCPeerConnection) \
-    macro(RTCPeerConnectionIceEvent) \
-    macro(RTCPeerConnectionIceErrorEvent) \
-    macro(RTCRtpReceiver) \
-    macro(RTCRtpScriptTransform) \
-    macro(RTCRtpScriptTransformer) \
-    macro(RTCRtpScriptTransformerContext) \
-    macro(RTCRtpSender) \
-    macro(RTCRtpTransceiver) \
-    macro(RTCRtpTransform) \
-    macro(RTCSessionDescription) \
-    macro(RTCStatsReport) \
-    macro(RTCTrackEvent) \
-    macro(RTCTransformEvent) \
     macro(ReadableByteStreamController) \
     macro(ReadableStream) \
     macro(ReadableStreamBYOBReader) \

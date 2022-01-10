@@ -147,7 +147,6 @@ Modules/mediastream/MediaStreamTrackEvent.cpp
 Modules/mediastream/MediaTrackConstraints.cpp
 Modules/mediastream/NavigatorMediaDevices.cpp
 Modules/mediastream/OverconstrainedErrorEvent.cpp
-Modules/mediastream/PeerConnectionBackend.cpp
 Modules/mediastream/UserMediaController.cpp
 Modules/mediastream/UserMediaRequest.cpp
 Modules/model-element/HTMLModelElement.cpp
@@ -1925,18 +1924,13 @@ platform/mediastream/AudioMediaStreamTrackRenderer.cpp
 platform/mediastream/AudioTrackPrivateMediaStream.cpp
 platform/mediastream/CaptureDeviceManager.cpp
 platform/mediastream/MediaConstraints.cpp
-platform/mediastream/MediaEndpointConfiguration.cpp
 platform/mediastream/MediaStreamPrivate.cpp
 platform/mediastream/MediaStreamTrackPrivate.cpp
-platform/mediastream/RealtimeIncomingAudioSource.cpp
-platform/mediastream/RealtimeIncomingVideoSource.cpp
 platform/mediastream/RealtimeMediaSource.cpp
 platform/mediastream/RealtimeMediaSourceCenter.cpp
 platform/mediastream/RealtimeMediaSourceFactory.cpp
 platform/mediastream/RealtimeMediaSourceSettings.cpp
 platform/mediastream/RealtimeMediaSourceSupportedConstraints.cpp
-platform/mediastream/RealtimeOutgoingAudioSource.cpp
-platform/mediastream/RealtimeOutgoingVideoSource.cpp
 platform/mediastream/RealtimeVideoCaptureSource.cpp
 platform/mediastream/RealtimeVideoSource.cpp
 platform/mock/MediaEngineConfigurationFactoryMock.cpp

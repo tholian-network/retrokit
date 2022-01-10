@@ -89,7 +89,6 @@ class NavigationAction;
 class Page;
 class ProtectionSpace;
 class RegistrableDomain;
-class RTCPeerConnectionHandler;
 class ResourceError;
 class ResourceHandle;
 class ResourceRequest;

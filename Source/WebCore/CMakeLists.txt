@@ -348,68 +348,6 @@ set(WebCore_NON_SVG_IDL_FILES
     Modules/mediastream/Navigator+MediaDevices.idl
     Modules/mediastream/OverconstrainedError.idl
     Modules/mediastream/OverconstrainedErrorEvent.idl
-    Modules/mediastream/RTCAnswerOptions.idl
-    Modules/mediastream/RTCCertificate.idl
-    Modules/mediastream/RTCConfiguration.idl
-    Modules/mediastream/RTCDTMFSender.idl
-    Modules/mediastream/RTCDTMFToneChangeEvent.idl
-    Modules/mediastream/RTCDataChannel.idl
-    Modules/mediastream/RTCDataChannelEvent.idl
-    Modules/mediastream/RTCDegradationPreference.idl
-    Modules/mediastream/RTCDtlsTransport.idl
-    Modules/mediastream/RTCDtlsTransportState.idl
-    Modules/mediastream/RTCDtxStatus.idl
-    Modules/mediastream/RTCEncodedAudioFrame.idl
-    Modules/mediastream/RTCEncodedVideoFrame.idl
-    Modules/mediastream/RTCIceCandidate.idl
-    Modules/mediastream/RTCIceCandidateInit.idl
-    Modules/mediastream/RTCIceCandidateType.idl
-    Modules/mediastream/RTCIceComponent.idl
-    Modules/mediastream/RTCIceConnectionState.idl
-    Modules/mediastream/RTCIceGatheringState.idl
-    Modules/mediastream/RTCIceProtocol.idl
-    Modules/mediastream/RTCIceServer.idl
-    Modules/mediastream/RTCIceTcpCandidateType.idl
-    Modules/mediastream/RTCIceTransport.idl
-    Modules/mediastream/RTCIceTransportState.idl
-    Modules/mediastream/RTCOfferAnswerOptions.idl
-    Modules/mediastream/RTCOfferOptions.idl
-    Modules/mediastream/RTCPeerConnection.idl
-    Modules/mediastream/RTCPeerConnectionIceErrorEvent.idl
-    Modules/mediastream/RTCPeerConnectionIceEvent.idl
-    Modules/mediastream/RTCPeerConnectionState.idl
-    Modules/mediastream/RTCPriorityType.idl
-    Modules/mediastream/RTCRtcpParameters.idl
-    Modules/mediastream/RTCRtpCapabilities.idl
-    Modules/mediastream/RTCRtpCodecCapability.idl
-    Modules/mediastream/RTCRtpCodecParameters.idl
-    Modules/mediastream/RTCRtpCodingParameters.idl
-    Modules/mediastream/RTCRtpContributingSource.idl
-    Modules/mediastream/RTCRtpEncodingParameters.idl
-    Modules/mediastream/RTCRtpFecParameters.idl
-    Modules/mediastream/RTCRtpHeaderExtensionParameters.idl
-    Modules/mediastream/RTCRtpParameters.idl
-    Modules/mediastream/RTCRtpReceiver+Transform.idl
-    Modules/mediastream/RTCRtpReceiver.idl
-    Modules/mediastream/RTCRtpRtxParameters.idl
-    Modules/mediastream/RTCRtpSFrameTransform.idl
-    Modules/mediastream/RTCRtpSFrameTransformErrorEvent.idl
-    Modules/mediastream/RTCRtpScriptTransform.idl
-    Modules/mediastream/RTCRtpScriptTransformProvider.idl
-    Modules/mediastream/RTCRtpScriptTransformer.idl
-    Modules/mediastream/RTCRtpSendParameters.idl
-    Modules/mediastream/RTCRtpSender+Transform.idl
-    Modules/mediastream/RTCRtpSender.idl
-    Modules/mediastream/RTCRtpSynchronizationSource.idl
-    Modules/mediastream/RTCRtpTransceiver.idl
-    Modules/mediastream/RTCRtpTransceiverDirection.idl
-    Modules/mediastream/RTCSdpType.idl
-    Modules/mediastream/RTCSessionDescription.idl
-    Modules/mediastream/RTCSessionDescriptionInit.idl
-    Modules/mediastream/RTCSignalingState.idl
-    Modules/mediastream/RTCStatsReport.idl
-    Modules/mediastream/RTCTrackEvent.idl
-    Modules/mediastream/RTCTransformEvent.idl
 
     Modules/model-element/HTMLModelElement.idl
 

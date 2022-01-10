@@ -39,8 +39,6 @@
 #include "Logging.h"
 #include "MediaOverridesForTesting.h"
 #include "RemoteAudioHardwareListenerProxy.h"
-#include "RemoteAudioMediaStreamTrackRendererInternalUnitManager.h"
-#include "RemoteAudioMediaStreamTrackRendererInternalUnitManagerMessages.h"
 #include "RemoteGraphicsContextGLMessages.h"
 #include "RemoteMediaPlayerManagerProxy.h"
 #include "RemoteMediaPlayerManagerProxyMessages.h"
@@ -402,14 +400,6 @@ UserMediaCaptureManagerProxy& GPUConnectionToWebProcess::userMediaCaptureManager
 
     return *m_userMediaCaptureManagerProxy;
 }
-
-RemoteAudioMediaStreamTrackRendererInternalUnitManager& GPUConnectionToWebProcess::audioMediaStreamTrackRendererInternalUnitManager()
-{
-    if (!m_audioMediaStreamTrackRendererInternalUnitManager)
-        m_audioMediaStreamTrackRendererInternalUnitManager = makeUnique<RemoteAudioMediaStreamTrackRendererInternalUnitManager>(*this);
-
-    return *m_audioMediaStreamTrackRendererInternalUnitManager;
-}
 #endif
 
 #if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM) && HAVE(AVASSETWRITERDELEGATE)
@@ -629,10 +619,6 @@ bool GPUConnectionToWebProcess::dispatchMessage(IPC::Connection& connection, IPC
 #if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
     if (decoder.messageReceiverName() == Messages::UserMediaCaptureManagerProxy::messageReceiverName()) {
         userMediaCaptureManagerProxy().didReceiveMessageFromGPUProcess(connection, decoder);
-        return true;
-    }
-    if (decoder.messageReceiverName() == Messages::RemoteAudioMediaStreamTrackRendererInternalUnitManager::messageReceiverName()) {
-        audioMediaStreamTrackRendererInternalUnitManager().didReceiveMessage(connection, decoder);
         return true;
     }
 #endif
