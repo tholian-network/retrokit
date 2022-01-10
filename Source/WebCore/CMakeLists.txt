@@ -36,7 +36,6 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${WEBCORE_DIR}/Modules/indexeddb/shared"
     "${WEBCORE_DIR}/Modules/mediacapabilities"
     "${WEBCORE_DIR}/Modules/mediacontrols"
-    "${WEBCORE_DIR}/Modules/mediarecorder"
     "${WEBCORE_DIR}/Modules/mediasession"
     "${WEBCORE_DIR}/Modules/mediasource"
     "${WEBCORE_DIR}/Modules/mediastream"
@@ -130,7 +129,6 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${WEBCORE_DIR}/platform/graphics/opentype"
     "${WEBCORE_DIR}/platform/graphics/transforms"
     "${WEBCORE_DIR}/platform/mediacapabilities"
-    "${WEBCORE_DIR}/platform/mediarecorder"
     "${WEBCORE_DIR}/platform/mediastream"
     "${WEBCORE_DIR}/platform/mock"
     "${WEBCORE_DIR}/platform/mock/mediasource"
@@ -184,7 +182,6 @@ set(WebCore_IDL_INCLUDES
     Modules/highlight
     Modules/indexeddb
     Modules/mediacapabilities
-    Modules/mediarecorder
     Modules/mediastream
     Modules/model-element
     Modules/notifications
@@ -304,10 +301,6 @@ set(WebCore_NON_SVG_IDL_FILES
     Modules/mediacapabilities/VideoConfiguration.idl
 
     Modules/mediacontrols/MediaControlsHost.idl
-
-    Modules/mediarecorder/BlobEvent.idl
-    Modules/mediarecorder/MediaRecorder.idl
-    Modules/mediarecorder/MediaRecorderErrorEvent.idl
 
     Modules/mediasession/MediaImage.idl
     Modules/mediasession/MediaMetadata.idl

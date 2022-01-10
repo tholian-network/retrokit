@@ -37,7 +37,6 @@
 #include "DragClient.h"
 #include "EditorClient.h"
 #include "FrameLoaderClient.h"
-#include "MediaRecorderProvider.h"
 #include "PerformanceLoggingClient.h"
 #include "PermissionController.h"
 #include "ProgressTrackerClient.h"
@@ -58,7 +57,7 @@
 
 namespace WebCore {
 
-PageConfiguration::PageConfiguration(PAL::SessionID sessionID, UniqueRef<EditorClient>&& editorClient, Ref<SocketProvider>&& socketProvider, Ref<CacheStorageProvider>&& cacheStorageProvider, Ref<UserContentProvider>&& userContentProvider, Ref<BackForwardClient>&& backForwardClient, Ref<CookieJar>&& cookieJar, UniqueRef<ProgressTrackerClient>&& progressTrackerClient, UniqueRef<FrameLoaderClient>&& loaderClientForMainFrame, UniqueRef<SpeechRecognitionProvider>&& speechRecognitionProvider, UniqueRef<MediaRecorderProvider>&& mediaRecorderProvider, Ref<BroadcastChannelRegistry>&& broadcastChannelRegistry, Ref<PermissionController>&& permissionController)
+PageConfiguration::PageConfiguration(PAL::SessionID sessionID, UniqueRef<EditorClient>&& editorClient, Ref<SocketProvider>&& socketProvider, Ref<CacheStorageProvider>&& cacheStorageProvider, Ref<UserContentProvider>&& userContentProvider, Ref<BackForwardClient>&& backForwardClient, Ref<CookieJar>&& cookieJar, UniqueRef<ProgressTrackerClient>&& progressTrackerClient, UniqueRef<FrameLoaderClient>&& loaderClientForMainFrame, UniqueRef<SpeechRecognitionProvider>&& speechRecognitionProvider, Ref<BroadcastChannelRegistry>&& broadcastChannelRegistry, Ref<PermissionController>&& permissionController)
     : sessionID(sessionID)
     , editorClient(WTFMove(editorClient))
     , socketProvider(WTFMove(socketProvider))
@@ -70,7 +69,6 @@ PageConfiguration::PageConfiguration(PAL::SessionID sessionID, UniqueRef<EditorC
     , userContentProvider(WTFMove(userContentProvider))
     , broadcastChannelRegistry(WTFMove(broadcastChannelRegistry))
     , speechRecognitionProvider(WTFMove(speechRecognitionProvider))
-    , mediaRecorderProvider(WTFMove(mediaRecorderProvider))
     , permissionController(WTFMove(permissionController))
 {
 }

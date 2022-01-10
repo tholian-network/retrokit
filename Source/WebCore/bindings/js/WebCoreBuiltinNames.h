@@ -60,7 +60,6 @@ namespace WebCore {
     macro(AuthenticatorResponse) \
     macro(BaseAudioContext) \
     macro(BeforeLoadEvent) \
-    macro(BlobEvent) \
     macro(BroadcastChannel) \
     macro(Cache) \
     macro(CacheStorage) \
@@ -136,8 +135,6 @@ namespace WebCore {
     macro(MediaKeySystemAccess) \
     macro(MediaKeys) \
     macro(MediaQueryListEvent) \
-    macro(MediaRecorder) \
-    macro(MediaRecorderErrorEvent) \
     macro(MediaSessionCoordinator) \
     macro(MediaSource) \
     macro(MediaStream) \

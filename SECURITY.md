@@ -224,6 +224,7 @@ list of Web APIs that are removed.
 - [x] Remove Picture in Picture API (`PICTURE_IN_PICTURE_API`, `operationMatchesPictureinPicturePseudoClass`, `EnterPictureInPictureEvent`, `picture-in-picture`, `PictureInPictureElement`)
 - [x] Remove Video Presentation Mode (`VIDEO_PRESENTATION_MODE`, `ControlledElementID`, `EnhancedFullscreen`, `VideoPresentation`, `prepareForVideoFullscreen`, `webkitPresentationModeChanged`)
 - [x] Remove iFrame `allowfullscreen` Property
+- [x] Remove Media Recorder API (`MediaRecorder`)
 - [x] Remove Web RTC API (`WEB_RTC`, `RTC`, `PeerConnectionState`, `PeerMediaDescription`, `RTCBundle`, `RTCDataChannel`, `RTCPeer`, `RTCIce`, `createRTCProvider`)
 - [x] Remove Web RTC H264 Codec (`WebRTCH264LowLatencyCoderEnabled`, `WebRTCH264HardwareEncoderEnabled`, `WebRTCH264SimulcastEnabled`)
 - [x] Remove Web RTC H265 Codec (`WebRTCH256CodecEnabled`)
@@ -234,6 +235,10 @@ list of Web APIs that are removed.
 - [x] Remove Web RTC Sockets Proxying (`WebRTCSocketsProxyingEnabled`)
 - [x] Remove Web RTC VP9 Codec Profiles (`WebRTCVP9Profile0CodecEnabled`, `WebRTCVP9Profile2CodecEnabled`)
 - [x] Remove Web RTC MDNS ICE Candidates Support (`WebRTCMDNSICECandidatesEnabled`, `PeerConnectionEnabled`, `ICECandidateFiltering`)
+- [ ] Remove Media Screen Capture API (`getDisplayMedia`)
+- [ ] Remove Media Session API (`MEDIA_SESSION`)
+- [ ] Remove Media Stream API (`MEDIA_STREAM`, `getUserMedia`)
+- [ ] Remove Offsceen Canvas in Workers (`OFFSCREEN_CANVAS_IN_WORKERS`)
 - [ ] Remove Network Shareable Resource API (`SHAREABLE_RESOURCE`)
 - [ ] Remove 3D Model Element API (`MODEL_ELEMENT`)
 - [ ] Remove Encrypted Media API (`ENCRYPTED_MEDIA`, `LEGACY_ENCRYPTED_MEDIA`)
@@ -245,15 +250,12 @@ list of Web APIs that are removed.
 - [ ] Remove Web Storage API
 - [ ] Remove Indexed Database API
 - [ ] Remove Canvas API (`OFFSCREEN_CANVAS`, `Canvas`, `DOMConvertWebGL`, `JSANGLEInstancedArray`, `CanvasActivityRecord`)
-- [ ] Remove Offsceen Canvas in Workers (`OFFSCREEN_CANVAS_IN_WORKERS`)
 - [ ] Remove WebGL API (`WEBGL`, `WebGL`, `JSANGLEInstancedArray`, `GraphicsContextGL`, `HighPerformanceGraphicsUsageSampler`)
 - [ ] Remove WebGL2 API (`WEBGL2`)
 - [ ] Remove GPU Process for WebGL (`GPU_PROCESS`)
 - [ ] Remove WebGL via Metal (`WEBGL_COMPATIBLE_METAL`)
 - [ ] Remove WebGPU API
 - [ ] Remove Media Capture API
-- [ ] Remove Screen Capture API (`getDisplayMedia`)
-- [ ] Remove Media Stream API (`MEDIA_STREAM`, `getUserMedia`)
 - [ ] Remove Page Visibility API
 - [ ] Remove Pointer Lock API (`POINTER_LOCK`)
 - [ ] Remove Web Notifications API

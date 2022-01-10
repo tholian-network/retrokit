@@ -138,9 +138,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/Modules/mediacapabilities/TransferFunction.idl \
     $(WebCore)/Modules/mediacapabilities/VideoConfiguration.idl \
     $(WebCore)/Modules/mediacontrols/MediaControlsHost.idl \
-    $(WebCore)/Modules/mediarecorder/BlobEvent.idl \
-    $(WebCore)/Modules/mediarecorder/MediaRecorder.idl \
-    $(WebCore)/Modules/mediarecorder/MediaRecorderErrorEvent.idl \
     $(WebCore)/Modules/mediasource/AudioTrack+MediaSource.idl \
     $(WebCore)/Modules/mediasource/DOMURL+MediaSource.idl \
     $(WebCore)/Modules/mediasource/MediaSource.idl \

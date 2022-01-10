@@ -56,8 +56,6 @@
 #include "HistoryItem.h"
 #include "IDBConnectionToServer.h"
 #include "InspectorClient.h"
-#include "MediaRecorderPrivate.h"
-#include "MediaRecorderProvider.h"
 #include "NetworkStorageSession.h"
 #include "Page.h"
 #include "PageConfiguration.h"
@@ -1104,15 +1102,6 @@ class EmptyStorageSessionProvider final : public StorageSessionProvider {
     NetworkStorageSession* storageSession() const final { return nullptr; }
 };
 
-class EmptyMediaRecorderProvider final : public MediaRecorderProvider {
-public:
-    EmptyMediaRecorderProvider() = default;
-private:
-#if ENABLE(MEDIA_STREAM) && PLATFORM(COCOA)
-    std::unique_ptr<MediaRecorderPrivate> createMediaRecorderPrivate(MediaStreamPrivate&, const MediaRecorderPrivateOptions&) final { return nullptr; }
-#endif
-};
-
 class EmptyBroadcastChannelRegistry final : public BroadcastChannelRegistry {
 public:
     static Ref<EmptyBroadcastChannelRegistry> create()
@@ -1140,7 +1129,6 @@ PageConfiguration pageConfigurationWithEmptyClients(PAL::SessionID sessionID)
         makeUniqueRef<EmptyProgressTrackerClient>(),
         makeUniqueRef<EmptyFrameLoaderClient>(),
         makeUniqueRef<DummySpeechRecognitionProvider>(),
-        makeUniqueRef<EmptyMediaRecorderProvider>(),
         EmptyBroadcastChannelRegistry::create(),
         DummyPermissionController::create()
     };

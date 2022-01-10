@@ -114,7 +114,6 @@ class IntSize;
 class LowPowerModeNotifier;
 class MediaCanStartListener;
 class MediaPlaybackTarget;
-class MediaRecorderProvider;
 class MediaSessionCoordinatorPrivate;
 class PageConfiguration;
 class PageConsoleClient;
@@ -675,7 +674,6 @@ public:
     DatabaseProvider& databaseProvider() { return m_databaseProvider; }
     CacheStorageProvider& cacheStorageProvider() { return m_cacheStorageProvider; }
     SocketProvider& socketProvider() { return m_socketProvider; }
-    MediaRecorderProvider& mediaRecorderProvider() { return m_mediaRecorderProvider; }
     CookieJar& cookieJar() { return m_cookieJar.get(); }
 
     StorageNamespaceProvider& storageNamespaceProvider() { return m_storageNamespaceProvider.get(); }
@@ -923,8 +921,6 @@ private:
 #endif
 
     UniqueRef<SpeechRecognitionProvider> m_speechRecognitionProvider;
-
-    UniqueRef<MediaRecorderProvider> m_mediaRecorderProvider;
 
     PlatformDisplayID m_displayID { 0 };
     std::optional<FramesPerSecond> m_displayNominalFramesPerSecond;

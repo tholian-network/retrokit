@@ -85,7 +85,6 @@
 #include "Logging.h"
 #include "LowPowerModeNotifier.h"
 #include "MediaCanStartListener.h"
-#include "MediaRecorderProvider.h"
 #include "Navigator.h"
 #include "PageColorSampler.h"
 #include "PageConfiguration.h"
@@ -267,7 +266,6 @@ Page::Page(PageConfiguration&& pageConfiguration)
     , m_speechSynthesisClient(WTFMove(pageConfiguration.speechSynthesisClient))
 #endif
     , m_speechRecognitionProvider((WTFMove(pageConfiguration.speechRecognitionProvider)))
-    , m_mediaRecorderProvider((WTFMove(pageConfiguration.mediaRecorderProvider)))
     , m_verticalScrollElasticity(ScrollElasticityAllowed)
     , m_horizontalScrollElasticity(ScrollElasticityAllowed)
     , m_domTimerAlignmentInterval(DOMTimer::defaultAlignmentInterval())

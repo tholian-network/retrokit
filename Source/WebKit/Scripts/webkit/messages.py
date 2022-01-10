@@ -315,8 +315,6 @@ def types_that_cannot_be_forward_declared():
         'WebKit::GraphicsContextGLIdentifier',
         'WebKit::ImageBufferBackendHandle',
         'WebKit::LayerHostingContextID',
-        'WebKit::MDNSRegisterIdentifier',
-        'WebKit::MediaRecorderIdentifier',
         'WebKit::PageGroupIdentifier',
         'WebKit::PlaybackSessionContextIdentifier',
         'WebKit::RTCDecoderIdentifier',

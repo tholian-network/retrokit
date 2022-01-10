@@ -22,7 +22,6 @@ MediaController conditional=VIDEO
 MediaDevices conditional=MEDIA_STREAM
 MediaKeySession conditional=ENCRYPTED_MEDIA
 MediaQueryList
-MediaRecorder conditional=MEDIA_STREAM
 MediaSessionCoordinator conditional=MEDIA_SESSION_COORDINATOR
 MediaSource conditional=MEDIA_SOURCE
 MediaStream conditional=MEDIA_STREAM

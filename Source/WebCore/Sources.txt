@@ -127,10 +127,6 @@ Modules/mediasession/MediaSessionCoordinator.cpp
 Modules/mediasession/MediaSessionCoordinatorPrivate.cpp
 Modules/mediasession/NavigatorMediaSession.cpp
 Modules/mediacontrols/MediaControlsHost.cpp
-Modules/mediarecorder/BlobEvent.cpp
-Modules/mediarecorder/MediaRecorder.cpp
-Modules/mediarecorder/MediaRecorderErrorEvent.cpp
-Modules/mediarecorder/MediaRecorderProvider.cpp
 Modules/mediasource/DOMURLMediaSource.cpp
 Modules/mediasource/MediaSource.cpp
 Modules/mediasource/MediaSourceRegistry.cpp
@@ -1918,8 +1914,6 @@ platform/graphics/transforms/TransformationMatrix.cpp
 platform/graphics/transforms/TranslateTransformOperation.cpp
 platform/mediacapabilities/MediaCapabilitiesLogging.cpp
 platform/mediacapabilities/MediaEngineConfigurationFactory.cpp
-platform/mediarecorder/MediaRecorderPrivate.cpp
-platform/mediarecorder/MediaRecorderPrivateMock.cpp
 platform/mediastream/AudioMediaStreamTrackRenderer.cpp
 platform/mediastream/AudioTrackPrivateMediaStream.cpp
 platform/mediastream/CaptureDeviceManager.cpp
@@ -2629,7 +2623,6 @@ JSBiquadFilterOptions.cpp
 JSBiquadFilterType.cpp
 JSBlob.cpp
 JSBlobCallback.cpp
-JSBlobEvent.cpp
 JSBlobPropertyBag.cpp
 JSBroadcastChannel.cpp
 JSByteLengthQueuingStrategy.cpp
@@ -3008,8 +3001,6 @@ JSMediaMetadataInit.cpp
 JSMediaPositionState.cpp
 JSMediaQueryList.cpp
 JSMediaQueryListEvent.cpp
-JSMediaRecorder.cpp
-JSMediaRecorderErrorEvent.cpp
 JSMediaSessionActionDetails.cpp
 JSMediaSessionActionHandler.cpp
 JSMediaSessionAction.cpp

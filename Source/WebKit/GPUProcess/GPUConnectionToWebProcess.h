@@ -71,7 +71,6 @@ class RemoteImageDecoderAVFProxy;
 class RemoteLegacyCDMFactoryProxy;
 class RemoteMediaEngineConfigurationFactoryProxy;
 class RemoteMediaPlayerManagerProxy;
-class RemoteMediaRecorderManager;
 class RemoteMediaResourceManager;
 class RemoteMediaSessionHelperProxy;
 class RemoteRemoteCommandListenerProxy;
@@ -170,9 +169,6 @@ private:
 #if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
     UserMediaCaptureManagerProxy& userMediaCaptureManagerProxy();
 #endif
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM) && HAVE(AVASSETWRITERDELEGATE)
-    RemoteMediaRecorderManager& mediaRecorderManager();
-#endif
 
     void createRenderingBackend(RemoteRenderingBackendCreationParameters&&);
     void releaseRenderingBackend(RenderingBackendIdentifier);
@@ -247,9 +243,6 @@ private:
 #if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
     std::unique_ptr<UserMediaCaptureManagerProxy> m_userMediaCaptureManagerProxy;
     Ref<RemoteSampleBufferDisplayLayerManager> m_sampleBufferDisplayLayerManager;
-#endif
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM) && HAVE(AVASSETWRITERDELEGATE)
-    std::unique_ptr<RemoteMediaRecorderManager> m_remoteMediaRecorderManager;
 #endif
 #if ENABLE(MEDIA_STREAM)
     Ref<WebCore::SecurityOrigin> m_captureOrigin;

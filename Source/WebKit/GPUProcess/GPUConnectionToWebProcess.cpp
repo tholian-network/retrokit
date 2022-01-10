@@ -44,9 +44,6 @@
 #include "RemoteMediaPlayerManagerProxyMessages.h"
 #include "RemoteMediaPlayerProxy.h"
 #include "RemoteMediaPlayerProxyMessages.h"
-#include "RemoteMediaRecorderManager.h"
-#include "RemoteMediaRecorderManagerMessages.h"
-#include "RemoteMediaRecorderMessages.h"
 #include "RemoteMediaResourceManager.h"
 #include "RemoteMediaResourceManagerMessages.h"
 #include "RemoteRemoteCommandListenerProxy.h"
@@ -330,10 +327,6 @@ bool GPUConnectionToWebProcess::allowsExitUnderMemoryPressure() const
     if (!m_sampleBufferDisplayLayerManager->allowsExitUnderMemoryPressure())
         return false;
 #endif
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM) && HAVE(AVASSETWRITERDELEGATE)
-    if (m_remoteMediaRecorderManager && !m_remoteMediaRecorderManager->allowsExitUnderMemoryPressure())
-        return false;
-#endif
 #if HAVE(AVASSETREADER)
     if (m_imageDecoderAVFProxy && !m_imageDecoderAVFProxy->allowsExitUnderMemoryPressure())
         return false;
@@ -399,16 +392,6 @@ UserMediaCaptureManagerProxy& GPUConnectionToWebProcess::userMediaCaptureManager
         m_userMediaCaptureManagerProxy = makeUnique<UserMediaCaptureManagerProxy>(makeUniqueRef<GPUProxyForCapture>(*this));
 
     return *m_userMediaCaptureManagerProxy;
-}
-#endif
-
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM) && HAVE(AVASSETWRITERDELEGATE)
-RemoteMediaRecorderManager& GPUConnectionToWebProcess::mediaRecorderManager()
-{
-    if (!m_remoteMediaRecorderManager)
-        m_remoteMediaRecorderManager = makeUnique<RemoteMediaRecorderManager>(*this);
-
-    return *m_remoteMediaRecorderManager;
 }
 #endif
 
@@ -619,16 +602,6 @@ bool GPUConnectionToWebProcess::dispatchMessage(IPC::Connection& connection, IPC
 #if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
     if (decoder.messageReceiverName() == Messages::UserMediaCaptureManagerProxy::messageReceiverName()) {
         userMediaCaptureManagerProxy().didReceiveMessageFromGPUProcess(connection, decoder);
-        return true;
-    }
-#endif
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM) && HAVE(AVASSETWRITERDELEGATE)
-    if (decoder.messageReceiverName() == Messages::RemoteMediaRecorderManager::messageReceiverName()) {
-        mediaRecorderManager().didReceiveMessageFromWebProcess(connection, decoder);
-        return true;
-    }
-    if (decoder.messageReceiverName() == Messages::RemoteMediaRecorder::messageReceiverName()) {
-        mediaRecorderManager().didReceiveRemoteMediaRecorderMessage(connection, decoder);
         return true;
     }
 #endif

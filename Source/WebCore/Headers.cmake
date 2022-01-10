@@ -80,8 +80,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     Modules/indexeddb/shared/IDBResultData.h
     Modules/indexeddb/shared/IDBTransactionInfo.h
 
-    Modules/mediarecorder/MediaRecorderProvider.h
-
     Modules/mediasource/SampleMap.h
 
     Modules/mediastream/DoubleRange.h
@@ -1350,8 +1348,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/mediacapabilities/MediaEngineConfigurationFactory.h
     platform/mediacapabilities/TransferFunction.h
     platform/mediacapabilities/VideoConfiguration.h
-
-    platform/mediarecorder/MediaRecorderPrivate.h
 
     platform/mediastream/CaptureDevice.h
     platform/mediastream/CaptureDeviceManager.h

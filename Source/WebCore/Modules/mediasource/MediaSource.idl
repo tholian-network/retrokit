@@ -59,7 +59,7 @@ enum ReadyState {
     undefined removeSourceBuffer(SourceBuffer buffer);
 
     readonly attribute ReadyState readyState;
-    
+
     undefined endOfStream(optional EndOfStreamError error);
 
     [CallWith=ScriptExecutionContext] static boolean isTypeSupported (DOMString type);

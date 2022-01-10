@@ -131,7 +131,6 @@
 #include "MediaMetadata.h"
 #include "MediaPlayer.h"
 #include "MediaProducer.h"
-#include "MediaRecorderProvider.h"
 #include "MediaResourceLoader.h"
 #include "MediaSession.h"
 #include "MediaSessionActionDetails.h"
@@ -269,8 +268,6 @@
 #endif
 
 #if ENABLE(MEDIA_STREAM)
-#include "MediaRecorder.h"
-#include "MediaRecorderPrivateMock.h"
 #include "MediaStream.h"
 #include "MockRealtimeMediaSourceCenter.h"
 #endif
@@ -561,7 +558,6 @@ void Internals::resetToConsistentState(Page& page)
 
 #if ENABLE(MEDIA_STREAM)
     page.settings().setInterruptAudioOnPageVisibilityChangeEnabled(false);
-    WebCore::MediaRecorder::setCustomPrivateRecorderCreator(nullptr);
 #endif
 
     HTMLCanvasElement::setMaxPixelMemoryForTesting(std::nullopt);
@@ -1455,25 +1451,6 @@ void Internals::enableMockSpeechSynthesizer()
 
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-void Internals::setShouldInterruptAudioOnPageVisibilityChange(bool shouldInterrupt)
-{
-    Document* document = contextDocument();
-    if (auto* page = document->page())
-        page->settings().setInterruptAudioOnPageVisibilityChangeEnabled(shouldInterrupt);
-}
-
-static ExceptionOr<std::unique_ptr<MediaRecorderPrivate>> createRecorderMockSource(MediaStreamPrivate& stream, const MediaRecorderPrivateOptions&)
-{
-    return std::unique_ptr<MediaRecorderPrivate>(new MediaRecorderPrivateMock(stream));
-}
-
-void Internals::setCustomPrivateRecorderCreator()
-{
-    WebCore::MediaRecorder::setCustomPrivateRecorderCreator(createRecorderMockSource);
-}
-#endif // ENABLE(MEDIA_STREAM)
-
 ExceptionOr<Ref<DOMRect>> Internals::absoluteLineRectFromPoint(int x, int y)
 {
     if (!contextDocument() || !contextDocument()->page())
@@ -1499,13 +1476,13 @@ ExceptionOr<Ref<DOMRect>> Internals::absoluteCaretBounds()
 
     return DOMRect::create(document->frame()->selection().absoluteCaretBounds());
 }
-    
+
 ExceptionOr<bool> Internals::isCaretBlinkingSuspended()
 {
     Document* document = contextDocument();
     if (!document || !document->frame())
         return Exception { InvalidAccessError };
-    
+
     return document->frame()->selection().isCaretBlinkingSuspended();
 }
 

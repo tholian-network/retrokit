@@ -55,7 +55,6 @@ class DragClient;
 class EditorClient;
 class FrameLoaderClient;
 class InspectorClient;
-class MediaRecorderProvider;
 class PerformanceLoggingClient;
 class PermissionController;
 class ProgressTrackerClient;
@@ -72,7 +71,7 @@ class SpeechSynthesisClient;
 class PageConfiguration {
     WTF_MAKE_NONCOPYABLE(PageConfiguration); WTF_MAKE_FAST_ALLOCATED;
 public:
-    WEBCORE_EXPORT PageConfiguration(PAL::SessionID, UniqueRef<EditorClient>&&, Ref<SocketProvider>&&, Ref<CacheStorageProvider>&&, Ref<UserContentProvider>&&, Ref<BackForwardClient>&&, Ref<CookieJar>&&, UniqueRef<ProgressTrackerClient>&&, UniqueRef<FrameLoaderClient>&&, UniqueRef<SpeechRecognitionProvider>&&, UniqueRef<MediaRecorderProvider>&&, Ref<BroadcastChannelRegistry>&&, Ref<PermissionController>&&);
+    WEBCORE_EXPORT PageConfiguration(PAL::SessionID, UniqueRef<EditorClient>&&, Ref<SocketProvider>&&, Ref<CacheStorageProvider>&&, Ref<UserContentProvider>&&, Ref<BackForwardClient>&&, Ref<CookieJar>&&, UniqueRef<ProgressTrackerClient>&&, UniqueRef<FrameLoaderClient>&&, UniqueRef<SpeechRecognitionProvider>&&, Ref<BroadcastChannelRegistry>&&, Ref<PermissionController>&&);
     WEBCORE_EXPORT ~PageConfiguration();
     PageConfiguration(PageConfiguration&&);
 
@@ -119,7 +118,6 @@ public:
 
     Vector<UserContentURLPattern> corsDisablingPatterns;
     UniqueRef<SpeechRecognitionProvider> speechRecognitionProvider;
-    UniqueRef<MediaRecorderProvider> mediaRecorderProvider;
 
     // FIXME: These should be all be Settings.
     bool loadsSubresources { true };

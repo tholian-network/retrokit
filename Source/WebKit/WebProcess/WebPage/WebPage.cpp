@@ -46,7 +46,6 @@
 #include "Logging.h"
 #include "MediaKeySystemPermissionRequestManager.h"
 #include "MediaPlaybackState.h"
-#include "MediaRecorderProvider.h"
 #include "NetworkConnectionToWebProcessMessages.h"
 #include "NetworkProcessConnection.h"
 #include "NotificationPermissionRequestManager.h"
@@ -533,7 +532,6 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
         makeUniqueRef<WebProgressTrackerClient>(*this),
         makeUniqueRef<WebFrameLoaderClient>(m_mainFrame.copyRef()),
         makeUniqueRef<WebSpeechRecognitionProvider>(m_identifier),
-        makeUniqueRef<MediaRecorderProvider>(*this),
         WebProcess::singleton().broadcastChannelRegistry(),
         WebPermissionController::create(*this)
     );

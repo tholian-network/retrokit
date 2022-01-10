@@ -407,10 +407,6 @@ platform/mac/WebGLBlocklist.mm
 platform/mac/WebNSAttributedStringExtras.mm
 platform/mac/WebPlaybackControlsManager.mm
 platform/mac/WidgetMac.mm
-platform/mediarecorder/MediaRecorderPrivateAVFImpl.cpp
-platform/mediarecorder/cocoa/AudioSampleBufferCompressor.mm
-platform/mediarecorder/cocoa/MediaRecorderPrivateWriterCocoa.mm
-platform/mediarecorder/cocoa/VideoSampleBufferCompressor.mm
 platform/mediastream/cocoa/AudioMediaStreamTrackRendererCocoa.cpp
 platform/mediastream/cocoa/AudioMediaStreamTrackRendererInternalUnit.cpp
 platform/mediastream/cocoa/AudioMediaStreamTrackRendererUnit.cpp

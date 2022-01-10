@@ -1011,7 +1011,6 @@ ExceptionOr<Ref<SourceBufferPrivate>> MediaSource::createSourceBufferPrivate(con
 {
     ContentType type { incomingType };
 
-    auto context = scriptExecutionContext();
     RefPtr<SourceBufferPrivate> sourceBufferPrivate;
 
     switch (m_private->addSourceBuffer(type, RuntimeEnabledFeatures::sharedFeatures().webMParserEnabled(), sourceBufferPrivate)) {

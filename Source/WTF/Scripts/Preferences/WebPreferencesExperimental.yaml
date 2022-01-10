@@ -724,21 +724,6 @@ MediaCapabilitiesExtensionsEnabled:
     WebCore:
       default: false
 
-# FIXME: Is this implemented for WebKitLegacy? If not, this should be excluded from WebKitLegacy entirely.
-MediaRecorderEnabled:
-  type: bool
-  humanReadableName: "MediaRecorder"
-  humanReadableDescription: "MediaRecorder"
-  condition: ENABLE(MEDIA_STREAM)
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      "HAVE(AVASSETWRITERDELEGATE)": true
-      default: false
-    WebCore:
-      default: false
-
 MediaSessionCoordinatorEnabled:
   type: bool
   humanReadableName: "Experimental MediaSession coordinator API"
