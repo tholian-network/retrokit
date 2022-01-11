@@ -1869,9 +1869,6 @@ public:
     WKQuickLookPreviewController *quickLookPreviewController() const { return m_quickLookPreviewController.get(); }
 #endif
 
-    bool needsSiteSpecificViewportQuirks() const { return m_needsSiteSpecificViewportQuirks; }
-    void setNeedsSiteSpecificViewportQuirks(bool value) { m_needsSiteSpecificViewportQuirks = value; }
-
 #if PLATFORM(MAC)
     bool isQuarantinedAndNotUserApproved(const String&);
 #endif
@@ -2866,7 +2863,7 @@ private:
     bool m_sessionStateWasRestoredByAPIRequest { false };
     bool m_isQuotaIncreaseDenied { false };
     bool m_isLayerTreeFrozenDueToSwipeAnimation { false };
-    
+
     String m_overriddenMediaType;
 
     Vector<String> m_corsDisablingPatterns;
@@ -2880,7 +2877,7 @@ private:
 #if ENABLE(RESOURCE_LOAD_STATISTICS)
     MonotonicTime m_didFinishDocumentLoadForMainFrameTimestamp;
 #endif
-        
+
 #if ENABLE(APP_BOUND_DOMAINS)
     std::optional<NavigatingToAppBoundDomain> m_isNavigatingToAppBoundDomain;
     std::optional<NavigatingToAppBoundDomain> m_isTopFrameNavigatingToAppBoundDomain;
@@ -2908,7 +2905,6 @@ private:
     RetainPtr<WKQuickLookPreviewController> m_quickLookPreviewController;
 #endif
 
-    bool m_needsSiteSpecificViewportQuirks { true };
 };
 
 #ifdef __OBJC__

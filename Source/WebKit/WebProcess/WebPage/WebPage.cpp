@@ -201,7 +201,6 @@
 #include <WebCore/PointerCaptureController.h>
 #include <WebCore/PrintContext.h>
 #include <WebCore/PromisedAttachmentInfo.h>
-#include <WebCore/Quirks.h>
 #include <WebCore/Range.h>
 #include <WebCore/RegistrableDomain.h>
 #include <WebCore/RemoteDOMWindow.h>

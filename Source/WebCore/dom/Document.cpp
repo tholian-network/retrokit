@@ -571,7 +571,6 @@ Document::Document(Frame* frame, const Settings& settings, const URL& url, Docum
     , TreeScope(*this)
     , FrameDestructionObserver(frame)
     , m_settings(settings)
-    , m_quirks(makeUniqueRef<Quirks>(*this))
     , m_cachedResourceLoader(createCachedResourceLoader(frame))
     , m_domTreeVersion(++s_globalTreeVersion)
     , m_styleScope(makeUnique<Style::Scope>(*this))

@@ -27,7 +27,6 @@
 
 #include "AudioTrackPrivateGStreamer.h"
 #include "GStreamerCommon.h"
-#include "GStreamerEMEUtilities.h"
 #include "GStreamerMediaDescription.h"
 #include "GStreamerRegistryScannerMSE.h"
 #include "InbandTextTrackPrivateGStreamer.h"

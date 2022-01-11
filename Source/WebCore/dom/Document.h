@@ -187,7 +187,6 @@ class PaintWorkletGlobalScope;
 class PlatformMouseEvent;
 class ProcessingInstruction;
 class QualifiedName;
-class Quirks;
 class Range;
 class RenderTreeBuilder;
 class RenderView;
@@ -557,8 +556,6 @@ public:
     const Settings& settings() const { return m_settings.get(); }
     EditingBehavior editingBehavior() const;
 
-    const Quirks& quirks() const { return m_quirks; }
-
     float deviceScaleFactor() const;
 
     WEBCORE_EXPORT bool useSystemAppearance() const;
@@ -587,7 +584,7 @@ public:
     unsigned lastStyleUpdateSizeForTesting() const { return m_lastStyleUpdateSizeForTesting; }
 
     WEBCORE_EXPORT void updateLayout();
-    
+
     // updateLayoutIgnorePendingStylesheets() forces layout even if we are waiting for pending stylesheet loads,
     // so calling this may cause a flash of unstyled content (FOUC).
     enum class RunPostLayoutTasks { Asynchronously, Synchronously };
@@ -625,9 +622,9 @@ public:
     bool renderTreeBeingDestroyed() const { return m_renderTreeBeingDestroyed; }
     bool hasLivingRenderTree() const { return renderView() && !renderTreeBeingDestroyed(); }
     void updateRenderTree(std::unique_ptr<const Style::Update> styleUpdate);
-    
+
     bool updateLayoutIfDimensionsOutOfDate(Element&, DimensionsCheck = AllDimensionsCheck);
-    
+
     AXObjectCache* existingAXObjectCache() const;
     WEBCORE_EXPORT AXObjectCache* axObjectCache() const;
     void clearAXObjectCache();
@@ -638,7 +635,7 @@ public:
     // to get visually ordered hebrew and arabic pages right
     void setVisuallyOrdered();
     bool visuallyOrdered() const { return m_visuallyOrdered; }
-    
+
     WEBCORE_EXPORT DocumentLoader* loader() const;
 
     WEBCORE_EXPORT ExceptionOr<RefPtr<WindowProxy>> openForBindings(DOMWindow& activeWindow, DOMWindow& firstDOMWindow, const String& url, const AtomString& name, const String& features);
@@ -892,7 +889,7 @@ public:
     DOMTimerHoldingTank* domTimerHoldingTankIfExists() { return m_domTimerHoldingTank.get(); }
     DOMTimerHoldingTank& domTimerHoldingTank();
 #endif
-    
+
     void processViewport(const String& features, ViewportArguments::Type origin);
     void processDisabledAdaptations(const String& adaptations);
     void updateViewportArguments();
@@ -1712,8 +1709,6 @@ private:
     void removeFromDocumentsMap();
 
     const Ref<const Settings> m_settings;
-
-    UniqueRef<Quirks> m_quirks;
 
     RefPtr<DOMWindow> m_domWindow;
     WeakPtr<Document> m_contextDocument;

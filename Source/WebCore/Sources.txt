@@ -1560,7 +1560,6 @@ page/PointerCaptureController.cpp
 page/PointerLockController.cpp
 page/PrintContext.cpp
 page/ProcessWarming.cpp
-page/Quirks.cpp
 page/RemoteDOMWindow.cpp
 page/RemoteFrame.cpp
 page/RenderingUpdateScheduler.cpp
