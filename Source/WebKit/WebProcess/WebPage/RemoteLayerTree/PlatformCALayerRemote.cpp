@@ -27,7 +27,6 @@
 #import "PlatformCALayerRemote.h"
 
 #import "PlatformCALayerRemoteCustom.h"
-#import "PlatformCALayerRemoteModelHosting.h"
 #import "PlatformCALayerRemoteTiledBacking.h"
 #import "RemoteLayerBackingStore.h"
 #import "RemoteLayerTreeContext.h"

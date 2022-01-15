@@ -1505,7 +1505,7 @@ void Page::updateRendering()
     });
 
     runProcessingStep(RenderingUpdateStep::MediaQueryEvaluation, [] (Document& document) {
-        document.evaluateMediaQueriesAndReportChanges();        
+        document.evaluateMediaQueriesAndReportChanges();
     });
 
     runProcessingStep(RenderingUpdateStep::Animations, [] (Document& document) {
@@ -1600,7 +1600,7 @@ void Page::doAfterUpdateRendering()
         auto appHighlightStorage = document.appHighlightStorageIfExists();
         if (!appHighlightStorage)
             return;
-        
+
         if (appHighlightStorage->hasUnrestoredHighlights() && MonotonicTime::now() - appHighlightStorage->lastRangeSearchTime() > 1_s) {
             appHighlightStorage->resetLastRangeSearchTime();
             document.eventLoop().queueTask(TaskSource::InternalAsyncTask, [weakDocument = makeWeakPtr(document)] {
