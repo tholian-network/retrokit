@@ -191,10 +191,6 @@ private:
     void prefetchDNS(const String&) final;
     void sendH2Ping(const URL&, CompletionHandler<void(Expected<Seconds, ResourceError>&&)>&&) final;
 
-#if USE(QUICK_LOOK)
-    RefPtr<LegacyPreviewLoaderClient> createPreviewLoaderClient(const String&, const String&) final;
-#endif
-
 #if ENABLE(RESOURCE_LOAD_STATISTICS)
     bool hasFrameSpecificStorageAccess() final;
 #endif

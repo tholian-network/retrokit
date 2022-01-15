@@ -79,7 +79,7 @@ private:
     void didFail(const ResourceError&) override;
     void willCancel(const ResourceError&) override;
     void didCancel(const ResourceError&) override;
-    
+
     void updateReferrerPolicy(const String&);
 
 #if PLATFORM(COCOA)
@@ -97,11 +97,6 @@ private:
     void notifyDone(LoadCompletionType);
 
     void reportResourceTiming(const NetworkLoadMetrics&);
-
-#if USE(QUICK_LOOK)
-    bool shouldCreatePreviewLoaderForResponse(const ResourceResponse&) const;
-    void didReceivePreviewResponse(const ResourceResponse&) override;
-#endif
 
     enum SubresourceLoaderState {
         Uninitialized,

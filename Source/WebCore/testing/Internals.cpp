@@ -281,11 +281,6 @@
 #include "PointerLockController.h"
 #endif
 
-#if USE(QUICK_LOOK)
-#include "LegacyPreviewLoader.h"
-#include "MockPreviewLoaderClient.h"
-#endif
-
 #if PLATFORM(MAC)
 #include "GraphicsChecksMac.h"
 #include "NSScrollerImpDetails.h"
@@ -535,11 +530,6 @@ void Internals::resetToConsistentState(Page& page)
 
     page.setLowPowerModeEnabledOverrideForTesting(std::nullopt);
     page.setOutsideViewportThrottlingEnabledForTesting(false);
-
-#if USE(QUICK_LOOK)
-    MockPreviewLoaderClient::singleton().setPassword("");
-    LegacyPreviewLoader::setClientForTesting(nullptr);
-#endif
 
     printContextForTesting() = nullptr;
 
@@ -4837,17 +4827,6 @@ Vector<String> Internals::accessKeyModifiers() const
     }
 
     return accessKeyModifierStrings;
-}
-
-void Internals::setQuickLookPassword(const String& password)
-{
-#if PLATFORM(IOS_FAMILY) && USE(QUICK_LOOK)
-    auto& quickLookHandleClient = MockPreviewLoaderClient::singleton();
-    LegacyPreviewLoader::setClientForTesting(&quickLookHandleClient);
-    quickLookHandleClient.setPassword(password);
-#else
-    UNUSED_PARAM(password);
-#endif
 }
 
 void Internals::setAsRunningUserScripts(Document& document)

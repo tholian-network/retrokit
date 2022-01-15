@@ -113,11 +113,6 @@
 #include "ScriptController.h"
 #endif
 
-#if USE(QUICK_LOOK)
-#include "PreviewConverter.h"
-#include "QuickLook.h"
-#endif
-
 #if ENABLE(RESOURCE_LOAD_STATISTICS)
 #include "NetworkStorageSession.h"
 #endif
@@ -1057,11 +1052,6 @@ bool DocumentLoader::disallowWebArchive() const
     String mimeType = m_response.mimeType();
     if (mimeType.isNull() || !webArchiveMIMETypes.get().contains(mimeType))
         return false;
-
-#if USE(QUICK_LOOK)
-    if (isQuickLookPreviewURL(m_response.url()))
-        return false;
-#endif
 
     if (m_substituteData.isValid())
         return false;
@@ -2324,26 +2314,6 @@ void DocumentLoader::addPendingContentExtensionDisplayNoneSelector(const String&
     auto addResult = m_pendingContentExtensionDisplayNoneSelectors.add(identifier, Vector<std::pair<String, uint32_t>>());
     addResult.iterator->value.append(std::make_pair(selector, selectorID));
 }
-#endif
-
-#if USE(QUICK_LOOK)
-
-void DocumentLoader::previewResponseReceived(CachedResource& resource, const ResourceResponse& response)
-{
-    ASSERT_UNUSED(resource, m_mainResource == &resource);
-    m_response = response;
-}
-
-void DocumentLoader::setPreviewConverter(RefPtr<PreviewConverter>&& previewConverter)
-{
-    m_previewConverter = WTFMove(previewConverter);
-}
-
-PreviewConverter* DocumentLoader::previewConverter() const
-{
-    return m_previewConverter.get();
-}
-
 #endif
 
 void DocumentLoader::addConsoleMessage(MessageSource messageSource, MessageLevel messageLevel, const String& message, unsigned long requestIdentifier)

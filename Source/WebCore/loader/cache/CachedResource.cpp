@@ -59,10 +59,6 @@
 #include <wtf/Vector.h>
 #include <wtf/text/CString.h>
 
-#if USE(QUICK_LOOK)
-#include "QuickLook.h"
-#endif
-
 #undef CACHEDRESOURCE_RELEASE_LOG
 #define PAGE_ID(frame) (frame.pageID().value_or(PageIdentifier()).toUInt64())
 #define FRAME_ID(frame) (frame.frameID().value_or(FrameIdentifier()).toUInt64())
@@ -910,7 +906,7 @@ void CachedResource::tryReplaceEncodedData(SharedBuffer& newBuffer)
 {
     if (!m_data)
         return;
-    
+
     if (!mayTryReplaceEncodedData())
         return;
 
@@ -923,16 +919,6 @@ void CachedResource::tryReplaceEncodedData(SharedBuffer& newBuffer)
     m_data->clear();
     m_data->append(newBuffer);
     didReplaceSharedBufferContents();
-}
-
-#endif
-
-#if USE(QUICK_LOOK)
-
-void CachedResource::previewResponseReceived(const ResourceResponse& response)
-{
-    ASSERT(response.url().protocolIs(QLPreviewProtocol));
-    CachedResource::responseReceived(response);
 }
 
 #endif

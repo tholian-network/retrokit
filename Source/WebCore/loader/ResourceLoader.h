@@ -52,7 +52,6 @@ class CachedResource;
 class DocumentLoader;
 class Frame;
 class FrameLoader;
-class LegacyPreviewLoader;
 class NetworkLoadMetrics;
 
 DECLARE_ALLOCATOR_WITH_HEAP_IDENTIFIER(ResourceLoader);
@@ -99,7 +98,7 @@ public:
 
     SharedBuffer* resourceData() const { return m_resourceData.get(); }
     void clearResourceData();
-    
+
     virtual bool isSubresourceLoader() const;
 
     virtual void willSendRequest(ResourceRequest&&, const ResourceResponse& redirectResponse, CompletionHandler<void(ResourceRequest&&)>&& callback);
@@ -118,11 +117,6 @@ public:
 #endif
     virtual void receivedCancellation(const AuthenticationChallenge&);
 
-#if USE(QUICK_LOOK)
-    bool isQuickLookResource() const;
-    virtual void didReceivePreviewResponse(const ResourceResponse&) { };
-#endif
-
     const URL& url() const { return m_request.url(); }
     ResourceHandle* handle() const { return m_handle.get(); }
     bool shouldSendResourceLoadCallbacks() const { return m_options.sendLoadCallbacks == SendCallbackPolicy::SendCallbacks; }
@@ -131,7 +125,7 @@ public:
     bool shouldSniffContentEncoding() const { return m_options.sniffContentEncoding == ContentEncodingSniffingPolicy::Sniff; }
     WEBCORE_EXPORT bool isAllowedToAskUserForCredentials() const;
     WEBCORE_EXPORT bool shouldIncludeCertificateInfo() const;
-    
+
     virtual CachedResource* cachedResource() const { return nullptr; }
 
     bool reachedTerminalState() const { return m_reachedTerminalState; }
@@ -166,7 +160,7 @@ protected:
     bool wasCancelled() const { return m_cancellationStatus >= Cancelled; }
 
     void didReceiveDataOrBuffer(const uint8_t*, unsigned, RefPtr<SharedBuffer>&&, long long encodedDataLength, DataPayloadType);
-    
+
     void setReferrerPolicy(ReferrerPolicy referrerPolicy) { m_options.referrerPolicy = referrerPolicy; }
     ReferrerPolicy referrerPolicy() const { return m_options.referrerPolicy; }
 
@@ -181,9 +175,6 @@ protected:
     RefPtr<DocumentLoader> m_documentLoader;
     ResourceResponse m_response;
     ResourceLoadTiming m_loadTiming;
-#if USE(QUICK_LOOK)
-    std::unique_ptr<LegacyPreviewLoader> m_previewLoader;
-#endif
     bool m_canCrossOriginRequestsAskUserForCredentials { true };
 
 private:

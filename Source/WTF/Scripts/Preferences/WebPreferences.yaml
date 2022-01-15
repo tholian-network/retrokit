@@ -1726,16 +1726,6 @@ ShouldConvertPositionStyleOnCopy:
     WebCore:
       default: false
 
-ShouldDecidePolicyBeforeLoadingQuickLookPreview:
-  type: bool
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      default: false
-    WebCore:
-      default: false
-
 ShouldDisplayCaptions:
   type: bool
   condition: ENABLE(VIDEO)

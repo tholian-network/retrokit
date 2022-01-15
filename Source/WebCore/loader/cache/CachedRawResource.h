@@ -68,10 +68,6 @@ private:
 
     std::optional<SharedBufferDataView> calculateIncrementalDataChunk(const SharedBuffer*) const;
     void notifyClientsDataWasReceived(const uint8_t* data, unsigned length);
-    
-#if USE(QUICK_LOOK)
-    void previewResponseReceived(const ResourceResponse&) final;
-#endif
 
     unsigned long m_identifier;
     bool m_allowEncodedDataReplacement;

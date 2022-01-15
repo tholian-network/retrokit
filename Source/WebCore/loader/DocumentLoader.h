@@ -79,7 +79,6 @@ class Frame;
 class FrameLoader;
 class IconLoader;
 class Page;
-class PreviewConverter;
 class ResourceLoader;
 class SharedBuffer;
 class SWClientConnection;
@@ -355,11 +354,6 @@ public:
     // The URL of the document resulting from this DocumentLoader.
     URL documentURL() const;
 
-#if USE(QUICK_LOOK)
-    void setPreviewConverter(RefPtr<PreviewConverter>&&);
-    PreviewConverter* previewConverter() const;
-#endif
-
 #if ENABLE(CONTENT_EXTENSIONS)
     void addPendingContentExtensionSheet(const String& identifier, StyleSheetContents&);
     void addPendingContentExtensionDisplayNoneSelector(const String& identifier, const String& selector, uint32_t selectorID);
@@ -450,7 +444,7 @@ private:
 
     void setupForReplace();
     void maybeFinishLoadingMultipartContent();
-    
+
     bool maybeCreateArchive();
 #if ENABLE(WEB_ARCHIVE) || ENABLE(MHTML)
     void clearArchiveResources();
@@ -463,9 +457,6 @@ private:
     WEBCORE_EXPORT void responseReceived(CachedResource&, const ResourceResponse&, CompletionHandler<void()>&&) override;
     WEBCORE_EXPORT void dataReceived(CachedResource&, const uint8_t* data, int length) override;
     WEBCORE_EXPORT void notifyFinished(CachedResource&, const NetworkLoadMetrics&) override;
-#if USE(QUICK_LOOK)
-    WEBCORE_EXPORT void previewResponseReceived(CachedResource&, const ResourceResponse&) override;
-#endif
 
     void responseReceived(const ResourceResponse&, CompletionHandler<void()>&&);
 
@@ -611,17 +602,13 @@ private:
 #endif
 
     Vector<CustomHeaderFields> m_customHeaderFields;
-    
+
     ShouldOpenExternalURLsPolicy m_shouldOpenExternalURLsPolicy { ShouldOpenExternalURLsPolicy::ShouldNotAllow };
 
     std::unique_ptr<ApplicationCacheHost> m_applicationCacheHost;
 
 #if ENABLE(CONTENT_FILTERING)
     std::unique_ptr<ContentFilter> m_contentFilter;
-#endif
-
-#if USE(QUICK_LOOK)
-    RefPtr<PreviewConverter> m_previewConverter;
 #endif
 
 #if ENABLE(CONTENT_EXTENSIONS)

@@ -483,7 +483,6 @@ UIProcess/mac/WindowServerConnection.mm
 UIProcess/mac/WKFullScreenWindowController.mm
 UIProcess/mac/WKImmediateActionController.mm
 UIProcess/mac/WKPrintingView.mm
-UIProcess/mac/WKQuickLookPreviewController.mm
 UIProcess/mac/WKRevealItemPresenter.mm
 UIProcess/mac/WKSharingServicePickerDelegate.mm
 UIProcess/mac/WKTextFinderClient.mm
@@ -587,7 +586,6 @@ WebProcess/WebCoreSupport/WebValidationMessageClient.cpp
 WebProcess/WebCoreSupport/ios/WebChromeClientIOS.mm
 WebProcess/WebCoreSupport/ios/WebEditorClientIOS.mm
 WebProcess/WebCoreSupport/ios/WebFrameLoaderClientIOS.mm
-WebProcess/WebCoreSupport/ios/WebPreviewLoaderClient.cpp
 
 WebProcess/WebCoreSupport/mac/WebAlternativeTextClient.cpp
 WebProcess/WebCoreSupport/mac/WebContextMenuClientMac.mm

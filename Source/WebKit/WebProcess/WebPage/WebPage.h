@@ -1265,14 +1265,8 @@ public:
     static WebCore::IntRect rootViewInteractionBounds(const WebCore::Node&);
 
     InteractionInformationAtPosition positionInformation(const InteractionInformationRequest&);
-    
-#endif // PLATFORM(IOS_FAMILY)
 
-#if USE(QUICK_LOOK)
-    void didStartLoadForQuickLookDocumentInMainFrame(const String& fileName, const String& uti);
-    void didFinishLoadForQuickLookDocumentInMainFrame(const WebCore::SharedBuffer&);
-    void requestPasswordForQuickLookDocumentInMainFrame(const String& fileName, CompletionHandler<void(const String&)>&&);
-#endif
+#endif // PLATFORM(IOS_FAMILY)
 
     const String& overriddenMediaType() const { return m_overriddenMediaType; }
     void setOverriddenMediaType(const String&);

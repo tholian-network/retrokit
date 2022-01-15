@@ -116,10 +116,6 @@ void CachedRawResource::finishLoading(SharedBuffer* data, const NetworkLoadMetri
         }
     }
 
-#if USE(QUICK_LOOK)
-    m_allowEncodedDataReplacement = m_loader && !m_loader->isQuickLookResource();
-#endif
-
     CachedResource::finishLoading(data, metrics);
     if (dataBufferingPolicy == DataBufferingPolicy::BufferData && this->dataBufferingPolicy() == DataBufferingPolicy::DoNotBufferData) {
         if (m_loader)
@@ -348,17 +344,5 @@ void CachedRawResource::clear()
     if (m_loader)
         m_loader->clearResourceData();
 }
-
-#if USE(QUICK_LOOK)
-void CachedRawResource::previewResponseReceived(const ResourceResponse& response)
-{
-    CachedResourceHandle<CachedRawResource> protectedThis(this);
-    CachedResource::previewResponseReceived(response);
-    CachedResourceClientWalker<CachedRawResourceClient> w(m_clients);
-    while (CachedRawResourceClient* c = w.next())
-        c->previewResponseReceived(*this, m_response);
-}
-
-#endif
 
 } // namespace WebCore

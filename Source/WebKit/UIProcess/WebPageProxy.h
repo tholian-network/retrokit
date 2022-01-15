@@ -214,7 +214,6 @@ OBJC_CLASS NSView;
 OBJC_CLASS QLPreviewPanel;
 OBJC_CLASS SYNotesActivationObserver;
 OBJC_CLASS WKQLThumbnailLoadOperation;
-OBJC_CLASS WKQuickLookPreviewController;
 OBJC_CLASS WKWebView;
 OBJC_CLASS _WKRemoteObjectRegistry;
 #endif
@@ -389,7 +388,6 @@ enum class TapHandlingResult : uint8_t;
 enum class TextRecognitionUpdateResult : uint8_t;
 enum class NegotiatedLegacyTLS : bool;
 enum class ProcessSwapRequestedByClient : bool;
-enum class QuickLookPreviewActivity : uint8_t;
 enum class UndoOrRedo : bool;
 enum class WebContentMode : uint8_t;
 
@@ -1649,9 +1647,6 @@ public:
     void loadRequestWithNavigationShared(Ref<WebProcessProxy>&&, WebCore::PageIdentifier, API::Navigation&, WebCore::ResourceRequest&&, WebCore::ShouldOpenExternalURLsPolicy, API::Object* userData, WebCore::ShouldTreatAsContinuingLoad, std::optional<NavigatingToAppBoundDomain>, std::optional<WebsitePoliciesData>&& = std::nullopt, std::optional<NetworkResourceLoadIdentifier> existingNetworkResourceLoadIdentifierToResume = std::nullopt);
     void backForwardGoToItemShared(Ref<WebProcessProxy>&&, const WebCore::BackForwardItemIdentifier&, CompletionHandler<void(const WebBackForwardListCounts&)>&&);
     void decidePolicyForNavigationActionSyncShared(Ref<WebProcessProxy>&&, WebCore::FrameIdentifier, bool isMainFrame, FrameInfoData&&, WebCore::PolicyCheckIdentifier, uint64_t navigationID, NavigationActionData&&, FrameInfoData&& originatingFrameInfo, std::optional<WebPageProxyIdentifier> originatingPageID, const WebCore::ResourceRequest& originalRequest, WebCore::ResourceRequest&&, IPC::FormDataReference&& requestBody, WebCore::ResourceResponse&& redirectResponse, const UserData&, Messages::WebPageProxy::DecidePolicyForNavigationActionSyncDelayedReply&&);
-#if USE(QUICK_LOOK)
-    void requestPasswordForQuickLookDocumentInMainFrameShared(const String& fileName, CompletionHandler<void(const String&)>&&);
-#endif
 #if ENABLE(CONTENT_FILTERING)
     void contentFilterDidBlockLoadForFrameShared(Ref<WebProcessProxy>&&, const WebCore::ContentFilterUnblockHandler&, WebCore::FrameIdentifier);
 #endif
@@ -1819,7 +1814,6 @@ public:
 
 #if ENABLE(IMAGE_ANALYSIS) && ENABLE(CONTEXT_MENUS)
     void handleContextMenuLookUpImage();
-    void handleContextMenuQuickLookImage(QuickLookPreviewActivity);
 #endif
 
 #if USE(APPKIT)
@@ -1852,10 +1846,6 @@ public:
 #endif
 
     bool isRunningModalJavaScriptDialog() const { return m_isRunningModalJavaScriptDialog; }
-
-#if ENABLE(IMAGE_ANALYSIS) && PLATFORM(MAC)
-    WKQuickLookPreviewController *quickLookPreviewController() const { return m_quickLookPreviewController.get(); }
-#endif
 
 #if PLATFORM(MAC)
     bool isQuarantinedAndNotUserApproved(const String&);
@@ -2251,12 +2241,6 @@ private:
     WebCore::TrackingType touchEventTrackingType(const WebTouchEvent&) const;
 #endif
 
-#if USE(QUICK_LOOK)
-    void didStartLoadForQuickLookDocumentInMainFrame(const String& fileName, const String& uti);
-    void didFinishLoadForQuickLookDocumentInMainFrame(const ShareableResource::Handle&);
-    void requestPasswordForQuickLookDocumentInMainFrame(const String& fileName, CompletionHandler<void(const String&)>&&);
-#endif
-
 #if ENABLE(CONTENT_FILTERING)
     void contentFilterDidBlockLoadForFrame(const WebCore::ContentFilterUnblockHandler&, WebCore::FrameIdentifier);
 #endif
@@ -2355,7 +2339,7 @@ private:
 
     void tryCloseTimedOut();
     void makeStorageSpaceRequest(WebCore::FrameIdentifier, const String& originIdentifier, const String& databaseName, const String& displayName, uint64_t currentQuota, uint64_t currentOriginUsage, uint64_t currentDatabaseUsage, uint64_t expectedUsage, CompletionHandler<void(uint64_t)>&&);
-        
+
 #if ENABLE(APP_BOUND_DOMAINS)
     bool setIsNavigatingToAppBoundDomainAndCheckIfPermitted(bool isMainFrame, const URL&, std::optional<NavigatingToAppBoundDomain>);
 #endif
@@ -2368,10 +2352,6 @@ private:
 
     void runModalJavaScriptDialog(RefPtr<WebFrameProxy>&&, FrameInfoData&&, const String& message, CompletionHandler<void(WebPageProxy&, WebFrameProxy*, FrameInfoData&&, const String&, CompletionHandler<void()>&&)>&&);
 
-#if ENABLE(IMAGE_ANALYSIS) && PLATFORM(MAC)
-    void showImageInQuickLookPreviewPanel(ShareableBitmap& imageBitmap, const String& tooltip, const URL& imageURL, QuickLookPreviewActivity);
-#endif
-        
 #if ENABLE(APP_HIGHLIGHTS)
     void setUpHighlightsObserver();
 #endif
@@ -2883,10 +2863,6 @@ private:
 
 #if ENABLE(APP_HIGHLIGHTS)
     RetainPtr<SYNotesActivationObserver> m_appHighlightsObserver;
-#endif
-
-#if ENABLE(IMAGE_ANALYSIS) && PLATFORM(MAC)
-    RetainPtr<WKQuickLookPreviewController> m_quickLookPreviewController;
 #endif
 
 };

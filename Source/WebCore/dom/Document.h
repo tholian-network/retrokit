@@ -1689,11 +1689,6 @@ private:
     bool canNavigateInternal(Frame& targetFrame);
     bool isNavigationBlockedByThirdPartyIFrameRedirectBlocking(Frame& targetFrame, const URL& destinationURL);
 
-#if USE(QUICK_LOOK)
-    bool shouldEnforceQuickLookSandbox() const;
-    void applyQuickLookSandbox();
-#endif
-
     bool shouldEnforceHTTP09Sandbox() const;
 
     void platformSuspendOrStopActiveDOMObjects();

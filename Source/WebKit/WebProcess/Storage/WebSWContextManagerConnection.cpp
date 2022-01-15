@@ -64,10 +64,6 @@
 #include <WebCore/UserAgent.h>
 #include <wtf/ProcessID.h>
 
-#if USE(QUICK_LOOK)
-#include <WebCore/LegacyPreviewLoaderClient.h>
-#endif
-
 namespace WebKit {
 using namespace PAL;
 using namespace WebCore;

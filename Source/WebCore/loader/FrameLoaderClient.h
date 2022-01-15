@@ -83,7 +83,6 @@ class HTMLFormElement;
 class HTMLFrameOwnerElement;
 class HistoryItem;
 class IntSize;
-class LegacyPreviewLoaderClient;
 class MessageEvent;
 class NavigationAction;
 class Page;
@@ -335,10 +334,6 @@ public:
     virtual bool isEmptyFrameLoaderClient() const { return false; }
     virtual bool isServiceWorkerFrameLoaderClient() const { return false; }
 
-#if USE(QUICK_LOOK)
-    virtual RefPtr<LegacyPreviewLoaderClient> createPreviewLoaderClient(const String&, const String&) = 0;
-#endif
-
 #if ENABLE(CONTENT_FILTERING)
     virtual void contentFilterDidBlockLoad(ContentFilterUnblockHandler) { }
 #endif
@@ -363,7 +358,7 @@ public:
 #endif
 
     virtual AllowsContentJavaScript allowsContentJavaScriptFromMostRecentNavigation() const { return AllowsContentJavaScript::Yes; }
-    
+
 #if ENABLE(APP_BOUND_DOMAINS)
     virtual bool shouldEnableInAppBrowserPrivacyProtections() const { return false; }
     virtual void notifyPageOfAppBoundBehavior() { }

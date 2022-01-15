@@ -212,7 +212,7 @@ removed as well.
 - [x] Remove libwebrtc Integration (`LIBWEBRTC`, `libWebRTC`, `libwebrtc`)
 - [x] Remove SystemD Integration (`libsystemd`, `USE_SYSTEMD`, `JOURNALD`)
 - [x] Remove ARKIT Integration (`ARKIT_INLINE_PREVIEW`)
-- [ ] Remove Quick Look Integration (`QUICK_LOOK`, `ARKIT_QUICK_LOOK_PREVIEW`)
+- [x] Remove Quick Look Integration (`QUICK_LOOK`, `ARKIT_QUICK_LOOK_PREVIEW`)
 - [x] Remove PASSKIT Integration (`PASSKIT`)
 
 

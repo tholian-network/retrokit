@@ -799,8 +799,6 @@ enum AutoplayPolicy {
 
     sequence<DOMString> accessKeyModifiers();
 
-    undefined setQuickLookPassword(DOMString password);
-
     [CallWith=Document] undefined setAsRunningUserScripts();
 
     undefined disableTileSizeUpdateDelay();
