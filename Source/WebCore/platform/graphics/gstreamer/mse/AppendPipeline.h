@@ -81,10 +81,6 @@ private:
 
         RefPtr<WebCore::TrackPrivateBase> webKitTrack;
 
-#if !LOG_DISABLED
-        struct PadProbeInformation appsinkDataEnteringPadProbeInformation;
-#endif
-
         void initializeElements(AppendPipeline*, GstBin*);
     };
 
@@ -154,10 +150,6 @@ private:
     // This strategy ensures that at any time, there are at most two notifications in the bus
     // queue, instead of it growing unbounded.
     std::atomic_flag m_wasBusAlreadyNotifiedOfAvailableSamples;
-
-#if !LOG_DISABLED
-    struct PadProbeInformation m_demuxerDataEnteringPadProbeInformation;
-#endif
 
     AbortableTaskQueue m_taskQueue;
 };

@@ -1315,7 +1315,7 @@ void HTMLMediaElement::selectMediaResource()
             );
 
             ContentType contentType;
-            loadResource(URL(), contentType, String());
+            loadResource(URL(), contentType);
             ALWAYS_LOG(logSiteIdentifier, "using 'srcObject' property");
 
             //    If that algorithm returns without aborting this one, then the load failed.
@@ -1359,7 +1359,7 @@ void HTMLMediaElement::selectMediaResource()
             // from the 'src' attribute so MediaPlayer
             // will have to pick a media engine based on the file extension.
             ContentType contentType;
-            loadResource(absoluteURL, contentType, String());
+            loadResource(absoluteURL, contentType);
             ALWAYS_LOG(logSiteIdentifier, "using 'src' attribute url");
 
             // 6. Failed with attribute: Reaching this step indicates that the media resource failed to load
@@ -4289,7 +4289,7 @@ bool HTMLMediaElement::havePotentialSourceChild()
     RefPtr<HTMLSourceElement> currentSourceNode = m_currentSourceNode;
     RefPtr<HTMLSourceElement> nextNode = m_nextChildNodeToConsider;
 
-    URL nextURL = selectNextSourceChild(0, 0, DoNothing);
+    URL nextURL = selectNextSourceChild(0, DoNothing);
 
     m_currentSourceNode = currentSourceNode;
     m_nextChildNodeToConsider = nextNode;

@@ -96,6 +96,7 @@ surface, that's why they're removed.
 
 - [x] Remove Legacy Netscape Plugin API (`NETSCAPE_PLUGIN_API`, `NPAPI`, `NPIdentifier`, `NPMethod`, `NPObject`, `NPRemote`, `NPRuntimeUtilities`, `NPRuntimeObjectMap`, `NPVariant`, `NetscapeBrowserFuncs`, `NetscapePlugin`, `PlugInData`, `PluginData.h`, `PluginProcess`, `WKContextSetAdditionalPluginsDirectory`, `WKContextRefreshPlugIns`, `canPluginHandleResponse`, `addSupportedPlugin`, `clearSupportedPlugin`)
 - [x] Remove PDFKit Plugin Integration (`PDFKIT_PLUGIN`, `UI_PROCESS_PDF_HUD`, `PDFHUD`)
+- [ ] Remove IncrementalPDF Integration (`INCREMENTAL_PDF_APIS`, `IncrementalPDFLoadingEnabled`)
 - [x] Remove QuickTime Plugin Replacement (`QuickTimePlugin`)
 - [x] Remove YouTube Flash Plugin Replacement (`YouTubePlugin`, `YouTubeEmbedShadowElement`)
 - [x] Remove Java Plugin Support (`enable_java`, `JavaEnabled`)
@@ -263,7 +264,6 @@ list of Web APIs that are removed.
 - [ ] Remove Web Performance API
 - [ ] Remove Web Storage API
 - [ ] Remove Indexed Database API
-- [ ] Remove WebSQL Database API
 - [ ] Remove Canvas API (`OFFSCREEN_CANVAS`, `Canvas`, `DOMConvertWebGL`, `JSANGLEInstancedArray`, `CanvasActivityRecord`)
 - [ ] Remove WebGL API (`WEBGL`, `WebGL`, `JSANGLEInstancedArray`, `GraphicsContextGL`, `HighPerformanceGraphicsUsageSampler`)
 - [ ] Remove WebGL2 API (`WEBGL2`)
@@ -279,13 +279,13 @@ list of Web APIs that are removed.
 - [ ] Remove Window Popups (`window.open()`)
 - [ ] Remove Performance Observer API (`PerformanceObserver`)
 - [ ] Remove Resize Observer API (`RESIZE_OBSERVER`, `ResizeObserver`)
-- [ ] Remove WASM / WebASM Support
 - [ ] *Undecided* Remove Custom Protocol Manager Support (`CustomProtocol`, `CustomProtocolManager`)
 - [ ] *Undecided* Remove Web Midi API
 - [ ] *Undecided* Remove Web Workers API
 - [ ] *Undecided* Remove Service Worker API (`SERVICE_WORKER`)
 - [ ] *Undecided* Remove Content Change Observer (`CONTENT_CHANGE_OBSERVER`)
-- [ ] *Undecided* Remove Incremental PDF API (`INCREMENTAL_PDF_APIS`)
+- [ ] Remove Contact Picker API (`ContactPickerAPI`, `ContactInfo`, `ContactProperty`, `ContactsManager`, `ContactsRequestData`, `ContactsSelectOption`, `navigator.contacts`)
+- [ ] Remove WebSQL Database API (`WebSQL`)
 
 
 ## HTML Features

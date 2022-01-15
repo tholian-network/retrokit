@@ -42,12 +42,37 @@ sudo pacman -S ruby base-devel \
 # Remove all build artifacts
 bash clean.sh;
 
-# Create a debug build
-cmake -DPORT=GTK -DCMAKE_BUILD_TYPE=RelWithDebInfo -DENABLE_MINIBROWSER=ON -GNinja;
+# Create a Debug build
+cmake -DPORT=GTK -DCMAKE_BUILD_TYPE=Debug -DENABLE_MINIBROWSER=ON -GNinja;
+
+# Alternatively create a Release build
+# cmake -DPORT=GTK -DCMAKE_BUILD_TYPE=Release -DENABLE_MINIBROWSER=ON -DCMAKE_INSTALL_SYSCONFDIR=/etc -DCMAKE_INSTALL_LOCALSTATEDIR=/var -DCMAKE_INSTALL_PREFIX=/usr -GNinja;
+
 ninja;
 ```
 
 The complete list of available options is described in the [Source/cmake/WebKitFeatures.cmake](/Source/cmake/WebKitFeatures.cmake) file.
+
+
+# Debugging
+
+A `Debug` build has support for the `WEBKIT_DEBUG` environment variable, which can activate
+different logging channels (which in return are defined in [Logging.h](/Source/WebCore/platform/Logging.h)).
+
+The log levels are in this order: `error`, `warning`, `info`, `debug`.
+
+The shorthand `WEBKIT_DEBUG="all"` activates all Logging Channels, though it will spam
+your TTY real quick. So it's hardly useful.
+
+```bash
+# Create a Debug build
+cmake -DPORT=GTK -DCMAKE_BUILD_TYPE=Debug -DENABLE_MINIBROWSER=ON -GNinja;
+ninja;
+
+# Debug Network and Images Channel
+export WEBKIT_DEBUG="Network=debug,Images=debug";
+./bin/Minibrowser;
+```
 
 
 # License

@@ -405,16 +405,6 @@ bool MIMETypeRegistry::isSupportedImageMIMEType(const String& mimeType)
     if (mimeType.isEmpty())
         return false;
     static constexpr SortedArraySet supportedImageMIMETypeSet { supportedImageMIMETypeArray };
-#if USE(CG) && ASSERT_ENABLED
-    // Ensure supportedImageMIMETypeArray matches defaultSupportedImageTypes().
-    static std::once_flag onceFlag;
-    std::call_once(onceFlag, [] {
-        for (auto& imageType : defaultSupportedImageTypes()) {
-            auto mimeType = MIMETypeForImageType(imageType);
-            ASSERT_IMPLIES(!mimeType.isEmpty(), supportedImageMIMETypeSet.contains(mimeType));
-        }
-    });
-#endif
     if (supportedImageMIMETypeSet.contains(mimeType))
         return true;
     return additionalSupportedImageMIMETypes().contains(normalizedImageMIMEType(mimeType));

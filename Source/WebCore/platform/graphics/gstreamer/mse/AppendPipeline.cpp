@@ -70,10 +70,6 @@ void AppendPipeline::staticInitialization()
     s_webKitEndOfAppendMetaInfo = gst_meta_register(s_endOfAppendMetaType, "WebKitEndOfAppendMeta", sizeof(EndOfAppendMeta), EndOfAppendMeta::init, EndOfAppendMeta::free, EndOfAppendMeta::transform);
 }
 
-#if !LOG_DISABLED
-static GstPadProbeReturn appendPipelinePadProbeDebugInformation(GstPad*, GstPadProbeInfo*, struct PadProbeInformation*);
-#endif
-
 static GstPadProbeReturn appendPipelineDemuxerBlackHolePadProbe(GstPad*, GstPadProbeInfo*, gpointer);
 static GstPadProbeReturn matroskademuxForceSegmentStartToEqualZero(GstPad*, GstPadProbeInfo*, void*);
 static GRefPtr<GstElement> createOptionalParserForFormat(const AtomString&, const GstCaps*);
@@ -152,13 +148,6 @@ AppendPipeline::AppendPipeline(SourceBufferPrivateGStreamer& sourceBufferPrivate
     } else
         ASSERT_NOT_REACHED();
 
-#if !LOG_DISABLED
-    GRefPtr<GstPad> demuxerPad = adoptGRef(gst_element_get_static_pad(m_demux.get(), "sink"));
-    m_demuxerDataEnteringPadProbeInformation.appendPipeline = this;
-    m_demuxerDataEnteringPadProbeInformation.description = "demuxer data entering";
-    m_demuxerDataEnteringPadProbeInformation.probeId = gst_pad_add_probe(demuxerPad.get(), GST_PAD_PROBE_TYPE_BUFFER, reinterpret_cast<GstPadProbeCallback>(appendPipelinePadProbeDebugInformation), &m_demuxerDataEnteringPadProbeInformation, nullptr);
-#endif
-
     if (hasDemuxer) {
         // These signals won't outlive the lifetime of `this`.
         g_signal_connect(m_demux.get(), "no-more-pads", G_CALLBACK(+[](GstElement*, AppendPipeline* appendPipeline) {
@@ -211,11 +200,6 @@ AppendPipeline::~AppendPipeline()
     }
 
     if (m_demux) {
-#if !LOG_DISABLED
-        GRefPtr<GstPad> demuxerPad = adoptGRef(gst_element_get_static_pad(m_demux.get(), "sink"));
-        gst_pad_remove_probe(demuxerPad.get(), m_demuxerDataEnteringPadProbeInformation.probeId);
-#endif
-
         g_signal_handlers_disconnect_by_data(m_demux.get(), this);
     }
 
@@ -223,9 +207,6 @@ AppendPipeline::~AppendPipeline()
         GRefPtr<GstPad> appsinkPad = adoptGRef(gst_element_get_static_pad(track->appsink.get(), "sink"));
         g_signal_handlers_disconnect_by_data(appsinkPad.get(), this);
         g_signal_handlers_disconnect_by_data(track->appsink.get(), this);
-#if !LOG_DISABLED
-        gst_pad_remove_probe(appsinkPad.get(), track->appsinkDataEnteringPadProbeInformation.probeId);
-#endif
     }
 
     // We can tear down the pipeline safely now.
@@ -787,12 +768,6 @@ void AppendPipeline::Track::initializeElements(AppendPipeline* appendPipeline, G
     gst_element_sync_state_with_parent(appsink.get());
     appsinkPad = adoptGRef(gst_element_get_static_pad(appsink.get(), "sink"));
 
-#if !LOG_DISABLED
-    appsinkDataEnteringPadProbeInformation.appendPipeline = appendPipeline;
-    appsinkDataEnteringPadProbeInformation.description = "appsink data entering";
-    appsinkDataEnteringPadProbeInformation.probeId = gst_pad_add_probe(appsinkPad.get(), GST_PAD_PROBE_TYPE_BUFFER, reinterpret_cast<GstPadProbeCallback>(appendPipelinePadProbeDebugInformation), &appsinkDataEnteringPadProbeInformation, nullptr);
-#endif
-
     // Some audio files unhelpfully omit the duration of frames in the container. We need to parse
     // the contained audio streams in order to know the duration of the frames.
     // If no parser is needed, a GstIdentity element will be created instead.
@@ -865,16 +840,6 @@ const char* AppendPipeline::streamTypeToString(StreamType streamType)
     default:
         return "(Unsupported stream type)";
     }
-}
-#endif
-
-#if !LOG_DISABLED
-static GstPadProbeReturn appendPipelinePadProbeDebugInformation(GstPad*, GstPadProbeInfo* info, struct PadProbeInformation* padProbeInformation)
-{
-    ASSERT(GST_PAD_PROBE_INFO_TYPE(info) & GST_PAD_PROBE_TYPE_BUFFER);
-    GstBuffer* buffer = GST_PAD_PROBE_INFO_BUFFER(info);
-    GST_TRACE("%s: buffer of size %" G_GSIZE_FORMAT " going thru", padProbeInformation->description, gst_buffer_get_size(buffer));
-    return GST_PAD_PROBE_OK;
 }
 #endif
 
