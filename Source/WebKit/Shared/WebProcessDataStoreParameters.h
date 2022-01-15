@@ -49,10 +49,7 @@ struct WebProcessDataStoreParameters {
     HashSet<WebCore::RegistrableDomain> domainsWithUserInteraction;
     HashMap<TopFrameDomain, SubResourceDomain> domainsWithStorageAccessQuirk;
 #endif
-#if HAVE(ARKIT_INLINE_PREVIEW)
-    String modelElementCacheDirectory;
-    SandboxExtension::Handle modelElementCacheDirectoryExtensionHandle;
-#endif
+
     bool resourceLoadStatisticsEnabled { false };
 
     template<class Encoder> void encode(Encoder&) const;
@@ -74,10 +71,6 @@ void WebProcessDataStoreParameters::encode(Encoder& encoder) const
     encoder << thirdPartyCookieBlockingMode;
     encoder << domainsWithUserInteraction;
     encoder << domainsWithStorageAccessQuirk;
-#endif
-#if HAVE(ARKIT_INLINE_PREVIEW)
-    encoder << modelElementCacheDirectory;
-    encoder << modelElementCacheDirectoryExtensionHandle;
 #endif
     encoder << resourceLoadStatisticsEnabled;
 }
@@ -137,16 +130,6 @@ std::optional<WebProcessDataStoreParameters> WebProcessDataStoreParameters::deco
     if (!domainsWithStorageAccessQuirk)
         return std::nullopt;
 #endif
-#if HAVE(ARKIT_INLINE_PREVIEW)
-        String modelElementCacheDirectory;
-        if (!decoder.decode(modelElementCacheDirectory))
-            return std::nullopt;
-
-        std::optional<SandboxExtension::Handle> modelElementCacheDirectoryExtensionHandle;
-        decoder >> modelElementCacheDirectoryExtensionHandle;
-        if (!modelElementCacheDirectoryExtensionHandle)
-            return std::nullopt;
-#endif
 
     bool resourceLoadStatisticsEnabled = false;
     if (!decoder.decode(resourceLoadStatisticsEnabled))
@@ -165,10 +148,6 @@ std::optional<WebProcessDataStoreParameters> WebProcessDataStoreParameters::deco
         *thirdPartyCookieBlockingMode,
         WTFMove(*domainsWithUserInteraction),
         WTFMove(*domainsWithStorageAccessQuirk),
-#endif
-#if HAVE(ARKIT_INLINE_PREVIEW)
-        WTFMove(modelElementCacheDirectory),
-        WTFMove(*modelElementCacheDirectoryExtensionHandle),
 #endif
         resourceLoadStatisticsEnabled
     };

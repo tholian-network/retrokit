@@ -176,10 +176,6 @@ interface ID3D11Device1;
 #include <WebCore/MediaSessionIdentifier.h>
 #endif
 
-#if HAVE(ARKIT_INLINE_PREVIEW)
-#include "ModelElementController.h"
-#endif
-
 namespace API {
 class Attachment;
 class ContentWorld;
@@ -533,14 +529,6 @@ public:
 #if USE(SYSTEM_PREVIEW)
     SystemPreviewController* systemPreviewController() { return m_systemPreviewController.get(); }
     void systemPreviewActionTriggered(const WebCore::SystemPreviewInfo&, const String&);
-#endif
-
-#if HAVE(ARKIT_INLINE_PREVIEW)
-    ModelElementController* modelElementController() { return m_modelElementController.get(); }
-#endif
-#if HAVE(ARKIT_INLINE_PREVIEW_MAC)
-    void modelElementDidCreatePreview(const WebCore::ElementContext&, const URL&, const String&, const WebCore::FloatSize&);
-    void modelElementPreviewDidObtainContextId(const WebCore::ElementContext&, const String&, uint32_t);
 #endif
 
 #if ENABLE(CONTEXT_MENUS)
@@ -2470,10 +2458,6 @@ private:
 
 #if USE(SYSTEM_PREVIEW)
     std::unique_ptr<SystemPreviewController> m_systemPreviewController;
-#endif
-
-#if HAVE(ARKIT_INLINE_PREVIEW)
-    std::unique_ptr<ModelElementController> m_modelElementController;
 #endif
 
 #if ENABLE(WEB_AUTHN)

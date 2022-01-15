@@ -601,9 +601,6 @@ static void logResourceLoaded(Frame* frame, CachedResource::Type type)
     case CachedResource::Type::Beacon:
     case CachedResource::Type::Ping:
     case CachedResource::Type::MediaResource:
-#if ENABLE(MODEL_ELEMENT)
-    case CachedResource::Type::ModelResource:
-#endif
     case CachedResource::Type::Icon:
     case CachedResource::Type::RawResource:
         resourceType = DiagnosticLoggingKeys::rawKey();
@@ -621,7 +618,7 @@ static void logResourceLoaded(Frame* frame, CachedResource::Type type)
         resourceType = DiagnosticLoggingKeys::otherKey();
         break;
     }
-    
+
     frame->page()->diagnosticLoggingClient().logDiagnosticMessage(DiagnosticLoggingKeys::resourceLoadedKey(), resourceType, ShouldSample::Yes);
 }
 

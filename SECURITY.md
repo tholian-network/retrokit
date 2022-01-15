@@ -81,7 +81,6 @@ These legacy APIs that are no longer of relevance to a modern Web View.
 - [ ] Remove WebKit WebExtension API (`WebKitWebExtension`, `webkit_web_extension*`)
 - [ ] Remove `AllowsInlineMediaPlayback` Hacks (`AllowsInlineMediaPlayback`, `MEDIA_PLAYBACK_ALLOWS_INLINE`) and default playback behaviour to no-autoplay.
 - [ ] Remove `bmalloc` and prefer system allocator (`USE_SYSTEM_MALLOC`)
-- [ ] Remove Quick Look Integration (`QUICK_LOOK`)
 - [ ] *Undecided* Remove WebKit Content Extensions API (`CONTENT_EXTENSIONS`)
 - [ ] *Undecided* Remove Arbitrary User Gestures (`ArbitraryUserGesture`)
 - [ ] *Undecided* Remove Release Log (`RELEASE_LOG_DISABLED`)
@@ -212,7 +211,8 @@ removed as well.
 - [x] Remove libnotify Integration (`LIBNOTIFY`, `libnotify`, `notify.h`)
 - [x] Remove libwebrtc Integration (`LIBWEBRTC`, `libWebRTC`, `libwebrtc`)
 - [x] Remove SystemD Integration (`libsystemd`, `USE_SYSTEMD`, `JOURNALD`)
-- [ ] Remove ARKIT Integration (`ARKIT`)
+- [x] Remove ARKIT Integration (`ARKIT_INLINE_PREVIEW`)
+- [ ] Remove Quick Look Integration (`QUICK_LOOK`, `ARKIT_QUICK_LOOK_PREVIEW`)
 - [x] Remove PASSKIT Integration (`PASSKIT`)
 
 
@@ -234,6 +234,7 @@ list of Web APIs that are removed.
 - [x] Remove Web API Statistics (`WEB_API_STATISTICS`)
 - [x] Remove Fullscreen API (`FULLSCREEN`, `TOGGLE_VIDEO_FULLSCREEN`, `FullScreenClient`, `FullScreenManagerProxy`, `EnterFullScreen`, `ExitFullScreen`, `IsFullScreen`, `WebFullScreenManager`, `webkitfullscreenchange`, `webkitfullscreenerror`)
 - [x] Remove Fullscreen Events (`allowfullscreen`, `webkitbeginfullscreen`, `webkitendfullscreen`, `webkitfullscreenchange`, `webkitfullscreenerror`)
+- [x] Remove 3D Model Element API (`MODEL_ELEMENT`, `HTMLModelElement`, `ModelElement`)
 - [x] Remove Picture in Picture API (`PICTURE_IN_PICTURE_API`, `operationMatchesPictureinPicturePseudoClass`, `EnterPictureInPictureEvent`, `picture-in-picture`, `PictureInPictureElement`)
 - [x] Remove Video Presentation Mode (`VIDEO_PRESENTATION_MODE`, `ControlledElementID`, `EnhancedFullscreen`, `VideoPresentation`, `prepareForVideoFullscreen`, `webkitPresentationModeChanged`)
 - [x] Remove iFrame `allowfullscreen` Property
@@ -257,7 +258,6 @@ list of Web APIs that are removed.
 - [ ] Remove Media Stream API (`MEDIA_STREAM`, `getUserMedia`)
 - [ ] Remove Offsceen Canvas in Workers (`OFFSCREEN_CANVAS_IN_WORKERS`)
 - [ ] Remove Network Shareable Resource API (`SHAREABLE_RESOURCE`)
-- [ ] Remove 3D Model Element API (`MODEL_ELEMENT`)
 - [ ] Remove Web Assembly API (`WEBASSEMBLY`)
 - [ ] Remove Sandbox Extensions (`SANDBOX_EXTENSIONS`)
 - [ ] Remove Web NFC API

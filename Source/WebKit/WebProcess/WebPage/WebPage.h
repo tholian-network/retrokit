@@ -204,10 +204,6 @@ class SubstituteData;
 class TextCheckingRequest;
 class VisiblePosition;
 
-#if HAVE(ARKIT_INLINE_PREVIEW)
-class HTMLModelElement;
-#endif
-
 enum SyntheticClickType : int8_t;
 enum class CreateNewGroupForHighlight : bool;
 enum class DOMPasteAccessResponse : uint8_t;
@@ -1360,14 +1356,6 @@ public:
 
 #if ENABLE(TEXT_AUTOSIZING)
     void textAutosizingUsesIdempotentModeChanged();
-#endif
-
-#if HAVE(ARKIT_INLINE_PREVIEW_IOS)
-    void takeModelElementFullscreen(WebCore::GraphicsLayer::PlatformLayerID contentLayerId);
-#endif
-#if HAVE(ARKIT_INLINE_PREVIEW_MAC)
-    void modelElementDidCreatePreview(WebCore::HTMLModelElement&, const URL&, const String&, const WebCore::FloatSize&);
-    void modelElementPreviewDidObtainContextId(const WebCore::ElementContext&, const String&, uint32_t);
 #endif
 
     void prepareToRunModalJavaScriptDialog();

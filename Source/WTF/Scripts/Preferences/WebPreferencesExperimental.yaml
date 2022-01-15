@@ -763,20 +763,6 @@ MediaSessionPlaylistEnabled:
     WebCore:
       default: false
 
-ModelElementEnabled:
-  type: bool
-  humanReadableName: "HTML <model> element"
-  humanReadableDescription: "HTML <model> element"
-  condition: ENABLE(MODEL_ELEMENT)
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      "ENABLE(SEPARATED_MODEL)": true
-      default: false
-    WebCore:
-      default: false
-
 OpusDecoderEnabled:
   type: bool
   humanReadableName: "Opus audio decoder"

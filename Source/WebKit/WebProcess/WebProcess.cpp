@@ -134,10 +134,6 @@
 #include <wtf/URLParser.h>
 #include <wtf/text/StringHash.h>
 
-#if HAVE(ARKIT_INLINE_PREVIEW)
-#include <WebCore/HTMLModelElement.h>
-#endif
-
 #if !OS(WINDOWS)
 #include <unistd.h>
 #endif
@@ -529,11 +525,6 @@ void WebProcess::setWebsiteDataStoreParameters(WebProcessDataStoreParameters&& p
         WebCore::HTMLMediaElement::setMediaCacheDirectory(parameters.mediaCacheDirectory);
 #endif
 
-#if HAVE(ARKIT_INLINE_PREVIEW)
-    if (!parameters.modelElementCacheDirectory.isEmpty())
-        WebCore::HTMLModelElement::setModelElementCacheDirectory(parameters.modelElementCacheDirectory);
-#endif
-
     setResourceLoadStatisticsEnabled(parameters.resourceLoadStatisticsEnabled);
 
 #if ENABLE(RESOURCE_LOAD_STATISTICS)
@@ -545,14 +536,13 @@ void WebProcess::setWebsiteDataStoreParameters(WebProcessDataStoreParameters&& p
         if (!parameters.sessionID.isEphemeral())
             ResourceLoadObserver::shared().setDomainsWithCrossPageStorageAccess(WTFMove(parameters.domainsWithStorageAccessQuirk), [] { });
     }
-    
 #endif
 
     for (auto& supplement : m_supplements.values())
         supplement->setWebsiteDataStore(parameters);
 
     platformSetWebsiteDataStoreParameters(WTFMove(parameters));
-    
+
     ensureNetworkProcessConnection();
 }
 

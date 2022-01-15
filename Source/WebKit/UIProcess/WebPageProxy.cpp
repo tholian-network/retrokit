@@ -503,7 +503,7 @@ WebPageProxy::WebPageProxy(PageClient& pageClient, WebProcessProxy& process, Ref
     updateActivityState();
     updateThrottleState();
     updateHiddenPageThrottlingAutoIncreases();
-    
+
 #if HAVE(OUT_OF_PROCESS_LAYER_HOSTING)
     m_layerHostingMode = m_activityState & ActivityState::IsInWindow ? WebPageProxy::pageClient().viewLayerHostingMode() : LayerHostingMode::OutOfProcess;
 #endif
@@ -994,13 +994,6 @@ void WebPageProxy::didAttachToRunningProcess()
     m_systemPreviewController = makeUnique<SystemPreviewController>(*this);
 #endif
 
-#if HAVE(ARKIT_INLINE_PREVIEW)
-    if (m_preferences->modelElementEnabled()) {
-        ASSERT(!m_modelElementController);
-        m_modelElementController = makeUnique<ModelElementController>(*this);
-    }
-#endif
-
 #if ENABLE(WEB_AUTHN)
     ASSERT(!m_credentialsMessenger);
     m_credentialsMessenger = makeUnique<WebAuthenticatorCoordinatorProxy>(*this);
@@ -1016,7 +1009,7 @@ RefPtr<API::Navigation> WebPageProxy::launchProcessForReload()
         WEBPAGEPROXY_RELEASE_LOG(Loading, "launchProcessForReload: page is closed");
         return nullptr;
     }
-    
+
     ASSERT(!hasRunningProcess());
     auto registrableDomain = m_backForwardList->currentItem() ? RegistrableDomain { URL(URL(), m_backForwardList->currentItem()->url()) } : RegistrableDomain { };
     launchProcess(registrableDomain, ProcessLaunchReason::Crash);
@@ -7571,10 +7564,6 @@ void WebPageProxy::resetState(ResetStateReason resetStateReason)
     m_systemPreviewController = nullptr;
 #endif
 
-#if HAVE(ARKIT_INLINE_PREVIEW)
-    m_modelElementController = nullptr;
-#endif
-
 #if ENABLE(WEB_AUTHN)
     m_credentialsMessenger = nullptr;
 #endif
@@ -10310,19 +10299,6 @@ WebCore::CaptureSourceOrError WebPageProxy::createRealtimeMediaSourceForSpeechRe
 #endif
 }
 
-#endif
-
-#if HAVE(ARKIT_INLINE_PREVIEW_MAC)
-void WebPageProxy::modelElementDidCreatePreview(const WebCore::ElementContext& context, const URL& url, const String& uuid, const FloatSize& size)
-{
-    modelElementController()->modelElementDidCreatePreview(context, url, uuid, size);
-}
-
-void WebPageProxy::modelElementPreviewDidObtainContextId(const WebCore::ElementContext& context, const String& uuid, uint32_t contextId)
-{
-    if (hasRunningProcess())
-        send(Messages::WebPage::ModelElementPreviewDidObtainContextId(context, uuid, contextId));
-}
 #endif
 
 #if !PLATFORM(COCOA)

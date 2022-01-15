@@ -252,10 +252,6 @@
 #include <WebCore/AppHighlightStorage.h>
 #endif
 
-#if HAVE(ARKIT_INLINE_PREVIEW)
-#include <WebCore/HTMLModelElement.h>
-#endif
-
 #if ENABLE(DATA_DETECTION)
 #include "DataDetectionResult.h"
 #endif
@@ -7106,28 +7102,6 @@ void WebPage::lastNavigationWasAppInitiated(CompletionHandler<void(bool)>&& comp
 void WebPage::handleContextMenuTranslation(const TranslationContextMenuInfo& info)
 {
     send(Messages::WebPageProxy::HandleContextMenuTranslation(info));
-}
-#endif
-
-#if HAVE(ARKIT_INLINE_PREVIEW_IOS)
-void WebPage::takeModelElementFullscreen(WebCore::GraphicsLayer::PlatformLayerID contentLayerId)
-{
-    send(Messages::WebPageProxy::TakeModelElementFullscreen(contentLayerId));
-}
-#endif
-
-#if HAVE(ARKIT_INLINE_PREVIEW_MAC)
-void WebPage::modelElementDidCreatePreview(WebCore::HTMLModelElement& element, const URL& url, const String& uuid, const WebCore::FloatSize& size)
-{
-    if (auto elementContext = contextForElement(element))
-        send(Messages::WebPageProxy::ModelElementDidCreatePreview(*elementContext, url, uuid, size));
-}
-
-void WebPage::modelElementPreviewDidObtainContextId(const WebCore::ElementContext& elementContext, const String& uuid, uint32_t contextId)
-{
-    auto element = elementForContext(elementContext);
-    if (is<WebCore::HTMLModelElement>(element))
-        downcast<WebCore::HTMLModelElement>(*element).inlinePreviewDidObtainContextId(uuid, contextId);
 }
 #endif
 

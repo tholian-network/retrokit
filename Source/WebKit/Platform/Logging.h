@@ -70,7 +70,6 @@ extern "C" {
     M(LocalStorageDatabaseTracker) \
     M(Media) \
     M(MemoryPressure) \
-    M(ModelElement) \
     M(MouseHandling) \
     M(Network) \
     M(NetworkCache) \

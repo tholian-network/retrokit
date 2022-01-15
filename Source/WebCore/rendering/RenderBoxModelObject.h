@@ -54,8 +54,7 @@ enum ContentChangeType {
     CanvasChanged,
     CanvasPixelsChanged,
     VideoChanged,
-    FullScreenChanged,
-    ModelChanged
+    FullScreenChanged
 };
 
 class BorderEdge;

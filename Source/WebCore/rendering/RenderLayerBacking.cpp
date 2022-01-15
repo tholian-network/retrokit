@@ -43,13 +43,11 @@
 #include "HTMLCanvasElement.h"
 #include "HTMLIFrameElement.h"
 #include "HTMLMediaElement.h"
-#include "HTMLModelElement.h"
 #include "HTMLNames.h"
 #include "InspectorInstrumentation.h"
 #include "KeyframeList.h"
 #include "LayerAncestorClippingStack.h"
 #include "Logging.h"
-#include "Model.h"
 #include "NullGraphicsContext.h"
 #include "Page.h"
 #include "PerformanceLoggingClient.h"
@@ -62,7 +60,6 @@
 #include "RenderLayerCompositor.h"
 #include "RenderLayerScrollableArea.h"
 #include "RenderMedia.h"
-#include "RenderModel.h"
 #include "RenderVideo.h"
 #include "RenderView.h"
 #include "RuntimeEnabledFeatures.h"
@@ -1045,20 +1042,6 @@ bool RenderLayerBacking::updateConfiguration(const RenderLayer* compositingAnces
         layerConfigChanged = true;
     }
 #endif
-#if ENABLE(MODEL_ELEMENT)
-    else if (is<RenderModel>(renderer())) {
-        auto element = downcast<HTMLModelElement>(renderer().element());
-#if HAVE(ARKIT_INLINE_PREVIEW_MAC)
-        if (auto* platformLayer = element->platformLayer())
-            m_graphicsLayer->setContentsToPlatformLayer(platformLayer, GraphicsLayer::ContentsLayerPurpose::Model);
-#else
-        if (auto model = element->model())
-            m_graphicsLayer->setContentsToModel(WTFMove(model));
-#endif
-
-        layerConfigChanged = true;
-    }
-#endif
     if (is<RenderWidget>(renderer()) && compositor.parentFrameContentLayers(downcast<RenderWidget>(renderer()))) {
         m_owningLayer.setNeedsCompositingGeometryUpdate();
         layerConfigChanged = true;
@@ -1086,7 +1069,7 @@ static bool subpixelOffsetFromRendererChanged(const LayoutSize& oldSubpixelOffse
     FloatSize current = snapSizeToDevicePixel(newSubpixelOffsetFromRenderer, LayoutPoint(), deviceScaleFactor);
     return previous != current;
 }
-    
+
 static FloatSize subpixelForLayerPainting(const LayoutPoint& point, float pixelSnappingFactor)
 {
     LayoutUnit x = point.x();
@@ -2834,13 +2817,6 @@ void RenderLayerBacking::contentChanged(ContentChangeType changeType)
         compositor().scheduleCompositingLayerUpdate();
         return;
     }
-
-#if ENABLE(MODEL_ELEMENT)
-    if (changeType == ModelChanged) {
-        compositor().scheduleCompositingLayerUpdate();
-        return;
-    }
-#endif
 
     if ((changeType == BackgroundImageChanged) && canDirectlyCompositeBackgroundBackgroundImage(renderer().style()))
         m_owningLayer.setNeedsCompositingConfigurationUpdate();

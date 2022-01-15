@@ -1991,7 +1991,7 @@ void RenderLayerCompositor::computeExtent(const LayerOverlapMap& overlapMap, con
         extent.animationCausesExtentUncertainty = !layer.getOverlapBoundsIncludingChildrenAccountingForTransformAnimations(layerBounds);
     else
         layerBounds = layer.overlapBounds();
-    
+
     // In the animating transform case, we avoid double-accounting for the transform because
     // we told pushMappingsToAncestor() to ignore transforms earlier.
     extent.bounds = enclosingLayoutRect(overlapMap.geometryMap().absoluteRect(layerBounds));
@@ -2582,7 +2582,6 @@ bool RenderLayerCompositor::requiresCompositingLayer(const RenderLayer& layer, R
         || requiresCompositingForWillChange(renderer)
         || requiresCompositingForBackfaceVisibility(renderer)
         || requiresCompositingForVideo(renderer)
-        || requiresCompositingForModel(renderer)
         || requiresCompositingForFrame(renderer, queryData)
         || requiresCompositingForOverflowScrolling(*renderer.layer(), queryData);
 }
@@ -2623,7 +2622,6 @@ bool RenderLayerCompositor::requiresOwnBackingStore(const RenderLayer& layer, co
         || requiresCompositingForWillChange(renderer)
         || requiresCompositingForBackfaceVisibility(renderer)
         || requiresCompositingForVideo(renderer)
-        || requiresCompositingForModel(renderer)
         || requiresCompositingForFrame(renderer, queryData)
         || requiresCompositingForOverflowScrolling(layer, queryData)
         || needsContentsCompositingLayer(layer)
@@ -2672,8 +2670,6 @@ OptionSet<CompositingReason> RenderLayerCompositor::reasonsForCompositing(const 
         reasons.add(CompositingReason::Video);
     else if (requiresCompositingForCanvas(renderer))
         reasons.add(CompositingReason::Canvas);
-    else if (requiresCompositingForModel(renderer))
-        reasons.add(CompositingReason::Model);
     else if (requiresCompositingForFrame(renderer, queryData))
         reasons.add(CompositingReason::IFrame);
 
@@ -2780,7 +2776,6 @@ static const char* compositingReasonToString(CompositingReason reason)
     case CompositingReason::Preserve3D: return "preserve-3d";
     case CompositingReason::WillChange: return "will-change";
     case CompositingReason::Root: return "root";
-    case CompositingReason::Model: return "model";
     }
     return "";
 }
@@ -3097,18 +3092,6 @@ bool RenderLayerCompositor::requiresCompositingForWillChange(RenderLayerModelObj
         return true;
 
     return renderer.style().willChange()->canTriggerCompositingOnInline();
-}
-
-bool RenderLayerCompositor::requiresCompositingForModel(RenderLayerModelObject& renderer) const
-{
-#if ENABLE(MODEL_ELEMENT)
-    if (is<RenderModel>(renderer))
-        return true;
-#else
-    UNUSED_PARAM(renderer);
-#endif
-
-    return false;
 }
 
 bool RenderLayerCompositor::requiresCompositingForFrame(RenderLayerModelObject& renderer, RequiresCompositingData& queryData) const
@@ -4337,7 +4320,7 @@ FixedPositionViewportConstraints RenderLayerCompositor::computeFixedViewportCons
     // If top and bottom are auto, use top.
     if (style.top().isAuto() && style.bottom().isAuto())
         constraints.addAnchorEdge(ViewportConstraints::AnchorEdgeTop);
-        
+
     return constraints;
 }
 

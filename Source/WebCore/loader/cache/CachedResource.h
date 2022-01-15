@@ -72,9 +72,6 @@ public:
         FontResource,
         SVGFontResource,
         MediaResource,
-#if ENABLE(MODEL_ELEMENT)
-        ModelResource,
-#endif
         RawResource,
         Icon,
         Beacon,
@@ -414,9 +411,6 @@ inline bool CachedResource::isMainOrMediaOrIconOrRawResource() const
 {
     return type() == Type::MainResource
         || type() == Type::MediaResource
-#if ENABLE(MODEL_ELEMENT)
-        || type() == Type::ModelResource
-#endif
         || type() == Type::Icon
         || type() == Type::RawResource
         || type() == Type::Beacon

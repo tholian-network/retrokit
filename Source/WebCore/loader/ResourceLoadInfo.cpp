@@ -69,9 +69,6 @@ OptionSet<ResourceType> toResourceType(CachedResource::Type type, ResourceReques
     case CachedResource::Type::Beacon:
     case CachedResource::Type::Ping:
     case CachedResource::Type::Icon:
-#if ENABLE(MODEL_ELEMENT)
-    case CachedResource::Type::ModelResource:
-#endif
 #if ENABLE(APPLICATION_MANIFEST)
     case CachedResource::Type::ApplicationManifest:
 #endif

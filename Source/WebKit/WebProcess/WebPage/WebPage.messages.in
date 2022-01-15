@@ -52,7 +52,7 @@ messages -> WebPage LegacyReceiver {
     SetMaximumUnobscuredSize(WebCore::FloatSize size)
     SetOverrideViewportArguments(std::optional<WebCore::ViewportArguments> arguments)
     DynamicViewportSizeUpdate(WebCore::FloatSize viewLayoutSize, WebCore::FloatSize maximumUnobscuredSize, WebCore::FloatRect targetExposedContentRect, WebCore::FloatRect targetUnobscuredRect, WebCore::FloatRect targetUnobscuredRectInScrollViewCoordinates, WebCore::RectEdges<float> targetUnobscuredSafeAreaInsets, double scale, int32_t deviceOrientation, double minimumEffectiveDeviceWidth, uint64_t dynamicViewportSizeUpdateID)
-    
+
     SetScreenIsBeingCaptured(bool captured)
 
     AttemptSyntheticClick(WebCore::IntPoint point, OptionSet<WebKit::WebEvent::Modifier> modifiers, WebKit::TransactionID lastLayerTreeTransactionId)
@@ -616,8 +616,4 @@ GenerateSyntheticEditingCommand(enum:uint8_t WebKit::SyntheticEditingCommandType
 #endif
 
     ScrollToRect(WebCore::FloatRect targetRect, WebCore::FloatPoint origin)
-
-#if HAVE(ARKIT_INLINE_PREVIEW_MAC)
-    ModelElementPreviewDidObtainContextId(struct WebCore::ElementContext elementContext, String uuid, uint32_t contextId)
-#endif
 }

@@ -160,7 +160,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/Modules/mediastream/Navigator+MediaDevices.idl \
     $(WebCore)/Modules/mediastream/OverconstrainedError.idl \
     $(WebCore)/Modules/mediastream/OverconstrainedErrorEvent.idl \
-    $(WebCore)/Modules/model-element/HTMLModelElement.idl \
     $(WebCore)/Modules/notifications/Notification.idl \
     $(WebCore)/Modules/notifications/NotificationPermission.idl \
     $(WebCore)/Modules/notifications/NotificationPermissionCallback.idl \

@@ -115,10 +115,6 @@ public:
 
         uint32_t hostingContextID;
         float hostingDeviceScaleFactor;
-        
-#if ENABLE(MODEL_ELEMENT)
-        RefPtr<WebCore::Model> model;
-#endif
     };
 
     struct LayerProperties {

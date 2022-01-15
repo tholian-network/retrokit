@@ -1318,11 +1318,4 @@ void WebChromeClient::showMediaControlsContextMenu(FloatRect&& targetFrame, Vect
 
 #endif // ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
 
-#if HAVE(ARKIT_INLINE_PREVIEW_MAC)
-void WebChromeClient::modelElementDidCreatePreview(WebCore::HTMLModelElement& element, const URL& url, const String& uuid, const WebCore::FloatSize& size) const
-{
-    m_page.modelElementDidCreatePreview(element, url, uuid, size);
-}
-#endif
-
 } // namespace WebKit

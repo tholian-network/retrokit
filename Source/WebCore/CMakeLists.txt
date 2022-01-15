@@ -37,7 +37,6 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${WEBCORE_DIR}/Modules/mediasession"
     "${WEBCORE_DIR}/Modules/mediasource"
     "${WEBCORE_DIR}/Modules/mediastream"
-    "${WEBCORE_DIR}/Modules/model-element"
     "${WEBCORE_DIR}/Modules/navigatorcontentutils"
     "${WEBCORE_DIR}/Modules/notifications"
     "${WEBCORE_DIR}/Modules/permissions"
@@ -179,7 +178,6 @@ set(WebCore_IDL_INCLUDES
     Modules/indexeddb
     Modules/mediacapabilities
     Modules/mediastream
-    Modules/model-element
     Modules/notifications
     Modules/permissions
     Modules/speech
@@ -325,8 +323,6 @@ set(WebCore_NON_SVG_IDL_FILES
     Modules/mediastream/Navigator+MediaDevices.idl
     Modules/mediastream/OverconstrainedError.idl
     Modules/mediastream/OverconstrainedErrorEvent.idl
-
-    Modules/model-element/HTMLModelElement.idl
 
     Modules/notifications/Notification.idl
     Modules/notifications/NotificationPermission.idl

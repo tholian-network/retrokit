@@ -514,18 +514,12 @@ public:
         Image,
         Media,
         Canvas,
-        BackgroundColor,
-        Plugin,
-        Model
+        BackgroundColor
     };
 
     // Pass an invalid color to remove the contents layer.
     virtual void setContentsToSolidColor(const Color&) { }
     virtual void setContentsToPlatformLayer(PlatformLayer*, ContentsLayerPurpose) { }
-#if ENABLE(MODEL_ELEMENT)
-    virtual void setContentsToModel(RefPtr<Model>&&) { }
-    virtual PlatformLayerID contentsLayerIDForModel() const { return 0; }
-#endif
     virtual bool usesContentsLayer() const { return false; }
 
     // Callback from the underlying graphics system to draw layer contents.
@@ -570,13 +564,13 @@ public:
     WEBCORE_EXPORT virtual void setZPosition(float);
 
     virtual FloatSize pixelAlignmentOffset() const { return FloatSize(); }
-    
+
     virtual void setAppliesPageScale(bool appliesScale = true) { m_appliesPageScale = appliesScale; }
     virtual bool appliesPageScale() const { return m_appliesPageScale; }
 
     float pageScaleFactor() const { return client().pageScaleFactor(); }
     float deviceScaleFactor() const { return client().deviceScaleFactor(); }
-    
+
     // Whether this layer can throw away backing store to save memory. False for layers that can be revealed by async scrolling.
     virtual void setAllowsBackingStoreDetaching(bool) { }
     virtual bool allowsBackingStoreDetaching() const { return true; }

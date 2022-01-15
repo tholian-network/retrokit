@@ -80,7 +80,6 @@ enum class CompositingReason {
     WillChange                             = 1 << 24,
     Root                                   = 1 << 25,
     IsolatesCompositedBlendingDescendants  = 1 << 26,
-    Model                                  = 1 << 27,
 };
 
 enum class ScrollCoordinationRole {
@@ -463,7 +462,7 @@ private:
 
     void attachRootLayer(RootLayerAttachment);
     void detachRootLayer();
-    
+
     void rootLayerAttachmentChanged();
 
     void updateOverflowControlsLayers();
@@ -481,9 +480,9 @@ private:
 #endif
 
     FloatRect visibleRectForLayerFlushing() const;
-    
+
     Page& page() const;
-    
+
     GraphicsLayerFactory* graphicsLayerFactory() const;
     ScrollingCoordinator* scrollingCoordinator() const;
 
@@ -495,7 +494,6 @@ private:
     bool requiresCompositingForCanvas(RenderLayerModelObject&) const;
     bool requiresCompositingForFilters(RenderLayerModelObject&) const;
     bool requiresCompositingForWillChange(RenderLayerModelObject&) const;
-    bool requiresCompositingForModel(RenderLayerModelObject&) const;
 
     // Layout-dependent
     bool requiresCompositingForFrame(RenderLayerModelObject&, RequiresCompositingData&) const;

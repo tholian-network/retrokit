@@ -64,13 +64,6 @@ Ref<PlatformCALayerRemote> PlatformCALayerRemote::create(PlatformLayer *platform
     return PlatformCALayerRemoteCustom::create(platformLayer, owner, context);
 }
 
-#if ENABLE(MODEL_ELEMENT)
-Ref<PlatformCALayerRemote> PlatformCALayerRemote::create(Ref<WebCore::Model> model, WebCore::PlatformCALayerClient* owner, RemoteLayerTreeContext& context)
-{
-    return PlatformCALayerRemoteModelHosting::create(model, owner, context);
-}
-#endif
-
 Ref<PlatformCALayerRemote> PlatformCALayerRemote::create(const PlatformCALayerRemote& other, WebCore::PlatformCALayerClient* owner, RemoteLayerTreeContext& context)
 {
     auto layer = adoptRef(*new PlatformCALayerRemote(other, owner, context));

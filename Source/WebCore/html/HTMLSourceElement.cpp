@@ -40,10 +40,6 @@
 #include "HTMLMediaElement.h"
 #endif
 
-#if ENABLE(MODEL_ELEMENT)
-#include "HTMLModelElement.h"
-#endif
-
 namespace WebCore {
 
 WTF_MAKE_ISO_ALLOCATED_IMPL(HTMLSourceElement);
@@ -81,11 +77,6 @@ Node::InsertedIntoAncestorResult HTMLSourceElement::insertedIntoAncestor(Inserti
             downcast<HTMLMediaElement>(*parent).sourceWasAdded(*this);
         else
 #endif
-#if ENABLE(MODEL_ELEMENT)
-        if (is<HTMLModelElement>(*parent))
-            downcast<HTMLModelElement>(*parent).sourcesChanged();
-        else
-#endif
         if (is<HTMLPictureElement>(*parent)) {
             // The new source element only is a relevant mutation if it precedes any img element.
             m_shouldCallSourcesChanged = true;
@@ -101,17 +92,12 @@ Node::InsertedIntoAncestorResult HTMLSourceElement::insertedIntoAncestor(Inserti
 }
 
 void HTMLSourceElement::removedFromAncestor(RemovalType removalType, ContainerNode& oldParentOfRemovedTree)
-{        
+{
     HTMLElement::removedFromAncestor(removalType, oldParentOfRemovedTree);
     if (!parentNode() && is<Element>(oldParentOfRemovedTree)) {
 #if ENABLE(VIDEO)
         if (is<HTMLMediaElement>(oldParentOfRemovedTree))
             downcast<HTMLMediaElement>(oldParentOfRemovedTree).sourceWasRemoved(*this);
-        else
-#endif
-#if ENABLE(MODEL_ELEMENT)
-        if (is<HTMLModelElement>(oldParentOfRemovedTree))
-            downcast<HTMLModelElement>(oldParentOfRemovedTree).sourcesChanged();
         else
 #endif
         if (m_shouldCallSourcesChanged) {
@@ -184,13 +170,6 @@ void HTMLSourceElement::parseAttribute(const QualifiedName& name, const AtomStri
         if (m_shouldCallSourcesChanged)
             downcast<HTMLPictureElement>(*parent).sourcesChanged();
     }
-#if ENABLE(MODEL_ELEMENT)
-    if (name == srcAttr ||  name == typeAttr) {
-        RefPtr<Element> parent = parentElement();
-        if (is<HTMLModelElement>(parent))
-            downcast<HTMLModelElement>(*parent).sourcesChanged();
-    }
-#endif
 }
 
 const MediaQuerySet* HTMLSourceElement::parsedMediaAttribute(Document& document) const

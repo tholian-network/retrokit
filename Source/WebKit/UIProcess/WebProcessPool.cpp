@@ -681,15 +681,6 @@ WebProcessDataStoreParameters WebProcessPool::webProcessDataStoreParameters(WebP
             javaScriptConfigurationDirectoryExtensionHandle = WTFMove(*handle);
     }
 
-#if HAVE(ARKIT_INLINE_PREVIEW)
-    auto modelElementCacheDirectory = websiteDataStore.resolvedModelElementCacheDirectory();
-    SandboxExtension::Handle modelElementCacheDirectoryExtensionHandle;
-    if (!modelElementCacheDirectory.isEmpty()) {
-        if (auto handle = SandboxExtension::createHandleWithoutResolvingPath(modelElementCacheDirectory, SandboxExtension::Type::ReadWrite))
-            modelElementCacheDirectoryExtensionHandle = WTFMove(*handle);
-    }
-#endif
-
     return WebProcessDataStoreParameters {
         websiteDataStore.sessionID(),
         WTFMove(applicationCacheDirectory),
@@ -703,10 +694,6 @@ WebProcessDataStoreParameters WebProcessPool::webProcessDataStoreParameters(WebP
         websiteDataStore.thirdPartyCookieBlockingMode(),
         m_domainsWithUserInteraction,
         m_domainsWithCrossPageStorageAccessQuirk,
-#endif
-#if HAVE(ARKIT_INLINE_PREVIEW)
-        WTFMove(modelElementCacheDirectory),
-        WTFMove(modelElementCacheDirectoryExtensionHandle),
 #endif
         websiteDataStore.resourceLoadStatisticsEnabled()
     };

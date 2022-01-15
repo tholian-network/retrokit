@@ -260,7 +260,6 @@ UIProcess/DeviceIdHashSaltStorage.cpp
 UIProcess/DrawingAreaProxy.cpp
 UIProcess/FrameLoadState.cpp
 UIProcess/LegacyGlobalSettings.cpp
-UIProcess/ModelElementController.cpp
 UIProcess/PageLoadState.cpp
 UIProcess/ProcessAssertion.cpp
 UIProcess/ProcessThrottler.cpp

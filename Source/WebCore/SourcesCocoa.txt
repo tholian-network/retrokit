@@ -24,7 +24,6 @@
 Modules/airplay/WebMediaSessionManager.cpp
 Modules/async-clipboard/ios/ClipboardImageReaderIOS.mm
 Modules/async-clipboard/mac/ClipboardImageReaderMac.mm
-Modules/model-element/HTMLModelElementCocoa.mm
 Modules/speech/cocoa/SpeechRecognizerCocoa.mm
 Modules/speech/cocoa/WebSpeechRecognizerTask.mm
 Modules/speech/cocoa/WebSpeechRecognizerTaskMock.mm

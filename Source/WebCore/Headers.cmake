@@ -84,8 +84,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     Modules/mediastream/UserMediaController.h
     Modules/mediastream/UserMediaRequest.h
 
-    Modules/model-element/HTMLModelElement.h
-
     Modules/notifications/Notification.h
     Modules/notifications/NotificationClient.h
     Modules/notifications/NotificationController.h

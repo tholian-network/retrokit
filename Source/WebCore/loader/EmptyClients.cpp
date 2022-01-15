@@ -540,22 +540,10 @@ DisplayRefreshMonitorFactory* EmptyChromeClient::displayRefreshMonitorFactory() 
 void EmptyChromeClient::runOpenPanel(Frame&, FileChooser&)
 {
 }
-    
+
 void EmptyChromeClient::showShareSheet(ShareDataWithParsedURL&, CompletionHandler<void(bool)>&&)
 {
 }
-
-#if HAVE(ARKIT_INLINE_PREVIEW_IOS)
-void EmptyChromeClient::takeModelElementFullscreen(WebCore::GraphicsLayer::PlatformLayerID) const
-{
-}
-#endif
-
-#if HAVE(ARKIT_INLINE_PREVIEW_MAC)
-void EmptyChromeClient::modelElementDidCreatePreview(WebCore::HTMLModelElement&, const URL&, const String&, const WebCore::FloatSize&) const
-{
-}
-#endif
 
 void EmptyFrameLoaderClient::dispatchDecidePolicyForNewWindowAction(const NavigationAction&, const ResourceRequest&, FormState*, const String&, PolicyCheckIdentifier, FramePolicyFunction&&)
 {

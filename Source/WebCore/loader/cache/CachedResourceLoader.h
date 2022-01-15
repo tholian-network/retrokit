@@ -103,9 +103,6 @@ public:
 #if ENABLE(APPLICATION_MANIFEST)
     ResourceErrorOr<CachedResourceHandle<CachedApplicationManifest>> requestApplicationManifest(CachedResourceRequest&&);
 #endif
-#if ENABLE(MODEL_ELEMENT)
-    ResourceErrorOr<CachedResourceHandle<CachedRawResource>> requestModelResource(CachedResourceRequest&&);
-#endif
 
     // Called to load Web Worker main script, Service Worker main script, importScripts(), XHR,
     // EventSource, Fetch, and App Cache.
@@ -131,9 +128,9 @@ public:
 
     bool shouldDeferImageLoad(const URL&) const;
     bool shouldPerformImageLoad(const URL&) const;
-    
+
     CachePolicy cachePolicy(CachedResource::Type, const URL&) const;
-    
+
     Frame* frame() const; // Can be null
     Document* document() const { return m_document.get(); } // Can be null
     void setDocument(Document* document) { m_document = makeWeakPtr(document); }

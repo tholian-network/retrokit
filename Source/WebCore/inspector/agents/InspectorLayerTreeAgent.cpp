@@ -255,8 +255,6 @@ Protocol::ErrorStringOr<Ref<Protocol::LayerTree::CompositingReasons>> InspectorL
         compositingReasons->setCanvas(true);
     else if (reasons.contains(CompositingReason::IFrame))
         compositingReasons->setIFrame(true);
-    else if (reasons.contains(CompositingReason::Model))
-        compositingReasons->setModel(true);
 
     if (reasons.contains(CompositingReason::BackfaceVisibilityHidden))
         compositingReasons->setBackfaceVisibilityHidden(true);
