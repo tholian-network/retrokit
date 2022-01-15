@@ -33,12 +33,6 @@
 #include <wtf/RetainPtr.h>
 #include <wtf/URL.h>
 
-#if USE(QUICK_LOOK)
-OBJC_CLASS QLPreviewController;
-OBJC_CLASS _WKPreviewControllerDataSource;
-OBJC_CLASS _WKPreviewControllerDelegate;
-#endif
-
 namespace WebKit {
 
 class WebPageProxy;
@@ -66,11 +60,6 @@ public:
 private:
     WebPageProxy& m_webPageProxy;
     WebCore::SystemPreviewInfo m_systemPreviewInfo;
-#if USE(QUICK_LOOK)
-    RetainPtr<QLPreviewController> m_qlPreviewController;
-    RetainPtr<_WKPreviewControllerDelegate> m_qlPreviewControllerDelegate;
-    RetainPtr<_WKPreviewControllerDataSource> m_qlPreviewControllerDataSource;
-#endif
 };
 
 }

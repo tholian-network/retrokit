@@ -234,14 +234,6 @@ Ref<SecurityOrigin> SecurityOrigin::createUnique()
     return origin;
 }
 
-Ref<SecurityOrigin> SecurityOrigin::createNonLocalWithAllowedFilePath(const URL& url, const String& filePath)
-{
-    ASSERT(!url.isLocalFile());
-    auto securityOrigin = SecurityOrigin::create(url);
-    securityOrigin->m_filePath = filePath;
-    return securityOrigin;
-}
-
 Ref<SecurityOrigin> SecurityOrigin::isolatedCopy() const
 {
     return adoptRef(*new SecurityOrigin(this));

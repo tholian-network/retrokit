@@ -512,10 +512,6 @@ void ContextMenuController::contextMenuItemSelected(ContextMenuAction action, co
     case ContextMenuItemTagDictationAlternative:
         frame->editor().applyDictationAlternative(title);
         break;
-    case ContextMenuItemTagQuickLookImage:
-        // This should be handled at the client layer.
-        ASSERT_NOT_REACHED();
-        break;
     case ContextMenuItemTagTranslate:
 #if HAVE(TRANSLATION_UI_SERVICES)
         if (auto view = makeRefPtr(frame->view())) {
@@ -832,12 +828,6 @@ void ContextMenuController::populate()
         return;
 #endif
 
-#if ENABLE(IMAGE_ANALYSIS)
-    bool shouldAppendQuickLookImageItem = false;
-    auto quickLookItemTitle = frame->settings().preferInlineTextSelectionInImages() ? contextMenuItemTagLookUpImage() : contextMenuItemTagQuickLookImage();
-    ContextMenuItem QuickLookImageItem { ActionType, ContextMenuItemTagQuickLookImage, quickLookItemTitle };
-#endif
-
     auto addSelectedTextActionsIfNeeded = [&] (const String& selectedText) {
         if (selectedText.isEmpty())
             return;
@@ -884,11 +874,6 @@ void ContextMenuController::populate()
             auto image = m_context.hitTestResult().image();
             if (imageURL.isLocalFile() || image) {
                 appendItem(CopyImageItem, m_contextMenu.get());
-
-#if ENABLE(IMAGE_ANALYSIS)
-                if (m_client.supportsLookUpInImages() && image && !image->isAnimated())
-                    shouldAppendQuickLookImageItem = true;
-#endif
             }
 #if PLATFORM(GTK)
             appendItem(CopyImageUrlItem, m_contextMenu.get());
@@ -1145,17 +1130,6 @@ void ContextMenuController::populate()
         }
     }
 
-#if ENABLE(IMAGE_ANALYSIS)
-    if (shouldAppendQuickLookImageItem) {
-        if (!frame->settings().preferInlineTextSelectionInImages()) {
-            // In the case where inline text selection is enabled, the Look Up item is only added if
-            // we discover visual look up results after image analysis. In that scenario, a separator
-            // is only added before the Look Up item once we're certain that we want to show it.
-            appendItem(*separatorItem(), m_contextMenu.get());
-        }
-        appendItem(QuickLookImageItem, m_contextMenu.get());
-    }
-#endif // ENABLE(IMAGE_ANALYSIS)
 }
 
 void ContextMenuController::addInspectElementItem()
@@ -1467,7 +1441,6 @@ void ContextMenuController::checkOrEnableIfNeeded(ContextMenuItem& item) const
             shouldEnable = m_context.hitTestResult().mediaHasAudio();
             shouldCheck = shouldEnable &&  m_context.hitTestResult().mediaMuted();
             break;
-        case ContextMenuItemTagQuickLookImage:
         case ContextMenuItemTagTranslate:
             break;
     }
@@ -1481,7 +1454,7 @@ void ContextMenuController::checkOrEnableIfNeeded(ContextMenuItem& item) const
 void ContextMenuController::showContextMenuAt(Frame& frame, const IntPoint& clickPoint)
 {
     clearContextMenu();
-    
+
     // Simulate a click in the middle of the accessibility object.
     PlatformMouseEvent mouseEvent(clickPoint, clickPoint, RightButton, PlatformEvent::MousePressed, 1, false, false, false, false, WallTime::now(), ForceAtClick, NoTap);
     frame.eventHandler().handleMousePressEvent(mouseEvent);

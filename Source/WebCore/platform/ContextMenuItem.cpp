@@ -255,7 +255,6 @@ bool isValidContextMenuAction(ContextMenuAction action)
     case ContextMenuAction::ContextMenuItemTagMediaMute:
     case ContextMenuAction::ContextMenuItemTagDictationAlternative:
     case ContextMenuAction::ContextMenuItemTagShareMenu:
-    case ContextMenuAction::ContextMenuItemTagQuickLookImage:
     case ContextMenuAction::ContextMenuItemTagTranslate:
     case ContextMenuAction::ContextMenuItemBaseCustomTag:
     case ContextMenuAction::ContextMenuItemLastCustomTag:

@@ -404,12 +404,6 @@ messages -> WebPageProxy {
 #endif
 #endif
 
-#if USE(QUICK_LOOK)
-    DidStartLoadForQuickLookDocumentInMainFrame(String fileName, String uti)
-    DidFinishLoadForQuickLookDocumentInMainFrame(WebKit::ShareableResource::Handle resource)
-    RequestPasswordForQuickLookDocumentInMainFrame(String fileName) -> (String password) Async
-#endif
-
 #if ENABLE(CONTENT_FILTERING)
     ContentFilterDidBlockLoadForFrame(WebCore::ContentFilterUnblockHandler unblockHandler, WebCore::FrameIdentifier frameID)
 #endif

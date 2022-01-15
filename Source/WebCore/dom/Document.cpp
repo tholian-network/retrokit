@@ -292,10 +292,6 @@
 #include "MathMLNames.h"
 #endif
 
-#if USE(QUICK_LOOK)
-#include "QuickLook.h"
-#endif
-
 #if ENABLE(TOUCH_EVENTS)
 #include "TouchEvent.h"
 #endif
@@ -3929,11 +3925,6 @@ void Document::processReferrerPolicy(const String& policy, ReferrerPolicySource 
     if (shouldEnforceContentDispositionAttachmentSandbox())
         return;
 
-#if USE(QUICK_LOOK)
-    if (shouldEnforceQuickLookSandbox())
-        return;
-#endif
-    
     auto referrerPolicy = parseReferrerPolicy(policy, source);
     if (!referrerPolicy) {
         // Unknown policy values are ignored (https://w3c.github.io/webappsec-referrer-policy/#unknown-policy-values).
@@ -6088,11 +6079,6 @@ void Document::initSecurityContext()
     if (!overrideContentSecurityPolicy.isNull())
         contentSecurityPolicy()->didReceiveHeader(overrideContentSecurityPolicy, ContentSecurityPolicyHeaderType::Enforce, ContentSecurityPolicy::PolicyFrom::API, referrer(), documentLoader ? documentLoader->response().httpStatusCode() : 0);
 
-#if USE(QUICK_LOOK)
-    if (shouldEnforceQuickLookSandbox())
-        applyQuickLookSandbox();
-#endif
-
     if (shouldEnforceHTTP09Sandbox()) {
         auto message = makeString("Sandboxing '", m_url.stringCenterEllipsizedToLength(), "' because it is using HTTP/0.9.");
         addConsoleMessage(MessageSource::Security, MessageLevel::Error, message);
@@ -7536,40 +7522,6 @@ bool Document::shouldEnforceHTTP09Sandbox() const
     DocumentLoader* documentLoader = m_frame->loader().activeDocumentLoader();
     return documentLoader && documentLoader->response().isHTTP09();
 }
-
-#if USE(QUICK_LOOK)
-
-bool Document::shouldEnforceQuickLookSandbox() const
-{
-    if (m_isSynthesized || !m_frame)
-        return false;
-    DocumentLoader* documentLoader = m_frame->loader().activeDocumentLoader();
-    return documentLoader && documentLoader->response().isQuickLook();
-}
-
-void Document::applyQuickLookSandbox()
-{
-    auto& documentLoader = *m_frame->loader().activeDocumentLoader();
-    auto documentURL = documentLoader.documentURL();
-    auto& responseURL = documentLoader.responseURL();
-    ASSERT(!documentURL.protocolIs(QLPreviewProtocol));
-    ASSERT(responseURL.protocolIs(QLPreviewProtocol));
-
-    auto securityOrigin = SecurityOrigin::createNonLocalWithAllowedFilePath(responseURL, documentURL.fileSystemPath());
-    securityOrigin->setStorageBlockingPolicy(StorageBlockingPolicy::BlockAll);
-    setSecurityOriginPolicy(SecurityOriginPolicy::create(WTFMove(securityOrigin)));
-
-    static NeverDestroyed<String> quickLookCSP = makeString("default-src ", QLPreviewProtocol, ": 'unsafe-inline'; base-uri 'none'; sandbox allow-same-origin allow-scripts");
-    RELEASE_ASSERT(contentSecurityPolicy());
-    // The sandbox directive is only allowed if the policy is from an HTTP header.
-    contentSecurityPolicy()->didReceiveHeader(quickLookCSP, ContentSecurityPolicyHeaderType::Enforce, ContentSecurityPolicy::PolicyFrom::HTTPHeader, referrer());
-
-    disableSandboxFlags(SandboxNavigation);
-
-    setReferrerPolicy(ReferrerPolicy::NoReferrer);
-}
-
-#endif
 
 bool Document::shouldEnforceContentDispositionAttachmentSandbox() const
 {

@@ -404,13 +404,6 @@ void ProvisionalPageProxy::logDiagnosticMessageWithValueDictionaryFromWebProcess
     m_page.logDiagnosticMessageWithValueDictionary(message, description, valueDictionary, shouldSample);
 }
 
-#if USE(QUICK_LOOK)
-void ProvisionalPageProxy::requestPasswordForQuickLookDocumentInMainFrame(const String& fileName, CompletionHandler<void(const String&)>&& completionHandler)
-{
-    m_page.requestPasswordForQuickLookDocumentInMainFrameShared(fileName, WTFMove(completionHandler));
-}
-#endif
-
 #if PLATFORM(COCOA)
 void ProvisionalPageProxy::registerWebProcessAccessibilityToken(const IPC::DataReference& data)
 {
@@ -464,10 +457,6 @@ void ProvisionalPageProxy::didReceiveMessage(IPC::Connection& connection, IPC::D
         || decoder.messageName() == Messages::WebPageProxy::BackForwardAddItem::name()
         || decoder.messageName() == Messages::WebPageProxy::SetNetworkRequestsInProgress::name()
         || decoder.messageName() == Messages::WebPageProxy::WillGoToBackForwardListItem::name()
-#if USE(QUICK_LOOK)
-        || decoder.messageName() == Messages::WebPageProxy::DidStartLoadForQuickLookDocumentInMainFrame::name()
-        || decoder.messageName() == Messages::WebPageProxy::DidFinishLoadForQuickLookDocumentInMainFrame::name()
-#endif
         || decoder.messageName() == Messages::WebPageProxy::CreateInspectorTarget::name()
         || decoder.messageName() == Messages::WebPageProxy::DestroyInspectorTarget::name()
         || decoder.messageName() == Messages::WebPageProxy::SendMessageToInspectorFrontend::name()
@@ -565,13 +554,6 @@ void ProvisionalPageProxy::didReceiveMessage(IPC::Connection& connection, IPC::D
         IPC::handleMessage<Messages::WebPageProxy::DidPerformServerRedirect>(decoder, this, &ProvisionalPageProxy::didPerformServerRedirect);
         return;
     }
-
-#if USE(QUICK_LOOK)
-    if (decoder.messageName() == Messages::WebPageProxy::RequestPasswordForQuickLookDocumentInMainFrame::name()) {
-        IPC::handleMessageAsync<Messages::WebPageProxy::RequestPasswordForQuickLookDocumentInMainFrame>(connection, decoder, this, &ProvisionalPageProxy::requestPasswordForQuickLookDocumentInMainFrame);
-        return;
-    }
-#endif
 
 #if ENABLE(CONTENT_FILTERING)
     if (decoder.messageName() == Messages::WebPageProxy::ContentFilterDidBlockLoadForFrame::name()) {

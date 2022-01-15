@@ -154,10 +154,6 @@
 #endif
 
 #if PLATFORM(IOS)
-#define USE_QUICK_LOOK 1
-#endif
-
-#if PLATFORM(IOS)
 #define USE_SYSTEM_PREVIEW 1
 #endif
 

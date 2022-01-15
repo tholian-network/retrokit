@@ -288,10 +288,6 @@ public:
     void setOriginalRequest(std::unique_ptr<ResourceRequest>&& originalRequest) { m_originalRequest = WTFMove(originalRequest); }
     const std::unique_ptr<ResourceRequest>& originalRequest() const { return m_originalRequest; }
 
-#if USE(QUICK_LOOK)
-    virtual void previewResponseReceived(const ResourceResponse&);
-#endif
-
 protected:
     // CachedResource constructor that may be used when the CachedResource can already be filled with response data.
     CachedResource(const URL&, Type, PAL::SessionID, const CookieJar*);

@@ -62,11 +62,6 @@
 #include "ResourceLoadInfo.h"
 #endif
 
-#if USE(QUICK_LOOK)
-#include "LegacyPreviewLoader.h"
-#include "PreviewConverter.h"
-#endif
-
 #undef SUBRESOURCELOADER_RELEASE_LOG
 #undef SUBRESOURCELOADER_RELEASE_LOG_ERROR
 #define PAGE_ID ((frame() ? frame()->pageID().value_or(PageIdentifier()) : PageIdentifier()).toUInt64())
@@ -323,30 +318,6 @@ void SubresourceLoader::didSendData(unsigned long long bytesSent, unsigned long 
     m_resource->didSendData(bytesSent, totalBytesToBeSent);
 }
 
-#if USE(QUICK_LOOK)
-
-bool SubresourceLoader::shouldCreatePreviewLoaderForResponse(const ResourceResponse& response) const
-{
-    if (m_resource->type() != CachedResource::Type::MainResource)
-        return false;
-
-    if (m_previewLoader)
-        return false;
-
-    return PreviewConverter::supportsMIMEType(response.mimeType());
-}
-
-void SubresourceLoader::didReceivePreviewResponse(const ResourceResponse& response)
-{
-    ASSERT(m_state == Initialized);
-    ASSERT(!response.isNull());
-    ASSERT(m_resource);
-    m_resource->previewResponseReceived(response);
-    ResourceLoader::didReceivePreviewResponse(response);
-}
-
-#endif
-
 static bool isLocationURLFailure(const ResourceResponse& response)
 {
     auto locationString = response.httpHeaderField(HTTPHeaderName::Location);
@@ -365,13 +336,6 @@ void SubresourceLoader::didReceiveResponse(const ResourceResponse& response, Com
         return;
     }
 
-#if USE(QUICK_LOOK)
-    if (shouldCreatePreviewLoaderForResponse(response)) {
-        m_previewLoader = makeUnique<LegacyPreviewLoader>(*this, response);
-        if (m_previewLoader->didReceiveResponse(response))
-            return;
-    }
-#endif
 #if ENABLE(SERVICE_WORKER)
     // Implementing step 10 of https://fetch.spec.whatwg.org/#main-fetch for service worker responses.
     if (response.source() == ResourceResponse::Source::ServiceWorker && response.url() != request().url()) {
@@ -520,25 +484,11 @@ void SubresourceLoader::didReceiveResponsePolicy()
 
 void SubresourceLoader::didReceiveData(const uint8_t* data, unsigned length, long long encodedDataLength, DataPayloadType dataPayloadType)
 {
-#if USE(QUICK_LOOK)
-    if (auto previewLoader = m_previewLoader.get()) {
-        if (previewLoader->didReceiveData(data, length))
-            return;
-    }
-#endif
-
     didReceiveDataOrBuffer(data, length, nullptr, encodedDataLength, dataPayloadType);
 }
 
 void SubresourceLoader::didReceiveBuffer(Ref<SharedBuffer>&& buffer, long long encodedDataLength, DataPayloadType dataPayloadType)
 {
-#if USE(QUICK_LOOK)
-    if (auto previewLoader = m_previewLoader.get()) {
-        if (previewLoader->didReceiveBuffer(buffer.get()))
-            return;
-    }
-#endif
-
     didReceiveDataOrBuffer(nullptr, 0, WTFMove(buffer), encodedDataLength, dataPayloadType);
 }
 
@@ -710,13 +660,6 @@ void SubresourceLoader::didFinishLoading(const NetworkLoadMetrics& networkLoadMe
 {
     SUBRESOURCELOADER_RELEASE_LOG("didFinishLoading:");
 
-#if USE(QUICK_LOOK)
-    if (auto previewLoader = m_previewLoader.get()) {
-        if (previewLoader->didFinishLoading())
-            return;
-    }
-#endif
-
     if (m_state != Initialized)
         return;
     ASSERT(!reachedTerminalState());
@@ -768,11 +711,6 @@ void SubresourceLoader::didFinishLoading(const NetworkLoadMetrics& networkLoadMe
 void SubresourceLoader::didFail(const ResourceError& error)
 {
     SUBRESOURCELOADER_RELEASE_LOG("didFail: (type=%d, code=%d)", static_cast<int>(error.type()), error.errorCode());
-
-#if USE(QUICK_LOOK)
-    if (auto previewLoader = m_previewLoader.get())
-        previewLoader->didFail();
-#endif
 
     if (m_state != Initialized)
         return;

@@ -79,10 +79,6 @@
 #include "CompiledContentExtension.h"
 #endif
 
-#if USE(QUICK_LOOK)
-#include "LegacyPreviewLoaderClient.h"
-#endif
-
 #if ENABLE(DATE_AND_TIME_INPUT_TYPES)
 #include "DateTimeChooser.h"
 #endif
@@ -1024,15 +1020,6 @@ bool EmptyFrameLoaderClient::isEmptyFrameLoaderClient() const
 void EmptyFrameLoaderClient::prefetchDNS(const String&)
 {
 }
-
-#if USE(QUICK_LOOK)
-
-RefPtr<LegacyPreviewLoaderClient> EmptyFrameLoaderClient::createPreviewLoaderClient(const String&, const String&)
-{
-    return nullptr;
-}
-
-#endif
 
 #if ENABLE(RESOURCE_LOAD_STATISTICS)
 

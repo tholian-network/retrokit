@@ -35,9 +35,6 @@
 #if ENABLE(CONTENT_FILTERING)
 #include "ContentFilter.h"
 #endif
-#if USE(QUICK_LOOK)
-#include "QuickLook.h"
-#endif
 
 namespace WebCore {
 
@@ -83,9 +80,6 @@ static const URLSchemesMap& allBuiltinSchemes()
             "webkit-fake-url",
 #if PLATFORM(MAC)
             "safari-extension",
-#endif
-#if USE(QUICK_LOOK)
-            QLPreviewProtocol,
 #endif
 #if ENABLE(CONTENT_FILTERING)
             ContentFilter::urlScheme(),

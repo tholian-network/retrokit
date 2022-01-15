@@ -61,10 +61,6 @@
 #include <wtf/Expected.h>
 #include <wtf/RunLoop.h>
 
-#if USE(QUICK_LOOK)
-#include <WebCore/PreviewConverter.h>
-#endif
-
 #define LOADER_RELEASE_LOG(fmt, ...) RELEASE_LOG(Network, "%p - [pageProxyID=%" PRIu64 ", webPageID=%" PRIu64 ", frameID=%" PRIu64 ", resourceID=%" PRIu64 ", isMainResource=%d, destination=%u, isSynchronous=%d] NetworkResourceLoader::" fmt, this, m_parameters.webPageProxyID.toUInt64(), m_parameters.webPageID.toUInt64(), m_parameters.webFrameID.toUInt64(), m_parameters.identifier, isMainResource(), static_cast<unsigned>(m_parameters.options.destination), isSynchronous(), ##__VA_ARGS__)
 #define LOADER_RELEASE_LOG_ERROR(fmt, ...) RELEASE_LOG_ERROR(Network, "%p - [pageProxyID=%" PRIu64 ", webPageID=%" PRIu64 ", frameID=%" PRIu64 ", resourceID=%" PRIu64 ", isMainResource=%d, destination=%u, isSynchronous=%d] NetworkResourceLoader::" fmt, this, m_parameters.webPageProxyID.toUInt64(), m_parameters.webPageID.toUInt64(), m_parameters.webFrameID.toUInt64(), m_parameters.identifier, isMainResource(), static_cast<unsigned>(m_parameters.options.destination), isSynchronous(), ##__VA_ARGS__)
 
@@ -572,11 +568,6 @@ bool NetworkResourceLoader::shouldInterruptLoadForXFrameOptions(const String& xF
 bool NetworkResourceLoader::shouldInterruptLoadForCSPFrameAncestorsOrXFrameOptions(const ResourceResponse& response)
 {
     ASSERT(isMainResource());
-
-#if USE(QUICK_LOOK)
-    if (PreviewConverter::supportsMIMEType(response.mimeType()))
-        return false;
-#endif
 
     auto url = response.url();
     ContentSecurityPolicy contentSecurityPolicy { URL { url }, this };

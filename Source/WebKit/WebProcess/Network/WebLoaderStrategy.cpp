@@ -72,10 +72,6 @@
 #include <wtf/CompletionHandler.h>
 #include <wtf/text/CString.h>
 
-#if USE(QUICK_LOOK)
-#include <WebCore/QuickLook.h>
-#endif
-
 #define WEBLOADERSTRATEGY_RELEASE_LOG_BASIC(fmt, ...) RELEASE_LOG(Network, "%p - WebLoaderStrategy::" fmt, this, ##__VA_ARGS__)
 #define WEBLOADERSTRATEGY_RELEASE_LOG_ERROR_BASIC(fmt, ...) RELEASE_LOG_ERROR(Network, "%p - WebLoaderStrategy::" fmt, this, ##__VA_ARGS__)
 
@@ -197,15 +193,6 @@ void WebLoaderStrategy::scheduleLoad(ResourceLoader& resourceLoader, CachedResou
         startLocalLoad(resourceLoader);
         return;
     }
-
-#if USE(QUICK_LOOK)
-    if (isQuickLookPreviewURL(resourceLoader.request().url())) {
-        LOG(NetworkScheduling, "(WebProcess) WebLoaderStrategy::scheduleLoad, url '%s' will be handled as a QuickLook resource.", resourceLoader.url().string().utf8().data());
-        WEBLOADERSTRATEGY_RELEASE_LOG("scheduleLoad: URL will be handled as a QuickLook resource");
-        startLocalLoad(resourceLoader);
-        return;
-    }
-#endif
 
 #if USE(SOUP)
     // For apps that call g_resource_load in a web extension.

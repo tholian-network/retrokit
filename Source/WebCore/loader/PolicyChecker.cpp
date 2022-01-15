@@ -49,10 +49,6 @@
 #include "ThreadableBlobRegistry.h"
 #include <wtf/CompletionHandler.h>
 
-#if USE(QUICK_LOOK)
-#include "QuickLook.h"
-#endif
-
 #define PAGE_ID (m_frame.loader().pageID().value_or(PageIdentifier()).toUInt64())
 #define FRAME_ID (m_frame.loader().frameID().value_or(FrameIdentifier()).toUInt64())
 #define POLICYCHECKER_RELEASE_LOG(fmt, ...) RELEASE_LOG(Loading, "%p - [pageID=%" PRIu64 ", frameID=%" PRIu64 "] PolicyChecker::" fmt, this, PAGE_ID, FRAME_ID, ##__VA_ARGS__)
@@ -165,14 +161,6 @@ void FrameLoader::PolicyChecker::checkNavigationPolicy(ResourceRequest&& request
     }
 
     loader->setLastCheckedRequest(ResourceRequest(request));
-
-#if USE(QUICK_LOOK)
-    // Always allow QuickLook-generated URLs based on the protocol scheme.
-    if (!request.isNull() && isQuickLookPreviewURL(request.url())) {
-        POLICYCHECKER_RELEASE_LOG("checkNavigationPolicy: continuing because quicklook-generated URL");
-        return function(WTFMove(request), makeWeakPtr(formState.get()), NavigationPolicyDecision::ContinueLoad);
-    }
-#endif
 
 #if ENABLE(CONTENT_FILTERING)
     if (m_contentFilterUnblockHandler.canHandleRequest(request)) {

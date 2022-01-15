@@ -59,11 +59,6 @@
 #include "UserContentController.h"
 #endif
 
-#if USE(QUICK_LOOK)
-#include "LegacyPreviewLoader.h"
-#include "PreviewConverter.h"
-#endif
-
 #undef RESOURCELOADER_RELEASE_LOG
 #define PAGE_ID ((frame() ? frame()->pageID().value_or(PageIdentifier()) : PageIdentifier()).toUInt64())
 #define FRAME_ID ((frame() ? frame()->frameID().value_or(FrameIdentifier()) : FrameIdentifier()).toUInt64())
@@ -418,13 +413,6 @@ void ResourceLoader::willSendRequestInternal(ResourceRequest&& request, const Re
     }
     else
         InspectorInstrumentation::willSendRequest(m_frame.get(), m_identifier, m_frame->loader().documentLoader(), request, redirectResponse, cachedResource());
-
-#if USE(QUICK_LOOK)
-    if (m_documentLoader) {
-        if (auto previewConverter = m_documentLoader->previewConverter())
-            request = previewConverter->safeRequest(request);
-    }
-#endif
 
     bool isRedirect = !redirectResponse.isNull();
     if (isRedirect) {
@@ -858,13 +846,6 @@ void ResourceLoader::unschedule(SchedulePair& pair)
         m_handle->unschedule(pair);
 }
 
-#endif
-
-#if USE(QUICK_LOOK)
-bool ResourceLoader::isQuickLookResource() const
-{
-    return !!m_previewLoader;
-}
 #endif
 
 } // namespace WebCore

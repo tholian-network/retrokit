@@ -726,8 +726,6 @@ public:
 
     Vector<String> accessKeyModifiers() const;
 
-    void setQuickLookPassword(const String&);
-
     void setAsRunningUserScripts(Document&);
 
 #if ENABLE(WEBGL)

@@ -57,10 +57,6 @@
 #include "ImageDecoderAVFObjC.h"
 #endif
 
-#if USE(QUICK_LOOK)
-#include "PreviewConverter.h"
-#endif
-
 #if USE(GSTREAMER) && ENABLE(VIDEO)
 #include "ImageDecoderGStreamer.h"
 #endif
@@ -639,11 +635,6 @@ bool MIMETypeRegistry::canShowMIMEType(const String& mimeType)
 
     if (isSupportedJavaScriptMIMEType(mimeType) || isSupportedJSONMIMEType(mimeType))
         return true;
-
-#if USE(QUICK_LOOK)
-    if (PreviewConverter::supportsMIMEType(mimeType))
-        return true;
-#endif
 
     if (startsWithLettersIgnoringASCIICase(mimeType, "text/"))
         return !isUnsupportedTextMIMEType(mimeType);

@@ -33,7 +33,7 @@ namespace WebKit {
 
 class WebFrame;
 struct WebsitePoliciesData;
-    
+
 class WebFrameLoaderClient final : public WebCore::FrameLoaderClient {
 public:
     explicit WebFrameLoaderClient(Ref<WebFrame>&&);
@@ -53,7 +53,7 @@ public:
 
 #if ENABLE(RESOURCE_LOAD_STATISTICS)
     bool hasFrameSpecificStorageAccess() final { return !!m_frameSpecificStorageAccessIdentifier; }
-    
+
     struct FrameSpecificStorageAccessIdentifier {
         WebCore::FrameIdentifier frameID;
         WebCore::PageIdentifier pageID;
@@ -246,10 +246,6 @@ private:
     Ref<WebCore::FrameNetworkingContext> createNetworkingContext() final;
 
     void completePageTransitionIfNeeded() final;
-
-#if USE(QUICK_LOOK)
-    RefPtr<WebCore::LegacyPreviewLoaderClient> createPreviewLoaderClient(const String& fileName, const String& uti) final;
-#endif
 
 #if ENABLE(CONTENT_FILTERING)
     void contentFilterDidBlockLoad(WebCore::ContentFilterUnblockHandler) final;
