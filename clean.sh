@@ -14,10 +14,15 @@ rm -rf ./WebInspectorUI     2> /dev/null;
 rm -rf ./WebKit2Gtk         2> /dev/null;
 rm -rf ./bmalloc            2> /dev/null;
 
-rm ./Source/WebCore/idl_files_WebCoreBindings.tmp               2> /dev/null;
-rm ./Source/WebCore/idl_files_WebCoreTestSupportBindings.tmp    2> /dev/null;
-rm ./Source/WebCore/pp_idl_files_WebCoreBindings.tmp            2> /dev/null;
-rm ./Source/WebCore/pp_idl_files_WebCoreTestSupportBindings.tmp 2> /dev/null;
+rm -rf ./Source/JavaScriptCore/disassembler/udis86/__pycache__       2> /dev/null;
+rm -rf ./Source/JavaScriptCore/inspector/scripts/codegen/__pycache__ 2> /dev/null;
+rm -rf ./Source/JavaScriptCore/wasm/__pycache__                      2> /dev/null;
+rm -rf ./Source/JavaScriptCore/yarr/__pycache__                      2> /dev/null;
+rm ./Source/WebCore/idl_files_WebCoreBindings.tmp                    2> /dev/null;
+rm ./Source/WebCore/idl_files_WebCoreTestSupportBindings.tmp         2> /dev/null;
+rm ./Source/WebCore/pp_idl_files_WebCoreBindings.tmp                 2> /dev/null;
+rm ./Source/WebCore/pp_idl_files_WebCoreTestSupportBindings.tmp      2> /dev/null;
+rm ./inspector-resources.stamp                                       2> /dev/null;
 
 rm -rf ./DerivedSources                          2> /dev/null;
 rm ./Source/JavaScriptCore/javascriptcoregtk*.pc 2> /dev/null;
@@ -48,7 +53,20 @@ rm ./Source/bmalloc/cmake_install.cmake                  2> /dev/null;
 rm ./Source/cmake_install.cmake                          2> /dev/null;
 rm ./cmake_install.cmake                                 2> /dev/null;
 
-rm -rf ./CMakeFiles                              2> /dev/null;
+rm -rf ./CMakeFiles                               2> /dev/null;
+rm -rf ./Source/bmalloc/CMakeFiles                2> /dev/null;
+rm -rf ./Source/JavaScriptCore/CMakeFiles         2> /dev/null;
+rm -rf ./Source/JavaScriptCore/shell/CMakeFiles   2> /dev/null;
+rm -rf ./Source/ThirdParty/ANGLE/CMakeFiles       2> /dev/null;
+rm -rf ./Source/ThirdParty/xdgmime/CMakeFiles     2> /dev/null;
+rm -rf ./Source/WebCore/CMakeFiles                2> /dev/null;
+rm -rf ./Source/WebCore/PAL/pal/CMakeFiles        2> /dev/null;
+rm -rf ./Source/WebDriver/CMakeFiles              2> /dev/null;
+rm -rf ./Source/WebKit/CMakeFiles                 2> /dev/null;
+rm -rf ./Source/WebKit/Scripts/webkit/__pycache__ 2> /dev/null;
+rm -rf ./Source/WTF/wtf/CMakeFiles                2> /dev/null;
+rm -rf ./Tools/MiniBrowser/gtk/CMakeFiles         2> /dev/null;
+
 rm ./CMakeCache.txt                              2> /dev/null;
 rm ./CPackConfig.cmake                           2> /dev/null;
 rm ./CPackSourceConfig.cmake                     2> /dev/null;
@@ -57,15 +75,10 @@ rm ./.ninja_deps                                 2> /dev/null;
 rm ./.ninja_log                                  2> /dev/null;
 rm ./build.ninja                                 2> /dev/null;
 
-# __pycache__
-#
-# /Source/*/*Bindings.tmp
-#
-# /JavaScriptCore*.gir
-# /JavaScriptCore*.typelib
-# /WebKit2*.gir
-# /WebKit2*.typelib
-# /WebKit2WebExtension*.gir
-# /WebKit2WebExtension*.typelib
-# /inspector-resources.stamp
+rm ./JavaScriptCore-*.gir          2> /dev/null;
+rm ./JavaScriptCore-*.typelib      2> /dev/null;
+rm ./WebKit2-*.gir                 2> /dev/null;
+rm ./WebKit2-*.typelib             2> /dev/null;
+rm ./WebKit2WebExtension-*.gir     2> /dev/null;
+rm ./WebKit2WebExtension-*.typelib 2> /dev/null;
 
