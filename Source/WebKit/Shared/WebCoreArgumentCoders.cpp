@@ -106,10 +106,6 @@
 #include <WebCore/SharedBuffer.h>
 #endif // PLATFORM(IOS_FAMILY)
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-#include <WebCore/MediaPlaybackTargetContext.h>
-#endif
-
 #if ENABLE(MEDIA_STREAM)
 #include <WebCore/CaptureDevice.h>
 #include <WebCore/MediaConstraints.h>
@@ -2445,53 +2441,6 @@ std::optional<TextIndicatorData> ArgumentCoder<TextIndicatorData>::decode(Decode
 
     return textIndicatorData;
 }
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-void ArgumentCoder<MediaPlaybackTargetContext>::encode(Encoder& encoder, const MediaPlaybackTargetContext& target)
-{
-    bool hasPlatformData = target.encodingRequiresPlatformData();
-    encoder << hasPlatformData;
-
-    MediaPlaybackTargetContext::Type contextType = target.type();
-    encoder << contextType;
-
-    if (target.encodingRequiresPlatformData()) {
-        encodePlatformData(encoder, target);
-        return;
-    }
-
-    ASSERT(contextType == MediaPlaybackTargetContext::Type::Mock);
-    encoder << target.deviceName();
-    encoder << target.mockState();
-}
-
-bool ArgumentCoder<MediaPlaybackTargetContext>::decode(Decoder& decoder, MediaPlaybackTargetContext& target)
-{
-    bool hasPlatformData;
-    if (!decoder.decode(hasPlatformData))
-        return false;
-
-    MediaPlaybackTargetContext::Type contextType;
-    if (!decoder.decode(contextType))
-        return false;
-
-    if (hasPlatformData)
-        return decodePlatformData(decoder, contextType, target);
-
-    ASSERT(contextType == MediaPlaybackTargetContext::Type::Mock);
-    String deviceName;
-    if (!decoder.decode(deviceName))
-        return false;
-
-    MediaPlaybackTargetContext::MockState mockState;
-    if (!decoder.decode(mockState))
-        return false;
-
-    target = MediaPlaybackTargetContext(deviceName, mockState);
-
-    return true;
-}
-#endif
 
 void ArgumentCoder<DictionaryPopupInfo>::encode(IPC::Encoder& encoder, const DictionaryPopupInfo& info)
 {

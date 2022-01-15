@@ -12,11 +12,7 @@ function Controller(root, video, host)
     this.listeners = {};
     this.isLive = false;
     this.statusHidden = true;
-    this.hasWirelessPlaybackTargets = false;
     this.canToggleShowControlsButton = false;
-    this.isListeningForPlaybackTargetAvailabilityEvent = false;
-    this.currentTargetIsWireless = false;
-    this.wirelessPlaybackDisabled = false;
     this.isVolumeSliderActive = false;
     this.currentDisplayWidth = 0;
     this._scrubbing = false;
@@ -39,8 +35,6 @@ function Controller(root, video, host)
     this.updateVolume();
     this.updateHasAudio();
     this.updateHasVideo();
-    this.updateWirelessTargetAvailable();
-    this.updateWirelessPlaybackStatus();
     this.scheduleUpdateLayoutForDisplayedWidth();
 
     this.listenFor(this.root, 'resize', this.handleRootResize);
@@ -51,9 +45,6 @@ Controller.InlineControls = 0;
 
 Controller.PlayAfterSeeking = 0;
 Controller.PauseAfterSeeking = 1;
-
-/* Globals */
-Controller.gSimulateWirelessPlaybackTarget = false; // Used for testing when there are no wireless targets.
 
 Controller.prototype = {
 
@@ -210,8 +201,6 @@ Controller.prototype = {
         this.controlsObserver = new MutationObserver(this.handleControlsChange.bind(this));
         this.controlsObserver.observe(this.video, { attributes: true, attributeFilter: ['controls'] });
 
-        this.listenFor(this.video, 'webkitcurrentplaybacktargetiswirelesschanged', this.handleWirelessPlaybackChange);
-
     },
 
     removeVideoListeners: function()
@@ -238,9 +227,6 @@ Controller.prototype = {
         /* controls attribute */
         this.controlsObserver.disconnect();
         delete(this.controlsObserver);
-
-        this.stopListeningFor(this.video, 'webkitcurrentplaybacktargetiswirelesschanged', this.handleWirelessPlaybackChange);
-        this.setShouldListenForPlaybackTargetAvailabilityEvent(false);
 
     },
 
@@ -286,7 +272,7 @@ Controller.prototype = {
 
     shouldHaveAnyUI: function()
     {
-        return this.shouldHaveControls() || (this.video.textTracks && this.video.textTracks.length) || this.currentPlaybackTargetIsWireless();
+        return this.shouldHaveControls() || (this.video.textTracks && this.video.textTracks.length);
     },
 
     shouldShowControls: function()
@@ -299,7 +285,7 @@ Controller.prototype = {
 
     shouldHaveControls: function()
     {
-        return this.shouldShowControls() || this.currentPlaybackTargetIsWireless();
+        return this.shouldShowControls();
     },
 
 
@@ -481,27 +467,6 @@ Controller.prototype = {
         captionButton.setAttribute('aria-owns', 'audioAndTextTrackMenu');
         this.listenFor(captionButton, 'click', this.handleCaptionButtonClicked);
 
-        var inlinePlaybackPlaceholder = this.controls.inlinePlaybackPlaceholder = document.createElement('div');
-        inlinePlaybackPlaceholder.setAttribute('pseudo', '-webkit-media-controls-wireless-playback-status');
-        inlinePlaybackPlaceholder.setAttribute('aria-label', this.UIString('Video Playback Placeholder'));
-        this.listenFor(inlinePlaybackPlaceholder, 'click', this.handlePlaceholderClick);
-        this.listenFor(inlinePlaybackPlaceholder, 'dblclick', this.handlePlaceholderClick);
-        inlinePlaybackPlaceholder.classList.add(this.ClassNames.hidden);
-
-        var inlinePlaybackPlaceholderText = this.controls.inlinePlaybackPlaceholderText = document.createElement('div');
-        inlinePlaybackPlaceholderText.setAttribute('pseudo', '-webkit-media-controls-wireless-playback-text');
-
-        var inlinePlaybackPlaceholderTextTop = this.controls.inlinePlaybackPlaceholderTextTop = document.createElement('p');
-        inlinePlaybackPlaceholderTextTop.setAttribute('pseudo', '-webkit-media-controls-wireless-playback-text-top');
-
-        var inlinePlaybackPlaceholderTextBottom = this.controls.inlinePlaybackPlaceholderTextBottom = document.createElement('p');
-        inlinePlaybackPlaceholderTextBottom.setAttribute('pseudo', '-webkit-media-controls-wireless-playback-text-bottom');
-
-        var wirelessTargetPicker = this.controls.wirelessTargetPicker = document.createElement('button');
-        wirelessTargetPicker.setAttribute('pseudo', '-webkit-media-controls-wireless-playback-picker-button');
-        wirelessTargetPicker.setAttribute('aria-label', this.UIString('Choose Wireless Display'));
-        this.listenFor(wirelessTargetPicker, 'click', this.handleWirelessPickerButtonClicked);
-
         // Show controls button is an accessibility workaround since the controls are now removed from the DOM. http://webkit.org/b/145684
         var showControlsButton = this.showControlsButton = document.createElement('button');
         showControlsButton.setAttribute('pseudo', '-webkit-media-show-controls');
@@ -510,8 +475,6 @@ Controller.prototype = {
         this.listenFor(showControlsButton, 'click', this.handleShowControlsClick);
         this.base.appendChild(showControlsButton);
 
-        if (!Controller.gSimulateWirelessPlaybackTarget)
-            wirelessTargetPicker.classList.add(this.ClassNames.hidden);
     },
 
     createTimeClones: function()
@@ -536,7 +499,6 @@ Controller.prototype = {
         this.controlsType = type;
 
         this.reconnectControls();
-        this.updateShouldListenForPlaybackTargetAvailabilityEvent();
     },
 
     setIsLive: function(live)
@@ -556,7 +518,7 @@ Controller.prototype = {
 
         if (this.controlsType === Controller.InlineControls)
             this.configureInlineControls();
-        if (this.shouldHaveControls() || this.currentPlaybackTargetIsWireless())
+        if (this.shouldHaveControls())
             this.addControls();
     },
 
@@ -571,9 +533,6 @@ Controller.prototype = {
 
     configureInlineControls: function()
     {
-        this.controls.inlinePlaybackPlaceholder.appendChild(this.controls.inlinePlaybackPlaceholderText);
-        this.controls.inlinePlaybackPlaceholderText.appendChild(this.controls.inlinePlaybackPlaceholderTextTop);
-        this.controls.inlinePlaybackPlaceholderText.appendChild(this.controls.inlinePlaybackPlaceholderTextBottom);
         this.controls.panel.appendChild(this.controls.panelBackgroundContainer);
         this.controls.panelBackgroundContainer.appendChild(this.controls.panelBackground);
         this.controls.panelBackgroundContainer.appendChild(this.controls.panelTint);
@@ -596,7 +555,6 @@ Controller.prototype = {
         this.controls.volumeBox.appendChild(this.controls.volumeBoxTint);
         this.controls.volumeBox.appendChild(this.controls.volume);
         this.controls.muteBox.appendChild(this.controls.muteButton);
-        this.controls.panel.appendChild(this.controls.wirelessTargetPicker);
         this.controls.panel.appendChild(this.controls.captionButton);
 
         this.controls.panel.style.removeProperty('left');
@@ -631,7 +589,6 @@ Controller.prototype = {
 
     updateStatusDisplay: function(event)
     {
-        this.updateShouldListenForPlaybackTargetAvailabilityEvent();
         if (this.video.error !== null)
             this.controls.statusDisplay.innerText = this.UIString('Error');
         else if (this.isLive && this.video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA)
@@ -682,8 +639,6 @@ Controller.prototype = {
         this.updateDuration();
         this.updateCaptionButton();
         this.updateCaptionContainer();
-        this.updateWirelessTargetAvailable();
-        this.updateWirelessTargetPickerButton();
         this.updateProgress();
         this.updateControls();
     },
@@ -835,7 +790,7 @@ Controller.prototype = {
 
     handlePanelMouseDown: function(event)
     {
-        if (event.target != this.controls.panelTint && event.target != this.controls.inlinePlaybackPlaceholder)
+        if (event.target != this.controls.panelTint)
             return;
 
         this.listenFor(this.base, 'mouseup', this.handleWrapperMouseUp, true);
@@ -851,7 +806,6 @@ Controller.prototype = {
     {
         var opacity = window.getComputedStyle(this.controls.panel).opacity;
         if (!parseInt(opacity) && !this.controlsAlwaysVisible() && this.video.controls) {
-            this.base.removeChild(this.controls.inlinePlaybackPlaceholder);
             this.base.removeChild(this.controls.panel);
         }
     },
@@ -1062,18 +1016,6 @@ Controller.prototype = {
     hasVideo: function()
     {
         return this.video.videoTracks && this.video.videoTracks.length;
-    },
-
-    updateWirelessTargetPickerButton: function() {
-        var wirelessTargetPickerColor;
-        if (this.controls.wirelessTargetPicker.classList.contains('playing'))
-            wirelessTargetPickerColor = "-apple-wireless-playback-target-active";
-        else
-            wirelessTargetPickerColor = "rgba(255,255,255,0.45)";
-        if (window.devicePixelRatio == 2)
-            this.controls.wirelessTargetPicker.style.backgroundImage = "url(\"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 15' stroke='" + wirelessTargetPickerColor + "'><defs> <clipPath fill-rule='evenodd' id='cut-hole'><path d='M 0,0.5 L 16,0.5 L 16,15.5 L 0,15.5 z M 0,14.5 L 16,14.5 L 8,5 z'/></clipPath></defs><rect fill='none' clip-path='url(#cut-hole)' x='0.5' y='2' width='15' height='8'/><path stroke='none' fill='" + wirelessTargetPickerColor +"' d='M 3.5,13.25 L 12.5,13.25 L 8,8 z'/></svg>\")";
-        else
-            this.controls.wirelessTargetPicker.style.backgroundImage = "url(\"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 15' stroke='" + wirelessTargetPickerColor + "'><defs> <clipPath fill-rule='evenodd' id='cut-hole'><path d='M 0,1 L 16,1 L 16,16 L 0,16 z M 0,15 L 16,15 L 8,5.5 z'/></clipPath></defs><rect fill='none' clip-path='url(#cut-hole)' x='0.5' y='2.5' width='15' height='8'/><path stroke='none' fill='" + wirelessTargetPickerColor +"' d='M 2.75,14 L 13.25,14 L 8,8.75 z'/></svg>\")";
     },
 
     handleControlsChange: function()
@@ -1453,13 +1395,11 @@ Controller.prototype = {
 
     showControls: function(focusControls)
     {
-        this.updateShouldListenForPlaybackTargetAvailabilityEvent();
         if (!this.video.controls)
             return;
 
         this.updateForShowingControls();
         if (this.shouldHaveControls() && !this.controls.panel.parentElement) {
-            this.base.appendChild(this.controls.inlinePlaybackPlaceholder);
             this.base.appendChild(this.controls.panel);
             if (focusControls)
                 this.controls.playButton.focus();
@@ -1473,7 +1413,6 @@ Controller.prototype = {
             return;
 
         this.clearHideControlsTimer();
-        this.updateShouldListenForPlaybackTargetAvailabilityEvent();
         this.controls.panel.classList.remove(this.ClassNames.show);
         if (this.controls.panelBackground)
             this.controls.panelBackground.classList.remove(this.ClassNames.show);
@@ -1514,8 +1453,7 @@ Controller.prototype = {
         this.currentDisplayWidth = visibleWidth;
 
         // Filter all the buttons which are not explicitly hidden.
-        var buttons = [this.controls.playButton, this.controls.rewindButton, this.controls.captionButton,
-                       this.controls.wirelessTargetPicker, this.controls.muteBox];
+        var buttons = [this.controls.playButton, this.controls.rewindButton, this.controls.captionButton, this.controls.muteBox];
         var visibleButtons = buttons.filter(this.isControlVisible, this);
 
         // This tells us how much room we need in order to display every visible button.
@@ -1532,8 +1470,7 @@ Controller.prototype = {
         this.controls.remainingTime.classList.toggle(this.ClassNames.dropped, shouldDropTimeline);
 
         // Then controls in the following order:
-        var removeOrder = [this.controls.wirelessTargetPicker,
-                           this.controls.captionButton, this.controls.muteBox, this.controls.rewindButton];
+        var removeOrder = [this.controls.captionButton, this.controls.muteBox, this.controls.rewindButton];
         removeOrder.forEach(function(control) {
             var shouldDropControl = visibleWidth < visibleButtonWidth && this.isControlVisible(control);
             control.classList.toggle(this.ClassNames.dropped, shouldDropControl);
@@ -1544,7 +1481,7 @@ Controller.prototype = {
 
     controlsAlwaysVisible: function()
     {
-        return this.isAudio() || this.currentPlaybackTargetIsWireless() || this.scrubbing;
+        return this.isAudio() || this.scrubbing;
     },
 
     controlsAreHidden: function()
@@ -1561,7 +1498,6 @@ Controller.prototype = {
 
     addControls: function()
     {
-        this.base.appendChild(this.controls.inlinePlaybackPlaceholder);
         this.base.appendChild(this.controls.panel);
         this.updateControls();
     },
@@ -1625,7 +1561,6 @@ Controller.prototype = {
             this.controls.remainingTime.classList.add(this.ClassNames.hidden);
             this.hideControls();
         }
-        this.updateWirelessTargetAvailable();
     },
 
     trackHasThumbnails: function(track)
@@ -1931,7 +1866,7 @@ Controller.prototype = {
 
     updateHasAudio: function()
     {
-        if (this.video.audioTracks.length && !this.currentPlaybackTargetIsWireless())
+        if (this.video.audioTracks.length)
             this.controls.muteBox.classList.remove(this.ClassNames.hidden);
         else
             this.controls.muteBox.classList.add(this.ClassNames.hidden);
@@ -1979,119 +1914,6 @@ Controller.prototype = {
 
         if (this.isPlaying)
             this.hideTimer = setTimeout(this.hideControls.bind(this), this.HideControlsDelay);
-    },
-
-    currentPlaybackTargetIsWireless: function() {
-        if (Controller.gSimulateWirelessPlaybackTarget)
-            return true;
-
-        if (!this.currentTargetIsWireless || this.wirelessPlaybackDisabled)
-            return false;
-
-        return true;
-    },
-
-    updateShouldListenForPlaybackTargetAvailabilityEvent: function() {
-        var shouldListen = true;
-        if (this.video.error)
-            shouldListen = false;
-        if (!this.isAudio() && !this.video.paused && this.controlsAreHidden())
-            shouldListen = false;
-        if (document.hidden)
-            shouldListen = false;
-
-        this.setShouldListenForPlaybackTargetAvailabilityEvent(shouldListen);
-    },
-
-    updateWirelessPlaybackStatus: function() {
-        if (this.currentPlaybackTargetIsWireless()) {
-            var deviceName = "";
-            var deviceType = "";
-            var type = this.host.externalDeviceType;
-            if (type == "airplay") {
-                deviceType = this.UIString('##WIRELESS_PLAYBACK_DEVICE_TYPE##');
-                deviceName = this.UIString('##WIRELESS_PLAYBACK_DEVICE_NAME##', '##DEVICE_NAME##', this.host.externalDeviceDisplayName || "Apple TV");
-            } else if (type == "tvout") {
-                deviceType = this.UIString('##TVOUT_DEVICE_TYPE##');
-                deviceName = this.UIString('##TVOUT_DEVICE_NAME##');
-            }
-
-            this.controls.inlinePlaybackPlaceholderTextTop.innerText = deviceType;
-            this.controls.inlinePlaybackPlaceholderTextBottom.innerText = deviceName;
-            this.controls.inlinePlaybackPlaceholder.setAttribute('aria-label', deviceType + ", " + deviceName);
-            this.controls.inlinePlaybackPlaceholder.classList.add(this.ClassNames.appleTV);
-            this.controls.inlinePlaybackPlaceholder.classList.remove(this.ClassNames.hidden);
-            this.controls.wirelessTargetPicker.classList.add(this.ClassNames.playing);
-            this.controls.inlinePlaybackPlaceholder.classList.remove(this.ClassNames.small);
-            this.controls.inlinePlaybackPlaceholderTextTop.classList.remove(this.ClassNames.small);
-            this.controls.inlinePlaybackPlaceholderTextBottom.classList.remove(this.ClassNames.small);
-            this.controls.volumeBox.classList.add(this.ClassNames.hidden);
-            this.controls.muteBox.classList.add(this.ClassNames.hidden);
-            this.updateBase();
-            this.showControls();
-        } else {
-            this.controls.inlinePlaybackPlaceholder.classList.add(this.ClassNames.hidden);
-            this.controls.inlinePlaybackPlaceholder.classList.remove(this.ClassNames.appleTV);
-            this.controls.wirelessTargetPicker.classList.remove(this.ClassNames.playing);
-            this.controls.volumeBox.classList.remove(this.ClassNames.hidden);
-            this.controls.muteBox.classList.remove(this.ClassNames.hidden);
-        }
-        this.setNeedsUpdateForDisplayedWidth();
-        this.updateLayoutForDisplayedWidth();
-        this.reconnectControls();
-        this.updateWirelessTargetPickerButton();
-    },
-
-    updateWirelessTargetAvailable: function() {
-        this.currentTargetIsWireless = this.video.webkitCurrentPlaybackTargetIsWireless;
-        this.wirelessPlaybackDisabled = this.video.webkitWirelessVideoPlaybackDisabled;
-
-        var wirelessPlaybackTargetsAvailable = Controller.gSimulateWirelessPlaybackTarget || this.hasWirelessPlaybackTargets;
-        if (this.wirelessPlaybackDisabled)
-            wirelessPlaybackTargetsAvailable = false;
-
-        if (wirelessPlaybackTargetsAvailable && this.isPlayable())
-            this.controls.wirelessTargetPicker.classList.remove(this.ClassNames.hidden);
-        else
-            this.controls.wirelessTargetPicker.classList.add(this.ClassNames.hidden);
-        this.setNeedsUpdateForDisplayedWidth();
-        this.updateLayoutForDisplayedWidth();
-    },
-
-    handleWirelessPickerButtonClicked: function(event)
-    {
-        this.video.webkitShowPlaybackTargetPicker();
-        return true;
-    },
-
-    handleWirelessPlaybackChange: function(event) {
-        this.updateWirelessTargetAvailable();
-        this.updateWirelessPlaybackStatus();
-        this.setNeedsTimelineMetricsUpdate();
-    },
-
-    handleWirelessTargetAvailableChange: function(event) {
-        var wirelessPlaybackTargetsAvailable = event.availability == "available";
-        if (this.hasWirelessPlaybackTargets === wirelessPlaybackTargetsAvailable)
-            return;
-
-        this.hasWirelessPlaybackTargets = wirelessPlaybackTargetsAvailable;
-        this.updateWirelessTargetAvailable();
-        this.setNeedsTimelineMetricsUpdate();
-    },
-
-    setShouldListenForPlaybackTargetAvailabilityEvent: function(shouldListen) {
-        if (!window.WebKitPlaybackTargetAvailabilityEvent || this.isListeningForPlaybackTargetAvailabilityEvent == shouldListen)
-            return;
-
-        if (shouldListen && this.video.error)
-            return;
-
-        this.isListeningForPlaybackTargetAvailabilityEvent = shouldListen;
-        if (shouldListen)
-            this.listenFor(this.video, 'webkitplaybacktargetavailabilitychanged', this.handleWirelessTargetAvailableChange);
-        else
-            this.stopListeningFor(this.video, 'webkitplaybacktargetavailabilitychanged', this.handleWirelessTargetAvailableChange);
     },
 
     get scrubbing()
@@ -2178,12 +2000,6 @@ Controller.prototype = {
                 extraProperties: ["hidden"],
             },
             {
-                name: "AppleTV Device Picker",
-                object: this.controls.wirelessTargetPicker,
-                styleValues: ["display"],
-                extraProperties: ["hidden"],
-            },
-            {
                 name: "Caption Button",
                 object: this.controls.captionButton,
                 extraProperties: ["hidden"],
@@ -2211,10 +2027,6 @@ Controller.prototype = {
             {
                 name: "Track Menu",
                 object: this.captionMenu,
-            },
-            {
-                name: "Inline playback placeholder",
-                object: this.controls.inlinePlaybackPlaceholder,
             },
             {
                 name: "Media Controls Panel",

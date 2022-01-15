@@ -181,18 +181,6 @@ AllowUniversalAccessFromFileURLs:
     WebCore:
       default: true
 
-AllowsAirPlayForMediaPlayback:
-  type: bool
-  webKitLegacyPreferenceKey: WebKitMediaPlaybackAllowsAirPlay
-  condition: ENABLE(WIRELESS_PLAYBACK_TARGET)
-  defaultValue:
-    WebKitLegacy:
-      default: true
-    WebKit:
-      default: true
-    WebCore:
-      default: true
-
 AllowsInlineMediaPlayback:
   type: bool
   webKitLegacyPreferenceKey: WebKitMediaPlaybackAllowsInline

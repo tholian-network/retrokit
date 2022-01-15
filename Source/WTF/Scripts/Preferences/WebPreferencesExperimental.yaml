@@ -944,20 +944,6 @@ ReferrerPolicyAttributeEnabled:
     WebCore:
       default: true
 
-# FIXME: This is on by default in WebKit2. Perhaps we should consider turning it on for WebKitLegacy as well.
-RemotePlaybackEnabled:
-  type: bool
-  humanReadableName: "Remote Playback API"
-  humanReadableDescription: "Enable Remote Playback API"
-  condition: ENABLE(WIRELESS_PLAYBACK_TARGET)
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      default: true
-    WebCore:
-      default: true
-
 RequestIdleCallbackEnabled:
   type: bool
   humanReadableName: "requestIdleCallback"

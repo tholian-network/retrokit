@@ -300,10 +300,6 @@
 #include "CaptionUserPreferences.h"
 #endif
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-#include "MediaPlaybackTargetClient.h"
-#endif
-
 #if ENABLE(XSLT)
 #include "XSLTProcessor.h"
 #endif
@@ -2593,13 +2589,6 @@ void Document::willBeRemovedFromFrame()
 
     if (m_mediaQueryMatcher)
         m_mediaQueryMatcher->documentDestroyed();
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    if (!m_clientToIDMap.isEmpty() && page()) {
-        for (auto* client : copyToVector(m_clientToIDMap.keys()))
-            removePlaybackTargetPickerClient(*client);
-    }
-#endif
 
     m_cachedResourceLoader->stopUnusedPreloadsTimer();
 
@@ -7403,109 +7392,6 @@ bool Document::hasFocus() const
     }
     return false;
 }
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-
-void Document::addPlaybackTargetPickerClient(MediaPlaybackTargetClient& client)
-{
-    Page* page = this->page();
-    if (!page)
-        return;
-
-    // FIXME: change this back to an ASSERT once https://webkit.org/b/144970 is fixed.
-    if (m_clientToIDMap.contains(&client))
-        return;
-
-    auto contextId = PlaybackTargetClientContextIdentifier::generate();
-    m_clientToIDMap.add(&client, contextId);
-    m_idToClientMap.add(contextId, &client);
-    page->addPlaybackTargetPickerClient(contextId);
-}
-
-void Document::removePlaybackTargetPickerClient(MediaPlaybackTargetClient& client)
-{
-    auto it = m_clientToIDMap.find(&client);
-    if (it == m_clientToIDMap.end())
-        return;
-
-    auto clientId = it->value;
-    m_idToClientMap.remove(clientId);
-    m_clientToIDMap.remove(it);
-
-    Page* page = this->page();
-    if (!page)
-        return;
-    page->removePlaybackTargetPickerClient(clientId);
-}
-
-void Document::showPlaybackTargetPicker(MediaPlaybackTargetClient& client, bool isVideo, RouteSharingPolicy routeSharingPolicy, const String& routingContextUID)
-{
-    Page* page = this->page();
-    if (!page)
-        return;
-
-    if (!frame())
-        return;
-
-    auto it = m_clientToIDMap.find(&client);
-    if (it == m_clientToIDMap.end())
-        return;
-
-    // FIXME: This is probably wrong for subframes.
-    auto position = frame()->eventHandler().lastKnownMousePosition();
-    page->showPlaybackTargetPicker(it->value, position, isVideo, routeSharingPolicy, routingContextUID);
-}
-
-void Document::playbackTargetPickerClientStateDidChange(MediaPlaybackTargetClient& client, MediaProducer::MediaStateFlags state)
-{
-    Page* page = this->page();
-    if (!page)
-        return;
-
-    auto it = m_clientToIDMap.find(&client);
-    if (it == m_clientToIDMap.end())
-        return;
-
-    page->playbackTargetPickerClientStateDidChange(it->value, state);
-}
-
-void Document::playbackTargetAvailabilityDidChange(PlaybackTargetClientContextIdentifier contextId, bool available)
-{
-    auto it = m_idToClientMap.find(contextId);
-    if (it == m_idToClientMap.end())
-        return;
-
-    it->value->externalOutputDeviceAvailableDidChange(available);
-}
-
-void Document::setPlaybackTarget(PlaybackTargetClientContextIdentifier contextId, Ref<MediaPlaybackTarget>&& target)
-{
-    auto it = m_idToClientMap.find(contextId);
-    if (it == m_idToClientMap.end())
-        return;
-
-    it->value->setPlaybackTarget(target.copyRef());
-}
-
-void Document::setShouldPlayToPlaybackTarget(PlaybackTargetClientContextIdentifier contextId, bool shouldPlay)
-{
-    auto it = m_idToClientMap.find(contextId);
-    if (it == m_idToClientMap.end())
-        return;
-
-    it->value->setShouldPlayToPlaybackTarget(shouldPlay);
-}
-
-void Document::playbackTargetPickerWasDismissed(PlaybackTargetClientContextIdentifier contextId)
-{
-    auto it = m_idToClientMap.find(contextId);
-    if (it == m_idToClientMap.end())
-        return;
-
-    it->value->playbackTargetPickerWasDismissed();
-}
-
-#endif // ENABLE(WIRELESS_PLAYBACK_TARGET)
 
 ShouldOpenExternalURLsPolicy Document::shouldOpenExternalURLsPolicyToPropagate() const
 {

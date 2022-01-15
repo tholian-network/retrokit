@@ -123,10 +123,6 @@
 #include <wtf/Vector.h>
 #include <wtf/text/WTFString.h>
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-#include <WebCore/MediaPlaybackTargetContext.h>
-#endif
-
 #if PLATFORM(IOS_FAMILY)
 #include "GestureTypes.h"
 #include "WebAutocorrectionContext.h"
@@ -153,11 +149,6 @@
 
 #if PLATFORM(GTK)
 #include "ArgumentCodersGtk.h"
-#endif
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET) && !PLATFORM(IOS_FAMILY)
-#include <WebCore/MediaPlaybackTargetPicker.h>
-#include <WebCore/WebMediaSessionManagerClient.h>
 #endif
 
 #if HAVE(APP_SSO)
@@ -415,9 +406,6 @@ using SpellDocumentTag = int64_t;
 class WebPageProxy final : public API::ObjectImpl<API::Object::Type::Page>
 #if ENABLE(INPUT_TYPE_COLOR)
     , public WebColorPicker::Client
-#endif
-#if ENABLE(WIRELESS_PLAYBACK_TARGET) && !PLATFORM(IOS_FAMILY)
-    , public WebCore::WebMediaSessionManagerClient
 #endif
     , public WebPopupMenuProxy::Client
     , public IPC::MessageReceiver
@@ -1509,26 +1497,6 @@ public:
     void setDeviceHasAGXCompilerServiceForTesting() const;
 #endif
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET) && !PLATFORM(IOS_FAMILY)
-    void addPlaybackTargetPickerClient(WebCore::PlaybackTargetClientContextIdentifier);
-    void removePlaybackTargetPickerClient(WebCore::PlaybackTargetClientContextIdentifier);
-    void showPlaybackTargetPicker(WebCore::PlaybackTargetClientContextIdentifier, const WebCore::FloatRect&, bool hasVideo);
-    void playbackTargetPickerClientStateDidChange(WebCore::PlaybackTargetClientContextIdentifier, WebCore::MediaProducer::MediaStateFlags);
-    void setMockMediaPlaybackTargetPickerEnabled(bool);
-    void setMockMediaPlaybackTargetPickerState(const String&, WebCore::MediaPlaybackTargetContext::MockState);
-    void mockMediaPlaybackTargetPickerDismissPopup();
-
-    // WebMediaSessionManagerClient
-    void setPlaybackTarget(WebCore::PlaybackTargetClientContextIdentifier, Ref<WebCore::MediaPlaybackTarget>&&) final;
-    void externalOutputDeviceAvailableDidChange(WebCore::PlaybackTargetClientContextIdentifier, bool) final;
-    void setShouldPlayToPlaybackTarget(WebCore::PlaybackTargetClientContextIdentifier, bool) final;
-    void playbackTargetPickerWasDismissed(WebCore::PlaybackTargetClientContextIdentifier) final;
-    bool alwaysOnLoggingAllowed() const final { return sessionID().isAlwaysOnLoggingAllowed(); }
-    bool useiTunesAVOutputContext() const final;
-    PlatformView* platformView() const final;
-
-#endif
-
     void didChangeBackgroundColor();
     void didLayoutForCustomContentProvider();
 
@@ -2154,7 +2122,6 @@ private:
 #endif
 #if PLATFORM(IOS_FAMILY)
     void interpretKeyEvent(const EditorState&, bool isCharEvent, CompletionHandler<void(bool)>&&);
-    void showPlaybackTargetPicker(bool hasVideo, const WebCore::IntRect& elementRect, WebCore::RouteSharingPolicy, const String&);
 
     void updateStringForFind(const String&);
 #endif
@@ -2710,7 +2677,7 @@ private:
     ProcessSuppressionDisabledToken m_preventProcessSuppressionCount;
     HiddenPageThrottlingAutoIncreasesCounter::Token m_hiddenPageDOMTimerThrottlingAutoIncreasesCount;
     VisibleWebPageToken m_visiblePageToken;
-        
+
     WebCore::ScrollPinningBehavior m_scrollPinningBehavior { WebCore::DoNotPin };
     std::optional<WebCore::ScrollbarOverlayStyle> m_scrollbarOverlayStyle;
 
@@ -2729,10 +2696,6 @@ private:
     Seconds m_mediaCaptureReportingDelay { DefaultMediaCaptureReportingDelay };
 
     bool m_hasHadSelectionChangesFromUserInteraction { false };
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET) && !PLATFORM(IOS_FAMILY)
-    bool m_requiresTargetMonitoring { false };
-#endif
 
 #if ENABLE(META_VIEWPORT)
     bool m_forceAlwaysUserScalable { false };

@@ -78,11 +78,6 @@ public:
     void updateCaptionDisplaySizes(ForceUpdate = ForceUpdate::No);
     void updateTextTrackRepresentationImageIfNeeded();
 
-    String externalDeviceDisplayName() const;
-
-    enum class DeviceType { None, Airplay, Tvout };
-    DeviceType externalDeviceType() const;
-
     bool controlsDependOnPageScaleFactor() const;
     void setControlsDependOnPageScaleFactor(bool v);
 

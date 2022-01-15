@@ -93,12 +93,6 @@ public:
         MockMSE,
     };
 
-    enum class WirelessPlaybackTargetType : uint8_t {
-        TargetTypeNone,
-        TargetTypeAirPlay,
-        TargetTypeTVOut
-    };
-
     enum class PitchCorrectionAlgorithm : uint8_t {
         BestAllAround,
         BestForMusic,
@@ -226,15 +220,6 @@ template<> struct EnumTraits<WebCore::MediaPlayerEnums::MediaEngineIdentifier> {
         WebCore::MediaPlayerEnums::MediaEngineIdentifier::HolePunch,
         WebCore::MediaPlayerEnums::MediaEngineIdentifier::MediaFoundation,
         WebCore::MediaPlayerEnums::MediaEngineIdentifier::MockMSE
-    >;
-};
-
-template<> struct EnumTraits<WebCore::MediaPlayerEnums::WirelessPlaybackTargetType> {
-using values = EnumValues<
-    WebCore::MediaPlayerEnums::WirelessPlaybackTargetType,
-    WebCore::MediaPlayerEnums::WirelessPlaybackTargetType::TargetTypeNone,
-    WebCore::MediaPlayerEnums::WirelessPlaybackTargetType::TargetTypeAirPlay,
-    WebCore::MediaPlayerEnums::WirelessPlaybackTargetType::TargetTypeTVOut
     >;
 };
 

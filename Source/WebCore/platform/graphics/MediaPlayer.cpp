@@ -985,55 +985,6 @@ bool MediaPlayer::isAvailable()
     return !installedMediaEngines().isEmpty();
 }
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-
-bool MediaPlayer::isCurrentPlaybackTargetWireless() const
-{
-    return m_private->isCurrentPlaybackTargetWireless();
-}
-
-String MediaPlayer::wirelessPlaybackTargetName() const
-{
-    return m_private->wirelessPlaybackTargetName();
-}
-
-MediaPlayer::WirelessPlaybackTargetType MediaPlayer::wirelessPlaybackTargetType() const
-{
-    return m_private->wirelessPlaybackTargetType();
-}
-
-bool MediaPlayer::wirelessVideoPlaybackDisabled() const
-{
-    return m_private->wirelessVideoPlaybackDisabled();
-}
-
-void MediaPlayer::setWirelessVideoPlaybackDisabled(bool disabled)
-{
-    m_private->setWirelessVideoPlaybackDisabled(disabled);
-}
-
-void MediaPlayer::currentPlaybackTargetIsWirelessChanged(bool isCurrentPlaybackTargetWireless)
-{
-    client().mediaPlayerCurrentPlaybackTargetIsWirelessChanged(isCurrentPlaybackTargetWireless);
-}
-
-bool MediaPlayer::canPlayToWirelessPlaybackTarget() const
-{
-    return m_private->canPlayToWirelessPlaybackTarget();
-}
-
-void MediaPlayer::setWirelessPlaybackTarget(Ref<MediaPlaybackTarget>&& device)
-{
-    m_private->setWirelessPlaybackTarget(WTFMove(device));
-}
-
-void MediaPlayer::setShouldPlayToPlaybackTarget(bool shouldPlay)
-{
-    m_private->setShouldPlayToPlaybackTarget(shouldPlay);
-}
-
-#endif
-
 double MediaPlayer::maxFastForwardRate() const
 {
     return m_private->maxFastForwardRate();

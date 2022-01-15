@@ -188,7 +188,6 @@ class HTMLMenuElement;
 class HTMLMenuItemElement;
 class IntPoint;
 class KeyboardEvent;
-class MediaPlaybackTargetContext;
 class MediaPlayerRequestInstallMissingPluginsCallback;
 class MediaSessionCoordinator;
 class Page;
@@ -1686,13 +1685,6 @@ private:
 #endif
 
     void setShouldDispatchFakeMouseMoveEvents(bool dispatch) { m_shouldDispatchFakeMouseMoveEvents = dispatch; }
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET) && !PLATFORM(IOS_FAMILY)
-    void playbackTargetSelected(WebCore::PlaybackTargetClientContextIdentifier, WebCore::MediaPlaybackTargetContext&&) const;
-    void playbackTargetAvailabilityDidChange(WebCore::PlaybackTargetClientContextIdentifier, bool);
-    void setShouldPlayToPlaybackTarget(WebCore::PlaybackTargetClientContextIdentifier, bool);
-    void playbackTargetPickerWasDismissed(WebCore::PlaybackTargetClientContextIdentifier);
-#endif
 
     void clearWheelEventTestMonitor();
 

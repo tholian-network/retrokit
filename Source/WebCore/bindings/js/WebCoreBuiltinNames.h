@@ -170,7 +170,6 @@ namespace WebCore {
     macro(ReadableStreamBYOBRequest) \
     macro(ReadableStreamDefaultController) \
     macro(ReadableStreamDefaultReader) \
-    macro(RemotePlayback) \
     macro(Request) \
     macro(Response) \
     macro(SFrameTransform) \

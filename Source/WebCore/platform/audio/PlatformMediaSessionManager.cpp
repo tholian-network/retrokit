@@ -407,24 +407,6 @@ void PlatformMediaSessionManager::processDidResume()
 #endif
 }
 
-void PlatformMediaSessionManager::setIsPlayingToAutomotiveHeadUnit(bool isPlayingToAutomotiveHeadUnit)
-{
-    if (isPlayingToAutomotiveHeadUnit == m_isPlayingToAutomotiveHeadUnit)
-        return;
-
-    ALWAYS_LOG(LOGIDENTIFIER, isPlayingToAutomotiveHeadUnit);
-    m_isPlayingToAutomotiveHeadUnit = isPlayingToAutomotiveHeadUnit;
-}
-
-void PlatformMediaSessionManager::sessionIsPlayingToWirelessPlaybackTargetChanged(PlatformMediaSession& session)
-{
-    if (!m_isApplicationInBackground || !(restrictions(session.mediaType()) & BackgroundProcessPlaybackRestricted))
-        return;
-
-    if (session.state() != PlatformMediaSession::Interrupted)
-        session.beginInterruption(PlatformMediaSession::EnteringBackground);
-}
-
 void PlatformMediaSessionManager::sessionCanProduceAudioChanged()
 {
     ALWAYS_LOG(LOGIDENTIFIER);

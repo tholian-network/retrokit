@@ -73,7 +73,6 @@ class CachedResourceLoader;
 class GraphicsContextGL;
 class GraphicsContext;
 class InbandTextTrackPrivate;
-class MediaPlaybackTarget;
 class MediaPlayer;
 class MediaPlayerFactory;
 class MediaPlayerPrivateInterface;
@@ -181,7 +180,7 @@ public:
 
     // A characteristic of the media file, eg. video, audio, closed captions, etc, has changed.
     virtual void mediaPlayerCharacteristicChanged() { }
-    
+
     // whether the rendering system can accelerate the display of this MediaPlayer.
     virtual bool mediaPlayerRenderingCanBeAccelerated() { return false; }
 
@@ -196,10 +195,6 @@ public:
 
 #if PLATFORM(WIN) && USE(AVFOUNDATION)
     virtual GraphicsDeviceAdapter* mediaPlayerGraphicsDeviceAdapter() const { return nullptr; }
-#endif
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    virtual void mediaPlayerCurrentPlaybackTargetIsWirelessChanged(bool) { };
 #endif
 
     virtual void mediaPlayerWillInitializeMediaEngine() { }
@@ -441,25 +436,6 @@ public:
 
     bool hasAvailableVideoFrame() const;
     void prepareForRendering();
-
-    using MediaPlayerEnums::WirelessPlaybackTargetType;
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    WirelessPlaybackTargetType wirelessPlaybackTargetType() const;
-
-    String wirelessPlaybackTargetName() const;
-
-    bool wirelessVideoPlaybackDisabled() const;
-    void setWirelessVideoPlaybackDisabled(bool);
-
-    void currentPlaybackTargetIsWirelessChanged(bool);
-    void playbackTargetAvailabilityChanged();
-
-    bool isCurrentPlaybackTargetWireless() const;
-    bool canPlayToWirelessPlaybackTarget() const;
-    void setWirelessPlaybackTarget(Ref<MediaPlaybackTarget>&&);
-
-    void setShouldPlayToPlaybackTarget(bool);
-#endif
 
     double minFastReverseRate() const;
     double maxFastForwardRate() const;

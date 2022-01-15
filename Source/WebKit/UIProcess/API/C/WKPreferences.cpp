@@ -1306,16 +1306,6 @@ bool WKPreferencesGetHTTPEquivEnabled(WKPreferencesRef preferencesRef)
     return toImpl(preferencesRef)->httpEquivEnabled();
 }
 
-void WKPreferencesSetAllowsAirPlayForMediaPlayback(WKPreferencesRef preferencesRef, bool enabled)
-{
-    toImpl(preferencesRef)->setAllowsAirPlayForMediaPlayback(enabled);
-}
-
-bool WKPreferencesGetAllowsAirPlayForMediaPlayback(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->allowsAirPlayForMediaPlayback();
-}
-
 void WKPreferencesSetUserInterfaceDirectionPolicy(WKPreferencesRef preferencesRef, _WKUserInterfaceDirectionPolicy userInterfaceDirectionPolicy)
 {
     toImpl(preferencesRef)->setUserInterfaceDirectionPolicy(userInterfaceDirectionPolicy);
@@ -1784,16 +1774,6 @@ void WKPreferencesSetReferrerPolicyAttributeEnabled(WKPreferencesRef preferences
 bool WKPreferencesGetReferrerPolicyAttributeEnabled(WKPreferencesRef preferencesRef)
 {
     return toImpl(preferencesRef)->referrerPolicyAttributeEnabled();
-}
-
-bool WKPreferencesGetRemotePlaybackEnabled(WKPreferencesRef preferencesRef)
-{
-    return WebKit::toImpl(preferencesRef)->remotePlaybackEnabled();
-}
-
-void WKPreferencesSetRemotePlaybackEnabled(WKPreferencesRef preferencesRef, bool enabled)
-{
-    WebKit::toImpl(preferencesRef)->setRemotePlaybackEnabled(enabled);
 }
 
 bool WKPreferencesGetShouldUseServiceWorkerShortTimeout(WKPreferencesRef preferencesRef)

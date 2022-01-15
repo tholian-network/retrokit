@@ -263,10 +263,6 @@ WK_EXPORT WKDebugOverlayRegions WKPreferencesGetVisibleDebugOverlayRegions(WKPre
 WK_EXPORT void WKPreferencesSetIgnoreViewportScalingConstraints(WKPreferencesRef preferencesRef, bool enabled);
 WK_EXPORT bool WKPreferencesGetIgnoreViewportScalingConstraints(WKPreferencesRef preferencesRef);
 
-// Defaults to true.
-WK_EXPORT void WKPreferencesSetAllowsAirPlayForMediaPlayback(WKPreferencesRef preferencesRef, bool enabled);
-WK_EXPORT bool WKPreferencesGetAllowsAirPlayForMediaPlayback(WKPreferencesRef preferencesRef);
-
 // Defaults to kWKUserInterfaceDirectionPolicyContent.
 WK_EXPORT void WKPreferencesSetUserInterfaceDirectionPolicy(WKPreferencesRef preferencesRef, _WKUserInterfaceDirectionPolicy userInterfaceDirectionPolicy);
 WK_EXPORT _WKUserInterfaceDirectionPolicy WKPreferencesGetUserInterfaceDirectionPolicy(WKPreferencesRef preferencesRef);
@@ -305,10 +301,6 @@ WK_EXPORT bool WKPreferencesGetCaptureVideoInGPUProcessEnabled(WKPreferencesRef 
 
 WK_EXPORT bool WKPreferencesGetVP9DecoderEnabled(WKPreferencesRef preferencesRef);
 WK_EXPORT void WKPreferencesSetVP9DecoderEnabled(WKPreferencesRef preferencesRef, bool enabled);
-
-// Defaults to false.
-WK_EXPORT bool WKPreferencesGetRemotePlaybackEnabled(WKPreferencesRef preferencesRef);
-WK_EXPORT void WKPreferencesSetRemotePlaybackEnabled(WKPreferencesRef preferencesRef, bool enabled);
 
 // Defaults to false.
 WK_EXPORT bool WKPreferencesGetShouldUseServiceWorkerShortTimeout(WKPreferencesRef preferencesRef);

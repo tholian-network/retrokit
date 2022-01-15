@@ -34,7 +34,6 @@
 #include "MediaProducer.h"
 #include "MediaSessionGroupIdentifier.h"
 #include "Pagination.h"
-#include "PlaybackTargetClientContextIdentifier.h"
 #include "Region.h"
 #include "RegistrableDomain.h"
 #include "ScrollTypes.h"
@@ -64,10 +63,6 @@
 
 #if ENABLE(APPLICATION_MANIFEST)
 #include "ApplicationManifest.h"
-#endif
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-#include "MediaPlaybackTargetContext.h"
 #endif
 
 namespace JSC {
@@ -113,7 +108,6 @@ class InspectorController;
 class IntSize;
 class LowPowerModeNotifier;
 class MediaCanStartListener;
-class MediaPlaybackTarget;
 class MediaSessionCoordinatorPrivate;
 class PageConfiguration;
 class PageConsoleClient;
@@ -717,21 +711,6 @@ public:
 
     void setCanUseCredentialStorage(bool canUse) { m_canUseCredentialStorage = canUse; }
     bool canUseCredentialStorage() const { return m_canUseCredentialStorage; }
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    void addPlaybackTargetPickerClient(PlaybackTargetClientContextIdentifier);
-    void removePlaybackTargetPickerClient(PlaybackTargetClientContextIdentifier);
-    void showPlaybackTargetPicker(PlaybackTargetClientContextIdentifier, const IntPoint&, bool, RouteSharingPolicy, const String&);
-    void playbackTargetPickerClientStateDidChange(PlaybackTargetClientContextIdentifier, MediaProducer::MediaStateFlags);
-    WEBCORE_EXPORT void setMockMediaPlaybackTargetPickerEnabled(bool);
-    WEBCORE_EXPORT void setMockMediaPlaybackTargetPickerState(const String&, MediaPlaybackTargetContext::MockState);
-    WEBCORE_EXPORT void mockMediaPlaybackTargetPickerDismissPopup();
-
-    WEBCORE_EXPORT void setPlaybackTarget(PlaybackTargetClientContextIdentifier, Ref<MediaPlaybackTarget>&&);
-    WEBCORE_EXPORT void playbackTargetAvailabilityDidChange(PlaybackTargetClientContextIdentifier, bool);
-    WEBCORE_EXPORT void setShouldPlayToPlaybackTarget(PlaybackTargetClientContextIdentifier, bool);
-    WEBCORE_EXPORT void playbackTargetPickerWasDismissed(PlaybackTargetClientContextIdentifier);
-#endif
 
     WEBCORE_EXPORT RefPtr<WheelEventTestMonitor> wheelEventTestMonitor() const;
     WEBCORE_EXPORT void clearWheelEventTestMonitor();

@@ -155,11 +155,6 @@
 #include <wtf/text/StringHash.h>
 #include <wtf/text/TextStream.h>
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-#include "HTMLVideoElement.h"
-#include "MediaPlaybackTarget.h"
-#endif
-
 #if PLATFORM(MAC)
 #include "ServicesOverlayController.h"
 #endif
@@ -2861,81 +2856,6 @@ void Page::setSessionID(PAL::SessionID sessionID)
     });
 
 }
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-void Page::addPlaybackTargetPickerClient(PlaybackTargetClientContextIdentifier contextId)
-{
-    chrome().client().addPlaybackTargetPickerClient(contextId);
-}
-
-void Page::removePlaybackTargetPickerClient(PlaybackTargetClientContextIdentifier contextId)
-{
-    chrome().client().removePlaybackTargetPickerClient(contextId);
-}
-
-void Page::showPlaybackTargetPicker(PlaybackTargetClientContextIdentifier contextId, const WebCore::IntPoint& location, bool isVideo, RouteSharingPolicy routeSharingPolicy, const String& routingContextUID)
-{
-#if PLATFORM(IOS_FAMILY)
-    // FIXME: refactor iOS implementation.
-    UNUSED_PARAM(contextId);
-    UNUSED_PARAM(location);
-    chrome().client().showPlaybackTargetPicker(isVideo, routeSharingPolicy, routingContextUID);
-#else
-    UNUSED_PARAM(routeSharingPolicy);
-    UNUSED_PARAM(routingContextUID);
-    chrome().client().showPlaybackTargetPicker(contextId, location, isVideo);
-#endif
-}
-
-void Page::playbackTargetPickerClientStateDidChange(PlaybackTargetClientContextIdentifier contextId, MediaProducer::MediaStateFlags state)
-{
-    chrome().client().playbackTargetPickerClientStateDidChange(contextId, state);
-}
-
-void Page::setMockMediaPlaybackTargetPickerEnabled(bool enabled)
-{
-    chrome().client().setMockMediaPlaybackTargetPickerEnabled(enabled);
-}
-
-void Page::setMockMediaPlaybackTargetPickerState(const String& name, MediaPlaybackTargetContext::MockState state)
-{
-    chrome().client().setMockMediaPlaybackTargetPickerState(name, state);
-}
-
-void Page::mockMediaPlaybackTargetPickerDismissPopup()
-{
-    chrome().client().mockMediaPlaybackTargetPickerDismissPopup();
-}
-
-void Page::setPlaybackTarget(PlaybackTargetClientContextIdentifier contextId, Ref<MediaPlaybackTarget>&& target)
-{
-    forEachDocument([&] (Document& document) {
-        document.setPlaybackTarget(contextId, target.copyRef());
-    });
-}
-
-void Page::playbackTargetAvailabilityDidChange(PlaybackTargetClientContextIdentifier contextId, bool available)
-{
-    forEachDocument([&] (Document& document) {
-        document.playbackTargetAvailabilityDidChange(contextId, available);
-    });
-}
-
-void Page::setShouldPlayToPlaybackTarget(PlaybackTargetClientContextIdentifier contextId, bool shouldPlay)
-{
-    forEachDocument([&] (Document& document) {
-        document.setShouldPlayToPlaybackTarget(contextId, shouldPlay);
-    });
-}
-
-void Page::playbackTargetPickerWasDismissed(PlaybackTargetClientContextIdentifier contextId)
-{
-    forEachDocument([&] (Document& document) {
-        document.playbackTargetPickerWasDismissed(contextId);
-    });
-}
-
-#endif
 
 RefPtr<WheelEventTestMonitor> Page::wheelEventTestMonitor() const
 {

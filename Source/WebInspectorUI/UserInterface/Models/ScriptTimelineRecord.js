@@ -328,9 +328,7 @@ WI.ScriptTimelineRecord.EventType.displayName = function(eventType, details, inc
         nameMap.set("webkitEditableContentChanged", "Editable Content Changed");
         nameMap.set("webkitTransitionEnd", "Transition End");
         nameMap.set("webkitaddsourcebuffer", "Add Source Buffer");
-        nameMap.set("webkitcurrentplaybacktargetiswirelesschanged", "Current Playback Target Is Wireless Changed");
         nameMap.set("webkitnetworkinfochange", "Network Info Change");
-        nameMap.set("webkitplaybacktargetavailabilitychanged", "Playback Target Availability Changed");
         nameMap.set("webkitpointerlockchange", "Pointer Lock Change");
         nameMap.set("webkitpointerlockerror", "Pointer Lock Error");
         nameMap.set("webkitregionoversetchange", "Region Overset Change");

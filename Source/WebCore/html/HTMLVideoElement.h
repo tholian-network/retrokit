@@ -50,11 +50,6 @@ public:
     WEBCORE_EXPORT unsigned videoWidth() const;
     WEBCORE_EXPORT unsigned videoHeight() const;
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    bool webkitWirelessVideoPlaybackDisabled() const;
-    void setWebkitWirelessVideoPlaybackDisabled(bool);
-#endif
-
 #if ENABLE(MEDIA_STATISTICS)
     unsigned webkitDecodedFrameCount() const;
     unsigned webkitDroppedFrameCount() const;

@@ -21,7 +21,6 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 // THE POSSIBILITY OF SUCH DAMAGE.
 
-Modules/airplay/WebMediaSessionManager.cpp
 Modules/async-clipboard/ios/ClipboardImageReaderIOS.mm
 Modules/async-clipboard/mac/ClipboardImageReaderMac.mm
 Modules/speech/cocoa/SpeechRecognizerCocoa.mm
@@ -185,28 +184,22 @@ platform/cocoa/VersionChecks.mm
 platform/cocoa/VideoToolboxSoftLink.cpp
 platform/cocoa/WebCoreAdditions.mm @no-unify
 platform/cocoa/WebCoreNSErrorExtras.mm
-platform/graphics/MediaPlaybackTargetPicker.cpp
 platform/graphics/avfoundation/AVTrackPrivateAVFObjCImpl.mm @no-unify
 platform/graphics/avfoundation/AudioSourceProviderAVFObjC.mm @no-unify
 platform/graphics/avfoundation/ISOFairPlayStreamingPsshBox.cpp
 platform/graphics/avfoundation/InbandMetadataTextTrackPrivateAVF.cpp @no-unify
 platform/graphics/avfoundation/InbandTextTrackPrivateAVF.cpp @no-unify
-platform/graphics/avfoundation/MediaPlaybackTargetCocoa.mm @no-unify
 platform/graphics/avfoundation/MediaPlayerPrivateAVFoundation.cpp @no-unify
 platform/graphics/avfoundation/MediaSelectionGroupAVFObjC.mm @no-unify
 platform/graphics/avfoundation/SampleBufferDisplayLayer.cpp
-platform/graphics/avfoundation/WebMediaSessionManagerMac.cpp @no-unify
 platform/graphics/avfoundation/objc/AVAssetMIMETypeCache.mm @no-unify
 platform/graphics/avfoundation/objc/AVAssetTrackUtilities.mm @no-unify
-platform/graphics/avfoundation/objc/AVOutputDeviceMenuControllerTargetPicker.mm @no-unify
-platform/graphics/avfoundation/objc/AVRoutePickerViewTargetPicker.mm @no-unify
 platform/graphics/avfoundation/objc/AVStreamDataParserMIMETypeCache.mm @no-unify
 platform/graphics/avfoundation/objc/AudioTrackPrivateAVFObjC.mm @no-unify
 platform/graphics/avfoundation/objc/AudioTrackPrivateMediaSourceAVFObjC.cpp @no-unify
 platform/graphics/avfoundation/objc/ImageDecoderAVFObjC.mm @no-unify
 platform/graphics/avfoundation/objc/InbandTextTrackPrivateAVFObjC.mm @no-unify
 platform/graphics/avfoundation/objc/LocalSampleBufferDisplayLayer.mm @no-unify
-platform/graphics/avfoundation/objc/MediaPlaybackTargetPickerMac.mm @no-unify
 platform/graphics/avfoundation/objc/MediaPlayerPrivateAVFoundationObjC.mm @no-unify
 platform/graphics/avfoundation/objc/MediaPlayerPrivateMediaSourceAVFObjC.mm @no-unify
 platform/graphics/avfoundation/objc/MediaPlayerPrivateMediaStreamAVFObjC.mm @no-unify
@@ -275,7 +268,6 @@ platform/graphics/cocoa/IOSurface.mm
 platform/graphics/cocoa/IOSurfacePoolCocoa.mm
 platform/graphics/cocoa/IntRectCocoa.mm
 platform/graphics/cocoa/MediaEngineConfigurationFactoryCocoa.cpp
-platform/graphics/cocoa/MediaPlaybackTargetContext.mm
 platform/graphics/cocoa/RemoteGraphicsContextGLProxyBaseCocoa.mm
 platform/graphics/cocoa/SourceBufferParser.cpp
 platform/graphics/cocoa/SourceBufferParserWebM.cpp
@@ -421,8 +413,6 @@ platform/mediastream/mac/RealtimeVideoUtilities.mm
 platform/mediastream/mac/ScreenDisplayCapturerMac.mm
 platform/mediastream/mac/WebAudioSourceProviderCocoa.mm
 platform/mediastream/mac/WindowDisplayCapturerMac.mm
-platform/mock/MediaPlaybackTargetMock.cpp
-platform/mock/MediaPlaybackTargetPickerMock.cpp
 platform/mock/MockAudioDestinationCocoa.cpp
 platform/network/cf/CertificateInfoCFNet.cpp
 platform/network/cf/DNSResolveQueueCFNet.cpp

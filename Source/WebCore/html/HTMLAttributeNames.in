@@ -420,9 +420,6 @@ wrap
 
 autocorrect
 autocapitalize
-onwebkitcurrentplaybacktargetiswirelesschanged
-onwebkitplaybacktargetavailabilitychanged
-onwebkitpresentationmodechanged
 webkit-playsinline
 x-webkit-airplay
 x-webkit-wirelessvideoplaybackdisabled

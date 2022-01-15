@@ -93,9 +93,6 @@ static String restrictionNames(MediaElementSession::BehaviorRestrictions restric
     CASE(RequireUserGestureForAudioRateChange)
     CASE(RequirePageConsentToLoadMedia)
     CASE(RequirePageConsentToResumeMedia)
-    CASE(RequireUserGestureToShowPlaybackTargetPicker)
-    CASE(WirelessVideoPlaybackDisabled)
-    CASE(RequireUserGestureToAutoplayToExternalDevice)
     CASE(AutoPreloadingNotPermitted)
     CASE(InvisibleAutoplayNotPermitted)
     CASE(OverrideUserGestureRequirementForMainContent)
@@ -159,9 +156,6 @@ MediaElementSession::MediaElementSession(HTMLMediaElement& element)
     : PlatformMediaSession(PlatformMediaSessionManager::sharedManager(), element)
     , m_element(element)
     , m_restrictions(NoRestrictions)
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    , m_targetAvailabilityChangedTimer(*this, &MediaElementSession::targetAvailabilityChangedTimerFired)
-#endif
     , m_mainContentCheckTimer(*this, &MediaElementSession::mainContentCheckTimerFired)
     , m_clientDataBufferingTimer(*this, &MediaElementSession::clientDataBufferingTimerFired)
 #if !RELEASE_LOG_DISABLED
@@ -196,21 +190,13 @@ void MediaElementSession::addMediaUsageManagerSessionIfNecessary()
 
 void MediaElementSession::registerWithDocument(Document& document)
 {
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    document.addPlaybackTargetPickerClient(*this);
-#else
     UNUSED_PARAM(document);
-#endif
     ensureIsObservingMediaSession();
 }
 
 void MediaElementSession::unregisterWithDocument(Document& document)
 {
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    document.removePlaybackTargetPickerClient(*this);
-#else
     UNUSED_PARAM(document);
-#endif
 #if ENABLE(MEDIA_SESSION)
     m_observer = nullptr;
 #endif
@@ -301,10 +287,6 @@ void MediaElementSession::clientDataBufferingTimerFired()
     INFO_LOG(LOGIDENTIFIER, "visible = ", m_element.elementIsHidden());
 
     updateClientDataBuffering();
-
-#if PLATFORM(IOS_FAMILY)
-    PlatformMediaSessionManager::sharedManager().configureWireLessTargetMonitoring();
-#endif
 
     if (state() != Playing || !m_element.elementIsHidden())
         return;
@@ -463,14 +445,6 @@ MediaPlayer::BufferingPolicy MediaElementSession::preferredBufferingPolicy() con
     if (state() == PlatformMediaSession::Playing)
         return MediaPlayer::BufferingPolicy::Default;
 
-    if (shouldOverrideBackgroundLoadingRestriction())
-        return MediaPlayer::BufferingPolicy::Default;
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    if (m_shouldPlayToPlaybackTarget)
-        return MediaPlayer::BufferingPolicy::Default;
-#endif
-
     if (m_elementIsHiddenUntilVisibleInViewport || m_elementIsHiddenBecauseItWasRemovedFromDOM || m_element.elementIsHidden())
         return MediaPlayer::BufferingPolicy::MakeResourcesPurgeable;
 
@@ -613,159 +587,6 @@ bool MediaElementSession::wantsToObserveViewportVisibilityForAutoplay() const
     return m_element.isVideo();
 }
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-void MediaElementSession::showPlaybackTargetPicker()
-{
-    INFO_LOG(LOGIDENTIFIER);
-
-    auto& document = m_element.document();
-    if (m_restrictions & RequireUserGestureToShowPlaybackTargetPicker && !document.processingUserGestureForMedia()) {
-        INFO_LOG(LOGIDENTIFIER, "returning early because of permissions");
-        return;
-    }
-
-    if (!document.page()) {
-        INFO_LOG(LOGIDENTIFIER, "returning early because page is NULL");
-        return;
-    }
-
-#if !PLATFORM(IOS_FAMILY)
-    if (m_element.readyState() < HTMLMediaElementEnums::HAVE_METADATA) {
-        INFO_LOG(LOGIDENTIFIER, "returning early because element is not playable");
-        return;
-    }
-#endif
-
-    auto& audioSession = AudioSession::sharedSession();
-    document.showPlaybackTargetPicker(*this, is<HTMLVideoElement>(m_element), audioSession.routeSharingPolicy(), audioSession.routingContextUID());
-}
-
-bool MediaElementSession::hasWirelessPlaybackTargets() const
-{
-    INFO_LOG(LOGIDENTIFIER, "returning ", m_hasPlaybackTargets);
-
-    return m_hasPlaybackTargets;
-}
-
-bool MediaElementSession::wirelessVideoPlaybackDisabled() const
-{
-    if (!m_element.document().settings().allowsAirPlayForMediaPlayback()) {
-        INFO_LOG(LOGIDENTIFIER, "returning TRUE because of settings");
-        return true;
-    }
-
-    if (m_element.hasAttributeWithoutSynchronization(HTMLNames::webkitwirelessvideoplaybackdisabledAttr)) {
-        INFO_LOG(LOGIDENTIFIER, "returning TRUE because of attribute");
-        return true;
-    }
-
-#if PLATFORM(IOS_FAMILY)
-    auto& legacyAirplayAttributeValue = m_element.attributeWithoutSynchronization(HTMLNames::webkitairplayAttr);
-    if (equalLettersIgnoringASCIICase(legacyAirplayAttributeValue, "deny")) {
-        INFO_LOG(LOGIDENTIFIER, "returning TRUE because of legacy attribute");
-        return true;
-    }
-    if (equalLettersIgnoringASCIICase(legacyAirplayAttributeValue, "allow")) {
-        INFO_LOG(LOGIDENTIFIER, "returning FALSE because of legacy attribute");
-        return false;
-    }
-#endif
-
-    if (m_element.document().settings().remotePlaybackEnabled() && m_element.hasAttributeWithoutSynchronization(HTMLNames::disableremoteplaybackAttr)) {
-        LOG(Media, "MediaElementSession::wirelessVideoPlaybackDisabled - returning TRUE because of RemotePlayback attribute");
-        return true;
-    }
-
-    auto player = m_element.player();
-    if (!player)
-        return true;
-
-    bool disabled = player->wirelessVideoPlaybackDisabled();
-    INFO_LOG(LOGIDENTIFIER, "returning ", disabled, " because media engine says so");
-
-    return disabled;
-}
-
-void MediaElementSession::setWirelessVideoPlaybackDisabled(bool disabled)
-{
-    if (disabled)
-        addBehaviorRestriction(WirelessVideoPlaybackDisabled);
-    else
-        removeBehaviorRestriction(WirelessVideoPlaybackDisabled);
-
-    auto player = m_element.player();
-    if (!player)
-        return;
-
-    INFO_LOG(LOGIDENTIFIER, disabled);
-    player->setWirelessVideoPlaybackDisabled(disabled);
-}
-
-void MediaElementSession::setHasPlaybackTargetAvailabilityListeners(bool hasListeners)
-{
-    INFO_LOG(LOGIDENTIFIER, hasListeners);
-
-#if PLATFORM(IOS_FAMILY)
-    m_hasPlaybackTargetAvailabilityListeners = hasListeners;
-    PlatformMediaSessionManager::sharedManager().configureWireLessTargetMonitoring();
-#else
-    UNUSED_PARAM(hasListeners);
-    m_element.document().playbackTargetPickerClientStateDidChange(*this, m_element.mediaState());
-#endif
-}
-
-void MediaElementSession::setPlaybackTarget(Ref<MediaPlaybackTarget>&& device)
-{
-    m_playbackTarget = WTFMove(device);
-    client().setWirelessPlaybackTarget(*m_playbackTarget.copyRef());
-}
-
-void MediaElementSession::targetAvailabilityChangedTimerFired()
-{
-    client().wirelessRoutesAvailableDidChange();
-}
-
-void MediaElementSession::externalOutputDeviceAvailableDidChange(bool hasTargets)
-{
-    if (m_hasPlaybackTargets == hasTargets)
-        return;
-
-    INFO_LOG(LOGIDENTIFIER, hasTargets);
-
-    m_hasPlaybackTargets = hasTargets;
-    m_targetAvailabilityChangedTimer.startOneShot(0_s);
-}
-
-bool MediaElementSession::isPlayingToWirelessPlaybackTarget() const
-{
-#if !PLATFORM(IOS_FAMILY)
-    if (!m_playbackTarget || !m_playbackTarget->hasActiveRoute())
-        return false;
-#endif
-
-    return client().isPlayingToWirelessPlaybackTarget();
-}
-
-void MediaElementSession::setShouldPlayToPlaybackTarget(bool shouldPlay)
-{
-    INFO_LOG(LOGIDENTIFIER, shouldPlay);
-    m_shouldPlayToPlaybackTarget = shouldPlay;
-    updateClientDataBuffering();
-    client().setShouldPlayToPlaybackTarget(shouldPlay);
-}
-
-void MediaElementSession::playbackTargetPickerWasDismissed()
-{
-    INFO_LOG(LOGIDENTIFIER);
-    client().playbackTargetPickerWasDismissed();
-}
-
-void MediaElementSession::mediaStateDidChange(MediaProducer::MediaStateFlags state)
-{
-    m_element.document().playbackTargetPickerClientStateDidChange(*this, state);
-}
-#endif
-
 MediaPlayer::Preload MediaElementSession::effectivePreloadForElement() const
 {
     MediaPlayer::Preload preload = m_element.preloadValue();
@@ -795,16 +616,6 @@ bool MediaElementSession::allowsAutomaticMediaDataLoading() const
 void MediaElementSession::mediaEngineUpdated()
 {
     INFO_LOG(LOGIDENTIFIER);
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    if (m_restrictions & WirelessVideoPlaybackDisabled)
-        setWirelessVideoPlaybackDisabled(true);
-    if (m_playbackTarget)
-        client().setWirelessPlaybackTarget(*m_playbackTarget.copyRef());
-    if (m_shouldPlayToPlaybackTarget)
-        client().setShouldPlayToPlaybackTarget(true);
-#endif
-
 }
 
 void MediaElementSession::resetPlaybackSessionState()
@@ -829,13 +640,6 @@ bool MediaElementSession::bufferingSuspended() const
         return page->mediaBufferingIsSuspended();
     return true;
 }
-
-#if PLATFORM(IOS_FAMILY)
-bool MediaElementSession::requiresPlaybackTargetRouteMonitoring() const
-{
-    return m_hasPlaybackTargetAvailabilityListeners && !m_element.elementIsHidden();
-}
-#endif
 
 #if ENABLE(MEDIA_SOURCE)
 size_t MediaElementSession::maximumMediaSourceBufferSize(const SourceBuffer& buffer) const

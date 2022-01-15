@@ -60,5 +60,4 @@ TouchEvent conditional=TOUCH_EVENTS
 TrackEvent conditional=VIDEO
 SecurityPolicyViolationEvent
 GestureEvent conditional=IOS_GESTURE_EVENTS|MAC_GESTURE_EVENTS
-WebKitPlaybackTargetAvailabilityEvent conditional=WIRELESS_PLAYBACK_TARGET
 PointerEvent

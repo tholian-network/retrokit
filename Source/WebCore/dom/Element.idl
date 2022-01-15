@@ -84,11 +84,6 @@
     // Non-standard: https://developer.apple.com/reference/webkitjs/element/1633146-onbeforeload.
     [NotEnumerable] attribute EventHandler onbeforeload;
 
-    // Non-standard: https://developer.apple.com/reference/webkitjs/element/1630042-onwebkitcurrentplaybacktargetisw.
-    [NotEnumerable, Conditional=WIRELESS_PLAYBACK_TARGET] attribute EventHandler onwebkitcurrentplaybacktargetiswirelesschanged;
-
-    // Non-standard: https://developer.apple.com/reference/webkitjs/element/1629580-onwebkitplaybacktargetavailabili.
-    [NotEnumerable, Conditional=WIRELESS_PLAYBACK_TARGET] attribute EventHandler onwebkitplaybacktargetavailabilitychanged;
 };
 
 Element includes AccessibilityRole;

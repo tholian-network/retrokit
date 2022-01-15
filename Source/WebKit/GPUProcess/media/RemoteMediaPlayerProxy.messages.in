@@ -62,12 +62,6 @@ messages -> RemoteMediaPlayerProxy NotRefCounted {
     SetVideoInlineSizeFenced(WebCore::FloatSize size, MachSendRight machSendRight)
 #endif
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    SetWirelessVideoPlaybackDisabled(bool disabled)
-    SetWirelessPlaybackTarget(WebCore::MediaPlaybackTargetContext target)
-    SetShouldPlayToPlaybackTarget(bool shouldPlay)
-#endif
-
     BeginSimulatedHDCPError()
     EndSimulatedHDCPError()
 

@@ -18,7 +18,6 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${CMAKE_BINARY_DIR}"
     "${WebCore_DERIVED_SOURCES_DIR}"
     "${WEBCORE_DIR}"
-    "${WEBCORE_DIR}/Modules/airplay"
     "${WEBCORE_DIR}/Modules/applicationmanifest"
     "${WEBCORE_DIR}/Modules/async-clipboard"
     "${WEBCORE_DIR}/Modules/beacon"
@@ -41,7 +40,6 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${WEBCORE_DIR}/Modules/notifications"
     "${WEBCORE_DIR}/Modules/permissions"
     "${WEBCORE_DIR}/Modules/pictureinpicture"
-    "${WEBCORE_DIR}/Modules/remoteplayback"
     "${WEBCORE_DIR}/Modules/speech"
     "${WEBCORE_DIR}/Modules/streams"
     "${WEBCORE_DIR}/Modules/webaudio"
@@ -169,7 +167,6 @@ set(WebCore_IDL_INCLUDES
     workers
     xml
 
-    Modules/airplay
     Modules/cache
     Modules/credentialmanagement
     Modules/entriesapi
@@ -199,8 +196,6 @@ set(WebCore_IDL_INCLUDES
 )
 
 set(WebCore_NON_SVG_IDL_FILES
-    Modules/airplay/WebKitPlaybackTargetAvailabilityEvent.idl
-
     Modules/async-clipboard/Clipboard.idl
     Modules/async-clipboard/ClipboardItem.idl
     Modules/async-clipboard/Navigator+Clipboard.idl
@@ -334,9 +329,6 @@ set(WebCore_NON_SVG_IDL_FILES
     Modules/permissions/PermissionState.idl
     Modules/permissions/PermissionStatus.idl
     Modules/permissions/Permissions.idl
-
-    Modules/remoteplayback/RemotePlayback.idl
-    Modules/remoteplayback/RemotePlaybackAvailabilityCallback.idl
 
     Modules/speech/SpeechRecognition.idl
     Modules/speech/SpeechRecognitionAlternative.idl

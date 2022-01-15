@@ -1,6 +1,4 @@
 set(WebCore_PRIVATE_FRAMEWORK_HEADERS
-    Modules/airplay/PlaybackTargetClientContextIdentifier.h
-
     Modules/applicationmanifest/ApplicationManifest.h
     Modules/applicationmanifest/ApplicationManifestParser.h
 
@@ -1210,9 +1208,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/graphics/LayoutRect.h
     platform/graphics/LayoutSize.h
     platform/graphics/MIMETypeCache.h
-    platform/graphics/MediaPlaybackTarget.h
-    platform/graphics/MediaPlaybackTargetClient.h
-    platform/graphics/MediaPlaybackTargetPicker.h
     platform/graphics/MediaPlayer.h
     platform/graphics/MediaPlayerEnums.h
     platform/graphics/MediaPlayerIdentifier.h
@@ -1342,8 +1337,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/mediastream/VideoPreset.h
     platform/mediastream/WebAudioSourceProvider.h
 
-    platform/mock/MediaPlaybackTargetMock.h
-    platform/mock/MediaPlaybackTargetPickerMock.h
     platform/mock/MockMediaDevice.h
     platform/mock/MockRealtimeAudioSource.h
     platform/mock/MockRealtimeMediaSourceCenter.h

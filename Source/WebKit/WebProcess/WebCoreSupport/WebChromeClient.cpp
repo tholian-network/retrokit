@@ -1177,46 +1177,6 @@ void WebChromeClient::inputElementDidResignStrongPasswordAppearance(HTMLInputEle
     m_page.send(Messages::WebPageProxy::DidResignInputElementStrongPasswordAppearance { UserData { WebProcess::singleton().transformObjectsToHandles(userData.get()).get() } });
 }
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET) && !PLATFORM(IOS_FAMILY)
-
-void WebChromeClient::addPlaybackTargetPickerClient(PlaybackTargetClientContextIdentifier contextId)
-{
-    m_page.send(Messages::WebPageProxy::AddPlaybackTargetPickerClient(contextId));
-}
-
-void WebChromeClient::removePlaybackTargetPickerClient(PlaybackTargetClientContextIdentifier contextId)
-{
-    m_page.send(Messages::WebPageProxy::RemovePlaybackTargetPickerClient(contextId));
-}
-
-void WebChromeClient::showPlaybackTargetPicker(PlaybackTargetClientContextIdentifier contextId, const IntPoint& position, bool isVideo)
-{
-    FrameView* frameView = m_page.mainFrame()->view();
-    FloatRect rect(frameView->contentsToRootView(frameView->windowToContents(position)), FloatSize());
-    m_page.send(Messages::WebPageProxy::ShowPlaybackTargetPicker(contextId, rect, isVideo));
-}
-
-void WebChromeClient::playbackTargetPickerClientStateDidChange(PlaybackTargetClientContextIdentifier contextId, MediaProducer::MediaStateFlags state)
-{
-    m_page.send(Messages::WebPageProxy::PlaybackTargetPickerClientStateDidChange(contextId, state));
-}
-
-void WebChromeClient::setMockMediaPlaybackTargetPickerEnabled(bool enabled)
-{
-    m_page.send(Messages::WebPageProxy::SetMockMediaPlaybackTargetPickerEnabled(enabled));
-}
-
-void WebChromeClient::setMockMediaPlaybackTargetPickerState(const String& name, MediaPlaybackTargetContext::MockState state)
-{
-    m_page.send(Messages::WebPageProxy::SetMockMediaPlaybackTargetPickerState(name, state));
-}
-
-void WebChromeClient::mockMediaPlaybackTargetPickerDismissPopup()
-{
-    m_page.send(Messages::WebPageProxy::MockMediaPlaybackTargetPickerDismissPopup());
-}
-#endif
-
 void WebChromeClient::imageOrMediaDocumentSizeChanged(const IntSize& newSize)
 {
     m_page.imageOrMediaDocumentSizeChanged(newSize);

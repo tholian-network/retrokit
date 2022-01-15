@@ -99,7 +99,7 @@ template <typename CharacterType>
 static CSSPropertyID cssPropertyID(const CharacterType* propertyName, unsigned length)
 {
     char buffer[maxCSSPropertyNameLength + 1 + 1]; // 1 to turn "apple"/"khtml" into "webkit", 1 for null character
-    
+
     for (unsigned i = 0; i != length; ++i) {
         CharacterType c = propertyName[i];
         if (!c || c >= 0x7F)
@@ -107,7 +107,7 @@ static CSSPropertyID cssPropertyID(const CharacterType* propertyName, unsigned l
         buffer[i] = toASCIILower(c);
     }
     buffer[length] = '\0';
-    
+
     if (auto hashTableEntry = findProperty(buffer, length)) {
         auto propertyID = static_cast<CSSPropertyID>(hashTableEntry->id);
         // FIXME: Should take account for flags in settings().
@@ -117,28 +117,11 @@ static CSSPropertyID cssPropertyID(const CharacterType* propertyName, unsigned l
     return CSSPropertyInvalid;
 }
 
-static bool isAppleLegacyCssValueKeyword(const char* valueKeyword, unsigned length)
-{
-    static const char applePrefix[] = "-apple-";
-    static const char appleSystemPrefix[] = "-apple-system";
-
-#if PLATFORM(COCOA)
-    static const char* appleWirelessPlaybackTargetActive = getValueName(CSSValueAppleWirelessPlaybackTargetActive);
-#endif
-
-    return hasPrefix(valueKeyword, length, applePrefix)
-    && !hasPrefix(valueKeyword, length, appleSystemPrefix)
-#if PLATFORM(COCOA)
-    && !WTF::equal(reinterpret_cast<const LChar*>(valueKeyword), reinterpret_cast<const LChar*>(appleWirelessPlaybackTargetActive), length)
-#endif
-    ;
-}
-
 template <typename CharacterType>
 static CSSValueID cssValueKeywordID(const CharacterType* valueKeyword, unsigned length)
 {
     char buffer[maxCSSValueKeywordLength + 1 + 1]; // 1 to turn "apple"/"khtml" into "webkit", 1 for null character
-    
+
     for (unsigned i = 0; i != length; ++i) {
         CharacterType c = valueKeyword[i];
         if (!c || c >= 0x7F)
@@ -146,19 +129,7 @@ static CSSValueID cssValueKeywordID(const CharacterType* valueKeyword, unsigned 
         buffer[i] = WTF::toASCIILower(c);
     }
     buffer[length] = '\0';
-    
-    if (buffer[0] == '-') {
-        // If the prefix is -apple- or -khtml-, change it to -webkit-.
-        // This makes the string one character longer.
-        // On iOS we don't want to change values starting with -apple-system to -webkit-system.
-        // FIXME: Remove this mangling without breaking the web.
-        if (isAppleLegacyCssValueKeyword(buffer, length)) {
-            memmove(buffer + 7, buffer + 6, length + 1 - 6);
-            memcpy(buffer, "-webkit", 7);
-            ++length;
-        }
-    }
-    
+
     const Value* hashTableEntry = findValue(buffer, length);
     return hashTableEntry ? static_cast<CSSValueID>(hashTableEntry->id) : CSSValueInvalid;
 }
@@ -170,22 +141,22 @@ CSSValueID cssValueKeywordID(StringView string)
         return CSSValueInvalid;
     if (length > maxCSSValueKeywordLength)
         return CSSValueInvalid;
-    
+
     return string.is8Bit() ? cssValueKeywordID(string.characters8(), length) : cssValueKeywordID(string.characters16(), length);
 }
 
 CSSPropertyID cssPropertyID(StringView string)
 {
     unsigned length = string.length();
-    
+
     if (!length)
         return CSSPropertyInvalid;
     if (length > maxCSSPropertyNameLength)
         return CSSPropertyInvalid;
-    
+
     return string.is8Bit() ? cssPropertyID(string.characters8(), length) : cssPropertyID(string.characters16(), length);
 }
-    
+
 using namespace CSSPropertyParserHelpers;
 using namespace CSSPropertyParserHelpersWorkerSafe;
 
@@ -270,7 +241,7 @@ RefPtr<CSSValue> CSSPropertyParser::parseSingleValue(CSSPropertyID property, con
     CSSPropertyParser parser(range, context, nullptr);
     if (auto value = maybeConsumeCSSWideKeyword(parser.m_range))
         return value;
-    
+
     RefPtr<CSSValue> value = parser.parseSingleValue(property);
     if (!value || !parser.m_range.atEnd())
         return nullptr;

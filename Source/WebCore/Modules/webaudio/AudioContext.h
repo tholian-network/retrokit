@@ -127,7 +127,6 @@ private:
     bool canReceiveRemoteControlCommands() const final { return false; }
     void didReceiveRemoteControlCommand(PlatformMediaSession::RemoteControlCommandType, const PlatformMediaSession::RemoteCommandArgument&) final { }
     bool supportsSeeking() const final { return false; }
-    bool shouldOverrideBackgroundPlaybackRestriction(PlatformMediaSession::InterruptionType) const final { return false; }
     bool canProduceAudio() const final { return true; }
     bool isSuspended() const final;
     bool isPlaying() const final;

@@ -727,9 +727,6 @@ enum AutoplayPolicy {
     [Conditional=VIDEO] undefined postRemoteControlCommand(DOMString command, optional unrestricted float argument = 0);
     [Conditional=VIDEO] undefined activeAudioRouteDidChange(boolean shouldPause);
 
-    [Conditional=WIRELESS_PLAYBACK_TARGET] undefined setMockMediaPlaybackTargetPickerEnabled(boolean enabled);
-    [Conditional=WIRELESS_PLAYBACK_TARGET] undefined setMockMediaPlaybackTargetPickerState(DOMString deviceName, DOMString deviceState);
-    [Conditional=WIRELESS_PLAYBACK_TARGET] undefined mockMediaPlaybackTargetPickerDismissPopup();
     [Conditional=MEDIA_STREAM] undefined setCustomPrivateRecorderCreator();
 
     [Conditional=WEB_AUDIO] undefined useMockAudioDestinationCocoa();
@@ -928,8 +925,6 @@ enum AutoplayPolicy {
 
     undefined setMaximumIntervalForUserGestureForwardingForFetch(double interval);
     undefined setTransientActivationDuration(double seconds);
-
-    undefined setIsPlayingToAutomotiveHeadUnit(boolean value);
 
     TextIndicatorInfo textIndicatorForRange(Range range, TextIndicatorOptions options);
 

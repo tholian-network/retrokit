@@ -49,10 +49,6 @@
 #include <WebCore/CurlProxySettings.h>
 #endif
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-#include <WebCore/MediaPlaybackTargetContext.h>
-#endif
-
 #if PLATFORM(IOS_FAMILY)
 #include <WebCore/InspectorOverlay.h>
 #endif
@@ -624,15 +620,6 @@ template<> struct ArgumentCoder<WebCore::DictionaryPopupInfo> {
     static void encodePlatformData(Encoder&, const WebCore::DictionaryPopupInfo&);
     static WARN_UNUSED_RETURN bool decodePlatformData(Decoder&, WebCore::DictionaryPopupInfo&);
 };
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-template<> struct ArgumentCoder<WebCore::MediaPlaybackTargetContext> {
-    static void encode(Encoder&, const WebCore::MediaPlaybackTargetContext&);
-    static WARN_UNUSED_RETURN bool decode(Decoder&, WebCore::MediaPlaybackTargetContext&);
-    static void encodePlatformData(Encoder&, const WebCore::MediaPlaybackTargetContext&);
-    static WARN_UNUSED_RETURN bool decodePlatformData(Decoder&, WebCore::MediaPlaybackTargetContext::Type, WebCore::MediaPlaybackTargetContext&);
-};
-#endif
 
 template<> struct ArgumentCoder<WebCore::RecentSearch> {
     static void encode(Encoder&, const WebCore::RecentSearch&);

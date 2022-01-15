@@ -176,11 +176,6 @@ void PlatformMediaSession::beginInterruption(InterruptionType type)
     if (++m_interruptionCount > 1 && m_interruptionType != NoInterruption)
         return;
 
-    if (client().shouldOverrideBackgroundPlaybackRestriction(type)) {
-        ALWAYS_LOG(LOGIDENTIFIER, "returning early because client says to override interruption");
-        return;
-    }
-
     m_stateToRestore = state();
     m_notifyingClient = true;
     setState(Interrupted);
@@ -325,25 +320,6 @@ bool PlatformMediaSession::isSuspended() const
 bool PlatformMediaSession::isPlaying() const
 {
     return m_client.isPlaying();
-}
-
-bool PlatformMediaSession::shouldOverrideBackgroundLoadingRestriction() const
-{
-    return m_client.shouldOverrideBackgroundLoadingRestriction();
-}
-
-void PlatformMediaSession::isPlayingToWirelessPlaybackTargetChanged(bool isWireless)
-{
-    if (isWireless == m_isPlayingToWirelessPlaybackTarget)
-        return;
-
-    m_isPlayingToWirelessPlaybackTarget = isWireless;
-
-    // Save and restore the interruption count so it doesn't get out of sync if beginInterruption is called because
-    // if we in the background.
-    int interruptionCount = m_interruptionCount;
-    PlatformMediaSessionManager::sharedManager().sessionIsPlayingToWirelessPlaybackTargetChanged(*this);
-    m_interruptionCount = interruptionCount;
 }
 
 PlatformMediaSession::DisplayType PlatformMediaSession::displayType() const

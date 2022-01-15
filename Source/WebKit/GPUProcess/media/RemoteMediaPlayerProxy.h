@@ -142,13 +142,6 @@ public:
     void setVideoInlineSizeFenced(const WebCore::FloatSize&, const WTF::MachSendRight&);
 #endif
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    void setWirelessVideoPlaybackDisabled(bool);
-    void setShouldPlayToPlaybackTarget(bool);
-    void setWirelessPlaybackTarget(WebCore::MediaPlaybackTargetContext&&);
-    void mediaPlayerCurrentPlaybackTargetIsWirelessChanged(bool) final;
-#endif
-
     void beginSimulatedHDCPError();
     void endSimulatedHDCPError();
 

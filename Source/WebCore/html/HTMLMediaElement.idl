@@ -112,7 +112,4 @@ typedef (
     [ImplementedAs=controllerForBindings] attribute MediaController? controller;
 
     VideoPlaybackQuality getVideoPlaybackQuality();
-
-    [Conditional=WIRELESS_PLAYBACK_TARGET] undefined webkitShowPlaybackTargetPicker();
-    [Conditional=WIRELESS_PLAYBACK_TARGET] readonly attribute boolean webkitCurrentPlaybackTargetIsWireless;
 };

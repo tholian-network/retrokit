@@ -238,11 +238,6 @@
 #include <WebCore/CairoUtilities.h>
 #endif
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET) && !PLATFORM(IOS_FAMILY)
-#include <WebCore/MediaPlaybackTarget.h>
-#include <WebCore/WebMediaSessionManager.h>
-#endif
-
 #if PLATFORM(IOS_FAMILY)
 #include "PlaybackSessionManagerProxy.h"
 #endif
@@ -7548,10 +7543,6 @@ void WebPageProxy::resetState(ResetStateReason resetStateReason)
     m_lastObservedStateWasBackground = false;
 #endif
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET) && !PLATFORM(IOS_FAMILY)
-    pageClient().mediaSessionManager().removeAllPlaybackTargetPickerClients(*this);
-#endif
-
 #if USE(SYSTEM_PREVIEW)
     m_systemPreviewController = nullptr;
 #endif
@@ -9214,80 +9205,6 @@ void WebPageProxy::didResignInputElementStrongPasswordAppearance(const UserData&
     m_uiClient->didResignInputElementStrongPasswordAppearance(*this, m_process->transformHandlesToObjects(userData.object()).get());
 }
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET) && !PLATFORM(IOS_FAMILY)
-void WebPageProxy::addPlaybackTargetPickerClient(PlaybackTargetClientContextIdentifier contextId)
-{
-    pageClient().mediaSessionManager().addPlaybackTargetPickerClient(*this, contextId);
-}
-
-void WebPageProxy::removePlaybackTargetPickerClient(PlaybackTargetClientContextIdentifier contextId)
-{
-    pageClient().mediaSessionManager().removePlaybackTargetPickerClient(*this, contextId);
-}
-
-void WebPageProxy::showPlaybackTargetPicker(PlaybackTargetClientContextIdentifier contextId, const WebCore::FloatRect& rect, bool hasVideo)
-{
-    pageClient().mediaSessionManager().showPlaybackTargetPicker(*this, contextId, pageClient().rootViewToScreen(IntRect(rect)), hasVideo, useDarkAppearance());
-}
-
-void WebPageProxy::playbackTargetPickerClientStateDidChange(PlaybackTargetClientContextIdentifier contextId, WebCore::MediaProducer::MediaStateFlags state)
-{
-    pageClient().mediaSessionManager().clientStateDidChange(*this, contextId, state);
-}
-
-void WebPageProxy::setMockMediaPlaybackTargetPickerEnabled(bool enabled)
-{
-    pageClient().mediaSessionManager().setMockMediaPlaybackTargetPickerEnabled(enabled);
-}
-
-void WebPageProxy::setMockMediaPlaybackTargetPickerState(const String& name, WebCore::MediaPlaybackTargetContext::MockState state)
-{
-    pageClient().mediaSessionManager().setMockMediaPlaybackTargetPickerState(name, state);
-}
-
-void WebPageProxy::mockMediaPlaybackTargetPickerDismissPopup()
-{
-    pageClient().mediaSessionManager().mockMediaPlaybackTargetPickerDismissPopup();
-}
-
-void WebPageProxy::setPlaybackTarget(PlaybackTargetClientContextIdentifier contextId, Ref<MediaPlaybackTarget>&& target)
-{
-    if (!hasRunningProcess())
-        return;
-
-    auto context = target->targetContext();
-    ASSERT(context.type() != MediaPlaybackTargetContext::Type::SerializedAVOutputContext);
-    if (preferences().useGPUProcessForMediaEnabled())
-        context.serializeOutputContext();
-
-    send(Messages::WebPage::PlaybackTargetSelected(contextId, context));
-}
-
-void WebPageProxy::externalOutputDeviceAvailableDidChange(PlaybackTargetClientContextIdentifier contextId, bool available)
-{
-    if (!hasRunningProcess())
-        return;
-
-    send(Messages::WebPage::PlaybackTargetAvailabilityDidChange(contextId, available));
-}
-
-void WebPageProxy::setShouldPlayToPlaybackTarget(PlaybackTargetClientContextIdentifier contextId, bool shouldPlay)
-{
-    if (!hasRunningProcess())
-        return;
-
-    send(Messages::WebPage::SetShouldPlayToPlaybackTarget(contextId, shouldPlay));
-}
-
-void WebPageProxy::playbackTargetPickerWasDismissed(PlaybackTargetClientContextIdentifier contextId)
-{
-    if (!hasRunningProcess())
-        return;
-
-    send(Messages::WebPage::PlaybackTargetPickerWasDismissed(contextId));
-}
-#endif
-
 void WebPageProxy::didExceedInactiveMemoryLimitWhileActive()
 {
     WEBPAGEPROXY_RELEASE_LOG_ERROR(PerformanceLogging, "didExceedInactiveMemoryLimitWhileActive");
@@ -9309,7 +9226,7 @@ void WebPageProxy::clearWheelEventTestMonitor()
 {
     if (!hasRunningProcess())
         return;
-    
+
     send(Messages::WebPage::ClearWheelEventTestMonitor());
 }
 

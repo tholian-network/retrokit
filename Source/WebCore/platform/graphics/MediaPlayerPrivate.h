@@ -169,21 +169,6 @@ public:
 
     virtual bool hasAvailableVideoFrame() const { return readyState() >= MediaPlayer::ReadyState::HaveCurrentData; }
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-
-    virtual String wirelessPlaybackTargetName() const { return emptyString(); }
-    virtual MediaPlayer::WirelessPlaybackTargetType wirelessPlaybackTargetType() const { return MediaPlayer::WirelessPlaybackTargetType::TargetTypeNone; }
-
-    virtual bool wirelessVideoPlaybackDisabled() const { return true; }
-    virtual void setWirelessVideoPlaybackDisabled(bool) { }
-
-    virtual bool canPlayToWirelessPlaybackTarget() const { return false; }
-    virtual bool isCurrentPlaybackTargetWireless() const { return false; }
-    virtual void setWirelessPlaybackTarget(Ref<MediaPlaybackTarget>&&) { }
-
-    virtual void setShouldPlayToPlaybackTarget(bool) { }
-#endif
-
     // whether accelerated rendering is supported by the media engine for the current media.
     virtual bool supportsAcceleratedRendering() const { return false; }
     // called when the rendering system flips the into or out of accelerated rendering mode.

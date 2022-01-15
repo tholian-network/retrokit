@@ -51,12 +51,6 @@
 #include <WebCore/MediaPlayerPrivate.h>
 #include <WebCore/NotImplemented.h>
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-#include <WebCore/MediaPlaybackTargetCocoa.h>
-#include <WebCore/MediaPlaybackTargetContext.h>
-#include <WebCore/MediaPlaybackTargetMock.h>
-#endif
-
 #if PLATFORM(COCOA)
 #include <WebCore/AudioSourceProviderAVFObjC.h>
 #endif
@@ -108,10 +102,6 @@ void RemoteMediaPlayerProxy::getConfiguration(RemoteMediaPlayerConfiguration& co
     configuration.supportsAcceleratedRendering = m_player->supportsAcceleratedRendering();
     configuration.supportsPlayAtHostTime = m_player->supportsPlayAtHostTime();
     configuration.supportsPauseAtHostTime = m_player->supportsPauseAtHostTime();
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    configuration.canPlayToWirelessPlaybackTarget = m_player->canPlayToWirelessPlaybackTarget();
-#endif
     configuration.shouldIgnoreIntrinsicSize = m_player->shouldIgnoreIntrinsicSize();
 
     m_observingTimeChanges = m_player->setCurrentTimeDidChangeCallback([this, weakThis = makeWeakPtr(this)] (auto currentTime) mutable {
@@ -331,9 +321,6 @@ void RemoteMediaPlayerProxy::mediaPlayerReadyStateChanged()
     m_cachedState.seekableTimeRangesLastModifiedTime = m_player->seekableTimeRangesLastModifiedTime();
     m_cachedState.liveUpdateInterval = m_player->liveUpdateInterval();
     m_cachedState.hasAvailableVideoFrame = m_player->hasAvailableVideoFrame();
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    m_cachedState.wirelessVideoPlaybackDisabled = m_player->wirelessVideoPlaybackDisabled();
-#endif
     m_cachedState.canSaveMediaData = m_player->canSaveMediaData();
     m_cachedState.hasSingleSecurityOrigin = m_player->hasSingleSecurityOrigin();
     m_cachedState.didPassCORSAccessCheck = m_player->didPassCORSAccessCheck();
@@ -624,47 +611,6 @@ void RemoteMediaPlayerProxy::mediaPlayerActiveSourceBuffersChanged()
 {
     m_webProcessConnection->send(Messages::MediaPlayerPrivateRemote::ActiveSourceBuffersChanged(), m_id);
 }
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-void RemoteMediaPlayerProxy::mediaPlayerCurrentPlaybackTargetIsWirelessChanged(bool isCurrentPlaybackTargetWireless)
-{
-    m_cachedState.wirelessPlaybackTargetName = m_player->wirelessPlaybackTargetName();
-    m_cachedState.wirelessPlaybackTargetType = m_player->wirelessPlaybackTargetType();
-    sendCachedState();
-    m_webProcessConnection->send(Messages::MediaPlayerPrivateRemote::CurrentPlaybackTargetIsWirelessChanged(isCurrentPlaybackTargetWireless), m_id);
-}
-
-void RemoteMediaPlayerProxy::setWirelessVideoPlaybackDisabled(bool disabled)
-{
-    m_player->setWirelessVideoPlaybackDisabled(disabled);
-    m_cachedState.wirelessVideoPlaybackDisabled = m_player->wirelessVideoPlaybackDisabled();
-}
-
-void RemoteMediaPlayerProxy::setShouldPlayToPlaybackTarget(bool shouldPlay)
-{
-    m_player->setShouldPlayToPlaybackTarget(shouldPlay);
-}
-
-void RemoteMediaPlayerProxy::setWirelessPlaybackTarget(MediaPlaybackTargetContext&& targetContext)
-{
-    switch (targetContext.type()) {
-    case MediaPlaybackTargetContext::Type::SerializedAVOutputContext: {
-        if (targetContext.deserializeOutputContext())
-            m_player->setWirelessPlaybackTarget(MediaPlaybackTargetCocoa::create(WTFMove(targetContext)));
-        break;
-    }
-    case MediaPlaybackTargetContext::Type::Mock:
-#if PLATFORM(MAC)
-        m_player->setWirelessPlaybackTarget(MediaPlaybackTargetMock::create(targetContext.deviceName(), targetContext.mockState()));
-        break;
-#endif
-    case MediaPlaybackTargetContext::Type::AVOutputContext:
-    case MediaPlaybackTargetContext::Type::None:
-        ASSERT_NOT_REACHED();
-        break;
-    }
-}
-#endif
 
 float RemoteMediaPlayerProxy::mediaPlayerContentsScale() const
 {

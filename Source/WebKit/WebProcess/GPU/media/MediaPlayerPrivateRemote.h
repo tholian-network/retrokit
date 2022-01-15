@@ -152,10 +152,6 @@ public:
     RefPtr<TextTrackPrivateRemote> textTrackPrivateRemote(TrackPrivateRemoteIdentifier identifier) const { return m_textTracks.get(identifier); }
 #endif
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    void currentPlaybackTargetIsWirelessChanged(bool);
-#endif
-
 #if PLATFORM(IOS_FAMILY)
     void getRawCookies(const URL&, WebCore::MediaPlayerClient::GetRawCookiesCallback&&) const;
 #endif
@@ -276,20 +272,6 @@ private:
 
     bool hasAvailableVideoFrame() const final;
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    String wirelessPlaybackTargetName() const final;
-    WebCore::MediaPlayer::WirelessPlaybackTargetType wirelessPlaybackTargetType() const final;
-
-    bool wirelessVideoPlaybackDisabled() const final;
-    void setWirelessVideoPlaybackDisabled(bool) final;
-
-    bool canPlayToWirelessPlaybackTarget() const final;
-    bool isCurrentPlaybackTargetWireless() const final;
-    void setWirelessPlaybackTarget(Ref<WebCore::MediaPlaybackTarget>&&) final;
-
-    void setShouldPlayToPlaybackTarget(bool) final;
-#endif
-
     bool supportsAcceleratedRendering() const final;
     void acceleratedRenderingStateChanged() final;
 
@@ -400,7 +382,6 @@ private:
     long m_platformErrorCode { 0 };
     bool m_muted { false };
     bool m_seeking { false };
-    bool m_isCurrentPlaybackTargetWireless { false };
     bool m_invalid { false };
     bool m_waitingForKey { false };
     bool m_timeIsProgressing { false };

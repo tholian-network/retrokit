@@ -47,7 +47,6 @@
 #include "MutationObserver.h"
 #include "PageIdentifier.h"
 #include "PlatformEvent.h"
-#include "PlaybackTargetClientContextIdentifier.h"
 #include "ReferrerPolicy.h"
 #include "Region.h"
 #include "RegistrableDomain.h"
@@ -173,8 +172,6 @@ class LiveNodeList;
 class Locale;
 class Location;
 class MediaCanStartListener;
-class MediaPlaybackTarget;
-class MediaPlaybackTargetClient;
 class MediaQueryList;
 class MediaQueryMatcher;
 class MessagePortChannelProvider;
@@ -1361,18 +1358,6 @@ public:
     WEBCORE_EXPORT void updateIsPlayingMedia();
     void pageMutedStateDidChange();
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    void addPlaybackTargetPickerClient(MediaPlaybackTargetClient&);
-    void removePlaybackTargetPickerClient(MediaPlaybackTargetClient&);
-    void showPlaybackTargetPicker(MediaPlaybackTargetClient&, bool, RouteSharingPolicy, const String&);
-    void playbackTargetPickerClientStateDidChange(MediaPlaybackTargetClient&, MediaProducer::MediaStateFlags);
-
-    void setPlaybackTarget(PlaybackTargetClientContextIdentifier, Ref<MediaPlaybackTarget>&&);
-    void playbackTargetAvailabilityDidChange(PlaybackTargetClientContextIdentifier, bool);
-    void setShouldPlayToPlaybackTarget(PlaybackTargetClientContextIdentifier, bool);
-    void playbackTargetPickerWasDismissed(PlaybackTargetClientContextIdentifier);
-#endif
-
     ShouldOpenExternalURLsPolicy shouldOpenExternalURLsPolicyToPropagate() const;
     bool shouldEnforceContentDispositionAttachmentSandbox() const;
     void applyContentDispositionAttachmentSandbox();
@@ -1941,13 +1926,6 @@ private:
     WeakPtr<SpeechRecognition> m_activeSpeechRecognition;
 
     ListHashSet<ShadowRoot*> m_inDocumentShadowRoots;
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    using TargetIdToClientMap = HashMap<PlaybackTargetClientContextIdentifier, WebCore::MediaPlaybackTargetClient*>;
-    TargetIdToClientMap m_idToClientMap;
-    using TargetClientToIdMap = HashMap<WebCore::MediaPlaybackTargetClient*, PlaybackTargetClientContextIdentifier>;
-    TargetClientToIdMap m_clientToIDMap;
-#endif
 
     RefPtr<IDBClient::IDBConnectionProxy> m_idbConnectionProxy;
 

@@ -129,22 +129,8 @@ void HTMLVideoElement::parseAttribute(const QualifiedName& name, const AtomStrin
                 renderer->updateFromElement();
             }
         }
-    }
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    else if (name == webkitwirelessvideoplaybackdisabledAttr)
-        mediaSession().setWirelessVideoPlaybackDisabled(true);
-#endif
-    else {
-        HTMLMediaElement::parseAttribute(name, value);    
-
-#if PLATFORM(IOS_FAMILY) && ENABLE(WIRELESS_PLAYBACK_TARGET)
-        if (name == webkitairplayAttr) {
-            bool disabled = false;
-            if (equalLettersIgnoringASCIICase(attributeWithoutSynchronization(HTMLNames::webkitairplayAttr), "deny"))
-                disabled = true;
-            mediaSession().setWirelessVideoPlaybackDisabled(disabled);
-        }
-#endif
+    } else {
+        HTMLMediaElement::parseAttribute(name, value);
     }
 }
 
@@ -232,7 +218,7 @@ void HTMLVideoElement::paintCurrentFrameInContext(GraphicsContext& context, cons
     RefPtr<MediaPlayer> player = HTMLMediaElement::player();
     if (!player)
         return;
-    
+
     player->setVisibleForCanvas(true); // Make player visible or it won't draw.
     context.paintFrameForMedia(*player, destRect);
 }
@@ -241,7 +227,7 @@ bool HTMLVideoElement::hasAvailableVideoFrame() const
 {
     if (!player())
         return false;
-    
+
     return player()->hasVideo() && player()->hasAvailableVideoFrame();
 }
 
@@ -252,18 +238,6 @@ RefPtr<NativeImage> HTMLVideoElement::nativeImageForCurrentTime()
 
     return player()->nativeImageForCurrentTime();
 }
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-bool HTMLVideoElement::webkitWirelessVideoPlaybackDisabled() const
-{
-    return mediaSession().wirelessVideoPlaybackDisabled();
-}
-
-void HTMLVideoElement::setWebkitWirelessVideoPlaybackDisabled(bool disabled)
-{
-    setBooleanAttribute(webkitwirelessvideoplaybackdisabledAttr, disabled);
-}
-#endif
 
 void HTMLVideoElement::didMoveToNewDocument(Document& oldDocument, Document& newDocument)
 {

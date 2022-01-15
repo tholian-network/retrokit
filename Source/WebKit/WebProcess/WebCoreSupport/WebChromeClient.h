@@ -178,7 +178,6 @@ private:
     void removeScrollingLayer(WebCore::Node*, PlatformLayer* scrollingLayer, PlatformLayer* contentsLayer) final;
 
     void webAppOrientationsUpdated() final;
-    void showPlaybackTargetPicker(bool hasVideo, WebCore::RouteSharingPolicy, const String&) final;
 
     Seconds eventThrottlingDelay() final;
 
@@ -345,16 +344,6 @@ private:
     void handleAutoFillButtonClick(WebCore::HTMLInputElement&) final;
 
     void inputElementDidResignStrongPasswordAppearance(WebCore::HTMLInputElement&) final;
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET) && !PLATFORM(IOS_FAMILY)
-    void addPlaybackTargetPickerClient(WebCore::PlaybackTargetClientContextIdentifier) final;
-    void removePlaybackTargetPickerClient(WebCore::PlaybackTargetClientContextIdentifier) final;
-    void showPlaybackTargetPicker(WebCore::PlaybackTargetClientContextIdentifier, const WebCore::IntPoint&, bool) final;
-    void playbackTargetPickerClientStateDidChange(WebCore::PlaybackTargetClientContextIdentifier, WebCore::MediaProducer::MediaStateFlags) final;
-    void setMockMediaPlaybackTargetPickerEnabled(bool) final;
-    void setMockMediaPlaybackTargetPickerState(const String&, WebCore::MediaPlaybackTargetContext::MockState) final;
-    void mockMediaPlaybackTargetPickerDismissPopup() final;
-#endif
 
     void imageOrMediaDocumentSizeChanged(const WebCore::IntSize&) final;
 

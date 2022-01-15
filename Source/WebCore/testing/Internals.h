@@ -640,12 +640,6 @@ public:
     bool isPlayerVisibleInViewport(HTMLMediaElement&) const;
 #endif
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    void setMockMediaPlaybackTargetPickerEnabled(bool);
-    ExceptionOr<void> setMockMediaPlaybackTargetPickerState(const String& deviceName, const String& deviceState);
-    void mockMediaPlaybackTargetPickerDismissPopup();
-#endif
-
 #if ENABLE(WEB_AUDIO)
     void setAudioContextRestrictions(AudioContext&, StringView restrictionsString);
     void useMockAudioDestinationCocoa();
@@ -963,17 +957,15 @@ public:
     void setMaximumIntervalForUserGestureForwardingForFetch(double);
     void setTransientActivationDuration(double seconds);
 
-    void setIsPlayingToAutomotiveHeadUnit(bool);
-    
     struct TextIndicatorInfo {
         RefPtr<DOMRectReadOnly> textBoundingRectInRootViewCoordinates;
         RefPtr<DOMRectList> textRectsInBoundingRectCoordinates;
-        
+
         TextIndicatorInfo();
         TextIndicatorInfo(const WebCore::TextIndicatorData&);
         ~TextIndicatorInfo();
     };
-        
+
     struct TextIndicatorOptions {
         bool useBoundingRectAndPaintAllContentForComplexRanges { false };
         bool computeEstimatedBackgroundColor { false };

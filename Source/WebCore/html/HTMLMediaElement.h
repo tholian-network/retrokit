@@ -92,10 +92,6 @@ enum class DynamicRangeMode : uint8_t;
 template<typename> class DOMPromiseDeferred;
 template<typename, typename> class PODInterval;
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-class RemotePlayback;
-#endif
-
 using CueInterval = PODInterval<MediaTime, TextTrackCue*>;
 using CueList = Vector<CueInterval>;
 
@@ -159,8 +155,6 @@ public:
     void setPreparedToReturnVideoLayerToInline(bool);
     void waitForPreparedForInlineThen(WTF::Function<void()>&& completionHandler = [] { });
 
-    void scheduleCheckPlaybackTargetCompatability();
-    void checkPlaybackTargetCompatibility();
     void scheduleResolvePendingPlayPromises();
     void scheduleRejectPendingPlayPromises(Ref<DOMException>&&);
     using PlayPromiseVector = Vector<DOMPromiseDeferred<void>>;
@@ -168,9 +162,9 @@ public:
     void resolvePendingPlayPromises(PlayPromiseVector&&);
     void scheduleNotifyAboutPlaying();
     void notifyAboutPlaying(PlayPromiseVector&&);
-    
+
     MediaPlayer::MovieLoadType movieLoadType() const;
-    
+
     bool inActiveDocument() const { return m_inActiveDocument; }
 
     MediaSessionGroupIdentifier mediaSessionGroupIdentifier() const final;
@@ -371,22 +365,8 @@ public:
     bool addEventListener(const AtomString& eventType, Ref<EventListener>&&, const AddEventListenerOptions&) override;
     bool removeEventListener(const AtomString& eventType, EventListener&, const EventListenerOptions&) override;
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    void webkitShowPlaybackTargetPicker();
-
-    void wirelessRoutesAvailableDidChange() override;
-    void setWirelessPlaybackTarget(Ref<MediaPlaybackTarget>&&) override;
-    void setShouldPlayToPlaybackTarget(bool) override;
-    void playbackTargetPickerWasDismissed() override;
-#endif
-    bool isPlayingToWirelessPlaybackTarget() const override { return m_isPlayingToWirelessTarget; };
-    void setIsPlayingToWirelessTarget(bool);
-    bool webkitCurrentPlaybackTargetIsWireless() const;
-
     void setPlayingOnSecondScreen(bool value);
     bool isPlayingOnSecondScreen() const override { return m_playingOnSecondScreen; }
-
-    bool isPlayingToExternalTarget() const { return isPlayingToWirelessPlaybackTarget() || isPlayingOnSecondScreen(); }
 
     // EventTarget function.
     // Both Node (via HTMLElement) and ActiveDOMObject define this method, which
@@ -500,11 +480,6 @@ public:
 
     enum class AutoplayEventPlaybackState { None, PreventedAutoplay, StartedWithUserGesture, StartedWithoutUserGesture };
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    RemotePlayback& remote() { return m_remote; }
-    void remoteHasAvailabilityCallbacksChanged();
-#endif
-
     void privateBrowsingStateDidChange(PAL::SessionID);
     void mediaVolumeDidChange();
     void applicationWillResignActive();
@@ -611,11 +586,6 @@ private:
     void mediaEngineWasUpdated();
 
     void mediaPlayerCharacteristicChanged() final;
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    void mediaPlayerCurrentPlaybackTargetIsWirelessChanged(bool) final;
-    void enqueuePlaybackTargetAvailabilityChangedEvent();
-#endif
 
     String mediaPlayerReferrer() const override;
     String mediaPlayerUserAgent() const override;
@@ -777,8 +747,6 @@ private:
     void resumeAutoplaying() override;
     void mayResumePlayback(bool shouldResume) override;
     bool canReceiveRemoteControlCommands() const override { return true; }
-    bool shouldOverrideBackgroundPlaybackRestriction(PlatformMediaSession::InterruptionType) const override;
-    bool shouldOverrideBackgroundLoadingRestriction() const override;
     bool canProduceAudio() const final;
     bool hasMediaStreamSource() const final;
     void processIsSuspendedChanged() final;
@@ -805,15 +773,6 @@ private:
 
     using JSSetupFunction = WTF::Function<bool(JSDOMGlobalObject&, JSC::JSGlobalObject&, ScriptController&, DOMWrapperWorld&)>;
     bool setupAndCallJS(const JSSetupFunction&);
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    void prepareForDocumentSuspension() final;
-    void resumeFromDocumentSuspension() final;
-
-    void scheduleUpdateMediaState();
-    void updateMediaState();
-    bool hasPlaybackTargetAvailabilityListeners() const { return m_hasPlaybackTargetAvailabilityListeners; }
-#endif
 
     bool isVideoTooSmallForInlinePlayback();
     void updateShouldAutoplay();
@@ -852,7 +811,6 @@ private:
     Timer m_playbackControlsManagerBehaviorRestrictionsTimer;
     Timer m_seekToPlaybackPositionEndedTimer;
     TaskCancellationGroup m_configureTextTracksTaskCancellationGroup;
-    TaskCancellationGroup m_checkPlaybackTargetCompatibilityTaskCancellationGroup;
     TaskCancellationGroup m_updateMediaStateTaskCancellationGroup;
     TaskCancellationGroup m_mediaEngineUpdatedTaskCancellationGroup;
     TaskCancellationGroup m_updatePlayStateTaskCancellationGroup;
@@ -1043,10 +1001,6 @@ private:
     URL m_blobURLForReading;
     MediaProvider m_mediaProvider;
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    Ref<RemotePlayback> m_remote;
-#endif
-
     std::unique_ptr<MediaElementSession> m_mediaSession;
     size_t m_reportedExtraMemoryCost { 0 };
 
@@ -1064,14 +1018,6 @@ private:
     bool m_settingMediaStreamSrcObject { false };
 #endif
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    MediaProducer::MediaStateFlags m_mediaState;
-    MonotonicTime m_currentPlaybackTargetIsWirelessEventFiredTime;
-    bool m_hasPlaybackTargetAvailabilityListeners { false };
-    bool m_failedToPlayToWirelessTarget { false };
-#endif
-
-    bool m_isPlayingToWirelessTarget { false };
     bool m_playingOnSecondScreen { false };
     bool m_removedBehaviorRestrictionsAfterFirstUserGesture { false };
 

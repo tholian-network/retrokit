@@ -50,7 +50,6 @@ FEATURE_AND_PLATFORM_DEFINE_DEPENDENCIES = $(WebCore)/DerivedSources.make
 # --------
 
 JS_BINDING_IDLS := \
-    $(WebCore)/Modules/airplay/WebKitPlaybackTargetAvailabilityEvent.idl \
     $(WebCore)/Modules/async-clipboard/Clipboard.idl \
     $(WebCore)/Modules/async-clipboard/ClipboardItem.idl \
     $(WebCore)/Modules/async-clipboard/Navigator+Clipboard.idl \
@@ -169,9 +168,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/Modules/permissions/PermissionState.idl \
     $(WebCore)/Modules/permissions/PermissionStatus.idl \
     $(WebCore)/Modules/permissions/Permissions.idl \
-    $(WebCore)/Modules/remoteplayback/HTMLMediaElement+RemotePlayback.idl \
-    $(WebCore)/Modules/remoteplayback/RemotePlayback.idl \
-    $(WebCore)/Modules/remoteplayback/RemotePlaybackAvailabilityCallback.idl \
     $(WebCore)/Modules/speech/DOMWindow+SpeechSynthesis.idl \
     $(WebCore)/Modules/speech/SpeechSynthesis.idl \
     $(WebCore)/Modules/speech/SpeechSynthesisEvent.idl \

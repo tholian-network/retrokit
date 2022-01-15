@@ -260,54 +260,6 @@ bool MediaControlsHost::shouldForceControlsDisplay() const
     return m_mediaElement && m_mediaElement->shouldForceControlsDisplay();
 }
 
-String MediaControlsHost::externalDeviceDisplayName() const
-{
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    if (!m_mediaElement)
-        return emptyString();
-
-    auto player = m_mediaElement->player();
-    if (!player) {
-        LOG(Media, "MediaControlsHost::externalDeviceDisplayName - returning \"\" because player is NULL");
-        return emptyString();
-    }
-
-    String name = player->wirelessPlaybackTargetName();
-    LOG(Media, "MediaControlsHost::externalDeviceDisplayName - returning \"%s\"", name.utf8().data());
-    return name;
-#else
-    return emptyString();
-#endif
-}
-
-auto MediaControlsHost::externalDeviceType() const -> DeviceType
-{
-#if !ENABLE(WIRELESS_PLAYBACK_TARGET)
-    return DeviceType::None;
-#else
-    if (!m_mediaElement)
-        return DeviceType::None;
-
-    auto player = m_mediaElement->player();
-    if (!player) {
-        LOG(Media, "MediaControlsHost::externalDeviceType - returning \"none\" because player is NULL");
-        return DeviceType::None;
-    }
-
-    switch (player->wirelessPlaybackTargetType()) {
-    case MediaPlayer::WirelessPlaybackTargetType::TargetTypeNone:
-        return DeviceType::None;
-    case MediaPlayer::WirelessPlaybackTargetType::TargetTypeAirPlay:
-        return DeviceType::Airplay;
-    case MediaPlayer::WirelessPlaybackTargetType::TargetTypeTVOut:
-        return DeviceType::Tvout;
-    }
-
-    ASSERT_NOT_REACHED();
-    return DeviceType::None;
-#endif
-}
-
 bool MediaControlsHost::controlsDependOnPageScaleFactor() const
 {
     return m_mediaElement && m_mediaElement->mediaControlsDependOnPageScaleFactor();

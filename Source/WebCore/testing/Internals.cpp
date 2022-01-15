@@ -273,10 +273,6 @@
 #include "AudioContext.h"
 #endif
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-#include "MediaPlaybackTargetContext.h"
-#endif
-
 #if ENABLE(POINTER_LOCK)
 #include "PointerLockController.h"
 #endif
@@ -505,9 +501,6 @@ void Internals::resetToConsistentState(Page& page)
     PlatformMediaSessionManager::sharedManager().resetRestrictions();
     PlatformMediaSessionManager::sharedManager().setWillIgnoreSystemInterruptions(true);
 #endif
-#if ENABLE(VIDEO) || ENABLE(WEB_AUDIO)
-    PlatformMediaSessionManager::sharedManager().setIsPlayingToAutomotiveHeadUnit(false);
-#endif
 #if ENABLE(ACCESSIBILITY)
     AXObjectCache::setEnhancedUserInterfaceAccessibility(false);
     AXObjectCache::disableAccessibility();
@@ -517,11 +510,6 @@ void Internals::resetToConsistentState(Page& page)
 
 #if ENABLE(CONTENT_FILTERING)
     MockContentFilterSettings::reset();
-#endif
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    page.setMockMediaPlaybackTargetPickerEnabled(true);
-    page.setMockMediaPlaybackTargetPickerState(emptyString(), MediaPlaybackTargetContext::MockState::Unknown);
 #endif
 
 #if ENABLE(VIDEO)
@@ -554,11 +542,6 @@ Internals::Internals(Document& document)
 #if ENABLE(VIDEO)
     if (document.page())
         document.page()->group().ensureCaptionPreferences().setTestingMode(true);
-#endif
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    if (document.page())
-        document.page()->setMockMediaPlaybackTargetPickerEnabled(true);
 #endif
 
     if (contextDocument() && contextDocument()->frame()) {
@@ -3976,12 +3959,6 @@ void Internals::setMediaElementRestrictions(HTMLMediaElement& element, StringVie
             restrictions |= MediaElementSession::RequirePageConsentToLoadMedia;
         if (equalLettersIgnoringASCIICase(restrictionString, "requirepageconsenttoresumemedia"))
             restrictions |= MediaElementSession::RequirePageConsentToResumeMedia;
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-        if (equalLettersIgnoringASCIICase(restrictionString, "requireusergesturetoshowplaybacktargetpicker"))
-            restrictions |= MediaElementSession::RequireUserGestureToShowPlaybackTargetPicker;
-        if (equalLettersIgnoringASCIICase(restrictionString, "wirelessvideoplaybackdisabled"))
-            restrictions |= MediaElementSession::WirelessVideoPlaybackDisabled;
-#endif
         if (equalLettersIgnoringASCIICase(restrictionString, "requireusergestureforaudioratechange"))
             restrictions |= MediaElementSession::RequireUserGestureForAudioRateChange;
         if (equalLettersIgnoringASCIICase(restrictionString, "autopreloadingnotpermitted"))
@@ -4188,46 +4165,6 @@ void Internals::setMediaElementVolumeLocked(HTMLMediaElement& element, bool volu
 }
 #endif
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-
-void Internals::setMockMediaPlaybackTargetPickerEnabled(bool enabled)
-{
-    Page* page = contextDocument()->frame()->page();
-    ASSERT(page);
-
-    page->setMockMediaPlaybackTargetPickerEnabled(enabled);
-}
-
-ExceptionOr<void> Internals::setMockMediaPlaybackTargetPickerState(const String& deviceName, const String& deviceState)
-{
-    Page* page = contextDocument()->frame()->page();
-    ASSERT(page);
-
-    MediaPlaybackTargetContext::MockState state = MediaPlaybackTargetContext::MockState::Unknown;
-
-    if (equalLettersIgnoringASCIICase(deviceState, "deviceavailable"))
-        state = MediaPlaybackTargetContext::MockState::OutputDeviceAvailable;
-    else if (equalLettersIgnoringASCIICase(deviceState, "deviceunavailable"))
-        state = MediaPlaybackTargetContext::MockState::OutputDeviceUnavailable;
-    else if (equalLettersIgnoringASCIICase(deviceState, "unknown"))
-        state = MediaPlaybackTargetContext::MockState::Unknown;
-    else
-        return Exception { InvalidAccessError };
-
-    page->setMockMediaPlaybackTargetPickerState(deviceName, state);
-    return { };
-}
-
-void Internals::mockMediaPlaybackTargetPickerDismissPopup()
-{
-    auto* page = contextDocument()->frame()->page();
-    ASSERT(page);
-
-    page->mockMediaPlaybackTargetPickerDismissPopup();
-}
-
-#endif
-
 ExceptionOr<Ref<MockPageOverlay>> Internals::installMockPageOverlay(PageOverlayType type)
 {
     Document* document = contextDocument();
@@ -4280,12 +4217,6 @@ String Internals::pageMediaState()
         string.append("IsPlayingAudio,");
     if (state.containsAny(MediaProducer::MediaState::IsPlayingVideo))
         string.append("IsPlayingVideo,");
-    if (state.containsAny(MediaProducer::MediaState::IsPlayingToExternalDevice))
-        string.append("IsPlayingToExternalDevice,");
-    if (state.containsAny(MediaProducer::MediaState::RequiresPlaybackTargetMonitoring))
-        string.append("RequiresPlaybackTargetMonitoring,");
-    if (state.containsAny(MediaProducer::MediaState::ExternalDeviceAutoPlayCandidate))
-        string.append("ExternalDeviceAutoPlayCandidate,");
     if (state.containsAny(MediaProducer::MediaState::DidPlayToEnd))
         string.append("DidPlayToEnd,");
     if (state.containsAny(MediaProducer::MediaState::IsSourceElementPlaying))
@@ -4296,8 +4227,6 @@ String Internals::pageMediaState()
     if (state.containsAny(MediaProducer::MediaState::IsPreviousTrackControlEnabled))
         string.append("IsPreviousTrackControlEnabled,");
 
-    if (state.containsAny(MediaProducer::MediaState::HasPlaybackTargetAvailabilityListener))
-        string.append("HasPlaybackTargetAvailabilityListener,");
     if (state.containsAny(MediaProducer::MediaState::HasAudioOrVideo))
         string.append("HasAudioOrVideo,");
     if (state.containsAny(MediaProducer::MediaState::HasActiveAudioCaptureDevice))
@@ -5548,13 +5477,6 @@ void Internals::setTransientActivationDuration(double seconds)
     DOMWindow::overrideTransientActivationDurationForTesting(Seconds { seconds });
 }
 
-void Internals::setIsPlayingToAutomotiveHeadUnit(bool isPlaying)
-{
-#if ENABLE(VIDEO) || ENABLE(WEB_AUDIO)
-    PlatformMediaSessionManager::sharedManager().setIsPlayingToAutomotiveHeadUnit(isPlaying);
-#endif
-}
-
 String Internals::highlightPseudoElementColor(const String& highlightName, Element& element)
 {
     element.document().updateStyleIfNeeded();
@@ -5570,7 +5492,7 @@ String Internals::highlightPseudoElementColor(const String& highlightName, Eleme
 
     return serializationForCSS(style->color());
 }
-    
+
 Internals::TextIndicatorInfo::TextIndicatorInfo()
 {
 }
@@ -5580,7 +5502,7 @@ Internals::TextIndicatorInfo::TextIndicatorInfo(const WebCore::TextIndicatorData
     , textRectsInBoundingRectCoordinates(DOMRectList::create(data.textRectsInBoundingRectCoordinates))
 {
 }
-    
+
 Internals::TextIndicatorInfo::~TextIndicatorInfo() = default;
 
 Internals::TextIndicatorInfo Internals::textIndicatorForRange(const Range& range, TextIndicatorOptions options)

@@ -158,7 +158,6 @@ messages -> WebPageProxy {
     InterpretKeyEvent(struct WebKit::EditorState state, bool isCharEvent) -> (bool handled) Synchronous
     DidReceivePositionInformation(struct WebKit::InteractionInformationAtPosition information)
     SaveImageToLibrary(WebKit::SharedMemory::IPCHandle handle)
-    ShowPlaybackTargetPicker(bool hasVideo, WebCore::IntRect elementRect, enum:uint8_t WebCore::RouteSharingPolicy policy, String routingContextUID)
     CommitPotentialTapFailed()
     DidNotHandleTapAsClick(WebCore::IntPoint point)
     DidCompleteSyntheticClick()
@@ -422,16 +421,6 @@ messages -> WebPageProxy {
     DidResignInputElementStrongPasswordAppearance(WebKit::UserData userData)
 
     ContentRuleListNotification(URL url, struct WebCore::ContentRuleListResults results)
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET) && !PLATFORM(IOS_FAMILY)
-    AddPlaybackTargetPickerClient(WebCore::PlaybackTargetClientContextIdentifier contextId)
-    RemovePlaybackTargetPickerClient(WebCore::PlaybackTargetClientContextIdentifier contextId)
-    ShowPlaybackTargetPicker(WebCore::PlaybackTargetClientContextIdentifier contextId, WebCore::FloatRect pickerLocation, bool hasVideo)
-    PlaybackTargetPickerClientStateDidChange(WebCore::PlaybackTargetClientContextIdentifier contextId, WebCore::MediaProducer::MediaStateFlags mediaState)
-    SetMockMediaPlaybackTargetPickerEnabled(bool enabled)
-    SetMockMediaPlaybackTargetPickerState(String name, enum:uint8_t WebCore::MediaPlaybackTargetContext::MockState pickerState)
-    MockMediaPlaybackTargetPickerDismissPopup()
-#endif
 
 #if ENABLE(POINTER_LOCK)
     RequestPointerLock()

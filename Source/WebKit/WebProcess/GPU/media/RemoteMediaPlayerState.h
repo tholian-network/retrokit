@@ -43,12 +43,10 @@ struct RemoteMediaPlayerState {
     MediaTime startDate;
     MediaTime startTime;
     String languageOfPrimaryAudioTrack;
-    String wirelessPlaybackTargetName;
     WebCore::PlatformTimeRanges bufferedRanges;
     WebCore::MediaPlayerEnums::NetworkState networkState { WebCore::MediaPlayerEnums::NetworkState::Empty };
     WebCore::MediaPlayerEnums::ReadyState readyState { WebCore::MediaPlayerEnums::ReadyState::HaveNothing };
     WebCore::MediaPlayerEnums::MovieLoadType movieLoadType { WebCore::MediaPlayerEnums::MovieLoadType::Unknown };
-    WebCore::MediaPlayerEnums::WirelessPlaybackTargetType wirelessPlaybackTargetType { WebCore::MediaPlayerEnums::WirelessPlaybackTargetType::TargetTypeNone };
     WebCore::FloatSize naturalSize;
     double maxFastForwardRate { 0 };
     double minFastReverseRate { 0 };
@@ -63,7 +61,6 @@ struct RemoteMediaPlayerState {
     bool hasVideo { false };
     bool hasClosedCaptions { false };
     bool hasAvailableVideoFrame { false };
-    bool wirelessVideoPlaybackDisabled { false };
     bool hasSingleSecurityOrigin { false };
     bool didPassCORSAccessCheck { false };
 
@@ -76,12 +73,10 @@ struct RemoteMediaPlayerState {
         encoder << startDate;
         encoder << startTime;
         encoder << languageOfPrimaryAudioTrack;
-        encoder << wirelessPlaybackTargetName;
         encoder << bufferedRanges;
         encoder << networkState;
         encoder << readyState;
         encoder << movieLoadType;
-        encoder << wirelessPlaybackTargetType;
         encoder << naturalSize;
         encoder << maxFastForwardRate;
         encoder << minFastReverseRate;
@@ -96,7 +91,6 @@ struct RemoteMediaPlayerState {
         encoder << hasVideo;
         encoder << hasClosedCaptions;
         encoder << hasAvailableVideoFrame;
-        encoder << wirelessVideoPlaybackDisabled;
         encoder << hasSingleSecurityOrigin;
         encoder << didPassCORSAccessCheck;
     }
@@ -134,11 +128,6 @@ struct RemoteMediaPlayerState {
         if (!languageOfPrimaryAudioTrack)
             return std::nullopt;
 
-        std::optional<String> wirelessPlaybackTargetName;
-        decoder >> wirelessPlaybackTargetName;
-        if (!wirelessPlaybackTargetName)
-            return std::nullopt;
-
         std::optional<WebCore::PlatformTimeRanges> bufferedRanges;
         decoder >> bufferedRanges;
         if (!bufferedRanges)
@@ -154,10 +143,6 @@ struct RemoteMediaPlayerState {
 
         WebCore::MediaPlayerEnums::MovieLoadType movieLoadType;
         if (!decoder.decode(movieLoadType))
-            return std::nullopt;
-
-        WebCore::MediaPlayerEnums::WirelessPlaybackTargetType wirelessPlaybackTargetType;
-        if (!decoder.decode(wirelessPlaybackTargetType))
             return std::nullopt;
 
         std::optional<WebCore::FloatSize> naturalSize;
@@ -230,11 +215,6 @@ struct RemoteMediaPlayerState {
         if (!hasAvailableVideoFrame)
             return std::nullopt;
 
-        std::optional<bool> wirelessVideoPlaybackDisabled;
-        decoder >> wirelessVideoPlaybackDisabled;
-        if (!wirelessVideoPlaybackDisabled)
-            return std::nullopt;
-
         std::optional<bool> hasSingleSecurityOrigin;
         decoder >> hasSingleSecurityOrigin;
         if (!hasSingleSecurityOrigin)
@@ -252,12 +232,10 @@ struct RemoteMediaPlayerState {
             WTFMove(*startDate),
             WTFMove(*startTime),
             WTFMove(*languageOfPrimaryAudioTrack),
-            WTFMove(*wirelessPlaybackTargetName),
             WTFMove(*bufferedRanges),
             networkState,
             readyState,
             movieLoadType,
-            wirelessPlaybackTargetType,
             WTFMove(*naturalSize),
             *maxFastForwardRate,
             *minFastReverseRate,
@@ -272,7 +250,6 @@ struct RemoteMediaPlayerState {
             *hasVideo,
             *hasClosedCaptions,
             *hasAvailableVideoFrame,
-            *wirelessVideoPlaybackDisabled,
             *hasSingleSecurityOrigin,
             *didPassCORSAccessCheck
         }};

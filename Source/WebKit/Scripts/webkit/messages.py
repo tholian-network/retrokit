@@ -288,7 +288,6 @@ def types_that_cannot_be_forward_declared():
         'WebCore::MediaSessionIdentifier',
         'WebCore::NativeImageReference',
         'WebCore::PageIdentifier',
-        'WebCore::PlaybackTargetClientContextIdentifier',
         'WebCore::PointerID',
         'WebCore::ProcessIdentifier',
         'WebCore::RealtimeMediaSourceIdentifier',
@@ -345,7 +344,6 @@ def conditions_for_header(header):
         '"InputMethodState.h"': ["PLATFORM(GTK)", "PLATFORM(WPE)"],
         '"LayerHostingContext.h"': ["PLATFORM(COCOA)", ],
         '"GestureTypes.h"': ["PLATFORM(IOS_FAMILY)"],
-        '<WebCore/MediaPlaybackTargetContext.h>': ["ENABLE(WIRELESS_PLAYBACK_TARGET)"],
         '<WebCore/DataDetectorType.h>': ["ENABLE(DATA_DETECTION)"],
     }
     if not header in conditions:

@@ -277,14 +277,11 @@ namespace WebCore {
     macro(webkitAnimationStart) \
     macro(webkitBeforeTextInserted) \
     macro(webkitTransitionEnd) \
-    macro(webkitcurrentplaybacktargetiswirelesschanged) \
     macro(webkitmouseforcechanged) \
     macro(webkitmouseforcedown) \
     macro(webkitmouseforcewillbegin) \
     macro(webkitmouseforceup) \
     macro(webkitnetworkinfochange) \
-    macro(webkitplaybacktargetavailabilitychanged) \
-    macro(webkitpresentationmodechanged) \
     macro(webkitregionoversetchange) \
     macro(webkitremovesourcebuffer) \
     macro(webkitsourceclose) \

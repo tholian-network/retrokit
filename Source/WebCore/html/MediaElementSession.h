@@ -82,20 +82,6 @@ public:
     bool pageAllowsDataLoading() const;
     bool pageAllowsPlaybackAfterResuming() const;
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    void showPlaybackTargetPicker();
-    bool hasWirelessPlaybackTargets() const;
-
-    bool wirelessVideoPlaybackDisabled() const;
-    void setWirelessVideoPlaybackDisabled(bool);
-
-    void setHasPlaybackTargetAvailabilityListeners(bool);
-
-    bool isPlayingToWirelessPlaybackTarget() const override;
-
-    void mediaStateDidChange(MediaProducer::MediaStateFlags);
-#endif
-
     MediaPlayer::Preload effectivePreloadForElement() const;
     bool allowsAutomaticMediaDataLoading() const;
 
@@ -116,9 +102,6 @@ public:
         RequirePageConsentToLoadMedia = 1 << 3,
         RequirePageConsentToResumeMedia = 1 << 4,
         RequireUserGestureForAudioRateChange = 1 << 5,
-        RequireUserGestureToShowPlaybackTargetPicker = 1 << 6,
-        WirelessVideoPlaybackDisabled =  1 << 7,
-        RequireUserGestureToAutoplayToExternalDevice = 1 << 8,
         AutoPreloadingNotPermitted = 1 << 10,
         InvisibleAutoplayNotPermitted = 1 << 11,
         OverrideUserGestureRequirementForMainContent = 1 << 12,
@@ -181,18 +164,6 @@ public:
 
 private:
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    void targetAvailabilityChangedTimerFired();
-
-    // MediaPlaybackTargetClient
-    void setPlaybackTarget(Ref<MediaPlaybackTarget>&&) override;
-    void externalOutputDeviceAvailableDidChange(bool) override;
-    void setShouldPlayToPlaybackTarget(bool) override;
-    void playbackTargetPickerWasDismissed() override;
-#endif
-#if PLATFORM(IOS_FAMILY)
-    bool requiresPlaybackTargetRouteMonitoring() const override;
-#endif
     void ensureIsObservingMediaSession();
 
     bool updateIsMainContent() const;
@@ -211,16 +182,6 @@ private:
 
     bool m_elementIsHiddenUntilVisibleInViewport { false };
     bool m_elementIsHiddenBecauseItWasRemovedFromDOM { false };
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    mutable Timer m_targetAvailabilityChangedTimer;
-    RefPtr<MediaPlaybackTarget> m_playbackTarget;
-    bool m_shouldPlayToPlaybackTarget { false };
-    mutable bool m_hasPlaybackTargets { false };
-#endif
-#if PLATFORM(IOS_FAMILY)
-    bool m_hasPlaybackTargetAvailabilityListeners { false };
-#endif
 
     MonotonicTime m_mostRecentUserInteractionTime;
 

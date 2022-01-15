@@ -21,7 +21,6 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 // THE POSSIBILITY OF SUCH DAMAGE.
 
-Modules/airplay/WebKitPlaybackTargetAvailabilityEvent.cpp
 Modules/applicationmanifest/ApplicationManifestParser.cpp
 Modules/async-clipboard/Clipboard.cpp
 Modules/async-clipboard/ClipboardImageReader.cpp
@@ -150,7 +149,6 @@ Modules/notifications/NotificationController.cpp
 Modules/permissions/NavigatorPermissions.cpp
 Modules/permissions/PermissionStatus.cpp
 Modules/permissions/Permissions.cpp
-Modules/remoteplayback/RemotePlayback.cpp
 Modules/speech/SpeechRecognition.cpp
 Modules/speech/SpeechRecognitionAlternative.cpp
 Modules/speech/SpeechRecognitionErrorEvent.cpp
@@ -3091,8 +3089,6 @@ JSReadableStreamDefaultReader.cpp
 JSReadableStreamSink.cpp
 JSReadableStreamSource.cpp
 JSRemoteDOMWindow.cpp
-JSRemotePlayback.cpp
-JSRemotePlaybackAvailabilityCallback.cpp
 JSRequestAnimationFrameCallback.cpp
 JSResizeObserver.cpp
 JSResizeObserverCallback.cpp
@@ -3388,7 +3384,6 @@ JSWebGLVertexArrayObject.cpp
 JSWebGLVertexArrayObjectOES.cpp
 JSWebKitAnimationEvent.cpp
 JSWebKitNamespace.cpp
-JSWebKitPlaybackTargetAvailabilityEvent.cpp
 JSWebKitPoint.cpp
 JSWebKitTransitionEvent.cpp
 JSWebSocket.cpp

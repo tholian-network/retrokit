@@ -452,13 +452,6 @@ void MediaPlayerPrivateRemote::acceleratedRenderingStateChanged()
         connection().send(Messages::RemoteMediaPlayerProxy::AcceleratedRenderingStateChanged(player->renderingCanBeAccelerated()), m_id);
 }
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-bool MediaPlayerPrivateRemote::canPlayToWirelessPlaybackTarget() const
-{
-    return m_configuration.canPlayToWirelessPlaybackTarget;
-}
-#endif
-
 void MediaPlayerPrivateRemote::updateCachedState(RemoteMediaPlayerState&& state)
 {
     const Seconds playbackQualityMetricsTimeout = 30_s;
@@ -471,8 +464,6 @@ void MediaPlayerPrivateRemote::updateCachedState(RemoteMediaPlayerState&& state)
     m_cachedState.paused = state.paused;
     m_cachedState.naturalSize = state.naturalSize;
     m_cachedState.movieLoadType = state.movieLoadType;
-    m_cachedState.wirelessPlaybackTargetType = state.wirelessPlaybackTargetType;
-    m_cachedState.wirelessPlaybackTargetName = state.wirelessPlaybackTargetName;
 
     m_cachedState.startDate = state.startDate;
     m_cachedState.startTime = state.startTime;
@@ -492,7 +483,6 @@ void MediaPlayerPrivateRemote::updateCachedState(RemoteMediaPlayerState&& state)
 
     m_cachedState.hasClosedCaptions = state.hasClosedCaptions;
     m_cachedState.hasAvailableVideoFrame = state.hasAvailableVideoFrame;
-    m_cachedState.wirelessVideoPlaybackDisabled = state.wirelessVideoPlaybackDisabled;
     m_cachedState.hasSingleSecurityOrigin = state.hasSingleSecurityOrigin;
     m_cachedState.didPassCORSAccessCheck = state.didPassCORSAccessCheck;
     m_cachedState.wouldTaintDocumentSecurityOrigin = state.wouldTaintDocumentSecurityOrigin;
@@ -931,50 +921,6 @@ bool MediaPlayerPrivateRemote::hasAvailableVideoFrame() const
 {
     return m_cachedState.hasAvailableVideoFrame;
 }
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-String MediaPlayerPrivateRemote::wirelessPlaybackTargetName() const
-{
-    return m_cachedState.wirelessPlaybackTargetName;
-}
-
-MediaPlayer::WirelessPlaybackTargetType MediaPlayerPrivateRemote::wirelessPlaybackTargetType() const
-{
-    return m_cachedState.wirelessPlaybackTargetType;
-}
-
-bool MediaPlayerPrivateRemote::wirelessVideoPlaybackDisabled() const
-{
-    return m_cachedState.wirelessVideoPlaybackDisabled;
-}
-
-void MediaPlayerPrivateRemote::setWirelessVideoPlaybackDisabled(bool disabled)
-{
-    connection().send(Messages::RemoteMediaPlayerProxy::SetWirelessVideoPlaybackDisabled(disabled), m_id);
-}
-
-void MediaPlayerPrivateRemote::currentPlaybackTargetIsWirelessChanged(bool isCurrentPlaybackTargetWireless)
-{
-    m_isCurrentPlaybackTargetWireless = isCurrentPlaybackTargetWireless;
-    if (auto player = makeRefPtr(m_player.get()))
-        player->currentPlaybackTargetIsWirelessChanged(isCurrentPlaybackTargetWireless);
-}
-
-bool MediaPlayerPrivateRemote::isCurrentPlaybackTargetWireless() const
-{
-    return m_isCurrentPlaybackTargetWireless;
-}
-
-void MediaPlayerPrivateRemote::setWirelessPlaybackTarget(Ref<MediaPlaybackTarget>&& target)
-{
-    connection().send(Messages::RemoteMediaPlayerProxy::SetWirelessPlaybackTarget(target->targetContext()), m_id);
-}
-
-void MediaPlayerPrivateRemote::setShouldPlayToPlaybackTarget(bool shouldPlay)
-{
-    connection().send(Messages::RemoteMediaPlayerProxy::SetShouldPlayToPlaybackTarget(shouldPlay), m_id);
-}
-#endif
 
 bool MediaPlayerPrivateRemote::hasSingleSecurityOrigin() const
 {

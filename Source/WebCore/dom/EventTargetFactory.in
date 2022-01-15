@@ -31,7 +31,6 @@ Notification conditional=NOTIFICATIONS
 OffscreenCanvas conditional=OFFSCREEN_CANVAS
 Performance
 PermissionStatus
-RemotePlayback conditional=WIRELESS_PLAYBACK_TARGET
 ServiceWorker conditional=SERVICE_WORKER
 ServiceWorkerContainer conditional=SERVICE_WORKER
 ServiceWorkerGlobalScope conditional=SERVICE_WORKER

@@ -56,10 +56,6 @@
 #include <wtf/MonotonicTime.h>
 #include <wtf/Seconds.h>
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-#include "MediaPlaybackTargetContext.h"
-#endif
-
 #if PLATFORM(IOS_FAMILY)
 #include "PlatformLayer.h"
 #include "WKContentObservation.h"
@@ -287,7 +283,6 @@ public:
     virtual void removeScrollingLayer(Node*, PlatformLayer* scrollingLayer, PlatformLayer* contentsLayer) = 0;
 
     virtual void webAppOrientationsUpdated() = 0;
-    virtual void showPlaybackTargetPicker(bool hasVideo, RouteSharingPolicy, const String&) = 0;
 
     virtual bool showDataDetectorsUIForElement(const Element&, const Event&) = 0;
 #endif
@@ -314,10 +309,10 @@ public:
     virtual void runOpenPanel(Frame&, FileChooser&) = 0;
     virtual void showShareSheet(ShareDataWithParsedURL&, WTF::CompletionHandler<void(bool)>&& callback) { callback(false); }
     virtual void showContactPicker(const ContactsRequestData&, WTF::CompletionHandler<void(std::optional<Vector<ContactInfo>>&&)>&& callback) { callback(std::nullopt); }
-    
+
     // Asynchronous request to load an icon for specified filenames.
     virtual void loadIconForFiles(const Vector<String>&, FileIconLoader&) = 0;
-        
+
     virtual void elementDidFocus(Element&) { }
     virtual void elementDidBlur(Element&) { }
     virtual void elementDidRefocus(Element&) { }
@@ -329,7 +324,7 @@ public:
 
     // Allows ports to customize the type of graphics layers created by this page.
     virtual GraphicsLayerFactory* graphicsLayerFactory() const { return nullptr; }
-    
+
     virtual DisplayRefreshMonitorFactory* displayRefreshMonitorFactory() const { return nullptr; }
 
     virtual RefPtr<ImageBuffer> createImageBuffer(const FloatSize&, RenderingMode, RenderingPurpose, float, const DestinationColorSpace&, PixelFormat) const { return nullptr; }
@@ -370,7 +365,7 @@ public:
 
     // Returns a bitfield indicating conditions that can trigger the compositor.
     virtual CompositingTriggerFlags allowedCompositingTriggers() const { return static_cast<CompositingTriggerFlags>(AllTriggers); }
-    
+
     // Returns true if layer tree updates are disabled.
     virtual bool layerTreeStateIsFrozen() const { return false; }
 
@@ -436,7 +431,7 @@ public:
     virtual std::optional<ScrollbarOverlayStyle> preferredScrollbarOverlayStyle() { return std::nullopt; }
 
     virtual void wheelEventHandlersChanged(bool hasHandlers) = 0;
-        
+
     virtual bool isSVGImageChromeClient() const { return false; }
 
 #if ENABLE(POINTER_LOCK)
@@ -482,16 +477,6 @@ public:
     virtual void handleAutoFillButtonClick(HTMLInputElement&) { }
 
     virtual void inputElementDidResignStrongPasswordAppearance(HTMLInputElement&) { };
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    virtual void addPlaybackTargetPickerClient(PlaybackTargetClientContextIdentifier) { }
-    virtual void removePlaybackTargetPickerClient(PlaybackTargetClientContextIdentifier) { }
-    virtual void showPlaybackTargetPicker(PlaybackTargetClientContextIdentifier, const IntPoint&, bool /*isVideo*/) { }
-    virtual void playbackTargetPickerClientStateDidChange(PlaybackTargetClientContextIdentifier, MediaProducer::MediaStateFlags) { }
-    virtual void setMockMediaPlaybackTargetPickerEnabled(bool)  { }
-    virtual void setMockMediaPlaybackTargetPickerState(const String&, MediaPlaybackTargetContext::MockState) { }
-    virtual void mockMediaPlaybackTargetPickerDismissPopup() { }
-#endif
 
     virtual void imageOrMediaDocumentSizeChanged(const IntSize&) { }
 

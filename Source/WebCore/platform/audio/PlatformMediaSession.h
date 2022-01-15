@@ -34,14 +34,9 @@
 #include <wtf/WeakPtr.h>
 #include <wtf/text/WTFString.h>
 
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-#include "MediaPlaybackTargetClient.h"
-#endif
-
 namespace WebCore {
 
 class Document;
-class MediaPlaybackTarget;
 class PlatformMediaSessionClient;
 class PlatformMediaSessionManager;
 enum class DelayCallingUpdateNowPlaying { No, Yes };
@@ -49,9 +44,6 @@ struct NowPlayingInfo;
 
 class PlatformMediaSession
     : public CanMakeWeakPtr<PlatformMediaSession>
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    , public MediaPlaybackTargetClient
-#endif
 #if !RELEASE_LOG_DISABLED
     , private LoggerHelper
 #endif
@@ -160,23 +152,6 @@ public:
     bool isSuspended() const;
     bool isPlaying() const;
 
-    bool shouldOverrideBackgroundLoadingRestriction() const;
-
-    virtual bool isPlayingToWirelessPlaybackTarget() const { return m_isPlayingToWirelessPlaybackTarget; }
-    void isPlayingToWirelessPlaybackTargetChanged(bool);
-
-#if ENABLE(WIRELESS_PLAYBACK_TARGET)
-    // MediaPlaybackTargetClient
-    void setPlaybackTarget(Ref<MediaPlaybackTarget>&&) override { }
-    void externalOutputDeviceAvailableDidChange(bool) override { }
-    void setShouldPlayToPlaybackTarget(bool) override { }
-    void playbackTargetPickerWasDismissed() override { }
-#endif
-
-#if PLATFORM(IOS_FAMILY)
-    virtual bool requiresPlaybackTargetRouteMonitoring() const { return false; }
-#endif
-
     bool activeAudioSessionRequired() const;
     bool canProduceAudio() const;
     void canProduceAudioChanged();
@@ -223,7 +198,6 @@ private:
     int m_interruptionCount { 0 };
     bool m_active { false };
     bool m_notifyingClient { false };
-    bool m_isPlayingToWirelessPlaybackTarget { false };
     bool m_hasPlayedSinceLastInterruption { false };
 
 #if !RELEASE_LOG_DISABLED
@@ -238,7 +212,7 @@ class PlatformMediaSessionClient {
     WTF_MAKE_NONCOPYABLE(PlatformMediaSessionClient);
 public:
     PlatformMediaSessionClient() = default;
-    
+
     virtual PlatformMediaSession::MediaType mediaType() const = 0;
     virtual PlatformMediaSession::MediaType presentationType() const = 0;
     virtual PlatformMediaSession::DisplayType displayType() const { return PlatformMediaSession::Normal; }
@@ -254,15 +228,6 @@ public:
     virtual bool canProduceAudio() const { return false; }
     virtual bool isSuspended() const { return false; };
     virtual bool isPlaying() const { return false; };
-
-    virtual bool shouldOverrideBackgroundPlaybackRestriction(PlatformMediaSession::InterruptionType) const = 0;
-    virtual bool shouldOverrideBackgroundLoadingRestriction() const { return false; }
-
-    virtual void wirelessRoutesAvailableDidChange() { }
-    virtual void setWirelessPlaybackTarget(Ref<MediaPlaybackTarget>&&) { }
-    virtual bool isPlayingToWirelessPlaybackTarget() const { return false; }
-    virtual void setShouldPlayToPlaybackTarget(bool) { }
-    virtual void playbackTargetPickerWasDismissed() { }
 
     virtual bool isPlayingOnSecondScreen() const { return false; }
 
