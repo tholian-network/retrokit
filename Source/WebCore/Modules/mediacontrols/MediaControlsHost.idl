@@ -23,12 +23,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-enum DeviceType {
-    "none",
-    "airplay",
-    "tvout"
-};
-
 [
     Conditional=MEDIA_CONTROLS_SCRIPT,
     ImplementationLacksVTable,
