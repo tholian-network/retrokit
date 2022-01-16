@@ -29,10 +29,8 @@
 #include "APIURLResponse.h"
 #include "ImageOptions.h"
 #include "InjectedBundle.h"
-#include "WebContextMenuItem.h"
 #include "WebImage.h"
 #include "WebKitConsoleMessagePrivate.h"
-#include "WebKitContextMenuPrivate.h"
 #include "WebKitDOMDocumentPrivate.h"
 #include "WebKitDOMElementPrivate.h"
 #include "WebKitDOMNodePrivate.h"
@@ -66,7 +64,6 @@ using namespace WebCore;
 enum {
     DOCUMENT_LOADED,
     SEND_REQUEST,
-    CONTEXT_MENU,
     CONSOLE_MESSAGE_SENT,
     FORM_CONTROLS_ASSOCIATED,
     FORM_CONTROLS_ASSOCIATED_FOR_FRAME,
@@ -323,35 +320,6 @@ private:
     WebKitWebPage* m_webPage;
 };
 
-class PageContextMenuClient final : public API::InjectedBundle::PageContextMenuClient {
-public:
-    explicit PageContextMenuClient(WebKitWebPage* webPage)
-        : m_webPage(webPage)
-    {
-    }
-
-private:
-    bool getCustomMenuFromDefaultItems(WebPage&, const WebCore::HitTestResult& hitTestResult, const Vector<WebCore::ContextMenuItem>& defaultMenu, Vector<WebContextMenuItemData>& newMenu, RefPtr<API::Object>& userData) override
-    {
-        GRefPtr<WebKitContextMenu> contextMenu = adoptGRef(webkitContextMenuCreate(kitItems(defaultMenu)));
-        GRefPtr<WebKitWebHitTestResult> webHitTestResult = adoptGRef(webkitWebHitTestResultCreate(hitTestResult));
-        gboolean returnValue;
-        g_signal_emit(m_webPage, signals[CONTEXT_MENU], 0, contextMenu.get(), webHitTestResult.get(), &returnValue);
-        if (GVariant* variant = webkit_context_menu_get_user_data(contextMenu.get())) {
-            GUniquePtr<gchar> dataString(g_variant_print(variant, TRUE));
-            userData = API::String::create(String::fromUTF8(dataString.get()));
-        }
-
-        if (!returnValue)
-            return false;
-
-        webkitContextMenuPopulate(contextMenu.get(), newMenu);
-        return true;
-    }
-
-    WebKitWebPage* m_webPage;
-};
-
 class PageUIClient final : public API::InjectedBundle::PageUIClient {
 public:
     explicit PageUIClient(WebKitWebPage* webPage)
@@ -502,36 +470,6 @@ static void webkit_web_page_class_init(WebKitWebPageClass* klass)
         G_TYPE_BOOLEAN, 2,
         WEBKIT_TYPE_URI_REQUEST,
         WEBKIT_TYPE_URI_RESPONSE);
-
-    /**
-     * WebKitWebPage::context-menu:
-     * @web_page: the #WebKitWebPage on which the signal is emitted
-     * @context_menu: the proposed #WebKitContextMenu
-     * @hit_test_result: a #WebKitWebHitTestResult
-     *
-     * Emitted before a context menu is displayed in the UI Process to
-     * give the application a chance to customize the proposed menu,
-     * build its own context menu or pass user data to the UI Process.
-     * This signal is useful when the information available in the UI Process
-     * is not enough to build or customize the context menu, for example, to
-     * add menu entries depending on the #WebKitDOMNode at the coordinates of the
-     * @hit_test_result. Otherwise, it's recommended to use #WebKitWebView::context-menu
-     * signal instead.
-     *
-     * Returns: %TRUE if the proposed @context_menu has been modified, or %FALSE otherwise.
-     *
-     * Since: 2.8
-     */
-    signals[CONTEXT_MENU] = g_signal_new(
-        "context-menu",
-        G_TYPE_FROM_CLASS(klass),
-        G_SIGNAL_RUN_LAST,
-        0,
-        g_signal_accumulator_true_handled, nullptr,
-        g_cclosure_marshal_generic,
-        G_TYPE_BOOLEAN, 2,
-        WEBKIT_TYPE_CONTEXT_MENU,
-        WEBKIT_TYPE_WEB_HIT_TEST_RESULT);
 
     /**
      * WebKitWebPage::console-message-sent:
@@ -712,7 +650,6 @@ WebKitWebPage* webkitWebPageCreate(WebPage* webPage)
 
     webPage->setInjectedBundleResourceLoadClient(makeUnique<PageResourceLoadClient>(page));
     webPage->setInjectedBundlePageLoaderClient(makeUnique<PageLoaderClient>(page));
-    webPage->setInjectedBundleContextMenuClient(makeUnique<PageContextMenuClient>(page));
     webPage->setInjectedBundleUIClient(makeUnique<PageUIClient>(page));
     webPage->setInjectedBundleFormClient(makeUnique<PageFormClient>(page));
 

@@ -2516,7 +2516,6 @@
         },
         "cursor": {
             "values": [
-                "context-menu",
                 "help",
                 "pointer",
                 "progress",

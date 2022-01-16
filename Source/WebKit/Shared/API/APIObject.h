@@ -59,7 +59,6 @@ public:
         AuthenticationDecisionListener,
         CertificateInfo,
         Connection,
-        ContextMenuItem,
         Credential,
         Data,
         Dictionary,
@@ -91,12 +90,12 @@ public:
         Double,
         UInt64,
         Int64,
-        
+
         // Geometry types
         Point,
         Size,
         Rect,
-        
+
         // UIProcess types
         ApplicationCacheManager,
 #if ENABLE(APPLICATION_MANIFEST)
@@ -112,10 +111,6 @@ public:
         ContentRuleListAction,
         ContentRuleListStore,
         ContentWorld,
-#if PLATFORM(IOS_FAMILY)
-        ContextMenuElementInfo,
-#endif
-        ContextMenuListener,
         CustomHeaderFields,
         InternalDebugFeature,
         DebuggableInfo,
@@ -133,9 +128,6 @@ public:
         IconDatabase,
         Inspector,
         InspectorConfiguration,
-#if ENABLE(INSPECTOR_EXTENSIONS)
-        InspectorExtension,
-#endif
         KeyValueStorageManager,
         MediaCacheManager,
         MessageListener,
@@ -305,7 +297,6 @@ template<> struct EnumTraits<API::Object::Type> {
         API::Object::Type::AuthenticationDecisionListener,
         API::Object::Type::CertificateInfo,
         API::Object::Type::Connection,
-        API::Object::Type::ContextMenuItem,
         API::Object::Type::Credential,
         API::Object::Type::Data,
         API::Object::Type::Dictionary,
@@ -356,10 +347,6 @@ template<> struct EnumTraits<API::Object::Type> {
         API::Object::Type::ContentRuleListAction,
         API::Object::Type::ContentRuleListStore,
         API::Object::Type::ContentWorld,
-#if PLATFORM(IOS_FAMILY)
-        API::Object::Type::ContextMenuElementInfo,
-#endif
-        API::Object::Type::ContextMenuListener,
         API::Object::Type::CustomHeaderFields,
         API::Object::Type::InternalDebugFeature,
         API::Object::Type::DebuggableInfo,
@@ -377,9 +364,6 @@ template<> struct EnumTraits<API::Object::Type> {
         API::Object::Type::IconDatabase,
         API::Object::Type::Inspector,
         API::Object::Type::InspectorConfiguration,
-#if ENABLE(INSPECTOR_EXTENSIONS)
-        API::Object::Type::InspectorExtension,
-#endif
         API::Object::Type::KeyValueStorageManager,
         API::Object::Type::MediaCacheManager,
         API::Object::Type::MessageListener,

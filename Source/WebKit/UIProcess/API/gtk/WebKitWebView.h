@@ -52,7 +52,6 @@
 #include <webkit2/WebKitUserContentManager.h>
 #include <webkit2/WebKitUserMessage.h>
 #include <webkit2/WebKitWebContext.h>
-#include <webkit2/WebKitWebInspector.h>
 #include <webkit2/WebKitWebResource.h>
 #include <webkit2/WebKitWebsitePolicies.h>
 #include <webkit2/WebKitWebViewBase.h>
@@ -264,11 +263,6 @@ struct _WebKitWebViewClass {
     gboolean   (* leave_fullscreen)            (WebKitWebView               *web_view);
     gboolean   (* run_file_chooser)            (WebKitWebView               *web_view,
                                                 WebKitFileChooserRequest    *request);
-    gboolean   (* context_menu)                (WebKitWebView               *web_view,
-                                                WebKitContextMenu           *context_menu,
-                                                GdkEvent                    *event,
-                                                WebKitHitTestResult         *hit_test_result);
-    void       (* context_menu_dismissed)      (WebKitWebView               *web_view);
     void       (* submit_form)                 (WebKitWebView               *web_view,
                                                 WebKitFormSubmissionRequest *request);
     void       (* insecure_content_detected)   (WebKitWebView               *web_view,
@@ -502,9 +496,6 @@ webkit_web_view_run_javascript_from_gresource_finish (WebKitWebView             
 
 WEBKIT_API WebKitWebResource *
 webkit_web_view_get_main_resource                    (WebKitWebView             *web_view);
-
-WEBKIT_API WebKitWebInspector *
-webkit_web_view_get_inspector                        (WebKitWebView             *web_view);
 
 WEBKIT_API gboolean
 webkit_web_view_can_show_mime_type                   (WebKitWebView             *web_view,

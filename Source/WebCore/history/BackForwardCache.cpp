@@ -174,10 +174,10 @@ static bool canCacheFrame(Frame& frame, DiagnosticLoggingClient& diagnosticLoggi
         if (!canCacheFrame(*child, diagnosticLoggingClient, indentLevel + 1))
             isCacheable = false;
     }
-    
+
     PCLOG(isCacheable ? " Frame CAN be cached" : " Frame CANNOT be cached");
     PCLOG("+---");
-    
+
     return isCacheable;
 }
 
@@ -191,7 +191,7 @@ static bool canCachePage(Page& page)
     DiagnosticLoggingClient& diagnosticLoggingClient = page.diagnosticLoggingClient();
     bool isCacheable = canCacheFrame(page.mainFrame(), diagnosticLoggingClient, indentLevel + 1);
 
-    if (!page.settings().usesBackForwardCache() || page.isResourceCachingDisabledByWebInspector()) {
+    if (!page.settings().usesBackForwardCache()) {
         PCLOG("   -Page settings says b/f cache disabled");
         logBackForwardCacheFailureDiagnosticMessage(diagnosticLoggingClient, DiagnosticLoggingKeys::isDisabledKey());
         isCacheable = false;
@@ -487,7 +487,7 @@ std::unique_ptr<CachedPage> BackForwardCache::take(HistoryItem& item, Page* page
 
     RELEASE_LOG(BackForwardCache, "BackForwardCache::take item: %s, size: %u / %u", item.identifier().string().utf8().data(), pageCount(), maxSize());
 
-    if (cachedPage->hasExpired() || (page && page->isResourceCachingDisabledByWebInspector())) {
+    if (cachedPage->hasExpired()) {
         LOG(BackForwardCache, "Not restoring page for %s from back/forward cache because cache entry has expired", item.url().string().ascii().data());
         logBackForwardCacheFailureDiagnosticMessage(page, DiagnosticLoggingKeys::expiredKey());
         return nullptr;
@@ -524,7 +524,7 @@ CachedPage* BackForwardCache::get(HistoryItem& item, Page* page)
         return nullptr;
     }
 
-    if (cachedPage->hasExpired() || (page && page->isResourceCachingDisabledByWebInspector())) {
+    if (cachedPage->hasExpired()) {
         LOG(BackForwardCache, "Not restoring page for %s from back/forward cache because cache entry has expired", item.url().string().ascii().data());
         logBackForwardCacheFailureDiagnosticMessage(page, DiagnosticLoggingKeys::expiredKey());
         remove(item);

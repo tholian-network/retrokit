@@ -62,8 +62,6 @@ namespace WebCore {
         void clearClient() { m_client = nullptr; }
 
         friend CrossOriginPreflightChecker;
-        friend class InspectorInstrumentation;
-        friend class InspectorNetworkAgent;
 
         using RefCounted<DocumentThreadableLoader>::ref;
         using RefCounted<DocumentThreadableLoader>::deref;

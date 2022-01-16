@@ -70,7 +70,6 @@
 #include "HTMLTemplateElement.h"
 #include "IdChangeInvalidation.h"
 #include "IdTargetObserverRegistry.h"
-#include "InspectorInstrumentation.h"
 #include "JSLazyEventListener.h"
 #include "KeyboardEvent.h"
 #include "KeyframeAnimationOptions.h"
@@ -2341,8 +2340,6 @@ void Element::addShadowRoot(Ref<ShadowRoot>&& newShadowRoot)
         notifyChildNodeInserted(*this, shadowRoot);
 #endif
 
-        InspectorInstrumentation::didPushShadowRoot(*this, shadowRoot);
-
         invalidateStyleAndRenderersForSubtree();
     }
 
@@ -2356,7 +2353,6 @@ void Element::removeShadowRoot()
     if (!oldRoot)
         return;
 
-    InspectorInstrumentation::willPopShadowRoot(*this, *oldRoot);
     document().adjustFocusedNodeOnNodeRemoval(*oldRoot);
 
     ASSERT(!oldRoot->renderer());
@@ -2466,7 +2462,6 @@ void Element::setIsDefinedCustomElement(JSCustomElementInterface& elementInterfa
     if (!data.customElementReactionQueue())
         data.setCustomElementReactionQueue(makeUnique<CustomElementReactionQueue>(elementInterface));
     invalidateStyleForSubtree();
-    InspectorInstrumentation::didChangeCustomElementState(*this);
 }
 
 void Element::setIsFailedCustomElement()
@@ -2480,7 +2475,6 @@ void Element::setIsFailedCustomElementWithoutClearingReactionQueue()
     ASSERT(isUndefinedCustomElement());
     ASSERT(customElementState() == CustomElementState::Undefined);
     setCustomElementState(CustomElementState::Failed);
-    InspectorInstrumentation::didChangeCustomElementState(*this);
 }
 
 void Element::clearReactionQueueFromFailedCustomElement()
@@ -2497,7 +2491,6 @@ void Element::setIsCustomElementUpgradeCandidate()
 {
     ASSERT(customElementState() == CustomElementState::Uncustomized);
     setCustomElementState(CustomElementState::Undefined);
-    InspectorInstrumentation::didChangeCustomElementState(*this);
 }
 
 void Element::enqueueToUpgrade(JSCustomElementInterface& elementInterface)
@@ -4160,28 +4153,22 @@ void Element::willModifyAttribute(const QualifiedName& name, const AtomString& o
 
     if (auto recipients = MutationObserverInterestGroup::createForAttributesMutation(*this, name))
         recipients->enqueueMutationRecord(MutationRecord::createAttributes(*this, name, oldValue));
-
-    InspectorInstrumentation::willModifyDOMAttr(document(), *this, oldValue, newValue);
 }
 
 void Element::didAddAttribute(const QualifiedName& name, const AtomString& value)
 {
     attributeChanged(name, nullAtom(), value);
-    InspectorInstrumentation::didModifyDOMAttr(document(), *this, name.toString(), value);
     dispatchSubtreeModifiedEvent();
 }
 
 void Element::didModifyAttribute(const QualifiedName& name, const AtomString& oldValue, const AtomString& newValue)
 {
     attributeChanged(name, oldValue, newValue);
-    InspectorInstrumentation::didModifyDOMAttr(document(), *this, name.toString(), newValue);
-    // Do not dispatch a DOMSubtreeModified event here; see bug 81141.
 }
 
 void Element::didRemoveAttribute(const QualifiedName& name, const AtomString& oldValue)
 {
     attributeChanged(name, oldValue, nullAtom());
-    InspectorInstrumentation::didRemoveDOMAttr(document(), *this, name.toString());
     dispatchSubtreeModifiedEvent();
 }
 

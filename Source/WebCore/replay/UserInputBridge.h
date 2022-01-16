@@ -58,9 +58,6 @@ public:
     UserInputBridge(Page&);
 
     // User input APIs.
-#if ENABLE(CONTEXT_MENU_EVENT)
-    WEBCORE_EXPORT bool handleContextMenuEvent(const PlatformMouseEvent&, Frame&, InputSource = InputSource::User);
-#endif
     WEBCORE_EXPORT bool handleMousePressEvent(const PlatformMouseEvent&, InputSource = InputSource::User);
     WEBCORE_EXPORT bool handleMouseReleaseEvent(const PlatformMouseEvent&, InputSource = InputSource::User);
     WEBCORE_EXPORT bool handleMouseMoveEvent(const PlatformMouseEvent&, InputSource = InputSource::User);

@@ -43,7 +43,6 @@ using namespace JSC;
 const ClassInfo JSWorkletGlobalScopeBase::s_info = { "WorkletGlobalScope", &JSDOMGlobalObject::s_info, nullptr, nullptr, CREATE_METHOD_TABLE(JSWorkletGlobalScopeBase) };
 
 const GlobalObjectMethodTable JSWorkletGlobalScopeBase::s_globalObjectMethodTable = {
-    &supportsRichSourceInfo,
     &shouldInterruptScript,
     &javaScriptRuntimeFlags,
     nullptr, // queueMicrotaskToEventLoop
@@ -106,11 +105,6 @@ JSC::ScriptExecutionStatus JSWorkletGlobalScopeBase::scriptExecutionStatus(JSC::
 {
     ASSERT_UNUSED(owner, globalObject == owner);
     return jsCast<JSWorkletGlobalScopeBase*>(globalObject)->scriptExecutionContext()->jscScriptExecutionStatus();
-}
-
-bool JSWorkletGlobalScopeBase::supportsRichSourceInfo(const JSGlobalObject* object)
-{
-    return JSGlobalObject::supportsRichSourceInfo(object);
 }
 
 bool JSWorkletGlobalScopeBase::shouldInterruptScript(const JSGlobalObject* object)

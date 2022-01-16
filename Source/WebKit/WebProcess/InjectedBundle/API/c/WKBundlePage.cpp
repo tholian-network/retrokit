@@ -47,11 +47,8 @@
 #include "WKBundleAPICast.h"
 #include "WKRetainPtr.h"
 #include "WKString.h"
-#include "WebContextMenu.h"
-#include "WebContextMenuItem.h"
 #include "WebFrame.h"
 #include "WebImage.h"
-#include "WebInspector.h"
 #include "WebPage.h"
 #include "WebPageGroupProxy.h"
 #include "WebPageOverlay.h"
@@ -75,16 +72,6 @@
 WKTypeID WKBundlePageGetTypeID()
 {
     return WebKit::toAPI(WebKit::WebPage::APIType);
-}
-
-void WKBundlePageSetContextMenuClient(WKBundlePageRef pageRef, WKBundlePageContextMenuClientBase* wkClient)
-{
-#if ENABLE(CONTEXT_MENUS)
-    WebKit::toImpl(pageRef)->setInjectedBundleContextMenuClient(makeUnique<WebKit::InjectedBundlePageContextMenuClient>(wkClient));
-#else
-    UNUSED_PARAM(pageRef);
-    UNUSED_PARAM(wkClient);
-#endif
 }
 
 void WKBundlePageSetEditorClient(WKBundlePageRef pageRef, WKBundlePageEditorClientBase* wkClient)
@@ -127,58 +114,6 @@ WKFrameHandleRef WKBundleFrameCreateFrameHandle(WKBundleFrameRef bundleFrameRef)
     return WebKit::toAPI(&API::FrameHandle::create(WebKit::toImpl(bundleFrameRef)->frameID()).leakRef());
 }
 
-void WKBundlePageClickMenuItem(WKBundlePageRef pageRef, WKContextMenuItemRef item)
-{
-#if ENABLE(CONTEXT_MENUS)
-    WebKit::toImpl(pageRef)->contextMenu().itemSelected(WebKit::toImpl(item)->data());
-#else
-    UNUSED_PARAM(pageRef);
-    UNUSED_PARAM(item);
-#endif
-}
-
-#if ENABLE(CONTEXT_MENUS)
-static Ref<API::Array> contextMenuItems(const WebKit::WebContextMenu& contextMenu)
-{
-    auto items = contextMenu.items();
-
-    Vector<RefPtr<API::Object>> menuItems;
-    menuItems.reserveInitialCapacity(items.size());
-
-    for (const auto& item : items)
-        menuItems.uncheckedAppend(WebKit::WebContextMenuItem::create(item));
-
-    return API::Array::create(WTFMove(menuItems));
-}
-#endif
-
-WKArrayRef WKBundlePageCopyContextMenuItems(WKBundlePageRef pageRef)
-{
-#if ENABLE(CONTEXT_MENUS)
-    auto& contextMenu = WebKit::toImpl(pageRef)->contextMenu();
-
-    return WebKit::toAPI(&contextMenuItems(contextMenu).leakRef());
-#else
-    UNUSED_PARAM(pageRef);
-    return nullptr;
-#endif
-}
-
-WKArrayRef WKBundlePageCopyContextMenuAtPointInWindow(WKBundlePageRef pageRef, WKPoint point)
-{
-#if ENABLE(CONTEXT_MENUS)
-    WebKit::WebContextMenu* contextMenu = WebKit::toImpl(pageRef)->contextMenuAtPointInWindow(WebKit::toIntPoint(point));
-    if (!contextMenu)
-        return nullptr;
-
-    return WebKit::toAPI(&contextMenuItems(*contextMenu).leakRef());
-#else
-    UNUSED_PARAM(pageRef);
-    UNUSED_PARAM(point);
-    return nullptr;
-#endif
-}
-
 void WKBundlePageInsertNewlineInQuotedContent(WKBundlePageRef pageRef)
 {
     WebKit::toImpl(pageRef)->insertNewlineInQuotedContent();
@@ -188,7 +123,7 @@ void WKAccessibilityTestingInjectPreference(WKBundlePageRef pageRef, WKStringRef
 {
     if (!pageRef)
         return;
-    
+
 #if ENABLE(CFPREFS_DIRECT_MODE)
     WebKit::WebProcess::singleton().notifyPreferencesChanged(WebKit::toWTFString(domain), WebKit::toWTFString(key), WebKit::toWTFString(encodedValue));
 #endif
@@ -199,21 +134,21 @@ void* WKAccessibilityRootObject(WKBundlePageRef pageRef)
 #if ENABLE(ACCESSIBILITY)
     if (!pageRef)
         return 0;
-    
+
     WebCore::Page* page = WebKit::toImpl(pageRef)->corePage();
     if (!page)
         return 0;
-    
+
     WebCore::Frame& core = page->mainFrame();
     if (!core.document())
         return 0;
-    
+
     WebCore::AXObjectCache::enableAccessibility();
 
     WebCore::AXCoreObject* root = core.document()->axObjectCache()->rootObject();
     if (!root)
         return 0;
-    
+
     return root->wrapper();
 #else
     UNUSED_PARAM(pageRef);
@@ -226,7 +161,7 @@ void* WKAccessibilityFocusedObject(WKBundlePageRef pageRef)
 #if ENABLE(ACCESSIBILITY)
     if (!pageRef)
         return 0;
-    
+
     WebCore::Page* page = WebKit::toImpl(pageRef)->corePage();
     if (!page)
         return 0;
@@ -244,7 +179,7 @@ void* WKAccessibilityFocusedObject(WKBundlePageRef pageRef)
     auto* focusedObject = axObjectCache->focusedUIElementForPage(page);
     if (!focusedObject)
         return 0;
-    
+
     return focusedObject->wrapper();
 #else
     UNUSED_PARAM(pageRef);
@@ -498,11 +433,6 @@ double WKBundlePageGetBackingScaleFactor(WKBundlePageRef pageRef)
 void WKBundlePageListenForLayoutMilestones(WKBundlePageRef pageRef, WKLayoutMilestones milestones)
 {
     WebKit::toImpl(pageRef)->listenForLayoutMilestones(WebKit::toLayoutMilestones(milestones));
-}
-
-WKBundleInspectorRef WKBundlePageGetInspector(WKBundlePageRef pageRef)
-{
-    return WebKit::toAPI(WebKit::toImpl(pageRef)->inspector());
 }
 
 void WKBundlePageForceRepaint(WKBundlePageRef page)

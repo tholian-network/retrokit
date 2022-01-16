@@ -40,7 +40,6 @@
 #include "Gradient.h"
 #include "ImageBuffer.h"
 #include "ImageData.h"
-#include "InspectorInstrumentation.h"
 #include "NodeRenderStyle.h"
 #include "Path2D.h"
 #include "PixelFormat.h"
@@ -70,11 +69,7 @@ WTF_MAKE_ISO_ALLOCATED_IMPL(CanvasRenderingContext2D);
 
 std::unique_ptr<CanvasRenderingContext2D> CanvasRenderingContext2D::create(CanvasBase& canvas, CanvasRenderingContext2DSettings&& settings, bool usesCSSCompatibilityParseMode)
 {
-    auto renderingContext = std::unique_ptr<CanvasRenderingContext2D>(new CanvasRenderingContext2D(canvas, WTFMove(settings), usesCSSCompatibilityParseMode));
-
-    InspectorInstrumentation::didCreateCanvasRenderingContext(*renderingContext);
-
-    return renderingContext;
+    return std::unique_ptr<CanvasRenderingContext2D>(new CanvasRenderingContext2D(canvas, WTFMove(settings), usesCSSCompatibilityParseMode));
 }
 
 CanvasRenderingContext2D::CanvasRenderingContext2D(CanvasBase& canvas, CanvasRenderingContext2DSettings&& settings, bool usesCSSCompatibilityParseMode)

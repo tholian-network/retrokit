@@ -1159,9 +1159,6 @@ template<> inline CSSPrimitiveValue::CSSPrimitiveValue(CursorType e)
     case CursorType::None:
         m_value.valueID = CSSValueNone;
         break;
-    case CursorType::ContextMenu:
-        m_value.valueID = CSSValueContextMenu;
-        break;
     case CursorType::Help:
         m_value.valueID = CSSValueHelp;
         break;

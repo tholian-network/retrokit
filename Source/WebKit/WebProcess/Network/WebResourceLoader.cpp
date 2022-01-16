@@ -46,7 +46,6 @@
 #include <WebCore/Frame.h>
 #include <WebCore/FrameLoader.h>
 #include <WebCore/FrameLoaderClient.h>
-#include <WebCore/InspectorInstrumentationWebKit.h>
 #include <WebCore/NetworkLoadMetrics.h>
 #include <WebCore/Page.h>
 #include <WebCore/ResourceError.h>
@@ -150,40 +149,6 @@ void WebResourceLoader::didReceiveResponse(const ResourceResponse& response, boo
             else
                 WEBRESOURCELOADER_RELEASE_LOG("didReceiveResponse: not continuing load because no coreLoader or no ID");
         };
-    }
-
-    if (InspectorInstrumentationWebKit::shouldInterceptResponse(m_coreLoader->frame(), response)) {
-        unsigned long interceptedRequestIdentifier = m_coreLoader->identifier();
-        m_interceptController.beginInterceptingResponse(interceptedRequestIdentifier);
-        InspectorInstrumentationWebKit::interceptResponse(m_coreLoader->frame(), response, interceptedRequestIdentifier, [this, protectedThis = makeRef(*this), interceptedRequestIdentifier, policyDecisionCompletionHandler = WTFMove(policyDecisionCompletionHandler)](const ResourceResponse& inspectorResponse, RefPtr<SharedBuffer> overrideData) mutable {
-            if (!m_coreLoader || !m_coreLoader->identifier()) {
-                WEBRESOURCELOADER_RELEASE_LOG("didReceiveResponse: not continuing intercept load because no coreLoader or no ID");
-                m_interceptController.continueResponse(interceptedRequestIdentifier);
-                return;
-            }
-
-            m_coreLoader->didReceiveResponse(inspectorResponse, [this, protectedThis = WTFMove(protectedThis), interceptedRequestIdentifier, policyDecisionCompletionHandler = WTFMove(policyDecisionCompletionHandler), overrideData = WTFMove(overrideData)]() mutable {
-                if (policyDecisionCompletionHandler)
-                    policyDecisionCompletionHandler();
-
-                if (!m_coreLoader || !m_coreLoader->identifier()) {
-                    m_interceptController.continueResponse(interceptedRequestIdentifier);
-                    return;
-                }
-
-                RefPtr<WebCore::ResourceLoader> protectedCoreLoader = m_coreLoader;
-                if (!overrideData)
-                    m_interceptController.continueResponse(interceptedRequestIdentifier);
-                else {
-                    m_interceptController.interceptedResponse(interceptedRequestIdentifier);
-                    if (unsigned bufferSize = overrideData->size())
-                        protectedCoreLoader->didReceiveBuffer(overrideData.releaseNonNull(), bufferSize, DataPayloadWholeResource);
-                    WebCore::NetworkLoadMetrics emptyMetrics;
-                    protectedCoreLoader->didFinishLoading(emptyMetrics);
-                }
-            });
-        });
-        return;
     }
 
     m_coreLoader->didReceiveResponse(response, WTFMove(policyDecisionCompletionHandler));

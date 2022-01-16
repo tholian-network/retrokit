@@ -115,7 +115,6 @@ public:
         Move,
         VerticalText,
         Cell,
-        ContextMenu,
         Alias,
         Progress,
         NoDrop,
@@ -209,7 +208,6 @@ const Cursor& southWestPanningCursor();
 const Cursor& westPanningCursor();
 const Cursor& verticalTextCursor();
 const Cursor& cellCursor();
-const Cursor& contextMenuCursor();
 const Cursor& noDropCursor();
 const Cursor& notAllowedCursor();
 const Cursor& progressCursor();
@@ -267,7 +265,6 @@ template<> struct EnumTraits<WebCore::Cursor::Type> {
         WebCore::Cursor::Type::Move,
         WebCore::Cursor::Type::VerticalText,
         WebCore::Cursor::Type::Cell,
-        WebCore::Cursor::Type::ContextMenu,
         WebCore::Cursor::Type::Alias,
         WebCore::Cursor::Type::Progress,
         WebCore::Cursor::Type::NoDrop,

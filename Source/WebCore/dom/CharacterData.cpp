@@ -26,7 +26,6 @@
 #include "ElementTraversal.h"
 #include "EventNames.h"
 #include "FrameSelection.h"
-#include "InspectorInstrumentation.h"
 #include "MutationEvent.h"
 #include "MutationObserverInterestGroup.h"
 #include "MutationRecord.h"
@@ -223,8 +222,6 @@ void CharacterData::dispatchModifiedEvent(const String& oldData)
             dispatchScopedEvent(MutationEvent::create(eventNames().DOMCharacterDataModifiedEvent, Event::CanBubble::Yes, nullptr, oldData, m_data));
         dispatchSubtreeModifiedEvent();
     }
-
-    InspectorInstrumentation::characterDataModified(document(), *this);
 }
 
 } // namespace WebCore

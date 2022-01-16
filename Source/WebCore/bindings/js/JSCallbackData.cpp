@@ -32,7 +32,6 @@
 #include "Document.h"
 #include "JSDOMBinding.h"
 #include "JSExecState.h"
-#include "JSExecStateInstrumentation.h"
 #include <JavaScriptCore/Exception.h>
 
 namespace WebCore {
@@ -89,8 +88,6 @@ JSValue JSCallbackData::invokeCallback(JSDOMGlobalObject& globalObject, JSObject
 
     returnedException = nullptr;
     JSValue result = JSExecState::profiledCall(lexicalGlobalObject, JSC::ProfilingReason::Other, function, callData, thisValue, args, returnedException);
-
-    InspectorInstrumentation::didCallFunction(context);
 
     return result;
 }

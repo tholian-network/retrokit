@@ -151,7 +151,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     Modules/websockets/ThreadableWebSocketChannel.h
     Modules/websockets/WebSocketChannel.h
     Modules/websockets/WebSocketChannelClient.h
-    Modules/websockets/WebSocketChannelInspector.h
     Modules/websockets/WebSocketDeflateFramer.h
     Modules/websockets/WebSocketDeflater.h
     Modules/websockets/WebSocketExtensionDispatcher.h
@@ -689,21 +688,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     html/track/VTTCue.h
     html/track/VideoTrack.h
 
-    inspector/InspectorClient.h
-    inspector/InspectorController.h
-    inspector/InspectorDebuggableType.h
-    inspector/InspectorFrontendAPIDispatcher.h
-    inspector/InspectorFrontendClient.h
-    inspector/InspectorFrontendClientLocal.h
-    inspector/InspectorFrontendHost.h
-    inspector/InspectorInstrumentationPublic.h
-    inspector/InspectorInstrumentationWebKit.h
-    inspector/InspectorOverlay.h
-    inspector/InspectorWebAgentBase.h
-    inspector/PageDebugger.h
-
-    inspector/agents/InspectorPageAgent.h
-
     layout/LayoutUnits.h
     layout/MarginTypes.h
 
@@ -814,10 +798,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     page/Chrome.h
     page/ChromeClient.h
     page/ClientOrigin.h
-    page/ContextMenuClient.h
-    page/ContextMenuContext.h
-    page/ContextMenuController.h
-    page/ContextMenuProvider.h
     page/CrossSiteNavigationDataTransfer.h
     page/DOMSelection.h
     page/DOMTimer.h
@@ -855,7 +835,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     page/KeyboardScroll.h
     page/LayoutMilestone.h
     page/MediaCanStartListener.h
-    page/MediaControlsContextMenuItem.h
     page/MediaProducer.h
     page/MemoryRelease.h
     page/NavigatorIsLoggedIn.h
@@ -901,7 +880,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     page/SuspendableTimer.h
     page/TextDirectionSubmenuInclusionBehavior.h
     page/TextIndicator.h
-    page/TranslationContextMenuInfo.h
     page/UserContentController.h
     page/UserContentProvider.h
     page/UserContentTypes.h
@@ -963,8 +941,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/ColorChooserClient.h
     platform/ContentFilterUnblockHandler.h
     platform/ContentType.h
-    platform/ContextMenu.h
-    platform/ContextMenuItem.h
     platform/ControlStates.h
     platform/Cookie.h
     platform/CountedUserActivity.h
@@ -1569,7 +1545,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
 
     workers/ScriptBuffer.h
     workers/WorkerAnimationController.h
-    workers/WorkerDebuggerProxy.h
     workers/WorkerFontLoadRequest.h
     workers/WorkerLoaderProxy.h
     workers/WorkerOrWorkletThread.h
@@ -1602,9 +1577,7 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     workers/service/ServiceWorkerUpdateViaCache.h
 
     workers/service/context/SWContextManager.h
-    workers/service/context/ServiceWorkerDebuggable.h
     workers/service/context/ServiceWorkerFetch.h
-    workers/service/context/ServiceWorkerInspectorProxy.h
     workers/service/context/ServiceWorkerThread.h
     workers/service/context/ServiceWorkerThreadProxy.h
 

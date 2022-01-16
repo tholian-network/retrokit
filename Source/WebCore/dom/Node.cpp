@@ -32,7 +32,6 @@
 #include "CommonVM.h"
 #include "ComposedTreeAncestorIterator.h"
 #include "ContainerNodeAlgorithms.h"
-#include "ContextMenuController.h"
 #include "DOMWindow.h"
 #include "DataTransfer.h"
 #include "DocumentType.h"
@@ -50,8 +49,6 @@
 #include "HTMLSlotElement.h"
 #include "HTMLStyleElement.h"
 #include "InputEvent.h"
-#include "InspectorController.h"
-#include "InspectorInstrumentation.h"
 #include "KeyboardEvent.h"
 #include "Logging.h"
 #include "MutationEvent.h"
@@ -350,8 +347,6 @@ Node::~Node()
     ASSERT(m_refCountAndParentBit == s_refCountIncrement);
     ASSERT(m_deletionHasBegun);
     ASSERT(!m_adoptionIsRequired);
-
-    InspectorInstrumentation::willDestroyDOMNode(*this);
 
 #ifndef NDEBUG
     if (!ignoreSet().remove(*this))
@@ -741,12 +736,6 @@ bool Node::isContentEditable() const
 bool Node::isContentRichlyEditable() const
 {
     return computeEditability(UserSelectAllIsAlwaysNonEditable, ShouldUpdateStyle::Update) == Editability::CanEditRichly;
-}
-
-void Node::inspect()
-{
-    if (document().page())
-        document().page()->inspectorController().inspect(this);
 }
 
 static Node::Editability computeEditabilityFromComputedStyle(const Node& startNode, Node::UserSelectAllTreatment treatment)
@@ -2434,12 +2423,6 @@ void Node::defaultEventHandler(Event& event)
         }
     } else if (eventType == eventNames().clickEvent) {
         dispatchDOMActivateEvent(event);
-#if ENABLE(CONTEXT_MENUS)
-    } else if (eventType == eventNames().contextmenuEvent) {
-        if (Frame* frame = document().frame())
-            if (Page* page = frame->page())
-                page->contextMenuController().handleContextMenuEvent(event);
-#endif
     } else if (eventType == eventNames().textInputEvent) {
         if (is<TextEvent>(event)) {
             if (Frame* frame = document().frame())
@@ -2467,7 +2450,7 @@ void Node::defaultEventHandler(Event& event)
         Node* startNode = this;
         while (startNode && !startNode->renderer())
             startNode = startNode->parentOrShadowHostNode();
-        
+
         if (startNode && startNode->renderer()) {
             if (Frame* frame = document().frame())
                 frame->eventHandler().defaultWheelEventHandler(startNode, downcast<WheelEvent>(event));

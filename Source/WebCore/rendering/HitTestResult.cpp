@@ -542,7 +542,7 @@ String HitTestResult::titleDisplayString() const
 {
     if (!m_innerURLElement)
         return String();
-    
+
     return displayString(m_innerURLElement->title(), m_innerURLElement.get());
 }
 
@@ -553,10 +553,6 @@ String HitTestResult::textContent() const
     return m_innerURLElement->textContent();
 }
 
-// FIXME: This function needs a better name and may belong in a different class. It's not
-// really isContentEditable(); it's more like needsEditingContextMenu(). In many ways, this
-// function would make more sense in the ContextMenu class, except that WebElementDictionary 
-// hooks into it. Anyway, we should architect this better. 
 bool HitTestResult::isContentEditable() const
 {
     if (!m_innerNonSharedNode)

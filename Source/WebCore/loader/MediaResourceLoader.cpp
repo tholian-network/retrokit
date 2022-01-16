@@ -36,7 +36,6 @@
 #include "Document.h"
 #include "Element.h"
 #include "FrameLoaderClient.h"
-#include "InspectorInstrumentation.h"
 #include "SecurityOrigin.h"
 #include <wtf/NeverDestroyed.h>
 
@@ -88,9 +87,6 @@ RefPtr<PlatformMediaResource> MediaResourceLoader::requestResource(ResourceReque
     auto cachingPolicy = options & LoadOption::DisallowCaching ? CachingPolicy::DisallowCaching : CachingPolicy::AllowCaching;
 
     request.setRequester(ResourceRequest::Requester::Media);
-
-    if (m_element)
-        request.setInspectorInitiatorNodeIdentifier(InspectorInstrumentation::identifierForNode(*m_element));
 
 #if PLATFORM(MAC)
     // FIXME: Workaround for <rdar://problem/26071607>. We are not able to do CORS checking on 304 responses because they are usually missing the headers we need.

@@ -47,9 +47,7 @@ public:
 
     AudioWorkletGlobalScope* globalScope() const;
 
-    // WorkerOrWorkletThread.
     WorkerLoaderProxy& workerLoaderProxy() final;
-    WorkerDebuggerProxy* workerDebuggerProxy() const final;
 
     AudioWorkletMessagingProxy& messagingProxy() { return m_messagingProxy; }
 

@@ -30,7 +30,6 @@
 
 #include "ContentData.h"
 #include "DocumentTimeline.h"
-#include "InspectorInstrumentation.h"
 #include "KeyframeEffectStack.h"
 #include "RenderElement.h"
 #include "RenderImage.h"
@@ -64,19 +63,13 @@ PseudoElement::~PseudoElement()
 
 Ref<PseudoElement> PseudoElement::create(Element& host, PseudoId pseudoId)
 {
-    auto pseudoElement = adoptRef(*new PseudoElement(host, pseudoId));
-
-    InspectorInstrumentation::pseudoElementCreated(host.document().page(), pseudoElement.get());
-
-    return pseudoElement;
+    return adoptRef(*new PseudoElement(host, pseudoId));
 }
 
 void PseudoElement::clearHostElement()
 {
-    InspectorInstrumentation::pseudoElementDestroyed(document().page(), *this);
-
     Styleable::fromElement(*this).elementWasRemoved();
-    
+
     m_hostElement = nullptr;
 }
 

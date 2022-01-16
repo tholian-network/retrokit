@@ -27,7 +27,6 @@
 
 #include "APIInjectedBundleEditorClient.h"
 #include "APIInjectedBundleFormClient.h"
-#include "APIInjectedBundlePageContextMenuClient.h"
 #include "APIInjectedBundlePageLoaderClient.h"
 #include "APIInjectedBundlePageResourceLoadClient.h"
 #include "APIInjectedBundlePageUIClient.h"
@@ -40,7 +39,6 @@
 #include "EditingRange.h"
 #include "FocusedElementInformation.h"
 #include "IdentifierTypes.h"
-#include "InjectedBundlePageContextMenuClient.h"
 #include "InjectedBundlePagePolicyClient.h"
 #include "LayerTreeContext.h"
 #include "MessageReceiver.h"
@@ -59,7 +57,6 @@
 #include "WebUndoStepID.h"
 #include "WebUserContentController.h"
 #include "WebsitePoliciesData.h"
-#include <JavaScriptCore/InspectorFrontendChannel.h>
 #include <WebCore/ActivityState.h>
 #include <WebCore/AppHighlight.h>
 #include <WebCore/DictionaryPopupInfo.h>
@@ -71,7 +68,6 @@
 #include <WebCore/HighlightVisibility.h>
 #include <WebCore/IntRect.h>
 #include <WebCore/IntSizeHash.h>
-#include <WebCore/MediaControlsContextMenuItem.h>
 #include <WebCore/Page.h>
 #include <WebCore/PageIdentifier.h>
 #include <WebCore/PageOverlay.h>
@@ -116,7 +112,6 @@ typedef struct _AtkObject AtkObject;
 
 #if PLATFORM(IOS_FAMILY)
 #include "GestureTypes.h"
-#include <WebCore/InspectorOverlay.h>
 #include <WebCore/IntPointHash.h>
 #include <WebCore/WKContentObservation.h>
 #endif
@@ -242,9 +237,6 @@ struct ViewportArguments;
 class HTMLAttachmentElement;
 #endif
 
-#if HAVE(TRANSLATION_UI_SERVICES) && ENABLE(CONTEXT_MENUS)
-struct TranslationContextMenuInfo;
-#endif
 }
 
 namespace WebKit {
@@ -258,13 +250,10 @@ class NotificationPermissionRequestManager;
 class PageBanner;
 class RemoteMediaSessionCoordinator;
 class RemoteRenderingBackendProxy;
-class RemoteWebInspectorUI;
 class TextCheckingControllerProxy;
 class UserMediaPermissionRequestManager;
 class ViewGestureGeometryCollector;
 class WebColorChooser;
-class WebContextMenu;
-class WebContextMenuItemData;
 class WebDataListSuggestionPicker;
 class WebDateTimeChooser;
 class WebDocumentLoader;
@@ -273,15 +262,11 @@ class PlaybackSessionManager;
 class WebFrame;
 class WebGestureEvent;
 class WebImage;
-class WebInspector;
-class WebInspectorClient;
-class WebInspectorUI;
 class WebKeyboardEvent;
 class WebMouseEvent;
 class WebNotificationClient;
 class WebOpenPanelResultListener;
 class WebPageGroupProxy;
-class WebPageInspectorTargetController;
 class WebPageOverlay;
 class WebPopupMenu;
 class WebRemoteObjectRegistry;
@@ -374,13 +359,6 @@ public:
 
     enum class LazyCreationPolicy { UseExistingOnly, CreateIfNeeded };
 
-    WebInspector* inspector(LazyCreationPolicy = LazyCreationPolicy::CreateIfNeeded);
-    WebInspectorUI* inspectorUI();
-    RemoteWebInspectorUI* remoteInspectorUI();
-    bool isInspectorPage() { return !!m_inspectorUI || !!m_remoteInspectorUI; }
-
-    void inspectorFrontendCountChanged(unsigned);
-
 #if PLATFORM(IOS_FAMILY)
     PlaybackSessionManager& playbackSessionManager();
     void videoControlsManagerDidChange();
@@ -461,9 +439,6 @@ public:
     bool didReceiveSyncMessage(IPC::Connection&, IPC::Decoder&, UniqueRef<IPC::Encoder>&) override;
 
     // -- InjectedBundle methods
-#if ENABLE(CONTEXT_MENUS)
-    void setInjectedBundleContextMenuClient(std::unique_ptr<API::InjectedBundle::PageContextMenuClient>&&);
-#endif
     void setInjectedBundleEditorClient(std::unique_ptr<API::InjectedBundle::EditorClient>&&);
     void setInjectedBundleFormClient(std::unique_ptr<API::InjectedBundle::FormClient>&&);
     void setInjectedBundlePageLoaderClient(std::unique_ptr<API::InjectedBundle::PageLoaderClient>&&);
@@ -471,9 +446,6 @@ public:
     void setInjectedBundleResourceLoadClient(std::unique_ptr<API::InjectedBundle::ResourceLoadClient>&&);
     void setInjectedBundleUIClient(std::unique_ptr<API::InjectedBundle::PageUIClient>&&);
 
-#if ENABLE(CONTEXT_MENUS)
-    API::InjectedBundle::PageContextMenuClient& injectedBundleContextMenuClient() { return *m_contextMenuClient; }
-#endif
     API::InjectedBundle::EditorClient& injectedBundleEditorClient() { return *m_editorClient; }
     API::InjectedBundle::FormClient& injectedBundleFormClient() { return *m_formClient; }
     API::InjectedBundle::PageLoaderClient& injectedBundleLoaderClient() { return *m_loaderClient; }
@@ -685,9 +657,6 @@ public:
     void didRecognizeLongPress();
     void handleDoubleTapForDoubleClickAtPoint(const WebCore::IntPoint&, OptionSet<WebKit::WebEvent::Modifier>, TransactionID lastLayerTreeTransactionId);
 
-    void inspectorNodeSearchMovedToPosition(const WebCore::FloatPoint&);
-    void inspectorNodeSearchEndedAtPosition(const WebCore::FloatPoint&);
-
     void blurFocusedElement();
     void requestFocusedElementInformation(CompletionHandler<void(const std::optional<FocusedElementInformation>&)>&&);
     void selectWithGesture(const WebCore::IntPoint&, GestureType, GestureRecognizerState, bool isInteractingWithFocusedElement, CompletionHandler<void(const WebCore::IntPoint&, GestureType, GestureRecognizerState, OptionSet<SelectionFlags>)>&&);
@@ -737,15 +706,6 @@ public:
 
     Seconds eventThrottlingDelay() const;
 
-    void showInspectorHighlight(const WebCore::InspectorOverlay::Highlight&);
-    void hideInspectorHighlight();
-
-    void showInspectorIndication();
-    void hideInspectorIndication();
-
-    void enableInspectorNodeSearch();
-    void disableInspectorNodeSearch();
-
     bool forceAlwaysUserScalable() const { return m_forceAlwaysUserScalable; }
     void setForceAlwaysUserScalable(bool);
 
@@ -784,11 +744,6 @@ public:
     NotificationPermissionRequestManager* notificationPermissionRequestManager();
 
     void pageDidScroll();
-
-#if ENABLE(CONTEXT_MENUS)
-    WebContextMenu& contextMenu();
-    WebContextMenu* contextMenuAtPointInWindow(const WebCore::IntPoint&);
-#endif
 
     bool hasLocalDataForURL(const URL&);
 
@@ -975,10 +930,6 @@ public:
     void simulateMouseUp(int button, WebCore::IntPoint, int clickCount, WKEventModifiers, WallTime);
     void simulateMouseMotion(WebCore::IntPoint, WallTime);
 
-#if ENABLE(CONTEXT_MENUS)
-    void startWaitingForContextMenuToShow() { m_waitingForContextMenuToShow = true; }
-#endif
-
     bool wheelEvent(const WebWheelEvent&, OptionSet<WebCore::WheelEventProcessingSteps>);
 
     void wheelEventHandlersChanged(bool);
@@ -1124,10 +1075,6 @@ public:
 
     bool isControlledByAutomation() const;
     void setControlledByAutomation(bool);
-
-    void connectInspector(const String& targetId, Inspector::FrontendChannel::ConnectionType);
-    void disconnectInspector(const String& targetId);
-    void sendMessageToTargetBackend(const String& targetId, const String& message);
 
     void insertNewlineInQuotedContent();
 
@@ -1304,14 +1251,6 @@ public:
     void updateWithTextRecognitionResult(const WebCore::TextRecognitionResult&, const WebCore::ElementContext&, const WebCore::FloatPoint& location, CompletionHandler<void(TextRecognitionUpdateResult)>&&);
 #endif
 
-#if HAVE(TRANSLATION_UI_SERVICES) && ENABLE(CONTEXT_MENUS)
-    void handleContextMenuTranslation(const WebCore::TranslationContextMenuInfo&);
-#endif
-
-#if ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
-    void showMediaControlsContextMenu(WebCore::FloatRect&&, Vector<WebCore::MediaControlsContextMenuItem>&&, CompletionHandler<void(WebCore::MediaControlsContextMenuItem::ID)>&&);
-#endif // ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
-
 #if PLATFORM(WIN)
     uint64_t nativeWindowHandle() { return m_nativeWindowHandle; }
 #endif
@@ -1485,14 +1424,6 @@ private:
     void cancelPointer(WebCore::PointerID, const WebCore::IntPoint&);
     void touchWithIdentifierWasRemoved(WebCore::PointerID);
 
-#if ENABLE(CONTEXT_MENUS)
-    void didShowContextMenu();
-    void didDismissContextMenu();
-#endif
-#if ENABLE(CONTEXT_MENU_EVENT)
-    void contextMenuForKeyEvent();
-#endif
-
     static bool scroll(WebCore::Page*, WebCore::ScrollDirection, WebCore::ScrollGranularity);
     static bool logicalScroll(WebCore::Page*, WebCore::ScrollLogicalDirection, WebCore::ScrollGranularity);
 
@@ -1507,10 +1438,6 @@ private:
     void setCurrentHistoryItemForReattach(WebKit::BackForwardListItemState&&);
 
     void requestFontAttributesAtSelectionStart(CompletionHandler<void(const WebCore::FontAttributes&)>&&);
-
-#if ENABLE(REMOTE_INSPECTOR)
-    void setIndicating(bool);
-#endif
 
     void setBackgroundColor(const std::optional<WebCore::Color>&);
 
@@ -1646,10 +1573,6 @@ private:
 
     void setHasResourceLoadClient(bool);
     void setCanUseCredentialStorage(bool);
-
-#if ENABLE(CONTEXT_MENUS)
-    void didSelectItemFromActiveContextMenu(const WebContextMenuItemData&);
-#endif
 
     void changeSelectedIndex(int32_t index);
     void setCanStartMediaTimerFired();
@@ -1852,9 +1775,6 @@ private:
 
     HashMap<WebUndoStepID, RefPtr<WebUndoStep>> m_undoStepMap;
 
-#if ENABLE(CONTEXT_MENUS)
-    std::unique_ptr<API::InjectedBundle::PageContextMenuClient> m_contextMenuClient;
-#endif
     std::unique_ptr<API::InjectedBundle::EditorClient> m_editorClient;
     std::unique_ptr<API::InjectedBundle::FormClient> m_formClient;
     std::unique_ptr<API::InjectedBundle::PageLoaderClient> m_loaderClient;
@@ -1864,21 +1784,12 @@ private:
 
     UniqueRef<FindController> m_findController;
 
-    RefPtr<WebInspector> m_inspector;
-    RefPtr<WebInspectorUI> m_inspectorUI;
-    RefPtr<RemoteWebInspectorUI> m_remoteInspectorUI;
-    std::unique_ptr<WebPageInspectorTargetController> m_inspectorTargetController;
-
 #if PLATFORM(IOS_FAMILY)
     bool m_allowsMediaDocumentInlinePlayback { false };
     std::optional<WebCore::SimpleRange> m_startingGestureRange;
 #endif
 
     RefPtr<WebPopupMenu> m_activePopupMenu;
-
-#if ENABLE(CONTEXT_MENUS)
-    RefPtr<WebContextMenu> m_contextMenu;
-#endif
 
 #if ENABLE(INPUT_TYPE_COLOR)
     WebColorChooser* m_activeColorChooser { nullptr };
@@ -1973,10 +1884,6 @@ private:
     bool m_hasEverFocusedElementDueToUserInteractionSincePageTransition { false };
 
     OptionSet<WebCore::ActivityState::Flag> m_lastActivityStateChanges;
-
-#if ENABLE(CONTEXT_MENUS)
-    bool m_waitingForContextMenuToShow { false };
-#endif
 
     RefPtr<WebCore::Element> m_focusedElement;
     RefPtr<WebCore::Element> m_recentlyBlurredElement;

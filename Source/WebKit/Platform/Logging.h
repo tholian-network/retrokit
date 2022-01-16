@@ -48,7 +48,6 @@ extern "C" {
     M(BackForwardCache) \
     M(CacheStorage) \
     M(ContentObservation) \
-    M(ContextMenu) \
     M(DisplayLink) \
     M(DiskPersistency) \
     M(DragAndDrop) \

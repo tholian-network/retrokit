@@ -332,10 +332,6 @@ public:
     void sendAudioComponentRegistrations();
 #endif
 
-#if ENABLE(REMOTE_INSPECTOR) && PLATFORM(COCOA)
-    void enableRemoteInspectorIfNeeded();
-#endif
-    
 #if PLATFORM(COCOA)
     void unblockAccessibilityServerIfNeeded();
 #if ENABLE(CFPREFS_DIRECT_MODE)
@@ -396,10 +392,6 @@ public:
     void pageMutedStateChanged(WebCore::PageIdentifier, WebCore::MediaProducer::MutedStateFlags);
     void pageIsBecomingInvisible(WebCore::PageIdentifier);
 
-#if PLATFORM(COCOA) && ENABLE(REMOTE_INSPECTOR)
-    static bool shouldEnableRemoteInspector();
-#endif
-
 #if PLATFORM(MAC)
     void platformSuspendProcess();
     void platformResumeProcess();
@@ -423,7 +415,7 @@ protected:
     void connectionWillOpen(IPC::Connection&) override;
     void processWillShutDown(IPC::Connection&) override;
     bool shouldSendPendingMessage(const PendingMessage&) final;
-    
+
     // ProcessLauncher::Client
     void didFinishLaunching(ProcessLauncher*, IPC::Connection::Identifier) override;
 

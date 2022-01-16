@@ -1,4 +1,3 @@
-include(InspectorGResources.cmake)
 
 set(WebKit_OUTPUT_NAME webkit2gtk-${WEBKITGTK_API_VERSION})
 set(WebProcess_OUTPUT_NAME WebKitWebProcess)
@@ -52,7 +51,6 @@ list(APPEND WebKit_MESSAGES_IN_FILES
 )
 
 list(APPEND WebKit_DERIVED_SOURCES
-    ${WebKit2Gtk_DERIVED_SOURCES_DIR}/InspectorGResourceBundle.c
     ${WebKit2Gtk_DERIVED_SOURCES_DIR}/WebKitDirectoryInputStreamData.cpp
     ${WebKit2Gtk_DERIVED_SOURCES_DIR}/WebKitResourcesGResourceBundle.c
 
@@ -92,7 +90,6 @@ endif ()
 set(WebKit2GTK_INSTALLED_HEADERS
     ${WebKit2Gtk_DERIVED_SOURCES_DIR}/webkit2/WebKitEnumTypes.h
     ${WebKit2Gtk_DERIVED_SOURCES_DIR}/webkit2/WebKitVersion.h
-    ${WEBKIT_DIR}/UIProcess/API/gtk${GTK_API_VERSION}/WebKitContextMenuItem.h
     ${WEBKIT_DIR}/UIProcess/API/gtk${GTK_API_VERSION}/WebKitInputMethodContext.h
     ${WEBKIT_DIR}/UIProcess/API/gtk${GTK_API_VERSION}/WebKitWebViewBase.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitApplicationInfo.h
@@ -103,8 +100,6 @@ set(WebKit2GTK_INSTALLED_HEADERS
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitBackForwardListItem.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitColorChooserRequest.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitCredential.h
-    ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitContextMenu.h
-    ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitContextMenuActions.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitCookieManager.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitDefines.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitDeviceInfoPermissionRequest.h
@@ -148,7 +143,6 @@ set(WebKit2GTK_INSTALLED_HEADERS
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitUserMediaPermissionRequest.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitUserMessage.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitWebContext.h
-    ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitWebInspector.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitWebResource.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitWebView.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitWebViewSessionState.h
@@ -420,8 +414,6 @@ list(APPEND WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/UIProcess/API/gtk${GTK_API_VERSION}"
     "${WEBKIT_DIR}/UIProcess/API/gtk"
     "${WEBKIT_DIR}/UIProcess/CoordinatedGraphics"
-    "${WEBKIT_DIR}/UIProcess/Inspector/glib"
-    "${WEBKIT_DIR}/UIProcess/Inspector/gtk"
     "${WEBKIT_DIR}/UIProcess/glib"
     "${WEBKIT_DIR}/UIProcess/gstreamer"
     "${WEBKIT_DIR}/UIProcess/gtk"
@@ -431,7 +423,6 @@ list(APPEND WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/WebProcess/InjectedBundle/API/glib/DOM"
     "${WEBKIT_DIR}/WebProcess/InjectedBundle/API/gtk"
     "${WEBKIT_DIR}/WebProcess/InjectedBundle/API/gtk/DOM"
-    "${WEBKIT_DIR}/WebProcess/Inspector/gtk"
     "${WEBKIT_DIR}/WebProcess/glib"
     "${WEBKIT_DIR}/WebProcess/gtk"
     "${WEBKIT_DIR}/WebProcess/soup"
@@ -525,8 +516,6 @@ add_custom_command(
     COMMAND glib-mkenums --template ${WEBKIT_DIR}/WebProcess/InjectedBundle/API/gtk/WebKitWebProcessEnumTypes.cpp.template ${WebKit2GTK_WEB_PROCESS_ENUM_GENERATION_HEADERS} | sed s/web_kit/webkit/ > ${WebKit2Gtk_DERIVED_SOURCES_DIR}/webkit2/WebKitWebProcessEnumTypes.cpp
     VERBATIM
 )
-
-WEBKIT_BUILD_INSPECTOR_GRESOURCES(${WebKit2Gtk_DERIVED_SOURCES_DIR})
 
 set(WebKitResources "")
 list(APPEND WebKitResources "<file alias=\"css/gtk-theme.css\">gtk-theme.css</file>\n")
@@ -729,15 +718,10 @@ if (ENABLE_INTROSPECTION)
             -I${WEBKIT_DIR}/WebProcess/InjectedBundle/API/gtk
             ${WebKitDOM_INSTALLED_HEADERS}
             ${WebKit2WebExtension_INSTALLED_HEADERS}
-            ${WEBKIT_DIR}/Shared/API/glib/WebKitContextMenu.cpp
-            ${WEBKIT_DIR}/Shared/API/glib/WebKitContextMenuItem.cpp
             ${WEBKIT_DIR}/Shared/API/glib/WebKitHitTestResult.cpp
             ${WEBKIT_DIR}/Shared/API/glib/WebKitUserMessage.cpp
             ${WEBKIT_DIR}/Shared/API/glib/WebKitURIRequest.cpp
             ${WEBKIT_DIR}/Shared/API/glib/WebKitURIResponse.cpp
-            ${WEBKIT_DIR}/UIProcess/API/gtk${GTK_API_VERSION}/WebKitContextMenuItem.h
-            ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitContextMenu.h
-            ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitContextMenuActions.h
             ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitHitTestResult.h
             ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitUserMessage.h
             ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitURIRequest.h

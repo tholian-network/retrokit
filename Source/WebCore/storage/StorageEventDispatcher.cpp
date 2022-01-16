@@ -30,7 +30,6 @@
 #include "DOMWindow.h"
 #include "EventNames.h"
 #include "Frame.h"
-#include "InspectorInstrumentation.h"
 #include "Page.h"
 #include "PageGroup.h"
 #include "SecurityOrigin.h"
@@ -82,8 +81,6 @@ void StorageEventDispatcher::dispatchLocalStorageEvents(const String& key, const
 
 void StorageEventDispatcher::dispatchSessionStorageEventsToFrames(Page& page, const Vector<RefPtr<Frame>>& frames, const String& key, const String& oldValue, const String& newValue, const String& url, const SecurityOriginData& securityOrigin)
 {
-    InspectorInstrumentation::didDispatchDOMStorageEvent(page, key, oldValue, newValue, StorageType::Session, securityOrigin.securityOrigin().ptr());
-
     for (auto& frame : frames) {
         auto document = makeRefPtr(frame->document());
         auto result = document->domWindow()->sessionStorage();
@@ -94,9 +91,6 @@ void StorageEventDispatcher::dispatchSessionStorageEventsToFrames(Page& page, co
 
 void StorageEventDispatcher::dispatchLocalStorageEventsToFrames(PageGroup& pageGroup, const Vector<RefPtr<Frame>>& frames, const String& key, const String& oldValue, const String& newValue, const String& url, const SecurityOriginData& securityOrigin)
 {
-    for (auto& page : pageGroup.pages())
-        InspectorInstrumentation::didDispatchDOMStorageEvent(page, key, oldValue, newValue, StorageType::Local, securityOrigin.securityOrigin().ptr());
-
     for (auto& frame : frames) {
         auto document = makeRefPtr(frame->document());
         auto result = document->domWindow()->localStorage();

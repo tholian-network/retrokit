@@ -32,7 +32,6 @@
 #include "FloatRect.h"
 #include "GraphicsContext.h"
 #include "ImageBuffer.h"
-#include "InspectorInstrumentation.h"
 #include <JavaScriptCore/JSCInlines.h>
 #include <JavaScriptCore/JSLock.h>
 #include <atomic>
@@ -123,17 +122,11 @@ size_t CanvasBase::externalMemoryCost() const
 void CanvasBase::addObserver(CanvasObserver& observer)
 {
     m_observers.add(&observer);
-
-    if (is<CSSCanvasValue::CanvasObserverProxy>(observer))
-        InspectorInstrumentation::didChangeCSSCanvasClientNodes(*this);
 }
 
 void CanvasBase::removeObserver(CanvasObserver& observer)
 {
     m_observers.remove(&observer);
-
-    if (is<CSSCanvasValue::CanvasObserverProxy>(observer))
-        InspectorInstrumentation::didChangeCSSCanvasClientNodes(*this);
 }
 
 void CanvasBase::notifyObserversCanvasChanged(const std::optional<FloatRect>& rect)
@@ -178,12 +171,6 @@ HashSet<Element*> CanvasBase::cssCanvasClients() const
     return cssCanvasClients;
 }
 
-bool CanvasBase::hasActiveInspectorCanvasCallTracer() const
-{
-    auto* context = renderingContext();
-    return context && context->hasActiveInspectorCanvasCallTracer();
-}
-
 RefPtr<ImageBuffer> CanvasBase::setImageBuffer(RefPtr<ImageBuffer>&& buffer) const
 {
     RefPtr<ImageBuffer> returnBuffer;
@@ -199,10 +186,6 @@ RefPtr<ImageBuffer> CanvasBase::setImageBuffer(RefPtr<ImageBuffer>&& buffer) con
     size_t previousMemoryCost = m_imageBufferCost;
     m_imageBufferCost = memoryCost();
     s_activePixelMemory += m_imageBufferCost - previousMemoryCost;
-
-    auto* context = renderingContext();
-    if (context && m_imageBuffer && previousMemoryCost != m_imageBufferCost)
-        InspectorInstrumentation::didChangeCanvasMemory(*context);
 
     if (m_imageBuffer) {
         m_imageBuffer->context().setShadowsIgnoreTransforms(true);

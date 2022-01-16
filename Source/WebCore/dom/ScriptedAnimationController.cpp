@@ -27,7 +27,6 @@
 #include "config.h"
 #include "ScriptedAnimationController.h"
 
-#include "InspectorInstrumentation.h"
 #include "Logging.h"
 #include "Page.h"
 #include "RequestAnimationFrameCallback.h"
@@ -115,9 +114,6 @@ ScriptedAnimationController::CallbackId ScriptedAnimationController::registerCal
     callback->m_id = callbackId;
     m_callbackDataList.append({ WTFMove(callback), UserGestureIndicator::currentUserGesture() });
 
-    if (m_document)
-        InspectorInstrumentation::didRequestAnimationFrame(*m_document, callbackId);
-
     if (!m_suspendCount)
         scheduleAnimation();
     return callbackId;
@@ -131,9 +127,6 @@ void ScriptedAnimationController::cancelCallback(CallbackId callbackId)
         data.callback->m_firedOrCancelled = true;
         return true;
     });
-
-    if (cancelled && m_document)
-        InspectorInstrumentation::didCancelAnimationFrame(*m_document, callbackId);
 }
 
 void ScriptedAnimationController::serviceRequestAnimationFrameCallbacks(ReducedResolutionSeconds timestamp)
@@ -171,9 +164,7 @@ void ScriptedAnimationController::serviceRequestAnimationFrameCallbacks(ReducedR
             userGestureTokenToForward = nullptr;
         UserGestureIndicator gestureIndicator(userGestureTokenToForward);
 
-        InspectorInstrumentation::willFireAnimationFrame(protectedDocument, callback->m_id);
         callback->handleEvent(highResNowMs);
-        InspectorInstrumentation::didFireAnimationFrame(protectedDocument);
     }
 
     // Remove any callbacks we fired from the list of pending callbacks.

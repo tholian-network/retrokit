@@ -43,7 +43,6 @@
 #include "HTMLImageElement.h"
 #include "HTMLVideoElement.h"
 #include "ImageData.h"
-#include "InspectorInstrumentation.h"
 #include "KHRParallelShaderCompile.h"
 #include "OESElementIndexUint.h"
 #include "OESFBORenderMipmap.h"
@@ -91,21 +90,15 @@ WTF_MAKE_ISO_ALLOCATED_IMPL(WebGLRenderingContext);
 
 std::unique_ptr<WebGLRenderingContext> WebGLRenderingContext::create(CanvasBase& canvas, GraphicsContextGLAttributes attributes)
 {
-    auto renderingContext = std::unique_ptr<WebGLRenderingContext>(new WebGLRenderingContext(canvas, attributes));
-    // This context is pending policy resolution, so don't call initializeNewContext on it yet.
-
-    InspectorInstrumentation::didCreateCanvasRenderingContext(*renderingContext);
-
-    return renderingContext;
+    return std::unique_ptr<WebGLRenderingContext>(new WebGLRenderingContext(canvas, attributes));
 }
 
 std::unique_ptr<WebGLRenderingContext> WebGLRenderingContext::create(CanvasBase& canvas, Ref<GraphicsContextGL>&& context, GraphicsContextGLAttributes attributes)
 {
     auto renderingContext = std::unique_ptr<WebGLRenderingContext>(new WebGLRenderingContext(canvas, WTFMove(context), attributes));
+
     // This is virtual and can't be called in the constructor.
     renderingContext->initializeNewContext();
-
-    InspectorInstrumentation::didCreateCanvasRenderingContext(*renderingContext);
 
     return renderingContext;
 }
@@ -142,8 +135,6 @@ WebGLExtension* WebGLRenderingContext::getExtension(const String& name)
     if (equalIgnoringASCIICase(name, nameLiteral)) { \
         if (!variable) { \
             variable = (canEnable) ? adoptRef(new type(*this)) : nullptr; \
-            if (variable != nullptr) \
-                InspectorInstrumentation::didEnableExtension(*this, name); \
         } \
         return variable.get(); \
     }
@@ -158,7 +149,6 @@ WebGLExtension* WebGLRenderingContext::getExtension(const String& name)
             else {
                 m_context->getExtensions().ensureEnabled("GL_EXT_shader_texture_lod"_s);
                 m_extShaderTextureLOD = adoptRef(new EXTShaderTextureLOD(*this));
-                InspectorInstrumentation::didEnableExtension(*this, name);
             }
         }
         return m_extShaderTextureLOD.get();
@@ -191,7 +181,6 @@ WebGLExtension* WebGLRenderingContext::getExtension(const String& name)
             else {
                 m_context->getExtensions().ensureEnabled("GL_EXT_draw_buffers"_s);
                 m_webglDrawBuffers = adoptRef(new WebGLDrawBuffers(*this));
-                InspectorInstrumentation::didEnableExtension(*this, name);
             }
         }
         return m_webglDrawBuffers.get();
@@ -203,7 +192,6 @@ WebGLExtension* WebGLRenderingContext::getExtension(const String& name)
             else {
                 m_context->getExtensions().ensureEnabled("GL_ANGLE_instanced_arrays"_s);
                 m_angleInstancedArrays = adoptRef(new ANGLEInstancedArrays(*this));
-                InspectorInstrumentation::didEnableExtension(*this, name);
             }
         }
         return m_angleInstancedArrays.get();

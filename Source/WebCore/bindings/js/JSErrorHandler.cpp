@@ -40,7 +40,6 @@
 #include "JSDOMWindow.h"
 #include "JSEvent.h"
 #include "JSExecState.h"
-#include "JSExecStateInstrumentation.h"
 #include <JavaScriptCore/JSLock.h>
 #include <JavaScriptCore/VMEntryScope.h>
 #include <wtf/Ref.h>
@@ -104,8 +103,6 @@ void JSErrorHandler::handleEvent(ScriptExecutionContext& scriptExecutionContext,
 
         NakedPtr<JSC::Exception> exception;
         JSValue returnValue = JSExecState::profiledCall(globalObject, JSC::ProfilingReason::Other, jsFunction, callData, globalObject, args, exception);
-
-        InspectorInstrumentation::didCallFunction(&scriptExecutionContext);
 
         if (jsFunctionWindow)
             jsFunctionWindow->setCurrentEvent(savedEvent.get());

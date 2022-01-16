@@ -24,10 +24,6 @@ if (NOT HAS_RUN_WEBKIT_COMMON)
         set(ENABLE_TOOLS ON)
     endif ()
 
-    if (NOT DEFINED ENABLE_WEBINSPECTORUI)
-        set(ENABLE_WEBINSPECTORUI ON)
-    endif ()
-
     # -----------------------------------------------------------------------------
     # Determine which port will be built
     # -----------------------------------------------------------------------------
@@ -149,7 +145,6 @@ if (NOT HAS_RUN_WEBKIT_COMMON)
     set(WebCore_LIBRARY_TYPE STATIC)
     set(WebKitLegacy_LIBRARY_TYPE SHARED)
     set(WebKit_LIBRARY_TYPE SHARED)
-    set(WebCoreTestSupport_LIBRARY_TYPE STATIC)
 
     set(CMAKE_POSITION_INDEPENDENT_CODE True)
 

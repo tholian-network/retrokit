@@ -59,9 +59,6 @@ Platform/unix/SharedMemoryUnix.cpp
 
 Shared/API/c/cairo/WKImageCairo.cpp
 
-Shared/API/glib/WebKitContextMenu.cpp @no-unify
-Shared/API/glib/WebKitContextMenuActions.cpp @no-unify
-Shared/API/glib/WebKitContextMenuItem.cpp @no-unify
 Shared/API/glib/WebKitHitTestResult.cpp @no-unify
 Shared/API/glib/WebKitURIRequest.cpp @no-unify
 Shared/API/glib/WebKitURIResponse.cpp @no-unify
@@ -80,7 +77,6 @@ Shared/glib/ArgumentCodersGLib.cpp
 Shared/glib/InputMethodState.cpp
 Shared/glib/ProcessExecutablePathGLib.cpp
 Shared/glib/UserMessage.cpp
-Shared/glib/WebContextMenuItemGlib.cpp
 
 Shared/gtk/ArgumentCodersGtk.cpp
 Shared/gtk/GtkSettingsState.cpp
@@ -122,7 +118,6 @@ UIProcess/API/glib/WebKitAuthenticationRequest.cpp @no-unify
 UIProcess/API/glib/WebKitAutomationSession.cpp @no-unify
 UIProcess/API/glib/WebKitBackForwardList.cpp @no-unify
 UIProcess/API/glib/WebKitBackForwardListItem.cpp @no-unify
-UIProcess/API/glib/WebKitContextMenuClient.cpp @no-unify
 UIProcess/API/glib/WebKitCookieManager.cpp @no-unify
 UIProcess/API/glib/WebKitCredential.cpp @no-unify
 UIProcess/API/glib/WebKitDeviceInfoPermissionRequest.cpp @no-unify
@@ -195,10 +190,8 @@ UIProcess/API/gtk/WebKitInputMethodContextImplGtk.cpp @no-unify
 UIProcess/API/gtk/WebKitPopupMenu.cpp @no-unify
 UIProcess/API/gtk/WebKitPrintCustomWidget.cpp @no-unify
 UIProcess/API/gtk/WebKitPrintOperation.cpp @no-unify
-UIProcess/API/gtk/WebKitRemoteInspectorProtocolHandler.cpp @no-unify
 UIProcess/API/gtk/WebKitScriptDialogGtk.cpp @no-unify
 UIProcess/API/gtk/WebKitScriptDialogImpl.cpp @no-unify
-UIProcess/API/gtk/WebKitWebInspector.cpp @no-unify
 UIProcess/API/gtk/WebKitWebViewBase.cpp @no-unify
 UIProcess/API/gtk/WebKitWebViewDialog.cpp @no-unify
 UIProcess/API/gtk/WebKitWebViewGtk.cpp @no-unify
@@ -208,12 +201,6 @@ UIProcess/Automation/cairo/WebAutomationSessionCairo.cpp
 UIProcess/Automation/gtk/WebAutomationSessionGtk.cpp
 
 UIProcess/CoordinatedGraphics/DrawingAreaProxyCoordinatedGraphics.cpp
-
-UIProcess/Inspector/glib/RemoteInspectorClient.cpp
-
-UIProcess/Inspector/gtk/RemoteWebInspectorUIProxyGtk.cpp
-UIProcess/Inspector/gtk/WebInspectorUIProxyGtk.cpp
-UIProcess/Inspector/gtk/WebKitInspectorWindow.cpp
 
 UIProcess/Launcher/glib/ProcessLauncherGLib.cpp @no-unify
 UIProcess/Launcher/glib/BubblewrapLauncher.cpp @no-unify
@@ -253,7 +240,6 @@ UIProcess/gtk/ViewSnapshotStoreGtk4.cpp @no-unify
 UIProcess/gtk/ViewGestureControllerGtk.cpp
 UIProcess/gtk/WaylandCompositor.cpp @no-unify
 UIProcess/gtk/WebColorPickerGtk.cpp
-UIProcess/gtk/WebContextMenuProxyGtk.cpp
 UIProcess/gtk/WebDataListSuggestionsDropdownGtk.cpp
 UIProcess/gtk/WebPageProxyGtk.cpp @no-unify
 UIProcess/gtk/WebPasteboardProxyGtk.cpp
@@ -390,11 +376,8 @@ WebProcess/InjectedBundle/API/gtk/DOM/WebKitDOMXPathResult.cpp
 
 WebProcess/InjectedBundle/glib/InjectedBundleGlib.cpp
 
-WebProcess/Inspector/gtk/WebInspectorUIGtk.cpp
-
 WebProcess/WebCoreSupport/glib/WebEditorClientGLib.cpp
 
-WebProcess/WebCoreSupport/gtk/WebContextMenuClientGtk.cpp
 WebProcess/WebCoreSupport/gtk/WebDragClientGtk.cpp
 WebProcess/WebCoreSupport/gtk/WebEditorClientGtk.cpp
 

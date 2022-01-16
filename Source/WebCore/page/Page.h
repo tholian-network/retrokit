@@ -87,7 +87,6 @@ class BackForwardController;
 class BroadcastChannelRegistry;
 class CacheStorageProvider;
 class Chrome;
-class ContextMenuController;
 class CookieJar;
 class DOMRectList;
 class DatabaseProvider;
@@ -103,15 +102,12 @@ class HTMLElement;
 class HTMLMediaElement;
 class HistoryItem;
 class ImageOverlayController;
-class InspectorClient;
-class InspectorController;
 class IntSize;
 class LowPowerModeNotifier;
 class MediaCanStartListener;
 class MediaSessionCoordinatorPrivate;
 class PageConfiguration;
 class PageConsoleClient;
-class PageDebuggable;
 class PageGroup;
 class PageOverlayController;
 class PerformanceLogging;
@@ -277,25 +273,13 @@ public:
     bool insideNestedRunLoop() const { return m_nestedRunLoopCount > 0; }
     WEBCORE_EXPORT void whenUnnested(WTF::Function<void()>&&);
 
-#if ENABLE(REMOTE_INSPECTOR)
-    WEBCORE_EXPORT bool remoteInspectionAllowed() const;
-    WEBCORE_EXPORT void setRemoteInspectionAllowed(bool);
-    WEBCORE_EXPORT String remoteInspectionNameOverride() const;
-    WEBCORE_EXPORT void setRemoteInspectionNameOverride(const String&);
-    void remoteInspectorInformationDidChange() const;
-#endif
-
     Chrome& chrome() const { return *m_chrome; }
     DragCaretController& dragCaretController() const { return *m_dragCaretController; }
 #if ENABLE(DRAG_SUPPORT)
     DragController& dragController() const { return *m_dragController; }
 #endif
     FocusController& focusController() const { return *m_focusController; }
-#if ENABLE(CONTEXT_MENUS)
-    ContextMenuController& contextMenuController() const { return *m_contextMenuController; }
-#endif
     UserInputBridge& userInputBridge() const { return *m_userInputBridge; }
-    InspectorController& inspectorController() const { return *m_inspectorController; }
     PointerCaptureController& pointerCaptureController() const { return *m_pointerCaptureController; }
 #if ENABLE(POINTER_LOCK)
     PointerLockController& pointerLockController() const { return *m_pointerLockController; }
@@ -641,10 +625,6 @@ public:
 
     PageConsoleClient& console() { return *m_consoleClient; }
 
-#if ENABLE(REMOTE_INSPECTOR)
-    PageDebuggable& inspectorDebuggable() const { return *m_inspectorDebuggable.get(); }
-#endif
-
     void hiddenPageCSSAnimationSuspensionStateChanged();
 
 #if ENABLE(VIDEO)
@@ -736,9 +716,6 @@ public:
 
     String captionUserPreferencesStyleSheet();
     void setCaptionUserPreferencesStyleSheet(const String&);
-
-    bool isResourceCachingDisabledByWebInspector() const { return m_resourceCachingDisabledByWebInspector; }
-    void setResourceCachingDisabledByWebInspector(bool disabled) { m_resourceCachingDisabledByWebInspector = disabled; }
 
     std::optional<EventThrottlingBehavior> eventThrottlingBehaviorOverride() const { return m_eventThrottlingBehaviorOverride; }
     void setEventThrottlingBehaviorOverride(std::optional<EventThrottlingBehavior> throttling) { m_eventThrottlingBehaviorOverride = throttling; }
@@ -869,11 +846,7 @@ private:
     const std::unique_ptr<DragController> m_dragController;
 #endif
     const std::unique_ptr<FocusController> m_focusController;
-#if ENABLE(CONTEXT_MENUS)
-    const std::unique_ptr<ContextMenuController> m_contextMenuController;
-#endif
     const std::unique_ptr<UserInputBridge> m_userInputBridge;
-    const std::unique_ptr<InspectorController> m_inspectorController;
     const std::unique_ptr<PointerCaptureController> m_pointerCaptureController;
 #if ENABLE(POINTER_LOCK)
     const std::unique_ptr<PointerLockController> m_pointerLockController;
@@ -1000,10 +973,6 @@ private:
     bool m_scriptedAnimationsSuspended { false };
     const std::unique_ptr<PageConsoleClient> m_consoleClient;
 
-#if ENABLE(REMOTE_INSPECTOR)
-    const std::unique_ptr<PageDebuggable> m_inspectorDebuggable;
-#endif
-
     RefPtr<IDBClient::IDBConnectionToServer> m_idbConnectionToServer;
 
     HashSet<String> m_seenMediaEngines;
@@ -1045,7 +1014,6 @@ private:
     bool m_allowsMediaDocumentInlinePlayback { false };
     bool m_allowsPlaybackControlsForAutoplayingAudio { false };
     bool m_controlledByAutomation { false };
-    bool m_resourceCachingDisabledByWebInspector { false };
     bool m_isUtilityPage;
     bool m_mediaPlaybackIsSuspended { false };
     bool m_mediaBufferingIsSuspended { false };
@@ -1058,9 +1026,9 @@ private:
 
     Vector<OptionSet<RenderingUpdateStep>, 2> m_renderingUpdateRemainingSteps;
     OptionSet<RenderingUpdateStep> m_unfulfilledRequestedSteps;
-    
+
     UserInterfaceLayoutDirection m_userInterfaceLayoutDirection { UserInterfaceLayoutDirection::LTR };
-    
+
     // For testing.
     std::optional<EventThrottlingBehavior> m_eventThrottlingBehaviorOverride;
     std::optional<CompositingPolicy> m_compositingPolicyOverride;

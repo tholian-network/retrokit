@@ -39,7 +39,6 @@
 #include "CrossOriginPreflightResultCache.h"
 #include "DocumentThreadableLoader.h"
 #include "FrameLoader.h"
-#include "InspectorInstrumentation.h"
 #include "NetworkLoadMetrics.h"
 #include "RuntimeEnabledFeatures.h"
 #include "SharedBuffer.h"
@@ -78,13 +77,6 @@ void CrossOriginPreflightChecker::validatePreflightResponse(DocumentThreadableLo
         loader.preflightFailure(identifier, ResourceError(errorDomainWebKitInternal, 0, request.url(), result.error(), ResourceError::Type::AccessControl));
         return;
     }
-
-    // FIXME: <https://webkit.org/b/164889> Web Inspector: Show Preflight Request information in inspector
-    // This is only showing success preflight requests and responses but we should show network events
-    // for preflight failures and distinguish them better from non-preflight requests.
-    NetworkLoadMetrics emptyMetrics;
-    InspectorInstrumentation::didReceiveResourceResponse(*frame, identifier, frame->loader().documentLoader(), response, nullptr);
-    InspectorInstrumentation::didFinishLoading(frame, frame->loader().documentLoader(), identifier, emptyMetrics, nullptr);
 
     loader.preflightSuccess(WTFMove(request));
 }

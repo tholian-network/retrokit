@@ -38,7 +38,6 @@ public:
 
     void setDataBufferingPolicy(DataBufferingPolicy);
 
-    // FIXME: This is exposed for the InspectorInstrumentation for preflights in DocumentThreadableLoader. It's also really lame.
     unsigned long identifier() const { return m_identifier; }
 
     void clear();

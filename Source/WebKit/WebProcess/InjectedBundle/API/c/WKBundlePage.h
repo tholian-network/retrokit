@@ -28,7 +28,6 @@
 
 #include <JavaScriptCore/JavaScript.h>
 #include <WebKit/WKBase.h>
-#include <WebKit/WKBundlePageContextMenuClient.h>
 #include <WebKit/WKBundlePageEditorClient.h>
 #include <WebKit/WKBundlePageFormClient.h>
 #include <WebKit/WKBundlePageLoaderClient.h>
@@ -51,7 +50,6 @@ extern "C" {
 
 WK_EXPORT WKTypeID WKBundlePageGetTypeID();
 
-WK_EXPORT void WKBundlePageSetContextMenuClient(WKBundlePageRef page, WKBundlePageContextMenuClientBase* client);
 WK_EXPORT void WKBundlePageSetEditorClient(WKBundlePageRef page, WKBundlePageEditorClientBase* client);
 WK_EXPORT void WKBundlePageSetFormClient(WKBundlePageRef page, WKBundlePageFormClientBase* client);
 WK_EXPORT void WKBundlePageSetPageLoaderClient(WKBundlePageRef page, WKBundlePageLoaderClientBase* client);
@@ -100,8 +98,6 @@ WK_EXPORT WKImageRef WKBundlePageCreateScaledSnapshotInDocumentCoordinates(WKBun
 WK_EXPORT double WKBundlePageGetBackingScaleFactor(WKBundlePageRef page);
 
 WK_EXPORT void WKBundlePageListenForLayoutMilestones(WKBundlePageRef page, WKLayoutMilestones milestones);
-
-WK_EXPORT WKBundleInspectorRef WKBundlePageGetInspector(WKBundlePageRef page);
 
 WK_EXPORT bool WKBundlePageIsUsingEphemeralSession(WKBundlePageRef page);
 

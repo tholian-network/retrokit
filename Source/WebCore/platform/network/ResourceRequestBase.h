@@ -161,21 +161,13 @@ public:
     WEBCORE_EXPORT bool isConditional() const;
     WEBCORE_EXPORT void makeUnconditional();
 
-    // Whether this request should be hidden from the Inspector.
-    bool hiddenFromInspector() const { return m_hiddenFromInspector; }
-    void setHiddenFromInspector(bool hiddenFromInspector) { m_hiddenFromInspector = hiddenFromInspector; }
-
     enum class Requester : uint8_t { Unspecified, Main, XHR, Fetch, Media, Model, ImportScripts, Ping, Beacon };
     Requester requester() const { return m_requester; }
     void setRequester(Requester requester) { m_requester = requester; }
 
-    // Who initiated the request so the Inspector can associate it with a context. E.g. a Web Worker.
+    // Who initiated the request so that it can be associated with a context. E.g. a Web Worker.
     String initiatorIdentifier() const { return m_initiatorIdentifier; }
     void setInitiatorIdentifier(const String& identifier) { m_initiatorIdentifier = identifier; }
-
-    // Additional information for the Inspector to be able to identify the node that initiated this request.
-    const std::optional<int>& inspectorInitiatorNodeIdentifier() const { return m_inspectorInitiatorNodeIdentifier; }
-    void setInspectorInitiatorNodeIdentifier(int inspectorInitiatorNodeIdentifier) { m_inspectorInitiatorNodeIdentifier = inspectorInitiatorNodeIdentifier; }
 
 #if USE(SYSTEM_PREVIEW)
     WEBCORE_EXPORT bool isSystemPreview() const;
@@ -206,7 +198,6 @@ protected:
         , m_platformRequestUpdated(true)
         , m_resourceRequestBodyUpdated(false)
         , m_platformRequestBodyUpdated(true)
-        , m_hiddenFromInspector(false)
         , m_isTopSite(false)
         , m_isAppInitiated(true)
     {
@@ -222,7 +213,6 @@ protected:
         , m_platformRequestUpdated(false)
         , m_resourceRequestBodyUpdated(true)
         , m_platformRequestBodyUpdated(false)
-        , m_hiddenFromInspector(false)
         , m_isTopSite(false)
         , m_isAppInitiated(true)
     {
@@ -250,13 +240,11 @@ protected:
     SameSiteDisposition m_sameSiteDisposition { SameSiteDisposition::Unspecified };
     ResourceLoadPriority m_priority { ResourceLoadPriority::Low };
     Requester m_requester { Requester::Unspecified };
-    std::optional<int> m_inspectorInitiatorNodeIdentifier;
     bool m_allowCookies : 1;
     mutable bool m_resourceRequestUpdated : 1;
     mutable bool m_platformRequestUpdated : 1;
     mutable bool m_resourceRequestBodyUpdated : 1;
     mutable bool m_platformRequestBodyUpdated : 1;
-    bool m_hiddenFromInspector : 1;
     bool m_isTopSite : 1;
     bool m_isAppInitiated : 1;
 #if USE(SYSTEM_PREVIEW)

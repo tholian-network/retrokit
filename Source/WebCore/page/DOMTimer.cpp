@@ -27,7 +27,6 @@
 #include "config.h"
 #include "DOMTimer.h"
 
-#include "InspectorInstrumentation.h"
 #include "Logging.h"
 #include "Page.h"
 #include "ScheduledAction.h"
@@ -112,9 +111,6 @@ struct NestedTimersMap {
 
     void startTracking()
     {
-        // Make sure we start with an empty HashMap. In theory, it is possible the HashMap is not
-        // empty if a timer fires during the execution of another timer (may happen with the
-        // in-process Web Inspector).
         nestedTimers.clear();
         isTrackingNestedTimers = true;
     }
@@ -180,8 +176,6 @@ int DOMTimer::install(ScriptExecutionContext& context, std::unique_ptr<Scheduled
         timer->m_timeoutId = context.circularSequentialID();
     } while (!context.addTimeout(timer->m_timeoutId, timer.get()));
 
-    InspectorInstrumentation::didInstallTimer(context, timer->m_timeoutId, timeout, singleShot);
-
     // Keep track of nested timer installs.
     if (NestedTimersMap* nestedTimers = NestedTimersMap::instanceForContext(context))
         nestedTimers->add(timer->m_timeoutId, timer.get());
@@ -218,7 +212,6 @@ void DOMTimer::removeById(ScriptExecutionContext& context, int timeoutId)
     if (NestedTimersMap* nestedTimers = NestedTimersMap::instanceForContext(context))
         nestedTimers->remove(timeoutId);
 
-    InspectorInstrumentation::didRemoveTimer(context, timeoutId);
     context.removeTimeout(timeoutId);
 }
 
@@ -294,8 +287,6 @@ void DOMTimer::fired()
     // Only the first execution of a multi-shot timer should get an affirmative user gesture indicator.
     m_userGestureTokenToForward = nullptr;
 
-    InspectorInstrumentation::willFireTimer(context, m_timeoutId, oneShot);
-
     // Simple case for non-one-shot timers.
     if (isActive()) {
         if (m_nestingLevel < maxTimerNestingLevel) {
@@ -304,8 +295,6 @@ void DOMTimer::fired()
         }
 
         m_action->execute(context);
-
-        InspectorInstrumentation::didFireTimer(context, m_timeoutId, oneShot);
 
         updateThrottlingStateIfNecessary(fireState);
         return;
@@ -322,8 +311,6 @@ void DOMTimer::fired()
     ContentChangeObserver::DOMTimerScope observingScope(is<Document>(context) ? &downcast<Document>(context) : nullptr, *this);
 #endif
     m_action->execute(context);
-
-    InspectorInstrumentation::didFireTimer(context, m_timeoutId, oneShot);
 
     // Check if we should throttle nested single-shot timers.
     if (nestedTimers) {

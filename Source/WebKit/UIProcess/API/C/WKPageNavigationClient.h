@@ -58,7 +58,7 @@ typedef void (*WKPageNavigationDidFinishDocumentLoadCallback)(WKPageRef page, WK
 typedef void (*WKPageNavigationDidSameDocumentNavigationCallback)(WKPageRef page, WKNavigationRef navigation, WKSameDocumentNavigationType navigationType, WKTypeRef userData, const void* clientInfo);
 
 typedef void (*WKPageNavigationRenderingProgressDidChangeCallback)(WKPageRef page, WKPageRenderingProgressEvents progressEvents, WKTypeRef userData, const void* clientInfo);
-    
+
 typedef bool (*WKPageNavigationCanAuthenticateAgainstProtectionSpaceCallback)(WKPageRef page, WKProtectionSpaceRef protectionSpace, const void* clientInfo);
 
 typedef void (*WKPageNavigationDidReceiveAuthenticationChallengeCallback)(WKPageRef page, WKAuthenticationChallengeRef challenge, const void* clientInfo);
@@ -74,8 +74,6 @@ typedef WKStringRef (*WKPageNavigationCopySignedPublicKeyAndChallengeStringCallb
 typedef void (*WKPageNavigationActionDidBecomeDownloadCallback)(WKPageRef page, WKNavigationActionRef navigationAction, WKDownloadRef download, const void* clientInfo);
 
 typedef void (*WKPageNavigationResponseDidBecomeDownloadCallback)(WKPageRef page, WKNavigationResponseRef navigationResponse, WKDownloadRef download, const void* clientInfo);
-
-typedef void (*WKPageNavigationContextMenuDidCreateDownloadCallback)(WKPageRef page, WKDownloadRef download, const void* clientInfo);
 
 typedef void (*WKPageNavigationDidBeginNavigationGesture)(WKPageRef page, const void* clientInfo);
 
@@ -214,7 +212,6 @@ typedef struct WKPageNavigationClientV3 {
     WKPageNavigationCopySignedPublicKeyAndChallengeStringCallback copySignedPublicKeyAndChallengeString;
     WKPageNavigationActionDidBecomeDownloadCallback navigationActionDidBecomeDownload;
     WKPageNavigationResponseDidBecomeDownloadCallback navigationResponseDidBecomeDownload;
-    WKPageNavigationContextMenuDidCreateDownloadCallback contextMenuDidCreateDownload;
 } WKPageNavigationClientV3;
 
 #ifdef __cplusplus

@@ -51,7 +51,6 @@ VPATH = \
     $(WebKit2)/WebProcess/GPU/media \
     $(WebKit2)/WebProcess/GPU/media/ios \
     $(WebKit2)/WebProcess/IconDatabase \
-    $(WebKit2)/WebProcess/Inspector \
     $(WebKit2)/WebProcess/MediaCache \
     $(WebKit2)/WebProcess/MediaSession \
     $(WebKit2)/WebProcess/MediaStream \
@@ -59,7 +58,7 @@ VPATH = \
     $(WebKit2)/WebProcess/Notifications \
     $(WebKit2)/WebProcess/OriginData \
     $(WebKit2)/WebProcess/ResourceCache \
-	$(WebKit2)/WebProcess/Speech \
+    $(WebKit2)/WebProcess/Speech \
     $(WebKit2)/WebProcess/Storage \
     $(WebKit2)/WebProcess/UserContent \
     $(WebKit2)/WebProcess/WebAuthentication \
@@ -77,8 +76,6 @@ VPATH = \
     $(WebKit2)/UIProcess/Databases \
     $(WebKit2)/UIProcess/Downloads \
     $(WebKit2)/UIProcess/GPU \
-    $(WebKit2)/UIProcess/Inspector \
-    $(WebKit2)/UIProcess/Inspector/Agents \
     $(WebKit2)/UIProcess/Media \
     $(WebKit2)/UIProcess/Media/cocoa \
     $(WebKit2)/UIProcess/MediaStream \
@@ -129,9 +126,6 @@ MESSAGE_RECEIVERS = \
 	UIProcess/WebAuthentication/WebAuthnProcessProxy \
 	UIProcess/WebPasteboardProxy \
 	UIProcess/UserContent/WebUserContentControllerProxy \
-	UIProcess/Inspector/WebInspectorUIProxy \
-	UIProcess/Inspector/RemoteWebInspectorUIProxy \
-	UIProcess/Inspector/WebInspectorUIExtensionControllerProxy \
 	UIProcess/DrawingAreaProxy \
 	UIProcess/Network/NetworkProcessProxy \
 	UIProcess/WebPageProxy \
@@ -165,11 +159,6 @@ MESSAGE_RECEIVERS = \
 	WebProcess/GPU/media/ios/RemoteMediaSessionHelper \
 	WebProcess/WebStorage/StorageAreaMap \
 	WebProcess/UserContent/WebUserContentController \
-	WebProcess/Inspector/WebInspectorInterruptDispatcher \
-	WebProcess/Inspector/WebInspectorUI \
-	WebProcess/Inspector/WebInspectorUIExtensionController \
-	WebProcess/Inspector/WebInspector \
-	WebProcess/Inspector/RemoteWebInspectorUI \
 	WebProcess/MediaSession/RemoteMediaSessionCoordinator \
 	WebProcess/Network/WebSocketChannel \
 	WebProcess/Network/NetworkProcessConnection \

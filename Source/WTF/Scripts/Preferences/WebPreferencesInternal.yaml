@@ -452,7 +452,6 @@ LiveRangeSelectionEnabled:
 
 MediaCaptureRequiresSecureConnection:
   type: bool
-  inspectorOverride: true
   humanReadableName: "Limit Media Capture to Secure Sites"
   humanReadableDescription: "Limit Media Capture to Secure Sites"
   condition: ENABLE(MEDIA_STREAM)
@@ -467,7 +466,6 @@ MediaCaptureRequiresSecureConnection:
 MockCaptureDevicesEnabled:
   type: bool
   webcoreOnChange: mockCaptureDevicesEnabledChanged
-  inspectorOverride: true
   condition: ENABLE(MEDIA_STREAM)
   humanReadableName: "Enable Mock Capture Devices"
   humanReadableDescription: "Enable Mock Capture Devices"

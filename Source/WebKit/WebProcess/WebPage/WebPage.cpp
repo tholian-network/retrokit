@@ -51,8 +51,6 @@
 #include "PageBanner.h"
 #include "PrintInfo.h"
 #include "RemoteRenderingBackendProxy.h"
-#include "RemoteWebInspectorUI.h"
-#include "RemoteWebInspectorUIMessages.h"
 #include "SessionState.h"
 #include "SessionStateConversion.h"
 #include "ShareableBitmap.h"
@@ -72,8 +70,6 @@
 #include "WebCacheStorageProvider.h"
 #include "WebChromeClient.h"
 #include "WebColorChooser.h"
-#include "WebContextMenu.h"
-#include "WebContextMenuClient.h"
 #include "WebCookieJar.h"
 #include "WebCoreArgumentCoders.h"
 #include "WebDataListSuggestionPicker.h"
@@ -88,11 +84,6 @@
 #include "WebFrame.h"
 #include "WebFrameLoaderClient.h"
 #include "WebImage.h"
-#include "WebInspector.h"
-#include "WebInspectorClient.h"
-#include "WebInspectorMessages.h"
-#include "WebInspectorUI.h"
-#include "WebInspectorUIMessages.h"
 #include "WebKeyboardEvent.h"
 #include "WebLoaderStrategy.h"
 #include "WebMediaStrategy.h"
@@ -101,7 +92,6 @@
 #include "WebOpenPanelResultListener.h"
 #include "WebPageCreationParameters.h"
 #include "WebPageGroupProxy.h"
-#include "WebPageInspectorTargetController.h"
 #include "WebPageMessages.h"
 #include "WebPageOverlay.h"
 #include "WebPageProxyMessages.h"
@@ -143,7 +133,6 @@
 #include <WebCore/Chrome.h>
 #include <WebCore/CommonVM.h>
 #include <WebCore/ContactsRequestData.h>
-#include <WebCore/ContextMenuController.h>
 #include <WebCore/DOMPasteAccess.h>
 #include <WebCore/DataTransfer.h>
 #include <WebCore/DatabaseManager.h>
@@ -183,7 +172,6 @@
 #include <WebCore/HistoryController.h>
 #include <WebCore/HistoryItem.h>
 #include <WebCore/HitTestResult.h>
-#include <WebCore/InspectorController.h>
 #include <WebCore/JSDOMExceptionHandling.h>
 #include <WebCore/JSDOMWindow.h>
 #include <WebCore/KeyboardEvent.h>
@@ -228,7 +216,6 @@
 #include <WebCore/SubframeLoader.h>
 #include <WebCore/SubstituteData.h>
 #include <WebCore/TextIterator.h>
-#include <WebCore/TranslationContextMenuInfo.h>
 #include <WebCore/UserContentURLPattern.h>
 #include <WebCore/UserGestureIndicator.h>
 #include <WebCore/UserInputBridge.h>
@@ -449,16 +436,12 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
     , m_nativeWindowHandle(parameters.nativeWindowHandle)
 #endif
     , m_setCanStartMediaTimer(RunLoop::main(), this, &WebPage::setCanStartMediaTimerFired)
-#if ENABLE(CONTEXT_MENUS)
-    , m_contextMenuClient(makeUnique<API::InjectedBundle::PageContextMenuClient>())
-#endif
     , m_editorClient { makeUnique<API::InjectedBundle::EditorClient>() }
     , m_formClient(makeUnique<API::InjectedBundle::FormClient>())
     , m_loaderClient(makeUnique<API::InjectedBundle::PageLoaderClient>())
     , m_resourceLoadClient(makeUnique<API::InjectedBundle::ResourceLoadClient>())
     , m_uiClient(makeUnique<API::InjectedBundle::PageUIClient>())
     , m_findController(makeUniqueRef<FindController>(this))
-    , m_inspectorTargetController(makeUnique<WebPageInspectorTargetController>(*this))
     , m_userContentController(WebUserContentController::getOrCreate(parameters.userContentControllerParameters.identifier))
 #if ENABLE(MEDIA_STREAM)
     , m_userMediaPermissionRequestManager { makeUniqueRef<UserMediaPermissionRequestManager>(*this) }
@@ -519,13 +502,9 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
         WebPermissionController::create(*this)
     );
     pageConfiguration.chromeClient = new WebChromeClient(*this);
-#if ENABLE(CONTEXT_MENUS)
-    pageConfiguration.contextMenuClient = new WebContextMenuClient(this);
-#endif
 #if ENABLE(DRAG_SUPPORT)
     pageConfiguration.dragClient = makeUnique<WebDragClient>(this);
 #endif
-    pageConfiguration.inspectorClient = new WebInspectorClient(this);
 #if USE(AUTOCORRECTION_PANEL)
     pageConfiguration.alternativeTextClient = makeUnique<WebAlternativeTextClient>(this);
 #endif
@@ -707,7 +686,7 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
     setTopContentInset(parameters.topContentInset);
 
     m_userAgent = parameters.userAgent;
-    
+
     // Do not overwrite existing items. Due to process swapping and back/forward cache support, there may be other
     // (suspended) WebPages in this process for the same WebPageProxy in the UIProcess. Overwriting the HistoryItems
     // would break back/forward cache for those other pages since the HistoryItems hold the CachedPage.
@@ -715,7 +694,7 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
         restoreSessionInternal(parameters.itemStates, parameters.itemStatesWereRestoredByAPIRequest ? WasRestoredByAPIRequest::Yes : WasRestoredByAPIRequest::No, WebBackForwardListProxy::OverwriteExistingItem::No);
 
     m_drawingArea->enablePainting();
-    
+
     setMediaVolume(parameters.mediaVolume);
 
     setMuted(parameters.muted, [] { });
@@ -725,11 +704,6 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
 
     auto& webProcess = WebProcess::singleton();
     webProcess.addMessageReceiver(Messages::WebPage::messageReceiverName(), m_identifier, *this);
-
-    // FIXME: This should be done in the object constructors, and the objects themselves should be message receivers.
-    webProcess.addMessageReceiver(Messages::WebInspector::messageReceiverName(), m_identifier, *this);
-    webProcess.addMessageReceiver(Messages::WebInspectorUI::messageReceiverName(), m_identifier, *this);
-    webProcess.addMessageReceiver(Messages::RemoteWebInspectorUI::messageReceiverName(), m_identifier, *this);
 
 #ifndef NDEBUG
     webPageCounter.increment();
@@ -974,18 +948,6 @@ uint64_t WebPage::messageSenderDestinationID() const
 {
     return identifier().toUInt64();
 }
-
-#if ENABLE(CONTEXT_MENUS)
-void WebPage::setInjectedBundleContextMenuClient(std::unique_ptr<API::InjectedBundle::PageContextMenuClient>&& contextMenuClient)
-{
-    if (!contextMenuClient) {
-        m_contextMenuClient = makeUnique<API::InjectedBundle::PageContextMenuClient>();
-        return;
-    }
-
-    m_contextMenuClient = WTFMove(contextMenuClient);
-}
-#endif
 
 void WebPage::setInjectedBundleEditorClient(std::unique_ptr<API::InjectedBundle::EditorClient>&& editorClient)
 {
@@ -1327,13 +1289,6 @@ void WebPage::close()
     if (WebProcess::singleton().injectedBundle())
         WebProcess::singleton().injectedBundle()->willDestroyPage(this);
 
-    if (m_inspector) {
-        m_inspector->disconnectFromPage();
-        m_inspector = nullptr;
-    }
-
-    m_page->inspectorController().disconnectAllFrontends();
-
     if (m_activePopupMenu) {
         m_activePopupMenu->disconnectFromPage();
         m_activePopupMenu = nullptr;
@@ -1371,9 +1326,6 @@ void WebPage::close()
     m_textAutoSizingAdjustmentTimer.stop();
 #endif
 
-#if ENABLE(CONTEXT_MENUS)
-    m_contextMenuClient = makeUnique<API::InjectedBundle::PageContextMenuClient>();
-#endif
     m_editorClient = makeUnique<API::InjectedBundle::EditorClient>();
     m_formClient = makeUnique<API::InjectedBundle::FormClient>();
     m_loaderClient = makeUnique<API::InjectedBundle::PageLoaderClient>();
@@ -1401,10 +1353,6 @@ void WebPage::close()
         webProcess.eventDispatcher().removeScrollingTreeForPage(this);
 #endif
     webProcess.removeMessageReceiver(Messages::WebPage::messageReceiverName(), m_identifier);
-    // FIXME: This should be done in the object destructors, and the objects themselves should be message receivers.
-    webProcess.removeMessageReceiver(Messages::WebInspector::messageReceiverName(), m_identifier);
-    webProcess.removeMessageReceiver(Messages::WebInspectorUI::messageReceiverName(), m_identifier);
-    webProcess.removeMessageReceiver(Messages::RemoteWebInspectorUI::messageReceiverName(), m_identifier);
 
 #if PLATFORM(COCOA) || PLATFORM(GTK)
     m_viewGestureGeometryCollector = nullptr;
@@ -1811,14 +1759,6 @@ void WebPage::drawRect(GraphicsContext& graphicsContext, const IntRect& rect)
     graphicsContext.clip(rect);
 
     m_mainFrame->coreFrame()->view()->paint(graphicsContext, rect);
-
-#if PLATFORM(GTK) || PLATFORM(WIN)
-    if (!m_page->settings().acceleratedCompositingEnabled() && m_page->inspectorController().enabled() && m_page->inspectorController().shouldShowOverlay()) {
-        graphicsContext.beginTransparencyLayer(1);
-        m_page->inspectorController().drawHighlight(graphicsContext);
-        graphicsContext.endTransparencyLayer();
-    }
-#endif
 }
 
 double WebPage::textZoomFactor() const
@@ -2443,32 +2383,7 @@ void WebPage::pageStoppedScrolling()
         frame->loader().history().saveScrollPositionAndViewStateToItem(frame->loader().history().currentItem());
 }
 
-#if ENABLE(CONTEXT_MENUS)
-WebContextMenu& WebPage::contextMenu()
-{
-    if (!m_contextMenu)
-        m_contextMenu = WebContextMenu::create(*this);
-    return *m_contextMenu;
-}
-
-WebContextMenu* WebPage::contextMenuAtPointInWindow(const IntPoint& point)
-{
-    corePage()->contextMenuController().clearContextMenu();
-
-    // Simulate a mouse click to generate the correct menu.
-    PlatformMouseEvent mousePressEvent(point, point, RightButton, PlatformEvent::MousePressed, 1, false, false, false, false, WallTime::now(), WebCore::ForceAtClick, WebCore::NoTap);
-    corePage()->userInputBridge().handleMousePressEvent(mousePressEvent);
-    Ref mainFrame = corePage()->mainFrame();
-    bool handled = corePage()->userInputBridge().handleContextMenuEvent(mousePressEvent, mainFrame);
-    auto* menu = handled ? &contextMenu() : nullptr;
-    PlatformMouseEvent mouseReleaseEvent(point, point, RightButton, PlatformEvent::MouseReleased, 1, false, false, false, false, WallTime::now(), WebCore::ForceAtClick, WebCore::NoTap);
-    corePage()->userInputBridge().handleMouseReleaseEvent(mouseReleaseEvent);
-
-    return menu;
-}
-#endif
-
-// Events 
+// Events
 
 static const WebEvent* g_currentEvent = 0;
 
@@ -2586,65 +2501,6 @@ private:
     const WebEvent* m_previousCurrentEvent;
 };
 
-#if ENABLE(CONTEXT_MENUS)
-
-void WebPage::didShowContextMenu()
-{
-    m_waitingForContextMenuToShow = false;
-}
-
-void WebPage::didDismissContextMenu()
-{
-    corePage()->contextMenuController().didDismissContextMenu();
-}
-
-#endif // ENABLE(CONTEXT_MENUS)
-
-#if ENABLE(CONTEXT_MENU_EVENT)
-static bool isContextClick(const PlatformMouseEvent& event)
-{
-#if USE(APPKIT)
-    return WebEventFactory::shouldBeHandledAsContextClick(event);
-#else
-    return event.button() == WebCore::RightButton;
-#endif
-}
-
-static bool handleContextMenuEvent(const PlatformMouseEvent& platformMouseEvent, WebPage* page)
-{
-    IntPoint point = page->corePage()->mainFrame().view()->windowToContents(platformMouseEvent.position());
-    constexpr OptionSet<HitTestRequest::Type> hitType { HitTestRequest::Type::ReadOnly, HitTestRequest::Type::Active, HitTestRequest::Type::DisallowUserAgentShadowContent,  HitTestRequest::Type::AllowChildFrameContent };
-    HitTestResult result = page->corePage()->mainFrame().eventHandler().hitTestResultAtPoint(point, hitType);
-
-    Ref frame = page->corePage()->mainFrame();
-    if (result.innerNonSharedNode())
-        frame = *result.innerNonSharedNode()->document().frame();
-
-    bool handled = page->corePage()->userInputBridge().handleContextMenuEvent(platformMouseEvent, frame);
-#if ENABLE(CONTEXT_MENUS)
-    if (handled)
-        page->contextMenu().show();
-#endif
-    return handled;
-}
-
-void WebPage::contextMenuForKeyEvent()
-{
-#if ENABLE(CONTEXT_MENUS)
-    corePage()->contextMenuController().clearContextMenu();
-#endif
-
-    Frame& frame = m_page->focusController().focusedOrMainFrame();
-    bool handled = frame.eventHandler().sendContextMenuEventForKey();
-#if ENABLE(CONTEXT_MENUS)
-    if (handled)
-        contextMenu().show();
-#else
-    UNUSED_PARAM(handled);
-#endif
-}
-#endif
-
 static bool handleMouseEvent(const WebMouseEvent& mouseEvent, WebPage* page)
 {
     Frame& frame = page->corePage()->mainFrame();
@@ -2655,16 +2511,7 @@ static bool handleMouseEvent(const WebMouseEvent& mouseEvent, WebPage* page)
 
     switch (platformMouseEvent.type()) {
         case PlatformEvent::MousePressed: {
-#if ENABLE(CONTEXT_MENUS)
-            if (isContextClick(platformMouseEvent))
-                page->corePage()->contextMenuController().clearContextMenu();
-#endif
-
             bool handled = page->corePage()->userInputBridge().handleMousePressEvent(platformMouseEvent);
-#if ENABLE(CONTEXT_MENU_EVENT)
-            if (isContextClick(platformMouseEvent))
-                handled = handleContextMenuEvent(platformMouseEvent, page);
-#endif
             return handled;
         }
         case PlatformEvent::MouseReleased:
@@ -2703,11 +2550,6 @@ void WebPage::mouseEvent(const WebMouseEvent& mouseEvent, std::optional<Vector<S
 
     bool shouldHandleEvent = true;
 
-#if ENABLE(CONTEXT_MENUS)
-    // Don't try to handle any pending mouse events if a context menu is showing.
-    if (m_waitingForContextMenuToShow)
-        shouldHandleEvent = false;
-#endif
 #if ENABLE(DRAG_SUPPORT)
     if (m_isStartingDrag)
         shouldHandleEvent = false;
@@ -3047,21 +2889,6 @@ void WebPage::setControlledByAutomation(bool controlled)
     m_page->setControlledByAutomation(controlled);
 }
 
-void WebPage::connectInspector(const String& targetId, Inspector::FrontendChannel::ConnectionType connectionType)
-{
-    m_inspectorTargetController->connectInspector(targetId, connectionType);
-}
-
-void WebPage::disconnectInspector(const String& targetId)
-{
-    m_inspectorTargetController->disconnectInspector(targetId);
-}
-
-void WebPage::sendMessageToTargetBackend(const String& targetId, const String& message)
-{
-    m_inspectorTargetController->sendMessageToTargetBackend(targetId, message);
-}
-
 void WebPage::insertNewlineInQuotedContent()
 {
     Frame& frame = m_page->focusController().focusedOrMainFrame();
@@ -3069,13 +2896,6 @@ void WebPage::insertNewlineInQuotedContent()
         return;
     frame.editor().insertParagraphSeparatorInQuotedContent();
 }
-
-#if ENABLE(REMOTE_INSPECTOR)
-void WebPage::setIndicating(bool indicating)
-{
-    m_page->inspectorController().setIndicating(indicating);
-}
-#endif
 
 void WebPage::setBackgroundColor(const std::optional<WebCore::Color>& backgroundColor)
 {
@@ -3900,38 +3720,6 @@ void WebPage::releaseMemory(Critical)
 #endif
 }
 
-WebInspector* WebPage::inspector(LazyCreationPolicy behavior)
-{
-    if (m_isClosed)
-        return nullptr;
-    if (!m_inspector && behavior == LazyCreationPolicy::CreateIfNeeded)
-        m_inspector = WebInspector::create(this);
-    return m_inspector.get();
-}
-
-WebInspectorUI* WebPage::inspectorUI()
-{
-    if (m_isClosed)
-        return nullptr;
-    if (!m_inspectorUI)
-        m_inspectorUI = WebInspectorUI::create(*this);
-    return m_inspectorUI.get();
-}
-
-RemoteWebInspectorUI* WebPage::remoteInspectorUI()
-{
-    if (m_isClosed)
-        return nullptr;
-    if (!m_remoteInspectorUI)
-        m_remoteInspectorUI = RemoteWebInspectorUI::create(*this);
-    return m_remoteInspectorUI.get();
-}
-
-void WebPage::inspectorFrontendCountChanged(unsigned count)
-{
-    send(Messages::WebPageProxy::DidChangeInspectorFrontendCount(count));
-}
-
 #if PLATFORM(IOS_FAMILY)
 void WebPage::setAllowsMediaDocumentInlinePlayback(bool allows)
 {
@@ -4452,14 +4240,6 @@ void WebPage::failedToShowPopupMenu()
 }
 #endif
 
-#if ENABLE(CONTEXT_MENUS)
-void WebPage::didSelectItemFromActiveContextMenu(const WebContextMenuItemData& item)
-{
-    if (auto contextMenu = std::exchange(m_contextMenu, nullptr))
-        contextMenu->itemSelected(item);
-}
-#endif
-
 void WebPage::replaceSelectionWithText(Frame* frame, const String& text)
 {
     return frame->editor().replaceSelectionWithText(text, WebCore::Editor::SelectReplacement::Yes, WebCore::Editor::SmartReplace::No);
@@ -4591,29 +4371,11 @@ bool WebPage::windowAndWebPageAreFocused() const
 
 void WebPage::didReceiveMessage(IPC::Connection& connection, IPC::Decoder& decoder)
 {
-    if (decoder.messageReceiverName() == Messages::WebInspector::messageReceiverName()) {
-        if (WebInspector* inspector = this->inspector())
-            inspector->didReceiveMessage(connection, decoder);
-        return;
-    }
-
-    if (decoder.messageReceiverName() == Messages::WebInspectorUI::messageReceiverName()) {
-        if (WebInspectorUI* inspectorUI = this->inspectorUI())
-            inspectorUI->didReceiveMessage(connection, decoder);
-        return;
-    }
-
-    if (decoder.messageReceiverName() == Messages::RemoteWebInspectorUI::messageReceiverName()) {
-        if (RemoteWebInspectorUI* remoteInspectorUI = this->remoteInspectorUI())
-            remoteInspectorUI->didReceiveMessage(connection, decoder);
-        return;
-    }
-
     didReceiveWebPageMessage(connection, decoder);
 }
 
 bool WebPage::didReceiveSyncMessage(IPC::Connection& connection, IPC::Decoder& decoder, UniqueRef<IPC::Encoder>& replyEncoder)
-{   
+{
     return didReceiveSyncWebPageMessage(connection, decoder, replyEncoder);
 }
 
@@ -6959,13 +6721,6 @@ void WebPage::updateWithTextRecognitionResult(const TextRecognitionResult& resul
 
 #endif // ENABLE(IMAGE_ANALYSIS)
 
-#if ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
-void WebPage::showMediaControlsContextMenu(FloatRect&& targetFrame, Vector<MediaControlsContextMenuItem>&& items, CompletionHandler<void(MediaControlsContextMenuItem::ID)>&& completionHandler)
-{
-    sendWithAsyncReply(Messages::WebPageProxy::ShowMediaControlsContextMenu(WTFMove(targetFrame), WTFMove(items)), completionHandler);
-}
-#endif // ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
-
 #if !PLATFORM(IOS_FAMILY)
 
 void WebPage::animationDidFinishForElement(const WebCore::Element&)
@@ -6978,7 +6733,7 @@ void WebPage::animationDidFinishForElement(const WebCore::Element&)
 void WebPage::setIsNavigatingToAppBoundDomain(std::optional<NavigatingToAppBoundDomain> isNavigatingToAppBoundDomain, WebFrame* frame)
 {
     frame->setIsNavigatingToAppBoundDomain(isNavigatingToAppBoundDomain);
-    
+
     m_navigationHasOccured = true;
 }
 
@@ -7096,14 +6851,6 @@ void WebPage::lastNavigationWasAppInitiated(CompletionHandler<void(bool)>&& comp
 {
     completionHandler(mainFrame()->document()->loader()->lastNavigationWasAppInitiated());
 }
-
-#if HAVE(TRANSLATION_UI_SERVICES) && ENABLE(CONTEXT_MENUS)
-
-void WebPage::handleContextMenuTranslation(const TranslationContextMenuInfo& info)
-{
-    send(Messages::WebPageProxy::HandleContextMenuTranslation(info));
-}
-#endif
 
 void WebPage::scrollToRect(const WebCore::FloatRect& targetRect, const WebCore::FloatPoint& origin)
 {

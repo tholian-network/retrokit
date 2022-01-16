@@ -40,7 +40,6 @@
 #include "HTMLElement.h"
 #include "HTMLImageElement.h"
 #include "HTMLParserIdioms.h"
-#include "InspectorInstrumentation.h"
 #include "PropertySetCSSStyleDeclaration.h"
 #include "ScriptableDocumentParser.h"
 #include "StyleProperties.h"
@@ -203,7 +202,6 @@ void StyledElement::styleAttributeChanged(const AtomString& newStyleString, Attr
     elementData()->setStyleAttributeIsDirty(false);
 
     invalidateStyle();
-    InspectorInstrumentation::didInvalidateStyleAttr(*this);
 }
 
 void StyledElement::invalidateStyleAttribute()
@@ -230,9 +228,8 @@ void StyledElement::invalidateStyleAttribute()
 void StyledElement::inlineStyleChanged()
 {
     invalidateStyleAttribute();
-    InspectorInstrumentation::didInvalidateStyleAttr(*this);
 }
-    
+
 bool StyledElement::setInlineStyleProperty(CSSPropertyID propertyID, CSSValueID identifier, bool important)
 {
     ensureMutableInlineStyle().setProperty(propertyID, CSSValuePool::singleton().createIdentifierValue(identifier), important);

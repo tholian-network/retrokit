@@ -39,7 +39,6 @@
 #include "HTMLDocument.h"
 #include "HTMLNames.h"
 #include "HTMLParserIdioms.h"
-#include "InspectorInstrumentation.h"
 #include "NodeRenderStyle.h"
 #include "QualifiedName.h"
 #include "RegisterAllocator.h"
@@ -3404,7 +3403,7 @@ void SelectorCodeGenerator::generateElementFunctionCallTest(Assembler::JumpList&
 
 JSC_DEFINE_JIT_OPERATION(operationElementIsActive, bool, (const Element* element))
 {
-    return element->active() || InspectorInstrumentation::forcePseudoState(*element, CSSSelector::PseudoClassActive);
+    return element->active();
 }
 
 void SelectorCodeGenerator::generateElementIsActive(Assembler::JumpList& failureCases, const SelectorFragment& fragment)
@@ -3515,7 +3514,7 @@ void SelectorCodeGenerator::generateElementIsFirstChild(Assembler::JumpList& fai
 
 JSC_DEFINE_JIT_OPERATION(operationElementIsHovered, bool, (const Element* element))
 {
-    return element->hovered() || InspectorInstrumentation::forcePseudoState(*element, CSSSelector::PseudoClassHover);
+    return element->hovered();
 }
 
 void SelectorCodeGenerator::generateElementIsHovered(Assembler::JumpList& failureCases, const SelectorFragment& fragment)

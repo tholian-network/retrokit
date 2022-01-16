@@ -1175,7 +1175,6 @@ bool ArgumentCoder<Cursor>::decode(Decoder& decoder, Cursor& cursor)
 void ArgumentCoder<ResourceRequest>::encode(Encoder& encoder, const ResourceRequest& resourceRequest)
 {
     encoder << resourceRequest.cachePartition();
-    encoder << resourceRequest.hiddenFromInspector();
 
 #if USE(SYSTEM_PREVIEW)
     if (resourceRequest.isSystemPreview()) {
@@ -1200,11 +1199,6 @@ bool ArgumentCoder<ResourceRequest>::decode(Decoder& decoder, ResourceRequest& r
     if (!decoder.decode(cachePartition))
         return false;
     resourceRequest.setCachePartition(cachePartition);
-
-    bool isHiddenFromInspector;
-    if (!decoder.decode(isHiddenFromInspector))
-        return false;
-    resourceRequest.setHiddenFromInspector(isHiddenFromInspector);
 
 #if USE(SYSTEM_PREVIEW)
     bool isSystemPreview;
@@ -1627,45 +1621,6 @@ bool ArgumentCoder<PasteboardURL>::decode(Decoder& decoder, PasteboardURL& conte
 }
 
 #if PLATFORM(IOS_FAMILY)
-
-void ArgumentCoder<InspectorOverlay::Highlight>::encode(Encoder& encoder, const InspectorOverlay::Highlight& highlight)
-{
-    encoder << static_cast<uint32_t>(highlight.type);
-    encoder << highlight.usePageCoordinates;
-    encoder << highlight.contentColor;
-    encoder << highlight.contentOutlineColor;
-    encoder << highlight.paddingColor;
-    encoder << highlight.borderColor;
-    encoder << highlight.marginColor;
-    encoder << highlight.quads;
-    encoder << highlight.gridHighlightOverlays;
-}
-
-bool ArgumentCoder<InspectorOverlay::Highlight>::decode(Decoder& decoder, InspectorOverlay::Highlight& highlight)
-{
-    uint32_t type;
-    if (!decoder.decode(type))
-        return false;
-    highlight.type = (InspectorOverlay::Highlight::Type)type;
-
-    if (!decoder.decode(highlight.usePageCoordinates))
-        return false;
-    if (!decoder.decode(highlight.contentColor))
-        return false;
-    if (!decoder.decode(highlight.contentOutlineColor))
-        return false;
-    if (!decoder.decode(highlight.paddingColor))
-        return false;
-    if (!decoder.decode(highlight.borderColor))
-        return false;
-    if (!decoder.decode(highlight.marginColor))
-        return false;
-    if (!decoder.decode(highlight.quads))
-        return false;
-    if (!decoder.decode(highlight.gridHighlightOverlays))
-        return false;
-    return true;
-}
 
 void ArgumentCoder<PasteboardWebContent>::encode(Encoder& encoder, const PasteboardWebContent& content)
 {

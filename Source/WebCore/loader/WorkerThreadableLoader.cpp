@@ -35,7 +35,6 @@
 #include "ContentSecurityPolicy.h"
 #include "Document.h"
 #include "DocumentThreadableLoader.h"
-#include "InspectorInstrumentation.h"
 #include "Performance.h"
 #include "ResourceError.h"
 #include "ResourceRequest.h"
@@ -138,9 +137,6 @@ WorkerThreadableLoader::MainThreadBridge::MainThreadBridge(ThreadableLoaderClien
         optionsCopy->options.serviceWorkerRegistrationIdentifier = activeServiceWorker->registrationIdentifier();
 #endif
 
-    if (is<WorkerGlobalScope>(globalScope))
-        InspectorInstrumentation::willSendRequest(downcast<WorkerGlobalScope>(globalScope), m_workerRequestIdentifier, request);
-
     // Can we benefit from request being an r-value to create more efficiently its isolated copy?
     m_loaderProxy.postTaskToLoader([this, request = request.isolatedCopy(), options = WTFMove(optionsCopy), contentSecurityPolicyCopy = WTFMove(contentSecurityPolicyCopy), crossOriginEmbedderPolicyCopy = WTFMove(crossOriginEmbedderPolicyCopy)](ScriptExecutionContext& context) mutable {
         ASSERT(isMainThread());
@@ -225,8 +221,6 @@ void WorkerThreadableLoader::MainThreadBridge::didReceiveResponse(unsigned long 
         ASSERT(context.isWorkerGlobalScope() || context.isWorkletGlobalScope());
         auto response = ResourceResponse::fromCrossThreadData(WTFMove(responseData));
         protectedWorkerClientWrapper->didReceiveResponse(identifier, response);
-        if (is<WorkerGlobalScope>(context))
-            InspectorInstrumentation::didReceiveResourceResponse(downcast<WorkerGlobalScope>(context), workerRequestIdentifier, response);
     }, m_taskMode);
 }
 
@@ -236,8 +230,6 @@ void WorkerThreadableLoader::MainThreadBridge::didReceiveData(const uint8_t* dat
     m_loaderProxy.postTaskForModeToWorkerOrWorkletGlobalScope([protectedWorkerClientWrapper = makeRef(*m_workerClientWrapper), workerRequestIdentifier = m_workerRequestIdentifier, buffer = WTFMove(buffer)] (ScriptExecutionContext& context) mutable {
         ASSERT(context.isWorkerGlobalScope() || context.isWorkletGlobalScope());
         protectedWorkerClientWrapper->didReceiveData(buffer.data(), buffer.size());
-        if (is<WorkerGlobalScope>(context))
-            InspectorInstrumentation::didReceiveData(downcast<WorkerGlobalScope>(context), workerRequestIdentifier, buffer.data(), buffer.size());
     }, m_taskMode);
 }
 
@@ -247,8 +239,6 @@ void WorkerThreadableLoader::MainThreadBridge::didFinishLoading(unsigned long id
     m_loaderProxy.postTaskForModeToWorkerOrWorkletGlobalScope([protectedWorkerClientWrapper = makeRef(*m_workerClientWrapper), workerRequestIdentifier = m_workerRequestIdentifier, networkLoadMetrics = m_networkLoadMetrics.isolatedCopy(), identifier] (ScriptExecutionContext& context) mutable {
         ASSERT(context.isWorkerGlobalScope() || context.isWorkletGlobalScope());
         protectedWorkerClientWrapper->didFinishLoading(identifier);
-        if (is<WorkerGlobalScope>(context))
-            InspectorInstrumentation::didFinishLoading(downcast<WorkerGlobalScope>(context), workerRequestIdentifier, networkLoadMetrics);
     }, m_taskMode);
 }
 
@@ -259,8 +249,6 @@ void WorkerThreadableLoader::MainThreadBridge::didFail(const ResourceError& erro
         ASSERT(context.isWorkerGlobalScope() || context.isWorkletGlobalScope());
         ThreadableLoader::logError(context, error, protectedWorkerClientWrapper->initiator());
         protectedWorkerClientWrapper->didFail(error);
-        if (is<WorkerGlobalScope>(context))
-            InspectorInstrumentation::didFailLoading(downcast<WorkerGlobalScope>(context), workerRequestIdentifier, error);
     }, m_taskMode);
 }
 

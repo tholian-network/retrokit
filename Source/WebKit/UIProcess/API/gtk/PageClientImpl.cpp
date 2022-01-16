@@ -34,7 +34,6 @@
 #include "NativeWebWheelEvent.h"
 #include "ViewSnapshotStore.h"
 #include "WebColorPickerGtk.h"
-#include "WebContextMenuProxyGtk.h"
 #include "WebDataListSuggestionsDropdownGtk.h"
 #include "WebEventFactory.h"
 #include "WebKitColorChooser.h"
@@ -265,11 +264,6 @@ RefPtr<WebPopupMenuProxy> PageClientImpl::createPopupMenuProxy(WebPageProxy& pag
     if (WEBKIT_IS_WEB_VIEW(m_viewWidget))
         return WebKitPopupMenu::create(m_viewWidget, page);
     return WebPopupMenuProxyGtk::create(m_viewWidget, page);
-}
-
-Ref<WebContextMenuProxy> PageClientImpl::createContextMenuProxy(WebPageProxy& page, ContextMenuContextData&& context, const UserData& userData)
-{
-    return WebContextMenuProxyGtk::create(m_viewWidget, page, WTFMove(context), userData);
 }
 
 RefPtr<WebColorPicker> PageClientImpl::createColorPicker(WebPageProxy* page, const WebCore::Color& color, const WebCore::IntRect& rect, Vector<WebCore::Color>&&)

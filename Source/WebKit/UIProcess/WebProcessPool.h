@@ -63,9 +63,6 @@ OBJC_CLASS NSObject;
 OBJC_CLASS NSSet;
 OBJC_CLASS NSString;
 OBJC_CLASS WKPreferenceObserver;
-#if PLATFORM(MAC)
-OBJC_CLASS WKWebInspectorPreferenceObserver;
-#endif
 #endif
 
 #if PLATFORM(MAC)
@@ -529,9 +526,6 @@ private:
 #if PLATFORM(IOS_FAMILY) && !PLATFORM(MACCATALYST)
     static float displayBrightness();
     static void backlightLevelDidChangeCallback(CFNotificationCenterRef, void *observer, CFStringRef name, const void *, CFDictionaryRef userInfo);    
-#if ENABLE(REMOTE_INSPECTOR)
-    static void remoteWebInspectorEnabledCallback(CFNotificationCenterRef, void *observer, CFStringRef name, const void *, CFDictionaryRef userInfo);
-#endif
 #endif
 
 #if PLATFORM(COCOA)
@@ -545,7 +539,7 @@ private:
 #if PLATFORM(MAC)
     static void colorPreferencesDidChangeCallback(CFNotificationCenterRef, void *observer, CFStringRef name, const void *, CFDictionaryRef userInfo);
 #endif
-    
+
 #if ENABLE(CFPREFS_DIRECT_MODE)
     void startObservingPreferenceChanges();
 #endif
@@ -636,7 +630,6 @@ private:
     RetainPtr<NSObject> m_accessibilityDisplayOptionsNotificationObserver;
     RetainPtr<NSObject> m_scrollerStyleNotificationObserver;
     RetainPtr<NSObject> m_deactivationObserver;
-    RetainPtr<WKWebInspectorPreferenceObserver> m_webInspectorPreferenceObserver;
 
     std::unique_ptr<HighPerformanceGraphicsUsageSampler> m_highPerformanceGraphicsUsageSampler;
     std::unique_ptr<PerActivityStateCPUUsageSampler> m_perActivityStateCPUUsageSampler;

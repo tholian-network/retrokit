@@ -359,7 +359,6 @@ ResourceLoadInfo NetworkResourceLoader::resourceLoadInfo()
         case ResourceResponse::Source::Unknown:
         case ResourceResponse::Source::Network:
         case ResourceResponse::Source::ServiceWorker:
-        case ResourceResponse::Source::InspectorOverride:
             break;
         }
         return false;

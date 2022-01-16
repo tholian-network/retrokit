@@ -49,10 +49,6 @@
 #include <WebCore/CurlProxySettings.h>
 #endif
 
-#if PLATFORM(IOS_FAMILY)
-#include <WebCore/InspectorOverlay.h>
-#endif
-
 #if PLATFORM(GTK)
 #include "ArgumentCodersGtk.h"
 #endif
@@ -456,11 +452,6 @@ template<> struct ArgumentCoder<CGAffineTransform> {
 template<> struct ArgumentCoder<WebCore::SelectionGeometry> {
     static void encode(Encoder&, const WebCore::SelectionGeometry&);
     static std::optional<WebCore::SelectionGeometry> decode(Decoder&);
-};
-
-template<> struct ArgumentCoder<WebCore::InspectorOverlay::Highlight> {
-    static void encode(Encoder&, const WebCore::InspectorOverlay::Highlight&);
-    static WARN_UNUSED_RETURN bool decode(Decoder&, WebCore::InspectorOverlay::Highlight&);
 };
 
 template<> struct ArgumentCoder<WebCore::PasteboardWebContent> {

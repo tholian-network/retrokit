@@ -253,7 +253,6 @@ ImagesEnabled:
   type: bool
   webcoreGetter: areImagesEnabled
   webcoreOnChange: imagesEnabledChanged
-  inspectorOverride: true
   defaultValue:
     WebCore:
       default: true

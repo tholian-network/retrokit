@@ -34,10 +34,6 @@
 #include "CaptionUserPreferences.h"
 #include "Chrome.h"
 #include "ChromeClient.h"
-#include "ContextMenu.h"
-#include "ContextMenuController.h"
-#include "ContextMenuItem.h"
-#include "ContextMenuProvider.h"
 #include "Event.h"
 #include "EventListener.h"
 #include "EventNames.h"
@@ -49,7 +45,6 @@
 #include "LocalizedStrings.h"
 #include "Logging.h"
 #include "MediaControlTextTrackContainerElement.h"
-#include "MediaControlsContextMenuItem.h"
 #include "Node.h"
 #include "Page.h"
 #include "PageGroup.h"
@@ -109,10 +104,6 @@ MediaControlsHost::MediaControlsHost(HTMLMediaElement& mediaElement)
 
 MediaControlsHost::~MediaControlsHost()
 {
-#if ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS)
-    if (auto showMediaControlsContextMenuCallback = std::exchange(m_showMediaControlsContextMenuCallback, nullptr))
-        showMediaControlsContextMenuCallback->handleEvent();
-#endif // ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS)
 }
 
 String MediaControlsHost::layoutTraitsClassName() const

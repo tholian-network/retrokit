@@ -36,8 +36,6 @@
 #include "Chrome.h"
 #include "ChromeClient.h"
 #include "ConstantPropertyMap.h"
-#include "ContextMenuClient.h"
-#include "ContextMenuController.h"
 #include "CookieJar.h"
 #include "DOMRect.h"
 #include "DOMRectList.h"
@@ -75,9 +73,6 @@
 #include "HistoryItem.h"
 #include "IDBConnectionToServer.h"
 #include "ImageOverlayController.h"
-#include "InspectorClient.h"
-#include "InspectorController.h"
-#include "InspectorInstrumentation.h"
 #include "LayoutDisallowedScope.h"
 #include "LegacySchemeRegistry.h"
 #include "LoaderStrategy.h"
@@ -89,7 +84,6 @@
 #include "PageColorSampler.h"
 #include "PageConfiguration.h"
 #include "PageConsoleClient.h"
-#include "PageDebuggable.h"
 #include "PageGroup.h"
 #include "PageOverlayController.h"
 #include "PerformanceLogging.h"
@@ -210,13 +204,6 @@ static void networkStateChanged(bool isOnLine)
 {
     Vector<Ref<Frame>> frames;
 
-    // Get all the frames of all the pages in all the page groups
-    for (auto* page : allPages()) {
-        for (Frame* frame = &page->mainFrame(); frame; frame = frame->tree().traverseNext())
-            frames.append(*frame);
-        InspectorInstrumentation::networkStateChanged(*page);
-    }
-
     auto& eventName = isOnLine ? eventNames().onlineEvent : eventNames().offlineEvent;
     for (auto& frame : frames) {
         if (!frame->document())
@@ -237,11 +224,7 @@ Page::Page(PageConfiguration&& pageConfiguration)
     , m_dragController(makeUnique<DragController>(*this, WTFMove(pageConfiguration.dragClient)))
 #endif
     , m_focusController(makeUnique<FocusController>(*this, pageInitialActivityState()))
-#if ENABLE(CONTEXT_MENUS)
-    , m_contextMenuController(makeUnique<ContextMenuController>(*this, *pageConfiguration.contextMenuClient))
-#endif
     , m_userInputBridge(makeUnique<UserInputBridge>(*this))
-    , m_inspectorController(makeUnique<InspectorController>(*this, pageConfiguration.inspectorClient))
     , m_pointerCaptureController(makeUnique<PointerCaptureController>(*this))
 #if ENABLE(POINTER_LOCK)
     , m_pointerLockController(makeUnique<PointerLockController>(*this))
@@ -268,9 +251,6 @@ Page::Page(PageConfiguration&& pageConfiguration)
     , m_activityState(pageInitialActivityState())
     , m_alternativeTextClient(WTFMove(pageConfiguration.alternativeTextClient))
     , m_consoleClient(makeUnique<PageConsoleClient>(*this))
-#if ENABLE(REMOTE_INSPECTOR)
-    , m_inspectorDebuggable(makeUnique<PageDebuggable>(*this))
-#endif
     , m_socketProvider(WTFMove(pageConfiguration.socketProvider))
     , m_cookieJar(WTFMove(pageConfiguration.cookieJar))
     , m_applicationCacheStorage(*WTFMove(pageConfiguration.applicationCacheStorage))
@@ -330,11 +310,6 @@ Page::Page(PageConfiguration&& pageConfiguration)
     pageCounter.increment();
 #endif
 
-#if ENABLE(REMOTE_INSPECTOR)
-    if (m_inspectorController->inspectorClient() && m_inspectorController->inspectorClient()->allowRemoteInspectionToPageDirectly())
-        m_inspectorDebuggable->init();
-#endif
-
 #if PLATFORM(COCOA)
     platformInitialize();
 #endif
@@ -361,10 +336,8 @@ Page::~Page()
         --gNonUtilityPageCount;
         MemoryPressureHandler::setPageCount(gNonUtilityPageCount);
     }
-    
-    m_settings->pageDestroyed();
 
-    m_inspectorController->inspectedPageDestroyed();
+    m_settings->pageDestroyed();
 
     for (Frame* frame = &mainFrame(); frame; frame = frame->tree().traverseNext()) {
         frame->willDetachPage();
@@ -2441,35 +2414,6 @@ void Page::whenUnnested(WTF::Function<void()>&& callback)
     m_unnestCallback = WTFMove(callback);
 }
 
-#if ENABLE(REMOTE_INSPECTOR)
-
-bool Page::remoteInspectionAllowed() const
-{
-    return m_inspectorDebuggable->remoteDebuggingAllowed();
-}
-
-void Page::setRemoteInspectionAllowed(bool allowed)
-{
-    m_inspectorDebuggable->setRemoteDebuggingAllowed(allowed);
-}
-
-String Page::remoteInspectionNameOverride() const
-{
-    return m_inspectorDebuggable->nameOverride();
-}
-
-void Page::setRemoteInspectionNameOverride(const String& name)
-{
-    m_inspectorDebuggable->setNameOverride(name);
-}
-
-void Page::remoteInspectorInformationDidChange() const
-{
-    m_inspectorDebuggable->update();
-}
-
-#endif
-
 void Page::addLayoutMilestones(OptionSet<LayoutMilestone> milestones)
 {
     // In the future, we may want a function that replaces m_layoutMilestones instead of just adding to it.
@@ -3011,8 +2955,6 @@ void Page::effectiveAppearanceDidChange(bool useDarkAppearance, bool useElevated
 
     m_useDarkAppearance = useDarkAppearance;
     m_useElevatedUserInterfaceLevel = useElevatedUserInterfaceLevel;
-
-    InspectorInstrumentation::defaultAppearanceDidChange(*this, useDarkAppearance);
 
     appearanceDidChange();
 #else

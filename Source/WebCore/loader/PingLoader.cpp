@@ -43,7 +43,6 @@
 #include "FrameLoader.h"
 #include "FrameLoaderClient.h"
 #include "HTTPHeaderValues.h"
-#include "InspectorInstrumentation.h"
 #include "LoaderStrategy.h"
 #include "NetworkLoadMetrics.h"
 #include "Page.h"
@@ -213,16 +212,11 @@ void PingLoader::startPingLoad(Frame& frame, ResourceRequest& request, HTTPHeade
 
     // FIXME: Deprecate the ping load code path.
     if (platformStrategies()->loaderStrategy()->usePingLoad()) {
-        InspectorInstrumentation::willSendRequestOfType(&frame, identifier, frame.loader().activeDocumentLoader(), request, InspectorInstrumentation::LoadType::Ping);
 
         platformStrategies()->loaderStrategy()->startPingLoad(frame, request, WTFMove(originalRequestHeaders), options, policyCheck, [protectedFrame = makeRef(frame), identifier] (const ResourceError& error, const ResourceResponse& response) {
-            if (!response.isNull())
-                InspectorInstrumentation::didReceiveResourceResponse(protectedFrame, identifier, protectedFrame->loader().activeDocumentLoader(), response, nullptr);
             if (!error.isNull()) {
-                InspectorInstrumentation::didFailLoading(protectedFrame.ptr(), protectedFrame->loader().activeDocumentLoader(), identifier, error);
                 return;
             }
-            InspectorInstrumentation::didFinishLoading(protectedFrame.ptr(), protectedFrame->loader().activeDocumentLoader(), identifier, { }, nullptr);
         });
         return;
     }

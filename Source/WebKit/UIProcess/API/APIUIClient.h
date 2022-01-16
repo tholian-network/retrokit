@@ -25,7 +25,6 @@
 
 #pragma once
 
-#include "APIInspectorConfiguration.h"
 #include "WKPage.h"
 #include "WebEvent.h"
 #include "WebHitTestResultData.h"
@@ -182,15 +181,6 @@ public:
 #if ENABLE(WEB_AUTHN)
     virtual void runWebAuthenticationPanel(WebKit::WebPageProxy&, WebAuthenticationPanel&, WebKit::WebFrameProxy&, WebKit::FrameInfoData&&, CompletionHandler<void(WebKit::WebAuthenticationPanelResult)>&& completionHandler) { completionHandler(WebKit::WebAuthenticationPanelResult::Unavailable); }
 #endif
-
-    virtual void didAttachLocalInspector(WebKit::WebPageProxy&, WebKit::WebInspectorUIProxy&) { }
-    virtual void willCloseLocalInspector(WebKit::WebPageProxy&, WebKit::WebInspectorUIProxy&) { }
-    virtual Ref<API::InspectorConfiguration> configurationForLocalInspector(WebKit::WebPageProxy&, WebKit::WebInspectorUIProxy&)
-    {
-        return API::InspectorConfiguration::create();
-    }
-    virtual void didEnableInspectorBrowserDomain(WebKit::WebPageProxy&) { }
-    virtual void didDisableInspectorBrowserDomain(WebKit::WebPageProxy&) { }
 
     virtual void decidePolicyForSpeechRecognitionPermissionRequest(WebKit::WebPageProxy& page, API::SecurityOrigin& origin, CompletionHandler<void(bool)>&& completionHandler) { page.requestSpeechRecognitionPermissionByDefaultAction(origin.securityOrigin(), WTFMove(completionHandler)); }
 

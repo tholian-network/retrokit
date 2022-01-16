@@ -218,7 +218,6 @@ UIProcess/WKImagePreviewViewController.mm
 
 UIProcess/API/APIWebsiteDataRecord.cpp
 
-UIProcess/API/C/WKContextMenuListener.cpp
 UIProcess/API/C/WKTestingSupport.cpp
 UIProcess/API/C/WKUserScriptRef.cpp
 
@@ -235,23 +234,15 @@ UIProcess/API/Cocoa/_WKAttachment.mm
 UIProcess/API/Cocoa/_WKAutomationSession.mm
 UIProcess/API/Cocoa/_WKAutomationSessionConfiguration.mm
 UIProcess/API/Cocoa/_WKContentRuleListAction.mm
-UIProcess/API/Cocoa/_WKContextMenuElementInfo.mm
 UIProcess/API/Cocoa/_WKCustomHeaderFields.mm @no-unify
 UIProcess/API/Cocoa/_WKDownload.mm
 UIProcess/API/Cocoa/_WKElementAction.mm
 UIProcess/API/Cocoa/_WKErrorRecoveryAttempting.mm
 UIProcess/API/Cocoa/_WKExperimentalFeature.mm
 UIProcess/API/Cocoa/_WKFrameTreeNode.mm
-UIProcess/API/Cocoa/_WKInspector.mm
-UIProcess/API/Cocoa/_WKInspectorConfiguration.mm
-UIProcess/API/Cocoa/_WKInspectorTesting.mm
-UIProcess/API/Cocoa/_WKInspectorDebuggableInfo.mm
-UIProcess/API/Cocoa/_WKInspectorExtension.mm
-UIProcess/API/Cocoa/_WKInspectorWindow.mm
 UIProcess/API/Cocoa/_WKInternalDebugFeature.mm
 UIProcess/API/Cocoa/_WKLinkIconParameters.mm
 UIProcess/API/Cocoa/_WKProcessPoolConfiguration.mm
-UIProcess/API/Cocoa/_WKRemoteWebInspectorViewController.mm
 UIProcess/API/Cocoa/_WKResourceLoadInfo.mm
 UIProcess/API/Cocoa/_WKSessionState.mm
 UIProcess/API/Cocoa/_WKTextInputContext.mm
@@ -284,7 +275,6 @@ UIProcess/API/Cocoa/WKConnection.mm
 UIProcess/API/Cocoa/WKContentRuleList.mm
 UIProcess/API/Cocoa/WKContentRuleListStore.mm
 UIProcess/API/Cocoa/WKContentWorld.mm
-UIProcess/API/Cocoa/WKContextMenuElementInfo.mm
 UIProcess/API/Cocoa/WKDownload.mm
 UIProcess/API/Cocoa/WKError.mm
 UIProcess/API/Cocoa/WKFindConfiguration.mm
@@ -390,17 +380,6 @@ UIProcess/Cocoa/WKFullKeyboardAccessWatcher.mm
 UIProcess/Cocoa/WKReloadFrameErrorRecoveryAttempter.mm
 UIProcess/Cocoa/WKWebViewContentProviderRegistry.mm
 
-UIProcess/Inspector/Cocoa/InspectorExtensionDelegate.mm
-
-UIProcess/Inspector/ios/WKInspectorHighlightView.mm
-UIProcess/Inspector/ios/WKInspectorNodeSearchGestureRecognizer.mm
-
-UIProcess/Inspector/mac/RemoteWebInspectorUIProxyMac.mm
-UIProcess/Inspector/mac/WebInspectorUIProxyMac.mm
-UIProcess/Inspector/mac/WKInspectorResourceURLSchemeHandler.mm
-UIProcess/Inspector/mac/WKInspectorViewController.mm
-UIProcess/Inspector/mac/WKInspectorWKWebView.mm
-
 UIProcess/Network/NetworkProcessProxyCocoa.mm
 
 UIProcess/ios/forms/WKAirPlayRoutePicker.mm
@@ -473,7 +452,6 @@ UIProcess/mac/TiledCoreAnimationDrawingAreaProxy.mm
 UIProcess/mac/ViewGestureControllerMac.mm
 UIProcess/mac/ViewSnapshotStoreMac.mm
 UIProcess/mac/WebColorPickerMac.mm
-UIProcess/mac/WebContextMenuProxyMac.mm
 UIProcess/mac/WebDataListSuggestionsDropdownMac.mm
 UIProcess/mac/WebDateTimePickerMac.mm
 UIProcess/mac/WebPageProxyMac.mm
@@ -577,8 +555,6 @@ WebProcess/InjectedBundle/API/mac/WKDOMTextIterator.mm
 
 WebProcess/InjectedBundle/mac/InjectedBundleMac.mm
 
-WebProcess/Inspector/mac/WebInspectorUIMac.mm
-
 WebProcess/WebCoreSupport/WebCaptionPreferencesDelegate.cpp
 WebProcess/WebCoreSupport/WebPasteboardOverrides.cpp
 WebProcess/WebCoreSupport/WebValidationMessageClient.cpp
@@ -588,7 +564,6 @@ WebProcess/WebCoreSupport/ios/WebEditorClientIOS.mm
 WebProcess/WebCoreSupport/ios/WebFrameLoaderClientIOS.mm
 
 WebProcess/WebCoreSupport/mac/WebAlternativeTextClient.cpp
-WebProcess/WebCoreSupport/mac/WebContextMenuClientMac.mm
 WebProcess/WebCoreSupport/mac/WebDragClientMac.mm
 WebProcess/WebCoreSupport/mac/WebEditorClientMac.mm
 WebProcess/WebCoreSupport/mac/WebFrameNetworkingContext.mm

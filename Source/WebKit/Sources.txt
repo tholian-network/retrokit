@@ -155,13 +155,11 @@ Shared/ActivityAssertion.cpp @no-unify
 Shared/AuxiliaryProcess.cpp @no-unify
 Shared/BlobDataFileReferenceWithSandboxExtension.cpp @no-unify
 Shared/CacheModel.cpp
-Shared/ContextMenuContextData.cpp
 Shared/DebuggableInfoData.cpp
 Shared/EditingRange.cpp
 Shared/EditorState.cpp
 Shared/FontInfo.cpp
 Shared/FrameInfoData.cpp
-Shared/InspectorExtensionTypes.cpp
 Shared/LayerTreeContext.cpp
 Shared/LoadParameters.cpp
 Shared/NavigationActionData.cpp
@@ -184,8 +182,6 @@ Shared/WebCompiledContentRuleList.cpp
 Shared/WebCompiledContentRuleListData.cpp
 Shared/WebConnection.cpp
 Shared/WebConnectionClient.cpp
-Shared/WebContextMenuItem.cpp
-Shared/WebContextMenuItemData.cpp
 Shared/WebCoreArgumentCoders.cpp @no-unify
 Shared/WebErrors.cpp
 Shared/WebEvent.cpp @no-unify
@@ -228,7 +224,6 @@ Shared/API/APIURLResponse.cpp
 Shared/API/c/WKArray.cpp
 Shared/API/c/WKCertificateInfo.cpp
 Shared/API/c/WKConnectionRef.cpp
-Shared/API/c/WKContextMenuItem.cpp
 Shared/API/c/WKData.cpp
 Shared/API/c/WKDeprecatedFunctions.cpp
 Shared/API/c/WKDictionary.cpp
@@ -286,8 +281,6 @@ UIProcess/WebConnectionToWebProcess.cpp
 UIProcess/WebContextClient.cpp
 UIProcess/WebContextConnectionClient.cpp
 UIProcess/WebContextInjectedBundleClient.cpp
-UIProcess/WebContextMenuListenerProxy.cpp
-UIProcess/WebContextMenuProxy.cpp
 UIProcess/WebCookieManagerProxy.cpp
 UIProcess/WebDataListSuggestionsDropdown.cpp
 UIProcess/WebDateTimePicker.cpp
@@ -315,15 +308,12 @@ UIProcess/API/APIContentRuleList.cpp
 UIProcess/API/APIContentRuleListAction.cpp
 UIProcess/API/APIContentRuleListStore.cpp
 UIProcess/API/APIContentWorld.cpp
-UIProcess/API/APIContextMenuElementInfo.cpp
 UIProcess/API/APIDebuggableInfo.cpp
 UIProcess/API/APIExperimentalFeature.cpp
 UIProcess/API/APIFrameInfo.cpp
 UIProcess/API/APIFrameTreeNode.cpp
 UIProcess/API/APIHTTPCookieStore.cpp
 UIProcess/API/APIHitTestResult.cpp
-UIProcess/API/APIInspectorConfiguration.cpp
-UIProcess/API/APIInspectorExtension.cpp
 UIProcess/API/APIInternalDebugFeature.cpp
 UIProcess/API/APINavigation.cpp
 UIProcess/API/APINavigationData.cpp
@@ -356,7 +346,6 @@ UIProcess/API/C/WKFramePolicyListener.cpp
 UIProcess/API/C/WKHTTPCookieStoreRef.cpp
 UIProcess/API/C/WKHitTestResult.cpp
 UIProcess/API/C/WKIconDatabase.cpp
-UIProcess/API/C/WKInspector.cpp
 UIProcess/API/C/WKKeyValueStorageManager.cpp
 UIProcess/API/C/WKMessageListener.cpp
 UIProcess/API/C/WKMockDisplay.cpp
@@ -405,16 +394,6 @@ UIProcess/Launcher/ProcessLauncher.cpp @no-unify
 UIProcess/Network/NetworkProcessProxy.cpp
 
 UIProcess/GPU/GPUProcessProxy.cpp
-
-UIProcess/Inspector/InspectorTargetProxy.cpp
-UIProcess/Inspector/RemoteWebInspectorUIProxy.cpp
-UIProcess/Inspector/WebInspectorUIProxy.cpp
-UIProcess/Inspector/WebInspectorUIExtensionControllerProxy.cpp
-UIProcess/Inspector/WebInspectorUtilities.cpp
-UIProcess/Inspector/WebPageDebuggable.cpp
-UIProcess/Inspector/WebPageInspectorController.cpp
-
-UIProcess/Inspector/Agents/InspectorBrowserAgent.cpp
 
 UIProcess/Media/AudioSessionRoutingArbitratorProxy.cpp
 UIProcess/Media/MediaUsageManager.cpp
@@ -475,7 +454,6 @@ WebProcess/InjectedBundle/InjectedBundleClient.cpp
 WebProcess/InjectedBundle/InjectedBundleDOMWindowExtension.cpp
 WebProcess/InjectedBundle/InjectedBundleHitTestResult.cpp
 WebProcess/InjectedBundle/InjectedBundleNavigationAction.cpp
-WebProcess/InjectedBundle/InjectedBundlePageContextMenuClient.cpp
 WebProcess/InjectedBundle/InjectedBundlePageEditorClient.cpp
 WebProcess/InjectedBundle/InjectedBundlePageFormClient.cpp
 WebProcess/InjectedBundle/InjectedBundlePageLoaderClient.cpp
@@ -490,7 +468,6 @@ WebProcess/InjectedBundle/API/c/WKBundleBackForwardListItem.cpp
 WebProcess/InjectedBundle/API/c/WKBundleDOMWindowExtension.cpp
 WebProcess/InjectedBundle/API/c/WKBundleFrame.cpp
 WebProcess/InjectedBundle/API/c/WKBundleHitTestResult.cpp
-WebProcess/InjectedBundle/API/c/WKBundleInspector.cpp
 WebProcess/InjectedBundle/API/c/WKBundleNavigationAction.cpp
 WebProcess/InjectedBundle/API/c/WKBundleNodeHandle.cpp
 WebProcess/InjectedBundle/API/c/WKBundlePage.cpp
@@ -501,16 +478,6 @@ WebProcess/InjectedBundle/API/c/WKBundleScriptWorld.cpp
 WebProcess/InjectedBundle/DOM/InjectedBundleCSSStyleDeclarationHandle.cpp
 WebProcess/InjectedBundle/DOM/InjectedBundleNodeHandle.cpp @no-unify
 WebProcess/InjectedBundle/DOM/InjectedBundleRangeHandle.cpp @no-unify
-
-WebProcess/Inspector/RemoteWebInspectorUI.cpp
-WebProcess/Inspector/WebInspector.cpp
-WebProcess/Inspector/WebInspectorClient.cpp
-WebProcess/Inspector/WebInspectorInterruptDispatcher.cpp
-WebProcess/Inspector/WebInspectorUI.cpp
-WebProcess/Inspector/WebInspectorUIExtensionController.cpp
-WebProcess/Inspector/WebPageInspectorTarget.cpp
-WebProcess/Inspector/WebPageInspectorTargetController.cpp
-WebProcess/Inspector/WebPageInspectorTargetFrontendChannel.cpp
 
 WebProcess/MediaSession/RemoteMediaSessionCoordinator.cpp
 
@@ -570,7 +537,6 @@ WebProcess/WebCoreSupport/ShareableBitmapUtilities.cpp
 WebProcess/WebCoreSupport/WebBroadcastChannelRegistry.cpp
 WebProcess/WebCoreSupport/WebChromeClient.cpp
 WebProcess/WebCoreSupport/WebColorChooser.cpp
-WebProcess/WebCoreSupport/WebContextMenuClient.cpp
 WebProcess/WebCoreSupport/WebDataListSuggestionPicker.cpp
 WebProcess/WebCoreSupport/WebDateTimeChooser.cpp
 WebProcess/WebCoreSupport/WebDiagnosticLoggingClient.cpp
@@ -597,7 +563,6 @@ WebProcess/WebPage/IPCTestingAPI.cpp
 WebProcess/WebPage/PageBanner.cpp
 WebProcess/WebPage/VisitedLinkTableController.cpp
 WebProcess/WebPage/WebBackForwardListProxy.cpp
-WebProcess/WebPage/WebContextMenu.cpp
 WebProcess/WebPage/WebCookieCache.cpp
 WebProcess/WebPage/WebCookieJar.cpp
 WebProcess/WebPage/WebDocumentLoader.cpp

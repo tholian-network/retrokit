@@ -40,7 +40,6 @@
 #include "Frame.h"
 #include "FrameLoader.h"
 #include "FrameLoaderClient.h"
-#include "InspectorInstrumentation.h"
 #include "LoaderStrategy.h"
 #include "Logging.h"
 #include "Page.h"
@@ -411,8 +410,6 @@ void ResourceLoader::willSendRequestInternal(ResourceRequest&& request, const Re
 
         frameLoader()->notifier().willSendRequest(this, request, redirectResponse);
     }
-    else
-        InspectorInstrumentation::willSendRequest(m_frame.get(), m_identifier, m_frame->loader().documentLoader(), request, redirectResponse, cachedResource());
 
     bool isRedirect = !redirectResponse.isNull();
     if (isRedirect) {
@@ -477,7 +474,6 @@ static void logResourceResponseSource(Frame* frame, ResourceResponse::Source sou
         break;
     case ResourceResponse::Source::DOMCache:
     case ResourceResponse::Source::ApplicationCache:
-    case ResourceResponse::Source::InspectorOverride:
     case ResourceResponse::Source::Unknown:
         return;
     }
@@ -778,8 +774,6 @@ bool ResourceLoader::isAllowedToAskUserForCredentials() const
 bool ResourceLoader::shouldIncludeCertificateInfo() const
 {
     if (m_options.certificateInfoPolicy == CertificateInfoPolicy::IncludeCertificateInfo)
-        return true;
-    if (UNLIKELY(InspectorInstrumentation::hasFrontends()))
         return true;
     return false;
 }

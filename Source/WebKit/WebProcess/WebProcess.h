@@ -34,7 +34,6 @@
 #include "TextCheckerState.h"
 #include "UserContentControllerIdentifier.h"
 #include "ViewUpdateDispatcher.h"
-#include "WebInspectorInterruptDispatcher.h"
 #include "WebPageProxyIdentifier.h"
 #include "WebProcessCreationParameters.h"
 #include "WebSQLiteDatabaseTracker.h"
@@ -316,9 +315,6 @@ public:
 
 #if PLATFORM(COCOA)
     void setMediaMIMETypes(const Vector<String>);
-#if ENABLE(REMOTE_INSPECTOR)
-    void enableRemoteWebInspector();
-#endif
     void unblockServicesRequiredByAccessibility(const Vector<SandboxExtension::Handle>&);
 #if ENABLE(CFPREFS_DIRECT_MODE)
     void notifyPreferencesChanged(const String& domain, const String& key, const std::optional<String>& encodedValue);
@@ -578,7 +574,6 @@ private:
 #if PLATFORM(IOS_FAMILY)
     RefPtr<ViewUpdateDispatcher> m_viewUpdateDispatcher;
 #endif
-    RefPtr<WebInspectorInterruptDispatcher> m_webInspectorInterruptDispatcher;
 
     bool m_hasSetCacheModel { false };
     CacheModel m_cacheModel { CacheModel::DocumentViewer };
@@ -660,7 +655,7 @@ private:
 #endif
 
 #if PLATFORM(COCOA)
-    enum class ProcessType { Inspector, ServiceWorker, PrewarmedWebContent, CachedWebContent, WebContent };
+    enum class ProcessType { ServiceWorker, PrewarmedWebContent, CachedWebContent, WebContent };
     ProcessType m_processType { ProcessType::WebContent };
 #endif
 

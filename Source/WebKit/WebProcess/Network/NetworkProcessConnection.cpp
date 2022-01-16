@@ -54,7 +54,6 @@
 #include "WebSocketStreamMessages.h"
 #include <WebCore/CachedResource.h>
 #include <WebCore/HTTPCookieAcceptPolicy.h>
-#include <WebCore/InspectorInstrumentationWebKit.h>
 #include <WebCore/MemoryCache.h>
 #include <WebCore/MessagePort.h>
 #include <WebCore/SharedBuffer.h>

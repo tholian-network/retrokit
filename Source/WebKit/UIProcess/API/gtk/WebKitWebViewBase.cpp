@@ -43,7 +43,6 @@
 #include "PointerLockManager.h"
 #include "ViewGestureController.h"
 #include "WebEventFactory.h"
-#include "WebInspectorUIProxy.h"
 #include "WebKit2Initialize.h"
 #include "WebKitEmojiChooser.h"
 #include "WebKitInitialize.h"
@@ -269,11 +268,6 @@ struct _WebKitWebViewBasePrivate {
     WebHitTestResultData::IsScrollbar mouseIsOverScrollbar;
     GRefPtr<AtkObject> accessible;
     GtkWidget* dialog { nullptr };
-    GtkWidget* inspectorView { nullptr };
-    AttachmentSide inspectorAttachmentSide { AttachmentSide::Bottom };
-    unsigned inspectorViewSize { 0 };
-    GUniquePtr<GdkEvent> contextMenuEvent;
-    WebContextMenuProxyGtk* activeContextMenuProxy { nullptr };
     InputMethodFilter inputMethodFilter;
     KeyBindingTranslator keyBindingTranslator;
     TouchEventsMap touchEvents;
@@ -529,7 +523,7 @@ static void webkitWebViewBaseUnrealize(GtkWidget* widget)
 static bool webkitWebViewChildIsInternalWidget(WebKitWebViewBase* webViewBase, GtkWidget* widget)
 {
     WebKitWebViewBasePrivate* priv = webViewBase->priv;
-    return widget == priv->inspectorView || widget == priv->dialog || widget == priv->keyBindingTranslator.widget();
+    return widget == priv->dialog || widget == priv->keyBindingTranslator.widget();
 }
 
 static void webkitWebViewBaseContainerAdd(GtkContainer* container, GtkWidget* widget)
@@ -537,8 +531,7 @@ static void webkitWebViewBaseContainerAdd(GtkContainer* container, GtkWidget* wi
     WebKitWebViewBase* webView = WEBKIT_WEB_VIEW_BASE(container);
     WebKitWebViewBasePrivate* priv = webView->priv;
 
-    // Internal widgets like the web inspector and authentication dialog have custom
-    // allocations so we don't need to add them to our list of children.
+    // Internal widgets have custom allocations so we don't need to add them
     if (!webkitWebViewChildIsInternalWidget(webView, widget)) {
         GtkAllocation childAllocation;
         gtk_widget_get_allocation(widget, &childAllocation);
@@ -585,10 +578,7 @@ static void webkitWebViewBaseContainerRemove(GtkContainer* container, GtkWidget*
     gboolean wasVisible = gtk_widget_get_visible(widget);
     gtk_widget_unparent(widget);
 
-    if (priv->inspectorView == widget) {
-        priv->inspectorView = 0;
-        priv->inspectorViewSize = 0;
-    } else if (priv->dialog == widget) {
+    if (priv->dialog == widget) {
         priv->dialog = nullptr;
         if (gtk_widget_get_visible(widgetContainer))
             gtk_widget_grab_focus(widgetContainer);
@@ -615,9 +605,6 @@ static void webkitWebViewBaseContainerForall(GtkContainer* container, gboolean i
     if (includeInternals && priv->keyBindingTranslator.widget())
         (*callback)(priv->keyBindingTranslator.widget(), callbackData);
 
-    if (includeInternals && priv->inspectorView)
-        (*callback)(priv->inspectorView, callbackData);
-
     if (includeInternals && priv->dialog)
         (*callback)(priv->dialog, callbackData);
 }
@@ -633,34 +620,6 @@ void webkitWebViewBaseChildMoveResize(WebKitWebViewBase* webView, GtkWidget* chi
 }
 #endif
 
-void webkitWebViewBaseAddWebInspector(WebKitWebViewBase* webViewBase, GtkWidget* inspector, AttachmentSide attachmentSide)
-{
-    if (webViewBase->priv->inspectorView == inspector && webViewBase->priv->inspectorAttachmentSide == attachmentSide)
-        return;
-
-    webViewBase->priv->inspectorAttachmentSide = attachmentSide;
-
-    if (webViewBase->priv->inspectorView == inspector) {
-        gtk_widget_queue_resize(GTK_WIDGET(webViewBase));
-        return;
-    }
-
-    webViewBase->priv->inspectorView = inspector;
-    gtk_widget_set_parent(inspector, GTK_WIDGET(webViewBase));
-}
-
-void webkitWebViewBaseRemoveWebInspector(WebKitWebViewBase* webViewBase, GtkWidget* inspector)
-{
-    if (webViewBase->priv->inspectorView != inspector)
-        return;
-
-#if USE(GTK4)
-    g_clear_pointer(&webViewBase->priv->inspectorView, gtk_widget_unparent);
-#else
-    gtk_container_remove(GTK_CONTAINER(webViewBase), inspector);
-#endif
-}
-
 #if GTK_CHECK_VERSION(3, 24, 0)
 static void webkitWebViewBaseCompleteEmojiChooserRequest(WebKitWebViewBase* webView, const String& text)
 {
@@ -674,7 +633,6 @@ static void webkitWebViewBaseDispose(GObject* gobject)
     WebKitWebViewBase* webView = WEBKIT_WEB_VIEW_BASE(gobject);
 #if USE(GTK4)
     webkitWebViewBaseRemoveDialog(webView, webView->priv->dialog);
-    webkitWebViewBaseRemoveWebInspector(webView, webView->priv->inspectorView);
     if (auto* widget = webView->priv->keyBindingTranslator.widget())
         gtk_widget_unparent(widget);
     g_clear_pointer(&webView->priv->emojiChooser, gtk_widget_unparent);
@@ -728,9 +686,6 @@ static void webkitWebViewBaseSnapshot(GtkWidget* widget, GtkSnapshot* snapshot)
 
         gsk_render_node_unref(pageRenderNode);
     }
-
-    if (webViewBase->priv->inspectorView)
-        gtk_widget_snapshot_child(widget, webViewBase->priv->inspectorView, snapshot);
 
     if (webViewBase->priv->dialog)
         gtk_widget_snapshot_child(widget, webViewBase->priv->dialog, snapshot);
@@ -812,29 +767,7 @@ static void webkitWebViewBaseSizeAllocate(GtkWidget* widget, GtkAllocation* allo
 
     IntRect viewRect(allocation->x, allocation->y, allocation->width, allocation->height);
     WebKitWebViewBasePrivate* priv = webViewBase->priv;
-    if (priv->inspectorView) {
-        GtkAllocation childAllocation = viewRect;
 
-        if (priv->inspectorAttachmentSide == AttachmentSide::Bottom) {
-            int inspectorViewHeight = std::min(static_cast<int>(priv->inspectorViewSize), allocation->height);
-            childAllocation.x = 0;
-            childAllocation.y = allocation->height - inspectorViewHeight;
-            childAllocation.height = inspectorViewHeight;
-            viewRect.setHeight(std::max(allocation->height - inspectorViewHeight, 1));
-        } else {
-            int inspectorViewWidth = std::min(static_cast<int>(priv->inspectorViewSize), allocation->width);
-            childAllocation.y = 0;
-            childAllocation.x = allocation->width - inspectorViewWidth;
-            childAllocation.width = inspectorViewWidth;
-            viewRect.setWidth(std::max(allocation->width - inspectorViewWidth, 1));
-        }
-
-        gtk_widget_size_allocate(priv->inspectorView, &childAllocation);
-    }
-
-    // The dialogs are centered in the view rect, which means that it
-    // never overlaps the web inspector. Thus, we need to calculate the allocation here
-    // after calculating the inspector allocation.
     if (priv->dialog) {
         GtkRequisition minimumSize;
         gtk_widget_get_preferred_size(priv->dialog, &minimumSize, nullptr);
@@ -1075,9 +1008,6 @@ static void webkitWebViewBaseHandleMouseEvent(WebKitWebViewBase* webViewBase, Gd
 
         guint button;
         gdk_event_get_button(event, &button);
-        // If it's a right click event save it as a possible context menu event.
-        if (button == GDK_BUTTON_SECONDARY)
-            priv->contextMenuEvent.reset(gdk_event_copy(event));
 
         clickCount = priv->clickCounter.currentClickCountForGdkButtonEvent(event);
     }
@@ -1151,10 +1081,6 @@ static void webkitWebViewBaseButtonPressed(WebKitWebViewBase* webViewBase, int c
 
     auto button = gtk_gesture_single_get_current_button(GTK_GESTURE_SINGLE(gesture));
     auto* event = gtk_gesture_get_last_event(gesture, sequence);
-
-    // If it's a right click event save it as a possible context menu event.
-    if (button == GDK_BUTTON_SECONDARY)
-        priv->contextMenuEvent.reset(gdk_event_copy(event));
 
     priv->pageProxy->handleMouseEvent(NativeWebMouseEvent(event, { clampToInteger(x), clampToInteger(y) }, clickCount, std::nullopt));
 }
@@ -1305,8 +1231,6 @@ static gboolean webkitWebViewBasePopupMenu(GtkWidget* widget)
     GdkEvent* currentEvent = gtk_get_current_event();
     if (!currentEvent)
         currentEvent = gdk_event_new(GDK_NOTHING);
-    priv->contextMenuEvent.reset(currentEvent);
-    priv->pageProxy->handleContextMenuKeyEvent();
 
     return TRUE;
 }
@@ -2237,34 +2161,6 @@ void webkitWebViewBaseForwardNextWheelEvent(WebKitWebViewBase* webkitWebViewBase
     webkitWebViewBase->priv->shouldForwardNextWheelEvent = true;
 }
 
-void webkitWebViewBaseSetInspectorViewSize(WebKitWebViewBase* webkitWebViewBase, unsigned size)
-{
-    if (webkitWebViewBase->priv->inspectorViewSize == size)
-        return;
-    webkitWebViewBase->priv->inspectorViewSize = size;
-    if (webkitWebViewBase->priv->inspectorView)
-        gtk_widget_queue_resize_no_redraw(GTK_WIDGET(webkitWebViewBase));
-}
-
-void webkitWebViewBaseSetActiveContextMenuProxy(WebKitWebViewBase* webkitWebViewBase, WebContextMenuProxyGtk* contextMenuProxy)
-{
-    webkitWebViewBase->priv->activeContextMenuProxy = contextMenuProxy;
-    g_signal_connect(contextMenuProxy->gtkWidget(), WebContextMenuProxyGtk::widgetDismissedSignal, G_CALLBACK(+[](GtkWidget* widget, WebKitWebViewBase* webViewBase) {
-        if (webViewBase->priv->activeContextMenuProxy && webViewBase->priv->activeContextMenuProxy->gtkWidget() == widget)
-            webViewBase->priv->activeContextMenuProxy = nullptr;
-    }), webkitWebViewBase);
-}
-
-WebContextMenuProxyGtk* webkitWebViewBaseGetActiveContextMenuProxy(WebKitWebViewBase* webkitWebViewBase)
-{
-    return webkitWebViewBase->priv->activeContextMenuProxy;
-}
-
-GdkEvent* webkitWebViewBaseTakeContextMenuEvent(WebKitWebViewBase* webkitWebViewBase)
-{
-    return webkitWebViewBase->priv->contextMenuEvent.release();
-}
-
 void webkitWebViewBaseSetFocus(WebKitWebViewBase* webViewBase, bool focused)
 {
     WebKitWebViewBasePrivate* priv = webViewBase->priv;
@@ -2724,7 +2620,6 @@ void webkitWebViewBaseSynthesizeMouseEvent(WebKitWebViewBase* webViewBase, Mouse
             gdk_window_get_root_coords(event->button.window, x, y, &xRoot, &yRoot);
             event->button.x_root = xRoot;
             event->button.y_root = yRoot;
-            priv->contextMenuEvent = WTFMove(event);
         }
 #endif
         if (!gtk_widget_has_focus(GTK_WIDGET(webViewBase)) && gtk_widget_is_focus(GTK_WIDGET(webViewBase)))
@@ -2772,26 +2667,6 @@ void webkitWebViewBaseSynthesizeKeyEvent(WebKitWebViewBase* webViewBase, KeyEven
                 return;
             }
         }
-
-#if !USE(GTK4)
-        if (priv->activeContextMenuProxy && keyval == GDK_KEY_Escape) {
-            gtk_menu_shell_deactivate(GTK_MENU_SHELL(priv->activeContextMenuProxy->gtkWidget()));
-            return;
-        }
-
-        if (keyval == GDK_KEY_Menu) {
-            GUniquePtr<GdkEvent> event(gdk_event_new(GDK_KEY_PRESS));
-            event->key.window = gtk_widget_get_window(GTK_WIDGET(webViewBase));
-            g_object_ref(event->key.window);
-            event->key.time = GDK_CURRENT_TIME;
-            event->key.keyval = keyval;
-            event->key.state = modifiers;
-            gdk_event_set_device(event.get(), gdk_seat_get_keyboard(gdk_display_get_default_seat(gtk_widget_get_display(GTK_WIDGET(webViewBase)))));
-            priv->contextMenuEvent = WTFMove(event);
-            priv->pageProxy->handleContextMenuKeyEvent();
-            return;
-        }
-#endif
     }
 
     auto keycode = widgetKeyvalToKeycode(GTK_WIDGET(webViewBase), keyval);

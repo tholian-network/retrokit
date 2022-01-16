@@ -41,12 +41,3 @@
 
 #endif
 
-#if !defined(WEBCORE_TESTSUPPORT_EXPORT)
-
-#if defined(BUILDING_WebCoreTestSupport) || defined(STATICALLY_LINKED_WITH_WebCoreTestSupport)
-#define WEBCORE_TESTSUPPORT_EXPORT WTF_EXPORT_DECLARATION
-#else
-#define WEBCORE_TESTSUPPORT_EXPORT WTF_IMPORT_DECLARATION
-#endif
-
-#endif

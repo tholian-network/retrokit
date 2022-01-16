@@ -59,9 +59,6 @@ Platform/unix/SharedMemoryUnix.cpp
 
 Shared/API/c/cairo/WKImageCairo.cpp
 
-Shared/API/glib/WebKitContextMenu.cpp @no-unify
-Shared/API/glib/WebKitContextMenuActions.cpp @no-unify
-Shared/API/glib/WebKitContextMenuItem.cpp @no-unify
 Shared/API/glib/WebKitHitTestResult.cpp @no-unify
 Shared/API/glib/WebKitURIRequest.cpp @no-unify
 Shared/API/glib/WebKitURIResponse.cpp @no-unify
@@ -80,7 +77,6 @@ Shared/glib/ArgumentCodersGLib.cpp
 Shared/glib/InputMethodState.cpp
 Shared/glib/ProcessExecutablePathGLib.cpp
 Shared/glib/UserMessage.cpp
-Shared/glib/WebContextMenuItemGlib.cpp
 
 Shared/libwpe/NativeWebKeyboardEventLibWPE.cpp
 Shared/libwpe/NativeWebMouseEventLibWPE.cpp
@@ -114,7 +110,6 @@ UIProcess/API/glib/WebKitAuthenticationRequest.cpp @no-unify
 UIProcess/API/glib/WebKitAutomationSession.cpp @no-unify
 UIProcess/API/glib/WebKitBackForwardList.cpp @no-unify
 UIProcess/API/glib/WebKitBackForwardListItem.cpp @no-unify
-UIProcess/API/glib/WebKitContextMenuClient.cpp @no-unify
 UIProcess/API/glib/WebKitCookieManager.cpp @no-unify
 UIProcess/API/glib/WebKitCredential.cpp @no-unify
 UIProcess/API/glib/WebKitDeviceInfoPermissionRequest.cpp @no-unify

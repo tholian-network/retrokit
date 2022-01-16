@@ -69,9 +69,6 @@ void ResourceRequestBase::setAsIsolatedCopy(const ResourceRequest& other)
     setInitiatorIdentifier(other.initiatorIdentifier().isolatedCopy());
     setCachePartition(other.cachePartition().isolatedCopy());
 
-    if (auto inspectorInitiatorNodeIdentifier = other.inspectorInitiatorNodeIdentifier())
-        setInspectorInitiatorNodeIdentifier(*inspectorInitiatorNodeIdentifier);
-
     if (!other.isSameSiteUnspecified())
         setIsSameSite(other.isSameSite());
     setIsTopSite(other.isTopSite());
@@ -100,31 +97,31 @@ void ResourceRequestBase::setAsIsolatedCopy(const ResourceRequest& other)
 
 bool ResourceRequestBase::isEmpty() const
 {
-    updateResourceRequest(); 
-    
-    return m_url.isEmpty(); 
+    updateResourceRequest();
+
+    return m_url.isEmpty();
 }
 
 bool ResourceRequestBase::isNull() const
 {
-    updateResourceRequest(); 
-    
+    updateResourceRequest();
+
     return m_url.isNull();
 }
 
-const URL& ResourceRequestBase::url() const 
+const URL& ResourceRequestBase::url() const
 {
-    updateResourceRequest(); 
-    
+    updateResourceRequest();
+
     return m_url;
 }
 
 void ResourceRequestBase::setURL(const URL& url)
-{ 
-    updateResourceRequest(); 
+{
+    updateResourceRequest();
 
-    m_url = url; 
-    
+    m_url = url;
+
     m_platformRequestUpdated = false;
 }
 

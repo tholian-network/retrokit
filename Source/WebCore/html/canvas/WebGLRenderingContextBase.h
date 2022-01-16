@@ -993,9 +993,6 @@ protected:
     // Helper function for texParameterf and texParameteri.
     void texParameter(GCGLenum target, GCGLenum pname, GCGLfloat parami, GCGLint paramf, bool isFloat);
 
-    // Helper function to print errors and warnings to console.
-    void printToConsole(MessageLevel, const String&);
-
     // Helper function to validate the target for checkFramebufferStatus and
     // validateFramebufferFuncParameters.
     virtual bool validateFramebufferTarget(GCGLenum target);

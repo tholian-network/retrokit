@@ -39,7 +39,6 @@
 #include "HTMLIFrameElement.h"
 #include "HTMLNames.h"
 #include "HitTestResult.h"
-#include "InspectorInstrumentation.h"
 #include "KeyframeEffectStack.h"
 #include "LayerAncestorClippingStack.h"
 #include "LayerOverlapMap.h"
@@ -947,8 +946,6 @@ bool RenderLayerCompositor::updateCompositingLayers(CompositingUpdateType update
     }
 #endif
 
-    InspectorInstrumentation::layerTreeDidChange(&page());
-
     if (m_renderView.needsRepaintHackAfterCompositingLayerUpdateForDebugOverlaysOnly()) {
         m_renderView.repaintRootContents();
         m_renderView.setNeedsRepaintHackAfterCompositingLayerUpdateForDebugOverlaysOnly(false);
@@ -1540,10 +1537,6 @@ void RenderLayerCompositor::layerBecameComposited(const RenderLayer& layer)
 
 void RenderLayerCompositor::layerBecameNonComposited(const RenderLayer& layer)
 {
-    // Inform the inspector that the given RenderLayer was destroyed.
-    // FIXME: "destroyed" is a misnomer.
-    InspectorInstrumentation::renderLayerDestroyed(&page(), layer);
-
     if (&layer != m_renderView.layer()) {
         ASSERT(m_contentLayersCount > 0);
         --m_contentLayersCount;
@@ -1568,7 +1561,7 @@ void RenderLayerCompositor::logLayerInfo(const RenderLayer& layer, const char* p
 
     LayoutRect absoluteBounds = backing->compositedBounds();
     absoluteBounds.move(layer.offsetFromAncestor(m_renderView.layer()));
-    
+
     StringBuilder logString;
     logString.append(pad(' ', 12 + depth * 2, hex(reinterpret_cast<uintptr_t>(&layer), Lowercase)), " id ", backing->graphicsLayer()->primaryLayerID(), " (", absoluteBounds.x().toFloat(), ',', absoluteBounds.y().toFloat(), '-', absoluteBounds.maxX().toFloat(), ',', absoluteBounds.maxY().toFloat(), ") ", FormattedNumber::fixedWidth(backing->backingStoreMemoryEstimate() / 1024, 2), "KB");
 

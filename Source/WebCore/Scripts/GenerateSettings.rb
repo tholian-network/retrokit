@@ -107,7 +107,6 @@ class Setting
   attr_accessor :condition
   attr_accessor :onChange
   attr_accessor :getter
-  attr_accessor :inspectorOverride
   attr_accessor :customImplementation
 
   def initialize(name, options)
@@ -119,7 +118,6 @@ class Setting
     @condition = options["condition"]
     @onChange = options["webcoreOnChange"]
     @getter = options["webcoreGetter"]
-    @inspectorOverride = options["inspectorOverride"]
     @customImplementation = options["webcoreImplementation"] == "custom"
   end
 
@@ -170,10 +168,6 @@ class Setting
     @onChange != nil
   end
 
-  def hasComplexGetter?
-    hasInspectorOverride?
-  end
-
   def setterFunctionName
     if @name.start_with?("html")
       "set" + @name[0..3].upcase + @name[4..@name.length]
@@ -190,9 +184,6 @@ class Setting
     @getter || @name
   end
 
-  def hasInspectorOverride?
-    @inspectorOverride == true
-  end
 end
 
 class Conditional
@@ -213,10 +204,10 @@ class Conditional
 
     @settings = settings
     @settingsNeedingImplementation = @settings.reject { |setting| setting.customImplementation }
-    
+
     @boolSettings = @settings.select { |setting| setting.type == "bool" }
     @boolSettingsNeedingImplementation = @boolSettings.reject { |setting| setting.customImplementation }
-  
+
     @nonBoolSettings = @settings.reject { |setting| setting.type == "bool" }
     @nonBoolSettingsNeedingImplementation = @nonBoolSettings.reject { |setting| setting.customImplementation }
 
@@ -230,14 +221,11 @@ end
 
 class SettingSet
   attr_accessor :settings
-  attr_accessor :inspectorOverrideSettings
   attr_accessor :conditions
 
   def initialize(settings)
     @settings = settings
     @settings.sort! { |x, y| x.name <=> y.name }
-
-    @inspectorOverrideSettings = @settings.select { |setting| setting.hasInspectorOverride? }
 
     @conditions = []
     conditionsMap = {}

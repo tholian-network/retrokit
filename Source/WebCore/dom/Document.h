@@ -1183,7 +1183,6 @@ public:
     IdleCallbackController* idleCallbackController() { return m_idleCallbackController.get(); }
 
     EventTarget* errorEventTarget() final;
-    void logExceptionToConsole(const String& errorMessage, const String& sourceURL, int lineNumber, int columnNumber, RefPtr<Inspector::ScriptCallStack>&&) final;
 
     void initDNSPrefetch();
 

@@ -47,7 +47,6 @@ using namespace JSC;
 const ClassInfo JSWorkerGlobalScopeBase::s_info = { "WorkerGlobalScope", &JSDOMGlobalObject::s_info, nullptr, nullptr, CREATE_METHOD_TABLE(JSWorkerGlobalScopeBase) };
 
 const GlobalObjectMethodTable JSWorkerGlobalScopeBase::s_globalObjectMethodTable = {
-    &supportsRichSourceInfo,
     &shouldInterruptScript,
     &javaScriptRuntimeFlags,
     &queueMicrotaskToEventLoop,
@@ -104,11 +103,6 @@ void JSWorkerGlobalScopeBase::destroy(JSCell* cell)
 ScriptExecutionContext* JSWorkerGlobalScopeBase::scriptExecutionContext() const
 {
     return m_wrapped.get();
-}
-
-bool JSWorkerGlobalScopeBase::supportsRichSourceInfo(const JSGlobalObject* object)
-{
-    return JSGlobalObject::supportsRichSourceInfo(object);
 }
 
 bool JSWorkerGlobalScopeBase::shouldInterruptScript(const JSGlobalObject* object)

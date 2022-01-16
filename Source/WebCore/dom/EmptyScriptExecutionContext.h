@@ -88,7 +88,6 @@ private:
     }
 
     void addMessage(MessageSource, MessageLevel, const String&, const String&, unsigned, unsigned, RefPtr<Inspector::ScriptCallStack>&&, JSC::JSGlobalObject* = nullptr, unsigned long = 0) final { }
-    void logExceptionToConsole(const String&, const String&, int, int, RefPtr<Inspector::ScriptCallStack>&&) final { };
     void refScriptExecutionContext() final { ref(); };
     void derefScriptExecutionContext() final { deref(); };
 

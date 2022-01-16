@@ -876,12 +876,6 @@ set(WebCore_NON_SVG_IDL_FILES
     html/track/VideoTrack.idl
     html/track/VideoTrackList.idl
 
-    inspector/CommandLineAPIHost.idl
-    inspector/InspectorAuditAccessibilityObject.idl
-    inspector/InspectorAuditDOMObject.idl
-    inspector/InspectorAuditResourcesObject.idl
-    inspector/InspectorFrontendHost.idl
-
     loader/appcache/DOMApplicationCache.idl
 
     mathml/MathMLElement.idl
@@ -1225,9 +1219,6 @@ else ()
     endif ()
 endif ()
 
-set(WebCoreTestSupport_FRAMEWORKS ${WebCore_FRAMEWORKS})
-set(WebCoreTestSupport_DEPENDENCIES WebCoreTestSupportBindings)
-
 list(APPEND WebCore_CSS_VALUE_KEYWORDS
     ${WEBCORE_DIR}/css/SVGCSSValueKeywords.in
 )
@@ -1431,43 +1422,6 @@ if (HAVE_OS_DARK_MODE_SUPPORT)
     set(FEATURE_DEFINES_WITH_SPACE_SEPARATOR "${FEATURE_DEFINES_WITH_SPACE_SEPARATOR} HAVE_OS_DARK_MODE_SUPPORT")
 endif ()
 
-set(WebCoreTestSupport_PRIVATE_INCLUDE_DIRECTORIES
-    "${WEBCORE_DIR}/platform/mock"
-    "${WEBCORE_DIR}/testing"
-    "${WEBCORE_DIR}/testing/js"
-    "${WebCore_DERIVED_SOURCES_DIR}"
-)
-
-set(WebCoreTestSupport_IDL_INCLUDES
-    testing
-)
-
-set(WebCoreTestSupport_IDL_FILES
-    testing/GCObservation.idl
-    testing/InternalSettings.idl
-    testing/Internals.idl
-    testing/InternalsMapLike.idl
-    testing/InternalsSetLike.idl
-    testing/MallocStatistics.idl
-    testing/MemoryInfo.idl
-    testing/MockContentFilterSettings.idl
-    testing/MockPageOverlay.idl
-    testing/ServiceWorkerInternals.idl
-    testing/TypeConversions.idl
-)
-
-list(APPEND WebCoreTestSupport_SOURCES
-    testing/GCObservation.cpp
-    testing/InternalSettings.cpp
-    testing/Internals.cpp
-    testing/InternalsMapLike.cpp
-    testing/InternalsSetLike.cpp
-    testing/MockPageOverlay.cpp
-    testing/MockPageOverlayClient.cpp
-    testing/ServiceWorkerInternals.cpp
-    testing/js/WebCoreTestSupport.cpp
-)
-
 # Modules that the bindings generator scripts may use
 set(SCRIPTS_RESOLVE_SUPPLEMENTAL
     ${WEBCORE_DIR}/bindings/scripts/IDLParser.pm
@@ -1498,26 +1452,8 @@ set(AUDIOWORKLETGLOBALSCOPE_CONSTRUCTORS_FILE ${WebCore_DERIVED_SOURCES_DIR}/Aud
 set(WebCore_INTERFACE_LIBRARIES WebCore)
 set(WebCore_INTERFACE_INCLUDE_DIRECTORIES ${WebCore_PRIVATE_FRAMEWORK_HEADERS_DIR})
 
-set(WebCoreTestSupport_INTERFACE_LIBRARIES WebCoreTestSupport)
-set(WebCoreTestSupport_INTERFACE_INCLUDE_DIRECTORIES
-    ${WebCore_PRIVATE_FRAMEWORK_HEADERS_DIR}/WebCoreTestSupport
-)
-
 WEBKIT_FRAMEWORK_DECLARE(WebCore)
-WEBKIT_FRAMEWORK_DECLARE(WebCoreTestSupport)
 WEBKIT_INCLUDE_CONFIG_FILES_IF_EXISTS()
-
-# Generate CommandLineAPIModuleSource.h
-add_custom_command(
-    OUTPUT ${WebCore_DERIVED_SOURCES_DIR}/CommandLineAPIModuleSource.h ${WebCore_DERIVED_SOURCES_DIR}/CommandLineAPIModuleSource.min.js
-    MAIN_DEPENDENCY inspector/CommandLineAPIModuleSource.js
-    DEPENDS ${JavaScriptCore_SCRIPTS_DIR}/xxd.pl ${JavaScriptCore_SCRIPTS_DIR}/jsmin.py
-    COMMAND ${CMAKE_COMMAND} -E echo "//# sourceURL=__InjectedScript_CommandLineAPIModuleSource.js" > ${WebCore_DERIVED_SOURCES_DIR}/CommandLineAPIModuleSource.min.js
-    COMMAND ${PYTHON_EXECUTABLE} ${JavaScriptCore_SCRIPTS_DIR}/jsmin.py < ${WEBCORE_DIR}/inspector/CommandLineAPIModuleSource.js >> ${WebCore_DERIVED_SOURCES_DIR}/CommandLineAPIModuleSource.min.js
-    COMMAND ${PERL_EXECUTABLE} ${JavaScriptCore_SCRIPTS_DIR}/xxd.pl CommandLineAPIModuleSource_js ${WebCore_DERIVED_SOURCES_DIR}/CommandLineAPIModuleSource.min.js ${WebCore_DERIVED_SOURCES_DIR}/CommandLineAPIModuleSource.h
-    VERBATIM)
-list(APPEND WebCore_SOURCES ${WebCore_DERIVED_SOURCES_DIR}/CommandLineAPIModuleSource.h)
-
 
 MAKE_HASH_TOOLS(${WEBCORE_DIR}/platform/ColorData)
 list(APPEND WebCore_SOURCES ${WebCore_DERIVED_SOURCES_DIR}/ColorData.cpp)
@@ -1648,13 +1584,11 @@ set(FEATURE_DEFINES_JAVASCRIPT "LANGUAGE_JAVASCRIPT ${FEATURE_DEFINES_WITH_SPACE
 GENERATE_SETTINGS_MACROS(${WEBCORE_DIR}/page/Settings.yaml Settings.h)
 list(APPEND WebCore_SOURCES ${WebCore_DERIVED_SOURCES_DIR}/Settings.h)
 list(APPEND WebCore_SOURCES ${WebCore_DERIVED_SOURCES_DIR}/Settings.cpp)
-list(APPEND WebCoreTestSupport_SOURCES ${WebCore_DERIVED_SOURCES_DIR}/InternalSettingsGenerated.cpp)
-list(APPEND WebCoreTestSupport_IDL_FILES ${WebCore_DERIVED_SOURCES_DIR}/InternalSettingsGenerated.idl)
 
 GENERATE_BINDINGS(WebCoreBindings
     OUTPUT_SOURCE WebCore_SOURCES
     INPUT_FILES ${WebCore_IDL_FILES}
-    PP_INPUT_FILES ${WebCore_IDL_FILES} ${WebCoreTestSupport_IDL_FILES}
+    PP_INPUT_FILES ${WebCore_IDL_FILES}
     BASE_DIR ${WEBCORE_DIR}
     IDL_INCLUDES ${WebCore_IDL_INCLUDES} ${WebCore_DERIVED_SOURCES_DIR}
     FEATURES ${FEATURE_DEFINES_JAVASCRIPT}
@@ -1674,25 +1608,6 @@ GENERATE_BINDINGS(WebCoreBindings
         --paintWorkletGlobalScopeConstructorsFile ${PAINTWORKLETGLOBALSCOPE_CONSTRUCTORS_FILE}
         --audioWorkletGlobalScopeConstructorsFile ${AUDIOWORKLETGLOBALSCOPE_CONSTRUCTORS_FILE})
 list(APPEND WebCore_DEPENDENCIES WebCoreBindings)
-
-if (ENABLE_WEBINSPECTORUI)
-    list(APPEND WebCore_DEPENDENCIES WebInspectorUI)
-endif ()
-
-GENERATE_BINDINGS(WebCoreTestSupportBindings
-    OUTPUT_SOURCE WebCoreTestSupport_SOURCES
-    INPUT_FILES ${WebCoreTestSupport_IDL_FILES}
-    BASE_DIR ${WEBCORE_DIR}
-    IDL_INCLUDES ${WebCore_IDL_INCLUDES} ${WebCore_DERIVED_SOURCES_DIR} ${WebCoreTestSupport_IDL_INCLUDES}
-    FEATURES ${FEATURE_DEFINES_JAVASCRIPT}
-    DESTINATION ${WebCore_DERIVED_SOURCES_DIR}
-    GENERATOR JS)
-
-# WebCoreTestSupportBindings needs to have a direct or indirect
-# dependency to WebCoreBindings for CMake Visual Studio generator to
-# eliminate duplicated custom commands. Otherwise,
-# GenerateSettings.rb will be triggered in both projects.
-add_dependencies(WebCoreTestSupportBindings WebCoreBindings)
 
 # WebCore JS Builtins
 
@@ -1830,7 +1745,7 @@ WEBKIT_FRAMEWORK(WebCore)
 WEBKIT_FRAMEWORK_TARGET(WebCore)
 
 if (APPLE)
-    set_target_properties(WebCore PROPERTIES LINK_FLAGS "-sub_library libobjc -umbrella WebKit -allowable_client WebCoreTestSupport -allowable_client WebKit2 -allowable_client WebKitLegacy")
+    set_target_properties(WebCore PROPERTIES LINK_FLAGS "-sub_library libobjc -umbrella WebKit -allowable_client WebKit2 -allowable_client WebKitLegacy")
 endif ()
 
 # The -ftree-sra optimization (implicit with -O2) causes crashes when
@@ -1840,32 +1755,6 @@ string(TOLOWER ${CMAKE_HOST_SYSTEM_PROCESSOR} LOWERCASE_CMAKE_HOST_SYSTEM_PROCES
 if (CMAKE_COMPILER_IS_GNUCXX AND "${LOWERCASE_CMAKE_HOST_SYSTEM_PROCESSOR}" MATCHES "(i[3-6]86|x86)$")
     WEBKIT_ADD_TARGET_CXX_FLAGS(WebCore -fno-tree-sra)
 endif ()
-
-if (MSVC)
-    WEBKIT_ADD_PRECOMPILED_HEADER("WebCoreTestSupportPrefix.h" "testing/js/WebCoreTestSupportPrefix.cpp" WebCoreTestSupport_SOURCES)
-endif ()
-
-WEBKIT_COPY_FILES(Copy_WebCoreTestSupportPrivateHeaders
-    DESTINATION ${WebCore_PRIVATE_FRAMEWORK_HEADERS_DIR}/WebCoreTestSupport
-    FILES testing/js/WebCoreTestSupport.h
-    FLATTENED
-)
-list(APPEND WebCoreTestSupport_INTERFACE_DEPENDENCIES Copy_WebCoreTestSupportPrivateHeaders)
-
-list(APPEND WebCoreTestSupport_INCLUDE_DIRECTORIES ${WebCore_INCLUDE_DIRECTORIES})
-list(APPEND WebCoreTestSupport_PRIVATE_INCLUDE_DIRECTORIES ${WebCore_PRIVATE_INCLUDE_DIRECTORIES})
-list(APPEND WebCoreTestSupport_SYSTEM_INCLUDE_DIRECTORIES ${WebCore_SYSTEM_INCLUDE_DIRECTORIES})
-
-if (WebCore_LIBRARY_TYPE STREQUAL SHARED)
-    list(APPEND WebCoreTestSupport_LIBRARIES WebCore)
-else ()
-    list(APPEND WebCoreTestSupport_LIBRARIES ${WebCore_LIBRARIES})
-    list(APPEND WebCoreTestSupport_PRIVATE_LIBRARIES ${WebCore_PRIVATE_LIBRARIES})
-    list(APPEND WebCoreTestSupport_DEPENDENCIES WebCore)
-endif ()
-
-WEBKIT_FRAMEWORK(WebCoreTestSupport)
-WEBKIT_FRAMEWORK_TARGET(WebCoreTestSupport)
 
 if (${WebCore_LIBRARY_TYPE} MATCHES "SHARED")
     set_target_properties(WebCore PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})

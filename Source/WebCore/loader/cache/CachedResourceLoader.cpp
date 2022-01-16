@@ -58,7 +58,6 @@
 #include "HTMLElement.h"
 #include "HTMLFrameOwnerElement.h"
 #include "HTTPHeaderField.h"
-#include "InspectorInstrumentation.h"
 #include "LoaderStrategy.h"
 #include "LocalizedStrings.h"
 #include "Logging.h"
@@ -644,10 +643,6 @@ bool CachedResourceLoader::shouldContinueAfterNotifyingLoadedFromMemoryCache(con
 
     ResourceRequest newRequest = ResourceRequest(resource.url());
     newRequest.setInitiatorIdentifier(request.resourceRequest().initiatorIdentifier());
-    if (auto inspectorInitiatorNodeIdentifier = request.resourceRequest().inspectorInitiatorNodeIdentifier())
-        newRequest.setInspectorInitiatorNodeIdentifier(*inspectorInitiatorNodeIdentifier);
-    if (request.resourceRequest().hiddenFromInspector())
-        newRequest.setHiddenFromInspector(true);
     frame()->loader().loadedResourceFromMemoryCache(resource, newRequest, error);
 
     // FIXME <http://webkit.org/b/113251>: If the delegate modifies the request's
@@ -876,9 +871,6 @@ ResourceErrorOr<CachedResourceHandle<CachedResource>> CachedResourceLoader::requ
     }
 
     request.updateReferrerPolicy(document() ? document()->referrerPolicy() : ReferrerPolicy::Default);
-
-    if (InspectorInstrumentation::willIntercept(&frame, request.resourceRequest()))
-        request.setCachingPolicy(CachingPolicy::DisallowCaching);
 
     auto& page = *frame.page();
 
@@ -1381,11 +1373,6 @@ CachePolicy CachedResourceLoader::cachePolicy(CachedResource::Type type, const U
     if (type != CachedResource::Type::MainResource)
         return frame->loader().subresourceCachePolicy(url);
 
-    if (Page* page = frame->page()) {
-        if (page->isResourceCachingDisabledByWebInspector())
-            return CachePolicy::Reload;
-    }
-
     switch (frame->loader().loadType()) {
     case FrameLoadType::ReloadFromOrigin:
     case FrameLoadType::Reload:
@@ -1481,15 +1468,12 @@ Vector<Ref<SVGImage>> CachedResourceLoader::allCachedSVGImages() const
         if (auto* image = cachedResourceSVGImage(resource))
             allCachedSVGImages.append(*image);
     }
-        
+
     return allCachedSVGImages;
 }
 
 ResourceErrorOr<CachedResourceHandle<CachedResource>> CachedResourceLoader::preload(CachedResource::Type type, CachedResourceRequest&& request)
 {
-    if (InspectorInstrumentation::willIntercept(frame(), request.resourceRequest()))
-        return makeUnexpected(ResourceError { errorDomainWebKitInternal, 0, request.resourceRequest().url(), "Inspector intercept"_s });
-
     if (request.charset().isEmpty() && (type == CachedResource::Type::Script || type == CachedResource::Type::CSSStyleSheet))
         request.setCharset(m_document->charset());
 

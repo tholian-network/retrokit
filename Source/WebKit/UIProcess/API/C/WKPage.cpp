@@ -28,7 +28,6 @@
 #include "WKPagePrivate.h"
 
 #include "APIArray.h"
-#include "APIContextMenuClient.h"
 #include "APIData.h"
 #include "APIDictionary.h"
 #include "APIFindClient.h"
@@ -71,7 +70,6 @@
 #include "WebBackForwardList.h"
 #include "WebFormClient.h"
 #include "WebImage.h"
-#include "WebInspectorUIProxy.h"
 #include "WebOpenPanelResultListenerProxy.h"
 #include "WebPageGroup.h"
 #include "WebPageMessages.h"
@@ -91,10 +89,6 @@
 #include <Block.h>
 #endif
 
-#if ENABLE(CONTEXT_MENUS)
-#include "WebContextMenuItem.h"
-#endif
-
 #if PLATFORM(COCOA)
 #include <WebCore/VersionChecks.h>
 #endif
@@ -102,7 +96,7 @@
 namespace API {
 using namespace WebCore;
 using namespace WebKit;
-    
+
 template<> struct ClientTraits<WKPageLoaderClientBase> {
     typedef std::tuple<WKPageLoaderClientV0, WKPageLoaderClientV1, WKPageLoaderClientV2, WKPageLoaderClientV3, WKPageLoaderClientV4, WKPageLoaderClientV5, WKPageLoaderClientV6> Versions;
 };
@@ -118,12 +112,6 @@ template<> struct ClientTraits<WKPagePolicyClientBase> {
 template<> struct ClientTraits<WKPageUIClientBase> {
     typedef std::tuple<WKPageUIClientV0, WKPageUIClientV1, WKPageUIClientV2, WKPageUIClientV3, WKPageUIClientV4, WKPageUIClientV5, WKPageUIClientV6, WKPageUIClientV7, WKPageUIClientV8, WKPageUIClientV9, WKPageUIClientV10, WKPageUIClientV11, WKPageUIClientV12, WKPageUIClientV13, WKPageUIClientV14, WKPageUIClientV15, WKPageUIClientV16> Versions;
 };
-
-#if ENABLE(CONTEXT_MENUS)
-template<> struct ClientTraits<WKPageContextMenuClientBase> {
-    typedef std::tuple<WKPageContextMenuClientV0, WKPageContextMenuClientV1, WKPageContextMenuClientV2, WKPageContextMenuClientV3, WKPageContextMenuClientV4> Versions;
-};
-#endif
 
 template<> struct ClientTraits<WKPageFindClientBase> {
     typedef std::tuple<WKPageFindClientV0> Versions;
@@ -434,11 +422,6 @@ uint64_t WKPageGetRenderTreeSize(WKPageRef page)
 WKWebsiteDataStoreRef WKPageGetWebsiteDataStore(WKPageRef page)
 {
     return toAPI(&toImpl(page)->websiteDataStore());
-}
-
-WKInspectorRef WKPageGetInspector(WKPageRef pageRef)
-{
-    return toAPI(toImpl(pageRef)->inspector());
 }
 
 double WKPageGetEstimatedProgress(WKPageRef pageRef)
@@ -927,118 +910,6 @@ void WKPageCountStringMatches(WKPageRef pageRef, WKStringRef string, WKFindOptio
     toImpl(pageRef)->countStringMatches(toImpl(string)->string(), toFindOptions(options), maxMatchCount);
 }
 
-void WKPageSetPageContextMenuClient(WKPageRef pageRef, const WKPageContextMenuClientBase* wkClient)
-{
-    CRASH_IF_SUSPENDED;
-#if ENABLE(CONTEXT_MENUS)
-    class ContextMenuClient final : public API::Client<WKPageContextMenuClientBase>, public API::ContextMenuClient {
-    public:
-        explicit ContextMenuClient(const WKPageContextMenuClientBase* client)
-        {
-            initialize(client);
-        }
-
-    private:
-        void getContextMenuFromProposedMenu(WebPageProxy& page, Vector<Ref<WebKit::WebContextMenuItem>>&& proposedMenuVector, WebKit::WebContextMenuListenerProxy& contextMenuListener, const WebHitTestResultData& hitTestResultData, API::Object* userData) override
-        {
-            if (m_client.base.version >= 4 && m_client.getContextMenuFromProposedMenuAsync) {
-                Vector<RefPtr<API::Object>> proposedMenuItems;
-                proposedMenuItems.reserveInitialCapacity(proposedMenuVector.size());
-                
-                for (const auto& menuItem : proposedMenuVector)
-                    proposedMenuItems.uncheckedAppend(menuItem.ptr());
-                
-                auto webHitTestResult = API::HitTestResult::create(hitTestResultData);
-                m_client.getContextMenuFromProposedMenuAsync(toAPI(&page), toAPI(API::Array::create(WTFMove(proposedMenuItems)).ptr()), toAPI(&contextMenuListener), toAPI(webHitTestResult.ptr()), toAPI(userData), m_client.base.clientInfo);
-                return;
-            }
-            
-            if (!m_client.getContextMenuFromProposedMenu && !m_client.getContextMenuFromProposedMenu_deprecatedForUseWithV0) {
-                contextMenuListener.useContextMenuItems(WTFMove(proposedMenuVector));
-                return;
-            }
-
-            if (m_client.base.version >= 2 && !m_client.getContextMenuFromProposedMenu) {
-                contextMenuListener.useContextMenuItems(WTFMove(proposedMenuVector));
-                return;
-            }
-
-            Vector<RefPtr<API::Object>> proposedMenuItems;
-            proposedMenuItems.reserveInitialCapacity(proposedMenuVector.size());
-
-            for (const auto& menuItem : proposedMenuVector)
-                proposedMenuItems.uncheckedAppend(menuItem.ptr());
-
-            WKArrayRef newMenu = nullptr;
-            if (m_client.base.version >= 2) {
-                auto webHitTestResult = API::HitTestResult::create(hitTestResultData);
-                m_client.getContextMenuFromProposedMenu(toAPI(&page), toAPI(API::Array::create(WTFMove(proposedMenuItems)).ptr()), &newMenu, toAPI(webHitTestResult.ptr()), toAPI(userData), m_client.base.clientInfo);
-            } else
-                m_client.getContextMenuFromProposedMenu_deprecatedForUseWithV0(toAPI(&page), toAPI(API::Array::create(WTFMove(proposedMenuItems)).ptr()), &newMenu, toAPI(userData), m_client.base.clientInfo);
-
-            RefPtr<API::Array> array = adoptRef(toImpl(newMenu));
-
-            Vector<Ref<WebContextMenuItem>> customMenu;
-            size_t newSize = array ? array->size() : 0;
-            customMenu.reserveInitialCapacity(newSize);
-            for (size_t i = 0; i < newSize; ++i) {
-                WebContextMenuItem* item = array->at<WebContextMenuItem>(i);
-                if (!item) {
-                    LOG(ContextMenu, "New menu entry at index %i is not a WebContextMenuItem", (int)i);
-                    continue;
-                }
-
-                customMenu.uncheckedAppend(*item);
-            }
-
-            contextMenuListener.useContextMenuItems(WTFMove(customMenu));
-        }
-
-        void customContextMenuItemSelected(WebPageProxy& page, const WebContextMenuItemData& itemData) override
-        {
-            if (!m_client.customContextMenuItemSelected)
-                return;
-
-            m_client.customContextMenuItemSelected(toAPI(&page), toAPI(WebContextMenuItem::create(itemData).ptr()), m_client.base.clientInfo);
-        }
-
-        void showContextMenu(WebPageProxy& page, const WebCore::IntPoint& menuLocation, const Vector<Ref<WebContextMenuItem>>& menuItemsVector) override
-        {
-            if (!canShowContextMenu())
-                return;
-
-            Vector<RefPtr<API::Object>> menuItems;
-            menuItems.reserveInitialCapacity(menuItemsVector.size());
-
-            for (const auto& menuItem : menuItemsVector)
-                menuItems.uncheckedAppend(menuItem.ptr());
-
-            m_client.showContextMenu(toAPI(&page), toAPI(menuLocation), toAPI(API::Array::create(WTFMove(menuItems)).ptr()), m_client.base.clientInfo);
-        }
-
-        bool canShowContextMenu() const override
-        {
-            return m_client.showContextMenu;
-        }
-
-        bool hideContextMenu(WebPageProxy& page) override
-        {
-            if (!m_client.hideContextMenu)
-                return false;
-
-            m_client.hideContextMenu(toAPI(&page), m_client.base.clientInfo);
-
-            return true;
-        }
-    };
-
-    toImpl(pageRef)->setContextMenuClient(makeUnique<ContextMenuClient>(wkClient));
-#else
-    UNUSED_PARAM(pageRef);
-    UNUSED_PARAM(wkClient);
-#endif
-}
-
 void WKPageSetPageDiagnosticLoggingClient(WKPageRef pageRef, const WKPageDiagnosticLoggingClientBase* wkClient)
 {
     toImpl(pageRef)->setDiagnosticLoggingClient(makeUnique<WebPageDiagnosticLoggingClient>(wkClient));
@@ -1059,7 +930,7 @@ void WKPageSetPageFindClient(WKPageRef pageRef, const WKPageFindClientBase* wkCl
         {
             if (!m_client.didFindString)
                 return;
-            
+
             m_client.didFindString(toAPI(page), toAPI(string.impl()), matchCount, m_client.base.clientInfo);
         }
 
@@ -1067,7 +938,7 @@ void WKPageSetPageFindClient(WKPageRef pageRef, const WKPageFindClientBase* wkCl
         {
             if (!m_client.didFailToFindString)
                 return;
-            
+
             m_client.didFailToFindString(toAPI(page), toAPI(string.impl()), m_client.base.clientInfo);
         }
 
@@ -2286,13 +2157,6 @@ void WKPageSetPageNavigationClient(WKPageRef pageRef, const WKPageNavigationClie
             m_client.navigationResponseDidBecomeDownload(toAPI(&page), toAPI(&response), toAPI(&download), m_client.base.clientInfo);
         }
 
-        void contextMenuDidCreateDownload(WebKit::WebPageProxy& page, WebKit::DownloadProxy& download) override
-        {
-            if (!m_client.contextMenuDidCreateDownload)
-                return;
-            m_client.contextMenuDidCreateDownload(toAPI(&page), toAPI(&download), m_client.base.clientInfo);
-        }
-
         void didBeginNavigationGesture(WebPageProxy& page) override
         {
             if (!m_client.didBeginNavigationGesture)
@@ -2320,7 +2184,7 @@ void WKPageSetPageNavigationClient(WKPageRef pageRef, const WKPageNavigationClie
                 return;
             m_client.didRemoveNavigationGestureSnapshot(toAPI(&page), m_client.base.clientInfo);
         }
-        
+
         void contentRuleListNotification(WebPageProxy& page, URL&& url, ContentRuleListResults&& results) final
         {
             if (!m_client.contentRuleListNotification)
@@ -2703,27 +2567,6 @@ void WKPageSetControlledByAutomation(WKPageRef pageRef, bool controlled)
     toImpl(pageRef)->setControlledByAutomation(controlled);
 }
 
-bool WKPageGetAllowsRemoteInspection(WKPageRef page)
-{
-#if ENABLE(REMOTE_INSPECTOR)
-    return toImpl(page)->allowsRemoteInspection();
-#else
-    UNUSED_PARAM(page);
-    return false;
-#endif    
-}
-
-void WKPageSetAllowsRemoteInspection(WKPageRef pageRef, bool allow)
-{
-    CRASH_IF_SUSPENDED;
-#if ENABLE(REMOTE_INSPECTOR)
-    toImpl(pageRef)->setAllowsRemoteInspection(allow);
-#else
-    UNUSED_PARAM(pageRef);
-    UNUSED_PARAM(allow);
-#endif
-}
-
 void WKPageSetMediaVolume(WKPageRef pageRef, float volume)
 {
     CRASH_IF_SUSPENDED;
@@ -2819,22 +2662,10 @@ void WKPageSetMayStartMediaWhenInWindow(WKPageRef pageRef, bool mayStartMedia)
     toImpl(pageRef)->setMayStartMediaWhenInWindow(mayStartMedia);
 }
 
-
-void WKPageSelectContextMenuItem(WKPageRef pageRef, WKContextMenuItemRef item)
-{
-    CRASH_IF_SUSPENDED;
-#if ENABLE(CONTEXT_MENUS)
-    toImpl(pageRef)->contextMenuItemSelected((toImpl(item)->data()));
-#else
-    UNUSED_PARAM(pageRef);
-    UNUSED_PARAM(item);
-#endif
-}
-
 WKScrollPinningBehavior WKPageGetScrollPinningBehavior(WKPageRef page)
 {
     ScrollPinningBehavior pinning = toImpl(page)->scrollPinningBehavior();
-    
+
     switch (pinning) {
     case WebCore::ScrollPinningBehavior::DoNotPin:
         return kWKScrollPinningBehaviorDoNotPin;
@@ -2843,7 +2674,7 @@ WKScrollPinningBehavior WKPageGetScrollPinningBehavior(WKPageRef page)
     case WebCore::ScrollPinningBehavior::PinToBottom:
         return kWKScrollPinningBehaviorPinToBottom;
     }
-    
+
     ASSERT_NOT_REACHED();
     return kWKScrollPinningBehaviorDoNotPin;
 }

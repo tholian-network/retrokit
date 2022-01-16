@@ -38,7 +38,6 @@
 #include "EventTargetConcrete.h"
 #include "HTMLBodyElement.h"
 #include "HTMLHtmlElement.h"
-#include "InspectorInstrumentation.h"
 #include "JSEventListener.h"
 #include "JSLazyEventListener.h"
 #include "Logging.h"
@@ -92,9 +91,6 @@ bool EventTarget::addEventListener(const AtomString& eventType, Ref<EventListene
         });
     }
 
-    if (listenerCreatedFromScript)
-        InspectorInstrumentation::didAddEventListener(*this, eventType, listener.get(), options.capture);
-
     if (eventNames().isWheelEventType(eventType))
         invalidateEventListenerRegions();
 
@@ -136,8 +132,6 @@ bool EventTarget::removeEventListener(const AtomString& eventType, EventListener
     if (!data)
         return false;
 
-    InspectorInstrumentation::willRemoveEventListener(*this, eventType, listener, options.capture);
-
     if (data->eventListenerMap.remove(eventType, listener, options.capture)) {
         if (eventNames().isWheelEventType(eventType))
             invalidateEventListenerRegions();
@@ -156,8 +150,6 @@ bool EventTarget::setAttributeEventListener(const AtomString& eventType, RefPtr<
             removeEventListener(eventType, *existingListener, false);
         return false;
     }
-    if (existingListener) {
-        InspectorInstrumentation::willRemoveEventListener(*this, eventType, *existingListener, false);
 
 #if ASSERT_ENABLED
         listener->checkValidityForEventTarget(*this);
@@ -165,8 +157,6 @@ bool EventTarget::setAttributeEventListener(const AtomString& eventType, RefPtr<
 
         auto listenerPointer = listener.copyRef();
         eventTargetData()->eventListenerMap.replace(eventType, *existingListener, listener.releaseNonNull(), { });
-
-        InspectorInstrumentation::didAddEventListener(*this, eventType, *listenerPointer, false);
 
         return true;
     }
@@ -291,8 +281,6 @@ void EventTarget::innerInvokeEventListeners(Event& event, EventListenerVector li
 
     auto& context = *scriptExecutionContext();
     bool contextIsDocument = is<Document>(context);
-    if (contextIsDocument)
-        InspectorInstrumentation::willDispatchEvent(downcast<Document>(context), event);
 
     for (auto& registeredListener : listeners) {
         if (UNLIKELY(registeredListener->wasRemoved()))
@@ -301,9 +289,6 @@ void EventTarget::innerInvokeEventListeners(Event& event, EventListenerVector li
         if (phase == EventInvokePhase::Capturing && !registeredListener->useCapture())
             continue;
         if (phase == EventInvokePhase::Bubbling && registeredListener->useCapture())
-            continue;
-
-        if (InspectorInstrumentation::isEventListenerDisabled(*this, event.type(), registeredListener->callback(), registeredListener->useCapture()))
             continue;
 
         // If stopImmediatePropagation has been called, we just break out immediately, without
@@ -328,16 +313,11 @@ void EventTarget::innerInvokeEventListeners(Event& event, EventListenerVector li
         registeredListener->callback().checkValidityForEventTarget(*this);
 #endif
 
-        InspectorInstrumentation::willHandleEvent(context, event, *registeredListener);
         registeredListener->callback().handleEvent(context, event);
-        InspectorInstrumentation::didHandleEvent(context, event, *registeredListener);
 
         if (registeredListener->isPassive())
             event.setInPassiveListener(false);
     }
-
-    if (contextIsDocument)
-        InspectorInstrumentation::didDispatchEvent(downcast<Document>(context), event);
 }
 
 Vector<AtomString> EventTarget::eventTypes()

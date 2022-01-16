@@ -263,7 +263,7 @@ list of Web APIs that are removed.
 - [ ] Remove Web NFC API
 - [ ] Remove Web Performance API
 - [ ] Remove Web Storage API
-- [ ] Remove Indexed Database API
+- [ ] Remove Indexed Database API (`IDBFactory`, `IDBOpenDBRequest`, `IDBDatabase`, `IDBTransaction`, `IDBRequest`, `IDBObjectStore`, `IDBIndex`, `IDBCursor`, `IDBKeyRange`, `IDBLocaleAwareKeyRange`, `IDBVersionChangeEvent`, `IDBDatabaseException`, `IDBTransactionSync`, `IDBObjectStoreSync`, `IDBIndexSync`, `IDBFactorySync`, `IDBEnvironmentSync`, `IDBDatabaseSync`, `IDBCursorSync`)
 - [ ] Remove Canvas API (`OFFSCREEN_CANVAS`, `Canvas`, `DOMConvertWebGL`, `JSANGLEInstancedArray`, `CanvasActivityRecord`)
 - [ ] Remove WebGL API (`WEBGL`, `WebGL`, `JSANGLEInstancedArray`, `GraphicsContextGL`, `HighPerformanceGraphicsUsageSampler`)
 - [ ] Remove WebGL2 API (`WEBGL2`)
@@ -277,6 +277,7 @@ list of Web APIs that are removed.
 - [ ] Remove Window Alert Method (`window.alert()`)
 - [ ] Remove Window History Interface (`window.history`)
 - [ ] Remove Window Popups (`window.open()`)
+- [ ] Remove Intersection Observer API (`INTERSECTION_OBSERVER`, `IntersectionObserver`)
 - [ ] Remove Performance Observer API (`PerformanceObserver`)
 - [ ] Remove Resize Observer API (`RESIZE_OBSERVER`, `ResizeObserver`)
 - [ ] *Undecided* Remove Custom Protocol Manager Support (`CustomProtocol`, `CustomProtocolManager`)

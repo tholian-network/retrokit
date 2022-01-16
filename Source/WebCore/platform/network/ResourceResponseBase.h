@@ -144,7 +144,7 @@ public:
     const std::optional<CertificateInfo>& certificateInfo() const { return m_certificateInfo; };
     bool usedLegacyTLS() const { return m_usedLegacyTLS == UsedLegacyTLS::Yes; }
     void setUsedLegacyTLS(UsedLegacyTLS used) { m_usedLegacyTLS = used; }
-    
+
     // These functions return parsed values of the corresponding response headers.
     WEBCORE_EXPORT bool cacheControlContainsNoCache() const;
     WEBCORE_EXPORT bool cacheControlContainsNoStore() const;
@@ -159,9 +159,8 @@ public:
     WEBCORE_EXPORT std::optional<WallTime> lastModified() const;
     const ParsedContentRange& contentRange() const;
 
-    enum class Source : uint8_t { Unknown, Network, DiskCache, DiskCacheAfterValidation, MemoryCache, MemoryCacheAfterValidation, ServiceWorker, ApplicationCache, DOMCache, InspectorOverride };
+    enum class Source : uint8_t { Unknown, Network, DiskCache, DiskCacheAfterValidation, MemoryCache, MemoryCacheAfterValidation, ServiceWorker, ApplicationCache, DOMCache };
     static constexpr unsigned bitWidthOfSource = 4;
-    static_assert(static_cast<unsigned>(Source::InspectorOverride) <= ((1U << bitWidthOfSource) - 1));
 
     WEBCORE_EXPORT Source source() const;
     void setSource(Source source)
@@ -473,8 +472,7 @@ template<> struct EnumTraits<WebCore::ResourceResponseBase::Source> {
         WebCore::ResourceResponseBase::Source::MemoryCacheAfterValidation,
         WebCore::ResourceResponseBase::Source::ServiceWorker,
         WebCore::ResourceResponseBase::Source::ApplicationCache,
-        WebCore::ResourceResponseBase::Source::DOMCache,
-        WebCore::ResourceResponseBase::Source::InspectorOverride
+        WebCore::ResourceResponseBase::Source::DOMCache
     >;
 };
 

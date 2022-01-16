@@ -45,7 +45,6 @@
 #include "WebAutomationSession.h"
 #include "WebBackForwardCache.h"
 #include "WebBackForwardListItem.h"
-#include "WebInspectorUtilities.h"
 #include "WebNavigationDataStore.h"
 #include "WebNotificationManagerProxy.h"
 #include "WebPageGroup.h"
@@ -357,8 +356,6 @@ void WebProcessProxy::getLaunchOptions(ProcessLauncher::LaunchOptions& launchOpt
 
     if (!m_processPool->customWebContentServiceBundleIdentifier().isEmpty())
         launchOptions.customWebContentServiceBundleIdentifier = m_processPool->customWebContentServiceBundleIdentifier().ascii();
-    if (WebKit::isInspectorProcessPool(processPool()))
-        launchOptions.extraInitializationData.add("inspector-process"_s, "1"_s);
 
     LOG(Language, "WebProcessProxy is getting launch options.");
     auto overrideLanguages = m_processPool->configuration().overrideLanguages();
@@ -1012,9 +1009,6 @@ void WebProcessProxy::didFinishLaunching(ProcessLauncher* launcher, IPC::Connect
 
 #if PLATFORM(COCOA)
     unblockAccessibilityServerIfNeeded();
-#if ENABLE(REMOTE_INSPECTOR)
-    enableRemoteInspectorIfNeeded();
-#endif
 #endif
 }
 
@@ -1107,9 +1101,6 @@ bool WebProcessProxy::canBeAddedToWebProcessCache() const
         WEBPROCESSPROXY_RELEASE_LOG(Process, "canBeAddedToWebProcessCache: Not adding to process cache because the process is cross-origin isolated");
         return false;
     }
-
-    if (WebKit::isInspectorProcessPool(processPool()))
-        return false;
 
     return true;
 }

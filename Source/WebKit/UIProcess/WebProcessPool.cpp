@@ -59,7 +59,6 @@
 #include "WebContextSupplement.h"
 #include "WebCookieManagerProxy.h"
 #include "WebCoreArgumentCoders.h"
-#include "WebInspectorUtilities.h"
 #include "WebKit2Initialize.h"
 #include "WebMemorySampler.h"
 #include "WebNotificationManagerProxy.h"
@@ -114,10 +113,6 @@
 #if ENABLE(WEB_AUTHN)
 #include "WebAuthnProcessConnectionInfo.h"
 #include "WebAuthnProcessProxy.h"
-#endif
-
-#if ENABLE(REMOTE_INSPECTOR)
-#include <JavaScriptCore/RemoteInspector.h>
 #endif
 
 #if OS(LINUX)
@@ -1438,27 +1433,14 @@ void WebProcessPool::terminateServiceWorkers()
 
 void WebProcessPool::updateAutomationCapabilities() const
 {
-#if ENABLE(REMOTE_INSPECTOR)
-    Inspector::RemoteInspector::singleton().clientCapabilitiesDidChange();
-#endif
 }
 
 void WebProcessPool::setAutomationSession(RefPtr<WebAutomationSession>&& automationSession)
 {
     if (m_automationSession)
         m_automationSession->setProcessPool(nullptr);
-    
+
     m_automationSession = WTFMove(automationSession);
-
-#if ENABLE(REMOTE_INSPECTOR)
-    if (m_automationSession) {
-        m_automationSession->init();
-        m_automationSession->setProcessPool(this);
-
-        sendToAllProcesses(Messages::WebProcess::EnsureAutomationSessionProxy(m_automationSession->sessionIdentifier()));
-    } else
-        sendToAllProcesses(Messages::WebProcess::DestroyAutomationSessionProxy());
-#endif
 }
 
 void WebProcessPool::setHTTPPipeliningEnabled(bool enabled)

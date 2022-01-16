@@ -33,7 +33,6 @@
 #include "JSDOMExceptionHandling.h"
 #include "JSDOMWindow.h"
 #include "JSExecState.h"
-#include "JSExecStateInstrumentation.h"
 #include "JSWorkerGlobalScope.h"
 #include "ScriptController.h"
 #include "ScriptExecutionContext.h"
@@ -120,8 +119,6 @@ void ScheduledAction::executeFunctionInContext(JSGlobalObject* globalObject, JSV
     NakedPtr<JSC::Exception> exception;
     JSExecState::profiledCall(lexicalGlobalObject, JSC::ProfilingReason::Other, m_function.get(), callData, thisValue, arguments, exception);
     EXCEPTION_ASSERT(!catchScope.exception());
-    
-    InspectorInstrumentation::didCallFunction(&context);
 
     if (exception)
         reportException(lexicalGlobalObject, exception);

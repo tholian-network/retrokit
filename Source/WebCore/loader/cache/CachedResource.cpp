@@ -41,7 +41,6 @@
 #include "FrameLoaderClient.h"
 #include "HTTPHeaderNames.h"
 #include "HTTPHeaderValues.h"
-#include "InspectorInstrumentation.h"
 #include "LegacySchemeRegistry.h"
 #include "LoaderStrategy.h"
 #include "Logging.h"
@@ -262,20 +261,15 @@ void CachedResource::load(CachedResourceLoader& cachedResourceLoader)
         CachedResourceHandle<CachedResource> protectedThis(this);
 
         unsigned long identifier = frame.page()->progress().createUniqueIdentifier();
-        InspectorInstrumentation::willSendRequestOfType(&frame, identifier, frameLoader.activeDocumentLoader(), request, InspectorInstrumentation::LoadType::Beacon);
 
         platformStrategies()->loaderStrategy()->startPingLoad(frame, request, m_originalRequest->httpHeaderFields(), m_options, m_options.contentSecurityPolicyImposition, [this, protectedThis = WTFMove(protectedThis), protectedFrame = makeRef(frame), identifier] (const ResourceError& error, const ResourceResponse& response) {
-            if (!response.isNull())
-                InspectorInstrumentation::didReceiveResourceResponse(protectedFrame, identifier, protectedFrame->loader().activeDocumentLoader(), response, nullptr);
             if (!error.isNull()) {
                 setResourceError(error);
                 this->error(LoadError);
-                InspectorInstrumentation::didFailLoading(protectedFrame.ptr(), protectedFrame->loader().activeDocumentLoader(), identifier, error);
                 return;
             }
             finishLoading(nullptr, { });
             NetworkLoadMetrics emptyMetrics;
-            InspectorInstrumentation::didFinishLoading(protectedFrame.ptr(), protectedFrame->loader().activeDocumentLoader(), identifier, emptyMetrics, nullptr);
         });
         return;
     }
@@ -630,8 +624,6 @@ void CachedResource::deleteThis()
     RELEASE_ASSERT(canDelete());
     RELEASE_ASSERT(!inCache());
 
-    InspectorInstrumentation::willDestroyCachedResource(*this);
-
     delete this;
 }
 
@@ -648,12 +640,12 @@ void CachedResource::setDecodedSize(unsigned size)
         MemoryCache::singleton().removeFromLRUList(*this);
 
     m_decodedSize = size;
-   
+
     if (allowsCaching() && inCache()) {
         auto& memoryCache = MemoryCache::singleton();
         // Now insert into the new LRU list.
         memoryCache.insertInLRUList(*this);
-        
+
         // Insert into or remove from the live decoded list if necessary.
         // When inserting into the LiveDecodedResourcesList it is possible
         // that the m_lastDecodedAccessTime is still zero or smaller than

@@ -42,7 +42,6 @@
 #include "FormData.h"
 #include "Frame.h"
 #include "HTMLParserIdioms.h"
-#include "InspectorInstrumentation.h"
 #include "JSExecState.h"
 #include "JSWindowProxy.h"
 #include "LegacySchemeRegistry.h"
@@ -64,7 +63,6 @@
 
 
 namespace WebCore {
-using namespace Inspector;
 
 static String consoleMessageForViolation(const char* effectiveViolatedDirective, const ContentSecurityPolicyDirective& violatedDirective, const URL& blockedURL, const char* prefix, const char* subject = "it")
 {
@@ -343,14 +341,9 @@ bool ContentSecurityPolicy::allowJavaScriptURLs(const String& contextURL, const 
 {
     if (overrideContentSecurityPolicy)
         return true;
-    bool didNotifyInspector = false;
     auto handleViolatedDirective = [&] (const ContentSecurityPolicyDirective& violatedDirective) {
         String consoleMessage = consoleMessageForViolation(ContentSecurityPolicyDirectiveNames::scriptSrc, violatedDirective, URL(), "Refused to execute a script", "its hash, its nonce, or 'unsafe-inline'");
         reportViolation(ContentSecurityPolicyDirectiveNames::scriptSrc, violatedDirective, URL(), consoleMessage, contextURL, TextPosition(contextLine, WTF::OrdinalNumber()));
-        if (!didNotifyInspector && violatedDirective.directiveList().isReportOnly()) {
-            reportBlockedScriptExecutionToInspector(violatedDirective.text());
-            didNotifyInspector = true;
-        }
     };
     return allPoliciesAllow(WTFMove(handleViolatedDirective), &ContentSecurityPolicyDirectiveList::violatedDirectiveForUnsafeInlineScript);
 }
@@ -359,14 +352,9 @@ bool ContentSecurityPolicy::allowInlineEventHandlers(const String& contextURL, c
 {
     if (overrideContentSecurityPolicy)
         return true;
-    bool didNotifyInspector = false;
     auto handleViolatedDirective = [&] (const ContentSecurityPolicyDirective& violatedDirective) {
         String consoleMessage = consoleMessageForViolation(ContentSecurityPolicyDirectiveNames::scriptSrc, violatedDirective, URL(), "Refused to execute a script for an inline event handler", "'unsafe-inline'");
         reportViolation(ContentSecurityPolicyDirectiveNames::scriptSrc, violatedDirective, URL(), consoleMessage, contextURL, TextPosition(contextLine, WTF::OrdinalNumber()));
-        if (!didNotifyInspector && !violatedDirective.directiveList().isReportOnly()) {
-            reportBlockedScriptExecutionToInspector(violatedDirective.text());
-            didNotifyInspector = true;
-        }
     };
     return allPoliciesAllow(WTFMove(handleViolatedDirective), &ContentSecurityPolicyDirectiveList::violatedDirectiveForUnsafeInlineScript);
 }
@@ -397,17 +385,12 @@ bool ContentSecurityPolicy::allowInlineScript(const String& contextURL, const WT
 {
     if (overrideContentSecurityPolicy)
         return true;
-    bool didNotifyInspector = false;
     auto [foundHashInEnforcedPolicies, foundHashInReportOnlyPolicies] = findHashOfContentInPolicies(&ContentSecurityPolicyDirectiveList::violatedDirectiveForScriptHash, scriptContent, m_hashAlgorithmsForInlineScripts);
     if (foundHashInEnforcedPolicies && foundHashInReportOnlyPolicies)
         return true;
     auto handleViolatedDirective = [&] (const ContentSecurityPolicyDirective& violatedDirective) {
         String consoleMessage = consoleMessageForViolation(ContentSecurityPolicyDirectiveNames::scriptSrc, violatedDirective, URL(), "Refused to execute a script", "its hash, its nonce, or 'unsafe-inline'");
         reportViolation(ContentSecurityPolicyDirectiveNames::scriptSrc, violatedDirective, URL(), consoleMessage, contextURL, TextPosition(contextLine, WTF::OrdinalNumber()));
-        if (!didNotifyInspector && !violatedDirective.directiveList().isReportOnly()) {
-            reportBlockedScriptExecutionToInspector(violatedDirective.text());
-            didNotifyInspector = true;
-        }
     };
     // FIXME: We should not report that the inline script violated a policy when its hash matched a source
     // expression in the policy and the page has more than one policy. See <https://bugs.webkit.org/show_bug.cgi?id=159832>.
@@ -440,14 +423,9 @@ bool ContentSecurityPolicy::allowEval(JSC::JSGlobalObject* state, bool overrideC
 {
     if (overrideContentSecurityPolicy)
         return true;
-    bool didNotifyInspector = false;
     auto handleViolatedDirective = [&] (const ContentSecurityPolicyDirective& violatedDirective) {
         String consoleMessage = consoleMessageForViolation(ContentSecurityPolicyDirectiveNames::scriptSrc, violatedDirective, URL(), "Refused to execute a script", "'unsafe-eval'");
         reportViolation(ContentSecurityPolicyDirectiveNames::scriptSrc, violatedDirective, URL(), consoleMessage, state);
-        if (!didNotifyInspector && !violatedDirective.directiveList().isReportOnly()) {
-            reportBlockedScriptExecutionToInspector(violatedDirective.text());
-            didNotifyInspector = true;
-        }
     };
     return allPoliciesAllow(WTFMove(handleViolatedDirective), &ContentSecurityPolicyDirectiveList::violatedDirectiveForUnsafeEval);
 }
@@ -846,12 +824,6 @@ void ContentSecurityPolicy::logToConsole(const String& message, const String& co
         m_client->addConsoleMessage(MessageSource::Security, MessageLevel::Error, message, 0);
     else if (m_scriptExecutionContext)
         m_scriptExecutionContext->addConsoleMessage(MessageSource::Security, MessageLevel::Error, message, contextURL, contextLine.oneBasedInt(), contextColumn.oneBasedInt(), state);
-}
-
-void ContentSecurityPolicy::reportBlockedScriptExecutionToInspector(const String& directiveText) const
-{
-    if (m_scriptExecutionContext)
-        InspectorInstrumentation::scriptExecutionBlockedByCSP(m_scriptExecutionContext, directiveText);
 }
 
 void ContentSecurityPolicy::upgradeInsecureRequestIfNeeded(ResourceRequest& request, InsecureRequestType requestType) const

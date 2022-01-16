@@ -272,7 +272,6 @@ HTMLElement::EventHandlerNameMap HTMLElement::createEventHandlerNameMap()
         &onchangeAttr.get(),
         &onclickAttr.get(),
         &oncloseAttr.get(),
-        &oncontextmenuAttr.get(),
         &oncopyAttr.get(),
         &oncutAttr.get(),
         &ondblclickAttr.get(),

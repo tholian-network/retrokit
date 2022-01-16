@@ -91,9 +91,6 @@ WK_EXPORT void WKPageEndPrinting(WKPageRef page);
 WK_EXPORT bool WKPageGetIsControlledByAutomation(WKPageRef page);
 WK_EXPORT void WKPageSetControlledByAutomation(WKPageRef page, bool controlled);
 
-WK_EXPORT bool WKPageGetAllowsRemoteInspection(WKPageRef page);
-WK_EXPORT void WKPageSetAllowsRemoteInspection(WKPageRef page, bool allow);
-
 WK_EXPORT void WKPageSetMediaVolume(WKPageRef page, float volume);
 WK_EXPORT void WKPageSetMayStartMediaWhenInWindow(WKPageRef page, bool mayStartMedia);
 

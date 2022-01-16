@@ -60,7 +60,6 @@
 #include "HistoryItem.h"
 #include "HistoryController.h"
 #include "IconLoader.h"
-#include "InspectorInstrumentation.h"
 #include "LegacySchemeRegistry.h"
 #include "LinkIconCollector.h"
 #include "LinkIconType.h"
@@ -443,7 +442,7 @@ void DocumentLoader::finishedLoading()
     // There is a bug in CFNetwork where callbacks can be dispatched even when loads are deferred.
     // See <rdar://problem/6304600> for more details.
 #if !USE(CF)
-    ASSERT(!m_frame->page()->defersLoading() || frameLoader()->stateMachine().creatingInitialEmptyDocument() || InspectorInstrumentation::isDebuggerPaused(m_frame.get()));
+    ASSERT(!m_frame->page()->defersLoading() || frameLoader()->stateMachine().creatingInitialEmptyDocument());
 #endif
 
     Ref<DocumentLoader> protectedThis(*this);
@@ -887,7 +886,6 @@ bool DocumentLoader::tryLoadingRedirectRequestFromApplicationCache(const Resourc
 void DocumentLoader::stopLoadingAfterXFrameOptionsOrContentSecurityPolicyDenied(unsigned long identifier, const ResourceResponse& response)
 {
     Ref<DocumentLoader> protectedThis { *this };
-    InspectorInstrumentation::continueAfterXFrameOptionsDenied(*m_frame, identifier, *this, response);
     m_frame->document()->enforceSandboxFlags(SandboxOrigin);
     if (HTMLFrameOwnerElement* ownerElement = m_frame->ownerElement())
         ownerElement->dispatchEvent(Event::create(eventNames().loadEvent, Event::CanBubble::No, Event::IsCancelable::No));
@@ -1119,9 +1117,6 @@ void DocumentLoader::continueAfterContentPolicy(PolicyAction policy)
             return;
         }
 
-        if (ResourceLoader* mainResourceLoader = this->mainResourceLoader())
-            InspectorInstrumentation::continueWithPolicyDownload(*m_frame, mainResourceLoader->identifier(), *this, m_response);
-
         // When starting the request, we didn't know that it would result in download and not navigation. Now we know that main document URL didn't change.
         // Download may use this knowledge for purposes unrelated to cookies, notably for setting file quarantine data.
         frameLoader()->setOriginalURLForDownloadRequest(m_request);
@@ -1149,8 +1144,6 @@ void DocumentLoader::continueAfterContentPolicy(PolicyAction policy)
         FALLTHROUGH;
 #endif
     case PolicyAction::Ignore:
-        if (ResourceLoader* mainResourceLoader = this->mainResourceLoader())
-            InspectorInstrumentation::continueWithPolicyIgnore(*m_frame, mainResourceLoader->identifier(), *this, m_response);
         stopLoadingForPolicyChange();
         return;
     }
@@ -1453,8 +1446,6 @@ void DocumentLoader::detachFromFrame()
     // already done so just return.
     if (!m_frame)
         return;
-
-    InspectorInstrumentation::loaderDetachedFromFrame(*m_frame, *this);
 
     observeFrame(nullptr);
 }

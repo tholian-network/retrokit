@@ -36,7 +36,6 @@
 #include "JSDOMWindow.h"
 #include "JSElement.h"
 #include "JSExecState.h"
-#include "JSExecStateInstrumentation.h"
 #include "JSHTMLElement.h"
 #include "ScriptExecutionContext.h"
 #include <JavaScriptCore/JSLock.h>
@@ -130,7 +129,6 @@ static RefPtr<Element> constructCustomElementSynchronously(Document& document, V
     MarkedArgumentBuffer args;
     ASSERT(!args.hasOverflowed());
     JSValue newElement = construct(&lexicalGlobalObject, constructor, constructData, args);
-    InspectorInstrumentation::didCallFunction(&document);
     RETURN_IF_EXCEPTION(scope, nullptr);
 
     ASSERT(!newElement.isEmpty());
@@ -211,7 +209,6 @@ void JSCustomElementInterface::upgradeElement(Element& element)
     ASSERT(!args.hasOverflowed());
     JSExecState::instrumentFunction(context, constructData);
     JSValue returnedElement = construct(lexicalGlobalObject, m_constructor.get(), constructData, args);
-    InspectorInstrumentation::didCallFunction(context);
 
     m_constructionStack.removeLast();
 
@@ -261,8 +258,6 @@ void JSCustomElementInterface::invokeCallback(Element& element, JSObject* callba
 
     NakedPtr<JSC::Exception> exception;
     JSExecState::call(lexicalGlobalObject, callback, callData, jsElement, args, exception);
-
-    InspectorInstrumentation::didCallFunction(context);
 
     if (exception)
         reportException(lexicalGlobalObject, exception);

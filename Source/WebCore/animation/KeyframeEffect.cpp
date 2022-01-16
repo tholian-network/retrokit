@@ -40,7 +40,6 @@
 #include "FontCascade.h"
 #include "FrameView.h"
 #include "GeometryUtilities.h"
-#include "InspectorInstrumentation.h"
 #include "JSCompositeOperation.h"
 #include "JSCompositeOperationOrAuto.h"
 #include "JSDOMConvert.h"
@@ -1275,8 +1274,6 @@ void KeyframeEffect::apply(RenderStyle& targetStyle, const RenderStyle* parentEl
     auto computedTiming = getComputedTiming(startTime);
     if (!startTime) {
         m_phaseAtLastApplication = computedTiming.phase;
-        if (auto* target = targetElementOrPseudoElement())
-            InspectorInstrumentation::willApplyKeyframeEffect(*target, *this, computedTiming);
     }
 
     if (!computedTiming.progress)

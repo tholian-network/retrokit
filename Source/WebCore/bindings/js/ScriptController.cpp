@@ -31,7 +31,6 @@
 #include "Frame.h"
 #include "FrameLoader.h"
 #include "FrameLoaderClient.h"
-#include "InspectorInstrumentation.h"
 #include "JSDOMBindingSecurity.h"
 #include "JSDOMExceptionHandling.h"
 #include "JSDOMWindow.h"
@@ -134,12 +133,8 @@ ValueOrException ScriptController::evaluateInWorld(const ScriptSourceCode& sourc
     Ref<Frame> protector(m_frame);
     SetForScope<const URL*> sourceURLScope(m_sourceURL, &sourceURL);
 
-    InspectorInstrumentation::willEvaluateScript(m_frame, sourceURL.string(), sourceCode.startLine(), sourceCode.startColumn());
-
     NakedPtr<JSC::Exception> evaluationException;
     JSValue returnValue = JSExecState::profiledEvaluate(&globalObject, JSC::ProfilingReason::Other, jsSourceCode, &proxy, evaluationException);
-
-    InspectorInstrumentation::didEvaluateScript(m_frame);
 
     std::optional<ExceptionDetails> optionalDetails;
     if (evaluationException) {
@@ -231,9 +226,7 @@ JSC::JSValue ScriptController::evaluateModule(const URL& sourceURL, JSModuleReco
     Ref<Frame> protector(m_frame);
     SetForScope<const URL*> sourceURLScope(m_sourceURL, &sourceURL);
 
-    InspectorInstrumentation::willEvaluateScript(m_frame, sourceURL.string(), jsSourceCode.firstLine().oneBasedInt(), jsSourceCode.startColumn().oneBasedInt());
     auto returnValue = moduleRecord.evaluate(&lexicalGlobalObject, awaitedValue, resumeMode);
-    InspectorInstrumentation::didEvaluateScript(m_frame);
 
     return returnValue;
 }
@@ -578,8 +571,6 @@ ValueOrException ScriptController::callInWorld(RunJavaScriptParameters&& paramet
     Ref<Frame> protector(m_frame);
     SetForScope<const URL*> sourceURLScope(m_sourceURL, &sourceURL);
 
-    InspectorInstrumentation::willEvaluateScript(m_frame, sourceURL.string(), sourceCode.startLine(), sourceCode.startColumn());
-
     NakedPtr<JSC::Exception> evaluationException;
     std::optional<ExceptionDetails> optionalDetails;
     JSValue returnValue;
@@ -604,8 +595,6 @@ ValueOrException ScriptController::callInWorld(RunJavaScriptParameters&& paramet
 
         returnValue = JSExecState::profiledCall(&globalObject, JSC::ProfilingReason::Other, functionObject, callData, &proxy, markedArguments, evaluationException);
     } while (false);
-
-    InspectorInstrumentation::didEvaluateScript(m_frame);
 
     if (evaluationException && !optionalDetails) {
         ExceptionDetails details;

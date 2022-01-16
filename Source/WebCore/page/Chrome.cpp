@@ -41,7 +41,6 @@
 #include "HTMLNames.h"
 #include "HitTestResult.h"
 #include "Icon.h"
-#include "InspectorInstrumentation.h"
 #include "Page.h"
 #include "PageGroupLoadDeferrer.h"
 #include "PopupOpeningObserver.h"
@@ -100,7 +99,6 @@ void Chrome::invalidateContentsForSlowScroll(const IntRect& updateRect)
 void Chrome::scroll(const IntSize& scrollDelta, const IntRect& rectToScroll, const IntRect& clipRect)
 {
     m_client.scroll(scrollDelta, rectToScroll, clipRect);
-    InspectorInstrumentation::didScroll(m_page);
 }
 
 IntPoint Chrome::screenToRootView(const IntPoint& point) const
@@ -112,7 +110,7 @@ IntRect Chrome::rootViewToScreen(const IntRect& rect) const
 {
     return m_client.rootViewToScreen(rect);
 }
-    
+
 IntPoint Chrome::accessibilityScreenToRootView(const IntPoint& point) const
 {
     return m_client.accessibilityScreenToRootView(point);
@@ -342,8 +340,6 @@ void Chrome::mouseDidMoveOverElement(const HitTestResult& result, unsigned modif
     TextDirection toolTipDirection;
     getToolTip(result, toolTip, toolTipDirection);
     m_client.mouseDidMoveOverElement(result, modifierFlags, toolTip, toolTipDirection);
-
-    InspectorInstrumentation::mouseDidMoveOverElement(m_page, result, modifierFlags);
 }
 
 void Chrome::getToolTip(const HitTestResult& result, String& toolTip, TextDirection& toolTipDirection)

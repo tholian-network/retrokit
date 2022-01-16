@@ -66,7 +66,6 @@
 #include "HitTestResult.h"
 #include "Image.h"
 #include "ImageOverlayController.h"
-#include "InspectorInstrumentation.h"
 #include "KeyboardEvent.h"
 #include "KeyboardScrollingAnimator.h"
 #include "Logging.h"
@@ -1536,8 +1535,6 @@ std::optional<Cursor> EventHandler::selectCursor(const HitTestResult& result, bo
         return pointerCursor();
     case CursorType::None:
         return noneCursor();
-    case CursorType::ContextMenu:
-        return contextMenuCursor();
     case CursorType::Help:
         return helpCursor();
     case CursorType::Pointer:
@@ -1662,11 +1659,6 @@ bool EventHandler::handleMousePressEvent(const PlatformMouseEvent& platformMouse
 {
     Ref<Frame> protectedFrame(m_frame);
     RefPtr<FrameView> protector(m_frame.view());
-
-    if (InspectorInstrumentation::handleMousePress(m_frame)) {
-        invalidateClick();
-        return true;
-    }
 
 #if ENABLE(POINTER_LOCK)
     if (m_frame.page()->pointerLockController().isLocked()) {
@@ -2141,10 +2133,9 @@ bool EventHandler::handleMouseReleaseEvent(const PlatformMouseEvent& platformMou
         return true;
 
     bool swallowMouseUpEvent = !dispatchMouseEvent(eventNames().mouseupEvent, mouseEvent.targetNode(), m_clickCount, platformMouseEvent, FireMouseOverOut::No);
-    bool contextMenuEvent = platformMouseEvent.button() == RightButton;
 
     auto nodeToClick = targetNodeForClickEvent(m_clickNode.get(), mouseEvent.targetNode());
-    bool swallowClickEvent = m_clickCount > 0 && !contextMenuEvent && nodeToClick && !dispatchMouseEvent(eventNames().clickEvent, nodeToClick.get(), m_clickCount, platformMouseEvent, FireMouseOverOut::Yes);
+    bool swallowClickEvent = m_clickCount > 0 && nodeToClick && !dispatchMouseEvent(eventNames().clickEvent, nodeToClick.get(), m_clickCount, platformMouseEvent, FireMouseOverOut::Yes);
 
     if (m_resizeLayer) {
         m_resizeLayer->setInResizeMode(false);
@@ -3169,122 +3160,6 @@ void EventHandler::defaultWheelEventHandler(Node* startNode, WheelEvent& wheelEv
     if (handleWheelEventInAppropriateEnclosingBox(startNode, wheelEvent, filteredPlatformDelta, filteredVelocity, eventHandling))
         wheelEvent.setDefaultHandled();
 }
-
-#if ENABLE(CONTEXT_MENU_EVENT)
-bool EventHandler::sendContextMenuEvent(const PlatformMouseEvent& event)
-{
-    Ref<Frame> protectedFrame(m_frame);
-
-    RefPtr doc = m_frame.document();
-    RefPtr view = m_frame.view();
-    if (!view)
-        return false;
-
-    // Caret blinking is normally un-suspended in handleMouseReleaseEvent, but we
-    // won't receive that event once the context menu is up.
-    m_frame.selection().setCaretBlinkingSuspended(false);
-    // Clear mouse press state to avoid initiating a drag while context menu is up.
-    m_mousePressed = false;
-    bool swallowEvent;
-    LayoutPoint viewportPos = view->windowToContents(event.position());
-    constexpr OptionSet<HitTestRequest::Type> hitType { HitTestRequest::Type::Active, HitTestRequest::Type::DisallowUserAgentShadowContent };
-    MouseEventWithHitTestResults mouseEvent = doc->prepareMouseEvent(hitType, viewportPos, event);
-
-    // Do not show context menus when clicking on scrollbars.
-    if (mouseEvent.scrollbar() || view->scrollbarAtPoint(event.position()))
-        return false;
-
-    if (m_frame.editor().behavior().shouldSelectOnContextualMenuClick()
-        && !m_frame.selection().contains(viewportPos)
-        // FIXME: In the editable case, word selection sometimes selects content that isn't underneath the mouse.
-        // If the selection is non-editable, we do word selection to make it easier to use the contextual menu items
-        // available for text selections.  But only if we're above text.
-        && (m_frame.selection().selection().isContentEditable() || (mouseEvent.targetNode() && mouseEvent.targetNode()->isTextNode()))) {
-        m_mouseDownMayStartSelect = true; // context menu events are always allowed to perform a selection
-        selectClosestContextualWordOrLinkFromMouseEvent(mouseEvent);
-    }
-
-    swallowEvent = !dispatchMouseEvent(eventNames().contextmenuEvent, mouseEvent.targetNode(), 0, event, FireMouseOverOut::No);
-    
-    return swallowEvent;
-}
-
-bool EventHandler::sendContextMenuEventForKey()
-{
-    Ref<Frame> protectedFrame(m_frame);
-
-    RefPtr view = m_frame.view();
-    if (!view)
-        return false;
-
-    RefPtr doc = m_frame.document();
-    if (!doc)
-        return false;
-
-    // Clear mouse press state to avoid initiating a drag while context menu is up.
-    m_mousePressed = false;
-
-    static const int kContextMenuMargin = 1;
-
-#if OS(WINDOWS)
-    int rightAligned = ::GetSystemMetrics(SM_MENUDROPALIGNMENT);
-#else
-    int rightAligned = 0;
-#endif
-    IntPoint location;
-
-    RefPtr focusedElement = doc->focusedElement();
-    const VisibleSelection& selection = m_frame.selection().selection();
-    Position start = selection.start();
-
-    if (start.deprecatedNode() && (selection.rootEditableElement() || selection.isRange())) {
-        IntRect firstRect = m_frame.editor().firstRectForRange(*selection.toNormalizedRange());
-
-        int x = rightAligned ? firstRect.maxX() : firstRect.x();
-        // In a multiline edit, firstRect.maxY() would endup on the next line, so -1.
-        int y = firstRect.maxY() ? firstRect.maxY() - 1 : 0;
-        location = IntPoint(x, y);
-    } else if (focusedElement) {
-        RenderBoxModelObject* box = focusedElement->renderBoxModelObject();
-        if (!box)
-            return false;
-
-        IntRect boundingBoxRect = box->absoluteBoundingBoxRect(true);
-        location = IntPoint(boundingBoxRect.x(), boundingBoxRect.maxY() - 1);
-    } else {
-        location = IntPoint(
-            rightAligned ? view->contentsWidth() - kContextMenuMargin : kContextMenuMargin,
-            kContextMenuMargin);
-    }
-
-    m_frame.view()->setCursor(pointerCursor());
-
-    IntPoint position = view->contentsToRootView(location);
-    IntPoint globalPosition = view->hostWindow()->rootViewToScreen(IntRect(position, IntSize())).location();
-
-    RefPtr<Node> targetNode = doc->focusedElement();
-    if (!targetNode)
-        targetNode = doc;
-
-    // Use the focused node as the target for hover and active.
-    HitTestResult result(position);
-    result.setInnerNode(targetNode.get());
-    doc->updateHoverActiveState(OptionSet<HitTestRequest::Type> { HitTestRequest::Type::Active, HitTestRequest::Type::DisallowUserAgentShadowContent }, result.targetElement());
-
-    // The contextmenu event is a mouse event even when invoked using the keyboard.
-    // This is required for web compatibility.
-
-#if OS(WINDOWS)
-    PlatformEvent::Type eventType = PlatformEvent::MouseReleased;
-#else
-    PlatformEvent::Type eventType = PlatformEvent::MousePressed;
-#endif
-
-    PlatformMouseEvent platformMouseEvent(position, globalPosition, RightButton, eventType, 1, false, false, false, false, WallTime::now(), ForceAtClick, NoTap);
-
-    return sendContextMenuEvent(platformMouseEvent);
-}
-#endif // ENABLE(CONTEXT_MENU_EVENT)
 
 void EventHandler::scheduleHoverStateUpdate()
 {
@@ -4479,9 +4354,6 @@ bool EventHandler::handleTouchEvent(const PlatformTouchEvent& event)
 
             RefPtr element = result.targetElement();
             ASSERT(element);
-
-            if (element && InspectorInstrumentation::handleTouchEvent(m_frame, *element))
-                return true;
 
             Document& doc = element->document();
             // Record the originating touch document even if it does not have a touch listener.

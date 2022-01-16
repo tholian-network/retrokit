@@ -158,9 +158,6 @@ void Cursor::ensurePlatformCursor() const
     case Cursor::Cell:
         m_platformCursor = createNamedCursor("cell");
         break;
-    case Cursor::ContextMenu:
-        m_platformCursor = createNamedCursor("context-menu");
-        break;
     case Cursor::Alias:
         m_platformCursor = createNamedCursor("alias");
         break;

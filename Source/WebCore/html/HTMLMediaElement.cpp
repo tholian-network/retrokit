@@ -62,7 +62,6 @@
 #include "InbandGenericTextTrack.h"
 #include "InbandTextTrackPrivate.h"
 #include "InbandWebVTTTextTrack.h"
-#include "InspectorInstrumentation.h"
 #include "JSDOMException.h"
 #include "JSDOMPromiseDeferred.h"
 #include "JSHTMLMediaElement.h"
@@ -431,8 +430,6 @@ HTMLMediaElement::HTMLMediaElement(const QualifiedName& tagName, Document& docum
     ALWAYS_LOG(LOGIDENTIFIER);
 
     setHasCustomStyleResolveCallbacks();
-
-    InspectorInstrumentation::addEventListenersToNode(*this);
 }
 
 void HTMLMediaElement::initializeMediaSession()
@@ -6083,7 +6080,7 @@ const MediaResourceLoader* HTMLMediaElement::lastMediaResourceLoaderForTesting()
 bool HTMLMediaElement::mediaPlayerShouldUsePersistentCache() const
 {
     if (Page* page = document().page())
-        return !page->usesEphemeralSession() && !page->isResourceCachingDisabledByWebInspector();
+        return !page->usesEphemeralSession();
 
     return false;
 }

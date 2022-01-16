@@ -33,9 +33,6 @@
 #include <webkit2/WebKitBackForwardList.h>
 #include <webkit2/WebKitBackForwardListItem.h>
 #include <webkit2/WebKitColorChooserRequest.h>
-#include <webkit2/WebKitContextMenu.h>
-#include <webkit2/WebKitContextMenuActions.h>
-#include <webkit2/WebKitContextMenuItem.h>
 #include <webkit2/WebKitCookieManager.h>
 #include <webkit2/WebKitCredential.h>
 #include <webkit2/WebKitDefines.h>
@@ -81,7 +78,6 @@
 #include <webkit2/WebKitUserMessage.h>
 #include <webkit2/WebKitVersion.h>
 #include <webkit2/WebKitWebContext.h>
-#include <webkit2/WebKitWebInspector.h>
 #include <webkit2/WebKitWebResource.h>
 #include <webkit2/WebKitWebView.h>
 #include <webkit2/WebKitWebViewBase.h>

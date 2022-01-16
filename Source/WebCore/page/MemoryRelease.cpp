@@ -40,7 +40,6 @@
 #include "GCController.h"
 #include "HTMLMediaElement.h"
 #include "InlineStyleSheetOwner.h"
-#include "InspectorInstrumentation.h"
 #include "LayoutIntegrationLineLayout.h"
 #include "Logging.h"
 #include "MemoryCache.h"
@@ -156,12 +155,6 @@ void releaseMemory(Critical critical, Synchronous synchronous, MaintainBackForwa
 #endif
         WTF::releaseFastMallocFreeMemory();
     }
-
-#if ENABLE(RESOURCE_USAGE)
-    Page::forEachPage([&](Page& page) {
-        InspectorInstrumentation::didHandleMemoryPressure(page, critical);
-    });
-#endif
 }
 
 void releaseGraphicsMemory(Critical critical, Synchronous synchronous)

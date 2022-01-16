@@ -167,7 +167,6 @@ if (USE_CF)
     )
 
     list(APPEND WebCore_LIBRARIES ${COREFOUNDATION_LIBRARY})
-    list(APPEND WebCoreTestSupport_LIBRARIES ${COREFOUNDATION_LIBRARY})
 else ()
     list(APPEND WebCore_SOURCES
         platform/text/Hyphenation.cpp
@@ -231,10 +230,6 @@ list(APPEND WebCore_LIBRARIES
     version
     winmm
     ws2_32
-)
-
-list(APPEND WebCoreTestSupport_LIBRARIES
-    shlwapi
 )
 
 make_directory(${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/WebKit.resources/en.lproj)

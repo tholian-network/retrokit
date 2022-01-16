@@ -346,7 +346,6 @@ TextStream& operator<<(TextStream& ts, CursorType cursor)
     switch (cursor) {
     case CursorType::Auto: ts << "auto"; break;
     case CursorType::Default: ts << "default"; break;
-    case CursorType::ContextMenu: ts << "contextmenu"; break;
     case CursorType::Help: ts << "help"; break;
     case CursorType::Pointer: ts << "pointer"; break;
     case CursorType::Progress: ts << "progress"; break;

@@ -34,7 +34,6 @@
 #include <WebCore/Frame.h>
 #include <WebCore/FrameView.h>
 #include <WebCore/GraphicsContext.h>
-#include <WebCore/InspectorController.h>
 #include <WebCore/NicosiaBackingStoreTextureMapperImpl.h>
 #include <WebCore/NicosiaContentLayerTextureMapperImpl.h>
 #include <WebCore/NicosiaImageBackingTextureMapperImpl.h>

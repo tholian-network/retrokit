@@ -37,7 +37,6 @@
 #include "HTTPHeaderNames.h"
 #include "HTTPHeaderValues.h"
 #include "HTTPParsers.h"
-#include "InspectorInstrumentation.h"
 #include "JSDOMBinding.h"
 #include "JSDOMWindow.h"
 #include "MIMETypeRegistry.h"
@@ -443,7 +442,6 @@ std::optional<ExceptionOr<void>> XMLHttpRequest::prepareToSend()
 
 ExceptionOr<void> XMLHttpRequest::send(std::optional<SendTypes>&& sendType)
 {
-    InspectorInstrumentation::willSendXMLHttpRequest(scriptExecutionContext(), url().string());
     m_userGestureToken = UserGestureIndicator::currentUserGesture();
 
     ExceptionOr<void> result;
@@ -667,9 +665,7 @@ ExceptionOr<void> XMLHttpRequest::createRequest()
             return Exception { NetworkError };
 
         request.setDomainForCachePartition(scriptExecutionContext()->domainForCachePartition());
-        InspectorInstrumentation::willLoadXHRSynchronously(scriptExecutionContext());
         ThreadableLoader::loadResourceSynchronously(*scriptExecutionContext(), WTFMove(request), *this, options);
-        InspectorInstrumentation::didLoadXHRSynchronously(scriptExecutionContext());
     }
 
     if (m_exceptionCode)

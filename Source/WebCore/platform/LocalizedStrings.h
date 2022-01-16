@@ -50,106 +50,6 @@ namespace WebCore {
 #if PLATFORM(COCOA)
     String copyImageUnknownFileLabel();
 #endif
-#if ENABLE(APP_HIGHLIGHTS)
-    WEBCORE_EXPORT String contextMenuItemTagAddHighlightToCurrentQuickNote();
-    WEBCORE_EXPORT String contextMenuItemTagAddHighlightToNewQuickNote();
-#endif
-
-#if ENABLE(CONTEXT_MENUS)
-    WEBCORE_EXPORT String contextMenuItemTagOpenLinkInNewWindow();
-    String contextMenuItemTagDownloadLinkToDisk();
-    String contextMenuItemTagCopyLinkToClipboard();
-    String contextMenuItemTagOpenImageInNewWindow();
-    String contextMenuItemTagDownloadImageToDisk();
-    String contextMenuItemTagCopyImageToClipboard();
-#if PLATFORM(GTK)
-    String contextMenuItemTagCopyImageUrlToClipboard();
-#endif
-    String contextMenuItemTagOpenFrameInNewWindow();
-    String contextMenuItemTagCopy();
-    String contextMenuItemTagGoBack();
-    String contextMenuItemTagGoForward();
-    String contextMenuItemTagStop();
-    String contextMenuItemTagReload();
-    String contextMenuItemTagCut();
-    WEBCORE_EXPORT String contextMenuItemTagPaste();
-#if PLATFORM(GTK)
-    String contextMenuItemTagPasteAsPlainText();
-    String contextMenuItemTagDelete();
-    String contextMenuItemTagInputMethods();
-    String contextMenuItemTagUnicode();
-    String contextMenuItemTagUnicodeInsertLRMMark();
-    String contextMenuItemTagUnicodeInsertRLMMark();
-    String contextMenuItemTagUnicodeInsertLREMark();
-    String contextMenuItemTagUnicodeInsertRLEMark();
-    String contextMenuItemTagUnicodeInsertLROMark();
-    String contextMenuItemTagUnicodeInsertRLOMark();
-    String contextMenuItemTagUnicodeInsertPDFMark();
-    String contextMenuItemTagUnicodeInsertZWSMark();
-    String contextMenuItemTagUnicodeInsertZWJMark();
-    String contextMenuItemTagUnicodeInsertZWNJMark();
-    String contextMenuItemTagSelectAll();
-    String contextMenuItemTagInsertEmoji();
-#endif
-    String contextMenuItemTagNoGuessesFound();
-    String contextMenuItemTagIgnoreSpelling();
-    String contextMenuItemTagLearnSpelling();
-    String contextMenuItemTagSearchWeb();
-    String contextMenuItemTagLookUpInDictionary(const String& selectedString);
-    WEBCORE_EXPORT String contextMenuItemTagOpenLink();
-    WEBCORE_EXPORT String contextMenuItemTagIgnoreGrammar();
-    WEBCORE_EXPORT String contextMenuItemTagSpellingMenu();
-    WEBCORE_EXPORT String contextMenuItemTagShowSpellingPanel(bool show);
-    WEBCORE_EXPORT String contextMenuItemTagCheckSpelling();
-    WEBCORE_EXPORT String contextMenuItemTagCheckSpellingWhileTyping();
-    WEBCORE_EXPORT String contextMenuItemTagCheckGrammarWithSpelling();
-    WEBCORE_EXPORT String contextMenuItemTagFontMenu();
-    WEBCORE_EXPORT String contextMenuItemTagBold();
-    WEBCORE_EXPORT String contextMenuItemTagItalic();
-    WEBCORE_EXPORT String contextMenuItemTagUnderline();
-    WEBCORE_EXPORT String contextMenuItemTagOutline();
-    WEBCORE_EXPORT String contextMenuItemTagWritingDirectionMenu();
-    String contextMenuItemTagTextDirectionMenu();
-    WEBCORE_EXPORT String contextMenuItemTagDefaultDirection();
-    WEBCORE_EXPORT String contextMenuItemTagLeftToRight();
-    WEBCORE_EXPORT String contextMenuItemTagRightToLeft();
-#if PLATFORM(COCOA)
-    String contextMenuItemTagSearchInSpotlight();
-    WEBCORE_EXPORT String contextMenuItemTagShowFonts();
-    WEBCORE_EXPORT String contextMenuItemTagStyles();
-    WEBCORE_EXPORT String contextMenuItemTagShowColors();
-    WEBCORE_EXPORT String contextMenuItemTagSpeechMenu();
-    WEBCORE_EXPORT String contextMenuItemTagStartSpeaking();
-    WEBCORE_EXPORT String contextMenuItemTagStopSpeaking();
-    WEBCORE_EXPORT String contextMenuItemTagCorrectSpellingAutomatically();
-    WEBCORE_EXPORT String contextMenuItemTagSubstitutionsMenu();
-    WEBCORE_EXPORT String contextMenuItemTagShowSubstitutions(bool show);
-    WEBCORE_EXPORT String contextMenuItemTagSmartCopyPaste();
-    WEBCORE_EXPORT String contextMenuItemTagSmartQuotes();
-    WEBCORE_EXPORT String contextMenuItemTagSmartDashes();
-    WEBCORE_EXPORT String contextMenuItemTagSmartLinks();
-    WEBCORE_EXPORT String contextMenuItemTagTextReplacement();
-    WEBCORE_EXPORT String contextMenuItemTagTransformationsMenu();
-    WEBCORE_EXPORT String contextMenuItemTagMakeUpperCase();
-    WEBCORE_EXPORT String contextMenuItemTagMakeLowerCase();
-    WEBCORE_EXPORT String contextMenuItemTagCapitalize();
-    String contextMenuItemTagChangeBack(const String& replacedString);
-#endif
-    String contextMenuItemTagOpenVideoInNewWindow();
-    String contextMenuItemTagOpenAudioInNewWindow();
-    String contextMenuItemTagDownloadVideoToDisk();
-    String contextMenuItemTagDownloadAudioToDisk();
-    String contextMenuItemTagCopyVideoLinkToClipboard();
-    String contextMenuItemTagCopyAudioLinkToClipboard();
-    String contextMenuItemTagToggleMediaControls();
-    String contextMenuItemTagShowMediaControls();
-    String contextMenuItemTagHideMediaControls();
-    String contextMenuItemTagToggleMediaLoop();
-    String contextMenuItemTagMediaPlay();
-    String contextMenuItemTagMediaPause();
-    String contextMenuItemTagMediaMute();
-    WEBCORE_EXPORT String contextMenuItemTagInspectElement();
-#endif // ENABLE(CONTEXT_MENUS)
 
 #if !PLATFORM(IOS_FAMILY)
     String searchMenuNoRecentSearchesText();
@@ -317,14 +217,6 @@ namespace WebCore {
     WEBCORE_EXPORT String makeCredentialTouchIDPromptTitle(const String& bundleName, const String& domain);
     WEBCORE_EXPORT String getAssertionTouchIDPromptTitle(const String& bundleName, const String& domain);
     WEBCORE_EXPORT String genericTouchIDPromptTitle();
-#endif
-
-#if ENABLE(IMAGE_ANALYSIS)
-    WEBCORE_EXPORT String contextMenuItemTagLookUpImage();
-#endif // ENABLE(IMAGE_ANALYSIS)
-
-#if HAVE(TRANSLATION_UI_SERVICES)
-    String contextMenuItemTagTranslate(const String& selectedString);
 #endif
 
 #if USE(GLIB) && defined(GETTEXT_PACKAGE)

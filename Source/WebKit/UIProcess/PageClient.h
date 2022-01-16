@@ -44,7 +44,6 @@
 #include <WebCore/EditorClient.h>
 #include <WebCore/FocusDirection.h>
 #include <WebCore/InputMode.h>
-#include <WebCore/MediaControlsContextMenuItem.h>
 #include <WebCore/UserInterfaceLayoutDirection.h>
 #include <WebCore/ValidationBubble.h>
 #include <wtf/CompletionHandler.h>
@@ -56,10 +55,6 @@
 #if PLATFORM(COCOA)
 #include "RemoteLayerTreeNode.h"
 #include "WKFoundation.h"
-
-#if PLATFORM(IOS_FAMILY)
-#include <WebCore/InspectorOverlay.h>
-#endif
 
 #if ENABLE(IMAGE_ANALYSIS)
 #include <WebCore/TextRecognitionResult.h>
@@ -127,9 +122,6 @@ struct DragItem;
 struct PromisedAttachmentInfo;
 #endif
 
-#if HAVE(TRANSLATION_UI_SERVICES) && ENABLE(CONTEXT_MENUS)
-struct TranslationContextMenuInfo;
-#endif
 }
 
 namespace WebKit {
@@ -137,7 +129,6 @@ namespace WebKit {
 enum class UndoOrRedo : bool;
 enum class TapHandlingResult : uint8_t;
 
-class ContextMenuContextData;
 class DownloadProxy;
 class DrawingAreaProxy;
 class NativeWebGestureEvent;
@@ -149,7 +140,6 @@ class SafeBrowsingWarning;
 class UserData;
 class ViewSnapshot;
 class WebBackForwardListItem;
-class WebContextMenuProxy;
 class WebEditCommandProxy;
 class WebFrameProxy;
 class WebOpenPanelResultListenerProxy;
@@ -346,11 +336,6 @@ public:
 #endif
 
     virtual RefPtr<WebPopupMenuProxy> createPopupMenuProxy(WebPageProxy&) = 0;
-#if ENABLE(CONTEXT_MENUS)
-    virtual Ref<WebContextMenuProxy> createContextMenuProxy(WebPageProxy&, ContextMenuContextData&&, const UserData&) = 0;
-    virtual void didShowContextMenu() { }
-    virtual void didDismissContextMenu() { }
-#endif
 
 #if ENABLE(INPUT_TYPE_COLOR)
     virtual RefPtr<WebColorPicker> createColorPicker(WebPageProxy*, const WebCore::Color& initialColor, const WebCore::IntRect&, Vector<WebCore::Color>&&) = 0;
@@ -372,7 +357,7 @@ public:
     virtual void setTextIndicator(Ref<WebCore::TextIndicator>, WebCore::TextIndicatorLifetime) = 0;
     virtual void clearTextIndicator(WebCore::TextIndicatorDismissalAnimation) = 0;
     virtual void setTextIndicatorAnimationProgress(float) = 0;
-    
+
     virtual void didPerformDictionaryLookup(const WebCore::DictionaryPopupInfo&) = 0;
 #endif
 
@@ -409,8 +394,6 @@ public:
     virtual CGRect boundsOfLayerInLayerBackedWindowCoordinates(CALayer *) const = 0;
 
     virtual WebCore::DestinationColorSpace colorSpace() = 0;
-
-    virtual void showPlatformContextMenu(NSMenu *, WebCore::IntPoint) = 0;
 
     virtual void startWindowDrag() = 0;
     virtual NSWindow *platformWindow() = 0;
@@ -456,15 +439,6 @@ public:
     virtual void scrollingNodeScrollWillStartScroll() = 0;
     virtual void scrollingNodeScrollDidEndScroll() = 0;
     virtual Vector<String> mimeTypesWithCustomContentProviders() = 0;
-
-    virtual void showInspectorHighlight(const WebCore::InspectorOverlay::Highlight&) = 0;
-    virtual void hideInspectorHighlight() = 0;
-
-    virtual void showInspectorIndication() = 0;
-    virtual void hideInspectorIndication() = 0;
-
-    virtual void enableInspectorNodeSearch() = 0;
-    virtual void disableInspectorNodeSearch() = 0;
 
     virtual void handleAutocorrectionContext(const WebAutocorrectionContext&) = 0;
 
@@ -520,10 +494,6 @@ public:
     virtual void requestTextRecognition(const URL& imageURL, const ShareableBitmap::Handle& imageData, CompletionHandler<void(WebCore::TextRecognitionResult&&)>&& completion) { completion({ }); }
     virtual void computeHasImageAnalysisResults(const URL&, ShareableBitmap&, ImageAnalysisType, CompletionHandler<void(bool)>&& completion) { completion(false); }
 #endif
-
-#if ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
-    virtual void showMediaControlsContextMenu(WebCore::FloatRect&&, Vector<WebCore::MediaControlsContextMenuItem>&&, CompletionHandler<void(WebCore::MediaControlsContextMenuItem::ID)>&& completionHandler) { completionHandler(WebCore::MediaControlsContextMenuItem::invalidID); }
-#endif // ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
 
 #if PLATFORM(MAC)
     virtual void didPerformImmediateActionHitTest(const WebHitTestResultData&, bool contentPreventsDefault, API::Object*) = 0;
@@ -589,11 +559,6 @@ public:
 #endif
 
     virtual void didChangeWebPageID() const { }
-
-#if HAVE(TRANSLATION_UI_SERVICES) && ENABLE(CONTEXT_MENUS)
-    virtual bool canHandleContextMenuTranslation() const = 0;
-    virtual void handleContextMenuTranslation(const WebCore::TranslationContextMenuInfo&) = 0;
-#endif
 
 #if ENABLE(DATA_DETECTION)
     virtual void handleClickForDataDetectionResult(const WebCore::DataDetectorElementInfo&, const WebCore::IntPoint&) { }

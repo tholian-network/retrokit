@@ -857,7 +857,6 @@ enum class CursorType : uint8_t {
     Auto,
     Default,
     // None
-    ContextMenu,
     Help,
     Pointer,
     Progress,

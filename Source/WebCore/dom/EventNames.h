@@ -88,7 +88,6 @@ namespace WebCore {
     macro(connect) \
     macro(connectionstatechange) \
     macro(connecting) \
-    macro(contextmenu) \
     macro(controllerchange) \
     macro(coordinatorstatechange) \
     macro(copy) \

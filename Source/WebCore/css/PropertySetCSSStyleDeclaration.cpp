@@ -27,7 +27,6 @@
 #include "CSSStyleSheet.h"
 #include "CustomElementReactionQueue.h"
 #include "HTMLNames.h"
-#include "InspectorInstrumentation.h"
 #include "MutationObserverInterestGroup.h"
 #include "MutationRecord.h"
 #include "StyleProperties.h"
@@ -96,17 +95,8 @@ public:
         }
 
         s_shouldDeliver = false;
-        if (!s_shouldNotifyInspector) {
-            s_currentDecl = nullptr;
-            return;
-        }
-        // We have to clear internal state before calling Inspector's code.
         PropertySetCSSStyleDeclaration* localCopyStyleDecl = s_currentDecl;
         s_currentDecl = nullptr;
-        s_shouldNotifyInspector = false;
-
-        if (auto* parentElement = localCopyStyleDecl->parentElement())
-            InspectorInstrumentation::didInvalidateStyleAttr(*parentElement);
     }
 
     void enqueueMutationRecord()
@@ -114,15 +104,9 @@ public:
         s_shouldDeliver = true;
     }
 
-    void didInvalidateStyleAttr()
-    {
-        s_shouldNotifyInspector = true;
-    }
-
 private:
     static unsigned s_scopeCount;
     static PropertySetCSSStyleDeclaration* s_currentDecl;
-    static bool s_shouldNotifyInspector;
     static bool s_shouldDeliver;
 
     std::unique_ptr<MutationObserverInterestGroup> m_mutationRecipients;
@@ -132,7 +116,6 @@ private:
 
 unsigned StyleAttributeMutationScope::s_scopeCount = 0;
 PropertySetCSSStyleDeclaration* StyleAttributeMutationScope::s_currentDecl = nullptr;
-bool StyleAttributeMutationScope::s_shouldNotifyInspector = false;
 bool StyleAttributeMutationScope::s_shouldDeliver = false;
 
 void PropertySetCSSStyleDeclaration::ref()
@@ -420,7 +403,7 @@ CSSParserContext StyleRuleCSSStyleDeclaration::cssParserContext() const
 
     auto context = styleSheet->parserContext();
     context.enclosingRuleType = m_parentRuleType;
-    
+
     return context;
 }
 
@@ -433,8 +416,6 @@ void StyleRuleCSSStyleDeclaration::reattach(MutableStyleProperties& propertySet)
 
 bool InlineCSSStyleDeclaration::willMutate()
 {
-    if (m_parentElement)
-        InspectorInstrumentation::willInvalidateStyleAttr(*m_parentElement);
     return true;
 }
 
@@ -449,7 +430,6 @@ void InlineCSSStyleDeclaration::didMutate(MutationType type)
         return;
 
     m_parentElement->invalidateStyleAttribute();
-    StyleAttributeMutationScope(this).didInvalidateStyleAttr();
 }
 
 CSSStyleSheet* InlineCSSStyleDeclaration::parentStyleSheet() const

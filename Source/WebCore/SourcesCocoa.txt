@@ -88,7 +88,6 @@ editing/mac/TextAlternativeWithRange.mm @no-unify
 editing/mac/TextUndoInsertionMarkupMac.mm
 fileapi/FileCocoa.mm
 history/mac/HistoryItemMac.mm
-inspector/mac/PageDebuggerMac.mm
 loader/archive/cf/LegacyWebArchive.cpp
 loader/archive/cf/LegacyWebArchiveMac.mm
 loader/cocoa/DiskCacheMonitorCocoa.mm
@@ -413,7 +412,6 @@ platform/mediastream/mac/RealtimeVideoUtilities.mm
 platform/mediastream/mac/ScreenDisplayCapturerMac.mm
 platform/mediastream/mac/WebAudioSourceProviderCocoa.mm
 platform/mediastream/mac/WindowDisplayCapturerMac.mm
-platform/mock/MockAudioDestinationCocoa.cpp
 platform/network/cf/CertificateInfoCFNet.cpp
 platform/network/cf/DNSResolveQueueCFNet.cpp
 platform/network/cf/FormDataStreamCFNet.cpp
@@ -456,7 +454,6 @@ rendering/RenderThemeCocoa.mm
 rendering/RenderThemeIOS.mm
 rendering/RenderThemeMac.mm
 rendering/TextAutoSizing.cpp
-testing/cocoa/WebViewVisualIdentificationOverlay.mm
 
 // The following files aren't unified with others to prevent them from being merged
 // with files that use the system OpenGL.

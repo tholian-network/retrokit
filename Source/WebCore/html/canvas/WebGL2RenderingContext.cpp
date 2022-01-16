@@ -41,7 +41,6 @@
 #include "HTMLVideoElement.h"
 #include "ImageBitmap.h"
 #include "ImageData.h"
-#include "InspectorInstrumentation.h"
 #include "KHRParallelShaderCompile.h"
 #include "Logging.h"
 #include "OESTextureFloatLinear.h"
@@ -89,21 +88,15 @@ WTF_MAKE_ISO_ALLOCATED_IMPL(WebGL2RenderingContext);
 
 std::unique_ptr<WebGL2RenderingContext> WebGL2RenderingContext::create(CanvasBase& canvas, GraphicsContextGLAttributes attributes)
 {
-    auto renderingContext = std::unique_ptr<WebGL2RenderingContext>(new WebGL2RenderingContext(canvas, attributes));
-    // This context is pending policy resolution, so don't call initializeNewContext on it yet.
-
-    InspectorInstrumentation::didCreateCanvasRenderingContext(*renderingContext);
-
-    return renderingContext;
+    return std::unique_ptr<WebGL2RenderingContext>(new WebGL2RenderingContext(canvas, attributes));
 }
 
 std::unique_ptr<WebGL2RenderingContext> WebGL2RenderingContext::create(CanvasBase& canvas, Ref<GraphicsContextGL>&& context, GraphicsContextGLAttributes attributes)
 {
     auto renderingContext = std::unique_ptr<WebGL2RenderingContext>(new WebGL2RenderingContext(canvas, WTFMove(context), attributes));
+
     // This is virtual and can't be called in the constructor.
     renderingContext->initializeNewContext();
-
-    InspectorInstrumentation::didCreateCanvasRenderingContext(*renderingContext);
 
     return renderingContext;
 }
@@ -2682,8 +2675,6 @@ WebGLExtension* WebGL2RenderingContext::getExtension(const String& name)
     if (equalIgnoringASCIICase(name, nameLiteral)) { \
         if (!variable) { \
             variable = (canEnable) ? adoptRef(new type(*this)) : nullptr; \
-            if (variable != nullptr) \
-                InspectorInstrumentation::didEnableExtension(*this, name); \
         } \
         return variable.get(); \
     }

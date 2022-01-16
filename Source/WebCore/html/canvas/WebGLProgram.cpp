@@ -28,7 +28,6 @@
 
 #if ENABLE(WEBGL)
 
-#include "InspectorInstrumentation.h"
 #include "ScriptExecutionContext.h"
 #include "WebGLContextGroup.h"
 #include "WebGLRenderingContextBase.h"
@@ -79,8 +78,6 @@ WebGLProgram::WebGLProgram(WebGLRenderingContextBase& ctx)
 
 WebGLProgram::~WebGLProgram()
 {
-    InspectorInstrumentation::willDestroyWebGLProgram(*this);
-
     {
         Locker locker { instancesLock() };
         ASSERT(instances().contains(this));
@@ -95,8 +92,6 @@ WebGLProgram::~WebGLProgram()
 
 void WebGLProgram::contextDestroyed()
 {
-    InspectorInstrumentation::willDestroyWebGLProgram(*this);
-
     ContextDestructionObserver::contextDestroyed();
 }
 

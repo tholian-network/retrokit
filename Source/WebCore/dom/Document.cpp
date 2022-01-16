@@ -126,7 +126,6 @@
 #include "ImageBitmapRenderingContext.h"
 #include "ImageLoader.h"
 #include "ImageOverlayController.h"
-#include "InspectorInstrumentation.h"
 #include "IntersectionObserver.h"
 #include "JSCustomElementInterface.h"
 #include "JSLazyEventListener.h"
@@ -624,8 +623,6 @@ Document::Document(Frame* frame, const Settings& settings, const URL& url, Docum
 
     for (auto& nodeListAndCollectionCount : m_nodeListAndCollectionCounts)
         nodeListAndCollectionCount = 0;
-
-    InspectorInstrumentation::addEventListenersToNode(*this);
 }
 
 Ref<Document> Document::create(Document& contextDocument)
@@ -1921,8 +1918,6 @@ void Document::scheduleStyleRecalc()
     ASSERT(childNeedsStyleRecalc() || m_needsFullStyleRebuild);
 
     m_styleRecalcTimer.startOneShot(0_s);
-
-    InspectorInstrumentation::didScheduleStyleRecalculation(*this);
 }
 
 void Document::unscheduleStyleRecalc()
@@ -1995,8 +1990,6 @@ void Document::resolveStyle(ResolveStyleType type)
         frameView.willRecalcStyle();
     }
 
-    InspectorInstrumentation::willRecalculateStyle(*this);
-
     bool updatedCompositingLayers = false;
     {
         Style::PostResolutionCallbackDisabler disabler(*this);
@@ -2064,8 +2057,6 @@ void Document::resolveStyle(ResolveStyleType type)
         ++m_styleRecalcCount;
         // FIXME: Assert ASSERT(!needsStyleRecalc()) here. Do we still have some cases where it's not true?
     }
-
-    InspectorInstrumentation::didRecalculateStyle(*this);
 
     // Some animated images may now be inside the viewport due to style recalc,
     // resume them if necessary if there is no layout pending. Otherwise, we'll
@@ -2455,8 +2446,6 @@ void Document::willDetachPage()
 #if ENABLE(CONTENT_CHANGE_OBSERVER)
     contentChangeObserver().willDetachPage();
 #endif
-    if (domWindow() && frame())
-        InspectorInstrumentation::frameWindowDiscarded(*frame(), domWindow());
 }
 
 void Document::attachToCachedFrame(CachedFrameBase& cachedFrame)
@@ -2574,8 +2563,6 @@ void Document::willBeRemovedFromFrame()
         if (auto* validationMessageClient = page->validationMessageClient())
             validationMessageClient->documentDetached(*this);
     }
-
-    InspectorInstrumentation::documentDetached(*this);
 
     commonTeardown();
 
@@ -3298,11 +3285,6 @@ Seconds Document::domTimerAlignmentInterval(bool hasReachedMaxNestingLevel) cons
 EventTarget* Document::errorEventTarget()
 {
     return m_domWindow.get();
-}
-
-void Document::logExceptionToConsole(const String& errorMessage, const String& sourceURL, int lineNumber, int columnNumber, RefPtr<Inspector::ScriptCallStack>&& callStack)
-{
-    addMessage(MessageSource::JS, MessageLevel::Error, errorMessage, sourceURL, lineNumber, columnNumber, WTFMove(callStack));
 }
 
 void Document::setURL(const URL& url)
@@ -5951,7 +5933,6 @@ void Document::finishedParsing()
         updateStyleIfNeeded();
 
         frame->loader().finishedParsing();
-        InspectorInstrumentation::domContentLoadedEventFired(*frame);
     }
 
     // Schedule dropping of the DocumentSharedObjectPool. We keep it alive for a while after parsing finishes
@@ -6343,17 +6324,6 @@ void Document::getParserLocation(String& completedURL, unsigned& line, unsigned&
     column = position.m_column.oneBasedInt();
 }
 
-void Document::addConsoleMessage(std::unique_ptr<Inspector::ConsoleMessage>&& consoleMessage)
-{
-    if (!isContextThread()) {
-        postTask(AddConsoleMessageTask(WTFMove(consoleMessage)));
-        return;
-    }
-
-    if (Page* page = this->page())
-        page->console().addMessage(WTFMove(consoleMessage));
-}
-
 void Document::addConsoleMessage(MessageSource source, MessageLevel level, const String& message, unsigned long requestIdentifier)
 {
     if (!isContextThread()) {
@@ -6366,17 +6336,6 @@ void Document::addConsoleMessage(MessageSource source, MessageLevel level, const
 
     if (m_consoleMessageListener)
         m_consoleMessageListener->scheduleCallback(*this, message);
-}
-
-void Document::addMessage(MessageSource source, MessageLevel level, const String& message, const String& sourceURL, unsigned lineNumber, unsigned columnNumber, RefPtr<Inspector::ScriptCallStack>&& callStack, JSC::JSGlobalObject* state, unsigned long requestIdentifier)
-{
-    if (!isContextThread()) {
-        postTask(AddConsoleMessageTask(source, level, message));
-        return;
-    }
-
-    if (Page* page = this->page())
-        page->console().addMessage(source, level, message, sourceURL, lineNumber, columnNumber, WTFMove(callStack), state, requestIdentifier);
 }
 
 void Document::postTask(Task&& task)
@@ -8229,11 +8188,6 @@ void Document::didLogMessage(const WTFLogChannel& channel, WTFLogLevel level, Ve
     eventLoop().queueTask(TaskSource::InternalAsyncTask, [weakThis = makeWeakPtr(*this), level, messageSource, logMessages = WTFMove(logMessages)]() mutable {
         if (!weakThis || !weakThis->page())
             return;
-
-        auto messageLevel = messageLevelFromWTFLogLevel(level);
-        auto message = makeUnique<Inspector::ConsoleMessage>(messageSource, MessageType::Log, messageLevel, WTFMove(logMessages), mainWorldExecState(weakThis->frame()));
-
-        weakThis->addConsoleMessage(WTFMove(message));
     });
 }
 

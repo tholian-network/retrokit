@@ -65,7 +65,6 @@
 #include "HTMLTableRowElement.h"
 #include "HitTestResult.h"
 #include "ImageBuffer.h"
-#include "InspectorInstrumentation.h"
 #include "JSWindowProxy.h"
 #include "Logging.h"
 #include "NavigationScheduler.h"
@@ -313,8 +312,6 @@ void Frame::setDocument(RefPtr<Document>&& newDocument)
 
     if (m_page && m_doc && isMainFrame() && !loader().stateMachine().isDisplayingInitialEmptyDocument())
         m_page->mainFrameDidChangeToNonInitialEmptyDocument();
-
-    InspectorInstrumentation::frameDocumentUpdated(*this);
 
     m_documentIsBeingReplaced = false;
 }

@@ -44,7 +44,6 @@
 #include "HTMLIFrameElement.h"
 #include "HTMLMediaElement.h"
 #include "HTMLNames.h"
-#include "InspectorInstrumentation.h"
 #include "KeyframeList.h"
 #include "LayerAncestorClippingStack.h"
 #include "Logging.h"
@@ -3119,8 +3118,6 @@ void RenderLayerBacking::paintIntoLayer(const GraphicsLayer* graphicsLayer, Grap
     auto paintOneLayer = [&](RenderLayer& layer, OptionSet<RenderLayer::PaintLayerFlag> paintFlags) {
         FrameView::PaintingState paintingState;
         if (!eventRegionContext) {
-            InspectorInstrumentation::willPaint(layer.renderer());
-
             if (layer.isRenderViewLayer())
                 renderer().view().frameView().willPaintContents(context, paintDirtyRect, paintingState);
         }
@@ -3140,15 +3137,13 @@ void RenderLayerBacking::paintIntoLayer(const GraphicsLayer* graphicsLayer, Grap
         if (!eventRegionContext) {
             if (layer.isRenderViewLayer())
                 renderer().view().frameView().didPaintContents(context, paintDirtyRect, paintingState);
-
-            InspectorInstrumentation::didPaint(layer.renderer(), paintDirtyRect);
         }
 
         ASSERT(!m_owningLayer.m_usedTransparency);
     };
 
     paintOneLayer(m_owningLayer, paintFlags);
-    
+
     // FIXME: Need to check m_foregroundLayer, masking etc. webkit.org/b/197565.
     GraphicsLayer* destinationForSharingLayers = m_scrolledContentsLayer ? m_scrolledContentsLayer.get() : m_graphicsLayer.get();
 

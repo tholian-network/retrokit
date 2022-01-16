@@ -29,7 +29,6 @@
 #include "HTMLCanvasElement.h"
 #include "ImageBitmap.h"
 #include "ImageBuffer.h"
-#include "InspectorInstrumentation.h"
 #include <wtf/IsoMallocInlines.h>
 
 namespace WebCore {
@@ -44,11 +43,7 @@ static RenderingMode bufferRenderingMode = RenderingMode::Unaccelerated;
 
 std::unique_ptr<ImageBitmapRenderingContext> ImageBitmapRenderingContext::create(CanvasBase& canvas, ImageBitmapRenderingContextSettings&& settings)
 {
-    auto renderingContext = std::unique_ptr<ImageBitmapRenderingContext>(new ImageBitmapRenderingContext(canvas, WTFMove(settings)));
-
-    InspectorInstrumentation::didCreateCanvasRenderingContext(*renderingContext);
-
-    return renderingContext;
+    return std::unique_ptr<ImageBitmapRenderingContext>(new ImageBitmapRenderingContext(canvas, WTFMove(settings)));
 }
 
 ImageBitmapRenderingContext::ImageBitmapRenderingContext(CanvasBase& canvas, ImageBitmapRenderingContextSettings&& settings)

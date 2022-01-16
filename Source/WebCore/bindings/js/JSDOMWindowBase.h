@@ -73,7 +73,6 @@ public:
 
     static const JSC::GlobalObjectMethodTable s_globalObjectMethodTable;
 
-    static bool supportsRichSourceInfo(const JSC::JSGlobalObject*);
     static bool shouldInterruptScript(const JSC::JSGlobalObject*);
     static bool shouldInterruptScriptBeforeTimeout(const JSC::JSGlobalObject*);
     static JSC::RuntimeFlags javaScriptRuntimeFlags(const JSC::JSGlobalObject*);

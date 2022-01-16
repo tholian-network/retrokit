@@ -147,8 +147,6 @@ include_directories(SYSTEM
     ${WebCore_SYSTEM_INCLUDE_DIRECTORIES}
 )
 
-list(APPEND WebCoreTestSupport_LIBRARIES PRIVATE GTK::GTK)
-
 add_definitions(-DBUILDING_WEBKIT)
 
 if (ENABLE_SMOOTH_SCROLLING)

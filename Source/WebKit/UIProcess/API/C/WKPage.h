@@ -33,7 +33,6 @@
 #include <WebKit/WKFindOptions.h>
 #include <WebKit/WKGeometry.h>
 #include <WebKit/WKNativeEvent.h>
-#include <WebKit/WKPageContextMenuClient.h>
 #include <WebKit/WKPageDiagnosticLoggingClient.h>
 #include <WebKit/WKPageFindClient.h>
 #include <WebKit/WKPageFindMatchesClient.h>
@@ -120,8 +119,6 @@ WK_EXPORT uint64_t WKPageGetRenderTreeSize(WKPageRef page);
 
 WK_EXPORT WKWebsiteDataStoreRef WKPageGetWebsiteDataStore(WKPageRef page);
 
-WK_EXPORT WKInspectorRef WKPageGetInspector(WKPageRef page);
-
 WK_EXPORT WKStringRef WKPageCopyUserAgent(WKPageRef page);
 
 WK_EXPORT WKStringRef WKPageCopyApplicationNameForUserAgent(WKPageRef page);
@@ -131,7 +128,7 @@ WK_EXPORT WKStringRef WKPageCopyCustomUserAgent(WKPageRef page);
 WK_EXPORT void WKPageSetCustomUserAgent(WKPageRef page, WKStringRef userAgent);
 
 WK_EXPORT void WKPageSetUserContentExtensionsEnabled(WKPageRef, bool);
-    
+
 WK_EXPORT bool WKPageSupportsTextEncoding(WKPageRef page);
 WK_EXPORT WKStringRef WKPageCopyCustomTextEncodingName(WKPageRef page);
 WK_EXPORT void WKPageSetCustomTextEncodingName(WKPageRef page, WKStringRef encodingName);
@@ -195,13 +192,13 @@ WK_EXPORT bool WKPageRubberBandsAtTop(WKPageRef);
 WK_EXPORT void WKPageSetRubberBandsAtTop(WKPageRef, bool rubberBandsAtTop);
 WK_EXPORT bool WKPageRubberBandsAtBottom(WKPageRef);
 WK_EXPORT void WKPageSetRubberBandsAtBottom(WKPageRef, bool rubberBandsAtBottom);
-    
+
 // Rubber-banding is enabled by default.
 WK_EXPORT bool WKPageVerticalRubberBandingIsEnabled(WKPageRef);
 WK_EXPORT void WKPageSetEnableVerticalRubberBanding(WKPageRef, bool enableVerticalRubberBanding);
 WK_EXPORT bool WKPageHorizontalRubberBandingIsEnabled(WKPageRef);
 WK_EXPORT void WKPageSetEnableHorizontalRubberBanding(WKPageRef, bool enableHorizontalRubberBanding);
-    
+
 WK_EXPORT void WKPageSetBackgroundExtendsBeyondPage(WKPageRef, bool backgroundExtendsBeyondPage);
 WK_EXPORT bool WKPageBackgroundExtendsBeyondPage(WKPageRef);
 
@@ -211,7 +208,7 @@ WK_EXPORT bool WKPageIsContentEditable(WKPageRef page);
 
 WK_EXPORT void WKPageSetMaintainsInactiveSelection(WKPageRef page, bool maintainsInactiveSelection);
 WK_EXPORT void WKPageCenterSelectionInVisibleArea(WKPageRef page);
-    
+
 WK_EXPORT void WKPageFindString(WKPageRef page, WKStringRef string, WKFindOptions findOptions, unsigned maxMatchCount);
 WK_EXPORT void WKPageHideFindUI(WKPageRef page);
 WK_EXPORT void WKPageCountStringMatches(WKPageRef page, WKStringRef string, WKFindOptions findOptions, unsigned maxMatchCount);
@@ -219,7 +216,6 @@ WK_EXPORT void WKPageFindStringMatches(WKPageRef page, WKStringRef string, WKFin
 WK_EXPORT void WKPageGetImageForFindMatch(WKPageRef page, int32_t matchIndex);
 WK_EXPORT void WKPageSelectFindMatch(WKPageRef page, int32_t matchIndex);
 
-WK_EXPORT void WKPageSetPageContextMenuClient(WKPageRef page, const WKPageContextMenuClientBase* client);
 WK_EXPORT void WKPageSetPageDiagnosticLoggingClient(WKPageRef page, const WKPageDiagnosticLoggingClientBase* client);
 WK_EXPORT void WKPageSetPageFindClient(WKPageRef page, const WKPageFindClientBase* client);
 WK_EXPORT void WKPageSetPageFindMatchesClient(WKPageRef page, const WKPageFindMatchesClientBase* client);
@@ -258,7 +254,7 @@ WK_EXPORT void WKPageForceRepaint(WKPageRef page, void* context, WKPageForceRepa
 
 /*
     Some of the more common command name strings include the following, although any WebCore EditorCommand string is supported:
-    
+
     "Cut"
     "Copy"
     "Paste"
@@ -273,8 +269,6 @@ WK_EXPORT void WKPageValidateCommand(WKPageRef page, WKStringRef command, void* 
 WK_EXPORT void WKPageExecuteCommand(WKPageRef page, WKStringRef command);
 
 WK_EXPORT void WKPagePostMessageToInjectedBundle(WKPageRef page, WKStringRef messageName, WKTypeRef messageBody);
-
-WK_EXPORT void WKPageSelectContextMenuItem(WKPageRef page, WKContextMenuItemRef item);
 
 #ifdef __cplusplus
 }

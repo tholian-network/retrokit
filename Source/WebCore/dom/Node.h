@@ -319,8 +319,6 @@ public:
     WEBCORE_EXPORT bool isContentEditable() const;
     bool isContentRichlyEditable() const;
 
-    WEBCORE_EXPORT void inspect();
-
     enum UserSelectAllTreatment {
         UserSelectAllDoesNotAffectEditability,
         UserSelectAllIsAlwaysNonEditable

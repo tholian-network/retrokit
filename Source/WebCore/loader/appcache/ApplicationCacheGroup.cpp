@@ -42,7 +42,6 @@
 #include "FrameLoaderClient.h"
 #include "HTTPHeaderNames.h"
 #include "HTTPHeaderValues.h"
-#include "InspectorInstrumentation.h"
 #include "NavigationScheduler.h"
 #include "NetworkLoadMetrics.h"
 #include "Page.h"
@@ -426,7 +425,7 @@ void ApplicationCacheGroup::update(Frame& frame, ApplicationCacheUpdateOption up
         ASSERT(updateOption == ApplicationCacheUpdateWithBrowsingContext);
         postListenerTask(eventNames().checkingEvent, documentLoader);
     }
-    
+
     ASSERT(!m_manifestLoader);
     ASSERT(!m_entryLoader);
     ASSERT(!m_manifestResource);
@@ -438,7 +437,6 @@ void ApplicationCacheGroup::update(Frame& frame, ApplicationCacheUpdateOption up
     auto request = createRequest(URL { m_manifestURL }, m_newestCache ? m_newestCache->manifestResource() : nullptr);
 
     m_currentResourceIdentifier = m_frame->page()->progress().createUniqueIdentifier();
-    InspectorInstrumentation::willSendRequest(m_frame.get(), m_currentResourceIdentifier, m_frame->loader().documentLoader(), request, ResourceResponse { }, nullptr);
 
     m_manifestLoader = ApplicationCacheResourceLoader::create(ApplicationCacheResource::Type::Manifest, documentLoader.cachedResourceLoader(), WTFMove(request), [this] (auto&& resourceOrError) {
         // 'this' is only valid if returned value is not Error::Abort.
@@ -447,8 +445,6 @@ void ApplicationCacheGroup::update(Frame& frame, ApplicationCacheUpdateOption up
             if (error == ApplicationCacheResourceLoader::Error::Abort)
                 return;
             if (error == ApplicationCacheResourceLoader::Error::CannotCreateResource) {
-                // FIXME: We should get back the error from ApplicationCacheResourceLoader level.
-                InspectorInstrumentation::didFailLoading(m_frame.get(), m_frame->loader().documentLoader(), m_currentResourceIdentifier, ResourceError { ResourceError::Type::AccessControl });
                 this->cacheUpdateFailed();
                 return;
             }
@@ -495,12 +491,11 @@ void ApplicationCacheGroup::didFinishLoadingEntry(const URL& entryURL)
 {
     // FIXME: We should have NetworkLoadMetrics for ApplicationCache loads.
     NetworkLoadMetrics emptyMetrics;
-    InspectorInstrumentation::didFinishLoading(m_frame.get(), m_frame->loader().documentLoader(), m_currentResourceIdentifier, emptyMetrics, nullptr);
 
     ASSERT(m_pendingEntries.contains(entryURL.string()));
-    
+
     auto type = m_pendingEntries.take(entryURL.string());
-    
+
     ASSERT(m_cacheBeingUpdated);
 
     // Did we received a 304?
@@ -534,7 +529,7 @@ void ApplicationCacheGroup::didFinishLoadingEntry(const URL& entryURL)
         cacheUpdateFailed();
         return;
     }
-    
+
     // Load the next resource, if any.
     startLoadingEntry();
 }
@@ -543,8 +538,6 @@ void ApplicationCacheGroup::didFailLoadingEntry(ApplicationCacheResourceLoader::
 {
     // FIXME: We should get back the error from ApplicationCacheResourceLoader level.
     ResourceError resourceError { error == ApplicationCacheResourceLoader::Error::CannotCreateResource ? ResourceError::Type::AccessControl : ResourceError::Type::General };
-
-    InspectorInstrumentation::didFailLoading(m_frame.get(), m_frame->loader().documentLoader(), m_currentResourceIdentifier, resourceError);
 
     URL url(entryURL);
     url.removeFragmentIdentifier();
@@ -657,23 +650,19 @@ void ApplicationCacheGroup::didFailLoadingManifest(ApplicationCacheResourceLoade
 {
     ASSERT(error != ApplicationCacheResourceLoader::Error::Abort && error != ApplicationCacheResourceLoader::Error::CannotCreateResource);
 
-    InspectorInstrumentation::didReceiveResourceResponse(*m_frame, m_currentResourceIdentifier, m_frame->loader().documentLoader(), m_manifestLoader->resource()->response(), nullptr);
     switch (error) {
     case ApplicationCacheResourceLoader::Error::NetworkError:
         cacheUpdateFailed();
         break;
     case ApplicationCacheResourceLoader::Error::NotFound:
-        InspectorInstrumentation::didFailLoading(m_frame.get(), m_frame->loader().documentLoader(), m_currentResourceIdentifier, m_frame->loader().cancelledError(m_manifestLoader->resource()->resourceRequest()));
         m_frame->document()->addConsoleMessage(MessageSource::AppCache, MessageLevel::Error, makeString("Application Cache manifest could not be fetched, because the manifest had a ", m_manifestLoader->resource()->response().httpStatusCode(), " response."));
         manifestNotFound();
         break;
     case ApplicationCacheResourceLoader::Error::NotOK:
-        InspectorInstrumentation::didFailLoading(m_frame.get(), m_frame->loader().documentLoader(), m_currentResourceIdentifier, m_frame->loader().cancelledError(m_manifestLoader->resource()->resourceRequest()));
         m_frame->document()->addConsoleMessage(MessageSource::AppCache, MessageLevel::Error, makeString("Application Cache manifest could not be fetched, because the manifest had a ", m_manifestLoader->resource()->response().httpStatusCode(), " response."));
         cacheUpdateFailed();
         break;
     case ApplicationCacheResourceLoader::Error::RedirectForbidden:
-        InspectorInstrumentation::didFailLoading(m_frame.get(), m_frame->loader().documentLoader(), m_currentResourceIdentifier, m_frame->loader().cancelledError(m_manifestLoader->resource()->resourceRequest()));
         m_frame->document()->addConsoleMessage(MessageSource::AppCache, MessageLevel::Error, "Application Cache manifest could not be fetched, because a redirection was attempted."_s);
         cacheUpdateFailed();
         break;
@@ -887,7 +876,7 @@ void ApplicationCacheGroup::startLoadingEntry()
         deliverDelayedMainResources();
         return;
     }
-    
+
     auto firstPendingEntryURL = m_pendingEntries.begin()->key;
 
     postListenerTask(eventNames().progressEvent, m_progressTotal, m_progressDone, m_associatedDocumentLoaders);
@@ -899,7 +888,6 @@ void ApplicationCacheGroup::startLoadingEntry()
     auto request = createRequest(URL { { }, firstPendingEntryURL }, m_newestCache ? m_newestCache->resourceForURL(firstPendingEntryURL) : nullptr);
 
     m_currentResourceIdentifier = m_frame->page()->progress().createUniqueIdentifier();
-    InspectorInstrumentation::willSendRequest(m_frame.get(), m_currentResourceIdentifier, m_frame->loader().documentLoader(), request, ResourceResponse { }, nullptr);
 
     auto& documentLoader = *m_frame->loader().documentLoader();
     auto requestURL = request.url();

@@ -39,7 +39,6 @@
 #include "HTMLNames.h"
 #include "HTMLParserIdioms.h"
 #include "HTMLSlotElement.h"
-#include "InspectorInstrumentation.h"
 #include "Page.h"
 #include "RenderElement.h"
 #include "SelectorCheckerTestFunctions.h"
@@ -995,13 +994,13 @@ bool SelectorChecker::checkOne(CheckingContext& checkingContext, const LocalCont
                 if (checkingContext.resolvingMode == SelectorChecker::Mode::CollectingRulesIgnoringVirtualPseudoElements && !context.isMatchElement)
                     return true;
 
-                if (element.hovered() || InspectorInstrumentation::forcePseudoState(element, CSSSelector::PseudoClassHover))
+                if (element.hovered())
                     return true;
             }
             break;
         case CSSSelector::PseudoClassActive:
             if (m_strictParsing || element.isLink() || canMatchHoverOrActiveInQuirksMode(context)) {
-                if (element.active() || InspectorInstrumentation::forcePseudoState(element, CSSSelector::PseudoClassActive))
+                if (element.active())
                     return true;
             }
             break;

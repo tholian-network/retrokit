@@ -80,11 +80,11 @@ private:
     RefPtr<CSSValue> getPropertyCSSValueInternal(CSSPropertyID) final;
     String getPropertyValueInternal(CSSPropertyID) final;
     ExceptionOr<void> setPropertyInternal(CSSPropertyID, const String& value, bool important) final;
-    
+
     Ref<MutableStyleProperties> copyProperties() const final;
 
     RefPtr<DeprecatedCSSOMValue> wrapForDeprecatedCSSOM(CSSValue*);
-    
+
     virtual bool willMutate() WARN_UNUSED_RETURN { return true; }
     virtual void didMutate(MutationType) { }
 };
@@ -99,7 +99,7 @@ public:
     virtual ~StyleRuleCSSStyleDeclaration();
 
     void clearParentRule() { m_parentRule = nullptr; }
-    
+
     void ref() final;
     void deref() final;
 

@@ -35,7 +35,6 @@
 #include "HTMLImageElement.h"
 #include "HTMLInputElement.h"
 #include "HTMLOptionElement.h"
-#include "InspectorInstrumentation.h"
 #include "Page.h"
 #include "SelectorChecker.h"
 #include "ShadowRoot.h"
@@ -429,9 +428,6 @@ ALWAYS_INLINE bool isFrameFocused(const Element& element)
 // as a part of focus pseudo class selectors in ElementRuleCollector::collectMatchingRules.
 ALWAYS_INLINE bool matchesDirectFocusPseudoClass(const Element& element)
 {
-    if (InspectorInstrumentation::forcePseudoState(element, CSSSelector::PseudoClassFocus))
-        return true;
-
     return element.focused() && isFrameFocused(element);
 }
 
@@ -443,25 +439,16 @@ ALWAYS_INLINE bool doesShadowTreeContainFocusedElement(const Element& element)
 
 ALWAYS_INLINE bool matchesFocusPseudoClass(const Element& element)
 {
-    if (InspectorInstrumentation::forcePseudoState(element, CSSSelector::PseudoClassFocus))
-        return true;
-
     return (element.focused() || doesShadowTreeContainFocusedElement(element)) && isFrameFocused(element);
 }
 
 ALWAYS_INLINE bool matchesFocusVisiblePseudoClass(const Element& element)
 {
-    if (InspectorInstrumentation::forcePseudoState(element, CSSSelector::PseudoClassFocusVisible))
-        return true;
-
     return element.hasFocusVisible() && isFrameFocused(element);
 }
 
 ALWAYS_INLINE bool matchesFocusWithinPseudoClass(const Element& element)
 {
-    if (InspectorInstrumentation::forcePseudoState(element, CSSSelector::PseudoClassFocusWithin))
-        return true;
-
     return element.hasFocusWithin() && isFrameFocused(element);
 }
 

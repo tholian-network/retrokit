@@ -29,7 +29,6 @@
 #include "DebugPageOverlays.h"
 #include "Document.h"
 #include "FrameView.h"
-#include "InspectorInstrumentation.h"
 #include "LayoutDisallowedScope.h"
 #include "Logging.h"
 #include "RenderElement.h"
@@ -185,9 +184,8 @@ void FrameViewLayoutContext::layout()
     Ref<FrameView> protectView(view());
     LayoutScope layoutScope(*this);
     TraceScope tracingScope(LayoutStart, LayoutEnd);
-    InspectorInstrumentation::willLayout(view().frame());
     WeakPtr<RenderElement> layoutRoot;
-    
+
     m_layoutTimer.stop();
     m_setNeedsLayoutWasDeferred = false;
 
@@ -260,7 +258,6 @@ void FrameViewLayoutContext::layout()
         view().didLayout(layoutRoot);
         runOrScheduleAsynchronousTasks();
     }
-    InspectorInstrumentation::didLayout(view().frame(), *layoutRoot);
     DebugPageOverlays::didLayout(view().frame());
 }
 
@@ -373,7 +370,6 @@ void FrameViewLayoutContext::scheduleLayout()
         return;
     if (!frame().document()->shouldScheduleLayout())
         return;
-    InspectorInstrumentation::didInvalidateLayout(frame());
     // When frame flattening is enabled, the contents of the frame could affect the layout of the parent frames.
     // Also invalidate parent frame starting from the owner element of this frame.
     if (frame().ownerRenderer() && view().isInChildFrameWithFrameFlattening())
@@ -423,7 +419,6 @@ void FrameViewLayoutContext::scheduleSubtreeLayout(RenderElement& layoutRoot)
     if (!isLayoutPending() && isLayoutSchedulingEnabled()) {
         ASSERT(!layoutRoot.container() || is<RenderView>(layoutRoot.container()) || !layoutRoot.container()->needsLayout());
         setSubtreeLayoutRoot(layoutRoot);
-        InspectorInstrumentation::didInvalidateLayout(frame());
         m_layoutTimer.startOneShot(0_s);
         return;
     }
@@ -435,7 +430,6 @@ void FrameViewLayoutContext::scheduleSubtreeLayout(RenderElement& layoutRoot)
     if (!subtreeLayoutRoot) {
         // We already have a pending (full) layout. Just mark the subtree for layout.
         layoutRoot.markContainingBlocksForLayout(ScheduleRelayout::No);
-        InspectorInstrumentation::didInvalidateLayout(frame());
         return;
     }
 
@@ -451,13 +445,11 @@ void FrameViewLayoutContext::scheduleSubtreeLayout(RenderElement& layoutRoot)
         subtreeLayoutRoot->markContainingBlocksForLayout(ScheduleRelayout::No, &layoutRoot);
         setSubtreeLayoutRoot(layoutRoot);
         ASSERT(!layoutRoot.container() || is<RenderView>(layoutRoot.container()) || !layoutRoot.container()->needsLayout());
-        InspectorInstrumentation::didInvalidateLayout(frame());
         return;
     }
     // Two disjoint subtrees need layout. Mark both of them and issue a full layout instead.
     convertSubtreeLayoutToFullLayout();
     layoutRoot.markContainingBlocksForLayout(ScheduleRelayout::No);
-    InspectorInstrumentation::didInvalidateLayout(frame());
 }
 
 void FrameViewLayoutContext::layoutTimerFired()

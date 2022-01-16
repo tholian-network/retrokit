@@ -46,7 +46,6 @@
 #include "HTMLFormElement.h"
 #include "HTMLFrameOwnerElement.h"
 #include "HistoryItem.h"
-#include "InspectorInstrumentation.h"
 #include "Logging.h"
 #include "NavigationDisabler.h"
 #include "Page.h"
@@ -398,8 +397,6 @@ bool NavigationScheduler::locationChangePending()
 
 void NavigationScheduler::clear()
 {
-    if (m_timer.isActive())
-        InspectorInstrumentation::frameClearedScheduledNavigation(m_frame);
     m_timer.stop();
     m_redirect = nullptr;
 }
@@ -549,7 +546,6 @@ void NavigationScheduler::timerFired()
     if (!m_frame.page())
         return;
     if (m_frame.page()->defersLoading()) {
-        InspectorInstrumentation::frameClearedScheduledNavigation(m_frame);
         return;
     }
 
@@ -559,7 +555,6 @@ void NavigationScheduler::timerFired()
     LOG(History, "NavigationScheduler %p timerFired - firing redirect %p", this, redirect.get());
 
     redirect->fire(m_frame);
-    InspectorInstrumentation::frameClearedScheduledNavigation(m_frame);
 }
 
 void NavigationScheduler::schedule(std::unique_ptr<ScheduledNavigation> redirect)
@@ -602,7 +597,6 @@ void NavigationScheduler::startTimer()
 
     Seconds delay = 1_s * m_redirect->delay();
     m_timer.startOneShot(delay);
-    InspectorInstrumentation::frameScheduledNavigation(m_frame, delay);
     m_redirect->didStartTimer(m_frame, m_timer); // m_redirect may be null on return (e.g. the client canceled the load)
 }
 
@@ -610,8 +604,6 @@ void NavigationScheduler::cancel(NewLoadInProgress newLoadInProgress)
 {
     LOG(History, "NavigationScheduler %p cancel(newLoadInProgress=%d)", this, newLoadInProgress == NewLoadInProgress::Yes);
 
-    if (m_timer.isActive())
-        InspectorInstrumentation::frameClearedScheduledNavigation(m_frame);
     m_timer.stop();
 
     if (auto redirect = std::exchange(m_redirect, nullptr))

@@ -158,8 +158,6 @@ String PlatformKeyboardEvent::keyValueForGdkKeyCode(unsigned keyCode)
         return "Attn"_s;
     case GDK_KEY_Cancel:
         return "Cancel"_s;
-    case GDK_KEY_Menu:
-        return "ContextMenu"_s;
     case GDK_KEY_Escape:
         return "Escape"_s;
     case GDK_KEY_Execute:
@@ -685,8 +683,6 @@ String PlatformKeyboardEvent::keyCodeForHardwareKeyCode(unsigned keyCode)
         return "OSLeft"_s;
     case 0x0086:
         return "OSRight"_s;
-    case 0x0087:
-        return "ContextMenu"_s;
     case 0x0088:
         return "BrowserStop"_s;
     case 0x0089:

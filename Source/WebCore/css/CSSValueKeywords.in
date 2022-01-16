@@ -498,7 +498,6 @@ flow
 auto
 default
 // none
-context-menu
 help
 pointer
 progress

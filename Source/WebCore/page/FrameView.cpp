@@ -61,9 +61,6 @@
 #include "HTMLNames.h"
 #include "HTMLParserIdioms.h"
 #include "ImageDocument.h"
-#include "InspectorClient.h"
-#include "InspectorController.h"
-#include "InspectorInstrumentation.h"
 #include "Logging.h"
 #include "MemoryCache.h"
 #include "NullGraphicsContext.h"
@@ -1327,7 +1324,6 @@ String FrameView::mediaType() const
 {
     // See if we have an override type.
     String overrideType = frame().loader().client().overrideMediaType();
-    InspectorInstrumentation::applyEmulatedMedia(frame(), overrideType);
     if (!overrideType.isNull())
         return overrideType;
     return m_mediaType;
@@ -3309,12 +3305,6 @@ void FrameView::scheduleResizeEventIfNeeded()
 
     LOG_WITH_STREAM(Events, stream << "FrameView " << this << " scheduleResizeEventIfNeeded scheduling resize event for document" << document << ", size " << currentSize);
     document->setNeedsDOMWindowResizeEvent();
-
-    bool isMainFrame = frame().isMainFrame();
-    if (InspectorInstrumentation::hasFrontends() && isMainFrame) {
-        if (InspectorClient* inspectorClient = page ? page->inspectorController().inspectorClient() : nullptr)
-            inspectorClient->didResizeMainFrame(&frame());
-    }
 }
 
 void FrameView::willStartLiveResize()
@@ -4112,23 +4102,20 @@ void FrameView::willPaintContents(GraphicsContext& context, const IntRect&, Pain
 {
     Document* document = frame().document();
 
-    if (!context.paintingDisabled())
-        InspectorInstrumentation::willPaint(*renderView());
-
     paintingState.isTopLevelPainter = !sCurrentPaintTimeStamp;
 
     if (paintingState.isTopLevelPainter)
         sCurrentPaintTimeStamp = MonotonicTime::now();
 
     paintingState.paintBehavior = m_paintBehavior;
-    
+
     if (FrameView* parentView = parentFrameView()) {
         if (parentView->paintBehavior() & PaintBehavior::FlattenCompositingLayers)
             m_paintBehavior.add(PaintBehavior::FlattenCompositingLayers);
-        
+
         if (parentView->paintBehavior() & PaintBehavior::Snapshotting)
             m_paintBehavior.add(PaintBehavior::Snapshotting);
-        
+
         if (parentView->paintBehavior() & PaintBehavior::TileFirstPaint)
             m_paintBehavior.add(PaintBehavior::TileFirstPaint);
     }
@@ -4160,7 +4147,6 @@ void FrameView::didPaintContents(GraphicsContext& context, const IntRect& dirtyR
         sCurrentPaintTimeStamp = MonotonicTime();
 
     if (!context.paintingDisabled()) {
-        InspectorInstrumentation::didPaint(*renderView(), dirtyRect);
         // FIXME: should probably not fire milestones for snapshot painting. https://bugs.webkit.org/show_bug.cgi?id=117623
         firePaintRelatedMilestonesIfNeeded();
     }

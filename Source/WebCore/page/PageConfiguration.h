@@ -48,13 +48,11 @@ class BroadcastChannelRegistry;
 class CacheStorageProvider;
 class CookieJar;
 class ChromeClient;
-class ContextMenuClient;
 class DatabaseProvider;
 class DiagnosticLoggingClient;
 class DragClient;
 class EditorClient;
 class FrameLoaderClient;
-class InspectorClient;
 class PerformanceLoggingClient;
 class PermissionController;
 class ProgressTrackerClient;
@@ -78,13 +76,9 @@ public:
     PAL::SessionID sessionID;
     std::unique_ptr<AlternativeTextClient> alternativeTextClient;
     ChromeClient* chromeClient { nullptr };
-#if ENABLE(CONTEXT_MENUS)
-    ContextMenuClient* contextMenuClient { nullptr };
-#endif
     UniqueRef<EditorClient> editorClient;
     Ref<SocketProvider> socketProvider;
     std::unique_ptr<DragClient> dragClient;
-    InspectorClient* inspectorClient { nullptr };
 
 #if ENABLE(WEB_AUTHN)
     std::unique_ptr<AuthenticatorCoordinatorClient> authenticatorCoordinatorClient;

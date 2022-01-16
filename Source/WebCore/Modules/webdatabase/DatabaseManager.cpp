@@ -32,7 +32,6 @@
 #include "DatabaseTask.h"
 #include "DatabaseTracker.h"
 #include "Document.h"
-#include "InspectorInstrumentation.h"
 #include "Logging.h"
 #include "PlatformStrategies.h"
 #include "ScriptController.h"
@@ -209,7 +208,6 @@ ExceptionOr<Ref<Database>> DatabaseManager::openDatabase(Document& document, con
 
     auto databaseContext = this->databaseContext(document);
     databaseContext->setHasOpenDatabases();
-    InspectorInstrumentation::didOpenDatabase(*database);
 
     if (database->isNew() && creationCallback.get()) {
         LOG(StorageAPI, "Scheduling DatabaseCreationCallbackTask for database %p\n", database.get());

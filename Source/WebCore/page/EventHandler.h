@@ -249,11 +249,6 @@ public:
     WEBCORE_EXPORT void dispatchSyntheticMouseMove(const PlatformMouseEvent&);
 #endif
 
-#if ENABLE(CONTEXT_MENU_EVENT)
-    WEBCORE_EXPORT bool sendContextMenuEvent(const PlatformMouseEvent&);
-    WEBCORE_EXPORT bool sendContextMenuEventForKey();
-#endif
-
     void setMouseDownMayStartAutoscroll() { m_mouseDownMayStartAutoscroll = true; }
 
     bool needsKeyboardEventDisambiguationQuirks() const;
@@ -272,14 +267,14 @@ public:
 
 #if ENABLE(DRAG_SUPPORT)
     WEBCORE_EXPORT bool eventMayStartDrag(const PlatformMouseEvent&) const;
-    
+
     WEBCORE_EXPORT void didStartDrag();
     WEBCORE_EXPORT void dragCancelled();
     WEBCORE_EXPORT void dragSourceEndedAt(const PlatformMouseEvent&, OptionSet<DragOperation>, MayExtendDragSession = MayExtendDragSession::No);
 #endif
 
     void focusDocumentView();
-    
+
     WEBCORE_EXPORT void scheduleScrollEvent();
 
 #if PLATFORM(MAC)

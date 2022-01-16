@@ -30,13 +30,8 @@
 #include "ImageOptions.h"
 #include "ProvisionalPageProxy.h"
 #include "WebCertificateInfo.h"
-#include "WebContextMenuItem.h"
-#include "WebContextMenuItemData.h"
 #include "WebKitAuthenticationRequestPrivate.h"
 #include "WebKitBackForwardListPrivate.h"
-#include "WebKitContextMenuClient.h"
-#include "WebKitContextMenuItemPrivate.h"
-#include "WebKitContextMenuPrivate.h"
 #include "WebKitDownloadPrivate.h"
 #include "WebKitEditingCommands.h"
 #include "WebKitEditorStatePrivate.h"
@@ -87,7 +82,6 @@
 #include "WebKitInputMethodContextImplGtk.h"
 #include "WebKitPointerLockPermissionRequest.h"
 #include "WebKitPrintOperationPrivate.h"
-#include "WebKitWebInspectorPrivate.h"
 #include "WebKitWebViewBasePrivate.h"
 #include <WebCore/GUniquePtrGtk.h>
 #include <WebCore/RefPtrCairo.h>
@@ -142,9 +136,6 @@ enum {
     RESOURCE_LOAD_STARTED,
 
     RUN_FILE_CHOOSER,
-
-    CONTEXT_MENU,
-    CONTEXT_MENU_DISMISSED,
 
     SUBMIT_FORM,
 
@@ -293,8 +284,6 @@ struct _WebKitWebViewPrivate {
 
 #if PLATFORM(GTK)
     GRefPtr<JSCContext> jsContext;
-
-    GRefPtr<WebKitWebInspector> inspector;
 
     RefPtr<cairo_surface_t> favicon;
     GRefPtr<GCancellable> faviconCancellable;
@@ -749,7 +738,6 @@ static void webkitWebViewConstructed(GObject* object)
 
     attachNavigationClientToView(webView);
     attachUIClientToView(webView);
-    attachContextMenuClientToView(webView);
     attachFormClientToView(webView);
 
 #if PLATFORM(GTK)
@@ -1904,98 +1892,6 @@ static void webkit_web_view_class_init(WebKitWebViewClass* webViewClass)
         WEBKIT_TYPE_FILE_CHOOSER_REQUEST);
 
     /**
-     * WebKitWebView::context-menu:
-     * @web_view: the #WebKitWebView on which the signal is emitted
-     * @context_menu: the proposed #WebKitContextMenu
-     * @event: the #GdkEvent that triggered the context menu
-     * @hit_test_result: a #WebKitHitTestResult
-     *
-     * Emitted when a context menu is about to be displayed to give the application
-     * a chance to customize the proposed menu, prevent the menu from being displayed,
-     * or build its own context menu.
-     * <itemizedlist>
-     * <listitem><para>
-     *  To customize the proposed menu you can use webkit_context_menu_prepend(),
-     *  webkit_context_menu_append() or webkit_context_menu_insert() to add new
-     *  #WebKitContextMenuItem<!-- -->s to @context_menu, webkit_context_menu_move_item()
-     *  to reorder existing items, or webkit_context_menu_remove() to remove an
-     *  existing item. The signal handler should return %FALSE, and the menu represented
-     *  by @context_menu will be shown.
-     * </para></listitem>
-     * <listitem><para>
-     *  To prevent the menu from being displayed you can just connect to this signal
-     *  and return %TRUE so that the proposed menu will not be shown.
-     * </para></listitem>
-     * <listitem><para>
-     *  To build your own menu, you can remove all items from the proposed menu with
-     *  webkit_context_menu_remove_all(), add your own items and return %FALSE so
-     *  that the menu will be shown. You can also ignore the proposed #WebKitContextMenu,
-     *  build your own #GtkMenu and return %TRUE to prevent the proposed menu from being shown.
-     * </para></listitem>
-     * <listitem><para>
-     *  If you just want the default menu to be shown always, simply don't connect to this
-     *  signal because showing the proposed context menu is the default behaviour.
-     * </para></listitem>
-     * </itemizedlist>
-     *
-     * The @event is expected to be one of the following types:
-     * <itemizedlist>
-     * <listitem><para>
-     * a #GdkEventButton of type %GDK_BUTTON_PRESS when the context menu
-     * was triggered with mouse.
-     * </para></listitem>
-     * <listitem><para>
-     * a #GdkEventKey of type %GDK_KEY_PRESS if the keyboard was used to show
-     * the menu.
-     * </para></listitem>
-     * <listitem><para>
-     * a generic #GdkEvent of type %GDK_NOTHING when the #GtkWidget::popup-menu
-     * signal was used to show the context menu.
-     * </para></listitem>
-     * </itemizedlist>
-     *
-     * If the signal handler returns %FALSE the context menu represented by @context_menu
-     * will be shown, if it return %TRUE the context menu will not be shown.
-     *
-     * The proposed #WebKitContextMenu passed in @context_menu argument is only valid
-     * during the signal emission.
-     *
-     * Returns: %TRUE to stop other handlers from being invoked for the event.
-     *    %FALSE to propagate the event further.
-     */
-    signals[CONTEXT_MENU] = g_signal_new(
-        "context-menu",
-        G_TYPE_FROM_CLASS(webViewClass),
-        G_SIGNAL_RUN_LAST,
-        G_STRUCT_OFFSET(WebKitWebViewClass, context_menu),
-        g_signal_accumulator_true_handled, nullptr,
-        g_cclosure_marshal_generic,
-        G_TYPE_BOOLEAN, 3,
-        WEBKIT_TYPE_CONTEXT_MENU,
-#if PLATFORM(GTK)
-        GDK_TYPE_EVENT | G_SIGNAL_TYPE_STATIC_SCOPE,
-#elif PLATFORM(WPE)
-        G_TYPE_POINTER, // FIXME: use a wpe thing here. I'm not sure we want to expose libwpe in the API.
-#endif
-        WEBKIT_TYPE_HIT_TEST_RESULT);
-
-    /**
-     * WebKitWebView::context-menu-dismissed:
-     * @web_view: the #WebKitWebView on which the signal is emitted
-     *
-     * Emitted after #WebKitWebView::context-menu signal, if the context menu is shown,
-     * to notify that the context menu is dismissed.
-     */
-    signals[CONTEXT_MENU_DISMISSED] =
-        g_signal_new("context-menu-dismissed",
-                     G_TYPE_FROM_CLASS(webViewClass),
-                     G_SIGNAL_RUN_LAST,
-                     G_STRUCT_OFFSET(WebKitWebViewClass, context_menu_dismissed),
-                     0, 0,
-                     g_cclosure_marshal_VOID__VOID,
-                     G_TYPE_NONE, 0);
-
-    /**
      * WebKitWebView::submit-form:
      * @web_view: the #WebKitWebView on which the signal is emitted
      * @request: a #WebKitFormSubmissionRequest
@@ -2602,47 +2498,6 @@ void webkitWebViewRunFileChooserRequest(WebKitWebView* webView, WebKitFileChoose
     gboolean returnValue;
     g_signal_emit(webView, signals[RUN_FILE_CHOOSER], 0, request, &returnValue);
 }
-
-#if PLATFORM(GTK)
-void webkitWebViewPopulateContextMenu(WebKitWebView* webView, const Vector<WebContextMenuItemData>& proposedMenu, const WebHitTestResultData& hitTestResultData, GVariant* userData)
-{
-    WebKitWebViewBase* webViewBase = WEBKIT_WEB_VIEW_BASE(webView);
-    WebContextMenuProxyGtk* contextMenuProxy = webkitWebViewBaseGetActiveContextMenuProxy(webViewBase);
-    ASSERT(contextMenuProxy);
-
-    GRefPtr<WebKitContextMenu> contextMenu = adoptGRef(webkitContextMenuCreate(proposedMenu));
-    if (userData)
-        webkit_context_menu_set_user_data(WEBKIT_CONTEXT_MENU(contextMenu.get()), userData);
-
-    GRefPtr<WebKitHitTestResult> hitTestResult = adoptGRef(webkitHitTestResultCreate(hitTestResultData));
-    GUniquePtr<GdkEvent> contextMenuEvent(webkitWebViewBaseTakeContextMenuEvent(webViewBase));
-    gboolean returnValue;
-    g_signal_emit(webView, signals[CONTEXT_MENU], 0, contextMenu.get(), contextMenuEvent.get(), hitTestResult.get(), &returnValue);
-    if (returnValue)
-        return;
-
-    Vector<WebContextMenuItemGlib> contextMenuItems;
-    webkitContextMenuPopulate(contextMenu.get(), contextMenuItems);
-    contextMenuProxy->populate(contextMenuItems);
-
-    g_signal_connect(contextMenuProxy->gtkWidget(), WebContextMenuProxyGtk::widgetDismissedSignal, G_CALLBACK(+[](GtkWidget*, WebKitWebView* webView) {
-        g_signal_emit(webView, signals[CONTEXT_MENU_DISMISSED], 0, nullptr);
-    }), webView);
-
-    // Clear the menu to make sure it's useless after signal emission.
-    webkit_context_menu_remove_all(contextMenu.get());
-}
-#elif PLATFORM(WPE)
-void webkitWebViewPopulateContextMenu(WebKitWebView* webView, const Vector<WebContextMenuItemData>& proposedMenu, const WebHitTestResultData& hitTestResultData, GVariant* userData)
-{
-    GRefPtr<WebKitContextMenu> contextMenu = adoptGRef(webkitContextMenuCreate(proposedMenu));
-    if (userData)
-        webkit_context_menu_set_user_data(WEBKIT_CONTEXT_MENU(contextMenu.get()), userData);
-    GRefPtr<WebKitHitTestResult> hitTestResult = adoptGRef(webkitHitTestResultCreate(hitTestResultData));
-    gboolean returnValue;
-    g_signal_emit(webView, signals[CONTEXT_MENU], 0, contextMenu.get(), nullptr, hitTestResult.get(), &returnValue);
-}
-#endif
 
 void webkitWebViewSubmitFormRequest(WebKitWebView* webView, WebKitFormSubmissionRequest* request)
 {
@@ -3989,26 +3844,6 @@ WebKitWebResource* webkit_web_view_get_main_resource(WebKitWebView* webView)
 
     return webView->priv->mainResource.get();
 }
-
-#if PLATFORM(GTK)
-/**
- * webkit_web_view_get_inspector:
- * @web_view: a #WebKitWebView
- *
- * Get the #WebKitWebInspector associated to @web_view
- *
- * Returns: (transfer none): the #WebKitWebInspector of @web_view
- */
-WebKitWebInspector* webkit_web_view_get_inspector(WebKitWebView* webView)
-{
-    g_return_val_if_fail(WEBKIT_IS_WEB_VIEW(webView), 0);
-
-    if (!webView->priv->inspector)
-        webView->priv->inspector = adoptGRef(webkitWebInspectorCreate(getPage(webView).inspector()));
-
-    return webView->priv->inspector.get();
-}
-#endif
 
 /**
  * webkit_web_view_can_show_mime_type:

@@ -29,7 +29,6 @@
 #include "ResizeObserver.h"
 
 #include "Element.h"
-#include "InspectorInstrumentation.h"
 #include "ResizeObserverEntry.h"
 #include <JavaScriptCore/AbstractSlotVisitorInlines.h>
 
@@ -133,9 +132,7 @@ void ResizeObserver::deliverObservations()
     if (!context)
         return;
 
-    InspectorInstrumentation::willFireObserverCallback(*context, "ResizeObserver"_s);
     m_callback->handleEvent(*this, entries, *this);
-    InspectorInstrumentation::didFireObserverCallback(*context);
 }
 
 bool ResizeObserver::isReachableFromOpaqueRoots(JSC::AbstractSlotVisitor& visitor) const

@@ -39,7 +39,6 @@
 #include "HTTPHeaderNames.h"
 #include "HTTPHeaderValues.h"
 #include "HTTPParsers.h"
-#include "InspectorInstrumentation.h"
 #include "Logging.h"
 #include "ResourceRequest.h"
 #include "ScriptExecutionContext.h"

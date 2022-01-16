@@ -36,7 +36,6 @@
 #include "Document.h"
 #include "GCReachableRef.h"
 #include "HTMLSlotElement.h"
-#include "InspectorInstrumentation.h"
 #include "MutationCallback.h"
 #include "MutationObserverRegistration.h"
 #include "MutationRecord.h"
@@ -216,9 +215,7 @@ void MutationObserver::deliver()
         if (!context)
             return;
 
-        InspectorInstrumentation::willFireObserverCallback(*context, "MutationObserver"_s);
         m_callback->handleEvent(*this, records, *this);
-        InspectorInstrumentation::didFireObserverCallback(*context);
     }
 }
 

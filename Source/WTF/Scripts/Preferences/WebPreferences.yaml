@@ -273,7 +273,6 @@ AuthorAndUserStylesEnabled:
   type: bool
   webKitLegacyPreferenceKey: WebKitAuthorAndUserStylesEnabledPreferenceKey
   webcoreOnChange: setNeedsRecalcStyleInAllFrames
-  inspectorOverride: true
   defaultValue:
     WebKitLegacy:
       default: true
@@ -956,7 +955,6 @@ JavaScriptCanOpenWindowsAutomatically:
 
 JavaScriptEnabled:
   type: bool
-  inspectorOverride: true
   webcoreGetter: isScriptEnabled
   webcoreName: scriptEnabled
   defaultValue:
@@ -1161,17 +1159,6 @@ MediaContentTypesRequiringHardwareSupport:
       default: '""'
     WebCore:
       default: '""'
-
-MediaControlsContextMenusEnabled:
-  type: bool
-  condition: ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS)
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      default: true
-    WebCore:
-      default: false
 
 MediaControlsScaleWithPageZoom:
   type: bool
@@ -2243,7 +2230,6 @@ WebGLEnabled:
 
 WebSecurityEnabled:
   type: bool
-  inspectorOverride: true
   defaultValue:
     WebKitLegacy:
       default: true

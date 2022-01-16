@@ -38,7 +38,6 @@
 #include "HTMLOptionsCollection.h"
 #include "HTMLSlotElement.h"
 #include "HTMLTableRowsCollection.h"
-#include "InspectorInstrumentation.h"
 #include "JSNode.h"
 #include "LabelsNodeList.h"
 #include "LegacyInlineTextBox.h"
@@ -435,8 +434,6 @@ ExceptionOr<void> ContainerNode::insertBefore(Node& newChild, Node* refChild)
             return checkAcceptResult.releaseException();
     }
 
-    InspectorInstrumentation::willInsertDOMNode(document(), *this);
-
     ChildListMutationScope mutation(*this);
     for (auto& child : targets) {
         // Due to arbitrary code running in response to a DOM mutation event it's
@@ -568,8 +565,6 @@ ExceptionOr<void> ContainerNode::replaceChild(Node& newChild, Node& oldChild)
         }
     }
 
-    InspectorInstrumentation::willInsertDOMNode(document(), *this);
-
     // Add the new child(ren).
     for (auto& child : targets) {
         // Due to arbitrary code running in response to a DOM mutation event it's
@@ -622,8 +617,6 @@ ExceptionOr<void> ContainerNode::removeChild(Node& oldChild)
 
 void ContainerNode::removeBetween(Node* previousChild, Node* nextChild, Node& oldChild)
 {
-    InspectorInstrumentation::didRemoveDOMNode(oldChild.document(), oldChild);
-
     ScriptDisallowedScope::InMainThread scriptDisallowedScope;
 
     ASSERT(oldChild.parentNode() == this);
@@ -683,7 +676,6 @@ void ContainerNode::replaceAll(Node* node)
     removeAllChildrenWithScriptAssertion(ChildChange::Source::API, DeferChildrenChanged::Yes);
 
     executeNodeInsertionWithScriptAssertion(*this, *node, ChildChange::Source::API, ReplacedAllChildren::Yes, [&] {
-        InspectorInstrumentation::willInsertDOMNode(document(), *this);
         node->setTreeScopeRecursively(treeScope());
         appendChildCommon(*node);
     });
@@ -750,8 +742,6 @@ ExceptionOr<void> ContainerNode::appendChildWithoutPreInsertionValidityCheck(Nod
         if (nodeTypeResult.hasException())
             return nodeTypeResult.releaseException();
     }
-
-    InspectorInstrumentation::willInsertDOMNode(document(), *this);
 
     // Now actually add the child(ren)
     ChildListMutationScope mutation(*this);
@@ -882,7 +872,6 @@ static void dispatchChildInsertionEvents(Node& child)
 static void dispatchChildRemovalEvents(Ref<Node>& child)
 {
     ASSERT_WITH_SECURITY_IMPLICATION(ScriptDisallowedScope::InMainThread::isEventDispatchAllowedInSubtree(child));
-    InspectorInstrumentation::willRemoveDOMNode(child->document(), child.get());
 
     if (child->isInShadowTree())
         return;

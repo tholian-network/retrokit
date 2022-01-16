@@ -35,7 +35,6 @@
 #include "Frame.h"
 #include "FrameLoader.h"
 #include "FrameLoaderClient.h"
-#include "InspectorInstrumentation.h"
 #include "Page.h"
 #include "ProgressTracker.h"
 #include "ResourceLoader.h"
@@ -99,8 +98,6 @@ void ResourceLoadNotifier::didFailToLoad(ResourceLoader* loader, const ResourceE
     Ref<Frame> protect(m_frame);
     if (!error.isNull())
         m_frame.loader().client().dispatchDidFailLoading(loader->documentLoader(), loader->identifier(), error);
-
-    InspectorInstrumentation::didFailLoading(&m_frame, loader->documentLoader(), loader->identifier(), error);
 }
 
 void ResourceLoadNotifier::assignIdentifierToInitialRequest(unsigned long identifier, DocumentLoader* loader, const ResourceRequest& request)
@@ -136,8 +133,6 @@ void ResourceLoadNotifier::dispatchWillSendRequest(DocumentLoader* loader, unsig
     // If the URL changed, then we want to put that new URL in the "did tell client" set too.
     if (!request.isNull() && oldRequestURL != request.url().string() && m_frame.loader().documentLoader())
         m_frame.loader().documentLoader()->didTellClientAboutLoad(request.url().string());
-
-    InspectorInstrumentation::willSendRequest(&m_frame, identifier, loader, request, redirectResponse, cachedResource);
 }
 
 void ResourceLoadNotifier::dispatchDidReceiveResponse(DocumentLoader* loader, unsigned long identifier, const ResourceResponse& r, ResourceLoader* resourceLoader)
@@ -145,8 +140,6 @@ void ResourceLoadNotifier::dispatchDidReceiveResponse(DocumentLoader* loader, un
     // Notifying the FrameLoaderClient may cause the frame to be destroyed.
     Ref<Frame> protect(m_frame);
     m_frame.loader().client().dispatchDidReceiveResponse(loader, identifier, r);
-
-    InspectorInstrumentation::didReceiveResourceResponse(m_frame, identifier, loader, r, resourceLoader);
 }
 
 void ResourceLoadNotifier::dispatchDidReceiveData(DocumentLoader* loader, unsigned long identifier, const uint8_t* data, int dataLength, int encodedDataLength)
@@ -154,8 +147,6 @@ void ResourceLoadNotifier::dispatchDidReceiveData(DocumentLoader* loader, unsign
     // Notifying the FrameLoaderClient may cause the frame to be destroyed.
     Ref<Frame> protect(m_frame);
     m_frame.loader().client().dispatchDidReceiveContentLength(loader, identifier, dataLength);
-
-    InspectorInstrumentation::didReceiveData(&m_frame, identifier, data, dataLength, encodedDataLength);
 }
 
 void ResourceLoadNotifier::dispatchDidFinishLoading(DocumentLoader* loader, unsigned long identifier, const NetworkLoadMetrics& networkLoadMetrics, ResourceLoader* resourceLoader)
@@ -163,8 +154,6 @@ void ResourceLoadNotifier::dispatchDidFinishLoading(DocumentLoader* loader, unsi
     // Notifying the FrameLoaderClient may cause the frame to be destroyed.
     Ref<Frame> protect(m_frame);
     m_frame.loader().client().dispatchDidFinishLoading(loader, identifier);
-
-    InspectorInstrumentation::didFinishLoading(&m_frame, loader, identifier, networkLoadMetrics, resourceLoader);
 }
 
 void ResourceLoadNotifier::dispatchDidFailLoading(DocumentLoader* loader, unsigned long identifier, const ResourceError& error)
@@ -172,8 +161,6 @@ void ResourceLoadNotifier::dispatchDidFailLoading(DocumentLoader* loader, unsign
     // Notifying the FrameLoaderClient may cause the frame to be destroyed.
     Ref<Frame> protect(m_frame);
     m_frame.loader().client().dispatchDidFailLoading(loader, identifier, error);
-
-    InspectorInstrumentation::didFailLoading(&m_frame, loader, identifier, error);
 }
 
 void ResourceLoadNotifier::sendRemainingDelegateMessages(DocumentLoader* loader, unsigned long identifier, const ResourceRequest& request, const ResourceResponse& response, const uint8_t* data, int dataLength, int encodedDataLength, const ResourceError& error)

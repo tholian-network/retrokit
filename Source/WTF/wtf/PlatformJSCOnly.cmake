@@ -130,18 +130,6 @@ if (LOWERCASE_EVENT_LOOP_TYPE STREQUAL "glib")
         glib/RunLoopSourcePriority.h
     )
 
-    if (ENABLE_REMOTE_INSPECTOR)
-        list(APPEND WTF_SOURCES
-            glib/GSocketMonitor.cpp
-            glib/SocketConnection.cpp
-        )
-        list(APPEND WTF_PUBLIC_HEADERS
-            glib/GSocketMonitor.h
-            glib/GUniquePtr.h
-            glib/SocketConnection.h
-        )
-    endif ()
-
     list(APPEND WTF_SYSTEM_INCLUDE_DIRECTORIES
         ${GIO_UNIX_INCLUDE_DIRS}
         ${GLIB_INCLUDE_DIRS}

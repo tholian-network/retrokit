@@ -58,7 +58,6 @@
 #include "ImageBitmap.h"
 #include "ImageBuffer.h"
 #include "ImageData.h"
-#include "InspectorInstrumentation.h"
 #include "IntSize.h"
 #include "JSExecState.h"
 #include "KHRParallelShaderCompile.h"
@@ -647,123 +646,6 @@ static bool possibleFormatAndTypeForInternalFormat(GCGLenum internalFormat, GCGL
 
 #endif
 
-class InspectorScopedShaderProgramHighlight {
-public:
-    InspectorScopedShaderProgramHighlight(WebGLRenderingContextBase& context, WebGLProgram* program)
-        : m_context(context)
-        , m_program(program)
-    {
-        showHightlight();
-    }
-
-    ~InspectorScopedShaderProgramHighlight()
-    {
-        hideHighlight();
-    }
-
-private:
-    void showHightlight()
-    {
-        if (!m_program || LIKELY(!InspectorInstrumentation::isWebGLProgramHighlighted(m_context, *m_program)))
-            return;
-
-        if (hasBufferBinding(GraphicsContextGL::FRAMEBUFFER_BINDING)) {
-            if (!hasBufferBinding(GraphicsContextGL::RENDERBUFFER_BINDING))
-                return;
-            if (hasFramebufferParameterAttachment(GraphicsContextGL::DEPTH_ATTACHMENT))
-                return;
-            if (hasFramebufferParameterAttachment(GraphicsContextGL::STENCIL_ATTACHMENT))
-                return;
-#if ENABLE(WEBGL2)
-            if (hasFramebufferParameterAttachment(GraphicsContextGL::DEPTH_STENCIL_ATTACHMENT))
-                return;
-#endif
-        }
-
-        saveBlendValue(GraphicsContextGL::BLEND_COLOR, m_savedBlend.color);
-        saveBlendValue(GraphicsContextGL::BLEND_EQUATION_RGB, m_savedBlend.equationRGB);
-        saveBlendValue(GraphicsContextGL::BLEND_EQUATION_ALPHA, m_savedBlend.equationAlpha);
-        saveBlendValue(GraphicsContextGL::BLEND_SRC_RGB, m_savedBlend.srcRGB);
-        saveBlendValue(GraphicsContextGL::BLEND_SRC_ALPHA, m_savedBlend.srcAlpha);
-        saveBlendValue(GraphicsContextGL::BLEND_DST_RGB, m_savedBlend.dstRGB);
-        saveBlendValue(GraphicsContextGL::BLEND_DST_ALPHA, m_savedBlend.dstAlpha);
-        saveBlendValue(GraphicsContextGL::BLEND, m_savedBlend.enabled);
-
-        static const GCGLfloat red = 111.0 / 255.0;
-        static const GCGLfloat green = 168.0 / 255.0;
-        static const GCGLfloat blue = 220.0 / 255.0;
-        static const GCGLfloat alpha = 2.0 / 3.0;
-
-        m_context.enable(GraphicsContextGL::BLEND);
-        m_context.blendColor(red, green, blue, alpha);
-        m_context.blendEquation(GraphicsContextGL::FUNC_ADD);
-        m_context.blendFunc(GraphicsContextGL::CONSTANT_COLOR, GraphicsContextGL::ONE_MINUS_SRC_ALPHA);
-
-        m_didApply = true;
-    }
-
-    void hideHighlight()
-    {
-        if (!m_didApply)
-            return;
-
-        if (!m_savedBlend.enabled)
-            m_context.disable(GraphicsContextGL::BLEND);
-
-        const RefPtr<Float32Array>& color = m_savedBlend.color;
-        m_context.blendColor(color->item(0), color->item(1), color->item(2), color->item(3));
-        m_context.blendEquationSeparate(m_savedBlend.equationRGB, m_savedBlend.equationAlpha);
-        m_context.blendFuncSeparate(m_savedBlend.srcRGB, m_savedBlend.dstRGB, m_savedBlend.srcAlpha, m_savedBlend.dstAlpha);
-
-        m_savedBlend.color = nullptr;
-
-        m_didApply = false;
-    }
-
-    template <typename T>
-    void saveBlendValue(GCGLenum attachment, T& destination)
-    {
-        WebGLAny param = m_context.getParameter(attachment);
-        if (WTF::holds_alternative<T>(param))
-            destination = WTF::get<T>(param);
-    }
-
-    bool hasBufferBinding(GCGLenum pname)
-    {
-        WebGLAny binding = m_context.getParameter(pname);
-        if (pname == GraphicsContextGL::FRAMEBUFFER_BINDING)
-            return WTF::holds_alternative<RefPtr<WebGLFramebuffer>>(binding) && WTF::get<RefPtr<WebGLFramebuffer>>(binding);
-        if (pname == GraphicsContextGL::RENDERBUFFER_BINDING)
-            return WTF::holds_alternative<RefPtr<WebGLRenderbuffer>>(binding) && WTF::get<RefPtr<WebGLRenderbuffer>>(binding);
-        return false;
-    }
-
-    bool hasFramebufferParameterAttachment(GCGLenum attachment)
-    {
-        WebGLAny attachmentParameter = m_context.getFramebufferAttachmentParameter(GraphicsContextGL::FRAMEBUFFER, attachment, GraphicsContextGL::FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE);
-        if (!WTF::holds_alternative<unsigned>(attachmentParameter))
-            return false;
-        if (WTF::get<unsigned>(attachmentParameter) != static_cast<unsigned>(GraphicsContextGL::RENDERBUFFER))
-            return false;
-        return true;
-    }
-
-    struct {
-        RefPtr<Float32Array> color;
-        unsigned equationRGB { 0 };
-        unsigned equationAlpha { 0 };
-        unsigned srcRGB { 0 };
-        unsigned srcAlpha { 0 };
-        unsigned dstRGB { 0 };
-        unsigned dstAlpha { 0 };
-        bool enabled { false };
-    } m_savedBlend;
-
-    WebGLRenderingContextBase& m_context;
-    WebGLProgram* m_program { nullptr };
-    bool m_didApply { false };
-};
-
 static bool isHighPerformanceContext(const RefPtr<GraphicsContextGL>& context)
 {
     return context->contextAttributes().powerPreference == WebGLPowerPreference::HighPerformance;
@@ -1236,7 +1118,7 @@ bool WebGLRenderingContextBase::clearIfComposited(WebGLRenderingContextBase::Cle
     if (isContextLostOrPending())
         return false;
 
-    if (!m_context->layerComposited() || m_layerCleared || m_preventBufferClearForInspector)
+    if (!m_context->layerComposited() || m_layerCleared)
         return false;
 
     GCGLbitfield buffersNeedingClearing = m_context->getBuffersToAutoClear();
@@ -1797,8 +1679,6 @@ GCGLenum WebGLRenderingContextBase::checkFramebufferStatus(GCGLenum target)
     const char* reason = "framebuffer incomplete";
     GCGLenum result = targetFramebuffer->checkStatus(&reason);
     if (result != GraphicsContextGL::FRAMEBUFFER_COMPLETE) {
-        String str = "WebGL: checkFramebufferStatus:" + String(reason);
-        printToConsole(MessageLevel::Warning, str);
         return result;
     }
     result = m_context->checkFramebufferStatus(target);
@@ -1879,15 +1759,6 @@ void WebGLRenderingContextBase::compileShader(WebGLShader& shader)
     m_context->compileShader(shader.object());
     GCGLint value = m_context->getShaderi(shader.object(), GraphicsContextGL::COMPILE_STATUS);
     shader.setValid(value);
-
-    auto* canvas = htmlCanvas();
-
-    if (canvas && m_synthesizedErrorsToConsole && !value) {
-        Ref<Inspector::ScriptCallStack> stackTrace = Inspector::createScriptCallStack(JSExecState::currentState());
-
-        for (auto& error : getShaderInfoLog(shader).split('\n'))
-            canvas->document().addConsoleMessage(makeUnique<Inspector::ConsoleMessage>(MessageSource::Rendering, MessageType::Log, MessageLevel::Error, "WebGL: " + error, stackTrace.copyRef()));
-    }
 }
 
 void WebGLRenderingContextBase::compressedTexImage2D(GCGLenum target, GCGLint level, GCGLenum internalformat, GCGLsizei width, GCGLsizei height, GCGLint border, ArrayBufferView& data)
@@ -2097,8 +1968,6 @@ RefPtr<WebGLProgram> WebGLRenderingContextBase::createProgram()
     auto program = WebGLProgram::create(*this);
     addSharedObject(program.get());
 
-    InspectorInstrumentation::didCreateWebGLProgram(*this, program.get());
-
     return program;
 }
 
@@ -2192,9 +2061,6 @@ void WebGLRenderingContextBase::deleteFramebuffer(WebGLFramebuffer* framebuffer)
 
 void WebGLRenderingContextBase::deleteProgram(WebGLProgram* program)
 {
-    if (program)
-        InspectorInstrumentation::willDestroyWebGLProgram(*program);
-
     Locker locker { objectGraphLock() };
 
     deleteObject(locker, program);
@@ -2666,13 +2532,13 @@ bool WebGLRenderingContextBase::validateDrawElements(const char* functionName, G
         return false;
     }
 #endif
-    
+
     const char* reason = "framebuffer incomplete";
     if (m_framebufferBinding && !m_framebufferBinding->onAccess(graphicsContextGL(), &reason)) {
         synthesizeGLError(GraphicsContextGL::INVALID_FRAMEBUFFER_OPERATION, functionName, reason);
         return false;
     }
-    
+
     return true;
 }
 #endif
@@ -2686,9 +2552,6 @@ void WebGLRenderingContextBase::drawArrays(GCGLenum mode, GCGLint first, GCGLsiz
     if (!validateDrawArrays("drawArrays", mode, first, count, 0))
         return;
 #endif
-
-    if (m_currentProgram && InspectorInstrumentation::isWebGLProgramDisabled(*this, *m_currentProgram))
-        return;
 
     clearIfComposited(ClearCallerDrawOrClear);
 
@@ -2709,8 +2572,6 @@ void WebGLRenderingContextBase::drawArrays(GCGLenum mode, GCGLint first, GCGLsiz
 #endif
 
     {
-        InspectorScopedShaderProgramHighlight scopedHighlight(*this, m_currentProgram.get());
-
         m_context->drawArrays(mode, first, count);
     }
 
@@ -2750,9 +2611,6 @@ void WebGLRenderingContextBase::drawElements(GCGLenum mode, GCGLsizei count, GCG
         return;
 #endif
 
-    if (m_currentProgram && InspectorInstrumentation::isWebGLProgramDisabled(*this, *m_currentProgram))
-        return;
-
     clearIfComposited(ClearCallerDrawOrClear);
 
 #if !USE(ANGLE)
@@ -2779,8 +2637,6 @@ void WebGLRenderingContextBase::drawElements(GCGLenum mode, GCGLsizei count, GCG
 #endif
 
     {
-        InspectorScopedShaderProgramHighlight scopedHighlight(*this, m_currentProgram.get());
-
         m_context->drawElements(mode, count, type, static_cast<GCGLintptr>(offset));
     }
 
@@ -6533,9 +6389,6 @@ bool WebGLRenderingContextBase::checkTextureCompleteness(const char* functionNam
         RefPtr<WebGLTexture> tex2D;
         RefPtr<WebGLTexture> texCubeMap;
         if (prepareToDraw) {
-            printToConsole(MessageLevel::Error, makeString("WebGL: ", functionName, ": texture bound to texture unit ", badTexture,
-                " is not renderable. It maybe non-power-of-2 and have incompatible texture filtering or is not 'texture complete',"
-                " or it is a float/half-float type with linear filtering and without the relevant float/half-float linear extension enabled."));
             tex2D = m_blackTexture2D.get();
             texCubeMap = m_blackTextureCubeMap.get();
         } else {
@@ -7145,29 +6998,6 @@ bool WebGLRenderingContextBase::validateStencilFunc(const char* functionName, GC
     }
 }
 
-void WebGLRenderingContextBase::printToConsole(MessageLevel level, const String& message)
-{
-    if (!m_synthesizedErrorsToConsole || !m_numGLErrorsToConsoleAllowed)
-        return;
-
-    std::unique_ptr<Inspector::ConsoleMessage> consoleMessage;
-
-    // Error messages can occur during function calls, so show stack traces for them.
-    if (level == MessageLevel::Error) {
-        Ref<Inspector::ScriptCallStack> stackTrace = Inspector::createScriptCallStack(JSExecState::currentState());
-        consoleMessage = makeUnique<Inspector::ConsoleMessage>(MessageSource::Rendering, MessageType::Log, level, message, WTFMove(stackTrace));
-    } else
-        consoleMessage = makeUnique<Inspector::ConsoleMessage>(MessageSource::Rendering, MessageType::Log, level, message);
-
-    auto* canvas = htmlCanvas();
-    if (canvas)
-        canvas->document().addConsoleMessage(WTFMove(consoleMessage));
-
-    --m_numGLErrorsToConsoleAllowed;
-    if (!m_numGLErrorsToConsoleAllowed)
-        printToConsole(MessageLevel::Warning, "WebGL: too many errors, no more errors will be reported to the console for this context.");
-}
-
 bool WebGLRenderingContextBase::validateFramebufferTarget(GCGLenum target)
 {
     if (target == GraphicsContextGL::FRAMEBUFFER)
@@ -7609,20 +7439,11 @@ void WebGLRenderingContextBase::maybeRestoreContext()
         // a lost context.
         break;
     case ExtensionsGL::GUILTY_CONTEXT_RESET_ARB:
-        // The rendering context is not restored if this context was
-        // guilty of causing the graphics reset.
-        printToConsole(MessageLevel::Warning, "WARNING: WebGL content on the page caused the graphics card to reset; not restoring the context");
         return;
     case ExtensionsGL::INNOCENT_CONTEXT_RESET_ARB:
         // Always allow the context to be restored.
         break;
     case ExtensionsGL::UNKNOWN_CONTEXT_RESET_ARB:
-        // Warn. Ideally, prompt the user telling them that WebGL
-        // content on the page might have caused the graphics card to
-        // reset and ask them whether they want to continue running
-        // the content. Only if they say "yes" should we start
-        // attempting to restore the context.
-        printToConsole(MessageLevel::Warning, "WARNING: WebGL content on the page might have caused the graphics card to reset");
         break;
     }
 
@@ -7743,10 +7564,6 @@ namespace {
 
 void WebGLRenderingContextBase::synthesizeGLError(GCGLenum error, const char* functionName, const char* description, ConsoleDisplayPreference display)
 {
-    if (m_synthesizedErrorsToConsole && display == DisplayInConsole) {
-        String str = "WebGL: " + GetErrorString(error) +  ": " + String(functionName) + ": " + String(description);
-        printToConsole(MessageLevel::Error, str);
-    }
     m_context->synthesizeGLError(error);
 }
 
@@ -8004,9 +7821,6 @@ void WebGLRenderingContextBase::activityStateDidChange(OptionSet<ActivityState::
 void WebGLRenderingContextBase::didComposite()
 {
     m_compositingResultsNeedUpdating = false;
-
-    if (UNLIKELY(hasActiveInspectorCanvasCallTracer()))
-        InspectorInstrumentation::didFinishRecordingCanvasFrame(*this);
 }
 
 void WebGLRenderingContextBase::forceContextLost()
@@ -8016,7 +7830,6 @@ void WebGLRenderingContextBase::forceContextLost()
 
 void WebGLRenderingContextBase::recycleContext()
 {
-    printToConsole(MessageLevel::Error, "There are too many active WebGL contexts on this page, the oldest context will be lost.");
     // Using SyntheticLostContext means the developer won't be able to force the restoration
     // of the context by calling preventDefault() in a "webglcontextlost" event handler.
     forceLostContext(SyntheticLostContext);

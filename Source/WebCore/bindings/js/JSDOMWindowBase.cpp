@@ -31,7 +31,6 @@
 #include "EventLoop.h"
 #include "FetchResponse.h"
 #include "Frame.h"
-#include "InspectorController.h"
 #include "JSDOMBindingSecurity.h"
 #include "JSDOMGlobalObjectTask.h"
 #include "JSDOMWindowCustom.h"
@@ -69,7 +68,6 @@ using namespace JSC;
 const ClassInfo JSDOMWindowBase::s_info = { "Window", &JSDOMGlobalObject::s_info, nullptr, nullptr, CREATE_METHOD_TABLE(JSDOMWindowBase) };
 
 const GlobalObjectMethodTable JSDOMWindowBase::s_globalObjectMethodTable = {
-    &supportsRichSourceInfo,
     &shouldInterruptScript,
     &javaScriptRuntimeFlags,
     &queueMicrotaskToEventLoop,
@@ -150,22 +148,6 @@ ScriptExecutionContext* JSDOMWindowBase::scriptExecutionContext() const
 void JSDOMWindowBase::printErrorMessage(const String& message) const
 {
     printErrorMessageForFrame(wrapped().frame(), message);
-}
-
-bool JSDOMWindowBase::supportsRichSourceInfo(const JSGlobalObject* object)
-{
-    const JSDOMWindowBase* thisObject = static_cast<const JSDOMWindowBase*>(object);
-    Frame* frame = thisObject->wrapped().frame();
-    if (!frame)
-        return false;
-
-    Page* page = frame->page();
-    if (!page)
-        return false;
-
-    bool enabled = page->inspectorController().enabled();
-    ASSERT(enabled || !thisObject->debugger());
-    return enabled;
 }
 
 static inline bool shouldInterruptScriptToPreventInfiniteRecursionWhenClosingPage(Page* page)

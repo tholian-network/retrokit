@@ -62,8 +62,6 @@ messages -> WebPage LegacyReceiver {
     TapHighlightAtPosition(WebKit::TapIdentifier requestID, WebCore::FloatPoint point)
     DidRecognizeLongPress()
     HandleDoubleTapForDoubleClickAtPoint(WebCore::IntPoint point, OptionSet<WebKit::WebEvent::Modifier> modifiers, WebKit::TransactionID lastLayerTreeTransactionId)
-    InspectorNodeSearchMovedToPosition(WebCore::FloatPoint point)
-    InspectorNodeSearchEndedAtPosition(WebCore::FloatPoint point)
     BlurFocusedElement()
     SelectWithGesture(WebCore::IntPoint point, enum:uint8_t WebKit::GestureType gestureType, enum:uint8_t WebKit::GestureRecognizerState gestureState, bool isInteractingWithFocusedElement) -> (WebCore::IntPoint point, enum:uint8_t WebKit::GestureType gestureType, enum:uint8_t WebKit::GestureRecognizerState gestureState, OptionSet<WebKit::SelectionFlags> flags) Async
     UpdateSelectionWithTouches(WebCore::IntPoint point, enum:uint8_t WebKit::SelectionTouch touches, bool baseIsStart) -> (WebCore::IntPoint point, enum:uint8_t WebKit::SelectionTouch touch, OptionSet<WebKit::SelectionFlags> selectionFlags) Async
@@ -128,14 +126,6 @@ GenerateSyntheticEditingCommand(enum:uint8_t WebKit::SyntheticEditingCommandType
 #endif
 
     SetControlledByAutomation(bool controlled)
-
-    ConnectInspector(String targetId, Inspector::FrontendChannel::ConnectionType connectionType)
-    DisconnectInspector(String targetId)
-    SendMessageToTargetBackend(String targetId, String message)
-
-#if ENABLE(REMOTE_INSPECTOR)
-    SetIndicating(bool indicating);
-#endif
 
 #if ENABLE(IOS_TOUCH_EVENTS)
     ResetPotentialTapSecurityOrigin()
@@ -335,14 +325,6 @@ GenerateSyntheticEditingCommand(enum:uint8_t WebKit::SyntheticEditingCommandType
     SetTextForActivePopupMenu(int32_t index)
 #if PLATFORM(GTK)
     FailedToShowPopupMenu()
-#endif
-
-#if ENABLE(CONTEXT_MENUS)
-    # Context menu.
-    DidShowContextMenu()
-    DidDismissContextMenu()
-    DidSelectItemFromActiveContextMenu(WebKit::WebContextMenuItemData menuItem)
-    ContextMenuForKeyEvent()
 #endif
 
     # Open panel.

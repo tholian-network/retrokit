@@ -33,9 +33,7 @@
 #include "ShareableBitmap.h"
 #include "ViewGestureController.h"
 #include "ViewSnapshotStore.h"
-#include "WebContextMenuProxyGtk.h"
 #include "WebHitTestResultData.h"
-#include "WebInspectorUIProxy.h"
 #include "WebKitInputMethodContext.h"
 #include "WebKitWebViewBase.h"
 #include "WebKitWebViewBaseInternal.h"
@@ -52,10 +50,6 @@ void webkitWebViewBaseSetMouseIsOverScrollbar(WebKitWebViewBase*, WebKit::WebHit
 void webkitWebViewBaseForwardNextKeyEvent(WebKitWebViewBase*);
 void webkitWebViewBaseForwardNextWheelEvent(WebKitWebViewBase*);
 void webkitWebViewBaseChildMoveResize(WebKitWebViewBase*, GtkWidget*, const WebCore::IntRect&);
-void webkitWebViewBaseSetInspectorViewSize(WebKitWebViewBase*, unsigned size);
-void webkitWebViewBaseSetActiveContextMenuProxy(WebKitWebViewBase*, WebKit::WebContextMenuProxyGtk*);
-WebKit::WebContextMenuProxyGtk* webkitWebViewBaseGetActiveContextMenuProxy(WebKitWebViewBase*);
-GdkEvent* webkitWebViewBaseTakeContextMenuEvent(WebKitWebViewBase*);
 void webkitWebViewBaseSetInputMethodState(WebKitWebViewBase*, std::optional<WebKit::InputMethodState>&&);
 void webkitWebViewBaseUpdateTextInputState(WebKitWebViewBase*);
 void webkitWebViewBaseSetContentsSize(WebKitWebViewBase*, const WebCore::IntSize&);
@@ -68,8 +62,6 @@ bool webkitWebViewBaseIsVisible(WebKitWebViewBase*);
 bool webkitWebViewBaseIsInWindow(WebKitWebViewBase*);
 
 void webkitWebViewBaseAddDialog(WebKitWebViewBase*, GtkWidget*);
-void webkitWebViewBaseAddWebInspector(WebKitWebViewBase*, GtkWidget* inspector, WebKit::AttachmentSide);
-void webkitWebViewBaseRemoveWebInspector(WebKitWebViewBase*, GtkWidget*);
 void webkitWebViewBaseResetClickCounter(WebKitWebViewBase*);
 void webkitWebViewBaseEnterAcceleratedCompositingMode(WebKitWebViewBase*, const WebKit::LayerTreeContext&);
 void webkitWebViewBaseUpdateAcceleratedCompositingMode(WebKitWebViewBase*, const WebKit::LayerTreeContext&);

@@ -125,9 +125,6 @@ messages -> WebProcess LegacyReceiver NotRefCounted {
 
 #if PLATFORM(COCOA)
     SetMediaMIMETypes(Vector<String> types)
-#if ENABLE(REMOTE_INSPECTOR)
-    EnableRemoteWebInspector();
-#endif
 #endif
 
 #if ENABLE(MEDIA_STREAM)

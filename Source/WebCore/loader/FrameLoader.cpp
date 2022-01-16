@@ -84,8 +84,6 @@
 #include "HistoryController.h"
 #include "HistoryItem.h"
 #include "IgnoreOpensDuringUnloadCountIncrementer.h"
-#include "InspectorController.h"
-#include "InspectorInstrumentation.h"
 #include "LinkLoader.h"
 #include "LoaderStrategy.h"
 #include "Logging.h"
@@ -652,10 +650,9 @@ void FrameLoader::clear(Document* newDocument, bool clearWindowProperties, bool 
 
     if (!neededClear)
         return;
-    
+
     // Do this after detaching the document so that the unload event works.
     if (clearWindowProperties) {
-        InspectorInstrumentation::frameWindowDiscarded(m_frame, m_frame.document()->domWindow());
         m_frame.document()->domWindow()->resetUnlessSuspendedForDocumentSuspension();
         m_frame.windowProxy().clearJSWindowProxiesNotMatchingDOMWindow(newDocument->domWindow(), m_frame.document()->backForwardCacheState() == Document::AboutToEnterBackForwardCache);
 
@@ -1682,7 +1679,6 @@ bool FrameLoader::willLoadMediaElementURL(URL& url, Node& initiatorNode)
 #endif
 
     ResourceRequest request(url);
-    request.setInspectorInitiatorNodeIdentifier(InspectorInstrumentation::identifierForNode(initiatorNode));
 
     unsigned long identifier;
     ResourceError error;
@@ -2407,14 +2403,9 @@ FrameLoadType FrameLoader::loadType() const
 {
     return m_loadType;
 }
-    
+
 CachePolicy FrameLoader::subresourceCachePolicy(const URL& url) const
 {
-    if (Page* page = m_frame.page()) {
-        if (page->isResourceCachingDisabledByWebInspector())
-            return CachePolicy::Reload;
-    }
-
     if (m_isComplete)
         return CachePolicy::Verify;
 
@@ -2426,7 +2417,7 @@ CachePolicy FrameLoader::subresourceCachePolicy(const URL& url) const
         if (parentCachePolicy != CachePolicy::Verify)
             return parentCachePolicy;
     }
-    
+
     switch (m_loadType) {
     case FrameLoadType::Reload:
         return CachePolicy::Revalidate;
@@ -2780,8 +2771,6 @@ String FrameLoader::userAgent(const URL& url) const
             userAgent = documentLoader->customUserAgent();
     }
 
-    InspectorInstrumentation::applyUserAgentOverride(m_frame, userAgent);
-
     if (!userAgent.isEmpty())
         return userAgent;
 
@@ -2838,8 +2827,6 @@ void FrameLoader::detachFromParent()
         // handlers might start a new subresource load in this frame.
         stopAllLoaders(ClearProvisionalItem::Yes, StopLoadingPolicy::AlwaysStopLoading);
     }
-
-    InspectorInstrumentation::frameDetachedFromParent(m_frame);
 
     detachViewsAndDocumentLoader();
 
@@ -2930,10 +2917,7 @@ void FrameLoader::updateRequestAndAddExtraFields(ResourceRequest& request, IsMai
     Page* page = frame().page();
     bool hasSpecificCachePolicy = request.cachePolicy() != ResourceRequestCachePolicy::UseProtocolCachePolicy;
 
-    if (page && page->isResourceCachingDisabledByWebInspector()) {
-        request.setCachePolicy(ResourceRequestCachePolicy::ReloadIgnoringCacheData);
-        loadType = FrameLoadType::ReloadFromOrigin;
-    } else if (!hasSpecificCachePolicy)
+    if (!hasSpecificCachePolicy)
         request.setCachePolicy(defaultRequestCachingPolicy(request, loadType, isMainResource));
 
     // The remaining modifications are only necessary for HTTP and HTTPS.
@@ -3608,14 +3592,12 @@ void FrameLoader::loadedResourceFromMemoryCache(CachedResource& resource, Resour
         return;
 
     if (!page->areMemoryCacheClientCallsEnabled()) {
-        InspectorInstrumentation::didLoadResourceFromMemoryCache(*page, m_documentLoader.get(), &resource);
         m_documentLoader->recordMemoryCacheLoadForFutureClientNotification(resource.resourceRequest());
         m_documentLoader->didTellClientAboutLoad(resource.url().string());
         return;
     }
 
     if (m_client->dispatchDidLoadResourceFromMemoryCache(m_documentLoader.get(), newRequest, resource.response(), resource.encodedSize())) {
-        InspectorInstrumentation::didLoadResourceFromMemoryCache(*page, m_documentLoader.get(), &resource);
         m_documentLoader->didTellClientAboutLoad(resource.url().string());
         return;
     }
@@ -3966,11 +3948,6 @@ void FrameLoader::dispatchDidClearWindowObjectInWorld(DOMWrapperWorld& world)
         return;
 
     m_client->dispatchDidClearWindowObjectInWorld(world);
-
-    if (Page* page = m_frame.page())
-        page->inspectorController().didClearWindowObjectInWorld(m_frame, world);
-
-    InspectorInstrumentation::didClearWindowObjectInWorld(m_frame, world);
 }
 
 void FrameLoader::dispatchGlobalObjectAvailableInAllWorlds()
@@ -4003,11 +3980,6 @@ void FrameLoader::didChangeTitle(DocumentLoader* loader)
         m_client->setMainFrameDocumentReady(true); // update observers with new DOMDocument
         m_client->dispatchDidReceiveTitle(loader->title());
     }
-
-#if ENABLE(REMOTE_INSPECTOR)
-    if (m_frame.isMainFrame())
-        m_frame.page()->remoteInspectorInformationDidChange();
-#endif
 }
 
 void FrameLoader::dispatchDidCommitLoad(std::optional<HasInsecureContent> initialHasInsecureContent, std::optional<UsedLegacyTLS> initialUsedLegacyTLS)
@@ -4019,13 +3991,6 @@ void FrameLoader::dispatchDidCommitLoad(std::optional<HasInsecureContent> initia
 
     if (m_frame.isMainFrame())
         m_frame.page()->didCommitLoad();
-
-    InspectorInstrumentation::didCommitLoad(m_frame, m_documentLoader.get());
-
-#if ENABLE(REMOTE_INSPECTOR)
-    if (m_frame.isMainFrame())
-        m_frame.page()->remoteInspectorInformationDidChange();
-#endif
 }
 
 void FrameLoader::tellClientAboutPastMemoryCacheLoads()

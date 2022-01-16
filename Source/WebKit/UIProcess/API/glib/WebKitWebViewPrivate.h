@@ -30,7 +30,6 @@
 #include "EditingRange.h"
 #include "InstallMissingMediaPluginsPermissionRequest.h"
 #include "UserMessage.h"
-#include "WebContextMenuItemData.h"
 #include "WebEvent.h"
 #include "WebHitTestResultData.h"
 #include "WebImage.h"
@@ -82,7 +81,6 @@ void webkitWebViewRemoveLoadingWebResource(WebKitWebView*, uint64_t resourceIden
 void webkitWebViewMaximizeWindow(WebKitWebView*, CompletionHandler<void()>&&);
 void webkitWebViewMinimizeWindow(WebKitWebView*, CompletionHandler<void()>&&);
 void webkitWebViewRestoreWindow(WebKitWebView*, CompletionHandler<void()>&&);
-void webkitWebViewPopulateContextMenu(WebKitWebView*, const Vector<WebKit::WebContextMenuItemData>& proposedMenu, const WebKit::WebHitTestResultData&, GVariant*);
 void webkitWebViewSubmitFormRequest(WebKitWebView*, WebKitFormSubmissionRequest*);
 void webkitWebViewHandleAuthenticationChallenge(WebKitWebView*, WebKit::AuthenticationChallengeProxy*);
 void webkitWebViewInsecureContentDetected(WebKitWebView*, WebKitInsecureContentEvent);

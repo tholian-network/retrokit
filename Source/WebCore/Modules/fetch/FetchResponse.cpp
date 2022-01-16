@@ -32,7 +32,6 @@
 
 #include "FetchRequest.h"
 #include "HTTPParsers.h"
-#include "InspectorInstrumentation.h"
 #include "JSBlob.h"
 #include "MIMETypeRegistry.h"
 #include "ReadableStreamSink.h"
@@ -239,8 +238,6 @@ void FetchResponse::fetch(ScriptExecutionContext& context, FetchRequest& request
         responseCallback(Exception { NotSupportedError, "ReadableStream uploading is not supported"_s });
         return;
     }
-
-    InspectorInstrumentation::willFetch(context, request.url().string());
 
     auto response = adoptRef(*new FetchResponse(context, FetchBody { }, FetchHeaders::create(FetchHeaders::Guard::Immutable), { }));
 

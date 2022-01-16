@@ -34,7 +34,6 @@
 #include "BroadcastChannelRegistry.h"
 #include "CacheStorageProvider.h"
 #include "ColorChooser.h"
-#include "ContextMenuClient.h"
 #include "CookieJar.h"
 #include "DOMPasteAccess.h"
 #include "DataListSuggestionPicker.h"
@@ -55,7 +54,6 @@
 #include "HTMLFormElement.h"
 #include "HistoryItem.h"
 #include "IDBConnectionToServer.h"
-#include "InspectorClient.h"
 #include "NetworkStorageSession.h"
 #include "Page.h"
 #include "PageConfiguration.h"
@@ -95,41 +93,6 @@ class EmptyBackForwardClient final : public BackForwardClient {
     unsigned forwardListCount() const final { return 0; }
     void close() final { }
 };
-
-#if ENABLE(CONTEXT_MENUS)
-
-class EmptyContextMenuClient final : public ContextMenuClient {
-    void contextMenuDestroyed() final { }
-
-    void downloadURL(const URL&) final { }
-    void searchWithGoogle(const Frame*) final { }
-    void lookUpInDictionary(Frame*) final { }
-    bool isSpeaking() final { return false; }
-    void speak(const String&) final { }
-    void stopSpeaking() final { }
-
-#if PLATFORM(COCOA)
-    void searchWithSpotlight() final { }
-#endif
-
-#if HAVE(TRANSLATION_UI_SERVICES)
-    void handleTranslation(const TranslationContextMenuInfo&) final { }
-#endif
-
-#if PLATFORM(GTK)
-    void insertEmoji(Frame&) final { }
-#endif
-
-#if USE(ACCESSIBILITY_CONTEXT_MENUS)
-    void showContextMenu() final { }
-#endif
-
-#if ENABLE(IMAGE_ANALYSIS)
-    bool supportsLookUpInImages() final { return false; }
-#endif
-};
-
-#endif // ENABLE(CONTEXT_MENUS)
 
 class EmptyDisplayRefreshMonitor final : public DisplayRefreshMonitor {
 public:
@@ -386,14 +349,6 @@ private:
 #if PLATFORM(COCOA) || PLATFORM(WIN)
     ResourceError blockedError(const ResourceRequest&) const final { return { }; }
 #endif
-};
-
-class EmptyInspectorClient final : public InspectorClient {
-    void inspectedPageDestroyed() final { }
-    Inspector::FrontendChannel* openLocalFrontend(InspectorController*) final { return nullptr; }
-    void bringFrontendToFront() final { }
-    void highlight() final { }
-    void hideHighlight() final { }
 };
 
 class EmptyPopupMenu : public PopupMenu {
@@ -1111,17 +1066,9 @@ PageConfiguration pageConfigurationWithEmptyClients(PAL::SessionID sessionID)
     static NeverDestroyed<EmptyChromeClient> dummyChromeClient;
     pageConfiguration.chromeClient = &dummyChromeClient.get();
 
-#if ENABLE(CONTEXT_MENUS)
-    static NeverDestroyed<EmptyContextMenuClient> dummyContextMenuClient;
-    pageConfiguration.contextMenuClient = &dummyContextMenuClient.get();
-#endif
-
 #if ENABLE(DRAG_SUPPORT)
     pageConfiguration.dragClient = makeUnique<EmptyDragClient>();
 #endif
-
-    static NeverDestroyed<EmptyInspectorClient> dummyInspectorClient;
-    pageConfiguration.inspectorClient = &dummyInspectorClient.get();
 
     pageConfiguration.diagnosticLoggingClient = makeUnique<EmptyDiagnosticLoggingClient>();
 
@@ -1129,7 +1076,7 @@ PageConfiguration pageConfigurationWithEmptyClients(PAL::SessionID sessionID)
     pageConfiguration.databaseProvider = adoptRef(*new EmptyDatabaseProvider);
     pageConfiguration.storageNamespaceProvider = adoptRef(*new EmptyStorageNamespaceProvider);
     pageConfiguration.visitedLinkStore = adoptRef(*new EmptyVisitedLinkStore);
-    
+
     return pageConfiguration;
 }
 

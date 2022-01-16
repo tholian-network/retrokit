@@ -33,7 +33,5 @@
 typedef struct _WebKitPrintOperation  WebKitPrintOperation;
 typedef struct _WebKitFindController  WebKitFindController;
 typedef struct _WebKitWebView         WebKitWebView;
-typedef struct _WebKitContextMenu     WebKitContextMenu;
-typedef struct _WebKitContextMenuItem WebKitContextMenuItem;
 
 #endif /* WebKitForward_h */

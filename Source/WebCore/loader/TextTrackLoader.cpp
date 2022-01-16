@@ -37,7 +37,6 @@
 #include "Document.h"
 #include "HTMLMediaElement.h"
 #include "HTMLTrackElement.h"
-#include "InspectorInstrumentation.h"
 #include "Logging.h"
 #include "SharedBuffer.h"
 #include "VTTCue.h"
@@ -45,7 +44,7 @@
 #include <wtf/NeverDestroyed.h>
 
 namespace WebCore {
-    
+
 TextTrackLoader::TextTrackLoader(TextTrackLoaderClient& client, Document& document)
     : m_client(client)
     , m_document(document)
@@ -150,9 +149,6 @@ bool TextTrackLoader::load(const URL& url, HTMLTrackElement& element)
 
     // FIXME: Do we really need to call completeURL here?
     ResourceRequest resourceRequest(m_document.completeURL(url.string()));
-
-    if (auto mediaElement = element.mediaElement())
-        resourceRequest.setInspectorInitiatorNodeIdentifier(InspectorInstrumentation::identifierForNode(*mediaElement));
 
     auto cueRequest = createPotentialAccessControlRequest(WTFMove(resourceRequest), WTFMove(options), m_document, element.mediaElementCrossOriginAttribute());
     m_resource = m_document.cachedResourceLoader().requestTextTrack(WTFMove(cueRequest)).value_or(nullptr);

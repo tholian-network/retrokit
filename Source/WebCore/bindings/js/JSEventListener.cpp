@@ -32,7 +32,6 @@
 #include "JSEvent.h"
 #include "JSEventTarget.h"
 #include "JSExecState.h"
-#include "JSExecStateInstrumentation.h"
 #include "JSWorkerGlobalScope.h"
 #include "ScriptController.h"
 #include "WorkerGlobalScope.h"
@@ -184,8 +183,6 @@ void JSEventListener::handleEvent(ScriptExecutionContext& scriptExecutionContext
     JSValue thisValue = handleEventFunction == jsFunction ? toJS(lexicalGlobalObject, globalObject, event.currentTarget()) : jsFunction;
     NakedPtr<JSC::Exception> uncaughtException;
     JSValue retval = JSExecState::profiledCall(lexicalGlobalObject, JSC::ProfilingReason::Other, handleEventFunction, callData, thisValue, args, uncaughtException);
-
-    InspectorInstrumentation::didCallFunction(&scriptExecutionContext);
 
     if (jsFunctionWindow)
         jsFunctionWindow->setCurrentEvent(savedEvent.get());

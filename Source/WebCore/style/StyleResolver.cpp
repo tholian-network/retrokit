@@ -44,7 +44,6 @@
 #include "Frame.h"
 #include "FrameSelection.h"
 #include "FrameView.h"
-#include "InspectorInstrumentation.h"
 #include "KeyframeList.h"
 #include "Logging.h"
 #include "MediaList.h"
@@ -219,11 +218,6 @@ ElementStyle Resolver::styleForElement(const Element& element, const RenderStyle
     if (element.isLink()) {
         style.setIsLink(true);
         InsideLink linkState = document().visitedLinkState().determineLinkState(element);
-        if (linkState != InsideLink::NotInside) {
-            bool forceVisited = InspectorInstrumentation::forcePseudoState(element, CSSSelector::PseudoClassVisited);
-            if (forceVisited)
-                linkState = InsideLink::InsideVisited;
-        }
         style.setInsideLink(linkState);
     }
 

@@ -39,7 +39,6 @@ interface mixin GlobalEventHandlers {
     attribute EventHandler onchange;
     attribute EventHandler onclick;
     attribute EventHandler onclose;
-    attribute EventHandler oncontextmenu;
     attribute EventHandler oncuechange;
     attribute EventHandler ondblclick;
     attribute EventHandler ondrag;

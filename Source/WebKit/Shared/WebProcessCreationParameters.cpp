@@ -56,9 +56,6 @@ void WebProcessCreationParameters::encode(IPC::Encoder& encoder) const
     encoder << containerCachesDirectoryExtensionHandle;
     encoder << containerTemporaryDirectoryExtensionHandle;
 #endif
-#if PLATFORM(COCOA) && ENABLE(REMOTE_INSPECTOR)
-    encoder << enableRemoteWebInspectorExtensionHandle;
-#endif
     encoder << wtfLoggingChannels;
     encoder << webCoreLoggingChannels;
     encoder << webKitLoggingChannels;
@@ -219,7 +216,7 @@ bool WebProcessCreationParameters::decode(IPC::Decoder& decoder, WebProcessCreat
 {
     if (!decoder.decode(parameters.injectedBundlePath))
         return false;
-    
+
     std::optional<SandboxExtension::Handle> injectedBundlePathExtensionHandle;
     decoder >> injectedBundlePathExtensionHandle;
     if (!injectedBundlePathExtensionHandle)
@@ -235,7 +232,7 @@ bool WebProcessCreationParameters::decode(IPC::Decoder& decoder, WebProcessCreat
         return false;
 
 #if PLATFORM(IOS_FAMILY)
-    
+
     std::optional<SandboxExtension::Handle> cookieStorageDirectoryExtensionHandle;
     decoder >> cookieStorageDirectoryExtensionHandle;
     if (!cookieStorageDirectoryExtensionHandle)
@@ -254,13 +251,6 @@ bool WebProcessCreationParameters::decode(IPC::Decoder& decoder, WebProcessCreat
         return false;
     parameters.containerTemporaryDirectoryExtensionHandle = WTFMove(*containerTemporaryDirectoryExtensionHandle);
 
-#endif
-#if PLATFORM(COCOA) && ENABLE(REMOTE_INSPECTOR)
-    std::optional<SandboxExtension::Handle> enableRemoteWebInspectorExtensionHandle;
-    decoder >> enableRemoteWebInspectorExtensionHandle;
-    if (!enableRemoteWebInspectorExtensionHandle)
-        return false;
-    parameters.enableRemoteWebInspectorExtensionHandle = WTFMove(*enableRemoteWebInspectorExtensionHandle);
 #endif
 
     if (!decoder.decode(parameters.wtfLoggingChannels))
@@ -353,7 +343,7 @@ bool WebProcessCreationParameters::decode(IPC::Decoder& decoder, WebProcessCreat
         return false;
     if (!decoder.decode(parameters.uiProcessBundleResourcePath))
         return false;
-    
+
     std::optional<SandboxExtension::Handle> uiProcessBundleResourcePathExtensionHandle;
     decoder >> uiProcessBundleResourcePathExtensionHandle;
     if (!uiProcessBundleResourcePathExtensionHandle)

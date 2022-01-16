@@ -175,10 +175,6 @@
 #include "WebAuthnProcessConnectionInfo.h"
 #endif
 
-#if ENABLE(REMOTE_INSPECTOR)
-#include <JavaScriptCore/RemoteInspector.h>
-#endif
-
 #if ENABLE(GPU_PROCESS)
 #include "RemoteMediaPlayerManager.h"
 #endif
@@ -245,7 +241,6 @@ WebProcess::WebProcess()
 #if PLATFORM(IOS_FAMILY)
     , m_viewUpdateDispatcher(ViewUpdateDispatcher::create())
 #endif
-    , m_webInspectorInterruptDispatcher(WebInspectorInterruptDispatcher::create())
     , m_webLoaderStrategy(*new WebLoaderStrategy)
     , m_cacheStorageProvider(WebCacheStorageProvider::create())
     , m_broadcastChannelRegistry(WebBroadcastChannelRegistry::create())
@@ -299,7 +294,7 @@ void WebProcess::initializeProcess(const AuxiliaryProcessInitializationParameter
     WTF::setProcessPrivileges({ });
 
     MessagePortChannelProvider::setSharedProvider(WebMessagePortChannelProvider::singleton());
-    
+
     platformInitializeProcess(parameters);
     updateCPULimit();
 }
@@ -321,8 +316,6 @@ void WebProcess::initializeConnection(IPC::Connection* connection)
     m_viewUpdateDispatcher->initializeConnection(connection);
 #endif // PLATFORM(IOS_FAMILY)
 
-    m_webInspectorInterruptDispatcher->initializeConnection(connection);
-
     for (auto& supplement : m_supplements.values())
         supplement->initializeConnection(connection);
 
@@ -330,7 +323,7 @@ void WebProcess::initializeConnection(IPC::Connection* connection)
 }
 
 void WebProcess::initializeWebProcess(WebProcessCreationParameters&& parameters)
-{    
+{
     TraceScope traceScope(InitializeWebProcessStart, InitializeWebProcessEnd);
 
     ASSERT(m_pageMap.isEmpty());
@@ -473,20 +466,13 @@ void WebProcess::initializeWebProcess(WebProcessCreationParameters&& parameters)
     setMemoryCacheDisabled(parameters.memoryCacheDisabled);
 
     WebCore::RuntimeEnabledFeatures::sharedFeatures().setAttrStyleEnabled(parameters.attrStyleEnabled);
-    
+
     commonVM().setGlobalConstRedeclarationShouldThrow(parameters.shouldThrowExceptionForGlobalConstantRedeclaration);
 
     ScriptExecutionContext::setCrossOriginMode(parameters.crossOriginMode);
 
 #if ENABLE(SERVICE_CONTROLS)
     setEnabledServices(parameters.hasImageServices, parameters.hasSelectionServices, parameters.hasRichContentServices);
-#endif
-
-#if ENABLE(REMOTE_INSPECTOR) && PLATFORM(COCOA)
-    if (std::optional<audit_token_t> auditToken = parentProcessConnection()->getAuditToken()) {
-        RetainPtr<CFDataRef> auditData = adoptCF(CFDataCreate(nullptr, (const UInt8*)&*auditToken, sizeof(*auditToken)));
-        Inspector::RemoteInspector::singleton().setParentProcessInformation(WebCore::presentingApplicationPID(), auditData);
-    }
 #endif
 
 #if ENABLE(SERVICE_WORKER)

@@ -67,7 +67,6 @@
 #include "HTTPParsers.h"
 #include "History.h"
 #include "IdleRequestOptions.h"
-#include "InspectorInstrumentation.h"
 #include "JSDOMExceptionHandling.h"
 #include "JSDOMPromiseDeferred.h"
 #include "JSDOMWindowBase.h"
@@ -138,7 +137,6 @@
 #endif
 
 namespace WebCore {
-using namespace Inspector;
 
 static const Seconds defaultTransientActivationDuration { 2_s };
 
@@ -484,7 +482,6 @@ void DOMWindow::willDetachDocumentFromFrame()
         m_performance->clearResourceTimings();
 
     JSDOMWindowBase::fireFrameClearedWatchpointsForWindow(this);
-    InspectorInstrumentation::frameWindowDiscarded(*frame(), this);
 }
 
 void DOMWindow::registerObserver(Observer& observer)
@@ -860,10 +857,6 @@ ExceptionOr<void> DOMWindow::postMessage(JSC::JSGlobalObject& lexicalGlobalObjec
 
     // Capture stack trace only when inspector front-end is loaded as it may be time consuming.
     RefPtr<ScriptCallStack> stackTrace;
-    if (InspectorInstrumentation::consoleAgentEnabled(sourceDocument.get()))
-        stackTrace = createScriptCallStack(JSExecState::currentState());
-
-    auto postMessageIdentifier = InspectorInstrumentation::willPostMessage(*frame());
 
     MessageWithMessagePorts message { messageData.releaseReturnValue(), disentangledPorts.releaseReturnValue() };
 
@@ -871,7 +864,7 @@ ExceptionOr<void> DOMWindow::postMessage(JSC::JSGlobalObject& lexicalGlobalObjec
     RefPtr<WindowProxy> incumbentWindowProxy = incumbentWindow.frame() ? &incumbentWindow.frame()->windowProxy() : nullptr;
     auto userGestureToForward = UserGestureIndicator::currentUserGesture();
 
-    document()->eventLoop().queueTask(TaskSource::PostedMessageQueue, [this, protectedThis = makeRef(*this), message = WTFMove(message), incumbentWindowProxy = WTFMove(incumbentWindowProxy), sourceOrigin = WTFMove(sourceOrigin), userGestureToForward = WTFMove(userGestureToForward), postMessageIdentifier, stackTrace = WTFMove(stackTrace), targetOrigin = WTFMove(target)]() mutable {
+    document()->eventLoop().queueTask(TaskSource::PostedMessageQueue, [this, protectedThis = makeRef(*this), message = WTFMove(message), incumbentWindowProxy = WTFMove(incumbentWindowProxy), sourceOrigin = WTFMove(sourceOrigin), userGestureToForward = WTFMove(userGestureToForward), 0, stackTrace = WTFMove(stackTrace), targetOrigin = WTFMove(target)]() mutable {
         if (!isCurrentlyDisplayedInFrame())
             return;
 
@@ -887,21 +880,15 @@ ExceptionOr<void> DOMWindow::postMessage(JSC::JSGlobalObject& lexicalGlobalObjec
                         pageConsole->addMessage(MessageSource::Security, MessageLevel::Error, message);
                 }
 
-                InspectorInstrumentation::didFailPostMessage(frame, postMessageIdentifier);
                 return;
             }
         }
 
         UserGestureIndicator userGestureIndicator(userGestureToForward);
-        InspectorInstrumentation::willDispatchPostMessage(frame, postMessageIdentifier);
 
         auto event = MessageEvent::create(MessagePort::entanglePorts(*document(), WTFMove(message.transferredPorts)), message.message.releaseNonNull(), sourceOrigin, { }, incumbentWindowProxy ? std::make_optional(MessageEventSource(WTFMove(incumbentWindowProxy))) : std::nullopt);
         dispatchEvent(event);
-
-        InspectorInstrumentation::didDispatchPostMessage(frame, postMessageIdentifier);
     });
-
-    InspectorInstrumentation::didPostMessage(*frame(), postMessageIdentifier, lexicalGlobalObject);
 
     return { };
 }
@@ -2039,8 +2026,6 @@ void DOMWindow::dispatchLoadEvent()
         if (RefPtr owner = ownerFrame->ownerElement())
             owner->dispatchEvent(Event::create(eventNames().loadEvent, Event::CanBubble::No, Event::IsCancelable::No));
     }
-
-    InspectorInstrumentation::loadEventFired(frame());
 }
 
 void DOMWindow::dispatchEvent(Event& event, EventTarget* target)
@@ -2080,19 +2065,10 @@ void DOMWindow::dispatchEvent(Event& event, EventTarget* target)
 
     RefPtr<Frame> protectedFrame;
     bool hasListenersForEvent = false;
-    if (UNLIKELY(InspectorInstrumentation::hasFrontends())) {
-        protectedFrame = frame();
-        hasListenersForEvent = hasEventListeners(event.type());
-        if (hasListenersForEvent)
-            InspectorInstrumentation::willDispatchEventOnWindow(protectedFrame.get(), event, *this);
-    }
 
     // FIXME: We should use EventDispatcher everywhere.
     fireEventListeners(event, EventInvokePhase::Capturing);
     fireEventListeners(event, EventInvokePhase::Bubbling);
-
-    if (hasListenersForEvent)
-        InspectorInstrumentation::didDispatchEventOnWindow(protectedFrame.get(), event);
 
     event.resetAfterDispatch();
 }

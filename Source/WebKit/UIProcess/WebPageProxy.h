@@ -28,7 +28,6 @@
 #include "APIObject.h"
 #include "Connection.h"
 #include "ContentAsStringIncludesChildFrames.h"
-#include "ContextMenuContextData.h"
 #include "DataReference.h"
 #include "DownloadID.h"
 #include "DragControllerAction.h"
@@ -60,7 +59,6 @@
 #include "WKBase.h"
 #include "WKPagePrivate.h"
 #include "WebColorPicker.h"
-#include "WebContextMenuItemData.h"
 #include "WebCoreArgumentCoders.h"
 #include "WebDataListSuggestionsDropdown.h"
 #include "WebFrameProxy.h"
@@ -88,7 +86,6 @@
 #include <WebCore/InputMode.h>
 #include <WebCore/LayoutPoint.h>
 #include <WebCore/LayoutSize.h>
-#include <WebCore/MediaControlsContextMenuItem.h>
 #include <WebCore/MediaProducer.h>
 #include <WebCore/PageIdentifier.h>
 #include <WebCore/PlatformEvent.h>
@@ -103,7 +100,6 @@
 #include <WebCore/TextChecking.h>
 #include <WebCore/TextGranularity.h>
 #include <WebCore/TextManipulationController.h>
-#include <WebCore/TranslationContextMenuInfo.h>
 #include <WebCore/UserInterfaceLayoutDirection.h>
 #include <WebCore/ViewportArguments.h>
 #include <memory>
@@ -126,7 +122,6 @@
 #if PLATFORM(IOS_FAMILY)
 #include "GestureTypes.h"
 #include "WebAutocorrectionContext.h"
-#include <WebCore/InspectorOverlay.h>
 #endif
 
 #if PLATFORM(MACCATALYST)
@@ -170,7 +165,6 @@ interface ID3D11Device1;
 namespace API {
 class Attachment;
 class ContentWorld;
-class ContextMenuClient;
 class DestinationColorSpace;
 class Error;
 class FindClient;
@@ -185,10 +179,6 @@ class PolicyClient;
 class ResourceLoadClient;
 class UIClient;
 class URLRequest;
-}
-
-namespace Inspector {
-enum class InspectorTargetType : uint8_t;
 }
 
 namespace IPC {
@@ -324,7 +314,6 @@ class ViewSnapshot;
 class VisitedLinkStore;
 class WebBackForwardList;
 class WebBackForwardListItem;
-class WebContextMenuProxy;
 class WebEditCommandProxy;
 class PlaybackSessionManagerProxy;
 class UserMediaPermissionRequestProxy;
@@ -334,9 +323,7 @@ class WebKeyboardEvent;
 class WebMouseEvent;
 class WebNavigationState;
 class WebOpenPanelResultListenerProxy;
-class WebPageDebuggable;
 class WebPageGroup;
-class WebPageInspectorController;
 class WebProcessProxy;
 class WebURLSchemeHandler;
 class WebUserContentControllerProxy;
@@ -363,7 +350,6 @@ struct LoadParameters;
 struct NavigationActionData;
 struct PlatformPopupMenuData;
 struct PrintInfo;
-struct PDFContextMenu;
 struct ResourceLoadInfo;
 struct URLSchemeTaskParameters;
 struct UserMessage;
@@ -453,7 +439,7 @@ public:
     void detectDataInAllFrames(OptionSet<WebCore::DataDetectorType>, CompletionHandler<void(const DataDetectionResult&)>&&);
     void removeDataDetectedLinks(CompletionHandler<void(const DataDetectionResult&)>&&);
 #endif
-        
+
 #if ENABLE(ASYNC_SCROLLING) && PLATFORM(COCOA)
     RemoteScrollingCoordinatorProxy* scrollingCoordinatorProxy() const { return m_scrollingCoordinatorProxy.get(); }
 #endif
@@ -468,42 +454,16 @@ public:
     void resume(CompletionHandler<void(bool)>&&);
     bool isSuspended() const { return m_isSuspended; }
 
-    WebInspectorUIProxy* inspector() const;
-
     void resourceLoadDidSendRequest(ResourceLoadInfo&&, WebCore::ResourceRequest&&);
     void resourceLoadDidPerformHTTPRedirection(ResourceLoadInfo&&, WebCore::ResourceResponse&&, WebCore::ResourceRequest&&);
     void resourceLoadDidReceiveChallenge(ResourceLoadInfo&&, WebCore::AuthenticationChallenge&&);
     void resourceLoadDidReceiveResponse(ResourceLoadInfo&&, WebCore::ResourceResponse&&);
     void resourceLoadDidCompleteWithError(ResourceLoadInfo&&, WebCore::ResourceResponse&&, WebCore::ResourceError&&);
 
-    void didChangeInspectorFrontendCount(unsigned count) { m_inspectorFrontendCount = count; }
-    unsigned inspectorFrontendCount() const { return m_inspectorFrontendCount; }
-    bool hasInspectorFrontend() const { return m_inspectorFrontendCount > 0; }
-
     bool isControlledByAutomation() const { return m_controlledByAutomation; }
     void setControlledByAutomation(bool);
 
-    WebPageInspectorController& inspectorController() { return *m_inspectorController; }
-
-#if PLATFORM(IOS_FAMILY)
-    void showInspectorIndication();
-    void hideInspectorIndication();
-#endif
-
-    void createInspectorTarget(const String& targetId, Inspector::InspectorTargetType);
-    void destroyInspectorTarget(const String& targetId);
-    void sendMessageToInspectorFrontend(const String& targetId, const String& message);
-
     void getAllFrames(CompletionHandler<void(FrameTreeNodeData&&)>&&);
-
-#if ENABLE(REMOTE_INSPECTOR)
-    void setIndicating(bool);
-    bool allowsRemoteInspection() const;
-    void setAllowsRemoteInspection(bool);
-    String remoteInspectionNameOverride() const;
-    void setRemoteInspectionNameOverride(const String&);
-    void remoteInspectorInformationDidChange();
-#endif
 
 #if PLATFORM(IOS_FAMILY)
     bool allowsMediaDocumentInlinePlayback() const;
@@ -517,10 +477,6 @@ public:
     void systemPreviewActionTriggered(const WebCore::SystemPreviewInfo&, const String&);
 #endif
 
-#if ENABLE(CONTEXT_MENUS)
-    API::ContextMenuClient& contextMenuClient() { return *m_contextMenuClient; }
-    void setContextMenuClient(std::unique_ptr<API::ContextMenuClient>&&);
-#endif
     API::FindClient& findClient() { return *m_findClient; }
     void setFindClient(std::unique_ptr<API::FindClient>&&);
     API::FindMatchesClient& findMatchesClient() { return *m_findMatchesClient; }
@@ -877,7 +833,6 @@ public:
     NSWindow *platformWindow();
     void rootViewToWindow(const WebCore::IntRect& viewRect, WebCore::IntRect& windowRect);
 
-    NSView *inspectorAttachmentView();
     _WKRemoteObjectRegistry *remoteObjectRegistry();
 
     CGRect boundsOfLayerInLayerBackedWindowCoordinates(CALayer *) const;
@@ -1231,14 +1186,6 @@ public:
 
     void preferencesDidChange();
 
-#if ENABLE(CONTEXT_MENUS)
-    // Called by the WebContextMenuProxy.
-    void didShowContextMenu();
-    void didDismissContextMenu();
-    void contextMenuItemSelected(const WebContextMenuItemData&);
-    void handleContextMenuKeyEvent();
-#endif
-
     // Called by the WebOpenPanelResultListenerProxy.
 #if PLATFORM(IOS_FAMILY)
     void didChooseFilesForOpenPanelWithDisplayStringAndIcon(const Vector<String>&, const String& displayString, const API::Data* iconData);
@@ -1331,9 +1278,6 @@ public:
     void attemptSyntheticClick(const WebCore::FloatPoint&, OptionSet<WebKit::WebEvent::Modifier>, TransactionID layerTreeTransactionIdAtLastTouchStart);
     void didRecognizeLongPress();
     void handleDoubleTapForDoubleClickAtPoint(const WebCore::IntPoint&, OptionSet<WebEvent::Modifier>, TransactionID layerTreeTransactionIdAtLastTouchStart);
-
-    void inspectorNodeSearchMovedToPosition(const WebCore::FloatPoint&);
-    void inspectorNodeSearchEndedAtPosition(const WebCore::FloatPoint&);
 
     void blurFocusedElement();
     void setIsShowingInputViewForFocusedElement(bool);
@@ -1550,10 +1494,6 @@ public:
     void computeHasImageAnalysisResults(const URL& imageURL, ShareableBitmap& imageBitmap, ImageAnalysisType, CompletionHandler<void(bool)>&&);
 #endif
 
-#if ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
-    void showMediaControlsContextMenu(WebCore::FloatRect&&, Vector<WebCore::MediaControlsContextMenuItem>&&, CompletionHandler<void(WebCore::MediaControlsContextMenuItem::ID)>&&);
-#endif // ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
-
     static WebPageProxy* nonEphemeralWebPageProxy();
 
 #if ENABLE(ATTACHMENT_ELEMENT)
@@ -1720,17 +1660,9 @@ public:
 
     void disableServiceWorkerEntitlementInNetworkProcess();
     void clearServiceWorkerEntitlementOverride(CompletionHandler<void()>&&);
-        
+
 #if PLATFORM(COCOA)
     void grantAccessToCurrentPasteboardData(const String& pasteboardName);
-#endif
-
-#if PLATFORM(MAC)
-    NSMenu *platformActiveContextMenu() const;
-#endif
-
-#if ENABLE(CONTEXT_MENUS)
-    void platformDidSelectItemFromActiveContextMenu(const WebContextMenuItemData&);
 #endif
 
 #if ENABLE(MEDIA_USAGE)
@@ -1780,19 +1712,10 @@ public:
 
     void dispatchWheelEventWithoutScrolling(const WebWheelEvent&, CompletionHandler<void(bool)>&&);
 
-#if ENABLE(IMAGE_ANALYSIS) && ENABLE(CONTEXT_MENUS)
-    void handleContextMenuLookUpImage();
-#endif
-
 #if USE(APPKIT)
     void beginPreviewPanelControl(QLPreviewPanel *);
     void endPreviewPanelControl(QLPreviewPanel *);
     void closeSharedPreviewPanelIfNecessary();
-#endif
-
-#if HAVE(TRANSLATION_UI_SERVICES) && ENABLE(CONTEXT_MENUS)
-    bool canHandleContextMenuTranslation() const;
-    void handleContextMenuTranslation(const WebCore::TranslationContextMenuInfo&);
 #endif
 
 #if ENABLE(MEDIA_SESSION_COORDINATOR)
@@ -2067,10 +1990,6 @@ private:
     void showPopupMenu(const WebCore::IntRect& rect, uint64_t textDirection, const Vector<WebPopupItem>& items, int32_t selectedIndex, const PlatformPopupMenuData&);
     void hidePopupMenu();
 
-#if ENABLE(CONTEXT_MENUS)
-    void showContextMenu(ContextMenuContextData&&, const UserData&);
-#endif
-
 #if ENABLE(TELEPHONE_NUMBER_DETECTION)
 #if PLATFORM(MAC)
     void showTelephoneNumberMenu(const String& telephoneNumber, const WebCore::IntPoint&);
@@ -2089,7 +2008,7 @@ private:
 
     // Spotlight.
     void searchWithSpotlight(const String&);
-        
+
     void searchTheWeb(const String&);
 
     // Dictionary.
@@ -2173,12 +2092,6 @@ private:
     void updateInputContextAfterBlurringAndRefocusingElement();
     void focusedElementDidChangeInputMode(WebCore::InputMode);
     void didReleaseAllTouchPoints();
-
-    void showInspectorHighlight(const WebCore::InspectorOverlay::Highlight&);
-    void hideInspectorHighlight();
-
-    void enableInspectorNodeSearch();
-    void disableInspectorNodeSearch();
 #else
     void didReleaseAllTouchPoints() { }
 #endif // PLATFORM(IOS_FAMILY)
@@ -2339,9 +2252,6 @@ private:
     std::unique_ptr<API::FindMatchesClient> m_findMatchesClient;
     std::unique_ptr<API::DiagnosticLoggingClient> m_diagnosticLoggingClient;
     std::unique_ptr<API::ResourceLoadClient> m_resourceLoadClient;
-#if ENABLE(CONTEXT_MENUS)
-    std::unique_ptr<API::ContextMenuClient> m_contextMenuClient;
-#endif
     std::unique_ptr<WebPageInjectedBundleClient> m_injectedBundleClient;
     std::unique_ptr<PageLoadState::Observer> m_pageLoadStateObserver;
 
@@ -2374,8 +2284,6 @@ private:
     String m_customUserAgent;
     String m_customTextEncodingName;
     String m_overrideContentSecurityPolicy;
-
-    RefPtr<WebInspectorUIProxy> m_inspector;
 
 #if PLATFORM(COCOA)
     WeakObjCPtr<WKWebView> m_cocoaView;
@@ -2418,10 +2326,6 @@ private:
 #endif
 
     RefPtr<WebPopupMenuProxy> m_activePopupMenu;
-#if ENABLE(CONTEXT_MENUS)
-    RefPtr<WebContextMenuProxy> m_activeContextMenu;
-    ContextMenuContextData m_activeContextMenuContextData;
-#endif
     RefPtr<API::HitTestResult> m_lastMouseMoveHitTestResult;
 
     RefPtr<WebOpenPanelResultListenerProxy> m_openPanelResultListener;
@@ -2578,8 +2482,6 @@ private:
 
     bool m_controlledByAutomation { false };
 
-    unsigned m_inspectorFrontendCount { 0 };
-
 #if PLATFORM(COCOA)
     bool m_isSmartInsertDeleteEnabled { false };
 #endif
@@ -2729,11 +2631,6 @@ private:
 #if ENABLE(ATTACHMENT_ELEMENT)
     using IdentifierToAttachmentMap = HashMap<String, Ref<API::Attachment>>;
     IdentifierToAttachmentMap m_attachmentIdentifierToAttachmentMap;
-#endif
-
-    const std::unique_ptr<WebPageInspectorController> m_inspectorController;
-#if ENABLE(REMOTE_INSPECTOR)
-    std::unique_ptr<WebPageDebuggable> m_inspectorDebuggable;
 #endif
 
     std::optional<SpellDocumentTag> m_spellDocumentTag;

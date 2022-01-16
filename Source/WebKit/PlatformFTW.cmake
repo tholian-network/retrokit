@@ -47,8 +47,6 @@ list(APPEND WebKit_SOURCES
 
     UIProcess/CoordinatedGraphics/DrawingAreaProxyCoordinatedGraphics.cpp
 
-    UIProcess/Inspector/win/WebInspectorUIProxyWin.cpp
-
     UIProcess/Launcher/win/ProcessLauncherWin.cpp
 
     UIProcess/WebsiteData/curl/WebsiteDataStoreCurl.cpp
@@ -56,15 +54,12 @@ list(APPEND WebKit_SOURCES
     UIProcess/WebsiteData/win/WebsiteDataStoreWin.cpp
 
     UIProcess/win/PageClientImpl.cpp
-    UIProcess/win/WebContextMenuProxyWin.cpp
     UIProcess/win/WebPageProxyWin.cpp
     UIProcess/win/WebPopupMenuProxyWin.cpp
     UIProcess/win/WebProcessPoolWin.cpp
     UIProcess/win/WebView.cpp
 
     WebProcess/InjectedBundle/win/InjectedBundleWin.cpp
-
-    WebProcess/Inspector/win/WebInspectorUIWin.cpp
 
     WebProcess/WebCoreSupport/win/WebPopupMenuWin.cpp
 
@@ -92,12 +87,9 @@ list(APPEND WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/UIProcess/API/cpp/win"
     "${WEBKIT_DIR}/UIProcess/API/win"
     "${WEBKIT_DIR}/UIProcess/CoordinatedGraphics"
-    "${WEBKIT_DIR}/UIProcess/Inspector/socket"
-    "${WEBKIT_DIR}/UIProcess/Inspector/win"
     "${WEBKIT_DIR}/UIProcess/win"
     "${WEBKIT_DIR}/WebProcess/InjectedBundle/API/win"
     "${WEBKIT_DIR}/WebProcess/InjectedBundle/API/win/DOM"
-    "${WEBKIT_DIR}/WebProcess/Inspector/win"
     "${WEBKIT_DIR}/WebProcess/WebCoreSupport/win"
     "${WEBKIT_DIR}/WebProcess/WebPage/CoordinatedGraphics"
     "${WEBKIT_DIR}/WebProcess/WebPage/win"
@@ -160,19 +152,6 @@ list(APPEND WebKit_PRIVATE_LIBRARIES
     mfuuid.lib
     strmiids.lib
 )
-
-if (ENABLE_REMOTE_INSPECTOR)
-    list(APPEND WebKit_SOURCES
-        UIProcess/Inspector/socket/RemoteInspectorClient.cpp
-        UIProcess/Inspector/socket/RemoteInspectorProtocolHandler.cpp
-
-        UIProcess/Inspector/win/RemoteWebInspectorUIProxyWin.cpp
-    )
-
-    list(APPEND WebKit_INCLUDE_DIRECTORIES
-        "${WEBKIT_DIR}/UIProcess/socket"
-    )
-endif ()
 
 # Windows specific
 list(APPEND WebKit_PUBLIC_FRAMEWORK_HEADERS

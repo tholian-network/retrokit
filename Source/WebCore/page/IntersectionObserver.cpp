@@ -33,7 +33,6 @@
 #include "CSSTokenizer.h"
 #include "DOMWindow.h"
 #include "Element.h"
-#include "InspectorInstrumentation.h"
 #include "IntersectionObserverCallback.h"
 #include "IntersectionObserverEntry.h"
 #include "Performance.h"
@@ -284,9 +283,7 @@ void IntersectionObserver::notify()
     if (!context)
         return;
 
-    InspectorInstrumentation::willFireObserverCallback(*context, "IntersectionObserver"_s);
     m_callback->handleEvent(*this, WTFMove(takenRecords.records), *this);
-    InspectorInstrumentation::didFireObserverCallback(*context);
 }
 
 bool IntersectionObserver::isReachableFromOpaqueRoots(JSC::AbstractSlotVisitor& visitor) const

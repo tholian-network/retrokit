@@ -28,7 +28,6 @@
 
 #include "DOMWindow.h"
 #include "Document.h"
-#include "InspectorInstrumentation.h"
 #include "Performance.h"
 #include "PerformanceObserverEntryList.h"
 #include "RuntimeEnabledFeatures.h"
@@ -140,9 +139,7 @@ void PerformanceObserver::deliver()
     Vector<RefPtr<PerformanceEntry>> entries = std::exchange(m_entriesToDeliver, { });
     auto list = PerformanceObserverEntryList::create(WTFMove(entries));
 
-    InspectorInstrumentation::willFireObserverCallback(*context, "PerformanceObserver"_s);
     m_callback->handleEvent(*this, list, *this);
-    InspectorInstrumentation::didFireObserverCallback(*context);
 }
 
 Vector<String> PerformanceObserver::supportedEntryTypes(ScriptExecutionContext& context)

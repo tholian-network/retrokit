@@ -37,7 +37,6 @@
 #include "HTMLImageElement.h"
 #include "HTMLNames.h"
 #include "HTMLParserIdioms.h"
-#include "InspectorInstrumentation.h"
 #include "JSDOMPromiseDeferred.h"
 #include "LazyLoadImageObserver.h"
 #include "Page.h"
@@ -191,7 +190,6 @@ void ImageLoader::updateFromElement(RelevantMutation relevantMutation)
         URL imageURL = m_lazyImageLoadState == LazyImageLoadState::LoadImmediately
             ? m_image->url() : document.completeURL(sourceURI(attr));
         ResourceRequest resourceRequest(imageURL);
-        resourceRequest.setInspectorInitiatorNodeIdentifier(InspectorInstrumentation::identifierForNode(m_element));
 
         auto request = createPotentialAccessControlRequest(WTFMove(resourceRequest), WTFMove(options), document, crossOriginAttribute);
         request.setInitiator(element());

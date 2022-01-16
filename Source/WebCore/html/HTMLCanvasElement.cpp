@@ -49,7 +49,6 @@
 #include "ImageBuffer.h"
 #include "ImageData.h"
 #include "InMemoryDisplayList.h"
-#include "InspectorInstrumentation.h"
 #include "JSDOMConvertDictionary.h"
 #include "MIMETypeRegistry.h"
 #include "OffscreenCanvas.h"
@@ -602,9 +601,6 @@ void HTMLCanvasElement::paint(GraphicsContext& context, const LayoutRect& r)
             }
         }
     }
-
-    if (UNLIKELY(m_context && m_context->hasActiveInspectorCanvasCallTracer()))
-        InspectorInstrumentation::didFinishRecordingCanvasFrame(*m_context);
 }
 
 bool HTMLCanvasElement::isGPUBased() const

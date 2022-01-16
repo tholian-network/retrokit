@@ -120,8 +120,6 @@ const Cursor& Cursor::fromType(Cursor::Type type)
         return verticalTextCursor();
     case Cursor::Cell:
         return cellCursor();
-    case Cursor::ContextMenu:
-        return contextMenuCursor();
     case Cursor::Alias:
         return aliasCursor();
     case Cursor::Progress:
@@ -213,12 +211,6 @@ const Cursor& verticalTextCursor()
 const Cursor& cellCursor()
 {
     static NeverDestroyed<Cursor> c(Cursor::Cell);
-    return c;
-}
-
-const Cursor& contextMenuCursor()
-{
-    static NeverDestroyed<Cursor> c(Cursor::ContextMenu);
     return c;
 }
 

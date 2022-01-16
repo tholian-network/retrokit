@@ -395,16 +395,8 @@ void ScriptExecutionContext::reportException(const String& errorMessage, int lin
         return;
     }
 
-    // First report the original exception and only then all the nested ones.
-    if (!dispatchErrorEvent(errorMessage, lineNumber, columnNumber, sourceURL, exception, cachedScript))
-        logExceptionToConsole(errorMessage, sourceURL, lineNumber, columnNumber, callStack.copyRef());
-
     if (!m_pendingExceptions)
         return;
-
-    auto pendingExceptions = WTFMove(m_pendingExceptions);
-    for (auto& exception : *pendingExceptions)
-        logExceptionToConsole(exception->m_errorMessage, exception->m_sourceURL, exception->m_lineNumber, exception->m_columnNumber, WTFMove(exception->m_callStack));
 }
 
 void ScriptExecutionContext::reportUnhandledPromiseRejection(JSC::JSGlobalObject& state, JSC::JSPromise& promise, RefPtr<Inspector::ScriptCallStack>&& callStack)
@@ -445,11 +437,6 @@ void ScriptExecutionContext::reportUnhandledPromiseRejection(JSC::JSGlobalObject
     else
         message = makeUnique<Inspector::ConsoleMessage>(MessageSource::JS, MessageType::Log, MessageLevel::Error, errorMessage);
     addConsoleMessage(WTFMove(message));
-}
-
-void ScriptExecutionContext::addConsoleMessage(MessageSource source, MessageLevel level, const String& message, const String& sourceURL, unsigned lineNumber, unsigned columnNumber, JSC::JSGlobalObject* state, unsigned long requestIdentifier)
-{
-    addMessage(source, level, message, sourceURL, lineNumber, columnNumber, 0, state, requestIdentifier);
 }
 
 bool ScriptExecutionContext::dispatchErrorEvent(const String& errorMessage, int lineNumber, int columnNumber, const String& sourceURL, JSC::Exception* exception, CachedScript* cachedScript)

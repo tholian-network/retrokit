@@ -35,10 +35,8 @@ LocalizedStringsGtk.cpp
 ../../../WebKit/UIProcess/API/gtk/WebKitPrintCustomWidget.cpp
 ../../../WebKit/UIProcess/API/gtk/WebKitPrintOperation.cpp
 ../../../WebKit/UIProcess/API/gtk/WebKitScriptDialogImpl.cpp
-../../../WebKit/UIProcess/API/gtk/WebKitWebInspector.cpp
 ../../../WebKit/UIProcess/API/gtk/WebKitWebViewBase.cpp
 ../../../WebKit/UIProcess/API/gtk/WebKitWebViewGtk.cpp
-../../../WebKit/UIProcess/Inspector/gtk/WebKitInspectorWindow.cpp
 ../../../WebKit/UIProcess/gtk/WebColorPickerGtk.cpp
 ../../../WebKit/UIProcess/WebsiteData/WebsiteDataRecord.cpp
 ../../../WebKit/WebProcess/InjectedBundle/API/glib/WebKitWebHitTestResult.cpp

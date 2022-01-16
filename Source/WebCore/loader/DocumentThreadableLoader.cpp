@@ -43,7 +43,6 @@
 #include "DocumentLoader.h"
 #include "Frame.h"
 #include "FrameLoader.h"
-#include "InspectorInstrumentation.h"
 #include "LegacySchemeRegistry.h"
 #include "LoaderStrategy.h"
 #include "MixedContentChecker.h"
@@ -404,8 +403,6 @@ void DocumentThreadableLoader::didReceiveResponse(unsigned long identifier, cons
     ASSERT(m_client);
     ASSERT(response.type() != ResourceResponse::Type::Error);
 
-    InspectorInstrumentation::didReceiveThreadableLoaderResponse(*this, identifier);
-
     if (m_delayCallbacksForIntegrityCheck)
         return;
 
@@ -539,8 +536,6 @@ void DocumentThreadableLoader::preflightFailure(unsigned long identifier, const 
 {
     m_preflightChecker = std::nullopt;
 
-    InspectorInstrumentation::didFailLoading(m_document.frame(), m_document.frame()->loader().documentLoader(), identifier, error);
-
     if (m_shouldLogError == ShouldLogError::Yes)
         logError(m_document, error, m_options.initiator);
 
@@ -563,7 +558,7 @@ void DocumentThreadableLoader::loadRequest(ResourceRequest&& request, SecurityCh
         ResourceLoaderOptions options = m_options;
         options.clientCredentialPolicy = m_sameOriginRequest ? ClientCredentialPolicy::MayAskClientForCredentials : ClientCredentialPolicy::CannotAskClientForCredentials;
         options.contentSecurityPolicyImposition = ContentSecurityPolicyImposition::SkipPolicyCheck;
-        
+
         // If there is integrity metadata to validate, we must buffer.
         if (!m_options.integrity.isEmpty())
             options.dataBufferingPolicy = DataBufferingPolicy::BufferData;

@@ -30,7 +30,6 @@
 #include "APIArray.h"
 #include "APIAttachment.h"
 #include "APIContentWorld.h"
-#include "APIContextMenuClient.h"
 #include "APIDictionary.h"
 #include "APIFindClient.h"
 #include "APIFindMatchesClient.h"
@@ -102,16 +101,12 @@
 #include "WebBackForwardListCounts.h"
 #include "WebBackForwardListItem.h"
 #include "WebCertificateInfo.h"
-#include "WebContextMenuItem.h"
-#include "WebContextMenuProxy.h"
 #include "WebCoreArgumentCoders.h"
 #include "WebEditCommandProxy.h"
 #include "WebEventConversion.h"
 #include "WebFrame.h"
 #include "WebFramePolicyListenerProxy.h"
 #include "WebImage.h"
-#include "WebInspectorUIProxy.h"
-#include "WebInspectorUtilities.h"
 #include "WebKeyboardEvent.h"
 #include "WebNavigationDataStore.h"
 #include "WebNavigationState.h"
@@ -119,10 +114,8 @@
 #include "WebOpenPanelResultListenerProxy.h"
 #include "WebPage.h"
 #include "WebPageCreationParameters.h"
-#include "WebPageDebuggable.h"
 #include "WebPageGroup.h"
 #include "WebPageGroupData.h"
-#include "WebPageInspectorController.h"
 #include "WebPageMessages.h"
 #include "WebPageNetworkParameters.h"
 #include "WebPageProxyMessages.h"
@@ -244,10 +237,6 @@
 
 #if ENABLE(WEB_AUTHN)
 #include "WebAuthenticatorCoordinatorProxy.h"
-#endif
-
-#if ENABLE(REMOTE_INSPECTOR)
-#include <JavaScriptCore/RemoteInspector.h>
 #endif
 
 #if HAVE(SEC_KEY_PROXY)
@@ -448,9 +437,6 @@ WebPageProxy::WebPageProxy(PageClient& pageClient, WebProcessProxy& process, Ref
     , m_uiClient(makeUnique<API::UIClient>())
     , m_findClient(makeUnique<API::FindClient>())
     , m_findMatchesClient(makeUnique<API::FindMatchesClient>())
-#if ENABLE(CONTEXT_MENUS)
-    , m_contextMenuClient(makeUnique<API::ContextMenuClient>())
-#endif
     , m_navigationState(makeUnique<WebNavigationState>())
     , m_process(process)
     , m_pageGroup(*m_configuration->pageGroup())
@@ -477,10 +463,6 @@ WebPageProxy::WebPageProxy(PageClient& pageClient, WebProcessProxy& process, Ref
 #endif
     , m_pageLoadState(*this)
     , m_updateReportedMediaCaptureStateTimer(RunLoop::main(), this, &WebPageProxy::updateReportedMediaCaptureState)
-    , m_inspectorController(makeUnique<WebPageInspectorController>(*this))
-#if ENABLE(REMOTE_INSPECTOR)
-    , m_inspectorDebuggable(makeUnique<WebPageDebuggable>(*this))
-#endif
     , m_resetRecentCrashCountTimer(RunLoop::main(), this, &WebPageProxy::resetRecentCrashCount)
     , m_tryCloseTimeoutTimer(RunLoop::main(), this, &WebPageProxy::tryCloseTimedOut)
     , m_corsDisablingPatterns(m_configuration->corsDisablingPatterns())
@@ -513,8 +495,6 @@ WebPageProxy::WebPageProxy(PageClient& pageClient, WebProcessProxy& process, Ref
     m_preferences->addPage(*this);
     m_pageGroup->addPage(*this);
 
-    m_inspector = WebInspectorUIProxy::create(*this);
-
     if (hasRunningProcess())
         didAttachToRunningProcess();
 
@@ -522,7 +502,7 @@ WebPageProxy::WebPageProxy(PageClient& pageClient, WebProcessProxy& process, Ref
 
 #if PLATFORM(IOS_FAMILY)
     DeprecatedGlobalSettings::setDisableScreenSizeOverride(m_preferences->disableScreenSizeOverride());
-    
+
     if (m_configuration->preferences()->serviceWorkerEntitlementDisabledForTesting())
         disableServiceWorkerEntitlementInNetworkProcess();
 #endif
@@ -532,12 +512,6 @@ WebPageProxy::WebPageProxy(PageClient& pageClient, WebProcessProxy& process, Ref
         this->dispatchActivityStateChange();
     });
 #endif
-
-#if ENABLE(REMOTE_INSPECTOR)
-    m_inspectorDebuggable->setRemoteDebuggingAllowed(true);
-    m_inspectorDebuggable->init();
-#endif
-    m_inspectorController->init();
 
 #if ENABLE(IPC_TESTING_API)
     if (m_preferences->ipcTestingAPIEnabled())
@@ -746,18 +720,6 @@ void WebPageProxy::setDiagnosticLoggingClient(std::unique_ptr<API::DiagnosticLog
     m_diagnosticLoggingClient = WTFMove(diagnosticLoggingClient);
 }
 
-#if ENABLE(CONTEXT_MENUS)
-void WebPageProxy::setContextMenuClient(std::unique_ptr<API::ContextMenuClient>&& contextMenuClient)
-{
-    if (!contextMenuClient) {
-        m_contextMenuClient = makeUnique<API::ContextMenuClient>();
-        return;
-    }
-
-    m_contextMenuClient = WTFMove(contextMenuClient);
-}
-#endif
-
 void WebPageProxy::setInjectedBundleClient(const WKPageInjectedBundleClientBase* client)
 {
     if (!client) {
@@ -807,10 +769,6 @@ void WebPageProxy::launchProcess(const RegistrableDomain& registrableDomain, Pro
     ASSERT(!hasRunningProcess());
 
     WEBPAGEPROXY_RELEASE_LOG(Loading, "launchProcess:");
-
-    // In case we are currently connected to the dummy process, we need to make sure the inspector proxy
-    // disconnects from the dummy process first.
-    m_inspector->reset();
 
     m_process->removeWebPage(*this, WebProcessProxy::EndsUsingDataStore::Yes);
     m_process->removeMessageReceiver(Messages::WebPageProxy::messageReceiverName(), m_webPageID);
@@ -965,12 +923,6 @@ void WebPageProxy::finishAttachingToWebProcess(ProcessLaunchReason reason)
     if (reason != ProcessLaunchReason::ProcessSwap)
         initializeWebPage();
 
-    m_inspector->updateForNewPageProcess(*this);
-
-#if ENABLE(REMOTE_INSPECTOR)
-    remoteInspectorInformationDidChange();
-#endif
-
     updateWheelEventActivityAfterProcessSwap();
 
     pageClient().didRelaunchProcess();
@@ -1056,11 +1008,6 @@ void WebPageProxy::initializeWebPage()
     setDrawingArea(pageClient().createDrawingAreaProxy(m_process));
     ASSERT(m_drawingArea);
 
-#if ENABLE(REMOTE_INSPECTOR)
-    // Initialize remote inspector connection now that we have a sub-process that is hosting one of our web views.
-    Inspector::RemoteInspector::singleton();
-#endif
-
     if (auto& attributedBundleIdentifier = m_configuration->attributedBundleIdentifier(); !!attributedBundleIdentifier) {
         WebPageNetworkParameters parameters { attributedBundleIdentifier };
         websiteDataStore().networkProcess().send(Messages::NetworkProcess::AddWebPageNetworkParameters(sessionID(), m_identifier, WTFMove(parameters)), 0);
@@ -1090,19 +1037,9 @@ void WebPageProxy::close()
             automationSession->willClosePage(*this);
     }
 
-#if ENABLE(CONTEXT_MENUS)
-    m_activeContextMenu = nullptr;
-#endif
-
     m_provisionalPage = nullptr;
 
-    m_inspector->invalidate();
-
     m_backForwardList->pageClosed();
-    m_inspectorController->pageClosed();
-#if ENABLE(REMOTE_INSPECTOR)
-    m_inspectorDebuggable = nullptr;
-#endif
     pageClient().pageClosed();
 
     m_process->disconnectFramesFromPage(this);
@@ -1116,9 +1053,6 @@ void WebPageProxy::close()
     m_findClient = makeUnique<API::FindClient>();
     m_findMatchesClient = makeUnique<API::FindMatchesClient>();
     m_diagnosticLoggingClient = nullptr;
-#if ENABLE(CONTEXT_MENUS)
-    m_contextMenuClient = makeUnique<API::ContextMenuClient>();
-#endif
 
     resetState(ResetStateReason::PageInvalidated);
 
@@ -1222,9 +1156,6 @@ void WebPageProxy::maybeInitializeSandboxExtensionHandle(WebProcessProxy& proces
 
     if (process.hasAssumedReadAccessToURL(url))
         return;
-
-    // Inspector resources are in a directory with assumed access.
-    RELEASE_ASSERT_WITH_SECURITY_IMPLICATION(!WebKit::isInspectorPage(*this));
 
     bool createdExtension = false;
 #if HAVE(AUDIT_TOKEN)
@@ -1824,58 +1755,6 @@ void WebPageProxy::setControlledByAutomation(bool controlled)
     websiteDataStore().networkProcess().send(Messages::NetworkProcess::SetSessionIsControlledByAutomation(m_websiteDataStore->sessionID(), m_controlledByAutomation), 0);
 }
 
-void WebPageProxy::createInspectorTarget(const String& targetId, Inspector::InspectorTargetType type)
-{
-    MESSAGE_CHECK(m_process, !targetId.isEmpty());
-    m_inspectorController->createInspectorTarget(targetId, type);
-}
-
-void WebPageProxy::destroyInspectorTarget(const String& targetId)
-{
-    MESSAGE_CHECK(m_process, !targetId.isEmpty());
-    m_inspectorController->destroyInspectorTarget(targetId);
-}
-
-void WebPageProxy::sendMessageToInspectorFrontend(const String& targetId, const String& message)
-{
-    m_inspectorController->sendMessageToInspectorFrontend(targetId, message);
-}
-
-#if ENABLE(REMOTE_INSPECTOR)
-void WebPageProxy::setIndicating(bool indicating)
-{
-    if (!hasRunningProcess())
-        return;
-
-    send(Messages::WebPage::SetIndicating(indicating));
-}
-
-bool WebPageProxy::allowsRemoteInspection() const
-{
-    return m_inspectorDebuggable->remoteDebuggingAllowed();
-}
-
-void WebPageProxy::setAllowsRemoteInspection(bool allow)
-{
-    m_inspectorDebuggable->setRemoteDebuggingAllowed(allow);
-}
-
-String WebPageProxy::remoteInspectionNameOverride() const
-{
-    return m_inspectorDebuggable->nameOverride();
-}
-
-void WebPageProxy::setRemoteInspectionNameOverride(const String& name)
-{
-    m_inspectorDebuggable->setNameOverride(name);
-}
-
-void WebPageProxy::remoteInspectorInformationDidChange()
-{
-    m_inspectorDebuggable->update();
-}
-#endif
-
 void WebPageProxy::setBackgroundColor(const std::optional<Color>& color)
 {
     if (m_backgroundColor == color)
@@ -2381,11 +2260,6 @@ void WebPageProxy::setNeedsFontAttributes(bool needsFontAttributes)
 
 bool WebPageProxy::maintainsInactiveSelection() const
 {
-    // Regardless of what the client wants to do, keep selections if a local Inspector is open.
-    // Otherwise, there is no way to use the console to inspect the state of a selection.
-    if (inspector() && inspector()->isVisible())
-        return true;
-
     return m_maintainsInactiveSelection;
 }
 
@@ -3471,8 +3345,6 @@ void WebPageProxy::commitProvisionalPage(FrameIdentifier frameID, FrameInfoData&
     swapToProvisionalPage(std::exchange(m_provisionalPage, nullptr));
 
     didCommitLoadForFrame(frameID, WTFMove(frameInfo), WTFMove(request), navigationID, mimeType, frameHasCustomContentProvider, frameLoadType, certificateInfo, usedLegacyTLS, forcedHasInsecureContent, mouseEventPolicy, userData);
-
-    m_inspectorController->didCommitProvisionalPage(oldWebPageID, m_webPageID);
 }
 
 void WebPageProxy::continueNavigationInNewProcess(API::Navigation& navigation, std::unique_ptr<SuspendedPageProxy>&& suspendedPage, Ref<WebProcessProxy>&& newProcess, ProcessSwapRequestedByClient processSwapRequestedByClient, ShouldTreatAsContinuingLoad shouldTreatAsContinuingLoad, RefPtr<API::WebsitePolicies>&& websitePolicies, std::optional<NetworkResourceLoadIdentifier> existingNetworkResourceLoadIdentifierToResume)
@@ -3521,10 +3393,7 @@ void WebPageProxy::continueNavigationInNewProcess(API::Navigation& navigation, s
         else
             m_provisionalPage->loadRequest(navigation, ResourceRequest { navigation->currentRequest() }, nullptr, shouldTreatAsContinuingLoad, isNavigatingToAppBoundDomain(), WTFMove(websitePoliciesData), existingNetworkResourceLoadIdentifierToResume);
     };
-    if (m_inspectorController->shouldPauseLoading(*m_provisionalPage))
-        m_inspectorController->setContinueLoadingCallback(*m_provisionalPage, WTFMove(continuation));
-    else
-        continuation();
+    continuation();
 }
 
 bool WebPageProxy::isPageOpenedByDOMShowingInitialEmptyDocument() const
@@ -4805,9 +4674,6 @@ void WebPageProxy::didCommitLoadForFrame(FrameIdentifier frameID, FrameInfoData&
 #if ENABLE(ATTACHMENT_ELEMENT)
         invalidateAllAttachments();
 #endif
-#if ENABLE(REMOTE_INSPECTOR)
-        remoteInspectorInformationDidChange();
-#endif
 #if USE(APPKIT)
         closeSharedPreviewPanelIfNecessary();
 #endif
@@ -5026,13 +4892,8 @@ void WebPageProxy::didReceiveTitleForFrame(FrameIdentifier frameID, const String
         m_pageLoadState.setTitle(transaction, title);
 
     frame->didChangeTitle(title);
-    
-    m_pageLoadState.commitChanges();
 
-#if ENABLE(REMOTE_INSPECTOR)
-    if (frame->isMainFrame())
-        remoteInspectorInformationDidChange();
-#endif
+    m_pageLoadState.commitChanges();
 }
 
 void WebPageProxy::didFirstLayoutForFrame(FrameIdentifier, const UserData& userData)
@@ -6264,13 +6125,6 @@ void WebPageProxy::didEndDateTimePicker()
 
 #endif
 
-WebInspectorUIProxy* WebPageProxy::inspector() const
-{
-    if (isClosed())
-        return nullptr;
-    return m_inspector.get();
-}
-
 void WebPageProxy::resourceLoadDidSendRequest(ResourceLoadInfo&& loadInfo, WebCore::ResourceRequest&& request)
 {
     if (m_resourceLoadClient)
@@ -6349,7 +6203,7 @@ void WebPageProxy::backForwardGoToItem(const BackForwardItemIdentifier& itemID, 
 
 void WebPageProxy::backForwardGoToItemShared(Ref<WebProcessProxy>&& process, const BackForwardItemIdentifier& itemID, CompletionHandler<void(const WebBackForwardListCounts&)>&& completionHandler)
 {
-    MESSAGE_CHECK_COMPLETION(m_process, !WebKit::isInspectorPage(*this), completionHandler(m_backForwardList->counts()));
+    MESSAGE_CHECK_COMPLETION(m_process, true, completionHandler(m_backForwardList->counts()));
 
     auto* item = m_backForwardList->itemForID(itemID);
     if (!item)
@@ -6581,168 +6435,6 @@ void WebPageProxy::hidePopupMenu()
     m_activePopupMenu->invalidate();
     m_activePopupMenu = nullptr;
 }
-
-#if ENABLE(CONTEXT_MENUS)
-void WebPageProxy::showContextMenu(ContextMenuContextData&& contextMenuContextData, const UserData& userData)
-{
-    // Showing a context menu runs a nested runloop, which can handle messages that cause |this| to get closed.
-    Ref<WebPageProxy> protect(*this);
-
-    // If the page is controlled by automation, entering a nested run loop while the menu is open
-    // can hang the page / WebDriver test. Pretend to show and immediately dismiss the context menu.
-    if (auto* automationSession = process().processPool().automationSession()) {
-        if (m_controlledByAutomation && automationSession->isSimulatingUserInteraction()) {
-            send(Messages::WebPage::DidShowContextMenu());
-            return;
-        }
-    }
-
-    // Discard any enqueued mouse events that have been delivered to the UIProcess whilst the WebProcess is still processing the
-    // MouseDown event that triggered this ShowContextMenu message. This can happen if we take too long to enter the nested runloop.
-    discardQueuedMouseEvents();
-
-    m_activeContextMenuContextData = contextMenuContextData;
-
-    m_activeContextMenu = pageClient().createContextMenuProxy(*this, WTFMove(contextMenuContextData), userData);
-
-    m_activeContextMenu->show();
-}
-
-void WebPageProxy::didShowContextMenu()
-{
-    // Don't send `Messages::WebPage::DidShowContextMenu` as that should've already been eagerly
-    // sent when requesting the context menu to show, regardless of the result of that request.
-
-    pageClient().didShowContextMenu();
-}
-
-void WebPageProxy::didDismissContextMenu()
-{
-    send(Messages::WebPage::DidDismissContextMenu());
-
-    pageClient().didDismissContextMenu();
-}
-
-void WebPageProxy::contextMenuItemSelected(const WebContextMenuItemData& item)
-{
-    // Application custom items don't need to round-trip through to WebCore in the WebProcess.
-    if (item.action() >= ContextMenuItemBaseApplicationTag) {
-        m_contextMenuClient->customContextMenuItemSelected(*this, item);
-        return;
-    }
-
-    struct DownloadInfo {
-        String url;
-        String suggestedFilename;
-    };
-    std::optional<DownloadInfo> downloadInfo;
-
-    switch (item.action()) {
-#if PLATFORM(COCOA)
-    case ContextMenuItemTagSmartCopyPaste:
-        setSmartInsertDeleteEnabled(!isSmartInsertDeleteEnabled());
-        return;
-
-    case ContextMenuItemTagSmartQuotes:
-        TextChecker::setAutomaticQuoteSubstitutionEnabled(!TextChecker::state().isAutomaticQuoteSubstitutionEnabled);
-        m_process->updateTextCheckerState();
-        return;
-
-    case ContextMenuItemTagSmartDashes:
-        TextChecker::setAutomaticDashSubstitutionEnabled(!TextChecker::state().isAutomaticDashSubstitutionEnabled);
-        m_process->updateTextCheckerState();
-        return;
-
-    case ContextMenuItemTagSmartLinks:
-        TextChecker::setAutomaticLinkDetectionEnabled(!TextChecker::state().isAutomaticLinkDetectionEnabled);
-        m_process->updateTextCheckerState();
-        return;
-
-    case ContextMenuItemTagTextReplacement:
-        TextChecker::setAutomaticTextReplacementEnabled(!TextChecker::state().isAutomaticTextReplacementEnabled);
-        m_process->updateTextCheckerState();
-        return;
-
-    case ContextMenuItemTagCorrectSpellingAutomatically:
-        TextChecker::setAutomaticSpellingCorrectionEnabled(!TextChecker::state().isAutomaticSpellingCorrectionEnabled);
-        m_process->updateTextCheckerState();
-        return;
-
-    case ContextMenuItemTagShowSubstitutions:
-        TextChecker::toggleSubstitutionsPanelIsShowing();
-        return;
-#endif
-
-    case ContextMenuItemTagDownloadImageToDisk:
-        downloadInfo = {{ m_activeContextMenuContextData.webHitTestResultData().absoluteImageURL, { } }};
-        break;
-
-    case ContextMenuItemTagDownloadLinkToDisk: {
-        auto& hitTestResult = m_activeContextMenuContextData.webHitTestResultData();
-        downloadInfo = {{ hitTestResult.absoluteLinkURL, hitTestResult.linkSuggestedFilename }};
-        break;
-    }
-
-    case ContextMenuItemTagDownloadMediaToDisk:
-        downloadInfo = {{ m_activeContextMenuContextData.webHitTestResultData().absoluteMediaURL, { } }};
-        break;
-
-    case ContextMenuItemTagCheckSpellingWhileTyping:
-        TextChecker::setContinuousSpellCheckingEnabled(!TextChecker::state().isContinuousSpellCheckingEnabled);
-        m_process->updateTextCheckerState();
-        return;
-
-    case ContextMenuItemTagCheckGrammarWithSpelling:
-        TextChecker::setGrammarCheckingEnabled(!TextChecker::state().isGrammarCheckingEnabled);
-        m_process->updateTextCheckerState();
-        return;
-
-    case ContextMenuItemTagShowSpellingPanel:
-        if (!TextChecker::spellingUIIsShowing())
-            advanceToNextMisspelling(true);
-        TextChecker::toggleSpellingUIIsShowing();
-        return;
-
-    case ContextMenuItemTagAddHighlightToNewQuickNote:
-#if ENABLE(APP_HIGHLIGHTS)
-        createAppHighlightInSelectedRange(CreateNewGroupForHighlight::Yes, HighlightRequestOriginatedInApp::No);
-#endif
-        return;
-
-    case ContextMenuItemTagAddHighlightToCurrentQuickNote:
-#if ENABLE(APP_HIGHLIGHTS)
-        createAppHighlightInSelectedRange(CreateNewGroupForHighlight::No, HighlightRequestOriginatedInApp::No);
-#endif
-        return;
-
-    case ContextMenuItemTagLearnSpelling:
-    case ContextMenuItemTagIgnoreSpelling:
-        ++m_pendingLearnOrIgnoreWordMessageCount;
-        break;
-
-    default:
-        break;
-    }
-
-    if (downloadInfo) {
-        auto& download = m_process->processPool().download(m_websiteDataStore, this, URL(URL(), downloadInfo->url), downloadInfo->suggestedFilename);
-        download.setDidStartCallback([this, weakThis = makeWeakPtr(*this)] (auto* download) {
-            if (!weakThis || !download)
-                return;
-            m_navigationClient->contextMenuDidCreateDownload(*this, *download);
-        });
-    }
-
-    platformDidSelectItemFromActiveContextMenu(item);
-
-    send(Messages::WebPage::DidSelectItemFromActiveContextMenu(item));
-}
-
-void WebPageProxy::handleContextMenuKeyEvent()
-{
-    send(Messages::WebPage::ContextMenuForKeyEvent());
-}
-#endif // ENABLE(CONTEXT_MENUS)
 
 #if PLATFORM(IOS_FAMILY)
 void WebPageProxy::didChooseFilesForOpenPanelWithDisplayStringAndIcon(const Vector<String>& fileURLs, const String& displayString, const API::Data* iconData)
@@ -7501,8 +7193,6 @@ void WebPageProxy::resetState(ResetStateReason resetStateReason)
     }
     closeOverlayedViews();
 
-    m_inspector->reset();
-
 #if ENABLE(MEDIA_USAGE)
     if (m_mediaUsageManager)
         m_mediaUsageManager->reset();
@@ -8208,16 +7898,6 @@ void WebPageProxy::updateWithTextRecognitionResult(TextRecognitionResult&& resul
 }
 
 #endif // ENABLE(IMAGE_ANALYSIS)
-
-#if ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
-
-void WebPageProxy::showMediaControlsContextMenu(FloatRect&& targetFrame, Vector<MediaControlsContextMenuItem>&& items, CompletionHandler<void(MediaControlsContextMenuItem::ID)>&& completionHandler)
-{
-    pageClient().showMediaControlsContextMenu(WTFMove(targetFrame), WTFMove(items), WTFMove(completionHandler));
-}
-
-#endif // ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
-
 
 void WebPageProxy::requestNotificationPermission(const String& originString, CompletionHandler<void(bool allowed)>&& completionHandler)
 {
@@ -10134,14 +9814,6 @@ void WebPageProxy::gpuProcessExited(GPUProcessTerminationReason)
     }
 #endif
 }
-#endif
-
-#if ENABLE(CONTEXT_MENUS) && !PLATFORM(MAC)
-
-void WebPageProxy::platformDidSelectItemFromActiveContextMenu(const WebContextMenuItemData&)
-{
-}
-
 #endif
 
 #if !PLATFORM(COCOA)

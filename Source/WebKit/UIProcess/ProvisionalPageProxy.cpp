@@ -40,7 +40,6 @@
 #include "WebErrors.h"
 #include "WebNavigationDataStore.h"
 #include "WebNavigationState.h"
-#include "WebPageInspectorController.h"
 #include "WebPageMessages.h"
 #include "WebPageProxy.h"
 #include "WebPageProxyMessages.h"
@@ -457,9 +456,6 @@ void ProvisionalPageProxy::didReceiveMessage(IPC::Connection& connection, IPC::D
         || decoder.messageName() == Messages::WebPageProxy::BackForwardAddItem::name()
         || decoder.messageName() == Messages::WebPageProxy::SetNetworkRequestsInProgress::name()
         || decoder.messageName() == Messages::WebPageProxy::WillGoToBackForwardListItem::name()
-        || decoder.messageName() == Messages::WebPageProxy::CreateInspectorTarget::name()
-        || decoder.messageName() == Messages::WebPageProxy::DestroyInspectorTarget::name()
-        || decoder.messageName() == Messages::WebPageProxy::SendMessageToInspectorFrontend::name()
         )
     {
         m_page.didReceiveMessage(connection, decoder);

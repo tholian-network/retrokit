@@ -39,7 +39,6 @@
 #include "Element.h"
 #include "EventLoop.h"
 #include "EventNames.h"
-#include "InspectorInstrumentation.h"
 #include "JSWebAnimation.h"
 #include "KeyframeEffect.h"
 #include "KeyframeEffectStack.h"
@@ -68,8 +67,6 @@ Ref<WebAnimation> WebAnimation::create(Document& document, AnimationEffect* effe
     result->setEffect(effect);
     result->setTimeline(&document.timeline());
 
-    InspectorInstrumentation::didCreateWebAnimation(result.get());
-
     return result;
 }
 
@@ -79,8 +76,6 @@ Ref<WebAnimation> WebAnimation::create(Document& document, AnimationEffect* effe
     result->setEffect(effect);
     if (timeline)
         result->setTimeline(timeline);
-
-    InspectorInstrumentation::didCreateWebAnimation(result.get());
 
     return result;
 }
@@ -98,8 +93,6 @@ WebAnimation::WebAnimation(Document& document)
 
 WebAnimation::~WebAnimation()
 {
-    InspectorInstrumentation::willDestroyWebAnimation(*this);
-
     if (m_timeline)
         m_timeline->forgetAnimation(this);
 
@@ -109,8 +102,6 @@ WebAnimation::~WebAnimation()
 
 void WebAnimation::contextDestroyed()
 {
-    InspectorInstrumentation::willDestroyWebAnimation(*this);
-
     ActiveDOMObject::contextDestroyed();
 }
 
@@ -139,15 +130,11 @@ void WebAnimation::effectTimingDidChange()
 
     if (m_effect)
         m_effect->animationDidChangeTimingProperties();
-
-    InspectorInstrumentation::didChangeWebAnimationEffectTiming(*this);
 }
 
 void WebAnimation::setId(const String& id)
 {
     m_id = id;
-
-    InspectorInstrumentation::didChangeWebAnimationName(*this);
 }
 
 void WebAnimation::setBindingsEffect(RefPtr<AnimationEffect>&& newEffect)
@@ -221,8 +208,6 @@ void WebAnimation::setEffectInternal(RefPtr<AnimationEffect>&& newEffect, bool d
         if (newTarget && previousTarget != newTarget)
             newTarget->animationWasAdded(*this);
     }
-
-    InspectorInstrumentation::didSetWebAnimationEffect(*this);
 }
 
 void WebAnimation::setTimeline(RefPtr<AnimationTimeline>&& timeline)
@@ -288,8 +273,6 @@ void WebAnimation::effectTargetDidChange(const std::optional<const Styleable>& p
         // This could have changed whether we have replaced animations, so we may need to schedule an update.
         m_timeline->animationTimingDidChange(*this);
     }
-
-    InspectorInstrumentation::didChangeWebAnimationEffectTarget(*this);
 }
 
 std::optional<double> WebAnimation::bindingsStartTime() const

@@ -46,8 +46,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/UIProcess/Automation"
     "${WEBKIT_DIR}/UIProcess/Downloads"
     "${WEBKIT_DIR}/UIProcess/GPU"
-    "${WEBKIT_DIR}/UIProcess/Inspector"
-    "${WEBKIT_DIR}/UIProcess/Inspector/Agents"
     "${WEBKIT_DIR}/UIProcess/Launcher"
     "${WEBKIT_DIR}/UIProcess/Media"
     "${WEBKIT_DIR}/UIProcess/Network"
@@ -74,7 +72,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/WebProcess/InjectedBundle/API"
     "${WEBKIT_DIR}/WebProcess/InjectedBundle/API/c"
     "${WEBKIT_DIR}/WebProcess/InjectedBundle/DOM"
-    "${WEBKIT_DIR}/WebProcess/Inspector"
     "${WEBKIT_DIR}/WebProcess/Launching"
     "${WEBKIT_DIR}/WebProcess/MediaCache"
     "${WEBKIT_DIR}/WebProcess/MediaStream"
@@ -160,9 +157,6 @@ set(WebKit_MESSAGES_IN_FILES
 
     UIProcess/GPU/GPUProcessProxy
 
-    UIProcess/Inspector/RemoteWebInspectorUIProxy
-    UIProcess/Inspector/WebInspectorUIProxy
-
     UIProcess/Network/NetworkProcessProxy
 
     UIProcess/UserContent/WebUserContentControllerProxy
@@ -185,11 +179,6 @@ set(WebKit_MESSAGES_IN_FILES
     WebProcess/GPU/media/RemoteAudioSourceProviderManager
     WebProcess/GPU/media/RemoteRemoteCommandListener
     WebProcess/GPU/media/SourceBufferPrivateRemote
-
-    WebProcess/Inspector/RemoteWebInspectorUI
-    WebProcess/Inspector/WebInspector
-    WebProcess/Inspector/WebInspectorInterruptDispatcher
-    WebProcess/Inspector/WebInspectorUI
 
     WebProcess/MediaSession/RemoteMediaSessionCoordinator
 

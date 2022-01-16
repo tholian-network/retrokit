@@ -213,14 +213,6 @@ messages -> WebPageProxy {
     RequestTextRecognition(URL imageURL, WebKit::ShareableBitmap::Handle imageData) -> (struct WebCore::TextRecognitionResult result) Async
 #endif
 
-#if HAVE(TRANSLATION_UI_SERVICES) && ENABLE(CONTEXT_MENUS)
-    HandleContextMenuTranslation(struct WebCore::TranslationContextMenuInfo info)
-#endif
-
-#if ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
-    ShowMediaControlsContextMenu(WebCore::FloatRect targetFrame, Vector<WebCore::MediaControlsContextMenuItem> items) -> (WebCore::MediaControlsContextMenuItem::ID selectedItemID) Async
-#endif // ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
-
     RequestDOMPasteAccess(WebCore::IntRect elementRect, String originIdentifier) -> (enum:uint8_t WebCore::DOMPasteAccessResponse response) Synchronous
 
     # Find messages
@@ -235,10 +227,6 @@ messages -> WebPageProxy {
     # PopupMenu messages
     ShowPopupMenu(WebCore::IntRect rect, uint64_t textDirection, Vector<WebKit::WebPopupItem> items, int32_t selectedIndex, struct WebKit::PlatformPopupMenuData data)
     HidePopupMenu()
-
-#if ENABLE(CONTEXT_MENUS)
-    ShowContextMenu(WebKit::ContextMenuContextData contextMenuContextData, WebKit::UserData userData)
-#endif
 
     # Database messages
     ExceededDatabaseQuota(WebCore::FrameIdentifier frameID, String originIdentifier, String databaseName, String databaseDisplayName, uint64_t currentQuota, uint64_t currentOriginUsage, uint64_t currentDatabaseUsage, uint64_t expectedUsage) -> (uint64_t newQuota) Synchronous
@@ -364,26 +352,12 @@ messages -> WebPageProxy {
     FocusedElementDidChangeInputMode(enum:uint8_t WebCore::InputMode mode)
     ScrollingNodeScrollWillStartScroll()
     ScrollingNodeScrollDidEndScroll()
-    ShowInspectorHighlight(struct WebCore::InspectorOverlay::Highlight highlight)
-    HideInspectorHighlight()
-
-    ShowInspectorIndication()
-    HideInspectorIndication()
-
-    EnableInspectorNodeSearch()
-    DisableInspectorNodeSearch()
 
     UpdateStringForFind(String findString)
     HandleAutocorrectionContext(struct WebKit::WebAutocorrectionContext context)
 
     ShowDataDetectorsUIForPositionInformation(struct WebKit::InteractionInformationAtPosition information)
 #endif
-
-    DidChangeInspectorFrontendCount(uint64_t count)
-
-    CreateInspectorTarget(String targetId, enum:uint8_t Inspector::InspectorTargetType type)
-    DestroyInspectorTarget(String targetId)
-    SendMessageToInspectorFrontend(String targetId, String message)
 
     # Search popup menus
     SaveRecentSearches(String name, Vector<WebCore::RecentSearch> searchItems)

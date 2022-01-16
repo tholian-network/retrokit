@@ -169,7 +169,7 @@ const char* DatabaseTransactionTask::debugTaskName() const
 #endif
 
 // *** DatabaseTableNamesTask ***
-// Retrieves a list of all tables in the database - for WebInspector support.
+// Retrieves a list of all tables in the database.
 
 DatabaseTableNamesTask::DatabaseTableNamesTask(Database& database, DatabaseTaskSynchronizer& synchronizer, Vector<String>& result)
     : DatabaseTask(database, &synchronizer)

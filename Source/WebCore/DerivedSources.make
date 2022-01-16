@@ -746,11 +746,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/html/track/VideoTrackList.idl \
     $(WebCore)/mathml/MathMLElement.idl \
     $(WebCore)/mathml/MathMLMathElement.idl \
-    $(WebCore)/inspector/CommandLineAPIHost.idl \
-    $(WebCore)/inspector/InspectorAuditAccessibilityObject.idl \
-    $(WebCore)/inspector/InspectorAuditDOMObject.idl \
-    $(WebCore)/inspector/InspectorAuditResourcesObject.idl \
-    $(WebCore)/inspector/InspectorFrontendHost.idl \
     $(WebCore)/loader/appcache/DOMApplicationCache.idl \
     $(WebCore)/page/BarProp.idl \
     $(WebCore)/page/Crypto.idl \
@@ -966,18 +961,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/svg/SVGViewSpec.idl \
     $(WebCore)/svg/SVGZoomAndPan.idl \
     $(WebCore)/svg/SVGZoomEvent.idl \
-    $(WebCore)/testing/GCObservation.idl \
-    $(WebCore)/testing/InternalSettings.idl \
-    $(WebCore)/testing/Internals.idl \
-    $(WebCore)/testing/InternalsMapLike.idl \
-    $(WebCore)/testing/InternalsSetLike.idl \
-    $(WebCore)/testing/MallocStatistics.idl \
-    $(WebCore)/testing/MemoryInfo.idl \
-    $(WebCore)/testing/MockContentFilterSettings.idl \
-    $(WebCore)/testing/MockPageOverlay.idl \
-    $(WebCore)/testing/MockWebAuthenticationConfiguration.idl \
-    $(WebCore)/testing/ServiceWorkerInternals.idl \
-    $(WebCore)/testing/TypeConversions.idl \
     $(WebCore)/workers/AbstractWorker.idl \
     $(WebCore)/workers/DedicatedWorkerGlobalScope.idl \
     $(WebCore)/workers/Worker.idl \
@@ -1014,7 +997,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/xml/XPathNSResolver.idl \
     $(WebCore)/xml/XPathResult.idl \
     $(WebCore)/xml/XSLTProcessor.idl \
-    InternalSettingsGenerated.idl \
     CSSStyleDeclaration+PropertyNames.idl \
 #
 
@@ -1397,9 +1379,6 @@ WEB_PREFERENCES_INPUT_FILES = \
 #
 
 GENERATE_SETTINGS = \
-    InternalSettingsGenerated.cpp \
-    InternalSettingsGenerated.idl \
-    InternalSettingsGenerated.h \
     Settings.cpp \
     Settings.h \
 #
@@ -1524,16 +1503,6 @@ endif
 ifneq ($(NO_SUPPLEMENTAL_FILES),1)
 -include $(JS_DOM_HEADERS:.h=.dep)
 endif
-
-# Inspector interfaces
-
-all : CommandLineAPIModuleSource.h
-
-CommandLineAPIModuleSource.h : $(WebCore)/inspector/CommandLineAPIModuleSource.js
-	echo "//# sourceURL=__InjectedScript_CommandLineAPIModuleSource.js" > CommandLineAPIModuleSource.min.js
-	$(PYTHON) $(JavaScriptCore_SCRIPTS_DIR)/jsmin.py < $(WebCore)/inspector/CommandLineAPIModuleSource.js >> CommandLineAPIModuleSource.min.js
-	$(PERL) $(JavaScriptCore_SCRIPTS_DIR)/xxd.pl CommandLineAPIModuleSource_js CommandLineAPIModuleSource.min.js CommandLineAPIModuleSource.h
-	$(DELETE) CommandLineAPIModuleSource.min.js
 
 # WebCore JS Builtins
 

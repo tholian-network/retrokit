@@ -226,7 +226,6 @@ oncanplaythrough
 onchange
 onclick
 onclose
-oncontextmenu
 oncopy
 oncut
 ondblclick

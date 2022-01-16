@@ -39,7 +39,6 @@
 #include "Icon.h"
 #include "ImageBuffer.h"
 #include "InputMode.h"
-#include "MediaControlsContextMenuItem.h"
 #include "MediaProducer.h"
 #include "PointerCharacteristics.h"
 #include "PopupMenu.h"
@@ -519,10 +518,6 @@ public:
     }
 #endif
     virtual bool needsImageOverlayControllerForSelectionPainting() const { return false; }
-
-#if ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
-    virtual void showMediaControlsContextMenu(FloatRect&&, Vector<MediaControlsContextMenuItem>&&, CompletionHandler<void(MediaControlsContextMenuItem::ID)>&& completionHandler) { completionHandler(MediaControlsContextMenuItem::invalidID); }
-#endif // ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
 
 #if ENABLE(TEXT_AUTOSIZING)
     virtual void textAutosizingUsesIdempotentModeChanged() { }

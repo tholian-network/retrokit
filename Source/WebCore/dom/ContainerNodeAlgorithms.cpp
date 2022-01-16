@@ -28,7 +28,6 @@
 
 #include "HTMLFrameOwnerElement.h"
 #include "HTMLTextAreaElement.h"
-#include "InspectorInstrumentation.h"
 #include "ScriptDisallowedScope.h"
 #include "ShadowRoot.h"
 #include "TypedElementDescendantIterator.h"
@@ -89,8 +88,6 @@ static void notifyNodeInsertedIntoTree(ContainerNode& parentOfInsertedTree, Node
 NodeVector notifyChildNodeInserted(ContainerNode& parentOfInsertedTree, Node& node)
 {
     ASSERT(ScriptDisallowedScope::InMainThread::hasDisallowedScope());
-
-    InspectorInstrumentation::didInsertDOMNode(node.document(), node);
 
     Ref<Document> protectDocument(node.document());
     Ref<Node> protectNode(node);

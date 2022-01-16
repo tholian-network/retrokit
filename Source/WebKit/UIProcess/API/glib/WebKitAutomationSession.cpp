@@ -85,9 +85,6 @@ private:
 
     void didDisconnectFromRemote(WebAutomationSession&) override
     {
-#if ENABLE(REMOTE_INSPECTOR)
-        webkitWebContextWillCloseAutomationSession(m_session->priv->webContext);
-#endif
     }
 
     void requestNewPageWithOptions(WebAutomationSession&, API::AutomationSessionBrowsingContextOptions options, CompletionHandler<void(WebPageProxy*)>&& completionHandler) override
@@ -314,59 +311,6 @@ static void webkit_automation_session_class_init(WebKitAutomationSessionClass* s
         WEBKIT_TYPE_WEB_VIEW, 0,
         G_TYPE_NONE);
 }
-
-#if ENABLE(REMOTE_INSPECTOR)
-static WebKitNetworkProxyMode parseProxyCapabilities(const Inspector::RemoteInspector::Client::SessionCapabilities::Proxy& proxy, WebKitNetworkProxySettings** settings)
-{
-    if (proxy.type == "system")
-        return WEBKIT_NETWORK_PROXY_MODE_DEFAULT;
-
-    if (proxy.type == "direct")
-        return WEBKIT_NETWORK_PROXY_MODE_NO_PROXY;
-
-    if (!proxy.ignoreAddressList.isEmpty()) {
-        GUniquePtr<char*> ignoreAddressList(static_cast<char**>(g_new0(char*, proxy.ignoreAddressList.size() + 1)));
-        unsigned i = 0;
-        for (const auto& ignoreAddress : proxy.ignoreAddressList)
-            ignoreAddressList.get()[i++] = g_strdup(ignoreAddress.utf8().data());
-        *settings = webkit_network_proxy_settings_new(nullptr, ignoreAddressList.get());
-    } else
-        *settings = webkit_network_proxy_settings_new(nullptr, nullptr);
-
-    if (proxy.ftpURL)
-        webkit_network_proxy_settings_add_proxy_for_scheme(*settings, "ftp", proxy.ftpURL->utf8().data());
-    if (proxy.httpURL)
-        webkit_network_proxy_settings_add_proxy_for_scheme(*settings, "http", proxy.httpURL->utf8().data());
-    if (proxy.httpsURL)
-        webkit_network_proxy_settings_add_proxy_for_scheme(*settings, "https", proxy.httpsURL->utf8().data());
-    if (proxy.socksURL)
-        webkit_network_proxy_settings_add_proxy_for_scheme(*settings, "socks", proxy.socksURL->utf8().data());
-
-    return WEBKIT_NETWORK_PROXY_MODE_CUSTOM;
-}
-
-WebKitAutomationSession* webkitAutomationSessionCreate(WebKitWebContext* webContext, const char* sessionID, const Inspector::RemoteInspector::Client::SessionCapabilities& capabilities)
-{
-    auto* session = WEBKIT_AUTOMATION_SESSION(g_object_new(WEBKIT_TYPE_AUTOMATION_SESSION, "id", sessionID, nullptr));
-    session->priv->webContext = webContext;
-    if (capabilities.acceptInsecureCertificates)
-        webkit_website_data_manager_set_tls_errors_policy(webkit_web_context_get_website_data_manager(webContext), WEBKIT_TLS_ERRORS_POLICY_IGNORE);
-
-    for (auto& certificate : capabilities.certificates) {
-        GRefPtr<GTlsCertificate> tlsCertificate = adoptGRef(g_tls_certificate_new_from_file(certificate.second.utf8().data(), nullptr));
-        if (tlsCertificate)
-            webkit_web_context_allow_tls_certificate_for_host(webContext, tlsCertificate.get(), certificate.first.utf8().data());
-    }
-    if (capabilities.proxy) {
-        WebKitNetworkProxySettings* proxySettings = nullptr;
-        auto proxyMode = parseProxyCapabilities(*capabilities.proxy, &proxySettings);
-        webkit_website_data_manager_set_network_proxy_settings(webkit_web_context_get_website_data_manager(webContext), proxyMode, proxySettings);
-        if (proxySettings)
-            webkit_network_proxy_settings_free(proxySettings);
-    }
-    return session;
-}
-#endif
 
 WebAutomationSession& webkitAutomationSessionGetSession(WebKitAutomationSession* session)
 {

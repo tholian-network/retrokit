@@ -46,7 +46,6 @@ class InjectedBundleRangeHandle;
 class InjectedBundleScriptWorld;
 class PageBanner;
 class WebFrame;
-class WebInspector;
 class WebPage;
 class WebPageGroupProxy;
 class WebPageOverlay;
@@ -57,7 +56,6 @@ WK_ADD_API_MAPPING(WKBundleCSSStyleDeclarationRef, InjectedBundleCSSStyleDeclara
 WK_ADD_API_MAPPING(WKBundleDOMWindowExtensionRef, InjectedBundleDOMWindowExtension)
 WK_ADD_API_MAPPING(WKBundleFrameRef, WebFrame)
 WK_ADD_API_MAPPING(WKBundleHitTestResultRef, InjectedBundleHitTestResult)
-WK_ADD_API_MAPPING(WKBundleInspectorRef, WebInspector)
 WK_ADD_API_MAPPING(WKBundleNavigationActionRef, InjectedBundleNavigationAction)
 WK_ADD_API_MAPPING(WKBundleNodeHandleRef, InjectedBundleNodeHandle)
 WK_ADD_API_MAPPING(WKBundlePageBannerRef, PageBanner)

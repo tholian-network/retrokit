@@ -28,7 +28,6 @@
 
 #include "Animation.h"
 #include "DocumentTimeline.h"
-#include "InspectorInstrumentation.h"
 #include "KeyframeEffect.h"
 #include "TransitionEvent.h"
 #include <wtf/IsoMallocInlines.h>
@@ -43,8 +42,6 @@ Ref<CSSTransition> CSSTransition::create(const Styleable& owningElement, CSSProp
     auto result = adoptRef(*new CSSTransition(owningElement, property, generationTime, backingAnimation, *oldStyle, newStyle, reversingAdjustedStartStyle, reversingShorteningFactor));
     result->initialize(oldStyle, newStyle, nullptr);
     result->setTimingProperties(delay, duration);
-
-    InspectorInstrumentation::didCreateWebAnimation(result.get());
 
     return result;
 }

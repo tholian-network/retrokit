@@ -38,7 +38,6 @@
 #include "HTMLLinkElement.h"
 #include "HTMLSlotElement.h"
 #include "HTMLStyleElement.h"
-#include "InspectorInstrumentation.h"
 #include "Logging.h"
 #include "ProcessingInstruction.h"
 #include "SVGStyleElement.h"
@@ -511,8 +510,6 @@ void Scope::updateActiveStyleSheets(UpdateType updateType)
     m_activeStyleSheets.swap(activeCSSStyleSheets);
     m_styleSheetsForStyleSheetList.swap(activeStyleSheets);
 
-    InspectorInstrumentation::activeStyleSheetsUpdated(m_document);
-
     for (const auto& sheet : m_activeStyleSheets) {
         if (sheet->contents().usesStyleBasedEditability())
             m_usesStyleBasedEditability = true;
@@ -719,9 +716,6 @@ void Scope::evaluateMediaQueries(TestFunction&& testFunction)
             }
         }
     }
-
-    if (hadChanges)
-        InspectorInstrumentation::mediaQueryResultChanged(m_document);
 }
 
 void Scope::didChangeActiveStyleSheetCandidates()

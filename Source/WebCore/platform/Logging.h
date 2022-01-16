@@ -69,7 +69,6 @@ namespace WebCore {
     M(Images) \
     M(IndexedDB) \
     M(IndexedDBOperations) \
-    M(Inspector) \
     M(Layers) \
     M(Layout) \
     M(FormattingContextLayout) \
@@ -91,7 +90,6 @@ namespace WebCore {
     M(PopupBlocking) \
     M(PrivateClickMeasurement) \
     M(Progress) \
-    M(RemoteInspector) \
     M(RequestAnimationFrame) \
     M(ResourceLoading) \
     M(ResourceLoadObserver) \

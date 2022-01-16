@@ -27,9 +27,6 @@
 #define __WEBKIT_WEB_EXTENSION_H_INSIDE__
 
 #include <webkit2/WebKitConsoleMessage.h>
-#include <webkit2/WebKitContextMenu.h>
-#include <webkit2/WebKitContextMenuActions.h>
-#include <webkit2/WebKitContextMenuItem.h>
 #include <webkit2/WebKitFrame.h>
 #include <webkit2/WebKitScriptWorld.h>
 #include <webkit2/WebKitURIRequest.h>
