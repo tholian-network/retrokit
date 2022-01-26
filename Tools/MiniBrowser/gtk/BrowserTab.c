@@ -59,7 +59,6 @@ struct _BrowserTab {
     GtkWidget *titleCloseButton;
 };
 
-static GHashTable *userMediaPermissionGrantedOrigins;
 static GHashTable *mediaKeySystemPermissionGrantedOrigins;
 struct _BrowserTabClass {
     GtkBoxClass parent;
@@ -269,15 +268,9 @@ static void permissionRequestDialogResponse(GtkWidget *dialog, gint response, Pe
 {
     switch (response) {
     case GTK_RESPONSE_YES:
-        if (WEBKIT_IS_USER_MEDIA_PERMISSION_REQUEST(requestData->request))
-            g_hash_table_add(userMediaPermissionGrantedOrigins, g_strdup(requestData->origin));
-
         webkit_permission_request_allow(requestData->request);
         break;
     default:
-        if (WEBKIT_IS_USER_MEDIA_PERMISSION_REQUEST(requestData->request))
-            g_hash_table_remove(userMediaPermissionGrantedOrigins, requestData->origin);
-
         webkit_permission_request_deny(requestData->request);
         break;
     }
@@ -298,36 +291,10 @@ static gboolean decidePermissionRequest(WebKitWebView *webView, WebKitPermission
     if (WEBKIT_IS_NOTIFICATION_PERMISSION_REQUEST(request)) {
         title = "Notification request";
         text = g_strdup("Allow notifications request?");
-    } else if (WEBKIT_IS_USER_MEDIA_PERMISSION_REQUEST(request)) {
-        title = "UserMedia request";
-        gboolean isForAudioDevice = webkit_user_media_permission_is_for_audio_device(WEBKIT_USER_MEDIA_PERMISSION_REQUEST(request));
-        gboolean isForVideoDevice = webkit_user_media_permission_is_for_video_device(WEBKIT_USER_MEDIA_PERMISSION_REQUEST(request));
-        gboolean isForDisplayDevice = webkit_user_media_permission_is_for_display_device(WEBKIT_USER_MEDIA_PERMISSION_REQUEST(request));
-
-        const char *mediaType = NULL;
-        if (isForAudioDevice) {
-            if (isForVideoDevice)
-                mediaType = "audio/video";
-            else
-                mediaType = "audio";
-        } else if (isForVideoDevice)
-            mediaType = "video";
-        else if (isForDisplayDevice)
-            mediaType = "display";
-        text = g_strdup_printf("Allow access to %s device?", mediaType);
     } else if (WEBKIT_IS_INSTALL_MISSING_MEDIA_PLUGINS_PERMISSION_REQUEST(request)) {
         title = "Media plugin missing request";
         text = g_strdup_printf("The media backend was unable to find a plugin to play the requested media:\n%s.\nAllow to search and install the missing plugin?",
             webkit_install_missing_media_plugins_permission_request_get_description(WEBKIT_INSTALL_MISSING_MEDIA_PLUGINS_PERMISSION_REQUEST(request)));
-    } else if (WEBKIT_IS_DEVICE_INFO_PERMISSION_REQUEST(request)) {
-        char* origin = getWebViewOrigin(webView);
-        if (g_hash_table_contains(userMediaPermissionGrantedOrigins, origin)) {
-            webkit_permission_request_allow(request);
-            g_free(origin);
-            return TRUE;
-        }
-        g_free(origin);
-        return FALSE;
     } else if (WEBKIT_IS_POINTER_LOCK_PERMISSION_REQUEST(request)) {
         const gchar *titleOrURI = webkit_web_view_get_title(tab->webView);
         if (!titleOrURI || !titleOrURI[0])
@@ -714,9 +681,6 @@ static void browser_tab_class_init(BrowserTabClass *klass)
     gobjectClass->constructed = browserTabConstructed;
     gobjectClass->set_property = browserTabSetProperty;
     gobjectClass->finalize = browserTabFinalize;
-
-    if (!userMediaPermissionGrantedOrigins)
-        userMediaPermissionGrantedOrigins = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
 
     if (!mediaKeySystemPermissionGrantedOrigins)
         mediaKeySystemPermissionGrantedOrigins = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);

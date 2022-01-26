@@ -171,7 +171,6 @@ enum class RenderingUpdateStep : uint16_t {
     Scroll                          = 1 << 1,
     MediaQueryEvaluation            = 1 << 2,
     Animations                      = 1 << 3,
-    Fullscreen                      = 1 << 4,
     AnimationFrameCallbacks         = 1 << 5,
 #if ENABLE(INTERSECTION_OBSERVER)
     IntersectionObservations        = 1 << 6,
@@ -194,7 +193,6 @@ constexpr OptionSet<RenderingUpdateStep> updateRenderingSteps = {
     RenderingUpdateStep::Scroll,
     RenderingUpdateStep::MediaQueryEvaluation,
     RenderingUpdateStep::Animations,
-    RenderingUpdateStep::Fullscreen,
     RenderingUpdateStep::AnimationFrameCallbacks,
 #if ENABLE(INTERSECTION_OBSERVER)
     RenderingUpdateStep::IntersectionObservations,
@@ -456,7 +454,7 @@ public:
     bool shouldSuppressScrollbarAnimations() const { return m_suppressScrollbarAnimations; }
     WEBCORE_EXPORT void setShouldSuppressScrollbarAnimations(bool suppressAnimations);
     void lockAllOverlayScrollbarsToHidden(bool lockOverlayScrollbars);
-    
+
     WEBCORE_EXPORT void setVerticalScrollElasticity(ScrollElasticity);
     ScrollElasticity verticalScrollElasticity() const { return static_cast<ScrollElasticity>(m_verticalScrollElasticity); }
 

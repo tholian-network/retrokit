@@ -157,9 +157,7 @@ static void webViewTitleChanged(WebKitWebView *webView, GParamSpec *pspec, Brows
     if (!title)
         title = defaultWindowTitle;
     char *privateTitle = NULL;
-    if (webkit_web_view_is_controlled_by_automation(webView))
-        privateTitle = g_strdup_printf("[Automation] %s", title);
-    else if (webkit_web_view_is_ephemeral(webView))
+    if (webkit_web_view_is_ephemeral(webView))
         privateTitle = g_strdup_printf("[Private] %s", title);
     gtk_window_set_title(GTK_WINDOW(window), privateTitle ? privateTitle : title);
     g_free(privateTitle);
@@ -492,7 +490,6 @@ static gboolean webViewDecidePolicy(WebKitWebView *webView, WebKitPolicyDecision
         "web-context", webkit_web_view_get_context(webView),
         "settings", webkit_web_view_get_settings(webView),
         "user-content-manager", webkit_web_view_get_user_content_manager(webView),
-        "is-controlled-by-automation", webkit_web_view_is_controlled_by_automation(webView),
         "website-policies", webkit_web_view_get_website_policies(webView),
         NULL));
     browser_window_append_view(window, newWebView);
@@ -635,70 +632,10 @@ static void faviconChanged(WebKitWebView *webView, GParamSpec *paramSpec, Browse
     updateUriEntryIcon(window);
 }
 
-static void webViewMediaCaptureStateChanged(WebKitWebView* webView, GParamSpec* paramSpec, BrowserWindow* window)
-{
-    const gchar* name = g_param_spec_get_name(paramSpec);
-    // FIXME: the URI entry is not great storage in case more than one capture device is in use,
-    // because it can store only one secondary icon.
-    GtkEntry *entry = GTK_ENTRY(window->uriEntry);
-
-    if (g_str_has_prefix(name, "microphone")) {
-        switch (webkit_web_view_get_microphone_capture_state(webView)) {
-        case WEBKIT_MEDIA_CAPTURE_STATE_NONE:
-            gtk_entry_set_icon_from_icon_name(entry, GTK_ENTRY_ICON_SECONDARY, NULL);
-            break;
-        case WEBKIT_MEDIA_CAPTURE_STATE_MUTED:
-            gtk_entry_set_icon_from_icon_name(entry, GTK_ENTRY_ICON_SECONDARY, "microphone-sensivity-mutes-symbolic");
-            break;
-        case WEBKIT_MEDIA_CAPTURE_STATE_ACTIVE:
-            gtk_entry_set_icon_from_icon_name(entry, GTK_ENTRY_ICON_SECONDARY, "audio-input-microphone-symbolic");
-            break;
-        }
-    } else if (g_str_has_prefix(name, "camera")) {
-        switch (webkit_web_view_get_camera_capture_state(webView)) {
-        case WEBKIT_MEDIA_CAPTURE_STATE_NONE:
-            gtk_entry_set_icon_from_icon_name(entry, GTK_ENTRY_ICON_SECONDARY, NULL);
-            break;
-        case WEBKIT_MEDIA_CAPTURE_STATE_MUTED:
-            gtk_entry_set_icon_from_icon_name(entry, GTK_ENTRY_ICON_SECONDARY, "camera-disabled-symbolic");
-            break;
-        case WEBKIT_MEDIA_CAPTURE_STATE_ACTIVE:
-            gtk_entry_set_icon_from_icon_name(entry, GTK_ENTRY_ICON_SECONDARY, "camera-web-symbolic");
-            break;
-        }
-    } else if (g_str_has_prefix(name, "display")) {
-        switch (webkit_web_view_get_display_capture_state(webView)) {
-        case WEBKIT_MEDIA_CAPTURE_STATE_NONE:
-            gtk_entry_set_icon_from_icon_name(entry, GTK_ENTRY_ICON_SECONDARY, NULL);
-            break;
-        case WEBKIT_MEDIA_CAPTURE_STATE_MUTED:
-            // FIXME: I found no suitable icon for this.
-            gtk_entry_set_icon_from_icon_name(entry, GTK_ENTRY_ICON_SECONDARY, "media-playback-stop-symbolic");
-            break;
-        case WEBKIT_MEDIA_CAPTURE_STATE_ACTIVE:
-            gtk_entry_set_icon_from_icon_name(entry, GTK_ENTRY_ICON_SECONDARY, "video-display-symbolic");
-            break;
-        }
-    }
-}
-
 static void webViewUriEntryIconPressed(GtkEntry* entry, GtkEntryIconPosition position, GdkEvent* event, BrowserWindow* window)
 {
     if (position != GTK_ENTRY_ICON_SECONDARY)
         return;
-
-    // FIXME: What about audio/video?
-    WebKitWebView *webView = browser_tab_get_web_view(window->activeTab);
-    switch (webkit_web_view_get_display_capture_state(webView)) {
-    case WEBKIT_MEDIA_CAPTURE_STATE_NONE:
-        break;
-    case WEBKIT_MEDIA_CAPTURE_STATE_MUTED:
-        webkit_web_view_set_display_capture_state(webView, WEBKIT_MEDIA_CAPTURE_STATE_ACTIVE);
-        break;
-    case WEBKIT_MEDIA_CAPTURE_STATE_ACTIVE:
-        webkit_web_view_set_display_capture_state(webView, WEBKIT_MEDIA_CAPTURE_STATE_MUTED);
-        break;
-    }
 }
 
 static void webViewIsLoadingChanged(WebKitWebView *webView, GParamSpec *paramSpec, BrowserWindow *window)
@@ -744,7 +681,6 @@ static void newTabCallback(GSimpleAction *action, GVariant *parameter, gpointer 
         "web-context", webkit_web_view_get_context(webView),
         "settings", webkit_web_view_get_settings(webView),
         "user-content-manager", webkit_web_view_get_user_content_manager(webView),
-        "is-controlled-by-automation", webkit_web_view_is_controlled_by_automation(webView),
         "website-policies", webkit_web_view_get_website_policies(webView),
         NULL)));
     gtk_widget_grab_focus(window->uriEntry);
@@ -765,7 +701,6 @@ static void openPrivateWindow(GSimpleAction *action, GVariant *parameter, gpoint
         "settings", webkit_web_view_get_settings(webView),
         "user-content-manager", webkit_web_view_get_user_content_manager(webView),
         "is-ephemeral", TRUE,
-        "is-controlled-by-automation", webkit_web_view_is_controlled_by_automation(webView),
         "website-policies", webkit_web_view_get_website_policies(webView),
         NULL));
     GtkWidget *newWindow = browser_window_new(GTK_WINDOW(window), window->webContext);
@@ -1230,9 +1165,6 @@ static void browserWindowSwitchTab(GtkNotebook *notebook, BrowserTab *tab, guint
 #if !GTK_CHECK_VERSION(3, 98, 0)
     g_signal_connect(webView, "scroll-event", G_CALLBACK(scrollEventCallback), window);
 #endif
-    g_signal_connect_object(webView, "notify::camera-capture-state", G_CALLBACK(webViewMediaCaptureStateChanged), window, 0);
-    g_signal_connect_object(webView, "notify::microphone-capture-state", G_CALLBACK(webViewMediaCaptureStateChanged), window, 0);
-    g_signal_connect_object(webView, "notify::display-capture-state", G_CALLBACK(webViewMediaCaptureStateChanged), window, 0);
 
     g_object_set(window->uriEntry, "secondary-icon-activatable", TRUE, NULL);
     g_signal_connect(window->uriEntry, "icon-press", G_CALLBACK(webViewUriEntryIconPressed), window);
@@ -1606,44 +1538,3 @@ void browser_window_set_background_color(BrowserWindow *window, GdkRGBA *rgba)
 #endif
 }
 
-WebKitWebView *browser_window_get_or_create_web_view_for_automation(BrowserWindow *window)
-{
-    WebKitWebView *webView = browser_tab_get_web_view(window->activeTab);
-    if (gtk_notebook_get_n_pages(GTK_NOTEBOOK(window->notebook)) == 1 && !webkit_web_view_get_uri(webView)) {
-        webkit_web_view_load_uri(webView, "about:blank");
-        return webView;
-    }
-
-    WebKitWebView *newWebView = WEBKIT_WEB_VIEW(g_object_new(WEBKIT_TYPE_WEB_VIEW,
-        "web-context", webkit_web_view_get_context(webView),
-        "settings", webkit_web_view_get_settings(webView),
-        "user-content-manager", webkit_web_view_get_user_content_manager(webView),
-        "is-controlled-by-automation", TRUE,
-        "website-policies", webkit_web_view_get_website_policies(webView),
-        NULL));
-    GtkWidget *newWindow = browser_window_new(GTK_WINDOW(window), window->webContext);
-    gtk_window_set_application(GTK_WINDOW(newWindow), gtk_window_get_application(GTK_WINDOW(window)));
-#if !GTK_CHECK_VERSION(3, 98, 0)
-    gtk_window_set_focus_on_map(GTK_WINDOW(newWindow), FALSE);
-#endif
-    browser_window_append_view(BROWSER_WINDOW(newWindow), newWebView);
-    webkit_web_view_load_uri(newWebView, "about:blank");
-    gtk_widget_show(newWindow);
-    return newWebView;
-}
-
-WebKitWebView *browser_window_create_web_view_in_new_tab_for_automation(BrowserWindow *window)
-{
-    WebKitWebView *webView = browser_tab_get_web_view(window->activeTab);
-    WebKitWebView *newWebView = WEBKIT_WEB_VIEW(g_object_new(WEBKIT_TYPE_WEB_VIEW,
-        "web-context", webkit_web_view_get_context(webView),
-        "settings", webkit_web_view_get_settings(webView),
-        "user-content-manager", webkit_web_view_get_user_content_manager(webView),
-        "is-controlled-by-automation", TRUE,
-        "automation-presentation-type", WEBKIT_AUTOMATION_BROWSING_CONTEXT_PRESENTATION_TAB,
-        "website-policies", webkit_web_view_get_website_policies(webView),
-        NULL));
-    browser_window_append_view(window, newWebView);
-    webkit_web_view_load_uri(newWebView, "about:blank");
-    return newWebView;
-}

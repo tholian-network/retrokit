@@ -45,7 +45,6 @@ public:
     virtual void contextMenuDestroyed() = 0;
 
     virtual void downloadURL(const URL&) = 0;
-    virtual void lookUpInDictionary(Frame*) = 0;
 
 #if ENABLE(IMAGE_ANALYSIS)
     virtual bool supportsLookUpInImages() = 0;

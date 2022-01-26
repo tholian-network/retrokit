@@ -44,7 +44,6 @@ static gboolean editorMode;
 static const char *sessionFile;
 static char *geometry;
 static gboolean privateMode;
-static gboolean automationMode;
 static gboolean fullScreen;
 static gboolean ignoreTLSErrors;
 static const char *contentFilter;
@@ -85,7 +84,6 @@ static WebKitWebView *createBrowserTab(BrowserWindow *window, WebKitSettings *we
         "web-context", browser_window_get_web_context(window),
         "settings", webkitSettings,
         "user-content-manager", userContentManager,
-        "is-controlled-by-automation", automationMode,
         "website-policies", defaultWebsitePolicies,
         NULL));
 
@@ -139,7 +137,6 @@ static const GOptionEntry commandLineOptions[] =
     { "geometry", 'g', 0, G_OPTION_ARG_STRING, &geometry, "Unused. Kept for backwards-compatibility only", "GEOMETRY" },
     { "full-screen", 'f', 0, G_OPTION_ARG_NONE, &fullScreen, "Set the window to full-screen mode", NULL },
     { "private", 'p', 0, G_OPTION_ARG_NONE, &privateMode, "Run in private browsing mode", NULL },
-    { "automation", 0, 0, G_OPTION_ARG_NONE, &automationMode, "Run in automation mode", NULL },
     { "cookies-file", 'c', 0, G_OPTION_ARG_FILENAME, &cookiesFile, "Persistent cookie storage database file", "FILE" },
     { "cookies-policy", 0, 0, G_OPTION_ARG_STRING, &cookiesPolicy, "Cookies accept policy (always, never, no-third-party). Default: no-third-party", "POLICY" },
     { "proxy", 0, 0, G_OPTION_ARG_STRING, &proxy, "Set proxy", "PROXY" },
@@ -555,29 +552,6 @@ static void aboutURISchemeRequestCallback(WebKitURISchemeRequest *request, WebKi
     }
 }
 
-static GtkWidget *createWebViewForAutomationInWindowCallback(WebKitAutomationSession* session, GtkApplication *application)
-{
-    GtkWindow *window = gtk_application_get_active_window(application);
-    return BROWSER_IS_WINDOW(window) ? GTK_WIDGET(browser_window_get_or_create_web_view_for_automation(BROWSER_WINDOW(window))) : NULL;
-}
-
-static GtkWidget *createWebViewForAutomationInTabCallback(WebKitAutomationSession* session, GtkApplication *application)
-{
-    GtkWindow *window = gtk_application_get_active_window(application);
-    return BROWSER_IS_WINDOW(window) ? GTK_WIDGET(browser_window_create_web_view_in_new_tab_for_automation(BROWSER_WINDOW(window))) : NULL;
-}
-
-static void automationStartedCallback(WebKitWebContext *webContext, WebKitAutomationSession *session, GtkApplication *application)
-{
-    WebKitApplicationInfo *info = webkit_application_info_new();
-    webkit_application_info_set_version(info, WEBKIT_MAJOR_VERSION, WEBKIT_MINOR_VERSION, WEBKIT_MICRO_VERSION);
-    webkit_automation_session_set_application_info(session, info);
-    webkit_application_info_unref(info);
-
-    g_signal_connect(session, "create-web-view::window", G_CALLBACK(createWebViewForAutomationInWindowCallback), application);
-    g_signal_connect(session, "create-web-view::tab", G_CALLBACK(createWebViewForAutomationInTabCallback), application);
-}
-
 static gboolean quitApplication(GApplication *application)
 {
     g_application_quit(application);
@@ -649,7 +623,7 @@ static void startup(GApplication *application)
 static void activate(GApplication *application, WebKitSettings *webkitSettings)
 {
     WebKitWebsiteDataManager *manager;
-    if (privateMode || automationMode)
+    if (privateMode)
         manager = webkit_website_data_manager_new_ephemeral();
     else {
         char *dataDirectory = g_build_filename(g_get_user_data_dir(), "webkitgtk-" WEBKITGTK_API_VERSION_STRING, "MiniBrowser", NULL);
@@ -732,9 +706,6 @@ static void activate(GApplication *application, WebKitSettings *webkitSettings)
         g_object_unref(contentFilterFile);
     }
 
-    webkit_web_context_set_automation_allowed(webContext, automationMode);
-    g_signal_connect(webContext, "automation-started", G_CALLBACK(automationStartedCallback), application);
-
     BrowserWindow *mainWindow = BROWSER_WINDOW(browser_window_new(NULL, webContext));
     gtk_application_add_window(GTK_APPLICATION(application), GTK_WINDOW(mainWindow));
     if (darkMode)
@@ -765,9 +736,9 @@ static void activate(GApplication *application, WebKitSettings *webkitSettings)
         firstTab = GTK_WIDGET(webView);
 
         if (!editorMode) {
-            if (sessionFile)
+            if (sessionFile) {
                 browser_window_load_session(mainWindow, sessionFile);
-            else if (!automationMode) {
+            } else {
                 webkit_web_view_load_uri(webView, BROWSER_DEFAULT_URL);
                 if (exitAfterLoad)
                     exitAfterWebViewLoadFinishes(webView, application);
@@ -805,7 +776,6 @@ int main(int argc, char *argv[])
     WebKitSettings *webkitSettings = webkit_settings_new();
     webkit_settings_set_enable_developer_extras(webkitSettings, TRUE);
     webkit_settings_set_enable_webgl(webkitSettings, TRUE);
-    webkit_settings_set_enable_media_stream(webkitSettings, TRUE);
     if (!addSettingsGroupToContext(context, webkitSettings))
         g_clear_object(&webkitSettings);
 

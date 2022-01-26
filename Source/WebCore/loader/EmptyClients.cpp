@@ -101,7 +101,6 @@ class EmptyContextMenuClient final : public ContextMenuClient {
     void contextMenuDestroyed() final { }
 
     void downloadURL(const URL&) final { }
-    void lookUpInDictionary(Frame*) final { }
 
 #if HAVE(TRANSLATION_UI_SERVICES)
     void handleTranslation(const TranslationContextMenuInfo&) final { }

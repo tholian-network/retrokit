@@ -226,6 +226,9 @@ struct _WebKitWebContextPrivate {
     GRefPtr<GVariant> webExtensionsInitializationUserData;
 
     CString localStorageDirectory;
+#if ENABLE(REMOTE_INSPECTOR)
+    std::unique_ptr<RemoteInspectorProtocolHandler> remoteInspectorProtocolHandler;
+#endif
     std::unique_ptr<WebKitProtocolHandler> webkitProtocolHandler;
 
     HashSet<String> dnsPrefetchedHosts;
