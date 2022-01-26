@@ -32,7 +32,6 @@
 #include "DataReference.h"
 #include <WebCore/CertificateInfo.h>
 #include <WebCore/Credential.h>
-#include <WebCore/DictionaryPopupInfo.h>
 #include <WebCore/Font.h>
 #include <WebCore/FontAttributes.h>
 #include <WebCore/ResourceError.h>
@@ -213,17 +212,6 @@ std::optional<FontAttributes> ArgumentCoder<FontAttributes>::decodePlatformData(
 {
     ASSERT_NOT_REACHED();
     return std::nullopt;
-}
-
-void ArgumentCoder<DictionaryPopupInfo>::encodePlatformData(Encoder&, const DictionaryPopupInfo&)
-{
-    ASSERT_NOT_REACHED();
-}
-
-bool ArgumentCoder<DictionaryPopupInfo>::decodePlatformData(Decoder&, DictionaryPopupInfo&)
-{
-    ASSERT_NOT_REACHED();
-    return false;
 }
 
 void ArgumentCoder<Ref<Font>>::encodePlatformData(Encoder&, const Ref<Font>&)

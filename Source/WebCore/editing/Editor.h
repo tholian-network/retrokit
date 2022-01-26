@@ -558,9 +558,6 @@ public:
     std::optional<SimpleRange> rangeForTextCheckingResult(const TextCheckingResult&) const;
     bool isHandlingAcceptedCandidate() const { return m_isHandlingAcceptedCandidate; }
 
-    void setIsGettingDictionaryPopupInfo(bool b) { m_isGettingDictionaryPopupInfo = b; }
-    bool isGettingDictionaryPopupInfo() const { return m_isGettingDictionaryPopupInfo; }
-
 #if ENABLE(ATTACHMENT_ELEMENT)
     WEBCORE_EXPORT void insertAttachment(const String& identifier, std::optional<uint64_t>&& fileSize, const String& fileName, const String& contentType);
     void registerAttachmentIdentifier(const String&, const String& contentType, const String& preferredFileName, Ref<SharedBuffer>&& fileData);
@@ -678,7 +675,6 @@ private:
 
     mutable std::unique_ptr<ScrollView::ProhibitScrollingWhenChangingContentSizeForScope> m_prohibitScrollingDueToContentSizeChangesWhileTyping;
 
-    bool m_isGettingDictionaryPopupInfo { false };
     HashSet<RefPtr<HTMLImageElement>> m_imageElementsToLoadBeforeRevealingSelection;
 };
 

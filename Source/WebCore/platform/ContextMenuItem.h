@@ -76,9 +76,6 @@ enum ContextMenuAction {
     ContextMenuItemTagIgnoreSpelling,
     ContextMenuItemTagLearnSpelling,
     ContextMenuItemTagOther,
-    ContextMenuItemTagSearchInSpotlight,
-    ContextMenuItemTagSearchWeb,
-    ContextMenuItemTagLookUpInDictionary,
     ContextMenuItemTagOpenWithDefaultApplication,
     ContextMenuItemPDFActualSize,
     ContextMenuItemPDFZoomIn,
@@ -104,9 +101,6 @@ enum ContextMenuAction {
     ContextMenuItemTagOutline,
     ContextMenuItemTagStyles,
     ContextMenuItemTagShowColors,
-    ContextMenuItemTagSpeechMenu, // Speech sub-menu
-    ContextMenuItemTagStartSpeaking,
-    ContextMenuItemTagStopSpeaking,
     ContextMenuItemTagWritingDirectionMenu, // Writing Direction sub-menu
     ContextMenuItemTagDefaultDirection,
     ContextMenuItemTagLeftToRight,

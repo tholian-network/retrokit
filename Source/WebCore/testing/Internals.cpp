@@ -1905,13 +1905,6 @@ RefPtr<Range> Internals::rangeOfStringNearLocation(const Range& liveRange, const
     return createLiveRange(findClosestPlainText(range, text, { }, targetOffset));
 }
 
-#if !PLATFORM(MAC)
-ExceptionOr<RefPtr<Range>> Internals::rangeForDictionaryLookupAtLocation(int, int)
-{
-    return Exception { InvalidAccessError };
-}
-#endif
-
 ExceptionOr<void> Internals::setDelegatesScrolling(bool enabled)
 {
     Document* document = contextDocument();
@@ -5265,26 +5258,6 @@ void Internals::processDidResume()
 #if ENABLE(VIDEO) || ENABLE(WEB_AUDIO)
     PlatformMediaSessionManager::sharedManager().processDidResume();
 #endif
-}
-
-void Internals::testDictionaryLogging()
-{
-    auto* document = contextDocument();
-    if (!document)
-        return;
-
-    auto* page = document->page();
-    if (!page)
-        return;
-
-    DiagnosticLoggingClient::ValueDictionary dictionary;
-    dictionary.set("stringKey"_s, String("stringValue"));
-    dictionary.set("uint64Key"_s, std::numeric_limits<uint64_t>::max());
-    dictionary.set("int64Key"_s, std::numeric_limits<int64_t>::min());
-    dictionary.set("boolKey"_s, true);
-    dictionary.set("doubleKey"_s, 2.7182818284590452353602874);
-
-    page->diagnosticLoggingClient().logDiagnosticMessageWithValueDictionary("testMessage"_s, "testDescription"_s, dictionary, ShouldSample::No);
 }
 
 void Internals::setMaximumIntervalForUserGestureForwardingForFetch(double interval)

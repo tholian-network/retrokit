@@ -249,7 +249,6 @@ struct ContentRuleListResults;
 struct DataDetectorElementInfo;
 struct DataListSuggestionInformation;
 struct DateTimeChooserParameters;
-struct DictionaryPopupInfo;
 struct DragItem;
 struct ElementContext;
 struct ExceptionDetails;
@@ -1104,12 +1103,6 @@ public:
     void drawHeaderForPrinting(WebFrameProxy&, WebCore::FloatRect&&);
     void drawFooterForPrinting(WebFrameProxy&, WebCore::FloatRect&&);
 
-#if PLATFORM(COCOA)
-    // Dictionary.
-    void performDictionaryLookupAtLocation(const WebCore::FloatPoint&);
-    void performDictionaryLookupOfCurrentSelection();
-#endif
-
     class PolicyDecisionSender;
     enum class WillContinueLoadInNewProcess : bool { No, Yes };
     void receivedPolicyDecision(WebCore::PolicyAction, API::Navigation*, RefPtr<API::WebsitePolicies>&&, Variant<Ref<API::NavigationResponse>, Ref<API::NavigationAction>>&&, Ref<PolicyDecisionSender>&&, std::optional<SandboxExtension::Handle> = { }, WillContinueLoadInNewProcess = WillContinueLoadInNewProcess::No);
@@ -1117,7 +1110,7 @@ public:
 
     void backForwardRemovedItem(const WebCore::BackForwardItemIdentifier&);
 
-#if ENABLE(DRAG_SUPPORT)    
+#if ENABLE(DRAG_SUPPORT)
     // Drag and drop support.
     void dragEntered(WebCore::DragData&, const String& dragStorageName = String());
     void dragUpdated(WebCore::DragData&, const String& dragStorageName = String());
@@ -2020,16 +2013,6 @@ private:
     // Search popup results
     void saveRecentSearches(const String&, const Vector<WebCore::RecentSearch>&);
     void loadRecentSearches(const String&, CompletionHandler<void(Vector<WebCore::RecentSearch>&&)>&&);
-
-#if PLATFORM(COCOA)
-    // Spotlight.
-    void searchWithSpotlight(const String&);
-
-    void searchTheWeb(const String&);
-
-    // Dictionary.
-    void didPerformDictionaryLookup(const WebCore::DictionaryPopupInfo&);
-#endif
 
     void stopMakingViewBlankDueToLackOfRenderingUpdateIfNecessary();
 

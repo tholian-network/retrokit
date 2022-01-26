@@ -58,7 +58,7 @@ void ImageOverlayController::selectionQuadsDidChange(Frame& frame, const Vector<
     if (!m_page || !m_page->chrome().client().needsImageOverlayControllerForSelectionPainting())
         return;
 
-    if (frame.editor().ignoreSelectionChanges() || frame.editor().isGettingDictionaryPopupInfo())
+    if (frame.editor().ignoreSelectionChanges())
         return;
 
     m_hostElementForSelection = nullptr;

@@ -111,7 +111,6 @@ enum class DOMPasteAccessResponse : uint8_t;
 
 struct AppHighlight;
 struct DataDetectorElementInfo;
-struct DictionaryPopupInfo;
 struct TextIndicatorData;
 struct ViewportAttributes;
 struct ShareDataWithParsedURL;
@@ -372,8 +371,6 @@ public:
     virtual void setTextIndicator(Ref<WebCore::TextIndicator>, WebCore::TextIndicatorLifetime) = 0;
     virtual void clearTextIndicator(WebCore::TextIndicatorDismissalAnimation) = 0;
     virtual void setTextIndicatorAnimationProgress(float) = 0;
-    
-    virtual void didPerformDictionaryLookup(const WebCore::DictionaryPopupInfo&) = 0;
 #endif
 
 #if HAVE(APP_ACCENT_COLORS)

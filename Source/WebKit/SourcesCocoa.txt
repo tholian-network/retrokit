@@ -539,9 +539,6 @@ WebProcess/API/Cocoa/WKWebProcess.cpp
 
 WebProcess/cocoa/PlaybackSessionManager.mm
 WebProcess/cocoa/RemoteCaptureSampleManager.cpp
-WebProcess/cocoa/RemoteRealtimeAudioSource.cpp
-WebProcess/cocoa/RemoteRealtimeMediaSourceProxy.cpp
-WebProcess/cocoa/RemoteRealtimeVideoSource.cpp
 WebProcess/cocoa/WebProcessCocoa.mm
 
 WebProcess/EntryPoint/Cocoa/XPCService/WebContentServiceEntryPoint.mm

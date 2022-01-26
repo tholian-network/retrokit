@@ -62,7 +62,6 @@
 #include <JavaScriptCore/InspectorFrontendChannel.h>
 #include <WebCore/ActivityState.h>
 #include <WebCore/AppHighlight.h>
-#include <WebCore/DictionaryPopupInfo.h>
 #include <WebCore/DisabledAdaptations.h>
 #include <WebCore/DragActions.h>
 #include <WebCore/FrameLoaderTypes.h>
@@ -172,7 +171,6 @@ class FormDataReference;
 namespace WebCore {
 
 class CachedPage;
-class CaptureDevice;
 class DocumentLoader;
 class DragData;
 class FontAttributeChanges;
@@ -867,14 +865,6 @@ public:
     bool hasCompositionForTesting();
     void confirmCompositionForTesting(const String& compositionString);
 
-#if PLATFORM(COCOA)
-    bool isSpeaking();
-    void speak(const String&);
-    void stopSpeaking();
-
-    void performDictionaryLookupForSelection(WebCore::Frame&, const WebCore::VisibleSelection&, WebCore::TextIndicatorPresentationTransition);
-#endif
-
     bool isSmartInsertDeleteEnabled();
     void setSmartInsertDeleteEnabled(bool);
 
@@ -1557,11 +1547,6 @@ private:
     void resume(CompletionHandler<void(bool)>&&);
 
 #if PLATFORM(COCOA)
-    void performDictionaryLookupAtLocation(const WebCore::FloatPoint&);
-    void performDictionaryLookupOfCurrentSelection();
-    void performDictionaryLookupForRange(WebCore::Frame&, const WebCore::SimpleRange&, NSDictionary *options, WebCore::TextIndicatorPresentationTransition);
-    WebCore::DictionaryPopupInfo dictionaryPopupInfoForRange(WebCore::Frame&, const WebCore::SimpleRange&, NSDictionary *options, WebCore::TextIndicatorPresentationTransition);
-
     void windowAndViewFramesChanged(const WebCore::FloatRect& windowFrameInScreenCoordinates, const WebCore::FloatRect& windowFrameInUnflippedScreenCoordinates, const WebCore::FloatRect& viewFrameInWindowCoordinates, const WebCore::FloatPoint& accessibilityViewCoordinates);
 
     void computePagesForPrintingPDFDocument(WebCore::FrameIdentifier, const PrintInfo&, Vector<WebCore::IntRect>& resultPageRects);

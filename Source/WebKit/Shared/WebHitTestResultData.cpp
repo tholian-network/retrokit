@@ -116,7 +116,6 @@ void WebHitTestResultData::encode(IPC::Encoder& encoder) const
     encoder << isDownloadableMedia;
     encoder << lookupText;
     encoder << toolTipText;
-    encoder << dictionaryPopupInfo;
 
     WebKit::SharedMemory::Handle imageHandle;
     if (imageSharedMemory && imageSharedMemory->data())
@@ -153,8 +152,7 @@ bool WebHitTestResultData::decode(IPC::Decoder& decoder, WebHitTestResultData& h
         || !decoder.decode(hitTestResultData.isOverTextInsideFormControlElement)
         || !decoder.decode(hitTestResultData.isDownloadableMedia)
         || !decoder.decode(hitTestResultData.lookupText)
-        || !decoder.decode(hitTestResultData.toolTipText)
-        || !decoder.decode(hitTestResultData.dictionaryPopupInfo))
+        || !decoder.decode(hitTestResultData.toolTipText))
         return false;
 
     WebKit::SharedMemory::IPCHandle imageHandle;

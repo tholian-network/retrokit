@@ -492,7 +492,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     editing/CompositionUnderline.h
     editing/DictationAlternative.h
     editing/DictationContext.h
-    editing/DictionaryPopupInfo.h
     editing/EditAction.h
     editing/EditableLinkBehavior.h
     editing/Editing.h

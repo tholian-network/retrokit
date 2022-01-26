@@ -292,9 +292,6 @@ messages -> WebPageProxy {
 #endif
 
 #if PLATFORM(COCOA)
-    # Dictionary support.
-    DidPerformDictionaryLookup(struct WebCore::DictionaryPopupInfo dictionaryPopupInfo)
-
     # Keyboard input support messages
     ExecuteSavedCommandBySelector(String selector) -> (bool handled) Synchronous
 
@@ -303,11 +300,6 @@ messages -> WebPageProxy {
 
     MakeFirstResponder()
     AssistiveTechnologyMakeFirstResponder()
-
-    # Spotlight
-    SearchWithSpotlight(String string)
-
-    SearchTheWeb(String string)
 #endif
 
 #if USE(APPKIT)

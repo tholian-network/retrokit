@@ -306,10 +306,6 @@ public:
     void didSetAssertionType(ProcessAssertionType) final;
     ASCIILiteral clientName() const final { return "WebProcess"_s; }
 
-#if PLATFORM(COCOA)
-    void sendAudioComponentRegistrations();
-#endif
-
 #if ENABLE(REMOTE_INSPECTOR) && PLATFORM(COCOA)
     void enableRemoteInspectorIfNeeded();
 #endif

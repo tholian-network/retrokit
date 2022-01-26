@@ -290,7 +290,6 @@ def types_that_cannot_be_forward_declared():
         'WebCore::PageIdentifier',
         'WebCore::PointerID',
         'WebCore::ProcessIdentifier',
-        'WebCore::RealtimeMediaSourceIdentifier',
         'WebCore::RenderingMode',
         'WebCore::RenderingResourceIdentifier',
         'WebCore::SWServerConnectionIdentifier',

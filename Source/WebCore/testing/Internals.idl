@@ -421,7 +421,6 @@ enum AutoplayPolicy {
     DOMString rangeAsText(Range range);
     DOMString rangeAsTextUsingBackwardsTextIterator(Range range);
     Range subrange(Range range, unsigned long rangeLocation, unsigned long rangeLength);
-    Range? rangeForDictionaryLookupAtLocation(long x, long y);
     Range? rangeOfStringNearLocation(Range range, DOMString text, long targetOffset);
 
     undefined setDelegatesScrolling(boolean enabled);
@@ -898,8 +897,6 @@ enum AutoplayPolicy {
 
     undefined processWillSuspend();
     undefined processDidResume();
-
-    undefined testDictionaryLogging();
 
     undefined setMaximumIntervalForUserGestureForwardingForFetch(double interval);
     undefined setTransientActivationDuration(double seconds);

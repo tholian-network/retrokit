@@ -43,13 +43,9 @@ class ContextMenuClient {
 public:
     virtual ~ContextMenuClient() = default;
     virtual void contextMenuDestroyed() = 0;
-    
+
     virtual void downloadURL(const URL&) = 0;
-    virtual void searchWithGoogle(const Frame*) = 0;
     virtual void lookUpInDictionary(Frame*) = 0;
-    virtual bool isSpeaking() = 0;
-    virtual void speak(const String&) = 0;
-    virtual void stopSpeaking() = 0;
 
 #if ENABLE(IMAGE_ANALYSIS)
     virtual bool supportsLookUpInImages() = 0;
@@ -57,10 +53,6 @@ public:
 
 #if HAVE(TRANSLATION_UI_SERVICES)
     virtual void handleTranslation(const TranslationContextMenuInfo&) = 0;
-#endif
-
-#if PLATFORM(COCOA)
-    virtual void searchWithSpotlight() = 0;
 #endif
 
 #if PLATFORM(GTK)

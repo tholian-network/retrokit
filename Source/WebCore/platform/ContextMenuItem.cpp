@@ -53,7 +53,7 @@ ContextMenuItem::ContextMenuItem(ContextMenuItemType type, ContextMenuAction act
     , m_indentationLevel(indentationLevel)
 {
 }
-        
+
 ContextMenuItem::ContextMenuItem(ContextMenuAction action, const String& title, bool enabled, bool checked, const Vector<ContextMenuItem>& subMenuItems, unsigned indentationLevel)
     : m_type(SubmenuType)
     , m_action(action)
@@ -187,9 +187,6 @@ bool isValidContextMenuAction(ContextMenuAction action)
     case ContextMenuAction::ContextMenuItemTagIgnoreSpelling:
     case ContextMenuAction::ContextMenuItemTagLearnSpelling:
     case ContextMenuAction::ContextMenuItemTagOther:
-    case ContextMenuAction::ContextMenuItemTagSearchInSpotlight:
-    case ContextMenuAction::ContextMenuItemTagSearchWeb:
-    case ContextMenuAction::ContextMenuItemTagLookUpInDictionary:
     case ContextMenuAction::ContextMenuItemTagOpenWithDefaultApplication:
     case ContextMenuAction::ContextMenuItemPDFActualSize:
     case ContextMenuAction::ContextMenuItemPDFZoomIn:
@@ -215,9 +212,6 @@ bool isValidContextMenuAction(ContextMenuAction action)
     case ContextMenuAction::ContextMenuItemTagOutline:
     case ContextMenuAction::ContextMenuItemTagStyles:
     case ContextMenuAction::ContextMenuItemTagShowColors:
-    case ContextMenuAction::ContextMenuItemTagSpeechMenu:
-    case ContextMenuAction::ContextMenuItemTagStartSpeaking:
-    case ContextMenuAction::ContextMenuItemTagStopSpeaking:
     case ContextMenuAction::ContextMenuItemTagWritingDirectionMenu:
     case ContextMenuAction::ContextMenuItemTagDefaultDirection:
     case ContextMenuAction::ContextMenuItemTagLeftToRight:

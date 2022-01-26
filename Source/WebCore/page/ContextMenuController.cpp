@@ -379,13 +379,6 @@ void ContextMenuController::contextMenuItemSelected(ContextMenuAction action, co
     case ContextMenuItemTagLearnSpelling:
         frame->editor().learnSpelling();
         break;
-    case ContextMenuItemTagSearchWeb:
-        m_client.searchWithGoogle(frame);
-        break;
-    case ContextMenuItemTagLookUpInDictionary:
-        // FIXME: Some day we may be able to do this from within WebCore.
-        m_client.lookUpInDictionary(frame);
-        break;
     case ContextMenuItemTagOpenLink:
         if (Frame* targetFrame = m_context.hitTestResult().targetFrame()) {
             ResourceRequest resourceRequest { m_context.hitTestResult().absoluteLinkURL(), frame->loader().outgoingReferrer() };
@@ -410,16 +403,7 @@ void ContextMenuController::contextMenuItemSelected(ContextMenuAction action, co
         // We actually never enable this because CSS does not have a way to specify an outline font,
         // which may make this difficult to implement. Maybe a special case of text-shadow?
         break;
-    case ContextMenuItemTagStartSpeaking: {
-        auto selectedRange = frame->selection().selection().toNormalizedRange();
-        if (!selectedRange || selectedRange->collapsed())
-            selectedRange = makeRangeSelectingNodeContents(document);
-        m_client.speak(plainText(*selectedRange));
-        break;
     }
-    case ContextMenuItemTagStopSpeaking:
-        m_client.stopSpeaking();
-        break;
     case ContextMenuItemTagDefaultDirection:
         frame->editor().setBaseWritingDirection(WritingDirection::Natural);
         break;
@@ -438,11 +422,6 @@ void ContextMenuController::contextMenuItemSelected(ContextMenuAction action, co
     case ContextMenuItemTagTextDirectionRightToLeft:
         frame->editor().command("MakeTextWritingDirectionRightToLeft").execute();
         break;
-#if PLATFORM(COCOA)
-    case ContextMenuItemTagSearchInSpotlight:
-        m_client.searchWithSpotlight();
-        break;
-#endif
     case ContextMenuItemTagShowSpellingPanel:
         frame->editor().showSpellingGuessPanel();
         break;
@@ -604,24 +583,6 @@ void ContextMenuController::createAndAppendSpellingAndGrammarSubMenu(ContextMenu
 
 #endif // !PLATFORM(GTK)
 
-
-#if PLATFORM(COCOA)
-
-void ContextMenuController::createAndAppendSpeechSubMenu(ContextMenuItem& speechMenuItem)
-{
-    ContextMenu speechMenu;
-
-    ContextMenuItem start(ActionType, ContextMenuItemTagStartSpeaking, contextMenuItemTagStartSpeaking());
-    ContextMenuItem stop(ActionType, ContextMenuItemTagStopSpeaking, contextMenuItemTagStopSpeaking());
-
-    appendItem(start, &speechMenu);
-    appendItem(stop, &speechMenu);
-
-    speechMenuItem.setSubMenu(&speechMenu);
-}
-
-#endif
- 
 #if PLATFORM(GTK)
 
 void ContextMenuController::createAndAppendUnicodeSubMenu(ContextMenuItem& unicodeMenuItem)
@@ -770,16 +731,9 @@ void ContextMenuController::populate()
 #endif
     ContextMenuItem ToggleMediaLoop(CheckableActionType, ContextMenuItemTagToggleMediaLoop, 
         contextMenuItemTagToggleMediaLoop());
-#if PLATFORM(COCOA)
-    ContextMenuItem SearchSpotlightItem(ActionType, ContextMenuItemTagSearchInSpotlight, 
-        contextMenuItemTagSearchInSpotlight());
-#endif
 #if ENABLE(APP_HIGHLIGHTS)
     ContextMenuItem AddHighlightItem(ActionType, ContextMenuItemTagAddHighlightToCurrentQuickNote, contextMenuItemTagAddHighlightToCurrentQuickNote());
     ContextMenuItem AddHighlightToNewQuickNoteItem(ActionType, ContextMenuItemTagAddHighlightToNewQuickNote, contextMenuItemTagAddHighlightToNewQuickNote());
-#endif
-#if !PLATFORM(GTK)
-    ContextMenuItem SearchWebItem(ActionType, ContextMenuItemTagSearchWeb, contextMenuItemTagSearchWeb());
 #endif
     ContextMenuItem CopyItem(ActionType, ContextMenuItemTagCopy, contextMenuItemTagCopy());
     ContextMenuItem BackItem(ActionType, ContextMenuItemTagGoBack, contextMenuItemTagGoBack());
@@ -832,20 +786,11 @@ void ContextMenuController::populate()
         if (selectedText.isEmpty())
             return;
 
-#if PLATFORM(COCOA)
-        ContextMenuItem lookUpInDictionaryItem(ActionType, ContextMenuItemTagLookUpInDictionary, contextMenuItemTagLookUpInDictionary(selectedText));
-        appendItem(lookUpInDictionaryItem, m_contextMenu.get());
-#endif
-
 #if HAVE(TRANSLATION_UI_SERVICES)
         ContextMenuItem translateItem(ActionType, ContextMenuItemTagTranslate, contextMenuItemTagTranslate(selectedText));
         appendItem(translateItem, m_contextMenu.get());
 #endif
 
-#if !PLATFORM(GTK)
-        appendItem(SearchWebItem, m_contextMenu.get());
-        appendItem(*separatorItem(), m_contextMenu.get());
-#endif
     };
 
     auto selectedText = m_context.hitTestResult().selectedText();
@@ -937,10 +882,7 @@ void ContextMenuController::populate()
                 appendItem(ShareMenuItem, m_contextMenu.get());
                 appendItem(*separatorItem(), m_contextMenu.get());
 
-                ContextMenuItem SpeechMenuItem(SubmenuType, ContextMenuItemTagSpeechMenu, contextMenuItemTagSpeechMenu());
-                createAndAppendSpeechSubMenu(SpeechMenuItem);
-                appendItem(SpeechMenuItem, m_contextMenu.get());
-#endif                
+#endif
             } else {
                 if (!(frame->page() && (frame->page()->inspectorController().inspectionLevel() > 0 || frame->page()->inspectorController().hasRemoteFrontend()))) {
 
@@ -1094,11 +1036,6 @@ void ContextMenuController::populate()
                 createAndAppendFontSubMenu(FontMenuItem);
                 appendItem(FontMenuItem, m_contextMenu.get());
             }
-#if PLATFORM(COCOA)
-            ContextMenuItem SpeechMenuItem(SubmenuType, ContextMenuItemTagSpeechMenu, contextMenuItemTagSpeechMenu());
-            createAndAppendSpeechSubMenu(SpeechMenuItem);
-            appendItem(SpeechMenuItem, m_contextMenu.get());
-#endif
 #if PLATFORM(GTK)
             EditorClient* client = frame->editor().client();
             if (client && client->shouldShowUnicodeMenu()) {
@@ -1245,9 +1182,6 @@ void ContextMenuController::checkOrEnableIfNeeded(ContextMenuItem& item) const
             shouldEnable = frame->editor().canEditRichly();
             break;
         }
-        case ContextMenuItemTagLookUpInDictionary:
-            shouldEnable = frame->selection().isRange();
-            break;
         case ContextMenuItemTagCheckGrammarWithSpelling:
             if (frame->editor().isGrammarCheckingEnabled())
                 shouldCheck = true;
@@ -1321,13 +1255,7 @@ void ContextMenuController::checkOrEnableIfNeeded(ContextMenuItem& item) const
         case ContextMenuItemTagTextReplacement:
             shouldCheck = frame->editor().isAutomaticTextReplacementEnabled();
             break;
-        case ContextMenuItemTagStopSpeaking:
-            shouldEnable = m_client.isSpeaking();
-            break;
-#else // PLATFORM(COCOA) ends here
-        case ContextMenuItemTagStopSpeaking:
-            break;
-#endif
+#endif // PLATFORM(COCOA) ends here
 #if PLATFORM(GTK)
         case ContextMenuItemTagGoBack:
             shouldEnable = frame->page() && frame->page()->backForward().canGoBackOrForward(-1);
@@ -1400,8 +1328,6 @@ void ContextMenuController::checkOrEnableIfNeeded(ContextMenuItem& item) const
         case ContextMenuItemTagOpenFrameInNewWindow:
         case ContextMenuItemTagSpellingGuess:
         case ContextMenuItemTagOther:
-        case ContextMenuItemTagSearchInSpotlight:
-        case ContextMenuItemTagSearchWeb:
         case ContextMenuItemTagOpenWithDefaultApplication:
         case ContextMenuItemPDFActualSize:
         case ContextMenuItemPDFZoomIn:
@@ -1418,8 +1344,6 @@ void ContextMenuController::checkOrEnableIfNeeded(ContextMenuItem& item) const
         case ContextMenuItemTagShowFonts:
         case ContextMenuItemTagStyles:
         case ContextMenuItemTagShowColors:
-        case ContextMenuItemTagSpeechMenu:
-        case ContextMenuItemTagStartSpeaking:
         case ContextMenuItemTagWritingDirectionMenu:
         case ContextMenuItemTagTextDirectionMenu:
         case ContextMenuItemTagPDFSinglePageScrolling:

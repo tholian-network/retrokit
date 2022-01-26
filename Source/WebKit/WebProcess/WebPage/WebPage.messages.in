@@ -223,12 +223,6 @@ GenerateSyntheticEditingCommand(enum:uint8_t WebKit::SyntheticEditingCommandType
     SelectAll()
     ScheduleFullEditorStateUpdate()
 
-#if PLATFORM(COCOA)
-    # Dictionary support.
-    PerformDictionaryLookupOfCurrentSelection()
-    PerformDictionaryLookupAtLocation(WebCore::FloatPoint point)
-#endif
-
 #if ENABLE(DATA_DETECTION)
     DetectDataInAllFrames(OptionSet<WebCore::DataDetectorType> types) -> (struct WebKit::DataDetectionResult result) Async
     RemoveDataDetectedLinks() -> (struct WebKit::DataDetectionResult result) Async

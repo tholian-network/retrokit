@@ -101,15 +101,7 @@ class EmptyContextMenuClient final : public ContextMenuClient {
     void contextMenuDestroyed() final { }
 
     void downloadURL(const URL&) final { }
-    void searchWithGoogle(const Frame*) final { }
     void lookUpInDictionary(Frame*) final { }
-    bool isSpeaking() final { return false; }
-    void speak(const String&) final { }
-    void stopSpeaking() final { }
-
-#if PLATFORM(COCOA)
-    void searchWithSpotlight() final { }
-#endif
 
 #if HAVE(TRANSLATION_UI_SERVICES)
     void handleTranslation(const TranslationContextMenuInfo&) final { }

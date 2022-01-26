@@ -403,12 +403,6 @@ inline WKContextMenuItemTag toAPI(WebCore::ContextMenuAction action)
         return kWKContextMenuItemTagLearnSpelling;
     case WebCore::ContextMenuItemTagOther:
         return kWKContextMenuItemTagOther;
-    case WebCore::ContextMenuItemTagSearchInSpotlight:
-        return kWKContextMenuItemTagSearchInSpotlight;
-    case WebCore::ContextMenuItemTagSearchWeb:
-        return kWKContextMenuItemTagSearchWeb;
-    case WebCore::ContextMenuItemTagLookUpInDictionary:
-        return kWKContextMenuItemTagLookUpInDictionary;
     case WebCore::ContextMenuItemTagOpenWithDefaultApplication:
         return kWKContextMenuItemTagOpenWithDefaultApplication;
     case WebCore::ContextMenuItemPDFActualSize:
@@ -459,12 +453,6 @@ inline WKContextMenuItemTag toAPI(WebCore::ContextMenuAction action)
         return kWKContextMenuItemTagStyles;
     case WebCore::ContextMenuItemTagShowColors:
         return kWKContextMenuItemTagShowColors;
-    case WebCore::ContextMenuItemTagSpeechMenu:
-        return kWKContextMenuItemTagSpeechMenu;
-    case WebCore::ContextMenuItemTagStartSpeaking:
-        return kWKContextMenuItemTagStartSpeaking;
-    case WebCore::ContextMenuItemTagStopSpeaking:
-        return kWKContextMenuItemTagStopSpeaking;
     case WebCore::ContextMenuItemTagWritingDirectionMenu:
         return kWKContextMenuItemTagWritingDirectionMenu;
     case WebCore::ContextMenuItemTagDefaultDirection:
@@ -597,12 +585,6 @@ inline WebCore::ContextMenuAction toImpl(WKContextMenuItemTag tag)
         return WebCore::ContextMenuItemTagLearnSpelling;
     case kWKContextMenuItemTagOther:
         return WebCore::ContextMenuItemTagOther;
-    case kWKContextMenuItemTagSearchInSpotlight:
-        return WebCore::ContextMenuItemTagSearchInSpotlight;
-    case kWKContextMenuItemTagSearchWeb:
-        return WebCore::ContextMenuItemTagSearchWeb;
-    case kWKContextMenuItemTagLookUpInDictionary:
-        return WebCore::ContextMenuItemTagLookUpInDictionary;
     case kWKContextMenuItemTagOpenWithDefaultApplication:
         return WebCore::ContextMenuItemTagOpenWithDefaultApplication;
     case kWKContextMenuItemTagPDFActualSize:
@@ -653,12 +635,6 @@ inline WebCore::ContextMenuAction toImpl(WKContextMenuItemTag tag)
         return WebCore::ContextMenuItemTagStyles;
     case kWKContextMenuItemTagShowColors:
         return WebCore::ContextMenuItemTagShowColors;
-    case kWKContextMenuItemTagSpeechMenu:
-        return WebCore::ContextMenuItemTagSpeechMenu;
-    case kWKContextMenuItemTagStartSpeaking:
-        return WebCore::ContextMenuItemTagStartSpeaking;
-    case kWKContextMenuItemTagStopSpeaking:
-        return WebCore::ContextMenuItemTagStopSpeaking;
     case kWKContextMenuItemTagWritingDirectionMenu:
         return WebCore::ContextMenuItemTagWritingDirectionMenu;
     case kWKContextMenuItemTagDefaultDirection:

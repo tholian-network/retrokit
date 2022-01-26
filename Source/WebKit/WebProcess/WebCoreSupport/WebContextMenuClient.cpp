@@ -50,47 +50,6 @@ void WebContextMenuClient::downloadURL(const URL&)
     ASSERT_NOT_REACHED();
 }
 
-#if !PLATFORM(COCOA)
-
-void WebContextMenuClient::searchWithGoogle(const WebCore::Frame* frame)
-{
-    auto page = frame->page();
-    if (!page)
-        return;
-
-    auto searchString = frame->editor().selectedText();
-    searchString.stripWhiteSpace();
-    searchString = encodeWithURLEscapeSequences(searchString);
-    searchString.replace("%20"_s, "+"_s);
-    auto searchURL = URL { { }, "https://www.google.com/search?q=" + searchString + "&ie=UTF-8&oe=UTF-8" };
-
-    WebCore::UserGestureIndicator indicator { WebCore::ProcessingUserGesture };
-    page->mainFrame().loader().changeLocation(searchURL, { }, nullptr, WebCore::ReferrerPolicy::EmptyString, WebCore::ShouldOpenExternalURLsPolicy::ShouldNotAllow);
-}
-
-void WebContextMenuClient::lookUpInDictionary(WebCore::Frame*)
-{
-    notImplemented();
-}
-
-bool WebContextMenuClient::isSpeaking()
-{
-    notImplemented();
-    return false;
-}
-
-void WebContextMenuClient::speak(const String&)
-{
-    notImplemented();
-}
-
-void WebContextMenuClient::stopSpeaking()
-{
-    notImplemented();
-}
-
-#endif
-
 #if USE(ACCESSIBILITY_CONTEXT_MENUS)
 
 void WebContextMenuClient::showContextMenu()

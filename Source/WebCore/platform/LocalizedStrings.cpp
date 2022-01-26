@@ -229,18 +229,6 @@ String contextMenuItemTagLearnSpelling()
     return WEB_UI_STRING_WITH_MNEMONIC("Learn Spelling", "_Learn Spelling", "Learn Spelling context menu item");
 }
 
-String contextMenuItemTagLookUpInDictionary(const String& selectedString)
-{
-#if USE(CF)
-    auto selectedCFString = truncatedStringForMenuItem(selectedString).createCFString();
-    return formatLocalizedString(WEB_UI_CFSTRING("Look Up “%@”", "Look Up context menu item with selected word"), selectedCFString.get());
-#elif USE(GLIB)
-    return formatLocalizedString(WEB_UI_STRING("Look Up “%s”", "Look Up context menu item with selected word"), truncatedStringForMenuItem(selectedString).utf8().data());
-#else
-    return WEB_UI_STRING("Look Up “<selection>”", "Look Up context menu item with selected word").replace("<selection>", truncatedStringForMenuItem(selectedString));
-#endif
-}
-
 #if HAVE(TRANSLATION_UI_SERVICES)
 
 String contextMenuItemTagTranslate(const String& selectedString)
@@ -412,13 +400,6 @@ String contextMenuItemTagInspectElement()
 {
     return WEB_UI_STRING_WITH_MNEMONIC("Inspect Element", "Inspect _Element", "Inspect Element context menu item");
 }
-
-#if !PLATFORM(COCOA)
-String contextMenuItemTagSearchWeb()
-{
-    return WEB_UI_STRING_WITH_MNEMONIC("Search the Web", "_Search the Web", "Search the Web context menu item");
-}
-#endif
 
 #endif // ENABLE(CONTEXT_MENUS)
 

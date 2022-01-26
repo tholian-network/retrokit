@@ -66,7 +66,7 @@ public:
     {
         return m_type == EditingBehaviorType::Unix;
     }
-    
+
     // On Mac and Windows, pressing backspace (when it isn't handled otherwise) should navigate back.
     bool shouldNavigateBackOnBackspace() const
     {
@@ -87,14 +87,12 @@ public:
     // space when deleting password cause space been showed insecurely.
     bool shouldRebalanceWhiteSpacesInSecureField() const { return m_type != EditingBehaviorType::iOS; }
 
-    bool shouldSelectBasedOnDictionaryLookup() const { return m_type == EditingBehaviorType::Mac; }
-
     // Linux and Windows always extend selections from the extent endpoint.
     bool shouldAlwaysExtendSelectionFromExtentEndpoint() const { return m_type != EditingBehaviorType::Mac && m_type != EditingBehaviorType::iOS; }
 
     // On iOS, we don't want to select all the text when focusing a field. Instead, match platform behavior by going to the end of the line.
     bool shouldMoveSelectionToEndWhenFocusingTextInput() const { return m_type == EditingBehaviorType::iOS; }
-    
+
     // On iOS, when smart delete is on, it is always on, and should do not additional checks (i.e. TextGranularity::WordGranularity).
     bool shouldAlwaysSmartDelete() const { return m_type == EditingBehaviorType::iOS; }
     

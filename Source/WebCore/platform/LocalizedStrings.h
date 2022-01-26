@@ -94,8 +94,6 @@ namespace WebCore {
     String contextMenuItemTagNoGuessesFound();
     String contextMenuItemTagIgnoreSpelling();
     String contextMenuItemTagLearnSpelling();
-    String contextMenuItemTagSearchWeb();
-    String contextMenuItemTagLookUpInDictionary(const String& selectedString);
     WEBCORE_EXPORT String contextMenuItemTagOpenLink();
     WEBCORE_EXPORT String contextMenuItemTagIgnoreGrammar();
     WEBCORE_EXPORT String contextMenuItemTagSpellingMenu();
@@ -114,13 +112,9 @@ namespace WebCore {
     WEBCORE_EXPORT String contextMenuItemTagLeftToRight();
     WEBCORE_EXPORT String contextMenuItemTagRightToLeft();
 #if PLATFORM(COCOA)
-    String contextMenuItemTagSearchInSpotlight();
     WEBCORE_EXPORT String contextMenuItemTagShowFonts();
     WEBCORE_EXPORT String contextMenuItemTagStyles();
     WEBCORE_EXPORT String contextMenuItemTagShowColors();
-    WEBCORE_EXPORT String contextMenuItemTagSpeechMenu();
-    WEBCORE_EXPORT String contextMenuItemTagStartSpeaking();
-    WEBCORE_EXPORT String contextMenuItemTagStopSpeaking();
     WEBCORE_EXPORT String contextMenuItemTagCorrectSpellingAutomatically();
     WEBCORE_EXPORT String contextMenuItemTagSubstitutionsMenu();
     WEBCORE_EXPORT String contextMenuItemTagShowSubstitutions(bool show);

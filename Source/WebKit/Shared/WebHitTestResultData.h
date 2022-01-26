@@ -22,7 +22,6 @@
 #include "APIObject.h"
 #include "ShareableBitmap.h"
 #include "SharedMemory.h"
-#include <WebCore/DictionaryPopupInfo.h>
 #include <WebCore/FloatPoint.h>
 #include <WebCore/IntRect.h>
 #include <WebCore/PageOverlay.h>
@@ -72,8 +71,6 @@ struct WebHitTestResultData {
     WebCore::FloatRect detectedDataBoundingBox;
     RefPtr<WebCore::TextIndicator> detectedDataTextIndicator;
     WebCore::PageOverlay::PageOverlayID detectedDataOriginatingPageOverlay;
-
-    WebCore::DictionaryPopupInfo dictionaryPopupInfo;
 
     RefPtr<WebCore::TextIndicator> linkTextIndicator;
 

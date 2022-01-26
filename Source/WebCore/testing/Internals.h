@@ -33,7 +33,6 @@
 #include "HEVCUtilities.h"
 #include "IDLTypes.h"
 #include "PageConsoleClient.h"
-#include "RealtimeMediaSource.h"
 #include "TextIndicator.h"
 #include "VP9Utilities.h"
 #include <JavaScriptCore/Float32Array.h>
@@ -307,7 +306,6 @@ public:
     String rangeAsText(const Range&);
     String rangeAsTextUsingBackwardsTextIterator(const Range&);
     Ref<Range> subrange(Range&, unsigned rangeLocation, unsigned rangeLength);
-    ExceptionOr<RefPtr<Range>> rangeForDictionaryLookupAtLocation(int x, int y);
     RefPtr<Range> rangeOfStringNearLocation(const Range&, const String&, unsigned);
 
     ExceptionOr<void> setDelegatesScrolling(bool enabled);
@@ -915,8 +913,6 @@ public:
     void setAlwaysAllowLocalWebarchive(bool);
     void processWillSuspend();
     void processDidResume();
-
-    void testDictionaryLogging();
 
     void setMaximumIntervalForUserGestureForwardingForFetch(double);
     void setTransientActivationDuration(double seconds);

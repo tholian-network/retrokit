@@ -36,7 +36,6 @@
 #include <WebCore/NativeImage.h>
 #include <WebCore/NetworkLoadMetrics.h>
 #include <WebCore/NotificationDirection.h>
-#include <WebCore/RealtimeMediaSource.h>
 #include <WebCore/RenderingMode.h>
 #include <WebCore/ScrollSnapOffsetsInfo.h>
 #include <WebCore/SerializedPlatformDataCueValue.h>
@@ -131,7 +130,6 @@ struct CharacterRange;
 struct CompositionUnderline;
 struct DataDetectorElementInfo;
 struct DictationAlternative;
-struct DictionaryPopupInfo;
 struct EventTrackingRegions;
 struct ExceptionDetails;
 struct FontAttributes;
@@ -154,7 +152,7 @@ struct TouchActionData;
 struct VelocityData;
 struct ViewportAttributes;
 struct WindowFeatures;
-    
+
 template<typename> class RectEdges;
 using FloatBoxExtent = RectEdges<float>;
 using IDBKeyPath = Variant<String, Vector<String>>;
@@ -608,13 +606,6 @@ template<> struct ArgumentCoder<WebCore::ContentFilterUnblockHandler> {
 template<> struct ArgumentCoder<WebCore::TextIndicatorData> {
     static void encode(Encoder&, const WebCore::TextIndicatorData&);
     static std::optional<WebCore::TextIndicatorData> decode(Decoder&);
-};
-
-template<> struct ArgumentCoder<WebCore::DictionaryPopupInfo> {
-    static void encode(Encoder&, const WebCore::DictionaryPopupInfo&);
-    static WARN_UNUSED_RETURN bool decode(Decoder&, WebCore::DictionaryPopupInfo&);
-    static void encodePlatformData(Encoder&, const WebCore::DictionaryPopupInfo&);
-    static WARN_UNUSED_RETURN bool decodePlatformData(Decoder&, WebCore::DictionaryPopupInfo&);
 };
 
 template<> struct ArgumentCoder<WebCore::RecentSearch> {

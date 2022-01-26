@@ -41,23 +41,14 @@ public:
         : m_page(page)
     {
     }
-    
+
 private:
     void contextMenuDestroyed() override;
 
     void downloadURL(const URL&) override;
-    void searchWithGoogle(const WebCore::Frame*) override;
-    void lookUpInDictionary(WebCore::Frame*) override;
-    bool isSpeaking() override;
-    void speak(const String&) override;
-    void stopSpeaking() override;
 
 #if ENABLE(IMAGE_ANALYSIS)
     bool supportsLookUpInImages() final { return true; }
-#endif
-
-#if PLATFORM(COCOA)
-    void searchWithSpotlight() override;
 #endif
 
 #if HAVE(TRANSLATION_UI_SERVICES)

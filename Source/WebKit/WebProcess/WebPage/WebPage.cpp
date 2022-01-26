@@ -5415,11 +5415,6 @@ void WebPage::didChangeSelection()
 void WebPage::didChangeSelectionOrOverflowScrollPosition()
 {
     Frame& frame = m_page->focusController().focusedOrMainFrame();
-    // The act of getting Dictionary Popup info can make selection changes that we should not propagate to the UIProcess.
-    // Specifically, if there is a caret selection, it will change to a range selection of the word around the caret. And
-    // then it will change back.
-    if (frame.editor().isGettingDictionaryPopupInfo())
-        return;
 
     // Similarly, we don't want to propagate changes to the web process when inserting text asynchronously, since we will
     // end up with a range selection very briefly right before inserting the text.
