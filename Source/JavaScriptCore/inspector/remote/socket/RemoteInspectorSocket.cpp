@@ -107,9 +107,6 @@ void RemoteInspector::stopInternal(StopSource)
         targetConnection->close();
     m_targetConnectionMap.clear();
 
-    if (m_client)
-        m_client->closeAutomationSession();
-
     updateHasActiveDebugSession();
 
     m_automaticInspectionPaused = false;
@@ -197,25 +194,6 @@ void RemoteInspector::sendAutomaticInspectionCandidateMessage()
     // FIXME: Implement automatic inspection.
 }
 
-void RemoteInspector::requestAutomationSession(String&& sessionID, const Client::SessionCapabilities& capabilities)
-{
-    if (!m_client)
-        return;
-
-    if (!m_clientCapabilities || !m_clientCapabilities->remoteAutomationAllowed) {
-        LOG_ERROR("Error: Remote automation is not allowed");
-        return;
-    }
-
-    if (sessionID.isNull()) {
-        LOG_ERROR("Client error: SESSION ID cannot be null");
-        return;
-    }
-
-    m_client->requestAutomationSession(WTFMove(sessionID), capabilities);
-    updateClientCapabilities();
-}
-
 void RemoteInspector::sendMessageToRemote(TargetID targetIdentifier, const String& message)
 {
     if (!m_clientConnection)
@@ -285,8 +263,7 @@ HashMap<String, RemoteInspectorConnectionClient::CallHandler>& RemoteInspector::
         { "SetupInspectorClient"_s, static_cast<CallHandler>(&RemoteInspector::setupInspectorClient) },
         { "Setup"_s, static_cast<CallHandler>(&RemoteInspector::setupTarget) },
         { "FrontendDidClose"_s, static_cast<CallHandler>(&RemoteInspector::frontendDidClose) },
-        { "SendMessageToBackend"_s, static_cast<CallHandler>(&RemoteInspector::sendMessageToBackend) },
-        { "StartAutomationSession"_s, static_cast<CallHandler>(&RemoteInspector::startAutomationSession) },
+        { "SendMessageToBackend"_s, static_cast<CallHandler>(&RemoteInspector::sendMessageToBackend) }
     });
 
     return methods;
@@ -355,36 +332,6 @@ void RemoteInspector::sendMessageToBackend(const Event& event)
     }
 
     connectionToTarget->sendMessageToTarget(event.message.value());
-}
-
-void RemoteInspector::startAutomationSession(const Event& event)
-{
-    ASSERT(isMainThread());
-
-    if (!m_clientConnection)
-        return;
-
-    if (!event.message)
-        return;
-
-    String sessionID = *event.message;
-    requestAutomationSession(WTFMove(sessionID), { });
-
-    auto sendEvent = JSON::Object::create();
-    sendEvent->setString("event"_s, "StartAutomationSession_Return"_s);
-
-    auto capability = clientCapabilities();
-
-    auto message = JSON::Object::create();
-    message->setString("browserName"_s, capability ? capability->browserName : "");
-    message->setString("browserVersion"_s, capability ? capability->browserVersion : "");
-    sendEvent->setString("message"_s, message->toJSONString());
-    sendWebInspectorEvent(sendEvent->toJSONString());
-
-    m_readyToPushListings = true;
-
-    Locker locker { m_mutex };
-    pushListingsNow();
 }
 
 } // namespace Inspector

@@ -117,7 +117,6 @@ class StorageAreaMap;
 class UserData;
 class WaylandCompositorDisplay;
 class WebAuthnProcessConnection;
-class WebAutomationSessionProxy;
 class WebBroadcastChannelRegistry;
 class WebCacheStorageProvider;
 class WebCookieJar;
@@ -290,8 +289,6 @@ public:
 
     void prefetchDNS(const String&);
 
-    WebAutomationSessionProxy* automationSessionProxy() { return m_automationSessionProxy.get(); }
-
     WebCacheStorageProvider& cacheStorageProvider() { return m_cacheStorageProvider.get(); }
     WebBroadcastChannelRegistry& broadcastChannelRegistry() { return m_broadcastChannelRegistry.get(); }
     WebCookieJar& cookieJar() { return m_cookieJar.get(); }
@@ -434,9 +431,6 @@ private:
     void setInjectedBundleParameters(const IPC::DataReference&);
 
     bool areAllPagesSuspended() const;
-
-    void ensureAutomationSessionProxy(const String& sessionIdentifier);
-    void destroyAutomationSessionProxy();
 
     void logDiagnosticMessageForNetworkProcessCrash();
     bool hasVisibleWebPage() const;
@@ -594,8 +588,6 @@ private:
 
     HashSet<String> m_dnsPrefetchedHosts;
     PAL::HysteresisActivity m_dnsPrefetchHystereris;
-
-    std::unique_ptr<WebAutomationSessionProxy> m_automationSessionProxy;
 
 #if ENABLE(SERVICE_CONTROLS)
     bool m_hasImageServices { false };

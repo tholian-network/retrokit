@@ -12,7 +12,6 @@ LocalizedStringsGtk.cpp
 ../../../WebKit/Shared/WebErrors.cpp
 ../../../WebKit/Shared/gtk/WebErrorsGtk.cpp
 ../../../WebKit/Shared/soup/WebErrorsSoup.cpp
-../../../WebKit/UIProcess/API/glib/WebKitAutomationSession.cpp
 ../../../WebKit/UIProcess/API/glib/WebKitDownload.cpp
 ../../../WebKit/UIProcess/API/glib/WebKitEditorState.cpp
 ../../../WebKit/UIProcess/API/glib/WebKitFaviconDatabase.cpp

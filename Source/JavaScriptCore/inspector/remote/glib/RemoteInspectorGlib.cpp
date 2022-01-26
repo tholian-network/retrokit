@@ -305,21 +305,6 @@ void RemoteInspector::sendMessageToTarget(TargetID targetIdentifier, const char*
         connectionToTarget->sendMessageToTarget(String::fromUTF8(message));
 }
 
-void RemoteInspector::requestAutomationSession(const char* sessionID, const Client::SessionCapabilities& capabilities)
-{
-    if (!m_client)
-        return;
-
-    if (!m_clientCapabilities || !m_clientCapabilities->remoteAutomationAllowed)
-        return;
-
-    if (!sessionID || !sessionID[0])
-        return;
-
-    m_client->requestAutomationSession(String::fromUTF8(sessionID), capabilities);
-    updateClientCapabilities();
-}
-
 } // namespace Inspector
 
 #endif // ENABLE(REMOTE_INSPECTOR)

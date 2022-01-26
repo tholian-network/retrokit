@@ -163,7 +163,7 @@ void Navigator::share(Document& document, const ShareData& data, Ref<DeferredPro
     if (document.settings().webShareFileAPIEnabled() && !data.files.isEmpty()) {
         if (m_loader)
             m_loader->cancel();
-        
+
         m_loader = ShareDataReader::create([this, promise = WTFMove(promise)] (ExceptionOr<ShareDataWithParsedURL&> readData) mutable {
             showShareData(readData, WTFMove(promise));
         });
@@ -180,19 +180,14 @@ void Navigator::showShareData(ExceptionOr<ShareDataWithParsedURL&> readData, Ref
         promise->reject(readData.releaseException());
         return;
     }
-    
+
     auto* frame = this->frame();
     if (!frame || !frame->page())
         return;
 
-    if (frame->page()->isControlledByAutomation()) {
-        promise->resolve();
-        return;
-    }
-    
     m_hasPendingShare = true;
     auto shareData = readData.returnValue();
-    
+
     frame->page()->chrome().showShareSheet(shareData, [promise = WTFMove(promise), this] (bool completed) {
         m_hasPendingShare = false;
         if (completed) {

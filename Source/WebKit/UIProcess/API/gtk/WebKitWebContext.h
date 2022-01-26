@@ -25,7 +25,6 @@
 #define WebKitWebContext_h
 
 #include <glib-object.h>
-#include <webkit2/WebKitAutomationSession.h>
 #include <webkit2/WebKitCookieManager.h>
 #include <webkit2/WebKitDefines.h>
 #include <webkit2/WebKitDownload.h>
@@ -116,8 +115,6 @@ struct _WebKitWebContextClass {
                                                       WebKitDownload          *download);
     void     (* initialize_web_extensions)           (WebKitWebContext        *context);
     void     (* initialize_notification_permissions) (WebKitWebContext        *context);
-    void     (* automation_started)                  (WebKitWebContext        *context,
-                                                      WebKitAutomationSession *session);
     gboolean (* user_message_received)               (WebKitWebContext        *context,
                                                       WebKitUserMessage       *message);
 
@@ -147,12 +144,6 @@ webkit_web_context_get_website_data_manager         (WebKitWebContext           
 WEBKIT_API gboolean
 webkit_web_context_is_ephemeral                     (WebKitWebContext              *context);
 
-WEBKIT_API gboolean
-webkit_web_context_is_automation_allowed            (WebKitWebContext              *context);
-
-WEBKIT_API void
-webkit_web_context_set_automation_allowed           (WebKitWebContext              *context,
-                                                     gboolean                       allowed);
 WEBKIT_API void
 webkit_web_context_set_cache_model                  (WebKitWebContext              *context,
                                                      WebKitCacheModel               cache_model);

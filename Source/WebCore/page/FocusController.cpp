@@ -455,7 +455,7 @@ bool FocusController::relinquishFocusToChrome(FocusDirection direction)
     if (!document)
         return false;
 
-    if (!m_page.chrome().canTakeFocus(direction) || m_page.isControlledByAutomation())
+    if (!m_page.chrome().canTakeFocus(direction))
         return false;
 
     document->setFocusedElement(nullptr);

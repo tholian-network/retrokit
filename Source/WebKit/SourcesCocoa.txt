@@ -232,8 +232,6 @@ UIProcess/API/Cocoa/_WKActivatedElementInfo.mm
 UIProcess/API/Cocoa/_WKAppHighlight.mm
 UIProcess/API/Cocoa/_WKApplicationManifest.mm
 UIProcess/API/Cocoa/_WKAttachment.mm
-UIProcess/API/Cocoa/_WKAutomationSession.mm
-UIProcess/API/Cocoa/_WKAutomationSessionConfiguration.mm
 UIProcess/API/Cocoa/_WKContentRuleListAction.mm
 UIProcess/API/Cocoa/_WKContextMenuElementInfo.mm
 UIProcess/API/Cocoa/_WKCustomHeaderFields.mm @no-unify
@@ -334,12 +332,6 @@ UIProcess/Authentication/cocoa/SecKeyProxyStore.mm
 
 UIProcess/Authentication/mac/WebCredentialMac.mm
 
-UIProcess/Automation/cocoa/WebAutomationSessionCocoa.mm
-
-UIProcess/Automation/ios/WebAutomationSessionIOS.mm
-
-UIProcess/Automation/mac/WebAutomationSessionMac.mm
-
 UIProcess/Cocoa/GroupActivities/GroupActivitiesCoordinator.mm
 UIProcess/Cocoa/GroupActivities/GroupActivitiesSession.mm
 UIProcess/Cocoa/GroupActivities/GroupActivitiesSessionNotifier.mm
@@ -353,8 +345,6 @@ UIProcess/Cocoa/SOAuthorization/SOAuthorizationSession.mm
 UIProcess/Cocoa/SOAuthorization/SubFrameSOAuthorizationSession.mm
 UIProcess/Cocoa/SOAuthorization/WKSOAuthorizationDelegate.mm
 
-UIProcess/Cocoa/AutomationClient.mm
-UIProcess/Cocoa/AutomationSessionClient.mm
 UIProcess/Cocoa/DiagnosticLoggingClient.mm
 UIProcess/Cocoa/LegacyDownloadClient.mm
 UIProcess/Cocoa/DownloadProxyMapCocoa.mm

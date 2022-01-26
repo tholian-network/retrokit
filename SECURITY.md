@@ -54,8 +54,8 @@ legacy platforms that are no longer maintained.
 - [x] Remove Tru64 OSF/1 Platform Support (`__osf`)
 - [x] Remove Touch Bar Support (`TOUCH_BAR`, `TouchBarMenuData`, `TouchBarMenuItemData`, `didInsertMenuElement`, `didRemoveMenuElement`, `didInsertMenuItemElement`, `didRemoveMenuItemElement`, `touchBarMenu*`)
 - [ ] Remove User Message Handlers Support (`USER_MESSAGE_HANDLERS`)
+- [x] Remove WebDriver Support (`WEBDRIVER`, `WEBDRIVER_KEYBOARD_INTERACTIONS`, `WEBDRIVER_MOUSE_INTERACTIONS`, `WEBDRIVER_TOUCH_INTERACTIONS`, `WEBDRIVER_WHEEL_INTERACTIONS`)
 - [x] Remove Wireless Playback Target Support (`WIRELESS_PLAYBACK_TARGET`, `PlaybackTarget`, `RemotePlayback`)
-- [ ] *Undecided* Remove WebDriver Support (`WEBDRIVER`, `WEBDRIVER_KEYBOARD_INTERACTIONS`, `WEBDRIVER_MOUSE_INTERACTIONS`, `WEBDRIVER_TOUCH_INTERACTIONS`, `WEBDRIVER_WHEEL_INTERACTIONS`)
 - [ ] *Undecided* Remove WebKit Platform for Embedded (`WPE`, `USE_WPE_RENDERER`)
 - [ ] *Undecided* Remove Remote Inspector Support (`REMOTE_INSPECTOR`)
 - [ ] *Undecided* Remove Developer Mode (`DEVELOPER_MODE`)
@@ -79,6 +79,7 @@ These legacy APIs that are no longer of relevance to a modern Web View.
 - [ ] Remove `WebFrameLoaderClient::createPlugin` and `WebFrameLoaderClient::redirectDataToPlugin`, `pluginSupportsExtension`
 - [ ] Remove Sandbox Extensions (`SANDBOX_EXTENSIONS`, `SandboxExtension`)
 - [ ] Remove Webkit InjectedBundle API (`InjectedBundle`, `WKBundle*`)
+- [x] Remove WebKit WebAutomation API (`WebAutomation`, `WebKitAutomation`, `AutomationClient`, `AutomationSession`)
 - [ ] Remove WebKit WebExtension API (`WebKitWebExtension`, `webkit_web_extension*`)
 - [ ] Remove `AllowsInlineMediaPlayback` Hacks (`AllowsInlineMediaPlayback`, `MEDIA_PLAYBACK_ALLOWS_INLINE`) and default playback behaviour to no-autoplay.
 - [ ] Remove `bmalloc` and prefer system allocator (`USE_SYSTEM_MALLOC`)

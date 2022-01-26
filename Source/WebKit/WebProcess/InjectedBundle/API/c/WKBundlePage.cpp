@@ -639,11 +639,6 @@ bool WKBundlePageIsUsingEphemeralSession(WKBundlePageRef pageRef)
     return WebKit::toImpl(pageRef)->usesEphemeralSession();
 }
 
-bool WKBundlePageIsControlledByAutomation(WKBundlePageRef pageRef)
-{
-    return WebKit::toImpl(pageRef)->isControlledByAutomation();
-}
-
 #if TARGET_OS_IPHONE
 void WKBundlePageSetUseTestingViewportConfiguration(WKBundlePageRef pageRef, bool useTestingViewportConfiguration)
 {
@@ -655,7 +650,7 @@ void WKBundlePageStartMonitoringScrollOperations(WKBundlePageRef pageRef, bool c
 {
     WebKit::WebPage* webPage = WebKit::toImpl(pageRef);
     WebCore::Page* page = webPage ? webPage->corePage() : nullptr;
-    
+
     if (!page)
         return;
 
@@ -666,12 +661,12 @@ bool WKBundlePageRegisterScrollOperationCompletionCallback(WKBundlePageRef pageR
 {
     if (!callback)
         return false;
-    
+
     WebKit::WebPage* webPage = WebKit::toImpl(pageRef);
     WebCore::Page* page = webPage ? webPage->corePage() : nullptr;
     if (!page || !page->isMonitoringWheelEvents())
         return false;
-    
+
     if (auto wheelEventTestMonitor = page->wheelEventTestMonitor()) {
         wheelEventTestMonitor->setTestCallbackAndStartMonitoring(expectWheelEndOrCancel, expectMomentumEnd, [=]() {
             callback(context);
@@ -684,7 +679,7 @@ void WKBundlePageCallAfterTasksAndTimers(WKBundlePageRef pageRef, WKBundlePageTe
 {
     if (!callback)
         return;
-    
+
     WebKit::WebPage* webPage = WebKit::toImpl(pageRef);
     WebCore::Page* page = webPage ? webPage->corePage() : nullptr;
     if (!page)
@@ -703,18 +698,18 @@ void WKBundlePageCallAfterTasksAndTimers(WKBundlePageRef pageRef, WKBundlePageTe
         {
             m_timer.startOneShot(0_s);
         }
-        
+
         void timerFired()
         {
             m_callback(m_context);
             delete this;
         }
-        
+
         WebCore::Timer m_timer;
         WTF::Function<void (void*)> m_callback;
         void* m_context;
     };
-    
+
     document->postTask([=] (WebCore::ScriptExecutionContext&) {
         new TimerOwner(callback, context); // deletes itself when done.
     });

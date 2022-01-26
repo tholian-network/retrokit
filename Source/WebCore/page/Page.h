@@ -725,9 +725,6 @@ public:
 
     WEBCORE_EXPORT void setDOMTimerAlignmentIntervalIncreaseLimit(Seconds);
 
-    bool isControlledByAutomation() const { return m_controlledByAutomation; }
-    void setControlledByAutomation(bool controlled) { m_controlledByAutomation = controlled; }
-
     String captionUserPreferencesStyleSheet();
     void setCaptionUserPreferencesStyleSheet(const String&);
 
@@ -1026,7 +1023,6 @@ private:
 
     bool m_allowsMediaDocumentInlinePlayback { false };
     bool m_allowsPlaybackControlsForAutoplayingAudio { false };
-    bool m_controlledByAutomation { false };
     bool m_resourceCachingDisabledByWebInspector { false };
     bool m_isUtilityPage;
     bool m_mediaPlaybackIsSuspended { false };
@@ -1040,9 +1036,9 @@ private:
 
     Vector<OptionSet<RenderingUpdateStep>, 2> m_renderingUpdateRemainingSteps;
     OptionSet<RenderingUpdateStep> m_unfulfilledRequestedSteps;
-    
+
     UserInterfaceLayoutDirection m_userInterfaceLayoutDirection { UserInterfaceLayoutDirection::LTR };
-    
+
     // For testing.
     std::optional<EventThrottlingBehavior> m_eventThrottlingBehaviorOverride;
     std::optional<CompositingPolicy> m_compositingPolicyOverride;

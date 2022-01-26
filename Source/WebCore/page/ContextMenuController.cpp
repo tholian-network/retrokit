@@ -403,7 +403,6 @@ void ContextMenuController::contextMenuItemSelected(ContextMenuAction action, co
         // We actually never enable this because CSS does not have a way to specify an outline font,
         // which may make this difficult to implement. Maybe a special case of text-shadow?
         break;
-    }
     case ContextMenuItemTagDefaultDirection:
         frame->editor().setBaseWritingDirection(WritingDirection::Natural);
         break;

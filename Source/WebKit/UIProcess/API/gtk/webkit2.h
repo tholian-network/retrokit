@@ -29,7 +29,6 @@
 
 #include <webkit2/WebKitApplicationInfo.h>
 #include <webkit2/WebKitAuthenticationRequest.h>
-#include <webkit2/WebKitAutomationSession.h>
 #include <webkit2/WebKitBackForwardList.h>
 #include <webkit2/WebKitBackForwardListItem.h>
 #include <webkit2/WebKitColorChooserRequest.h>

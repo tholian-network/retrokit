@@ -192,8 +192,6 @@ enum {
     PROP_IS_LOADING,
     PROP_IS_PLAYING_AUDIO,
     PROP_IS_EPHEMERAL,
-    PROP_IS_CONTROLLED_BY_AUTOMATION,
-    PROP_AUTOMATION_PRESENTATION_TYPE,
     PROP_EDITABLE,
     PROP_PAGE_ID,
     PROP_IS_MUTED,
@@ -263,8 +261,6 @@ struct _WebKitWebViewPrivate {
     bool isActiveURIChangeBlocked;
     bool isLoading;
     bool isEphemeral;
-    bool isControlledByAutomation;
-    WebKitAutomationBrowsingContextPresentation automationPresentationType;
 
     std::unique_ptr<PageLoadStateObserver> loadObserver;
 
@@ -696,7 +692,6 @@ static void webkitWebViewConstructed(GObject* object)
     if (priv->relatedView) {
         priv->context = webkit_web_view_get_context(priv->relatedView);
         priv->isEphemeral = webkit_web_view_is_ephemeral(priv->relatedView);
-        priv->isControlledByAutomation = webkit_web_view_is_controlled_by_automation(priv->relatedView);
     } else if (!priv->context)
         priv->context = webkit_web_context_get_default();
     else if (!priv->isEphemeral)
@@ -801,12 +796,6 @@ static void webkitWebViewSetProperty(GObject* object, guint propId, const GValue
     case PROP_IS_EPHEMERAL:
         webView->priv->isEphemeral = g_value_get_boolean(value);
         break;
-    case PROP_IS_CONTROLLED_BY_AUTOMATION:
-        webView->priv->isControlledByAutomation = g_value_get_boolean(value);
-        break;
-    case PROP_AUTOMATION_PRESENTATION_TYPE:
-        webView->priv->automationPresentationType = static_cast<WebKitAutomationBrowsingContextPresentation>(g_value_get_enum(value));
-        break;
     case PROP_EDITABLE:
         webkit_web_view_set_editable(webView, g_value_get_boolean(value));
         break;
@@ -865,12 +854,6 @@ static void webkitWebViewGetProperty(GObject* object, guint propId, GValue* valu
         break;
     case PROP_IS_EPHEMERAL:
         g_value_set_boolean(value, webkit_web_view_is_ephemeral(webView));
-        break;
-    case PROP_IS_CONTROLLED_BY_AUTOMATION:
-        g_value_set_boolean(value, webkit_web_view_is_controlled_by_automation(webView));
-        break;
-    case PROP_AUTOMATION_PRESENTATION_TYPE:
-        g_value_set_enum(value, webkit_web_view_get_automation_presentation_type(webView));
         break;
     case PROP_EDITABLE:
         g_value_set_boolean(value, webkit_web_view_is_editable(webView));
@@ -1166,42 +1149,6 @@ static void webkit_web_view_class_init(WebKitWebViewClass* webViewClass)
             "Is Ephemeral",
             _("Whether the web view is ephemeral"),
             FALSE,
-            static_cast<GParamFlags>(WEBKIT_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
-
-    /**
-     * WebKitWebView:is-controlled-by-automation:
-     *
-     * Whether the #WebKitWebView is controlled by automation. This should only be used when
-     * creating a new #WebKitWebView as a response to #WebKitAutomationSession::create-web-view
-     * signal request.
-     *
-     * Since: 2.18
-     */
-    sObjProperties[PROP_IS_CONTROLLED_BY_AUTOMATION] =
-        g_param_spec_boolean(
-            "is-controlled-by-automation",
-            "Is Controlled By Automation",
-            _("Whether the web view is controlled by automation"),
-            FALSE,
-            static_cast<GParamFlags>(WEBKIT_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
-
-    /**
-     * WebKitWebView:automation-presentation-type:
-     *
-     * The #WebKitAutomationBrowsingContextPresentation of #WebKitWebView. This should only be used when
-     * creating a new #WebKitWebView as a response to #WebKitAutomationSession::create-web-view
-     * signal request. If the new WebView was added to a new tab of current browsing context window
-     * %WEBKIT_AUTOMATION_BROWSING_CONTEXT_PRESENTATION_TAB should be used.
-     *
-     * Since: 2.28
-     */
-    sObjProperties[PROP_AUTOMATION_PRESENTATION_TYPE] =
-        g_param_spec_enum(
-            "automation-presentation-type",
-            "Automation Presentation Type",
-            _("The browsing context presentation type for automation"),
-            WEBKIT_TYPE_AUTOMATION_BROWSING_CONTEXT_PRESENTATION,
-            WEBKIT_AUTOMATION_BROWSING_CONTEXT_PRESENTATION_WINDOW,
             static_cast<GParamFlags>(WEBKIT_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
     /**
@@ -2743,42 +2690,6 @@ gboolean webkit_web_view_is_ephemeral(WebKitWebView* webView)
     g_return_val_if_fail(WEBKIT_IS_WEB_VIEW(webView), FALSE);
 
     return webView->priv->isEphemeral;
-}
-
-/**
- * webkit_web_view_is_controlled_by_automation:
- * @web_view: a #WebKitWebView
- *
- * Get whether a #WebKitWebView was created with #WebKitWebView:is-controlled-by-automation
- * property enabled. Only #WebKitWebView<!-- -->s controlled by automation can be used in an
- * automation session.
- *
- * Returns: %TRUE if @web_view is controlled by automation, or %FALSE otherwise.
- *
- * Since: 2.18
- */
-gboolean webkit_web_view_is_controlled_by_automation(WebKitWebView* webView)
-{
-    g_return_val_if_fail(WEBKIT_IS_WEB_VIEW(webView), FALSE);
-
-    return webView->priv->isControlledByAutomation;
-}
-
-/**
- * webkit_web_view_get_automation_presentation_type:
- * @web_view: a #WebKitWebView
- *
- * Get the presentation type of #WebKitWebView when created for automation.
- *
- * Returns: a #WebKitAutomationBrowsingContextPresentation.
- *
- * Since: 2.28
- */
-WebKitAutomationBrowsingContextPresentation webkit_web_view_get_automation_presentation_type(WebKitWebView* webView)
-{
-    g_return_val_if_fail(WEBKIT_IS_WEB_VIEW(webView), WEBKIT_AUTOMATION_BROWSING_CONTEXT_PRESENTATION_WINDOW);
-
-    return webView->priv->automationPresentationType;
 }
 
 /**

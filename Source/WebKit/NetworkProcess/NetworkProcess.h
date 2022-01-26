@@ -292,9 +292,6 @@ public:
 
     void preconnectTo(PAL::SessionID, WebPageProxyIdentifier, WebCore::PageIdentifier, const URL&, const String&, WebCore::StoredCredentialsPolicy, std::optional<NavigatingToAppBoundDomain>, LastNavigationWasAppInitiated);
 
-    void setSessionIsControlledByAutomation(PAL::SessionID, bool);
-    bool sessionIsControlledByAutomation(PAL::SessionID) const;
-
     void connectionToWebProcessClosed(IPC::Connection&, PAL::SessionID);
     void getLocalStorageOriginDetails(PAL::SessionID, CompletionHandler<void(Vector<LocalStorageDatabaseTracker::OriginDetails>&&)>&&);
 
@@ -314,7 +311,7 @@ public:
     WebCore::SWServer& swServerForSession(PAL::SessionID);
     void registerSWServerConnection(WebSWServerConnection&);
     void unregisterSWServerConnection(WebSWServerConnection&);
-    
+
     void forEachSWServer(const Function<void(WebCore::SWServer&)>&);
 #endif
 
@@ -549,7 +546,6 @@ private:
     typedef HashMap<const char*, std::unique_ptr<NetworkProcessSupplement>, PtrHash<const char*>> NetworkProcessSupplementMap;
     NetworkProcessSupplementMap m_supplements;
 
-    HashSet<PAL::SessionID> m_sessionsControlledByAutomation;
     HashMap<PAL::SessionID, Vector<CacheStorageRootPathCallback>> m_cacheStorageParametersCallbacks;
 
     HashMap<PAL::SessionID, std::unique_ptr<NetworkSession>> m_networkSessions;

@@ -233,7 +233,6 @@ Modules/webdatabase/SQLTransaction.cpp
 Modules/webdatabase/SQLTransactionBackend.cpp
 Modules/webdatabase/SQLTransactionCoordinator.cpp
 Modules/webdatabase/SQLTransactionStateMachine.cpp
-Modules/webdriver/NavigatorWebDriver.cpp
 Modules/websockets/CloseEvent.cpp
 Modules/websockets/ThreadableWebSocketChannel.cpp
 Modules/websockets/ThreadableWebSocketChannelClientWrapper.cpp

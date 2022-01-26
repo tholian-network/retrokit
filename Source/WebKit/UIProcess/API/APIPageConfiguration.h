@@ -121,9 +121,6 @@ public:
     bool drawsBackground() const { return m_drawsBackground; }
     void setDrawsBackground(bool drawsBackground) { m_drawsBackground = drawsBackground; }
 
-    bool isControlledByAutomation() const { return m_controlledByAutomation; }
-    void setControlledByAutomation(bool controlledByAutomation) { m_controlledByAutomation = controlledByAutomation; }
-
     const WTF::String& overrideContentSecurityPolicy() const { return m_overrideContentSecurityPolicy; }
     void setOverrideContentSecurityPolicy(const WTF::String& overrideContentSecurityPolicy) { m_overrideContentSecurityPolicy = overrideContentSecurityPolicy; }
 
@@ -143,7 +140,7 @@ public:
 
     const Vector<WTF::String>& corsDisablingPatterns() const { return m_corsDisablingPatterns; }
     void setCORSDisablingPatterns(Vector<WTF::String>&& patterns) { m_corsDisablingPatterns = WTFMove(patterns); }
-    
+
     bool userScriptsShouldWaitUntilNotification() const { return m_userScriptsShouldWaitUntilNotification; }
     void setUserScriptsShouldWaitUntilNotification(bool value) { m_userScriptsShouldWaitUntilNotification = value; }
 
@@ -200,7 +197,6 @@ private:
     bool m_initialCapitalizationEnabled { true };
     bool m_waitsForPaintAfterViewDidMoveToWindow { true };
     bool m_drawsBackground { true };
-    bool m_controlledByAutomation { false };
     std::optional<double> m_cpuLimit;
 
     WTF::String m_overrideContentSecurityPolicy;

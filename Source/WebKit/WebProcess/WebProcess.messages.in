@@ -84,9 +84,6 @@ messages -> WebProcess LegacyReceiver NotRefCounted {
     SetEnabledServices(bool hasImageServices, bool hasSelectionServices, bool hasRichContentServices)
 #endif
 
-    EnsureAutomationSessionProxy(String sessionIdentifier)
-    DestroyAutomationSessionProxy()
-
     PrepareToSuspend(bool isSuspensionImminent) -> () Async
     ProcessDidResume()
 

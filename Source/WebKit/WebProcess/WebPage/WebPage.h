@@ -1103,9 +1103,6 @@ public:
 
     void didRestoreScrollPosition();
 
-    bool isControlledByAutomation() const;
-    void setControlledByAutomation(bool);
-
     void connectInspector(const String& targetId, Inspector::FrontendChannel::ConnectionType);
     void disconnectInspector(const String& targetId);
     void sendMessageToTargetBackend(const String& targetId, const String& message);

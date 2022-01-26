@@ -45,7 +45,6 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${WEBCORE_DIR}/Modules/webauthn/cbor"
     "${WEBCORE_DIR}/Modules/webauthn/fido"
     "${WEBCORE_DIR}/Modules/webdatabase"
-    "${WEBCORE_DIR}/Modules/webdriver"
     "${WEBCORE_DIR}/Modules/webgpu"
     "${WEBCORE_DIR}/Modules/webgpu/WHLSL"
     "${WEBCORE_DIR}/Modules/webgpu/WHLSL/AST"
@@ -428,8 +427,6 @@ set(WebCore_NON_SVG_IDL_FILES
     Modules/webdatabase/SQLTransaction.idl
     Modules/webdatabase/SQLTransactionCallback.idl
     Modules/webdatabase/SQLTransactionErrorCallback.idl
-
-    Modules/webdriver/Navigator+WebDriver.idl
 
     Modules/websockets/CloseEvent.idl
     Modules/websockets/WebSocket.idl

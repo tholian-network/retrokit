@@ -465,9 +465,6 @@ public:
     unsigned inspectorFrontendCount() const { return m_inspectorFrontendCount; }
     bool hasInspectorFrontend() const { return m_inspectorFrontendCount > 0; }
 
-    bool isControlledByAutomation() const { return m_controlledByAutomation; }
-    void setControlledByAutomation(bool);
-
     WebPageInspectorController& inspectorController() { return *m_inspectorController; }
 
 #if PLATFORM(IOS_FAMILY)
@@ -2472,8 +2469,6 @@ private:
     bool m_areActiveDOMObjectsAndAnimationsSuspended { false };
     bool m_addsVisitedLinks { true };
 
-    bool m_controlledByAutomation { false };
-
     unsigned m_inspectorFrontendCount { 0 };
 
 #if PLATFORM(COCOA)
@@ -2498,7 +2493,7 @@ private:
 #endif
 
     PageLoadState m_pageLoadState;
-    
+
     bool m_delegatesScrolling { false };
 
     bool m_mainFrameHasHorizontalScrollbar { false };
@@ -2517,7 +2512,7 @@ private:
     bool m_rubberBandsAtRight { true };
     bool m_rubberBandsAtTop { true };
     bool m_rubberBandsAtBottom { true };
-        
+
     bool m_enableVerticalRubberBanding { true };
     bool m_enableHorizontalRubberBanding { true };
 

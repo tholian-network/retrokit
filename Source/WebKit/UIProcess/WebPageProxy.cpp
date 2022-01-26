@@ -91,7 +91,6 @@
 #include "URLSchemeTaskParameters.h"
 #include "UndoOrRedo.h"
 #include "WKContextPrivate.h"
-#include "WebAutomationSession.h"
 #include "WebBackForwardCache.h"
 #include "WebBackForwardList.h"
 #include "WebBackForwardListCounts.h"
@@ -464,7 +463,6 @@ WebPageProxy::WebPageProxy(PageClient& pageClient, WebProcessProxy& process, Ref
 #if HAVE(CVDISPLAYLINK)
     , m_wheelEventActivityHysteresis([this](PAL::HysteresisState state) { wheelEventHysteresisUpdated(state); })
 #endif
-    , m_controlledByAutomation(m_configuration->isControlledByAutomation())
 #if PLATFORM(COCOA)
     , m_isSmartInsertDeleteEnabled(TextChecker::isSmartInsertDeleteEnabled())
 #endif
@@ -1076,11 +1074,6 @@ void WebPageProxy::close()
 
     if (m_activePopupMenu)
         m_activePopupMenu->cancelTracking();
-
-    if (m_controlledByAutomation) {
-        if (auto* automationSession = process().processPool().automationSession())
-            automationSession->willClosePage(*this);
-    }
 
 #if ENABLE(CONTEXT_MENUS)
     m_activeContextMenu = nullptr;
@@ -1795,20 +1788,6 @@ bool WebPageProxy::canShowMIMEType(const String& mimeType)
 #endif // PLATFORM(COCOA)
 
     return false;
-}
-
-void WebPageProxy::setControlledByAutomation(bool controlled)
-{
-    if (m_controlledByAutomation == controlled)
-        return;
-
-    m_controlledByAutomation = controlled;
-
-    if (!hasRunningProcess())
-        return;
-
-    send(Messages::WebPage::SetControlledByAutomation(controlled));
-    websiteDataStore().networkProcess().send(Messages::NetworkProcess::SetSessionIsControlledByAutomation(m_websiteDataStore->sessionID(), m_controlledByAutomation), 0);
 }
 
 void WebPageProxy::createInspectorTarget(const String& targetId, Inspector::InspectorTargetType type)
@@ -4584,11 +4563,6 @@ void WebPageProxy::didFailProvisionalLoadForFrameShared(Ref<WebProcessProxy>&& p
     WebFrameProxy* frame = process->webFrame(frameID);
     MESSAGE_CHECK(process, frame);
 
-    if (m_controlledByAutomation) {
-        if (auto* automationSession = process->processPool().automationSession())
-            automationSession->navigationOccurredForFrame(*frame);
-    }
-
     // FIXME: We should message check that navigationID is not zero here, but it's currently zero for some navigations through the back/forward cache.
     RefPtr<API::Navigation> navigation;
     if (frame->isMainFrame() && navigationID)
@@ -4777,11 +4751,6 @@ void WebPageProxy::didFinishDocumentLoadForFrame(FrameIdentifier frameID, uint64
     WebFrameProxy* frame = m_process->webFrame(frameID);
     MESSAGE_CHECK(m_process, frame);
 
-    if (m_controlledByAutomation) {
-        if (auto* automationSession = process().processPool().automationSession())
-            automationSession->documentLoadedForFrame(*frame);
-    }
-
     // FIXME: We should message check that navigationID is not zero here, but it's currently zero for some navigations through the back/forward cache.
     RefPtr<API::Navigation> navigation;
     if (frame->isMainFrame() && navigationID)
@@ -4815,11 +4784,6 @@ void WebPageProxy::didFinishLoadForFrame(FrameIdentifier frameID, FrameInfoData&
     bool isMainFrame = frame->isMainFrame();
     if (isMainFrame)
         m_pageLoadState.didFinishLoad(transaction);
-
-    if (m_controlledByAutomation) {
-        if (auto* automationSession = process().processPool().automationSession())
-            automationSession->navigationOccurredForFrame(*frame);
-    }
 
     frame->didFinishLoad();
 
@@ -4868,11 +4832,6 @@ void WebPageProxy::didFailLoadForFrame(FrameIdentifier frameID, FrameInfoData&& 
     if (isMainFrame)
         m_pageLoadState.didFailLoad(transaction);
 
-    if (m_controlledByAutomation) {
-        if (auto* automationSession = process().processPool().automationSession())
-            automationSession->navigationOccurredForFrame(*frame);
-    }
-
     frame->didFailLoad();
 
     m_pageLoadState.commitChanges();
@@ -4912,11 +4871,6 @@ void WebPageProxy::didSameDocumentNavigationForFrame(FrameIdentifier frameID, ui
     bool isMainFrame = frame->isMainFrame();
     if (isMainFrame)
         m_pageLoadState.didSameDocumentNavigation(transaction, url.string());
-
-    if (m_controlledByAutomation) {
-        if (auto* automationSession = process().processPool().automationSession())
-            automationSession->navigationOccurredForFrame(*frame);
-    }
 
     m_pageLoadState.clearPendingAPIRequest(transaction);
     frame->didSameDocumentNavigation(url);
@@ -5644,11 +5598,6 @@ void WebPageProxy::runJavaScriptAlert(FrameIdentifier frameID, FrameInfoData&& f
     // Since runJavaScriptAlert() can spin a nested run loop we need to turn off the responsiveness timer.
     m_process->stopResponsivenessTimer();
 
-    if (m_controlledByAutomation) {
-        if (auto* automationSession = process().processPool().automationSession())
-            automationSession->willShowJavaScriptDialog(*this);
-    }
-
     runModalJavaScriptDialog(WTFMove(frame), WTFMove(frameInfo), message, [reply = WTFMove(reply)](WebPageProxy& page, WebFrameProxy* frame, FrameInfoData&& frameInfo, const String& message, CompletionHandler<void()>&& completion) mutable {
         page.m_uiClient->runJavaScriptAlert(page, message, frame, WTFMove(frameInfo), [reply = WTFMove(reply), completion = WTFMove(completion)]() mutable {
             reply();
@@ -5665,11 +5614,6 @@ void WebPageProxy::runJavaScriptConfirm(FrameIdentifier frameID, FrameInfoData&&
     // Since runJavaScriptConfirm() can spin a nested run loop we need to turn off the responsiveness timer.
     m_process->stopResponsivenessTimer();
 
-    if (m_controlledByAutomation) {
-        if (auto* automationSession = process().processPool().automationSession())
-            automationSession->willShowJavaScriptDialog(*this);
-    }
-
     runModalJavaScriptDialog(WTFMove(frame), WTFMove(frameInfo), message, [reply = WTFMove(reply)](WebPageProxy& page, WebFrameProxy* frame, FrameInfoData&& frameInfo, const String& message, CompletionHandler<void()>&& completion) mutable {
         page.m_uiClient->runJavaScriptConfirm(page, message, frame, WTFMove(frameInfo), [reply = WTFMove(reply), completion = WTFMove(completion)](bool result) mutable {
             reply(result);
@@ -5685,11 +5629,6 @@ void WebPageProxy::runJavaScriptPrompt(FrameIdentifier frameID, FrameInfoData&& 
 
     // Since runJavaScriptPrompt() can spin a nested run loop we need to turn off the responsiveness timer.
     m_process->stopResponsivenessTimer();
-
-    if (m_controlledByAutomation) {
-        if (auto* automationSession = process().processPool().automationSession())
-            automationSession->willShowJavaScriptDialog(*this);
-    }
 
     runModalJavaScriptDialog(WTFMove(frame), WTFMove(frameInfo), message, [reply = WTFMove(reply), defaultValue](WebPageProxy& page, WebFrameProxy* frame, FrameInfoData&& frameInfo, const String& message, CompletionHandler<void()>&& completion) mutable {
         page.m_uiClient->runJavaScriptPrompt(page, message, defaultValue, frame, WTFMove(frameInfo), [reply = WTFMove(reply), completion = WTFMove(completion)](auto& result) mutable {
@@ -5808,16 +5747,6 @@ void WebPageProxy::runBeforeUnloadConfirmPanel(FrameIdentifier frameID, FrameInf
     WebFrameProxy* frame = m_process->webFrame(frameID);
     MESSAGE_CHECK(m_process, frame);
 
-    // Per §18 User Prompts in the WebDriver spec, "User prompts that are spawned from beforeunload
-    // event handlers, are dismissed implicitly upon navigation or close window, regardless of the
-    // defined user prompt handler." So, always allow the unload to proceed if the page is being automated.
-    if (m_controlledByAutomation) {
-        if (!!process().processPool().automationSession()) {
-            reply(true);
-            return;
-        }
-    }
-
     // Since runBeforeUnloadConfirmPanel() can spin a nested run loop we need to turn off the responsiveness timer and the tryClose timer.
     m_process->stopResponsivenessTimer();
     bool shouldResumeTimerAfterPrompt = m_tryCloseTimeoutTimer.isActive();
@@ -5864,14 +5793,6 @@ void WebPageProxy::runOpenPanel(FrameIdentifier frameID, FrameInfoData&& frameIn
 
     Ref<API::OpenPanelParameters> parameters = API::OpenPanelParameters::create(settings);
     m_openPanelResultListener = WebOpenPanelResultListenerProxy::create(this);
-
-    if (m_controlledByAutomation) {
-        if (auto* automationSession = process().processPool().automationSession())
-            automationSession->handleRunOpenPanel(*this, *frame, parameters.get(), *m_openPanelResultListener);
-
-        // Don't show a file chooser, since automation will be unable to interact with it.
-        return;
-    }
 
     // Since runOpenPanel() can spin a nested run loop we need to turn off the responsiveness timer.
     m_process->stopResponsivenessTimer();
@@ -6444,14 +6365,6 @@ void WebPageProxy::showPopupMenu(const IntRect& rect, uint64_t textDirection, co
         m_activePopupMenu = nullptr;
     }
 
-    // If the page is controlled by automation, entering a nested run loop while the menu is open
-    // can hang the page / WebDriver test. Since <option> elements are selected via a different
-    // code path anyway, just don't show the native popup menu.
-    if (auto* automationSession = process().processPool().automationSession()) {
-        if (m_controlledByAutomation && automationSession->isSimulatingUserInteraction())
-            return;
-    }
-
     m_activePopupMenu = pageClient().createPopupMenuProxy(*this);
 
     if (!m_activePopupMenu)
@@ -6480,15 +6393,6 @@ void WebPageProxy::showContextMenu(ContextMenuContextData&& contextMenuContextDa
 {
     // Showing a context menu runs a nested runloop, which can handle messages that cause |this| to get closed.
     Ref<WebPageProxy> protect(*this);
-
-    // If the page is controlled by automation, entering a nested run loop while the menu is open
-    // can hang the page / WebDriver test. Pretend to show and immediately dismiss the context menu.
-    if (auto* automationSession = process().processPool().automationSession()) {
-        if (m_controlledByAutomation && automationSession->isSimulatingUserInteraction()) {
-            send(Messages::WebPage::DidShowContextMenu());
-            return;
-        }
-    }
 
     // Discard any enqueued mouse events that have been delivered to the UIProcess whilst the WebProcess is still processing the
     // MouseDown event that triggered this ShowContextMenu message. This can happen if we take too long to enter the nested runloop.
@@ -6949,8 +6853,6 @@ void WebPageProxy::didReceiveEvent(uint32_t opaqueType, bool handled)
             LOG(MouseHandling, " UIProcess: handling a queued mouse event from didReceiveEvent");
             processNextQueuedMouseEvent();
         } else {
-            if (auto* automationSession = process().processPool().automationSession())
-                automationSession->mouseEventsFlushedForPage(*this);
             didFinishProcessingAllPendingMouseEvents();
         }
         break;
@@ -6968,8 +6870,6 @@ void WebPageProxy::didReceiveEvent(uint32_t opaqueType, bool handled)
 
         if (auto eventToSend = wheelEventCoalescer().nextEventToDispatch())
             sendWheelEvent(*eventToSend);
-        else if (auto* automationSession = process().processPool().automationSession())
-            automationSession->wheelEventsFlushedForPage(*this);
         break;
     }
 
@@ -7002,11 +6902,6 @@ void WebPageProxy::didReceiveEvent(uint32_t opaqueType, bool handled)
         if (!handled)
             m_uiClient->didNotHandleKeyEvent(this, event);
 
-        // Notify the session after -[NSApp sendEvent:] has a crack at turning the event into an action.
-        if (!canProcessMoreKeyEvents) {
-            if (auto* automationSession = process().processPool().automationSession())
-                automationSession->keyboardEventsFlushedForPage(*this);
-        }
         break;
     }
 #if ENABLE(MAC_GESTURE_EVENTS)
@@ -7300,11 +7195,6 @@ void WebPageProxy::resetStateAfterProcessTermination(ProcessTerminationReason re
     // FIXME: This might have to change
     if (reason != ProcessTerminationReason::NavigationSwap)
         navigationState().clearAllNavigations();
-
-    if (m_controlledByAutomation) {
-        if (auto* automationSession = process().processPool().automationSession())
-            automationSession->terminate();
-    }
 }
 
 void WebPageProxy::provisionalProcessDidTerminate()
@@ -7702,7 +7592,6 @@ WebPageCreationParameters WebPageProxy::creationParameters(WebProcessProxy& proc
         parameters.scrollbarOverlayStyle = std::nullopt;
     parameters.backgroundExtendsBeyondPage = m_backgroundExtendsBeyondPage;
     parameters.layerHostingMode = m_layerHostingMode;
-    parameters.controlledByAutomation = m_controlledByAutomation;
     parameters.useDarkAppearance = useDarkAppearance();
     parameters.useElevatedUserInterfaceLevel = useElevatedUserInterfaceLevel();
 #if PLATFORM(MAC)

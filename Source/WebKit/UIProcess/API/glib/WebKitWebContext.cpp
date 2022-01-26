@@ -20,7 +20,6 @@
 #include "config.h"
 #include "WebKitWebContext.h"
 
-#include "APIAutomationClient.h"
 #include "APIDownloadClient.h"
 #include "APIInjectedBundleClient.h"
 #include "APIPageConfiguration.h"
@@ -30,9 +29,7 @@
 #include "NetworkProcessMessages.h"
 #include "TextChecker.h"
 #include "TextCheckerState.h"
-#include "WebAutomationSession.h"
 #include "WebCertificateInfo.h"
-#include "WebKitAutomationSessionPrivate.h"
 #include "WebKitDownloadClient.h"
 #include "WebKitDownloadPrivate.h"
 #include "WebKitFaviconDatabasePrivate.h"
@@ -199,8 +196,6 @@ private:
 typedef HashMap<String, RefPtr<WebKitURISchemeHandler> > URISchemeHandlerMap;
 typedef HashMap<uint64_t, GRefPtr<WebKitURISchemeRequest> > URISchemeRequestMap;
 
-class WebKitAutomationClient;
-
 struct _WebKitWebContextPrivate {
     _WebKitWebContextPrivate()
         : dnsPrefetchHystereris([this](PAL::HysteresisState state) { if (state == PAL::HysteresisState::Stopped) dnsPrefetchedHosts.clear(); })
@@ -231,13 +226,6 @@ struct _WebKitWebContextPrivate {
     GRefPtr<GVariant> webExtensionsInitializationUserData;
 
     CString localStorageDirectory;
-#if ENABLE(REMOTE_INSPECTOR)
-#if PLATFORM(GTK)
-    std::unique_ptr<RemoteInspectorProtocolHandler> remoteInspectorProtocolHandler;
-#endif
-    std::unique_ptr<WebKitAutomationClient> automationClient;
-    GRefPtr<WebKitAutomationSession> automationSession;
-#endif
     std::unique_ptr<WebKitProtocolHandler> webkitProtocolHandler;
 
     HashSet<String> dnsPrefetchedHosts;
@@ -247,58 +235,6 @@ struct _WebKitWebContextPrivate {
 };
 
 static guint signals[LAST_SIGNAL] = { 0, };
-
-#if ENABLE(REMOTE_INSPECTOR)
-class WebKitAutomationClient final : Inspector::RemoteInspector::Client {
-    WTF_MAKE_FAST_ALLOCATED;
-public:
-    explicit WebKitAutomationClient(WebKitWebContext* context)
-        : m_webContext(context)
-    {
-        Inspector::RemoteInspector::singleton().setClient(this);
-    }
-
-    ~WebKitAutomationClient()
-    {
-        Inspector::RemoteInspector::singleton().setClient(nullptr);
-    }
-
-private:
-    bool remoteAutomationAllowed() const override { return true; }
-
-    String browserName() const override
-    {
-        if (!m_webContext->priv->automationSession)
-            return { };
-
-        return webkitAutomationSessionGetBrowserName(m_webContext->priv->automationSession.get());
-    }
-
-    String browserVersion() const override
-    {
-        if (!m_webContext->priv->automationSession)
-            return { };
-
-        return webkitAutomationSessionGetBrowserVersion(m_webContext->priv->automationSession.get());
-    }
-
-    void requestAutomationSession(const String& sessionIdentifier, const Inspector::RemoteInspector::Client::SessionCapabilities& capabilities) override
-    {
-        ASSERT(!m_webContext->priv->automationSession);
-        m_webContext->priv->automationSession = adoptGRef(webkitAutomationSessionCreate(m_webContext, sessionIdentifier.utf8().data(), capabilities));
-        g_signal_emit(m_webContext, signals[AUTOMATION_STARTED], 0, m_webContext->priv->automationSession.get());
-        m_webContext->priv->processPool->setAutomationSession(&webkitAutomationSessionGetSession(m_webContext->priv->automationSession.get()));
-    }
-
-    WebKitWebContext* m_webContext;
-};
-
-void webkitWebContextWillCloseAutomationSession(WebKitWebContext* webContext)
-{
-    webContext->priv->processPool->setAutomationSession(nullptr);
-    webContext->priv->automationSession = nullptr;
-}
-#endif // ENABLE(REMOTE_INSPECTOR)
 
 WEBKIT_DEFINE_TYPE(WebKitWebContext, webkit_web_context, G_TYPE_OBJECT)
 
@@ -634,27 +570,6 @@ static void webkit_web_context_class_init(WebKitWebContextClass* webContextClass
             G_TYPE_NONE, 0);
 
     /**
-     * WebKitWebContext::automation-started:
-     * @context: the #WebKitWebContext
-     * @session: the #WebKitAutomationSession associated with this event
-     *
-     * This signal is emitted when a new automation request is made.
-     * Note that it will never be emitted if automation is not enabled in @context,
-     * see webkit_web_context_set_automation_allowed() for more details.
-     *
-     * Since: 2.18
-     */
-    signals[AUTOMATION_STARTED] =
-        g_signal_new("automation-started",
-            G_TYPE_FROM_CLASS(gObjectClass),
-            G_SIGNAL_RUN_LAST,
-            G_STRUCT_OFFSET(WebKitWebContextClass, automation_started),
-            nullptr, nullptr,
-            g_cclosure_marshal_VOID__OBJECT,
-            G_TYPE_NONE, 1,
-            WEBKIT_TYPE_AUTOMATION_SESSION);
-
-    /**
      * WebKitWebContext::user-message-received:
      * @context: the #WebKitWebContext
      * @message: the #WebKitUserMessage received
@@ -783,62 +698,6 @@ gboolean webkit_web_context_is_ephemeral(WebKitWebContext* context)
     g_return_val_if_fail(WEBKIT_IS_WEB_CONTEXT(context), FALSE);
 
     return webkit_website_data_manager_is_ephemeral(context->priv->websiteDataManager.get());
-}
-
-/**
- * webkit_web_context_is_automation_allowed:
- * @context: the #WebKitWebContext
- *
- * Get whether automation is allowed in @context.
- * See also webkit_web_context_set_automation_allowed().
- *
- * Returns: %TRUE if automation is allowed or %FALSE otherwise.
- *
- * Since: 2.18
- */
-gboolean webkit_web_context_is_automation_allowed(WebKitWebContext* context)
-{
-    g_return_val_if_fail(WEBKIT_IS_WEB_CONTEXT(context), FALSE);
-
-#if ENABLE(REMOTE_INSPECTOR)
-    return !!context->priv->automationClient;
-#else
-    return FALSE;
-#endif
-}
-
-/**
- * webkit_web_context_set_automation_allowed:
- * @context: the #WebKitWebContext
- * @allowed: value to set
- *
- * Set whether automation is allowed in @context. When automation is enabled the browser could
- * be controlled by another process by requesting an automation session. When a new automation
- * session is requested the signal #WebKitWebContext::automation-started is emitted.
- * Automation is disabled by default, so you need to explicitly call this method passing %TRUE
- * to enable it.
- *
- * Note that only one #WebKitWebContext can have automation enabled, so this will do nothing
- * if there's another #WebKitWebContext with automation already enabled.
- *
- * Since: 2.18
- */
-void webkit_web_context_set_automation_allowed(WebKitWebContext* context, gboolean allowed)
-{
-    g_return_if_fail(WEBKIT_IS_WEB_CONTEXT(context));
-
-    if (webkit_web_context_is_automation_allowed(context) == allowed)
-        return;
-#if ENABLE(REMOTE_INSPECTOR)
-    if (allowed) {
-        if (Inspector::RemoteInspector::singleton().client()) {
-            g_warning("Not enabling automation on WebKitWebContext because there's another context with automation enabled, only one is allowed");
-            return;
-        }
-        context->priv->automationClient = makeUnique<WebKitAutomationClient>(context);
-    } else
-        context->priv->automationClient = nullptr;
-#endif
 }
 
 /**
@@ -1813,7 +1672,6 @@ void webkitWebContextCreatePageForWebView(WebKitWebContext* context, WebKitWebVi
     pageConfiguration->setPreferences(webkitSettingsGetPreferences(webkit_web_view_get_settings(webView)));
     pageConfiguration->setRelatedPage(relatedView ? &webkitWebViewGetPage(relatedView) : nullptr);
     pageConfiguration->setUserContentController(userContentManager ? webkitUserContentManagerGetUserContentControllerProxy(userContentManager) : nullptr);
-    pageConfiguration->setControlledByAutomation(webkit_web_view_is_controlled_by_automation(webView));
 
     WebKitWebsiteDataManager* manager = webkitWebViewGetWebsiteDataManager(webView);
     if (!manager)

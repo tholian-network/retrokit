@@ -44,7 +44,6 @@
 #include "SharedBufferDataReference.h"
 #include "UserData.h"
 #include "WKBundleAPICast.h"
-#include "WebAutomationSessionProxy.h"
 #include "WebBackForwardListProxy.h"
 #include "WebCoreArgumentCoders.h"
 #include "WebDocumentLoader.h"
@@ -1600,10 +1599,6 @@ void WebFrameLoaderClient::dispatchDidClearWindowObjectInWorld(DOMWrapperWorld& 
 #endif
 
     webPage->injectedBundleLoaderClient().didClearWindowObjectForFrame(*webPage, m_frame, world);
-
-    WebAutomationSessionProxy* automationSessionProxy = WebProcess::singleton().automationSessionProxy();
-    if (automationSessionProxy && world.isNormal())
-        automationSessionProxy->didClearWindowObjectForFrame(m_frame);
 }
 
 void WebFrameLoaderClient::dispatchGlobalObjectAvailable(DOMWrapperWorld& world)
@@ -1611,7 +1606,7 @@ void WebFrameLoaderClient::dispatchGlobalObjectAvailable(DOMWrapperWorld& world)
     WebPage* webPage = m_frame->page();
     if (!webPage)
         return;
-    
+
     webPage->injectedBundleLoaderClient().globalObjectIsAvailableForFrame(*webPage, m_frame, world);
 }
 
@@ -1629,7 +1624,7 @@ void WebFrameLoaderClient::dispatchWillDisconnectDOMWindowExtensionFromGlobalObj
     WebPage* webPage = m_frame->page();
     if (!webPage)
         return;
-        
+
     webPage->injectedBundleLoaderClient().willDisconnectDOMWindowExtensionFromGlobalObject(*webPage, extension);
 }
 

@@ -91,19 +91,18 @@ public:
         Double,
         UInt64,
         Int64,
-        
+
         // Geometry types
         Point,
         Size,
         Rect,
-        
+
         // UIProcess types
         ApplicationCacheManager,
 #if ENABLE(APPLICATION_MANIFEST)
         ApplicationManifest,
 #endif
         Attachment,
-        AutomationSession,
         BackForwardList,
         BackForwardListItem,
         CacheManager,
@@ -344,7 +343,6 @@ template<> struct EnumTraits<API::Object::Type> {
         API::Object::Type::ApplicationManifest,
 #endif
         API::Object::Type::Attachment,
-        API::Object::Type::AutomationSession,
         API::Object::Type::BackForwardList,
         API::Object::Type::BackForwardListItem,
         API::Object::Type::CacheManager,

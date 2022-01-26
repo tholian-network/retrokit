@@ -43,7 +43,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/UIProcess/API/C"
     "${WEBKIT_DIR}/UIProcess/API/cpp"
     "${WEBKIT_DIR}/UIProcess/Authentication"
-    "${WEBKIT_DIR}/UIProcess/Automation"
     "${WEBKIT_DIR}/UIProcess/Downloads"
     "${WEBKIT_DIR}/UIProcess/GPU"
     "${WEBKIT_DIR}/UIProcess/Inspector"
@@ -60,7 +59,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/WebAuthnProcess"
     "${WEBKIT_DIR}/WebProcess"
     "${WEBKIT_DIR}/WebProcess/ApplicationCache"
-    "${WEBKIT_DIR}/WebProcess/Automation"
     "${WEBKIT_DIR}/WebProcess/Cache"
     "${WEBKIT_DIR}/WebProcess/Databases"
     "${WEBKIT_DIR}/WebProcess/Databases/IndexedDB"
@@ -90,8 +88,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${CMAKE_SOURCE_DIR}/Source"
     "${CMAKE_SOURCE_DIR}/WebKitLibraries"
 )
-
-set(PROTOCOL_GENERATOR_SCRIPTS_DIR "${JAVASCRIPTCORE_DIR}/inspector/scripts")
 
 list(APPEND WebKit_UNIFIED_SOURCE_LIST_FILES
     "Sources.txt"
@@ -150,8 +146,6 @@ set(WebKit_MESSAGES_IN_FILES
     UIProcess/WebProcessPool
     UIProcess/WebProcessProxy
 
-    UIProcess/Automation/WebAutomationSession
-
     UIProcess/Downloads/DownloadProxy
 
     UIProcess/GPU/GPUProcessProxy
@@ -164,8 +158,6 @@ set(WebKit_MESSAGES_IN_FILES
     UIProcess/UserContent/WebUserContentControllerProxy
 
     WebProcess/WebProcess
-
-    WebProcess/Automation/WebAutomationSessionProxy
 
     WebProcess/Databases/IndexedDB/WebIDBConnectionToServer
 
@@ -371,57 +363,6 @@ macro(GENERATE_MESSAGE_SOURCES _output_source _inputs)
     )
 endmacro()
 GENERATE_MESSAGE_SOURCES(WebKit_DERIVED_SOURCES "${WebKit_MESSAGES_IN_FILES}")
-
-set(WebKit_AUTOMATION_PROTOCOL_GENERATOR_SCRIPTS
-    ${PROTOCOL_GENERATOR_SCRIPTS_DIR}/generate-inspector-protocol-bindings.py
-    ${PROTOCOL_GENERATOR_SCRIPTS_DIR}/codegen/cpp_generator.py
-    ${PROTOCOL_GENERATOR_SCRIPTS_DIR}/codegen/cpp_generator_templates.py
-    ${PROTOCOL_GENERATOR_SCRIPTS_DIR}/codegen/generate_cpp_backend_dispatcher_header.py
-    ${PROTOCOL_GENERATOR_SCRIPTS_DIR}/codegen/generate_cpp_backend_dispatcher_implementation.py
-    ${PROTOCOL_GENERATOR_SCRIPTS_DIR}/codegen/generate_cpp_frontend_dispatcher_header.py
-    ${PROTOCOL_GENERATOR_SCRIPTS_DIR}/codegen/generate_cpp_frontend_dispatcher_implementation.py
-    ${PROTOCOL_GENERATOR_SCRIPTS_DIR}/codegen/generate_cpp_protocol_types_header.py
-    ${PROTOCOL_GENERATOR_SCRIPTS_DIR}/codegen/generate_cpp_protocol_types_implementation.py
-    ${PROTOCOL_GENERATOR_SCRIPTS_DIR}/codegen/generator.py
-    ${PROTOCOL_GENERATOR_SCRIPTS_DIR}/codegen/generator_templates.py
-    ${PROTOCOL_GENERATOR_SCRIPTS_DIR}/codegen/models.py
-)
-
-set(WebKit_AUTOMATION_PROTOCOL_GENERATOR_INPUTS
-    ${WEBKIT_DIR}/UIProcess/Automation/Automation.json
-)
-
-add_custom_command(
-    OUTPUT ${WebKit_DERIVED_SOURCES_DIR}/AutomationBackendDispatchers.h ${WebKit_DERIVED_SOURCES_DIR}/AutomationBackendDispatchers.cpp ${WebKit_DERIVED_SOURCES_DIR}/AutomationProtocolObjects.h ${WebKit_DERIVED_SOURCES_DIR}/AutomationProtocolObjects.cpp ${WebKit_DERIVED_SOURCES_DIR}/AutomationFrontendDispatchers.h ${WebKit_DERIVED_SOURCES_DIR}/AutomationFrontendDispatchers.cpp
-    MAIN_DEPENDENCY ${WebKit_AUTOMATION_PROTOCOL_GENERATOR_INPUTS}
-    DEPENDS ${WebKit_AUTOMATION_PROTOCOL_GENERATOR_SCRIPTS}
-    COMMAND ${PYTHON_EXECUTABLE} ${PROTOCOL_GENERATOR_SCRIPTS_DIR}/generate-inspector-protocol-bindings.py --outputDir "${WebKit_DERIVED_SOURCES_DIR}" --framework WebKit ${WebKit_AUTOMATION_PROTOCOL_GENERATOR_EXTRA_FLAGS} --backend ${WebKit_AUTOMATION_PROTOCOL_GENERATOR_INPUTS}
-    VERBATIM)
-
-list(APPEND WebKit_HEADERS
-    ${WebKit_DERIVED_SOURCES_DIR}/AutomationBackendDispatchers.h
-    ${WebKit_DERIVED_SOURCES_DIR}/AutomationFrontendDispatchers.h
-    ${WebKit_DERIVED_SOURCES_DIR}/AutomationProtocolObjects.h
-)
-
-list(APPEND WebKit_SOURCES
-    ${WebKit_DERIVED_SOURCES_DIR}/AutomationBackendDispatchers.cpp
-    ${WebKit_DERIVED_SOURCES_DIR}/AutomationFrontendDispatchers.cpp
-    ${WebKit_DERIVED_SOURCES_DIR}/AutomationProtocolObjects.cpp
-)
-
-add_custom_command(
-    OUTPUT ${WebKit_DERIVED_SOURCES_DIR}/WebAutomationSessionProxyScriptSource.h ${WebKit_DERIVED_SOURCES_DIR}/WebAutomationSessionProxy.min.js
-    MAIN_DEPENDENCY ${WEBKIT_DIR}/WebProcess/Automation/WebAutomationSessionProxy.js
-    DEPENDS ${JavaScriptCore_SCRIPTS_DIR}/xxd.pl ${JavaScriptCore_SCRIPTS_DIR}/jsmin.py
-    COMMAND ${CMAKE_COMMAND} -E echo "//# sourceURL=__InjectedScript_WebAutomationSessionProxy.js" > ${WebKit_DERIVED_SOURCES_DIR}/WebAutomationSessionProxy.min.js
-    COMMAND ${PYTHON_EXECUTABLE} ${JavaScriptCore_SCRIPTS_DIR}/jsmin.py < ${WEBKIT_DIR}/WebProcess/Automation/WebAutomationSessionProxy.js >> ${WebKit_DERIVED_SOURCES_DIR}/WebAutomationSessionProxy.min.js
-    COMMAND ${PERL_EXECUTABLE} ${JavaScriptCore_SCRIPTS_DIR}/xxd.pl WebAutomationSessionProxyScriptSource ${WebKit_DERIVED_SOURCES_DIR}/WebAutomationSessionProxy.min.js ${WebKit_DERIVED_SOURCES_DIR}/WebAutomationSessionProxyScriptSource.h
-    VERBATIM)
-
-list(APPEND WebKit_HEADERS
-    ${WebKit_DERIVED_SOURCES_DIR}/WebAutomationSessionProxyScriptSource.h
-)
 
 set(WebKit_WEB_PREFERENCES_TEMPLATES
     ${WEBKIT_DIR}/Scripts/PreferencesTemplates/WebPageUpdatePreferences.cpp.erb

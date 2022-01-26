@@ -2663,17 +2663,6 @@ void WKPageEndPrinting(WKPageRef pageRef)
     toImpl(pageRef)->endPrinting();
 }
 
-bool WKPageGetIsControlledByAutomation(WKPageRef page)
-{
-    return toImpl(page)->isControlledByAutomation();
-}
-
-void WKPageSetControlledByAutomation(WKPageRef pageRef, bool controlled)
-{
-    CRASH_IF_SUSPENDED;
-    toImpl(pageRef)->setControlledByAutomation(controlled);
-}
-
 bool WKPageGetAllowsRemoteInspection(WKPageRef page)
 {
 #if ENABLE(REMOTE_INSPECTOR)
@@ -2681,7 +2670,7 @@ bool WKPageGetAllowsRemoteInspection(WKPageRef page)
 #else
     UNUSED_PARAM(page);
     return false;
-#endif    
+#endif
 }
 
 void WKPageSetAllowsRemoteInspection(WKPageRef pageRef, bool allow)

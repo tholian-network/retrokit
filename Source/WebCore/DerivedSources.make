@@ -269,7 +269,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/Modules/webdatabase/SQLTransaction.idl \
     $(WebCore)/Modules/webdatabase/SQLTransactionCallback.idl \
     $(WebCore)/Modules/webdatabase/SQLTransactionErrorCallback.idl \
-    $(WebCore)/Modules/webdriver/Navigator+WebDriver.idl \
     $(WebCore)/Modules/websockets/CloseEvent.idl \
     $(WebCore)/Modules/websockets/WebSocket.idl \
     $(WebCore)/accessibility/AccessibilityRole.idl \

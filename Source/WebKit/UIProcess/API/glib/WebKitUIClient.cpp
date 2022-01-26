@@ -175,61 +175,7 @@ private:
 #if PLATFORM(GTK)
         GdkRectangle geometry = WebCore::IntRect(frame);
         GtkWidget* window = gtk_widget_get_toplevel(GTK_WIDGET(m_webView));
-        if (webkit_web_view_is_controlled_by_automation(m_webView) && WebCore::widgetIsOnscreenToplevelWindow(window) && gtk_widget_get_visible(window)) {
-            bool needsMove = false;
-            // Querying and setting window positions is not supported in GTK4.
-#if !USE(GTK4)
-            // Position a toplevel window is not supported under wayland.
-#if PLATFORM(WAYLAND)
-            if (WebCore::PlatformDisplay::sharedDisplay().type() != WebCore::PlatformDisplay::Type::Wayland)
-#endif // PLATFORM(WAYLAND)
-            {
-                if (geometry.x >= 0 && geometry.y >= 0) {
-                    int x, y;
-                    gtk_window_get_position(GTK_WINDOW(window), &x, &y);
-                    needsMove = x != geometry.x || y != geometry.y;
-                }
-            }
-#endif // !USE(GTK4)
-
-            bool needsResize = false;
-            if (geometry.width > 0 && geometry.height > 0) {
-                int width, height;
-                gtk_window_get_size(GTK_WINDOW(window), &width, &height);
-                needsResize = width != geometry.width || height != geometry.height;
-            }
-
-            if (!needsMove && !needsResize)
-                return;
-
-#if USE(GTK4)
-            auto* surface = gtk_native_get_surface(GTK_NATIVE(window));
-            auto signalID = g_signal_connect(surface, "size-changed", G_CALLBACK(+[](GdkSurface*, int width, int height, GdkRectangle* targetGeometry) {
-                if (width == targetGeometry->width && height == targetGeometry->height)
-                    RunLoop::current().stop();
-            }), &geometry);
-#else
-            auto signalID = g_signal_connect(window, "configure-event", G_CALLBACK(windowConfigureEventCallback), &geometry);
-            if (needsMove)
-                gtk_window_move(GTK_WINDOW(window), geometry.x, geometry.y);
-#endif // !USE(GTK4)
-            if (needsResize)
-                gtk_window_resize(GTK_WINDOW(window), geometry.width, geometry.height);
-
-            // We need the move/resize to happen synchronously in automation mode, so we use a nested RunLoop
-            // to wait, up top 200 milliseconds, for the configure events.
-            auto timer = makeUnique<RunLoop::Timer<UIClient>>(RunLoop::main(), this, &UIClient::setWindowFrameTimerFired);
-            timer->setPriority(RunLoopSourcePriority::RunLoopTimer);
-            timer->startOneShot(200_ms);
-            RunLoop::run();
-            timer = nullptr;
-#if USE(GTK4)
-            g_signal_handler_disconnect(surface, signalID);
-#else
-            g_signal_handler_disconnect(window, signalID);
-#endif
-        } else
-            webkitWindowPropertiesSetGeometry(webkit_web_view_get_window_properties(m_webView), &geometry);
+        webkitWindowPropertiesSetGeometry(webkit_web_view_get_window_properties(m_webView), &geometry);
 #endif // PLATFORM(GTK)
     }
 

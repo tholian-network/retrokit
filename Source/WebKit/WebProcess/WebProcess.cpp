@@ -48,7 +48,6 @@
 #include "RemoteRemoteCommandListener.h"
 #include "StorageAreaMap.h"
 #include "UserData.h"
-#include "WebAutomationSessionProxy.h"
 #include "WebBroadcastChannelRegistry.h"
 #include "WebCacheStorageProvider.h"
 #include "WebConnectionToUIProcess.h"
@@ -1698,16 +1697,6 @@ void WebProcess::setEnabledServices(bool hasImageServices, bool hasSelectionServ
     m_hasRichContentServices = hasRichContentServices;
 }
 #endif
-
-void WebProcess::ensureAutomationSessionProxy(const String& sessionIdentifier)
-{
-    m_automationSessionProxy = makeUnique<WebAutomationSessionProxy>(sessionIdentifier);
-}
-
-void WebProcess::destroyAutomationSessionProxy()
-{
-    m_automationSessionProxy = nullptr;
-}
 
 void WebProcess::prefetchDNS(const String& hostname)
 {

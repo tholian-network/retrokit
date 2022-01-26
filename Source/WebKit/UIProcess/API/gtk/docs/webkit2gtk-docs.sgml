@@ -56,7 +56,6 @@
     <xi:include href="xml/WebKitWebsiteDataManager.xml"/>
     <xi:include href="xml/WebKitWebsiteData.xml"/>
     <xi:include href="xml/WebKitNetworkProxySettings.xml"/>
-    <xi:include href="xml/WebKitAutomationSession.xml"/>
     <xi:include href="xml/WebKitApplicationInfo.xml"/>
     <xi:include href="xml/WebKitUserMessage.xml"/>
     <xi:include href="xml/WebKitPointerLockPermissionRequest.xml"/>

@@ -537,7 +537,6 @@ void NetworkProcess::destroySession(PAL::SessionID sessionID)
     if (auto session = m_networkSessions.take(sessionID))
         session->invalidateAndCancel();
     m_networkStorageSessions.remove(sessionID);
-    m_sessionsControlledByAutomation.remove(sessionID);
     CacheStorage::Engine::destroyEngine(*this, sessionID);
 
 #if ENABLE(SERVICE_WORKER)
@@ -1388,19 +1387,6 @@ void NetworkProcess::preconnectTo(PAL::SessionID sessionID, WebPageProxyIdentifi
 #endif
 }
 
-bool NetworkProcess::sessionIsControlledByAutomation(PAL::SessionID sessionID) const
-{
-    return m_sessionsControlledByAutomation.contains(sessionID);
-}
-
-void NetworkProcess::setSessionIsControlledByAutomation(PAL::SessionID sessionID, bool controlled)
-{
-    if (controlled)
-        m_sessionsControlledByAutomation.add(sessionID);
-    else
-        m_sessionsControlledByAutomation.remove(sessionID);
-}
-
 static void fetchDiskCacheEntries(NetworkCache::Cache* cache, PAL::SessionID sessionID, OptionSet<WebsiteDataFetchOption> fetchOptions, CompletionHandler<void(Vector<WebsiteData::Entry>)>&& completionHandler)
 {
     if (!cache) {
@@ -1409,7 +1395,7 @@ static void fetchDiskCacheEntries(NetworkCache::Cache* cache, PAL::SessionID ses
         });
         return;
     }
-    
+
     HashMap<SecurityOriginData, uint64_t> originsAndSizes;
     cache->traverse([fetchOptions, completionHandler = WTFMove(completionHandler), originsAndSizes = WTFMove(originsAndSizes)](auto* traversalEntry) mutable {
         if (!traversalEntry) {

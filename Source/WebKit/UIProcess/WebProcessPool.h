@@ -75,7 +75,6 @@ OBJC_CLASS WKWebInspectorPreferenceObserver;
 #endif
 
 namespace API {
-class AutomationClient;
 class DownloadClient;
 class HTTPCookieStore;
 class InjectedBundleClient;
@@ -98,7 +97,6 @@ class WebBackForwardCache;
 class HighPerformanceGraphicsUsageSampler;
 class PerActivityStateCPUUsageSampler;
 class SuspendedPageProxy;
-class WebAutomationSession;
 class WebContextSupplement;
 class WebPageGroup;
 class WebPageProxy;
@@ -154,13 +152,13 @@ public:
     void removeMessageReceiver(IPC::ReceiverName, uint64_t destinationID);
 
     WebBackForwardCache& backForwardCache() { return m_backForwardCache.get(); }
-    
+
     template <typename T>
     void addMessageReceiver(IPC::ReceiverName messageReceiverName, ObjectIdentifier<T> destinationID, IPC::MessageReceiver& receiver)
     {
         addMessageReceiver(messageReceiverName, destinationID.toUInt64(), receiver);
     }
-    
+
     template <typename T>
     void removeMessageReceiver(IPC::ReceiverName messageReceiverName, ObjectIdentifier<T> destinationID)
     {
@@ -175,7 +173,6 @@ public:
     void initializeConnectionClient(const WKContextConnectionClientBase*);
     void setHistoryClient(std::unique_ptr<API::LegacyContextHistoryClient>&&);
     void setLegacyDownloadClient(RefPtr<API::DownloadClient>&&);
-    void setAutomationClient(std::unique_ptr<API::AutomationClient>&&);
 
     void setCustomWebContentServiceBundleIdentifier(const String&);
     const String& customWebContentServiceBundleIdentifier() { return m_configuration->customWebContentServiceBundleIdentifier(); }
@@ -304,10 +301,6 @@ public:
 
     void disableProcessTermination();
     void enableProcessTermination();
-
-    void updateAutomationCapabilities() const;
-    void setAutomationSession(RefPtr<WebAutomationSession>&&);
-    WebAutomationSession* automationSession() const { return m_automationSession.get(); }
 
     // Defaults to false.
     void setHTTPPipeliningEnabled(bool);
@@ -584,11 +577,8 @@ private:
 
     WebContextClient m_client;
     WebContextConnectionClient m_connectionClient;
-    std::unique_ptr<API::AutomationClient> m_automationClient;
     RefPtr<API::DownloadClient> m_legacyDownloadClient;
     std::unique_ptr<API::LegacyContextHistoryClient> m_historyClient;
-
-    RefPtr<WebAutomationSession> m_automationSession;
 
     Ref<VisitedLinkStore> m_visitedLinkStore;
     bool m_visitedLinksPopulated { false };

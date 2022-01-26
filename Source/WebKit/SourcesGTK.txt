@@ -119,7 +119,6 @@ UIProcess/API/glib/IconDatabase.cpp @no-unify
 UIProcess/API/glib/InputMethodFilter.cpp @no-unify
 UIProcess/API/glib/WebKitApplicationInfo.cpp @no-unify
 UIProcess/API/glib/WebKitAuthenticationRequest.cpp @no-unify
-UIProcess/API/glib/WebKitAutomationSession.cpp @no-unify
 UIProcess/API/glib/WebKitBackForwardList.cpp @no-unify
 UIProcess/API/glib/WebKitBackForwardListItem.cpp @no-unify
 UIProcess/API/glib/WebKitContextMenuClient.cpp @no-unify
@@ -200,10 +199,6 @@ UIProcess/API/gtk/WebKitWebInspector.cpp @no-unify
 UIProcess/API/gtk/WebKitWebViewBase.cpp @no-unify
 UIProcess/API/gtk/WebKitWebViewDialog.cpp @no-unify
 UIProcess/API/gtk/WebKitWebViewGtk.cpp @no-unify
-
-UIProcess/Automation/cairo/WebAutomationSessionCairo.cpp
-
-UIProcess/Automation/gtk/WebAutomationSessionGtk.cpp
 
 UIProcess/CoordinatedGraphics/DrawingAreaProxyCoordinatedGraphics.cpp
 

@@ -255,10 +255,6 @@ if (NOT HAS_RUN_WEBKIT_COMMON)
         file(MAKE_DIRECTORY ${WebKitLegacy_DERIVED_SOURCES_DIR})
     endif ()
 
-    if (ENABLE_WEBDRIVER)
-        file(MAKE_DIRECTORY ${WebDriver_DERIVED_SOURCES_DIR})
-    endif ()
-
     # -----------------------------------------------------------------------------
     # config.h
     # -----------------------------------------------------------------------------

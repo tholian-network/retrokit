@@ -1026,9 +1026,6 @@ void DOMWindow::print()
         return;
     }
 
-    if (page->isControlledByAutomation())
-        return;
-
     if (auto loader = frame->loader().activeDocumentLoader(); loader && loader->isLoading()) {
         m_shouldPrintWhenFinishedLoading = true;
         return;

@@ -148,8 +148,6 @@ messages -> NetworkProcess LegacyReceiver {
 
     SetPrivateClickMeasurementDebugMode(bool debugMode)
 
-    SetSessionIsControlledByAutomation(PAL::SessionID sessionID, bool controlled);
-
     RegisterURLSchemeAsSecure(String scheme)
     RegisterURLSchemeAsBypassingContentSecurityPolicy(String scheme)
     RegisterURLSchemeAsLocal(String scheme)
@@ -177,7 +175,7 @@ messages -> NetworkProcess LegacyReceiver {
     ResetServiceWorkerFetchTimeoutForTesting() -> () Synchronous
 
     ResetQuota(PAL::SessionID sessionID) -> () Async
-    
+
 #if ENABLE(APP_BOUND_DOMAINS)
     HasAppBoundSession(PAL::SessionID sessionID) -> (bool hasAppBoundSession) Async
     ClearAppBoundSession(PAL::SessionID sessionID) -> () Async

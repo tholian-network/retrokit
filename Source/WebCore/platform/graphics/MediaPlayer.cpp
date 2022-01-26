@@ -501,7 +501,7 @@ void MediaPlayer::reloadAndResumePlaybackIfNeeded()
 
 void MediaPlayer::loadWithNextMediaEngine(const MediaPlayerFactory* current)
 {
-#if ENABLE(MEDIA_SOURCE) 
+#if ENABLE(MEDIA_SOURCE)
 #define MEDIASOURCE m_mediaSource
 #else
 #define MEDIASOURCE 0
@@ -513,7 +513,7 @@ void MediaPlayer::loadWithNextMediaEngine(const MediaPlayerFactory* current)
 
     const MediaPlayerFactory* engine = nullptr;
 
-    if (!m_contentType.isEmpty() || MEDIASTREAM || MEDIASOURCE)
+    if (!m_contentType.isEmpty() || MEDIASOURCE)
         engine = nextBestMediaEngine(current);
 
     // If no MIME type is specified or the type was inferred from the file extension, just use the next engine.

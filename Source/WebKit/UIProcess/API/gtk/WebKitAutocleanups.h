@@ -28,7 +28,6 @@
 #ifndef __GI_SCANNER__
 
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (WebKitAuthenticationRequest, g_object_unref)
-G_DEFINE_AUTOPTR_CLEANUP_FUNC (WebKitAutomationSession, g_object_unref)
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (WebKitBackForwardList, g_object_unref)
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (WebKitBackForwardListItem, g_object_unref)
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (WebKitColorChooserRequest, g_object_unref)

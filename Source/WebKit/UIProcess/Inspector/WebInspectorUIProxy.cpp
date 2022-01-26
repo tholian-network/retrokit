@@ -32,7 +32,6 @@
 #include "APIProcessPoolConfiguration.h"
 #include "APIUIClient.h"
 #include "InspectorBrowserAgent.h"
-#include "WebAutomationSession.h"
 #include "WebFrameProxy.h"
 #include "WebInspectorInterruptDispatcherMessages.h"
 #include "WebInspectorMessages.h"

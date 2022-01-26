@@ -27,7 +27,6 @@
 #include "WebProcessPool.h"
 
 #include "APIArray.h"
-#include "APIAutomationClient.h"
 #include "APIDownloadClient.h"
 #include "APIHTTPCookieStore.h"
 #include "APIInjectedBundleClient.h"
@@ -51,7 +50,6 @@
 #include "SandboxExtension.h"
 #include "TextChecker.h"
 #include "WKContextPrivate.h"
-#include "WebAutomationSession.h"
 #include "WebBackForwardCache.h"
 #include "WebBackForwardList.h"
 #include "WebBackForwardListItem.h"
@@ -187,7 +185,6 @@ WebProcessPool::WebProcessPool(API::ProcessPoolConfiguration& configuration)
     : m_configuration(configuration.copy())
     , m_defaultPageGroup(WebPageGroup::create())
     , m_injectedBundleClient(makeUnique<API::InjectedBundleClient>())
-    , m_automationClient(makeUnique<API::AutomationClient>())
     , m_historyClient(makeUnique<API::LegacyContextHistoryClient>())
     , m_visitedLinkStore(VisitedLinkStore::create())
 #if PLATFORM(MAC)
@@ -331,14 +328,6 @@ void WebProcessPool::setLegacyDownloadClient(RefPtr<API::DownloadClient>&& clien
     m_legacyDownloadClient = WTFMove(client);
 }
 
-void WebProcessPool::setAutomationClient(std::unique_ptr<API::AutomationClient>&& automationClient)
-{
-    if (!automationClient)
-        m_automationClient = makeUnique<API::AutomationClient>();
-    else
-        m_automationClient = WTFMove(automationClient);
-}
-
 void WebProcessPool::setCustomWebContentServiceBundleIdentifier(const String& customWebContentServiceBundleIdentifier)
 {
     // Guard against API misuse.
@@ -399,9 +388,6 @@ void WebProcessPool::networkProcessDidTerminate(NetworkProcessProxy& networkProc
 
     if (reason == NetworkProcessProxy::TerminationReason::Crash)
         m_client.networkProcessDidCrash(this);
-
-    if (m_automationSession)
-        m_automationSession->terminate();
 
     terminateServiceWorkers();
 }
@@ -794,9 +780,6 @@ void WebProcessPool::initializeNewWebProcess(WebProcessProxy& process, WebsiteDa
 #if HAVE(MEDIA_ACCESSIBILITY_FRAMEWORK)
     setMediaAccessibilityPreferences(process);
 #endif
-
-    if (m_automationSession)
-        process.send(Messages::WebProcess::EnsureAutomationSessionProxy(m_automationSession->sessionIdentifier()), 0);
 
     ASSERT(m_messagesToInjectedBundlePostedToEmptyContext.isEmpty());
 
@@ -1431,31 +1414,6 @@ void WebProcessPool::terminateServiceWorkers()
 #endif
 }
 
-void WebProcessPool::updateAutomationCapabilities() const
-{
-#if ENABLE(REMOTE_INSPECTOR)
-    Inspector::RemoteInspector::singleton().clientCapabilitiesDidChange();
-#endif
-}
-
-void WebProcessPool::setAutomationSession(RefPtr<WebAutomationSession>&& automationSession)
-{
-    if (m_automationSession)
-        m_automationSession->setProcessPool(nullptr);
-    
-    m_automationSession = WTFMove(automationSession);
-
-#if ENABLE(REMOTE_INSPECTOR)
-    if (m_automationSession) {
-        m_automationSession->init();
-        m_automationSession->setProcessPool(this);
-
-        sendToAllProcesses(Messages::WebProcess::EnsureAutomationSessionProxy(m_automationSession->sessionIdentifier()));
-    } else
-        sendToAllProcesses(Messages::WebProcess::DestroyAutomationSessionProxy());
-#endif
-}
-
 void WebProcessPool::setHTTPPipeliningEnabled(bool enabled)
 {
 #if PLATFORM(COCOA)
@@ -1665,9 +1623,6 @@ void WebProcessPool::processForNavigationInternal(WebPageProxy& page, const API:
 
     if (!m_configuration->processSwapsOnNavigation())
         return completionHandler(WTFMove(sourceProcess), nullptr, "Feature is disabled"_s);
-
-    if (m_automationSession)
-        return completionHandler(WTFMove(sourceProcess), nullptr, "An automation session is active"_s);
 
     if (!sourceProcess->hasCommittedAnyProvisionalLoads()) {
         tryPrewarmWithDomainInformation(sourceProcess, targetRegistrableDomain);

@@ -107,11 +107,7 @@ public:
         virtual bool remoteAutomationAllowed() const = 0;
         virtual String browserName() const { return { }; }
         virtual String browserVersion() const { return { }; }
-        virtual void requestAutomationSession(const String& sessionIdentifier, const SessionCapabilities&) = 0;
         virtual void requestedDebuggablesToWakeUp() { };
-#if USE(INSPECTOR_SOCKET_SERVER)
-        virtual void closeAutomationSession() = 0;
-#endif
     };
 
 #if PLATFORM(COCOA)
@@ -152,16 +148,11 @@ public:
 
     void updateTargetListing(TargetID);
 
-#if USE(GLIB)
-    void requestAutomationSession(const char* sessionID, const Client::SessionCapabilities&);
-#endif
 #if USE(GLIB) || USE(INSPECTOR_SOCKET_SERVER)
     void setup(TargetID);
     void sendMessageToTarget(TargetID, const char* message);
 #endif
 #if USE(INSPECTOR_SOCKET_SERVER)
-    void requestAutomationSession(String&& sessionID, const Client::SessionCapabilities&);
-
     bool isConnected() const { return !!m_clientConnection; }
     void connect(ConnectionID);
 
@@ -187,7 +178,6 @@ private:
     void receivedSetupMessage(TargetID);
     void receivedDataMessage(TargetID, const char* message);
     void receivedCloseMessage(TargetID);
-    void receivedAutomationSessionRequestMessage(const char* sessionID);
 #endif
 
     TargetListing listingForTarget(const RemoteControllableTarget&) const;
@@ -221,7 +211,6 @@ private:
     void receivedConnectionDiedMessage(NSDictionary *userInfo);
     void receivedAutomaticInspectionConfigurationMessage(NSDictionary *userInfo);
     void receivedAutomaticInspectionRejectMessage(NSDictionary *userInfo);
-    void receivedAutomationSessionRequestMessage(NSDictionary *userInfo);
 #endif
 #if USE(INSPECTOR_SOCKET_SERVER)
     HashMap<String, CallHandler>& dispatchMap() final;
@@ -233,9 +222,6 @@ private:
     void setupTarget(const Event&);
     void frontendDidClose(const Event&);
     void sendMessageToBackend(const Event&);
-    void startAutomationSession(const Event&);
-
-    void receivedAutomationSessionRequestMessage(const Event&);
 
     String backendCommands() const;
 #endif
@@ -264,7 +250,7 @@ private:
 #endif
 
 #if USE(INSPECTOR_SOCKET_SERVER)
-    // Connection from RemoteInspectorClient or WebDriver.
+    // Connection from RemoteInspectorClient
     std::optional<ConnectionID> m_clientConnection;
     bool m_readyToPushListings { false };
 

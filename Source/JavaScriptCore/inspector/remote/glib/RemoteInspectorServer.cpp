@@ -151,20 +151,6 @@ const SocketConnection::MessageHandlers& RemoteInspectorServer::messageHandlers(
             g_variant_get(parameters, "(tt&s)", &connectionID, &targetID, &message);
             inspectorServer.sendMessageToBackend(connection, connectionID, targetID, message);
         }}
-    },
-    { "StartAutomationSession", std::pair<CString, SocketConnection::MessageCallback> { "(sa{sv})",
-        [](SocketConnection& connection, GVariant* parameters, gpointer userData) {
-            auto& inspectorServer = *static_cast<RemoteInspectorServer*>(userData);
-            const char* sessionID;
-            GRefPtr<GVariant> sessionCapabilities;
-            g_variant_get(parameters, "(&s@a{sv})", &sessionID, &sessionCapabilities.outPtr());
-            auto capabilities = processSessionCapabilities(sessionCapabilities.get());
-            inspectorServer.startAutomationSession(connection, sessionID, capabilities);
-            auto clientCapabilities = RemoteInspector::singleton().clientCapabilities();
-            connection.sendMessage("DidStartAutomationSession", g_variant_new("(ss)",
-                clientCapabilities ? clientCapabilities->browserName.utf8().data() : "",
-                clientCapabilities ? clientCapabilities->browserVersion.utf8().data() : ""));
-        }}
     }
     });
     return messageHandlers;
@@ -323,15 +309,6 @@ void RemoteInspectorServer::sendMessageToFrontend(SocketConnection& remoteInspec
     SocketConnection* clientConnection = m_inspectionTargets.contains(connectionTargetPair) ? m_clientConnection : m_automationConnection;
     ASSERT(clientConnection);
     clientConnection->sendMessage("SendMessageToFrontend", g_variant_new("(tt&s)", connectionID, targetID, message));
-}
-
-void RemoteInspectorServer::startAutomationSession(SocketConnection& automationConnection, const char* sessionID, const RemoteInspector::Client::SessionCapabilities& capabilities)
-{
-    if (!m_automationConnection)
-        m_automationConnection = &automationConnection;
-    ASSERT(m_automationConnection == &automationConnection);
-
-    RemoteInspector::singleton().requestAutomationSession(sessionID, capabilities);
 }
 
 } // namespace Inspector

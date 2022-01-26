@@ -98,7 +98,6 @@ set(WebKit2GTK_INSTALLED_HEADERS
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitApplicationInfo.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitAuthenticationRequest.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitAutocleanups.h
-    ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitAutomationSession.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitBackForwardList.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitBackForwardListItem.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitColorChooserRequest.h

@@ -629,7 +629,6 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
     WebCore::provideNotification(m_page.get(), new WebNotificationClient(this));
 #endif
 
-    m_page->setControlledByAutomation(parameters.controlledByAutomation);
     m_page->setHasResourceLoadClient(parameters.hasResourceLoadClient);
 
     m_page->setCanStartMedia(false);
@@ -3019,16 +3018,6 @@ void WebPage::centerSelectionInVisibleArea()
     Frame& frame = m_page->focusController().focusedOrMainFrame();
     frame.selection().revealSelection(SelectionRevealMode::Reveal, ScrollAlignment::alignCenterAlways);
     findController().showFindIndicatorInSelection();
-}
-
-bool WebPage::isControlledByAutomation() const
-{
-    return m_page->isControlledByAutomation();
-}
-
-void WebPage::setControlledByAutomation(bool controlled)
-{
-    m_page->setControlledByAutomation(controlled);
 }
 
 void WebPage::connectInspector(const String& targetId, Inspector::FrontendChannel::ConnectionType connectionType)
