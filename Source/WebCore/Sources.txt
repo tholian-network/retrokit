@@ -2706,7 +2706,6 @@ JSDocumentOrShadowRoot.cpp
 JSDocumentTimeline.cpp
 JSDocumentTimelineOptions.cpp
 JSDocumentType.cpp
-JSDoubleRange.cpp
 JSDragEvent.cpp
 JSDynamicsCompressorNode.cpp
 JSDynamicsCompressorOptions.cpp
@@ -2896,7 +2895,6 @@ JSKeyframeAnimationOptions.cpp
 JSKeyframeEffect.cpp
 JSKeyframeEffectOptions.cpp
 JSLocation.cpp
-JSLongRange.cpp
 JSMathMLElement.cpp
 JSMathMLMathElement.cpp
 JSMediaCapabilities.cpp
@@ -2907,8 +2905,6 @@ JSMediaController.cpp
 JSMediaControlsHost.cpp
 JSMediaDecodingConfiguration.cpp
 JSMediaDecodingType.cpp
-JSMediaDeviceInfo.cpp
-JSMediaDevices.cpp
 JSMediaElementAudioSourceNode.cpp
 JSMediaElementAudioSourceOptions.cpp
 JSMediaEncodingConfiguration.cpp
@@ -2930,8 +2926,6 @@ JSMediaSessionPlaybackState.cpp
 JSMediaSessionReadyState.cpp
 JSMediaSession.cpp
 JSMediaSource.cpp
-JSMediaTrackConstraints.cpp
-JSMediaTrackSupportedConstraints.cpp
 JSMessageChannel.cpp
 JSMessageEvent.cpp
 JSMessagePort.cpp
@@ -2972,8 +2966,6 @@ JSOscillatorNode.cpp
 JSOscillatorOptions.cpp
 JSOscillatorType.cpp
 JSOverSampleType.cpp
-JSOverconstrainedError.cpp
-JSOverconstrainedErrorEvent.cpp
 JSOverflowEvent.cpp
 JSPageTransitionEvent.cpp
 JSPaintRenderingContext2D.cpp

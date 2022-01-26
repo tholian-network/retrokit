@@ -255,7 +255,6 @@ struct ExceptionDetails;
 struct FileChooserSettings;
 struct GlobalWindowIdentifier;
 struct LinkIcon;
-struct MediaStreamRequest;
 struct MediaUsageInfo;
 struct MockWebAuthenticationConfiguration;
 struct PermissionDescriptor;
@@ -2337,7 +2336,6 @@ private:
     bool m_allowsMediaDocumentInlinePlayback { false };
     std::unique_ptr<ProcessThrottler::ForegroundActivity> m_isVisibleActivity;
     std::unique_ptr<ProcessThrottler::ForegroundActivity> m_isAudibleActivity;
-    std::unique_ptr<ProcessThrottler::ForegroundActivity> m_isCapturingActivity;
     RunLoop::Timer<WebPageProxy> m_audibleActivityTimer;
     std::unique_ptr<ProcessThrottler::BackgroundActivity> m_openingAppLinkActivity;
 #endif

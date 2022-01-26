@@ -1352,7 +1352,6 @@ public:
     WEBCORE_EXPORT void removeAudioProducer(MediaProducer&);
     MediaProducer::MediaStateFlags mediaState() const { return m_mediaState; }
     void noteUserInteractionWithMediaElement();
-    bool isCapturing() const { return MediaProducer::isCapturing(m_mediaState); }
     WEBCORE_EXPORT void updateIsPlayingMedia();
     void pageMutedStateDidChange();
 

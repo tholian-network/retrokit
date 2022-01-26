@@ -26,13 +26,8 @@
 // https://w3c.github.io/permissions/#enumdef-permissionname
 
 enum PermissionName {
-    // FIXME: update the list to match spec when new features are implemented.
     "background-fetch",
-    "camera",
-    "display-capture",
-    "microphone",
     "midi",
     "nfc",
-    "notifications",
-    "speaker-selection"
+    "notifications"
 };

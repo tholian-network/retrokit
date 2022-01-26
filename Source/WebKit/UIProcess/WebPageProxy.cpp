@@ -158,7 +158,6 @@
 #include <WebCore/GlobalWindowIdentifier.h>
 #include <WebCore/LengthBox.h>
 #include <WebCore/MIMETypeRegistry.h>
-#include <WebCore/MediaStreamRequest.h>
 #include <WebCore/PerformanceLoggingClient.h>
 #include <WebCore/PermissionState.h>
 #include <WebCore/PlatformEvent.h>

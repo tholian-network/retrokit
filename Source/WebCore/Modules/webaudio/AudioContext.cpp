@@ -67,7 +67,7 @@ static std::optional<float>& defaultSampleRateForTesting()
 
 static bool shouldDocumentAllowWebAudioToAutoPlay(const Document& document)
 {
-    if (document.processingUserGestureForMedia() || document.isCapturing())
+    if (document.processingUserGestureForMedia())
         return true;
     return document.topDocument().hasHadUserInteraction();
 }

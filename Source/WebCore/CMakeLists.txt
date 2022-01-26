@@ -35,12 +35,10 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${WEBCORE_DIR}/Modules/mediacontrols"
     "${WEBCORE_DIR}/Modules/mediasession"
     "${WEBCORE_DIR}/Modules/mediasource"
-    "${WEBCORE_DIR}/Modules/mediastream"
     "${WEBCORE_DIR}/Modules/navigatorcontentutils"
     "${WEBCORE_DIR}/Modules/notifications"
     "${WEBCORE_DIR}/Modules/permissions"
     "${WEBCORE_DIR}/Modules/pictureinpicture"
-    "${WEBCORE_DIR}/Modules/speech"
     "${WEBCORE_DIR}/Modules/streams"
     "${WEBCORE_DIR}/Modules/webaudio"
     "${WEBCORE_DIR}/Modules/webauthn"
@@ -123,7 +121,6 @@ set(WebCore_PRIVATE_INCLUDE_DIRECTORIES
     "${WEBCORE_DIR}/platform/graphics/opentype"
     "${WEBCORE_DIR}/platform/graphics/transforms"
     "${WEBCORE_DIR}/platform/mediacapabilities"
-    "${WEBCORE_DIR}/platform/mediastream"
     "${WEBCORE_DIR}/platform/mock"
     "${WEBCORE_DIR}/platform/mock/mediasource"
     "${WEBCORE_DIR}/platform/network"
@@ -174,10 +171,8 @@ set(WebCore_IDL_INCLUDES
     Modules/highlight
     Modules/indexeddb
     Modules/mediacapabilities
-    Modules/mediastream
     Modules/notifications
     Modules/permissions
-    Modules/speech
     Modules/streams
     Modules/webaudio
     Modules/webdatabase

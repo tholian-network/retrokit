@@ -493,15 +493,6 @@
         "description": "Allows defering loading of images until they are visible in the viewport."
     },
     {
-        "name": "Media Capture and Streams",
-        "status": {
-            "status": "Supported"
-        },
-        "url": "https://w3c.github.io/mediacapture-main/",
-        "keywords": ["mediastream", "getusermedia"],
-        "description": "A set of JavaScript APIs that allow local media, including audio and video, to be requested."
-    },
-    {
         "name": "Navigation Timing Level 1",
         "status": {
             "status": "Supported"
@@ -1177,15 +1168,6 @@
         "url": "http://dev.w3.org/csswg/mediaqueries-4/#mf-interaction",
         "specification": "CSS Media Queries Level 4",
         "description": "The \"pointer\" media defines how percise the pointing device is. The \"hover\" media defines the ability of the poiting device to hover elements."
-    },
-    {
-        "name": "MediaStream Recording API",
-        "status": {
-            "status": "In Development"
-        },
-        "url": "https://w3c.github.io/mediacapture-record",
-        "webkit-url": "https://bugs.webkit.org/show_bug.cgi?id=85851",
-        "comment": "Allows recording of audio and/or video MediaStream."
     },
     {
         "name": "MicroData",

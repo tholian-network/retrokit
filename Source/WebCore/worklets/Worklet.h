@@ -45,7 +45,7 @@ class Worklet : public RefCounted<Worklet>, public ScriptWrappable, public CanMa
     WTF_MAKE_ISO_ALLOCATED(Worklet);
 public:
     virtual ~Worklet();
-    
+
     virtual void addModule(const String& moduleURL, WorkletOptions&&, DOMPromiseDeferred<void>&&);
 
     void finishPendingTasks(WorkletPendingTasks&);

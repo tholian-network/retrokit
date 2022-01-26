@@ -109,7 +109,6 @@ void WebPageCreationParameters::encode(IPC::Encoder& encoder) const
     encoder << deviceOrientation;
     encoder << keyboardIsAttached;
     encoder << canShowWhileLocked;
-    encoder << isCapturingScreen;
 #endif
 #if PLATFORM(COCOA)
     encoder << smartInsertDeleteEnabled;
@@ -371,8 +370,6 @@ std::optional<WebPageCreationParameters> WebPageCreationParameters::decode(IPC::
     if (!decoder.decode(parameters.keyboardIsAttached))
         return std::nullopt;
     if (!decoder.decode(parameters.canShowWhileLocked))
-        return std::nullopt;
-    if (!decoder.decode(parameters.isCapturingScreen))
         return std::nullopt;
 #endif
 

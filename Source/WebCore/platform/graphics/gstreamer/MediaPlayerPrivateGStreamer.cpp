@@ -2093,7 +2093,6 @@ void MediaPlayerPrivateGStreamer::updateStates()
 
     MediaPlayer::NetworkState oldNetworkState = m_networkState;
     MediaPlayer::ReadyState oldReadyState = m_readyState;
-    bool oldIsPaused = m_isPaused;
     GstState pending, state;
     bool stateReallyChanged = false;
 
@@ -2555,8 +2554,7 @@ void MediaPlayerPrivateGStreamer::createGSTPlayBin(const URL& url)
     // In the MSE case stream collection messages are emitted from the main thread right before the
     // initilization segment is parsed and "updateend" is fired. We need therefore to handle these
     // synchronously in the same main thread tick to make the tracks information available to JS no
-    // later than "updateend". There is no such limitation otherwise (if playbin3 is enabled or in
-    // MediaStream cases).
+    // later than "updateend". There is no such limitation otherwise.
     auto streamCollectionSignalName = makeString(isMediaSource() ? "sync-" : "", "message::stream-collection");
     g_signal_connect_swapped(bus.get(), streamCollectionSignalName.ascii().data(), G_CALLBACK(+[](MediaPlayerPrivateGStreamer* player, GstMessage* message) {
         player->handleStreamCollectionMessage(message);

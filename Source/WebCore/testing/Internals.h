@@ -81,8 +81,6 @@ class InternalSettings;
 class InternalsSetLike;
 class Location;
 class MallocStatistics;
-class MediaStream;
-class MediaStreamTrack;
 class MemoryInfo;
 class MockContentFilterSettings;
 class MockPageOverlay;

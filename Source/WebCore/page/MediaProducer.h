@@ -46,13 +46,12 @@ public:
     using MediaStateFlags = OptionSet<MediaState>;
     static constexpr MediaStateFlags IsNotPlaying = { };
 
-    static bool isCapturing(MediaStateFlags state) { return false; }
-
     virtual MediaStateFlags mediaState() const = 0;
 
     enum class MutedState {
         AudioIsMuted = 1 << 0
     };
+    using MutedStateFlags = OptionSet<MutedState>;
 
     virtual void pageMutedStateDidChange() = 0;
 

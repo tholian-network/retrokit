@@ -203,11 +203,6 @@ WI.NativeConstructorFunctionParameters = {
         __proto__: null,
     },
 
-    MediaStreamTrackConstructor: {
-        getSources: "callback",
-        __proto__: null,
-    },
-
     NotificationConstructor: {
         requestPermission: "[callback]",
         __proto__: null,
@@ -1070,16 +1065,6 @@ WI.NativePrototypeFunctionParameters = {
         addSourceBuffer: "type",
         endOfStream: "[error]",
         removeSourceBuffer: "buffer",
-        __proto__: null,
-    },
-
-    MediaStreamTrack: {
-        applyConstraints: "constraints",
-        __proto__: null,
-    },
-
-    MediaStreamTrackSourcesCallback: {
-        handleEvent: "sources",
         __proto__: null,
     },
 
@@ -2038,13 +2023,6 @@ WI.NativePrototypeFunctionParameters = {
         setOrientation: "x, y, z",
         setPosition: "x, y, z",
         setVelocity: "x, y, z",
-        __proto__: null,
-    },
-
-    webkitMediaStream: {
-        addTrack: "track",
-        getTrackById: "trackId",
-        removeTrack: "track",
         __proto__: null,
     },
 

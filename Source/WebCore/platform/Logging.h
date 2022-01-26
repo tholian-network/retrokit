@@ -77,7 +77,6 @@ namespace WebCore {
     M(Media) \
     M(MediaQueries) \
     M(MediaSource) \
-    M(MediaStream) \
     M(MediaSourceSamples) \
     M(MemoryPressure) \
     M(MessagePorts) \

@@ -197,7 +197,6 @@ platform/graphics/avfoundation/objc/InbandTextTrackPrivateAVFObjC.mm @no-unify
 platform/graphics/avfoundation/objc/LocalSampleBufferDisplayLayer.mm @no-unify
 platform/graphics/avfoundation/objc/MediaPlayerPrivateAVFoundationObjC.mm @no-unify
 platform/graphics/avfoundation/objc/MediaPlayerPrivateMediaSourceAVFObjC.mm @no-unify
-platform/graphics/avfoundation/objc/MediaPlayerPrivateMediaStreamAVFObjC.mm @no-unify
 platform/graphics/avfoundation/objc/MediaSampleAVFObjC.mm @no-unify
 platform/graphics/avfoundation/objc/MediaSourcePrivateAVFObjC.mm @no-unify
 platform/graphics/avfoundation/objc/SourceBufferPrivateAVFObjC.mm @no-unify

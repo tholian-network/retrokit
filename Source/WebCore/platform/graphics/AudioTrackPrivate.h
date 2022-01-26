@@ -65,8 +65,6 @@ public:
     enum Kind { Alternative, Description, Main, MainDesc, Translation, Commentary, None };
     virtual Kind kind() const { return None; }
 
-    virtual bool isBackedByMediaStreamTrack() const { return false; }
-
     using EnabledChangedCallback = Function<void(AudioTrackPrivate&, bool enabled)>;
     void setEnabledChangedCallback(EnabledChangedCallback&& callback) { m_enabledChangedCallback = WTFMove(callback); }
 

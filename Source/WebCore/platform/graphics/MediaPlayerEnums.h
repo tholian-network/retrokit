@@ -84,7 +84,6 @@ public:
     enum class MediaEngineIdentifier : uint8_t {
         AVFoundation,
         AVFoundationMSE,
-        AVFoundationMediaStream,
         AVFoundationCF,
         GStreamer,
         GStreamerMSE,
@@ -214,7 +213,6 @@ template<> struct EnumTraits<WebCore::MediaPlayerEnums::MediaEngineIdentifier> {
         WebCore::MediaPlayerEnums::MediaEngineIdentifier,
         WebCore::MediaPlayerEnums::MediaEngineIdentifier::AVFoundation,
         WebCore::MediaPlayerEnums::MediaEngineIdentifier::AVFoundationMSE,
-        WebCore::MediaPlayerEnums::MediaEngineIdentifier::AVFoundationMediaStream,
         WebCore::MediaPlayerEnums::MediaEngineIdentifier::GStreamer,
         WebCore::MediaPlayerEnums::MediaEngineIdentifier::GStreamerMSE,
         WebCore::MediaPlayerEnums::MediaEngineIdentifier::HolePunch,

@@ -107,6 +107,7 @@ surface, that's why they're removed.
 - [x] Remove Plugin Document Wrappers (`PluginDocument`, `PluginLoadClientPolicy`, `PluginModuleLoadPolicy`)
 - [x] Remove Plugin Renderer Integration (`RenderEmbeddedObject`)
 
+
 ## Legacy Quirks
 
 These legacy Quirks are really dirty Hacks that are domain-specific and site-specific
@@ -180,6 +181,7 @@ and are also no longer of relevance to a modern Web View.
 - [x] Remove `requestStorageAccessAndHandleClick()` Quirk
 - [x] Remove `shouldOmitHTMLDocumentSupportedPropertyNames()` Quirk
 - [x] Remove `shouldBypassUserGestureRequirementForWebAuthn` Quirk (`dropbox.com`, `facebook.com`, `google.com`, `microsoft.com`, `twitter.com`)
+
 
 ## Legacy User-Agent Quirks
 
@@ -291,6 +293,13 @@ list of Web APIs that are removed.
 - [ ] *Undecied* Remove App Bound Domains Support (`APP_BOUND_DOMAINS`)
 - [ ] Remove Contact Picker API (`ContactPickerAPI`, `ContactInfo`, `ContactProperty`, `ContactsManager`, `ContactsRequestData`, `ContactsSelectOption`, `navigator.contacts`)
 - [ ] Remove WebSQL Database API (`WebSQL`)
+
+
+## Web Workers and Worklets
+
+- [ ] Remove Worklet API (`Worklet`, `WorkletGlobalScope`, `WorkletPendingTask`)
+- [ ] Remove AudioWorklet API
+- [ ] Remove PaintWorklet API
 
 
 ## HTML Features

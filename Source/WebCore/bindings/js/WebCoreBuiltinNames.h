@@ -126,14 +126,10 @@ namespace WebCore {
     macro(KeyframeEffect) \
     macro(MediaCapabilities) \
     macro(MediaCapabilitiesInfo) \
-    macro(MediaDevices) \
     macro(MediaQueryListEvent) \
     macro(MediaSessionCoordinator) \
     macro(MediaSource) \
-    macro(MediaStream) \
-    macro(MediaStreamTrack) \
     macro(NavigatorCredentials) \
-    macro(NavigatorMediaDevices) \
     macro(NavigatorPermissions) \
     macro(OfflineAudioContext) \
     macro(OffscreenCanvas) \

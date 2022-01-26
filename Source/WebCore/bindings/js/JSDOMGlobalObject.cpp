@@ -38,8 +38,6 @@
 #include "JSEventListener.h"
 #include "JSFetchResponse.h"
 #include "JSIDBSerializationGlobalObject.h"
-#include "JSMediaStream.h"
-#include "JSMediaStreamTrack.h"
 #include "JSReadableStream.h"
 #include "JSRemoteDOMWindow.h"
 #include "JSWorkerGlobalScope.h"
