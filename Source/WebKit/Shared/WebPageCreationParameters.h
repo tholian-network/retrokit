@@ -73,7 +73,7 @@ struct WebPageCreationParameters {
     WebCore::IntSize viewSize;
 
     OptionSet<WebCore::ActivityState::Flag> activityState;
-    
+
     WebPreferencesStore store;
     DrawingAreaType drawingAreaType;
     DrawingAreaIdentifier drawingAreaIdentifier;
@@ -99,7 +99,7 @@ struct WebPageCreationParameters {
     double pageLength;
     double gapBetweenPages;
     bool paginationLineGridEnabled;
-    
+
     String userAgent;
 
     bool itemStatesWereRestoredByAPIRequest { false };
@@ -116,7 +116,7 @@ struct WebPageCreationParameters {
     double pageZoomFactor { 1 };
 
     float topContentInset;
-    
+
     float mediaVolume;
     WebCore::MediaProducer::MutedStateFlags muted;
     bool mayStartMediaWhenInWindow;
@@ -126,7 +126,7 @@ struct WebPageCreationParameters {
     WebCore::IntSize sizeToContentAutoSizeMaximumSize;
     bool autoSizingShouldExpandToViewHeight;
     std::optional<WebCore::IntSize> viewportSizeForCSSViewportUnits;
-    
+
     WebCore::ScrollPinningBehavior scrollPinningBehavior;
 
     // FIXME: This should be std::optional<WebCore::ScrollbarOverlayStyle>, but we would need to
@@ -141,7 +141,6 @@ struct WebPageCreationParameters {
 
     Vector<String> mimeTypesWithCustomContentProviders;
 
-    bool controlledByAutomation;
     bool isProcessSwap { false };
 
     bool useDarkAppearance { false };

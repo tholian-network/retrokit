@@ -76,7 +76,6 @@ void WebPageCreationParameters::encode(IPC::Encoder& encoder) const
     encoder << backgroundExtendsBeyondPage;
     encoder << layerHostingMode;
     encoder << mimeTypesWithCustomContentProviders;
-    encoder << controlledByAutomation;
     encoder << isProcessSwap;
     encoder << useDarkAppearance;
     encoder << useElevatedUserInterfaceLevel;
@@ -302,8 +301,6 @@ std::optional<WebPageCreationParameters> WebPageCreationParameters::decode(IPC::
     if (!decoder.decode(parameters.layerHostingMode))
         return std::nullopt;
     if (!decoder.decode(parameters.mimeTypesWithCustomContentProviders))
-        return std::nullopt;
-    if (!decoder.decode(parameters.controlledByAutomation))
         return std::nullopt;
     if (!decoder.decode(parameters.isProcessSwap))
         return std::nullopt;

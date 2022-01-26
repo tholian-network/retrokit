@@ -577,9 +577,6 @@ void WebInspectorUIProxy::frontendLoaded()
     if (!m_inspectedPage)
         return;
 
-    if (auto* automationSession = m_inspectedPage->process().processPool().automationSession())
-        automationSession->inspectorFrontendLoaded(*m_inspectedPage);
-    
 #if ENABLE(INSPECTOR_EXTENSIONS)
     if (m_extensionController)
         m_extensionController->inspectorFrontendLoaded();

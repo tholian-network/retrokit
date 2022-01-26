@@ -23,8 +23,10 @@
 #include "ShareableBitmap.h"
 #include "SharedMemory.h"
 #include <WebCore/FloatPoint.h>
+#include <WebCore/FloatRect.h>
 #include <WebCore/IntRect.h>
 #include <WebCore/PageOverlay.h>
+#include <WebCore/TextIndicator.h>
 #include <wtf/EnumTraits.h>
 #include <wtf/Forward.h>
 #include <wtf/RefPtr.h>
