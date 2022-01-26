@@ -186,10 +186,6 @@ struct PasteboardWebContent;
 class ContentFilterUnblockHandler;
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-struct MediaConstraints;
-#endif
-
 #if ENABLE(ATTACHMENT_ELEMENT)
 struct SerializedAttachmentData;
 #endif
@@ -636,13 +632,6 @@ template<> struct ArgumentCoder<WebCore::ResourceLoadStatistics> {
     static std::optional<WebCore::ResourceLoadStatistics> decode(Decoder&);
 };
 
-#if ENABLE(MEDIA_STREAM)
-template<> struct ArgumentCoder<WebCore::MediaConstraints> {
-    static void encode(Encoder&, const WebCore::MediaConstraints&);
-    static WARN_UNUSED_RETURN bool decode(Decoder&, WebCore::MediaConstraints&);
-};
-#endif
-
 template<> struct ArgumentCoder<WebCore::IDBKeyPath> {
     static void encode(Encoder&, const WebCore::IDBKeyPath&);
     static WARN_UNUSED_RETURN bool decode(Decoder&, WebCore::IDBKeyPath&);
@@ -823,17 +812,6 @@ template<> struct EnumTraits<WebCore::IndexedDB::GetAllType> {
         WebCore::IndexedDB::GetAllType::Values
     >;
 };
-
-#if ENABLE(MEDIA_STREAM)
-template<> struct EnumTraits<WebCore::RealtimeMediaSource::Type> {
-    using values = EnumValues<
-        WebCore::RealtimeMediaSource::Type,
-        WebCore::RealtimeMediaSource::Type::None,
-        WebCore::RealtimeMediaSource::Type::Audio,
-        WebCore::RealtimeMediaSource::Type::Video
-    >;
-};
-#endif
 
 template<> struct EnumTraits<WebCore::MediaSelectionOption::Type> {
     using values = EnumValues<

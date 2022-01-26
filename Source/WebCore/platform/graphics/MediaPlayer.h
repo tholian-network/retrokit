@@ -78,7 +78,6 @@ class MediaPlayerFactory;
 class MediaPlayerPrivateInterface;
 class MediaPlayerRequestInstallMissingPluginsCallback;
 class MediaSourcePrivateClient;
-class MediaStreamPrivate;
 class PlatformTimeRanges;
 class TextTrackRepresentation;
 
@@ -89,7 +88,6 @@ struct MediaEngineSupportParameters {
     ContentType type;
     URL url;
     bool isMediaSource { false };
-    bool isMediaStream { false };
     Vector<ContentType> contentTypesRequiringHardwareSupport;
 
     template<class Encoder>
@@ -98,7 +96,6 @@ struct MediaEngineSupportParameters {
         encoder << type;
         encoder << url;
         encoder << isMediaSource;
-        encoder << isMediaStream;
         encoder << contentTypesRequiringHardwareSupport;
     }
 
@@ -120,17 +117,12 @@ struct MediaEngineSupportParameters {
         if (!isMediaSource)
             return std::nullopt;
 
-        std::optional<bool> isMediaStream;
-        decoder >> isMediaStream;
-        if (!isMediaStream)
-            return std::nullopt;
-
         std::optional<Vector<ContentType>> typesRequiringHardware;
         decoder >> typesRequiringHardware;
         if (!typesRequiringHardware)
             return std::nullopt;
 
-        return {{ WTFMove(*type), WTFMove(*url), *isMediaSource, *isMediaStream, *typesRequiringHardware }};
+        return {{ WTFMove(*type), WTFMove(*url), *isMediaSource, *typesRequiringHardware }};
     }
 };
 
@@ -310,9 +302,6 @@ public:
     bool load(const URL&, const ContentType&);
 #if ENABLE(MEDIA_SOURCE)
     bool load(const URL&, const ContentType&, MediaSourcePrivateClient*);
-#endif
-#if ENABLE(MEDIA_STREAM)
-    bool load(MediaStreamPrivate&);
 #endif
     void cancelLoad();
 
@@ -616,9 +605,6 @@ private:
 
 #if ENABLE(MEDIA_SOURCE)
     RefPtr<MediaSourcePrivateClient> m_mediaSource;
-#endif
-#if ENABLE(MEDIA_STREAM)
-    RefPtr<MediaStreamPrivate> m_mediaStream;
 #endif
 };
 

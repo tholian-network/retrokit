@@ -192,10 +192,6 @@ void RemoteMediaPlayerManager::getSupportedTypes(MediaPlayerEnums::MediaEngineId
 
 MediaPlayer::SupportsType RemoteMediaPlayerManager::supportsTypeAndCodecs(MediaPlayerEnums::MediaEngineIdentifier remoteEngineIdentifier, const MediaEngineSupportParameters& parameters)
 {
-#if ENABLE(MEDIA_STREAM)
-    if (parameters.isMediaStream)
-        return MediaPlayer::SupportsType::IsNotSupported;
-#endif
     return typeCache(remoteEngineIdentifier).supportsTypeAndCodecs(parameters);
 }
 
@@ -230,14 +226,6 @@ void RemoteMediaPlayerManager::setUseGPUProcess(bool useGPUProcess)
     };
 
     RemoteMediaPlayerSupport::setRegisterRemotePlayerCallback(useGPUProcess ? WTFMove(registerEngine) : RemoteMediaPlayerSupport::RegisterRemotePlayerCallback());
-
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-    if (useGPUProcess) {
-        WebCore::SampleBufferDisplayLayer::setCreator([](auto& client) {
-            return WebProcess::singleton().ensureGPUProcessConnection().sampleBufferDisplayLayerManager().createLayer(client);
-        });
-    }
-#endif
 }
 
 GPUProcessConnection& RemoteMediaPlayerManager::gpuProcessConnection() const

@@ -179,9 +179,6 @@ private:
 #if ENABLE(MEDIA_SOURCE)
     void load(const URL&, const WebCore::ContentType&, WebCore::MediaSourcePrivateClient*) final;
 #endif
-#if ENABLE(MEDIA_STREAM)
-    void load(WebCore::MediaStreamPrivate&) final;
-#endif
     void cancelLoad() final;
 
     void play() final;

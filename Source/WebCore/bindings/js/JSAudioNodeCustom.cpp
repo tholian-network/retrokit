@@ -56,16 +56,12 @@
 #include "JSGainNode.h"
 #include "JSIIRFilterNode.h"
 #include "JSMediaElementAudioSourceNode.h"
-#include "JSMediaStreamAudioDestinationNode.h"
-#include "JSMediaStreamAudioSourceNode.h"
 #include "JSOscillatorNode.h"
 #include "JSPannerNode.h"
 #include "JSScriptProcessorNode.h"
 #include "JSStereoPannerNode.h"
 #include "JSWaveShaperNode.h"
 #include "MediaElementAudioSourceNode.h"
-#include "MediaStreamAudioDestinationNode.h"
-#include "MediaStreamAudioSourceNode.h"
 #include "OscillatorNode.h"
 #include "PannerNode.h"
 #include "ScriptProcessorNode.h"
@@ -88,16 +84,6 @@ JSValue toJSNewlyCreated(JSGlobalObject*, JSDOMGlobalObject* globalObject, Ref<A
 #if ENABLE(VIDEO)
         return createWrapper<MediaElementAudioSourceNode>(globalObject, WTFMove(node));
 #else
-        return createWrapper<AudioNode>(globalObject, WTFMove(node));
-#endif
-#if ENABLE(MEDIA_STREAM)
-    case AudioNode::NodeTypeMediaStreamAudioDestination:
-        return createWrapper<MediaStreamAudioDestinationNode>(globalObject, WTFMove(node));
-    case AudioNode::NodeTypeMediaStreamAudioSource:
-        return createWrapper<MediaStreamAudioSourceNode>(globalObject, WTFMove(node));
-#else
-    case AudioNode::NodeTypeMediaStreamAudioDestination:
-    case AudioNode::NodeTypeMediaStreamAudioSource:
         return createWrapper<AudioNode>(globalObject, WTFMove(node));
 #endif
     case AudioNode::NodeTypeJavaScript:

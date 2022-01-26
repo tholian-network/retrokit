@@ -303,10 +303,6 @@ public:
 
     String defaultToolTip() const;
 
-#if ENABLE(MEDIA_CAPTURE)
-    MediaCaptureType mediaCaptureType() const;
-#endif
-
     static const unsigned maxEffectiveLength;
 
     WEBCORE_EXPORT unsigned height() const;

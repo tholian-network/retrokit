@@ -369,13 +369,6 @@ GenerateSyntheticEditingCommand(enum:uint8_t WebKit::SyntheticEditingCommandType
     SetSmartInsertDeleteEnabled(bool isSmartInsertDeleteEnabled)
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-    # MediaSteam
-    UserMediaAccessWasGranted(WebCore::UserMediaRequestIdentifier userMediaID, WebCore::CaptureDevice audioDevice, WebCore::CaptureDevice videoDevice, String mediaDeviceIdentifierHashSalt, WebKit::SandboxExtension::Handle sandboxExtensionHandle) -> () Async
-    UserMediaAccessWasDenied(WebCore::UserMediaRequestIdentifier userMediaID, uint64_t reason, String invalidConstraint)
-    CaptureDevicesChanged()
-#endif
-
     RequestMediaPlaybackState() -> (enum:uint8_t WebKit::MediaPlaybackState state) Async
     PauseAllMediaPlayback() -> () Async
     SuspendAllMediaPlayback() -> () Async
@@ -405,7 +398,6 @@ GenerateSyntheticEditingCommand(enum:uint8_t WebKit::SyntheticEditingCommandType
     SetMediaVolume(float volume)
     SetMuted(WebCore::MediaProducer::MutedStateFlags muted) -> () Async
     SetMayStartMediaWhenInWindow(bool mayStartMedia)
-    StopMediaCapture(WebCore::MediaProducer::MediaCaptureKind kind) -> () Async
 
     SetCanRunBeforeUnloadConfirmPanel(bool canRunBeforeUnloadConfirmPanel)
     SetCanRunModal(bool canRunModal)
@@ -551,12 +543,6 @@ GenerateSyntheticEditingCommand(enum:uint8_t WebKit::SyntheticEditingCommandType
     SetDefersLoading(bool defersLoading)
 
     UpdateCurrentModifierState(OptionSet<WebCore::PlatformEvent::Modifier> modifiers)
-
-#if ENABLE(SPEECH_SYNTHESIS)
-    SpeakingErrorOccurred()
-    BoundaryEventOccurred(bool wordBoundary, unsigned charIndex)
-    VoicesDidChange()
-#endif
 
     SetCanShowPlaceholder(struct WebCore::ElementContext context, bool canShowPlaceholder)
 

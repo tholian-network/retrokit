@@ -186,49 +186,6 @@ bool defaultUseGPUProcessForWebGLEnabled()
 
 #endif // ENABLE(GPU_PROCESS)
 
-#if ENABLE(MEDIA_STREAM)
-
-bool defaultCaptureAudioInGPUProcessEnabled()
-{
-#if PLATFORM(MAC)
-    // FIXME: Enable GPU process audio capture when <rdar://problem/29448368> is fixed.
-    if (!WebCore::MacApplication::isSafari())
-        return false;
-#endif
-
-#if ENABLE(GPU_PROCESS_BY_DEFAULT)
-    bool defaultValue = true;
-#else
-    bool defaultValue = false;
-#endif
-
-#if PLATFORM(IOS_FAMILY)
-    return isFeatureFlagEnabled("gpu_process_media", defaultValue);
-#else
-    return defaultValue;
-#endif
-}
-
-bool defaultCaptureAudioInUIProcessEnabled()
-{
-#if PLATFORM(MAC)
-    return !defaultCaptureAudioInGPUProcessEnabled();
-#endif
-
-    return false;
-}
-
-bool defaultCaptureVideoInGPUProcessEnabled()
-{
-#if ENABLE(GPU_PROCESS_BY_DEFAULT)
-    return true;
-#else
-    return false;
-#endif
-}
-
-#endif // ENABLE(MEDIA_STREAM)
-
 #if HAVE(INCREMENTAL_PDF_APIS)
 bool defaultIncrementalPDFEnabled()
 {

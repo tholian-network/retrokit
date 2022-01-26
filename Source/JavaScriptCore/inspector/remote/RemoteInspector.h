@@ -101,9 +101,6 @@ public:
             };
             std::optional<Proxy> proxy;
 #endif
-#if PLATFORM(COCOA)
-            std::optional<bool> allowInsecureMediaCapture;
-#endif
         };
 
         virtual ~Client();

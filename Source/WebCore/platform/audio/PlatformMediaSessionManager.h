@@ -86,7 +86,6 @@ public:
     virtual MediaUniqueIdentifier lastUpdatedNowPlayingInfoUniqueIdentifier() const { return { }; }
     virtual bool registeredAsNowPlayingApplication() const { return false; }
     virtual bool haveEverRegisteredAsNowPlayingApplication() const { return false; }
-    virtual void prepareToSendUserMediaPermissionRequest() { }
 
     bool willIgnoreSystemInterruptions() const { return m_willIgnoreSystemInterruptions; }
     void setWillIgnoreSystemInterruptions(bool ignore) { m_willIgnoreSystemInterruptions = ignore; }
@@ -141,10 +140,6 @@ public:
 
     bool processIsSuspended() const { return m_processIsSuspended; }
 
-    WEBCORE_EXPORT void addAudioCaptureSource(PlatformMediaSession::AudioCaptureSource&);
-    WEBCORE_EXPORT void removeAudioCaptureSource(PlatformMediaSession::AudioCaptureSource&);
-    bool hasAudioCaptureSource(PlatformMediaSession::AudioCaptureSource& source) const { return m_audioCaptureSources.contains(source); }
-
     WEBCORE_EXPORT void processDidReceiveRemoteControlCommand(PlatformMediaSession::RemoteControlCommandType, const PlatformMediaSession::RemoteCommandArgument&);
 
     bool isInterrupted() const { return m_interrupted; }
@@ -182,8 +177,6 @@ protected:
     WTFLogChannel& logChannel() const final;
 #endif
 
-    int countActiveAudioCaptureSources();
-
     bool computeSupportsSeeking() const;
 
 private:
@@ -206,7 +199,6 @@ private:
     bool m_becameActive { false };
 #endif
 
-    WeakHashSet<PlatformMediaSession::AudioCaptureSource> m_audioCaptureSources;
     bool m_hasScheduledSessionStateUpdate { false };
 
 #if ENABLE(WEBM_FORMAT_READER)

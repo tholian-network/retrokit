@@ -59,7 +59,6 @@
 #include "ShareableBitmapUtilities.h"
 #include "SharedBufferDataReference.h"
 #include "TextRecognitionUpdateResult.h"
-#include "UserMediaPermissionRequestManager.h"
 #include "ViewGestureGeometryCollector.h"
 #include "VisitedLinkTableController.h"
 #include "WKBundleAPICast.h"
@@ -117,14 +116,11 @@
 #include "WebProgressTrackerClient.h"
 #include "WebServiceWorkerProvider.h"
 #include "WebSocketProvider.h"
-#include "WebSpeechRecognitionProvider.h"
-#include "WebSpeechSynthesisClient.h"
 #include "WebStorageNamespaceProvider.h"
 #include "WebTouchEvent.h"
 #include "WebURLSchemeHandlerProxy.h"
 #include "WebUndoStep.h"
 #include "WebUserContentController.h"
-#include "WebUserMediaClient.h"
 #include "WebValidationMessageClient.h"
 #include "WebWheelEvent.h"
 #include "WebsiteDataStoreParameters.h"
@@ -271,7 +267,6 @@
 #include "RemoteLayerTreeTransaction.h"
 #include "RemoteObjectRegistryMessages.h"
 #include "TextCheckingControllerProxy.h"
-#include "UserMediaCaptureManager.h"
 #include "WKStringCF.h"
 #include "WebRemoteObjectRegistry.h"
 #include <WebCore/LegacyWebArchive.h>
@@ -460,9 +455,6 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
     , m_findController(makeUniqueRef<FindController>(this))
     , m_inspectorTargetController(makeUnique<WebPageInspectorTargetController>(*this))
     , m_userContentController(WebUserContentController::getOrCreate(parameters.userContentControllerParameters.identifier))
-#if ENABLE(MEDIA_STREAM)
-    , m_userMediaPermissionRequestManager { makeUniqueRef<UserMediaPermissionRequestManager>(*this) }
-#endif
     , m_pageScrolledHysteresis([this](PAL::HysteresisState state) { if (state == PAL::HysteresisState::Stopped) pageStoppedScrolling(); }, pageScrollHysteresisDuration)
     , m_canRunBeforeUnloadConfirmPanel(parameters.canRunBeforeUnloadConfirmPanel)
     , m_canRunModal(parameters.canRunModal)
@@ -514,7 +506,6 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
         WebProcess::singleton().cookieJar(),
         makeUniqueRef<WebProgressTrackerClient>(*this),
         makeUniqueRef<WebFrameLoaderClient>(m_mainFrame.copyRef()),
-        makeUniqueRef<WebSpeechRecognitionProvider>(m_identifier),
         WebProcess::singleton().broadcastChannelRegistry(),
         WebPermissionController::create(*this)
     );
@@ -537,10 +528,6 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
     pageConfiguration.webGLStateTracker = makeUnique<WebGLStateTracker>([this](bool isUsingHighPerformanceWebGL) {
         send(Messages::WebPageProxy::SetIsUsingHighPerformanceWebGL(isUsingHighPerformanceWebGL));
     });
-#endif
-
-#if ENABLE(SPEECH_SYNTHESIS)
-    pageConfiguration.speechSynthesisClient = makeUnique<WebSpeechSynthesisClient>(*this);
 #endif
 
 #if PLATFORM(COCOA)
@@ -640,9 +627,6 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
 
 #if ENABLE(NOTIFICATIONS)
     WebCore::provideNotification(m_page.get(), new WebNotificationClient(this));
-#endif
-#if ENABLE(MEDIA_STREAM)
-    WebCore::provideUserMediaTo(m_page.get(), new WebUserMediaClient(*this));
 #endif
 
     m_page->setControlledByAutomation(parameters.controlledByAutomation);
@@ -916,7 +900,7 @@ void WebPage::updateThrottleState()
 
 bool WebPage::isThrottleable() const
 {
-    bool isActive = m_activityState.containsAny({ ActivityState::IsLoading, ActivityState::IsAudible, ActivityState::IsCapturingMedia, ActivityState::WindowIsActive });
+    bool isActive = m_activityState.containsAny({ ActivityState::IsLoading, ActivityState::IsAudible, ActivityState::WindowIsActive });
     bool isVisuallyIdle = m_activityState.contains(ActivityState::IsVisuallyIdle);
 
     return m_isAppNapEnabled && !isActive && isVisuallyIdle;
@@ -4358,27 +4342,6 @@ void WebPage::extendSandboxForFilesFromOpenPanel(Vector<SandboxExtension::Handle
 }
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-
-void WebPage::userMediaAccessWasGranted(UserMediaRequestIdentifier userMediaID, WebCore::CaptureDevice&& audioDevice, WebCore::CaptureDevice&& videoDevice, String&& mediaDeviceIdentifierHashSalt, SandboxExtension::Handle&& handle, CompletionHandler<void()>&& completionHandler)
-{
-    SandboxExtension::consumePermanently(handle);
-
-    m_userMediaPermissionRequestManager->userMediaAccessWasGranted(userMediaID, WTFMove(audioDevice), WTFMove(videoDevice), WTFMove(mediaDeviceIdentifierHashSalt), WTFMove(completionHandler));
-}
-
-void WebPage::userMediaAccessWasDenied(UserMediaRequestIdentifier userMediaID, uint64_t reason, String&& invalidConstraint)
-{
-    m_userMediaPermissionRequestManager->userMediaAccessWasDenied(userMediaID, static_cast<UserMediaRequest::MediaAccessDenialReason>(reason), WTFMove(invalidConstraint));
-}
-
-void WebPage::captureDevicesChanged()
-{
-    m_userMediaPermissionRequestManager->captureDevicesChanged();
-}
-
-#endif
-
 #if !PLATFORM(IOS_FAMILY)
 void WebPage::advanceToNextMisspelling(bool startBeforeSelection)
 {
@@ -4767,26 +4730,6 @@ void WebPage::didRemoveBackForwardItem(const BackForwardItemIdentifier& itemID)
     WebBackForwardListProxy::removeItem(itemID);
 }
 
-#if PLATFORM(COCOA)
-
-bool WebPage::isSpeaking()
-{
-    bool result;
-    return sendSync(Messages::WebPageProxy::GetIsSpeaking(), Messages::WebPageProxy::GetIsSpeaking::Reply(result)) && result;
-}
-
-void WebPage::speak(const String& string)
-{
-    send(Messages::WebPageProxy::Speak(string));
-}
-
-void WebPage::stopSpeaking()
-{
-    send(Messages::WebPageProxy::StopSpeaking());
-}
-
-#endif
-
 void WebPage::effectiveAppearanceDidChange(bool useDarkAppearance, bool useElevatedUserInterfaceLevel)
 {
     corePage()->effectiveAppearanceDidChange(useDarkAppearance, useElevatedUserInterfaceLevel);
@@ -5087,14 +5030,6 @@ void WebPage::setMediaVolume(float volume)
 void WebPage::setMuted(MediaProducer::MutedStateFlags state, CompletionHandler<void()>&& completionHandler)
 {
     m_page->setMuted(state);
-    completionHandler();
-}
-
-void WebPage::stopMediaCapture(MediaProducer::MediaCaptureKind kind, CompletionHandler<void()>&& completionHandler)
-{
-#if ENABLE(MEDIA_STREAM)
-    m_page->stopMediaCapture(kind);
-#endif
     completionHandler();
 }
 
@@ -6534,26 +6469,6 @@ void WebPage::systemPreviewActionTriggered(WebCore::SystemPreviewInfo previewInf
         return;
 
     document->dispatchSystemPreviewActionEvent(previewInfo, message);
-}
-#endif
-
-#if ENABLE(SPEECH_SYNTHESIS)
-void WebPage::speakingErrorOccurred()
-{
-    if (auto observer = corePage()->speechSynthesisClient()->observer())
-        observer->speakingErrorOccurred();
-}
-
-void WebPage::boundaryEventOccurred(bool wordBoundary, unsigned charIndex)
-{
-    if (auto observer = corePage()->speechSynthesisClient()->observer())
-        observer->boundaryEventOccurred(wordBoundary, charIndex);
-}
-
-void WebPage::voicesDidChange()
-{
-    if (auto observer = corePage()->speechSynthesisClient()->observer())
-        observer->voicesChanged();
 }
 #endif
 

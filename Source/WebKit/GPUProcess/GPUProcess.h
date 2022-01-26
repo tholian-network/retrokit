@@ -43,7 +43,6 @@
 
 namespace WebCore {
 class NowPlayingManager;
-struct MockMediaDevice;
 struct SecurityOriginData;
 }
 
@@ -80,10 +79,6 @@ public:
 
     WebCore::NowPlayingManager& nowPlayingManager();
 
-#if ENABLE(MEDIA_STREAM) && PLATFORM(COCOA)
-    WorkQueue& videoMediaStreamTrackRendererQueue();
-#endif
-
 #if ENABLE(VP9)
     void enableVP9Decoders(bool shouldEnableVP8Decoder, bool shouldEnableVP9Decoder, bool shouldEnableVP9SWDecoder);
 #endif
@@ -112,18 +107,6 @@ private:
     void addSession(PAL::SessionID, GPUProcessSessionParameters&&);
     void removeSession(PAL::SessionID);
 
-#if ENABLE(MEDIA_STREAM)
-    void setMockCaptureDevicesEnabled(bool);
-    void setOrientationForMediaCapture(uint64_t orientation);
-    void updateCaptureAccess(bool allowAudioCapture, bool allowVideoCapture, bool allowDisplayCapture, WebCore::ProcessIdentifier, CompletionHandler<void()>&&);
-    void updateCaptureOrigin(const WebCore::SecurityOriginData&, WebCore::ProcessIdentifier);
-    void updateSandboxAccess(const Vector<SandboxExtension::Handle>&);
-    void addMockMediaDevice(const WebCore::MockMediaDevice&);
-    void clearMockMediaDevices();
-    void removeMockMediaDevice(const String& persistentId);
-    void resetMockMediaDevices();
-    bool setCaptureAttributionString(const String&);
-#endif
 #if PLATFORM(MAC)
     void displayConfigurationChanged(CGDirectDisplayID, CGDisplayChangeSummaryFlags);
 #endif
@@ -151,19 +134,6 @@ private:
     // Connections to WebProcesses.
     HashMap<WebCore::ProcessIdentifier, Ref<GPUConnectionToWebProcess>> m_webProcessConnections;
     MonotonicTime m_creationTime { MonotonicTime::now() };
-
-#if ENABLE(MEDIA_STREAM)
-    struct MediaCaptureAccess {
-        bool allowAudioCapture { false };
-        bool allowVideoCapture { false };
-        bool allowDisplayCapture { false };
-    };
-    HashMap<WebCore::ProcessIdentifier, MediaCaptureAccess> m_mediaCaptureAccessMap;
-#if ENABLE(MEDIA_STREAM) && PLATFORM(COCOA)
-    RefPtr<WorkQueue> m_videoMediaStreamTrackRendererQueue;
-#endif
-    uint64_t m_orientation { 0 };
-#endif
 
     struct GPUSession {
         String mediaCacheDirectory;

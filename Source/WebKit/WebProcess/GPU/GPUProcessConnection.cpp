@@ -61,11 +61,6 @@
 #include "RemoteMediaSessionHelperMessages.h"
 #endif
 
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-#include "UserMediaCaptureManager.h"
-#include "UserMediaCaptureManagerMessages.h"
-#endif
-
 #if ENABLE(WEBGL)
 #include "RemoteGraphicsContextGLProxyMessages.h"
 #endif
@@ -133,15 +128,6 @@ void GPUProcessConnection::didReceiveInvalidMessage(IPC::Connection&, IPC::Messa
 {
 }
 
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-SampleBufferDisplayLayerManager& GPUProcessConnection::sampleBufferDisplayLayerManager()
-{
-    if (!m_sampleBufferDisplayLayerManager)
-        m_sampleBufferDisplayLayerManager = makeUnique<SampleBufferDisplayLayerManager>();
-    return *m_sampleBufferDisplayLayerManager;
-}
-#endif
-
 RemoteMediaPlayerManager& GPUProcessConnection::mediaPlayerManager()
 {
     return *WebProcess::singleton().supplement<RemoteMediaPlayerManager>();
@@ -162,19 +148,6 @@ bool GPUProcessConnection::dispatchMessage(IPC::Connection& connection, IPC::Dec
         WebProcess::singleton().supplement<RemoteMediaPlayerManager>()->didReceivePlayerMessage(connection, decoder);
         return true;
     }
-
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-    if (decoder.messageReceiverName() == Messages::UserMediaCaptureManager::messageReceiverName()) {
-        if (auto* captureManager = WebProcess::singleton().supplement<UserMediaCaptureManager>())
-            captureManager->didReceiveMessageFromGPUProcess(connection, decoder);
-        return true;
-    }
-
-    if (decoder.messageReceiverName() == Messages::SampleBufferDisplayLayer::messageReceiverName()) {
-        sampleBufferDisplayLayerManager().didReceiveLayerMessage(connection, decoder);
-        return true;
-    }
-#endif // PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
 
     if (messageReceiverMap().dispatchMessage(connection, decoder))
         return true;

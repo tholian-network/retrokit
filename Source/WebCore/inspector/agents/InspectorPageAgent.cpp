@@ -372,8 +372,6 @@ Protocol::ErrorStringOr<void> InspectorPageAgent::disable()
     auto& inspectedPageSettings = m_inspectedPage.settings();
     inspectedPageSettings.setAuthorAndUserStylesEnabledInspectorOverride(std::nullopt);
     inspectedPageSettings.setImagesEnabledInspectorOverride(std::nullopt);
-    inspectedPageSettings.setMediaCaptureRequiresSecureConnectionInspectorOverride(std::nullopt);
-    inspectedPageSettings.setMockCaptureDevicesEnabledInspectorOverride(std::nullopt);
     inspectedPageSettings.setScriptEnabledInspectorOverride(std::nullopt);
     inspectedPageSettings.setShowDebugBordersInspectorOverride(std::nullopt);
     inspectedPageSettings.setShowRepaintCounterInspectorOverride(std::nullopt);
@@ -381,7 +379,6 @@ Protocol::ErrorStringOr<void> InspectorPageAgent::disable()
 
     m_client->setDeveloperPreferenceOverride(InspectorClient::DeveloperPreference::PrivateClickMeasurementDebugModeEnabled, std::nullopt);
     m_client->setDeveloperPreferenceOverride(InspectorClient::DeveloperPreference::ITPDebugModeEnabled, std::nullopt);
-    m_client->setDeveloperPreferenceOverride(InspectorClient::DeveloperPreference::MockCaptureDevicesEnabled, std::nullopt);
 
     return { };
 }
@@ -442,15 +439,6 @@ Protocol::ErrorStringOr<void> InspectorPageAgent::overrideSetting(Protocol::Page
 
     case Protocol::Page::Setting::ImagesEnabled:
         inspectedPageSettings.setImagesEnabledInspectorOverride(value);
-        return { };
-
-    case Protocol::Page::Setting::MediaCaptureRequiresSecureConnection:
-        inspectedPageSettings.setMediaCaptureRequiresSecureConnectionInspectorOverride(value);
-        return { };
-
-    case Protocol::Page::Setting::MockCaptureDevicesEnabled:
-        inspectedPageSettings.setMockCaptureDevicesEnabledInspectorOverride(value);
-        m_client->setDeveloperPreferenceOverride(InspectorClient::DeveloperPreference::MockCaptureDevicesEnabled, value);
         return { };
 
     case Protocol::Page::Setting::ScriptEnabled:

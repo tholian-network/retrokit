@@ -312,10 +312,6 @@
 #define ENABLE_MATHML 1
 #endif
 
-#if !defined(ENABLE_MEDIA_CAPTURE)
-#define ENABLE_MEDIA_CAPTURE 0
-#endif
-
 #if !defined(ENABLE_MEDIA_CONTROLS_SCRIPT)
 #define ENABLE_MEDIA_CONTROLS_SCRIPT 0
 #endif
@@ -326,10 +322,6 @@
 
 #if !defined(ENABLE_MEDIA_STATISTICS)
 #define ENABLE_MEDIA_STATISTICS 0
-#endif
-
-#if !defined(ENABLE_MEDIA_STREAM)
-#define ENABLE_MEDIA_STREAM 0
 #endif
 
 #if !defined(ENABLE_MHTML)
@@ -391,10 +383,6 @@
 
 #if !defined(ENABLE_SMOOTH_SCROLLING)
 #define ENABLE_SMOOTH_SCROLLING 0
-#endif
-
-#if !defined(ENABLE_SPEECH_SYNTHESIS)
-#define ENABLE_SPEECH_SYNTHESIS 0
 #endif
 
 #if !defined(ENABLE_SPELLCHECK)

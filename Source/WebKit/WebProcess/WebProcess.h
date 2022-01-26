@@ -56,10 +56,6 @@
 #include <wtf/text/AtomString.h>
 #include <wtf/text/AtomStringHash.h>
 
-#if ENABLE(MEDIA_STREAM)
-#include "MediaDeviceSandboxExtensions.h"
-#endif
-
 #if PLATFORM(COCOA)
 #include <WebCore/ScreenProperties.h>
 #include <dispatch/dispatch.h>
@@ -99,7 +95,6 @@ struct BackForwardItemIdentifier;
 struct DisplayUpdate;
 struct MessagePortIdentifier;
 struct MessageWithMessagePorts;
-struct MockMediaDevice;
 struct PrewarmInformation;
 struct SecurityOriginData;
 
@@ -110,7 +105,6 @@ struct ServiceWorkerContextData;
 
 namespace WebKit {
 
-class AudioMediaStreamTrackRendererInternalUnitManager;
 class EventDispatcher;
 class GPUProcessConnection;
 class InjectedBundle;
@@ -148,10 +142,6 @@ struct WebsiteDataStoreParameters;
 
 #if PLATFORM(IOS_FAMILY)
 class LayerHostingContext;
-#endif
-
-#if ENABLE(MEDIA_STREAM)
-class SpeechRecognitionRealtimeMediaSourceManager;
 #endif
 
 class WebProcess : public AuxiliaryProcess
@@ -218,7 +208,7 @@ public:
 
     uint64_t userGestureTokenIdentifier(RefPtr<WebCore::UserGestureToken>);
     void userGestureTokenDestroyed(WebCore::UserGestureToken&);
-    
+
     const TextCheckerState& textCheckerState() const { return m_textCheckerState; }
     void setTextCheckerState(const TextCheckerState&);
 
@@ -234,9 +224,6 @@ public:
     void gpuProcessConnectionClosed(GPUProcessConnection&);
     GPUProcessConnection* existingGPUProcessConnection() { return m_gpuProcessConnection.get(); }
 
-#if ENABLE(MEDIA_STREAM) && PLATFORM(COCOA)
-    AudioMediaStreamTrackRendererInternalUnitManager& audioMediaStreamTrackRendererInternalUnitManager();
-#endif
     RemoteMediaEngineConfigurationFactory& mediaEngineConfigurationFactory();
 #endif // ENABLE(GPU_PROCESS)
 
@@ -361,10 +348,6 @@ public:
     void didWriteToPasteboardAsynchronously(const String& pasteboardName);
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-    SpeechRecognitionRealtimeMediaSourceManager& ensureSpeechRecognitionRealtimeMediaSourceManager();
-#endif
-
 private:
     WebProcess();
     ~WebProcess();
@@ -473,18 +456,6 @@ private:
     void stopRunLoop() override;
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-    void addMockMediaDevice(const WebCore::MockMediaDevice&);
-    void clearMockMediaDevices();
-    void removeMockMediaDevice(const String& persistentId);
-    void resetMockMediaDevices();
-#if ENABLE(SANDBOX_EXTENSIONS)
-    void grantUserMediaDeviceSandboxExtensions(MediaDeviceSandboxExtensions&&);
-    void revokeUserMediaDeviceSandboxExtensions(const Vector<String>&);
-#endif
-
-#endif
-
 #if ENABLE(RESOURCE_LOAD_STATISTICS)
     void setThirdPartyCookieBlockingMode(WebCore::ThirdPartyCookieBlockingMode, CompletionHandler<void()>&&);
     void setDomainsWithUserInteraction(HashSet<WebCore::RegistrableDomain>&&);
@@ -505,7 +476,7 @@ private:
 #if PLATFORM(COCOA)
     void consumeAudioComponentRegistrations(const IPC::DataReference&);
 #endif
-    
+
     void platformInitializeProcess(const AuxiliaryProcessInitializationParameters&);
 
     // IPC::Connection::Client
@@ -610,9 +581,6 @@ private:
 
 #if ENABLE(GPU_PROCESS)
     RefPtr<GPUProcessConnection> m_gpuProcessConnection;
-#if ENABLE(MEDIA_STREAM) && PLATFORM(COCOA)
-    std::unique_ptr<AudioMediaStreamTrackRendererInternalUnitManager> m_audioMediaStreamTrackRendererInternalUnitManager;
-#endif
 #endif
 
 #if ENABLE(WEB_AUTHN)
@@ -677,10 +645,6 @@ private:
     bool m_hasSuspendedPageProxy { false };
     bool m_isSuspending { false };
 
-#if ENABLE(MEDIA_STREAM) && ENABLE(SANDBOX_EXTENSIONS)
-    HashMap<String, RefPtr<SandboxExtension>> m_mediaCaptureSandboxExtensions;
-#endif
-
 #if PLATFORM(IOS_FAMILY) && !PLATFORM(MACCATALYST)
     float m_backlightLevel { 0 };
 #endif
@@ -690,7 +654,7 @@ private:
 #endif
 
     HashMap<StorageAreaIdentifier, StorageAreaMap*> m_storageAreaMaps;
-    
+
     // Prewarmed WebProcesses do not have an associated sessionID yet, which is why this is an optional.
     // By the time the WebProcess gets a WebPage, it is guaranteed to have a sessionID.
     std::optional<PAL::SessionID> m_sessionID;
@@ -712,10 +676,6 @@ private:
 #if ENABLE(WEBGL)
     bool m_useGPUProcessForWebGL { false };
 #endif
-#endif
-
-#if ENABLE(MEDIA_STREAM)
-    std::unique_ptr<SpeechRecognitionRealtimeMediaSourceManager> m_speechRecognitionRealtimeMediaSourceManager;
 #endif
 };
 

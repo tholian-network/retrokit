@@ -198,7 +198,6 @@
 #include "TreeScope.h"
 #include "TypeConversions.h"
 #include "UserGestureIndicator.h"
-#include "UserMediaController.h"
 #include "ViewportArguments.h"
 #include "VoidCallback.h"
 #include "WebAnimation.h"
@@ -248,17 +247,6 @@
 
 #if ENABLE(WEBGL)
 #include "WebGLRenderingContext.h"
-#endif
-
-#if ENABLE(SPEECH_SYNTHESIS)
-#include "DOMWindowSpeechSynthesis.h"
-#include "PlatformSpeechSynthesizerMock.h"
-#include "SpeechSynthesis.h"
-#endif
-
-#if ENABLE(MEDIA_STREAM)
-#include "MediaStream.h"
-#include "MockRealtimeMediaSourceCenter.h"
 #endif
 
 #if ENABLE(MEDIA_SOURCE)
@@ -446,9 +434,6 @@ Ref<Internals> Internals::create(Document& document)
 
 Internals::~Internals()
 {
-#if ENABLE(MEDIA_STREAM)
-    stopObservingRealtimeMediaSource();
-#endif
 #if ENABLE(MEDIA_SESSION)
     if (m_artworkImagePromise)
         m_artworkImagePromise->reject(Exception { InvalidStateError });
@@ -522,10 +507,6 @@ void Internals::resetToConsistentState(Page& page)
     printContextForTesting() = nullptr;
 
     MediaEngineConfigurationFactory::disableMock();
-
-#if ENABLE(MEDIA_STREAM)
-    page.settings().setInterruptAudioOnPageVisibilityChangeEnabled(false);
-#endif
 
     HTMLCanvasElement::setMaxPixelMemoryForTesting(std::nullopt);
     HTMLCanvasElement::setMaxCanvasAreaForTesting(std::nullopt);
@@ -1396,22 +1377,6 @@ ExceptionOr<void> Internals::setFormControlStateOfPreviousHistoryItem(const Vect
         return Exception { InvalidAccessError };
     return { };
 }
-
-#if ENABLE(SPEECH_SYNTHESIS)
-
-void Internals::enableMockSpeechSynthesizer()
-{
-    Document* document = contextDocument();
-    if (!document || !document->domWindow())
-        return;
-    SpeechSynthesis* synthesis = DOMWindowSpeechSynthesis::speechSynthesis(*document->domWindow());
-    if (!synthesis)
-        return;
-
-    synthesis->setPlatformSynthesizer(makeUnique<PlatformSpeechSynthesizerMock>(synthesis));
-}
-
-#endif
 
 ExceptionOr<Ref<DOMRect>> Internals::absoluteLineRectFromPoint(int x, int y)
 {
@@ -4195,10 +4160,6 @@ void Internals::setPageMuted(StringView statesString)
     for (StringView stateString : statesString.split(',')) {
         if (equalLettersIgnoringASCIICase(stateString, "audio"))
             state.add(MediaProducer::MutedState::AudioIsMuted);
-        if (equalLettersIgnoringASCIICase(stateString, "capturedevices"))
-            state.add(MediaProducer::AudioAndVideoCaptureIsMuted);
-        if (equalLettersIgnoringASCIICase(stateString, "screencapture"))
-            state.add(MediaProducer::MutedState::ScreenCaptureIsMuted);
     }
 
     if (Page* page = document->page())
@@ -4229,20 +4190,8 @@ String Internals::pageMediaState()
 
     if (state.containsAny(MediaProducer::MediaState::HasAudioOrVideo))
         string.append("HasAudioOrVideo,");
-    if (state.containsAny(MediaProducer::MediaState::HasActiveAudioCaptureDevice))
-        string.append("HasActiveAudioCaptureDevice,");
-    if (state.containsAny(MediaProducer::MediaState::HasActiveVideoCaptureDevice))
-        string.append("HasActiveVideoCaptureDevice,");
-    if (state.containsAny(MediaProducer::MediaState::HasMutedAudioCaptureDevice))
-        string.append("HasMutedAudioCaptureDevice,");
-    if (state.containsAny(MediaProducer::MediaState::HasMutedVideoCaptureDevice))
-        string.append("HasMutedVideoCaptureDevice,");
     if (state.containsAny(MediaProducer::MediaState::HasUserInteractedWithMediaElement))
         string.append("HasUserInteractedWithMediaElement,");
-    if (state.containsAny(MediaProducer::MediaState::HasActiveDisplayCaptureDevice))
-        string.append("HasActiveDisplayCaptureDevice,");
-    if (state.containsAny(MediaProducer::MediaState::HasMutedDisplayCaptureDevice))
-        string.append("HasMutedDisplayCaptureDevice,");
 
     if (string.isEmpty())
         string.append("IsNotPlaying");
@@ -4884,135 +4833,6 @@ bool Internals::isPageActive() const
     auto& page = *document->page();
     return page.activityState().contains(ActivityState::WindowIsActive);
 }
-
-#if ENABLE(MEDIA_STREAM)
-void Internals::setMockAudioTrackChannelNumber(MediaStreamTrack& track, unsigned short channelNumber)
-{
-    auto& source = track.source();
-    if (!is<MockRealtimeAudioSource>(source))
-        return;
-    downcast<MockRealtimeAudioSource>(source).setChannelCount(channelNumber);
-}
-
-void Internals::stopObservingRealtimeMediaSource()
-{
-    if (!m_trackSource)
-        return;
-
-    switch (m_trackSource->type()) {
-    case RealtimeMediaSource::Type::Audio:
-        m_trackSource->removeAudioSampleObserver(*this);
-        break;
-    case RealtimeMediaSource::Type::Video:
-        m_trackSource->removeVideoSampleObserver(*this);
-        break;
-    case RealtimeMediaSource::Type::None:
-        ASSERT_NOT_REACHED();
-    }
-    m_trackSource->removeObserver(*this);
-
-    m_trackSource = nullptr;
-    m_trackAudioSampleCount = 0;
-    m_trackVideoSampleCount = 0;
-}
-
-void Internals::observeMediaStreamTrack(MediaStreamTrack& track)
-{
-    stopObservingRealtimeMediaSource();
-
-    m_trackSource = &track.source();
-    m_trackSource->addObserver(*this);
-    switch (m_trackSource->type()) {
-    case RealtimeMediaSource::Type::Audio:
-        m_trackSource->addAudioSampleObserver(*this);
-        break;
-    case RealtimeMediaSource::Type::Video:
-        m_trackSource->addVideoSampleObserver(*this);
-        break;
-    case RealtimeMediaSource::Type::None:
-        ASSERT_NOT_REACHED();
-    }
-}
-
-void Internals::grabNextMediaStreamTrackFrame(TrackFramePromise&& promise)
-{
-    m_nextTrackFramePromise = makeUnique<TrackFramePromise>(WTFMove(promise));
-}
-
-void Internals::videoSampleAvailable(MediaSample& sample)
-{
-    m_trackVideoSampleCount++;
-    if (!m_nextTrackFramePromise)
-        return;
-
-    auto& videoSettings = m_trackSource->settings();
-    if (!videoSettings.width() || !videoSettings.height())
-        return;
-    
-    auto rgba = sample.getRGBAImageData();
-    if (!rgba)
-        return;
-    
-    auto imageData = ImageData::create(rgba.releaseNonNull(), videoSettings.width(), videoSettings.height(), { { PredefinedColorSpace::SRGB } });
-    if (!imageData.hasException())
-        m_nextTrackFramePromise->resolve(imageData.releaseReturnValue());
-    else
-        m_nextTrackFramePromise->reject(imageData.exception().code());
-    m_nextTrackFramePromise = nullptr;
-}
-
-void Internals::delayMediaStreamTrackSamples(MediaStreamTrack& track, float delay)
-{
-    track.source().delaySamples(Seconds { delay });
-}
-
-void Internals::setMediaStreamTrackMuted(MediaStreamTrack& track, bool muted)
-{
-    track.source().setMuted(muted);
-}
-
-void Internals::removeMediaStreamTrack(MediaStream& stream, MediaStreamTrack& track)
-{
-    stream.privateStream().removeTrack(track.privateTrack());
-}
-
-void Internals::simulateMediaStreamTrackCaptureSourceFailure(MediaStreamTrack& track)
-{
-    track.source().captureFailed();
-}
-
-void Internals::setMediaStreamTrackIdentifier(MediaStreamTrack& track, String&& id)
-{
-    track.setIdForTesting(WTFMove(id));
-}
-
-void Internals::setMediaStreamSourceInterrupted(MediaStreamTrack& track, bool interrupted)
-{
-    track.source().setInterruptedForTesting(interrupted);
-}
-
-bool Internals::isMediaStreamSourceInterrupted(MediaStreamTrack& track) const
-{
-    return track.source().interrupted();
-}
-
-bool Internals::isMediaStreamSourceEnded(MediaStreamTrack& track) const
-{
-    return track.source().isEnded();
-}
-
-bool Internals::isMockRealtimeMediaSourceCenterEnabled()
-{
-    return MockRealtimeMediaSourceCenter::mockRealtimeMediaSourceCenterEnabled();
-}
-
-bool Internals::shouldAudioTrackPlay(const AudioTrack& track)
-{
-    if (!is<AudioTrackPrivateMediaStream>(track.privateTrack()))
-        return false;
-    return downcast<AudioTrackPrivateMediaStream>(track.privateTrack()).shouldPlay();
-}
-#endif
 
 bool Internals::supportsAudioSession() const
 {

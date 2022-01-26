@@ -27,7 +27,6 @@
 
 #if ENABLE(GPU_PROCESS)
 
-#include "AudioMediaStreamTrackRendererInternalUnitIdentifier.h"
 #include "Connection.h"
 #include "MediaOverridesForTesting.h"
 #include "MessageReceiverMap.h"
@@ -63,16 +62,13 @@ public:
         return adoptRef(*new GPUProcessConnection(connectionIdentifier));
     }
     ~GPUProcessConnection();
-    
+
     IPC::Connection& connection() { return m_connection.get(); }
     IPC::MessageReceiverMap& messageReceiverMap() { return m_messageReceiverMap; }
 
 #if HAVE(AUDIT_TOKEN)
     void setAuditToken(std::optional<audit_token_t> auditToken) { m_auditToken = auditToken; }
     std::optional<audit_token_t> auditToken() const { return m_auditToken; }
-#endif
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-    SampleBufferDisplayLayerManager& sampleBufferDisplayLayerManager();
 #endif
 
     RemoteMediaPlayerManager& mediaPlayerManager();
@@ -132,9 +128,6 @@ private:
 
 #if HAVE(AUDIT_TOKEN)
     std::optional<audit_token_t> m_auditToken;
-#endif
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-    std::unique_ptr<SampleBufferDisplayLayerManager> m_sampleBufferDisplayLayerManager;
 #endif
 #if PLATFORM(COCOA) && ENABLE(WEB_AUDIO)
     RefPtr<RemoteAudioSourceProviderManager> m_audioSourceProviderManager;

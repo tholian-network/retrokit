@@ -75,7 +75,6 @@ namespace WebCore {
     M(FormattingContextLayout) \
     M(Loading) \
     M(Media) \
-    M(MediaCaptureSamples) \
     M(MediaQueries) \
     M(MediaSource) \
     M(MediaStream) \

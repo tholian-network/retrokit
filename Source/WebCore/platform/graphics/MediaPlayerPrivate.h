@@ -46,9 +46,6 @@ public:
 #if ENABLE(MEDIA_SOURCE)
     virtual void load(const URL&, const ContentType&, MediaSourcePrivateClient*) = 0;
 #endif
-#if ENABLE(MEDIA_STREAM)
-    virtual void load(MediaStreamPrivate&) = 0;
-#endif
     virtual void cancelLoad() = 0;
 
     virtual void prepareForPlayback(bool privateMode, MediaPlayer::Preload preload, bool preservesPitch, bool prepare)

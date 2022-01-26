@@ -687,8 +687,6 @@ enum AutoplayPolicy {
 
     undefined enableMockMediaCapabilities();
 
-    [Conditional=SPEECH_SYNTHESIS] undefined enableMockSpeechSynthesizer();
-
     DOMString getImageSourceURL(Element element);
 
     [Conditional=VIDEO] DOMString captionsStyleSheetOverride();
@@ -726,8 +724,6 @@ enum AutoplayPolicy {
     [Conditional=WEB_AUDIO] undefined setAudioContextRestrictions(AudioContext context, DOMString restrictions);
     [Conditional=VIDEO] undefined postRemoteControlCommand(DOMString command, optional unrestricted float argument = 0);
     [Conditional=VIDEO] undefined activeAudioRouteDidChange(boolean shouldPause);
-
-    [Conditional=MEDIA_STREAM] undefined setCustomPrivateRecorderCreator();
 
     [Conditional=WEB_AUDIO] undefined useMockAudioDestinationCocoa();
 
@@ -811,24 +807,6 @@ enum AutoplayPolicy {
     undefined setPageIsFocusedAndActive(boolean isFocused);
     undefined setPageIsInWindow(boolean isInWindow);
     boolean isPageActive();
-
-    [Conditional=MEDIA_STREAM] undefined setMockAudioTrackChannelNumber(MediaStreamTrack track, unsigned short count);
-    [Conditional=MEDIA_STREAM] undefined setShouldInterruptAudioOnPageVisibilityChange(boolean shouldInterrupt);
-    [Conditional=MEDIA_STREAM] undefined setCameraMediaStreamTrackOrientation(MediaStreamTrack track, short orientation);
-    [Conditional=MEDIA_STREAM] undefined observeMediaStreamTrack(MediaStreamTrack track);
-    [Conditional=MEDIA_STREAM] Promise<ImageData> grabNextMediaStreamTrackFrame();
-    [Conditional=MEDIA_STREAM] readonly attribute unsigned long trackAudioSampleCount;
-    [Conditional=MEDIA_STREAM] readonly attribute unsigned long trackVideoSampleCount;
-    [Conditional=MEDIA_STREAM] undefined delayMediaStreamTrackSamples(MediaStreamTrack track, float delay);
-    [Conditional=MEDIA_STREAM] undefined setMediaStreamTrackMuted(MediaStreamTrack track, boolean muted);
-    [Conditional=MEDIA_STREAM] undefined removeMediaStreamTrack(MediaStream stream, MediaStreamTrack track);
-    [Conditional=MEDIA_STREAM] undefined simulateMediaStreamTrackCaptureSourceFailure(MediaStreamTrack track);
-    [Conditional=MEDIA_STREAM] undefined setMediaStreamTrackIdentifier(MediaStreamTrack track, DOMString identifier);
-    [Conditional=MEDIA_STREAM] undefined setMediaStreamSourceInterrupted(MediaStreamTrack track, boolean interrupted);
-    [Conditional=MEDIA_STREAM] boolean isMediaStreamSourceInterrupted(MediaStreamTrack track);
-    [Conditional=MEDIA_STREAM] boolean isMediaStreamSourceEnded(MediaStreamTrack track);
-    [Conditional=MEDIA_STREAM] boolean isMockRealtimeMediaSourceCenterEnabled();
-    [Conditional=MEDIA_STREAM] boolean shouldAudioTrackPlay(AudioTrack track);
 
     unsigned long long documentIdentifier(Document document);
     boolean isDocumentAlive(unsigned long long documentIdentifier);

@@ -282,17 +282,6 @@ CanvasColorSpaceEnabled:
     WebCore:
       default: false
 
-CaptureVideoInGPUProcessEnabled:
-  type: bool
-  humanReadableName: "GPU Process: Video Capture"
-  humanReadableDescription: "Enable video capture in GPU Process"
-  webcoreBinding: none
-  condition: ENABLE(MEDIA_STREAM)
-  exposed: [ WebKit ]
-  defaultValue:
-    WebKit:
-      default: WebKit::defaultCaptureVideoInGPUProcessEnabled()
-
 ContactPickerAPIEnabled:
   type: bool
   humanReadableName: "Contact Picker API"
@@ -394,20 +383,6 @@ DisallowSyncXHRDuringPageDismissalEnabled:
       default: true
     WebCore:
       default: true
-
-# FIXME: Is this implemented for WebKitLegacy? If not, this should be excluded from WebKitLegacy entirely.
-ExposeSpeakersEnabled:
-  type: bool
-  humanReadableName: "Allow speaker device selection"
-  humanReadableDescription: "Allow speaker device selection"
-  condition: ENABLE(MEDIA_STREAM)
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      default: false
-    WebCore:
-      default: false
 
 # FIXME: This seems to be accidentally enabled for WebKit1 right now due to the old code using the
 # wrong preference key in some places. We should identify whether it really makes sense to keep this
@@ -836,20 +811,6 @@ PassiveWheelListenersAsDefaultOnDocument:
     WebCore:
       default: true
 
-# FIXME: Is this implemented for WebKitLegacy? If not, this should be excluded from WebKitLegacy entirely.
-PerElementSpeakerSelectionEnabled:
-  type: bool
-  humanReadableName: "Allow per media element speaker device selection"
-  humanReadableDescription: "Allow per media element speaker device selection"
-  condition: ENABLE(MEDIA_STREAM)
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      default: false
-    WebCore:
-      default: false
-
 PerformanceNavigationTimingAPIEnabled:
   type: bool
   humanReadableName: "PerformanceNavigationTiming"
@@ -982,22 +943,6 @@ ResizeObserverEnabled:
     WebCore:
       default: false
 
-# FIXME: Is this implemented for WebKitLegacy? If not, this should be excluded from WebKitLegacy entirely.
-# FIXME: This should have it's own ENABLE.
-ScreenCaptureEnabled:
-  type: bool
-  condition: ENABLE(MEDIA_STREAM)
-  humanReadableName: "ScreenCapture"
-  humanReadableDescription: "Enable ScreenCapture"
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      "PLATFORM(MAC) || USE(GSTREAMER)": true
-      default: false
-    WebCore:
-      default: false
-
 ServerTimingEnabled:
   type: bool
   humanReadableName: "Server Timing"
@@ -1021,19 +966,6 @@ ShouldDeferAsynchronousScriptsUntilAfterDocumentLoadOrFirstPaint:
       default: true
     WebCore:
       default: true
-
-SpeechRecognitionEnabled:
-  type: bool
-  humanReadableName: "SpeechRecognition API"
-  humanReadableDescription: "Enable SpeechRecognition of WebSpeech API"
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      "HAVE(SPEECHRECOGNIZER) && ENABLE(MEDIA_STREAM)": true
-      default: false
-    WebCore:
-      default: false
 
 # FIXME: This is enabled when ENABLE(EXPERIMENTAL_FEATURES) is true in WebKit2. Perhaps we should consider using that for WebKitLegacy as well.
 SpringTimingFunctionEnabled:

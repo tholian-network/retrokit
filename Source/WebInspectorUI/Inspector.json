@@ -3704,8 +3704,6 @@
                 "AuthorAndUserStylesEnabled",
                 "ITPDebugModeEnabled",
                 "ImagesEnabled",
-                "MediaCaptureRequiresSecureConnection",
-                "MockCaptureDevicesEnabled",
                 "ScriptEnabled",
                 "ShowDebugBorders",
                 "ShowRepaintCounter",

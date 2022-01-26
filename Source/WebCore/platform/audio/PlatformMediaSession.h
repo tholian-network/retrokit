@@ -172,12 +172,6 @@ public:
     bool canPlayConcurrently(const PlatformMediaSession&) const;
     bool shouldOverridePauseDuringRouteChange() const;
 
-    class AudioCaptureSource : public CanMakeWeakPtr<AudioCaptureSource> {
-    public:
-        virtual ~AudioCaptureSource() = default;
-        virtual bool isCapturingAudio() const = 0;
-    };
-
     virtual std::optional<NowPlayingInfo> nowPlayingInfo() const;
     virtual void updateMediaUsageIfChanged() { }
 
@@ -232,8 +226,6 @@ public:
     virtual bool isPlayingOnSecondScreen() const { return false; }
 
     virtual MediaSessionGroupIdentifier mediaSessionGroupIdentifier() const = 0;
-
-    virtual bool hasMediaStreamSource() const { return false; }
 
     virtual void processIsSuspendedChanged() { }
 

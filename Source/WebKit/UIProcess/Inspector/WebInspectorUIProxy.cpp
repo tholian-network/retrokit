@@ -46,7 +46,6 @@
 #include "WebProcessPool.h"
 #include "WebProcessProxy.h"
 #include <WebCore/CertificateInfo.h>
-#include <WebCore/MockRealtimeMediaSourceCenter.h>
 #include <WebCore/NotImplemented.h>
 #include <WebCore/TextEncoding.h>
 #include <wtf/SetForScope.h>
@@ -681,13 +680,6 @@ void WebInspectorUIProxy::setDeveloperPreferenceOverride(WebCore::InspectorClien
     case InspectorClient::DeveloperPreference::ITPDebugModeEnabled:
         if (m_inspectedPage)
             m_inspectedPage->websiteDataStore().setResourceLoadStatisticsDebugMode(overrideValue && overrideValue.value());
-        return;
-
-    case InspectorClient::DeveloperPreference::MockCaptureDevicesEnabled:
-#if ENABLE(MEDIA_STREAM)
-        if (m_inspectedPage)
-            m_inspectedPage->setMockCaptureDevicesEnabledOverride(overrideValue);
-#endif // ENABLE(MEDIA_STREAM)
         return;
     }
 

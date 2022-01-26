@@ -130,18 +130,6 @@ messages -> WebProcess LegacyReceiver NotRefCounted {
 #endif
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-    AddMockMediaDevice(struct WebCore::MockMediaDevice device);
-    ClearMockMediaDevices();
-    RemoveMockMediaDevice(String persistentId);
-    ResetMockMediaDevices();
-
-#if ENABLE(SANDBOX_EXTENSIONS)
-    GrantUserMediaDeviceSandboxExtensions(WebKit::MediaDeviceSandboxExtensions sandboxExtensions)
-    RevokeUserMediaDeviceSandboxExtensions(Vector<String> sandboxExtensionIDs)
-#endif
-#endif
-
     ClearCurrentModifierStateForTesting()
 
     SetBackForwardCacheCapacity(unsigned capacity);

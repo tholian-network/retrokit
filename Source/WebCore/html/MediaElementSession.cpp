@@ -354,15 +354,6 @@ Expected<void, MediaPlaybackDenialReason> MediaElementSession::playbackStateChan
     if (m_restrictions & OverrideUserGestureRequirementForMainContent && updateIsMainContent())
         return { };
 
-#if ENABLE(MEDIA_STREAM)
-    if (m_element.hasMediaStreamSrcObject()) {
-        if (document.isCapturing())
-            return { };
-        if (document.mediaState() & MediaProducer::MediaState::IsPlayingAudio)
-            return { };
-    }
-#endif
-
     if (m_restrictions & RequireUserGestureForVideoRateChange && m_element.isVideo() && !document.processingUserGestureForMedia()) {
         ALWAYS_LOG(LOGIDENTIFIER, "Returning FALSE because a user gesture is required for video rate change restriction");
         return makeUnexpected(MediaPlaybackDenialReason::UserGestureRequired);

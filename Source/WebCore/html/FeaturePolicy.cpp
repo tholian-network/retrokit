@@ -40,14 +40,6 @@ using namespace HTMLNames;
 static const char* policyTypeName(FeaturePolicy::Type type)
 {
     switch (type) {
-    case FeaturePolicy::Type::Camera:
-        return "Camera";
-    case FeaturePolicy::Type::Microphone:
-        return "Microphone";
-    case FeaturePolicy::Type::SpeakerSelection:
-        return "SpeakerSelection";
-    case FeaturePolicy::Type::DisplayCapture:
-        return "DisplayCapture";
     case FeaturePolicy::Type::SyncXHR:
         return "SyncXHR";
     }
@@ -149,49 +141,15 @@ static inline void updateList(Document& document, FeaturePolicy::AllowRule& rule
 FeaturePolicy FeaturePolicy::parse(Document& document, const HTMLIFrameElement& iframe, StringView allowAttributeValue)
 {
     FeaturePolicy policy;
-    bool isCameraInitialized = false;
-    bool isMicrophoneInitialized = false;
-    bool isSpeakerSelectionInitialized = false;
-    bool isDisplayCaptureInitialized = false;
     bool isSyncXHRInitialized = false;
     for (auto allowItem : allowAttributeValue.split(';')) {
         auto item = allowItem.stripLeadingAndTrailingMatchedCharacters(isHTMLSpace<UChar>);
-        if (item.startsWith("camera")) {
-            isCameraInitialized = true;
-            updateList(document, policy.m_cameraRule, item.substring(7));
-            continue;
-        }
-        if (item.startsWith("microphone")) {
-            isMicrophoneInitialized = true;
-            updateList(document, policy.m_microphoneRule, item.substring(11));
-            continue;
-        }
-        if (item.startsWith("speaker-selection")) {
-            isSpeakerSelectionInitialized = true;
-            updateList(document, policy.m_speakerSelectionRule, item.substring(18));
-            continue;
-        }
-        if (item.startsWith("display-capture")) {
-            isDisplayCaptureInitialized = true;
-            updateList(document, policy.m_displayCaptureRule, item.substring(16));
-            continue;
-        }
         if (item.startsWith("sync-xhr")) {
             isSyncXHRInitialized = true;
             updateList(document, policy.m_syncXHRRule, item.substring(9));
             continue;
         }
     }
-
-    // By default, camera, microphone, speaker-selection, display-capture and xr-spatial-tracking policy is 'self'.
-    if (!isCameraInitialized)
-        policy.m_cameraRule.allowedList.add(document.securityOrigin().data());
-    if (!isMicrophoneInitialized)
-        policy.m_microphoneRule.allowedList.add(document.securityOrigin().data());
-    if (!isSpeakerSelectionInitialized)
-        policy.m_speakerSelectionRule.allowedList.add(document.securityOrigin().data());
-    if (!isDisplayCaptureInitialized)
-        policy.m_displayCaptureRule.allowedList.add(document.securityOrigin().data());
 
     if (!isSyncXHRInitialized)
         policy.m_syncXHRRule.type = AllowRule::Type::All;
@@ -202,14 +160,6 @@ FeaturePolicy FeaturePolicy::parse(Document& document, const HTMLIFrameElement& 
 bool FeaturePolicy::allows(Type type, const SecurityOriginData& origin) const
 {
     switch (type) {
-    case Type::Camera:
-        return isAllowedByFeaturePolicy(m_cameraRule, origin);
-    case Type::Microphone:
-        return isAllowedByFeaturePolicy(m_microphoneRule, origin);
-    case Type::SpeakerSelection:
-        return isAllowedByFeaturePolicy(m_speakerSelectionRule, origin);
-    case Type::DisplayCapture:
-        return isAllowedByFeaturePolicy(m_displayCaptureRule, origin);
     case Type::SyncXHR:
         return isAllowedByFeaturePolicy(m_syncXHRRule, origin);
     }

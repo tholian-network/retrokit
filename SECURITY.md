@@ -77,6 +77,7 @@ These legacy APIs that are no longer of relevance to a modern Web View.
 - [x] Remove Legacy Custom Protocol Manager Support (`LEGACY_CUSTOM_PROTOCOL_MANAGER`, `LegacyCustomProtocol`, `LegacyCustomProtocolManager`, `registerSchemeForLegacyCustomProtocol`, `unregisterSchemeForLegacyCustomProtocol`, `LegacySchemeRegistry`, `CustomProtocolManagerClient`)
 - [x] Remove Legacy Encrypted Media API (`LEGACY_ENCRYPTED_MEDIA`)
 - [ ] Remove `WebFrameLoaderClient::createPlugin` and `WebFrameLoaderClient::redirectDataToPlugin`, `pluginSupportsExtension`
+- [ ] Remove Sandbox Extensions (`SANDBOX_EXTENSIONS`, `SandboxExtension`)
 - [ ] Remove Webkit InjectedBundle API (`InjectedBundle`, `WKBundle*`)
 - [ ] Remove WebKit WebExtension API (`WebKitWebExtension`, `webkit_web_extension*`)
 - [ ] Remove `AllowsInlineMediaPlayback` Hacks (`AllowsInlineMediaPlayback`, `MEDIA_PLAYBACK_ALLOWS_INLINE`) and default playback behaviour to no-autoplay.
@@ -240,7 +241,11 @@ list of Web APIs that are removed.
 - [x] Remove iFrame `allowfullscreen` Property
 - [x] Remove Encrypted Media API (`ENCRYPTED_MEDIA`, `LEGACY_ENCRYPTED_MEDIA`)
 - [x] Remove Encrypted Media Thunder API (`THUNDER`)
+- [x] Remove Media Capture API (`MEDIA_CAPTURE`, `MediaCapture`)
 - [x] Remove Media Recorder API (`MediaRecorder`)
+- [x] Remove Media Stream API (`MEDIA_STREAM`, `getUserMedia`, `MediaDevices`, `MediaStream`, `MediaStreamTrack`, `UserMediaPermissionRequest`)
+- [x] Remove Speech Recognition API (`SPEECHRECOGNIZER`, `SpeechRecognizer`, `SpeechRecognition`, `SpeechSynthesizer`)
+- [x] Remove Speech Synthesis API (`SPEECH_SYNTHESIS`, `SpeechSynthesis`)
 - [x] Remove Web RTC API (`WEB_RTC`, `RTC`, `PeerConnectionState`, `PeerMediaDescription`, `RTCBundle`, `RTCDataChannel`, `RTCPeer`, `RTCIce`, `createRTCProvider`)
 - [x] Remove Web RTC H264 Codec (`WebRTCH264LowLatencyCoderEnabled`, `WebRTCH264HardwareEncoderEnabled`, `WebRTCH264SimulcastEnabled`)
 - [x] Remove Web RTC H265 Codec (`WebRTCH256CodecEnabled`)
@@ -251,32 +256,31 @@ list of Web APIs that are removed.
 - [x] Remove Web RTC Sockets Proxying (`WebRTCSocketsProxyingEnabled`)
 - [x] Remove Web RTC VP9 Codec Profiles (`WebRTCVP9Profile0CodecEnabled`, `WebRTCVP9Profile2CodecEnabled`)
 - [x] Remove Web RTC MDNS ICE Candidates Support (`WebRTCMDNSICECandidatesEnabled`, `PeerConnectionEnabled`, `ICECandidateFiltering`)
-- [ ] Remove Screen Capture API (`getDisplayMedia`)
-- [ ] Remove Media Capture API (`MEDIA_CAPTURE`)
+- [ ] Remove Display Capture API (`getDisplayMedia`)
 - [ ] Remove Media Session API (`MEDIA_SESSION`)
 - [ ] Remove Media Statistics API (`MEDIA_STATISTICS`)
-- [ ] Remove Media Stream API (`MEDIA_STREAM`, `getUserMedia`)
+- [ ] Remove Media Capabilities API (`MediaCapabilities`)
+- [ ] Remove Media Usage API (`MEDIA_USAGE`)
 - [ ] Remove Offsceen Canvas in Workers (`OFFSCREEN_CANVAS_IN_WORKERS`)
 - [ ] Remove Network Shareable Resource API (`SHAREABLE_RESOURCE`)
 - [ ] Remove Web Assembly API (`WEBASSEMBLY`)
-- [ ] Remove Sandbox Extensions (`SANDBOX_EXTENSIONS`)
 - [ ] Remove Web NFC API
 - [ ] Remove Web Performance API
 - [ ] Remove Web Storage API
-- [ ] Remove Indexed Database API
+- [ ] Remove Indexed Database API (`IDBFactory`, `IDBOpenDBRequest`, `IDBDatabase`, `IDBTransaction`, `IDBRequest`, `IDBObjectStore`, `IDBIndex`, `IDBCursor`, `IDBKeyRange`, `IDBLocaleAwareKeyRange`, `IDBVersionChangeEvent`, `IDBDatabaseException`, `IDBTransactionSync`, `IDBObjectStoreSync`, `IDBIndexSync`, `IDBFactorySync`, `IDBEnvironmentSync`, `IDBDatabaseSync`, `IDBCursorSync`)
 - [ ] Remove Canvas API (`OFFSCREEN_CANVAS`, `Canvas`, `DOMConvertWebGL`, `JSANGLEInstancedArray`, `CanvasActivityRecord`)
 - [ ] Remove WebGL API (`WEBGL`, `WebGL`, `JSANGLEInstancedArray`, `GraphicsContextGL`, `HighPerformanceGraphicsUsageSampler`)
 - [ ] Remove WebGL2 API (`WEBGL2`)
 - [ ] Remove GPU Process for WebGL (`GPU_PROCESS`)
 - [ ] Remove WebGL via Metal (`WEBGL_COMPATIBLE_METAL`)
 - [ ] Remove WebGPU API
-- [ ] Remove Media Capture API
 - [ ] Remove Page Visibility API
 - [ ] Remove Pointer Lock API (`POINTER_LOCK`)
 - [ ] Remove Web Notifications API
 - [ ] Remove Window Alert Method (`window.alert()`)
 - [ ] Remove Window History Interface (`window.history`)
 - [ ] Remove Window Popups (`window.open()`)
+- [ ] Remove Intersection Observer API (`INTERSECTION_OBSERVER`, `IntersectionObserver`)
 - [ ] Remove Performance Observer API (`PerformanceObserver`)
 - [ ] Remove Resize Observer API (`RESIZE_OBSERVER`, `ResizeObserver`)
 - [ ] *Undecided* Remove Custom Protocol Manager Support (`CustomProtocol`, `CustomProtocolManager`)
@@ -284,6 +288,7 @@ list of Web APIs that are removed.
 - [ ] *Undecided* Remove Web Workers API
 - [ ] *Undecided* Remove Service Worker API (`SERVICE_WORKER`)
 - [ ] *Undecided* Remove Content Change Observer (`CONTENT_CHANGE_OBSERVER`)
+- [ ] *Undecied* Remove App Bound Domains Support (`APP_BOUND_DOMAINS`)
 - [ ] Remove Contact Picker API (`ContactPickerAPI`, `ContactInfo`, `ContactProperty`, `ContactsManager`, `ContactsRequestData`, `ContactsSelectOption`, `navigator.contacts`)
 - [ ] Remove WebSQL Database API (`WebSQL`)
 

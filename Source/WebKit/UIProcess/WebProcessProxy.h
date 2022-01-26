@@ -37,7 +37,6 @@
 #include "ProcessThrottlerClient.h"
 #include "ResponsivenessTimer.h"
 #include "ServiceWorkerInitializationData.h"
-#include "SpeechRecognitionServer.h"
 #include "UserContentControllerIdentifier.h"
 #include "VisibleWebPageCounter.h"
 #include "WebConnectionToWebProcess.h"
@@ -86,7 +85,6 @@ class AudioSessionRoutingArbitratorProxy;
 class ObjCObjectGraph;
 class PageClient;
 class ProvisionalPageProxy;
-class UserMediaCaptureManagerProxy;
 class VisitedLinkStore;
 class WebBackForwardListItem;
 class WebCompiledContentRuleListData;
@@ -104,10 +102,6 @@ struct WebNavigationDataStore;
 struct WebPageCreationParameters;
 struct WebPreferencesStore;
 struct WebsiteData;
-
-#if ENABLE(MEDIA_STREAM)
-class SpeechRecognitionRemoteRealtimeMediaSourceManager;
-#endif
 
 enum ForegroundWebProcessCounterType { };
 typedef RefCounter<ForegroundWebProcessCounterType> ForegroundWebProcessCounter;
@@ -313,29 +307,13 @@ public:
     ASCIILiteral clientName() const final { return "WebProcess"_s; }
 
 #if PLATFORM(COCOA)
-    enum SandboxExtensionType : uint32_t {
-        None = 0,
-        Video = 1 << 0,
-        Audio = 1 << 1
-    };
-
-    typedef uint32_t MediaCaptureSandboxExtensions;
-
-    bool hasVideoCaptureExtension() const { return m_mediaCaptureSandboxExtensions & Video; }
-    void grantVideoCaptureExtension() { m_mediaCaptureSandboxExtensions |= Video; }
-    void revokeVideoCaptureExtension() { m_mediaCaptureSandboxExtensions &= ~Video; }
-
-    bool hasAudioCaptureExtension() const { return m_mediaCaptureSandboxExtensions & Audio; }
-    void grantAudioCaptureExtension() { m_mediaCaptureSandboxExtensions |= Audio; }
-    void revokeAudioCaptureExtension() { m_mediaCaptureSandboxExtensions &= ~Audio; }
-
     void sendAudioComponentRegistrations();
 #endif
 
 #if ENABLE(REMOTE_INSPECTOR) && PLATFORM(COCOA)
     void enableRemoteInspectorIfNeeded();
 #endif
-    
+
 #if PLATFORM(COCOA)
     void unblockAccessibilityServerIfNeeded();
 #if ENABLE(CFPREFS_DIRECT_MODE)
@@ -357,10 +335,6 @@ public:
     bool hasServiceWorkerBackgroundActivityForTesting() const;
 #endif
     void setAssertionTypeForTesting(ProcessAssertionType type) { didSetAssertionType(type); }
-
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-    UserMediaCaptureManagerProxy* userMediaCaptureManagerProxy() { return m_userMediaCaptureManagerProxy.get(); }
-#endif
 
 #if ENABLE(ATTACHMENT_ELEMENT)
     bool hasIssuedAttachmentElementRelatedSandboxExtensions() const { return m_hasIssuedAttachmentElementRelatedSandboxExtensions; }
@@ -389,13 +363,6 @@ public:
     void setIgnoreInvalidMessageForTesting();
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-    static void muteCaptureInPagesExcept(WebCore::PageIdentifier);
-    SpeechRecognitionRemoteRealtimeMediaSourceManager& ensureSpeechRecognitionRemoteRealtimeMediaSourceManager();
-#endif
-    void pageMutedStateChanged(WebCore::PageIdentifier, WebCore::MediaProducer::MutedStateFlags);
-    void pageIsBecomingInvisible(WebCore::PageIdentifier);
-
 #if PLATFORM(COCOA) && ENABLE(REMOTE_INSPECTOR)
     static bool shouldEnableRemoteInspector();
 #endif
@@ -423,7 +390,7 @@ protected:
     void connectionWillOpen(IPC::Connection&) override;
     void processWillShutDown(IPC::Connection&) override;
     bool shouldSendPendingMessage(const PendingMessage&) final;
-    
+
     // ProcessLauncher::Client
     void didFinishLaunching(ProcessLauncher*, IPC::Connection::Identifier) override;
 
@@ -494,7 +461,7 @@ private:
     void didCollectPrewarmInformation(const WebCore::RegistrableDomain&, const WebCore::PrewarmInformation&);
 
     void logDiagnosticMessageForResourceLimitTermination(const String& limitKey);
-    
+
     void updateRegistrationWithDataStore();
     Vector<String> platformOverrideLanguages() const;
 
@@ -505,11 +472,8 @@ private:
     void sendMessageToWebContextWithReply(UserMessage&&, CompletionHandler<void(UserMessage&&)>&&);
 #endif
 
-    void createSpeechRecognitionServer(SpeechRecognitionServerIdentifier);
-    void destroySpeechRecognitionServer(SpeechRecognitionServerIdentifier);
-
     void systemBeep();
-    
+
 #if PLATFORM(MAC)
     void isAXAuthenticated(audit_token_t, CompletionHandler<void(bool)>&&);
 #endif
@@ -595,10 +559,6 @@ private:
 
     bool m_isUnderMemoryPressure { false };
 
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-    std::unique_ptr<UserMediaCaptureManagerProxy> m_userMediaCaptureManagerProxy;
-#endif
-
     unsigned m_suspendedPageCount { 0 };
 
     bool m_hasCommittedAnyProvisionalLoads { false };
@@ -614,9 +574,6 @@ private:
     bool m_hasManagedSessionSandboxAccess { false };
 #endif
 
-#if PLATFORM(COCOA)
-    MediaCaptureSandboxExtensions m_mediaCaptureSandboxExtensions { SandboxExtensionType::None };
-#endif
     RefPtr<Logger> m_logger;
 
     struct ServiceWorkerInformation {
@@ -640,11 +597,6 @@ private:
     bool m_ignoreInvalidMessageForTesting { false };
 #endif
 
-    using SpeechRecognitionServerMap = HashMap<SpeechRecognitionServerIdentifier, std::unique_ptr<SpeechRecognitionServer>>;
-    SpeechRecognitionServerMap m_speechRecognitionServerMap;
-#if ENABLE(MEDIA_STREAM)
-    std::unique_ptr<SpeechRecognitionRemoteRealtimeMediaSourceManager> m_speechRecognitionRemoteRealtimeMediaSourceManager;
-#endif
 };
 
 } // namespace WebKit

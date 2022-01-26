@@ -35,10 +35,6 @@
 #include "LoadParameters.h"
 #include "Logging.h"
 #include "ProvisionalPageProxy.h"
-#include "SpeechRecognitionPermissionRequest.h"
-#include "SpeechRecognitionRemoteRealtimeMediaSourceManager.h"
-#include "SpeechRecognitionRemoteRealtimeMediaSourceManagerMessages.h"
-#include "SpeechRecognitionServerMessages.h"
 #include "TextChecker.h"
 #include "TextCheckerState.h"
 #include "UserData.h"
@@ -79,7 +75,6 @@
 
 #if PLATFORM(COCOA)
 #include "ObjCObjectGraph.h"
-#include "UserMediaCaptureManagerProxy.h"
 #include <WebCore/VersionChecks.h>
 #endif
 
@@ -163,34 +158,6 @@ Ref<WebProcessProxy> WebProcessProxy::createForServiceWorkers(WebProcessPool& pr
 }
 #endif
 
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-class UIProxyForCapture final : public UserMediaCaptureManagerProxy::ConnectionProxy {
-    WTF_MAKE_FAST_ALLOCATED;
-public:
-    explicit UIProxyForCapture(WebProcessProxy& process) : m_process(process) { }
-private:
-    void addMessageReceiver(IPC::ReceiverName messageReceiverName, IPC::MessageReceiver& receiver) final { m_process.addMessageReceiver(messageReceiverName, receiver); }
-    void removeMessageReceiver(IPC::ReceiverName messageReceiverName) final { m_process.removeMessageReceiver(messageReceiverName); }
-    IPC::Connection& connection() final { return *m_process.connection(); }
-    Logger& logger() final
-    {
-        if (!m_logger) {
-            m_logger = Logger::create(this);
-            m_logger->setEnabled(this, m_process.sessionID().isAlwaysOnLoggingAllowed());
-        }
-        return *m_logger;
-    }
-    bool willStartCapture(CaptureDevice::DeviceType) const final
-    {
-        // FIXME: We should validate this is granted.
-        return true;
-    }
-
-    RefPtr<Logger> m_logger;
-    WebProcessProxy& m_process;
-};
-#endif
-
 WebProcessProxy::WebProcessProxy(WebProcessPool& processPool, WebsiteDataStore* websiteDataStore, IsPrewarmed isPrewarmed, CrossOriginMode crossOriginMode)
     : AuxiliaryProcessProxy(processPool.alwaysRunsAtBackgroundPriority())
     , m_backgroundResponsivenessTimer(*this)
@@ -204,9 +171,6 @@ WebProcessProxy::WebProcessProxy(WebProcessPool& processPool, WebsiteDataStore* 
     , m_isResponsive(NoOrMaybe::Maybe)
     , m_visiblePageCounter([this](RefCounterEvent) { updateBackgroundResponsivenessTimer(); })
     , m_websiteDataStore(websiteDataStore)
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-    , m_userMediaCaptureManagerProxy(makeUnique<UserMediaCaptureManagerProxy>(makeUniqueRef<UIProxyForCapture>(*this)))
-#endif
     , m_isPrewarmed(isPrewarmed == IsPrewarmed::Yes)
     , m_crossOriginMode(crossOriginMode)
     , m_shutdownPreventingScopeCounter([this](RefCounterEvent event) { if (event == RefCounterEvent::Decrement) maybeShutDown(); })
@@ -233,14 +197,6 @@ WebProcessProxy::~WebProcessProxy()
     RELEASE_ASSERT(isMainThreadOrCheckDisabled());
     ASSERT(m_pageURLRetainCountMap.isEmpty());
     WEBPROCESSPROXY_RELEASE_LOG(Process, "destructor:");
-
-    for (auto identifier : m_speechRecognitionServerMap.keys())
-        removeMessageReceiver(Messages::SpeechRecognitionServer::messageReceiverName(), identifier);
-
-#if ENABLE(MEDIA_STREAM)
-    if (m_speechRecognitionRemoteRealtimeMediaSourceManager)
-        removeMessageReceiver(Messages::SpeechRecognitionRemoteRealtimeMediaSourceManager::messageReceiverName());
-#endif
 
     auto result = allProcesses().remove(coreProcessIdentifier());
     ASSERT_UNUSED(result, result);
@@ -845,10 +801,6 @@ void WebProcessProxy::processDidTerminateOrFailedToLaunch(ProcessTerminationReas
     // Protect ourselves, as the call to shutDown() below may otherwise cause us
     // to be deleted before we can finish our work.
     auto protectedThis = makeRef(*this);
-
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-    m_userMediaCaptureManagerProxy->clear();
-#endif
 
 #if ENABLE(ATTACHMENT_ELEMENT)
     m_hasIssuedAttachmentElementRelatedSandboxExtensions = false;
@@ -1571,11 +1523,6 @@ void WebProcessProxy::didExceedCPULimit()
             WEBPROCESSPROXY_RELEASE_LOG(PerformanceLogging, "didExceedCPULimit: WebProcess has exceeded the background CPU limit but we are not terminating it because there is audio playing");
             return;
         }
-
-        if (page->hasActiveAudioStream() || page->hasActiveVideoStream()) {
-            WEBPROCESSPROXY_RELEASE_LOG(PerformanceLogging, "didExceedCPULimit: WebProcess has exceeded the background CPU limit but we are not terminating it because it is capturing audio / video");
-            return;
-        }
     }
 
     bool hasVisiblePage = false;
@@ -1690,100 +1637,6 @@ PAL::SessionID WebProcessProxy::sessionID() const
 {
     ASSERT(m_websiteDataStore);
     return m_websiteDataStore->sessionID();
-}
-
-void WebProcessProxy::createSpeechRecognitionServer(SpeechRecognitionServerIdentifier identifier)
-{
-    WebPageProxy* targetPage = nullptr;
-    for (auto* page : pages()) {
-        if (page && page->webPageID() == identifier) {
-            targetPage = page;
-            break;
-        }
-    }
-
-    if (!targetPage)
-        return;
-
-    ASSERT(!m_speechRecognitionServerMap.contains(identifier));
-    MESSAGE_CHECK(!m_speechRecognitionServerMap.contains(identifier));
-
-    auto& speechRecognitionServer = m_speechRecognitionServerMap.add(identifier, nullptr).iterator->value;
-    auto permissionChecker = [weakPage = makeWeakPtr(targetPage)](auto& request, auto&& completionHandler) mutable {
-        if (!weakPage) {
-            completionHandler(WebCore::SpeechRecognitionError { SpeechRecognitionErrorType::NotAllowed, "Page no longer exists"_s });
-            return;
-        }
-
-        weakPage->requestSpeechRecognitionPermission(request, WTFMove(completionHandler));
-    };
-    auto checkIfMockCaptureDevicesEnabled = [weakPage = makeWeakPtr(targetPage)]() {
-        return weakPage && weakPage->preferences().mockCaptureDevicesEnabled();
-    };
-
-#if ENABLE(MEDIA_STREAM)
-    auto createRealtimeMediaSource = [weakPage = makeWeakPtr(targetPage)]() {
-        return weakPage ? weakPage->createRealtimeMediaSourceForSpeechRecognition() : CaptureSourceOrError { "Page is invalid" };
-    };
-    speechRecognitionServer = makeUnique<SpeechRecognitionServer>(makeRef(*connection()), identifier, WTFMove(permissionChecker), WTFMove(checkIfMockCaptureDevicesEnabled), WTFMove(createRealtimeMediaSource));
-#else
-    speechRecognitionServer = makeUnique<SpeechRecognitionServer>(makeRef(*connection()), identifier, WTFMove(permissionChecker), WTFMove(checkIfMockCaptureDevicesEnabled));
-#endif
-
-    addMessageReceiver(Messages::SpeechRecognitionServer::messageReceiverName(), identifier, *speechRecognitionServer);
-}
-
-void WebProcessProxy::destroySpeechRecognitionServer(SpeechRecognitionServerIdentifier identifier)
-{
-    if (auto server = m_speechRecognitionServerMap.take(identifier))
-        removeMessageReceiver(Messages::SpeechRecognitionServer::messageReceiverName(), identifier);
-}
-
-#if ENABLE(MEDIA_STREAM)
-
-SpeechRecognitionRemoteRealtimeMediaSourceManager& WebProcessProxy::ensureSpeechRecognitionRemoteRealtimeMediaSourceManager()
-{
-    if (!m_speechRecognitionRemoteRealtimeMediaSourceManager) {
-        m_speechRecognitionRemoteRealtimeMediaSourceManager = makeUnique<SpeechRecognitionRemoteRealtimeMediaSourceManager>(makeRef(*connection()));
-        addMessageReceiver(Messages::SpeechRecognitionRemoteRealtimeMediaSourceManager::messageReceiverName(), *m_speechRecognitionRemoteRealtimeMediaSourceManager);
-    }
-
-    return *m_speechRecognitionRemoteRealtimeMediaSourceManager;
-}
-
-void WebProcessProxy::muteCaptureInPagesExcept(WebCore::PageIdentifier pageID)
-{
-#if PLATFORM(COCOA)
-    for (auto* page : globalPageMap().values()) {
-        if (page->webPageID() != pageID)
-            page->setMediaStreamCaptureMuted(true);
-    }
-#else
-    UNUSED_PARAM(pageID);
-#endif
-}
-
-#endif
-
-void WebProcessProxy::pageMutedStateChanged(WebCore::PageIdentifier identifier, WebCore::MediaProducer::MutedStateFlags flags)
-{
-    bool mutedForCapture = flags.containsAny(MediaProducer::AudioAndVideoCaptureIsMuted);
-    if (!mutedForCapture)
-        return;
-
-    if (auto speechRecognitionServer = m_speechRecognitionServerMap.get(identifier))
-        speechRecognitionServer->mute();
-}
-
-void WebProcessProxy::pageIsBecomingInvisible(WebCore::PageIdentifier identifier)
-{
-#if ENABLE(MEDIA_STREAM)
-    if (!RealtimeMediaSourceCenter::shouldInterruptAudioOnPageVisibilityChange())
-        return;
-#endif
-
-    if (auto speechRecognitionServer = m_speechRecognitionServerMap.get(identifier))
-        speechRecognitionServer->mute();
 }
 
 #if ENABLE(SERVICE_WORKER)

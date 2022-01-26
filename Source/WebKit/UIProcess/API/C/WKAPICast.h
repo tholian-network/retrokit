@@ -76,9 +76,6 @@ class AuthenticationChallengeProxy;
 class AuthenticationDecisionListener;
 class DownloadProxy;
 class NotificationPermissionRequest;
-class SpeechRecognitionPermissionCallback;
-class UserMediaPermissionCheckProxy;
-class UserMediaPermissionRequestProxy;
 class WebBackForwardList;
 class WebBackForwardListItem;
 class WebColorPickerResultListenerProxy;
@@ -145,13 +142,10 @@ WK_ADD_API_MAPPING(WKPreferencesRef, WebPreferences)
 WK_ADD_API_MAPPING(WKProtectionSpaceRef, WebProtectionSpace)
 WK_ADD_API_MAPPING(WKResourceLoadStatisticsManagerRef, WebResourceLoadStatisticsManager)
 WK_ADD_API_MAPPING(WKSessionStateRef, API::SessionState)
-WK_ADD_API_MAPPING(WKSpeechRecognitionPermissionCallbackRef, SpeechRecognitionPermissionCallback)
 WK_ADD_API_MAPPING(WKTextCheckerRef, WebTextChecker)
 WK_ADD_API_MAPPING(WKUserContentControllerRef, WebUserContentControllerProxy)
 WK_ADD_API_MAPPING(WKUserContentExtensionStoreRef, API::ContentRuleListStore)
 WK_ADD_API_MAPPING(WKUserContentFilterRef, API::ContentRuleList)
-WK_ADD_API_MAPPING(WKUserMediaPermissionCheckRef, UserMediaPermissionCheckProxy)
-WK_ADD_API_MAPPING(WKUserMediaPermissionRequestRef, UserMediaPermissionRequestProxy)
 WK_ADD_API_MAPPING(WKUserScriptRef, API::UserScript)
 WK_ADD_API_MAPPING(WKViewportAttributesRef, WebViewportAttributes)
 WK_ADD_API_MAPPING(WKWebsiteDataStoreRef, WebKit::WebsiteDataStore)
@@ -171,11 +165,11 @@ inline BundleHitTestResultMediaType toBundleHitTestResultMediaType(WKBundleHitTe
     case kWKBundleHitTestResultMediaTypeVideo:
         return BundleHitTestResultMediaTypeVideo;
     }
-    
+
     ASSERT_NOT_REACHED();
     return BundleHitTestResultMediaTypeNone;
 }
-    
+
 inline WKBundleHitTestResultMediaType toAPI(BundleHitTestResultMediaType mediaType)
 {
     switch (mediaType) {

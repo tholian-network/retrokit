@@ -50,10 +50,6 @@
 #include <WebCore/ScrollbarThemeGtk.h>
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-#include "UserMediaCaptureManager.h"
-#endif
-
 namespace WebKit {
 
 using namespace WebCore;
@@ -65,9 +61,6 @@ void WebProcess::platformSetCacheModel(CacheModel cacheModel)
 
 void WebProcess::platformInitializeWebProcess(WebProcessCreationParameters& parameters)
 {
-#if ENABLE(MEDIA_STREAM)
-    addSupplement<UserMediaCaptureManager>();
-#endif
 
 #if PLATFORM(WPE)
     if (!parameters.isServiceWorkerProcess) {

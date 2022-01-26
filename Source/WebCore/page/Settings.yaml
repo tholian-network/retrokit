@@ -348,13 +348,6 @@ MaximumSourceBufferSize:
     WebCore:
       default: 318767104
 
-MediaDeviceIdentifierStorageDirectory:
-  type: String
-  condition: ENABLE(MEDIA_STREAM)
-  defaultValue:
-    WebCore:
-      default: '{ }'
-
 MediaTypeOverride:
   type: String
   webcoreOnChange: mediaTypeOverrideChanged

@@ -436,7 +436,7 @@ InspectorBackend.activateDomain("Network", ["itml", "page", "service-worker", "w
 
 // Page
 InspectorBackend.registerDomain("Page", ["itml", "page"]);
-InspectorBackend.registerEnum("Page.Setting", {PrivateClickMeasurementDebugModeEnabled: "PrivateClickMeasurementDebugModeEnabled", AuthorAndUserStylesEnabled: "AuthorAndUserStylesEnabled", ITPDebugModeEnabled: "ITPDebugModeEnabled", ImagesEnabled: "ImagesEnabled", MediaCaptureRequiresSecureConnection: "MediaCaptureRequiresSecureConnection", MockCaptureDevicesEnabled: "MockCaptureDevicesEnabled", ScriptEnabled: "ScriptEnabled", ShowDebugBorders: "ShowDebugBorders", ShowRepaintCounter: "ShowRepaintCounter", WebSecurityEnabled: "WebSecurityEnabled"});
+InspectorBackend.registerEnum("Page.Setting", {PrivateClickMeasurementDebugModeEnabled: "PrivateClickMeasurementDebugModeEnabled", AuthorAndUserStylesEnabled: "AuthorAndUserStylesEnabled", ITPDebugModeEnabled: "ITPDebugModeEnabled", ImagesEnabled: "ImagesEnabled", ScriptEnabled: "ScriptEnabled", ShowDebugBorders: "ShowDebugBorders", ShowRepaintCounter: "ShowRepaintCounter", WebSecurityEnabled: "WebSecurityEnabled"});
 InspectorBackend.registerEnum("Page.ResourceType", {Document: "Document", StyleSheet: "StyleSheet", Image: "Image", Font: "Font", Script: "Script", XHR: "XHR", Fetch: "Fetch", Ping: "Ping", Beacon: "Beacon", WebSocket: "WebSocket", Other: "Other"});
 InspectorBackend.registerEnum("Page.CoordinateSystem", {Viewport: "Viewport", Page: "Page"});
 InspectorBackend.registerEnum("Page.CookieSameSitePolicy", {None: "None", Lax: "Lax", Strict: "Strict"});

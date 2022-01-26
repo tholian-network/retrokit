@@ -118,39 +118,6 @@ CSSOMViewScrollingAPIEnabled:
     WebCore:
       default: false
 
-CaptureAudioInGPUProcessEnabled:
-  type: bool
-  humanReadableName: "GPU Process: Audio Capture"
-  humanReadableDescription: "Enable audio capture in GPU Process"
-  webcoreBinding: none
-  condition: ENABLE(MEDIA_STREAM)
-  exposed: [ WebKit ]
-  defaultValue:
-    WebKit:
-      default: WebKit::defaultCaptureAudioInGPUProcessEnabled()
-
-CaptureAudioInUIProcessEnabled:
-  type: bool
-  humanReadableName: "Capture audio in UI Process"
-  humanReadableDescription: "Enable audio capture in UI Process"
-  webcoreBinding: none
-  condition: ENABLE(MEDIA_STREAM)
-  exposed: [ WebKit ]
-  defaultValue:
-    WebKit:
-      default: WebKit::defaultCaptureAudioInUIProcessEnabled()
-
-CaptureVideoInUIProcessEnabled:
-  type: bool
-  humanReadableName: "Capture video in UI Process"
-  humanReadableDescription: "Enable video capture in UI Process"
-  webcoreBinding: none
-  condition: ENABLE(MEDIA_STREAM)
-  exposed: [ WebKit ]
-  defaultValue:
-    WebKit:
-      default: false
-
 DOMPasteAccessRequestsEnabled:
   type: bool
   humanReadableName: "DOM Paste Access Requests"
@@ -450,36 +417,6 @@ LiveRangeSelectionEnabled:
     WebCore:
       default: false
 
-MediaCaptureRequiresSecureConnection:
-  type: bool
-  inspectorOverride: true
-  humanReadableName: "Limit Media Capture to Secure Sites"
-  humanReadableDescription: "Limit Media Capture to Secure Sites"
-  condition: ENABLE(MEDIA_STREAM)
-  defaultValue:
-    WebKitLegacy:
-      default: true
-    WebKit:
-      default: true
-    WebCore:
-      default: true
-
-MockCaptureDevicesEnabled:
-  type: bool
-  webcoreOnChange: mockCaptureDevicesEnabledChanged
-  inspectorOverride: true
-  condition: ENABLE(MEDIA_STREAM)
-  humanReadableName: "Enable Mock Capture Devices"
-  humanReadableDescription: "Enable Mock Capture Devices"
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      "PLATFORM(IOS_FAMILY_SIMULATOR)": true
-      default: false
-    WebCore:
-      default: false
-
 MouseEventsSimulationEnabled:
   type: bool
   humanReadableName: "Mouse events simulation"
@@ -636,20 +573,6 @@ SimpleLineLayoutEnabled:
   webcoreOnChange: setNeedsRecalcStyleInAllFrames
   humanReadableName: "Simple line layout"
   humanReadableDescription: "Enable simple line layout path (SLL)"
-  defaultValue:
-    WebKitLegacy:
-      default: true
-    WebKit:
-      default: true
-    WebCore:
-      default: true
-
-# FIXME: Is this implemented for WebKitLegacy? If not, this should be excluded from WebKitLegacy entirely.
-SpeakerSelectionRequiresUserGesture:
-  type: bool
-  humanReadableName: "Require a user gesture for speaker selection"
-  humanReadableDescription: "Require a user gesture for speaker selection"
-  condition: ENABLE(MEDIA_STREAM)
   defaultValue:
     WebKitLegacy:
       default: true

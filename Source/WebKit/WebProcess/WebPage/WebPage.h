@@ -85,7 +85,6 @@
 #include <WebCore/UserActivity.h>
 #include <WebCore/UserContentTypes.h>
 #include <WebCore/UserInterfaceLayoutDirection.h>
-#include <WebCore/UserMediaRequestIdentifier.h>
 #include <WebCore/UserScriptTypes.h>
 #include <WebCore/VisibilityState.h>
 #include <WebCore/WebCoreKeyboardUIMode.h>
@@ -253,14 +252,12 @@ class DrawingArea;
 class FindController;
 class GPUProcessConnection;
 class LayerHostingContext;
-class MediaDeviceSandboxExtensions;
 class NotificationPermissionRequestManager;
 class PageBanner;
 class RemoteMediaSessionCoordinator;
 class RemoteRenderingBackendProxy;
 class RemoteWebInspectorUI;
 class TextCheckingControllerProxy;
-class UserMediaPermissionRequestManager;
 class ViewGestureGeometryCollector;
 class WebColorChooser;
 class WebContextMenu;
@@ -610,7 +607,7 @@ public:
 
     void hidePageBanners();
     void showPageBanners();
-    
+
     void setHeaderBannerHeightForTesting(int);
     void setFooterBannerHeightForTesting(int);
 #endif
@@ -619,7 +616,7 @@ public:
     WebCore::IntRect rootViewToScreen(const WebCore::IntRect&);
     WebCore::IntPoint accessibilityScreenToRootView(const WebCore::IntPoint&);
     WebCore::IntRect rootViewToAccessibilityScreen(const WebCore::IntRect&);
-    
+
     RefPtr<WebImage> scaledSnapshotWithOptions(const WebCore::IntRect&, double additionalScaleFactor, SnapshotOptions);
 
     static const WebEvent* currentEvent();
@@ -629,11 +626,6 @@ public:
 #if PLATFORM(IOS_FAMILY)
     void savePageState(WebCore::HistoryItem&);
     void restorePageState(const WebCore::HistoryItem&);
-#endif
-
-#if ENABLE(MEDIA_STREAM)
-    UserMediaPermissionRequestManager& userMediaPermissionRequestManager() { return m_userMediaPermissionRequestManager; }
-    void captureDevicesChanged();
 #endif
 
     void elementDidFocus(WebCore::Element&);
@@ -941,7 +933,6 @@ public:
     void setMediaVolume(float);
     void setMuted(WebCore::MediaProducer::MutedStateFlags, CompletionHandler<void()>&&);
     void setMayStartMediaWhenInWindow(bool);
-    void stopMediaCapture(WebCore::MediaProducer::MediaCaptureKind, CompletionHandler<void()>&&);
 
     void updateMainFrameScrollOffsetPinning();
 
@@ -1622,11 +1613,6 @@ private:
     void extendSandboxForFilesFromOpenPanel(Vector<SandboxExtension::Handle>&&);
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-    void userMediaAccessWasGranted(WebCore::UserMediaRequestIdentifier, WebCore::CaptureDevice&& audioDeviceUID, WebCore::CaptureDevice&& videoDeviceUID, String&& mediaDeviceIdentifierHashSalt, SandboxExtension::Handle&&, CompletionHandler<void()>&&);
-    void userMediaAccessWasDenied(WebCore::UserMediaRequestIdentifier, uint64_t reason, String&& invalidConstraint);
-#endif
-
     void requestMediaPlaybackState(CompletionHandler<void(WebKit::MediaPlaybackState)>&&);
 
     void pauseAllMediaPlayback(CompletionHandler<void()>&&);
@@ -1700,12 +1686,6 @@ private:
 
 #if USE(SYSTEM_PREVIEW)
     void systemPreviewActionTriggered(WebCore::SystemPreviewInfo, const String& message);
-#endif
-
-#if ENABLE(SPEECH_SYNTHESIS)
-    void speakingErrorOccurred();
-    void boundaryEventOccurred(bool wordBoundary, unsigned charIndex);
-    void voicesDidChange();
 #endif
 
     void frameBecameRemote(WebCore::FrameIdentifier, WebCore::GlobalFrameIdentifier&& remoteFrameIdentifier, WebCore::GlobalWindowIdentifier&& remoteWindowIdentifier);
@@ -1896,10 +1876,6 @@ private:
     RefPtr<NotificationPermissionRequestManager> m_notificationPermissionRequestManager;
 
     Ref<WebUserContentController> m_userContentController;
-
-#if ENABLE(MEDIA_STREAM)
-    UniqueRef<UserMediaPermissionRequestManager> m_userMediaPermissionRequestManager;
-#endif
 
     std::unique_ptr<WebCore::PrintContext> m_printContext;
     bool m_inActivePrintContextAccessScope { false };

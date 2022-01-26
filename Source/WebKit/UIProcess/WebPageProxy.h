@@ -49,12 +49,10 @@
 #include "SandboxExtension.h"
 #include "ShareableBitmap.h"
 #include "ShareableResource.h"
-#include "SpeechRecognitionPermissionRequest.h"
 #include "SuspendedPageProxy.h"
 #include "SyntheticEditingCommandType.h"
 #include "SystemPreviewController.h"
 #include "TransactionID.h"
-#include "UserMediaPermissionRequestManagerProxy.h"
 #include "VisibleContentRectUpdateInfo.h"
 #include "VisibleWebPageCounter.h"
 #include "WKBase.h"
@@ -93,8 +91,6 @@
 #include <WebCore/PageIdentifier.h>
 #include <WebCore/PlatformEvent.h>
 #include <WebCore/PlatformScreen.h>
-#include <WebCore/PlatformSpeechSynthesisUtterance.h>
-#include <WebCore/PlatformSpeechSynthesizer.h>
 #include <WebCore/PointerID.h>
 #include <WebCore/RegistrableDomain.h>
 #include <WebCore/RunJavaScriptParameters.h>
@@ -224,7 +220,6 @@ class ProtectionSpace;
 class RunLoopObserver;
 class SelectionData;
 class SharedBuffer;
-class SpeechRecognitionRequest;
 class TextIndicator;
 class ValidationBubble;
 
@@ -268,7 +263,6 @@ struct PermissionDescriptor;
 struct PrewarmInformation;
 struct SecurityOriginData;
 struct ShareData;
-struct SpeechRecognitionError;
 struct TextAlternativeWithRange;
 struct TextCheckingResult;
 struct TextRecognitionResult;
@@ -318,7 +312,6 @@ class RemoteLayerTreeTransaction;
 class RemoteMediaSessionCoordinatorProxy;
 class RemoteScrollingCoordinatorProxy;
 class SecKeyProxyStore;
-class SpeechRecognitionPermissionManager;
 class UserData;
 class ViewSnapshot;
 class VisitedLinkStore;
@@ -327,7 +320,6 @@ class WebBackForwardListItem;
 class WebContextMenuProxy;
 class WebEditCommandProxy;
 class PlaybackSessionManagerProxy;
-class UserMediaPermissionRequestProxy;
 class WebAuthenticatorCoordinatorProxy;
 class WebBackForwardCache;
 class WebKeyboardEvent;
@@ -372,7 +364,6 @@ struct WebBackForwardListCounts;
 struct WebHitTestResultData;
 struct WebNavigationDataStore;
 struct WebPopupItem;
-struct WebSpeechSynthesisVoice;
 
 enum class ImageAnalysisType : uint8_t;
 enum class TapHandlingResult : uint8_t;
@@ -410,10 +401,6 @@ class WebPageProxy final : public API::ObjectImpl<API::Object::Type::Page>
     , public WebPopupMenuProxy::Client
     , public IPC::MessageReceiver
     , public IPC::MessageSender
-#if ENABLE(SPEECH_SYNTHESIS)
-    , public WebCore::PlatformSpeechSynthesisUtteranceClient
-    , public WebCore::PlatformSpeechSynthesizerClient
-#endif
 #if PLATFORM(MACCATALYST)
     , public EndowmentStateTracker::Client
 #endif
@@ -681,10 +668,6 @@ public:
     void setEditable(bool);
     bool isEditable() const { return m_isEditable; }
 
-    void activateMediaStreamCaptureInPage();
-    bool isMediaStreamCaptureMuted() const { return m_mutedState.containsAny(WebCore::MediaProducer::MediaStreamCaptureIsMuted); }
-    void setMediaStreamCaptureMuted(bool);
-
     void requestFontAttributesAtSelectionStart(CompletionHandler<void(const WebCore::FontAttributes&)>&&);
 
     void setCanShowPlaceholder(const WebCore::ElementContext&, bool);
@@ -698,7 +681,7 @@ public:
     void focusTextInputContextAndPlaceCaret(const WebCore::ElementContext&, const WebCore::IntPoint&, CompletionHandler<void(bool)>&&);
 
     void setShouldRevealCurrentSelectionAfterInsertion(bool);
-        
+
     void setScreenIsBeingCaptured(bool);
 
     void insertTextPlaceholder(const WebCore::IntSize&, CompletionHandler<void(const std::optional<WebCore::ElementContext>&)>&&);
@@ -1301,9 +1284,6 @@ public:
     bool isAudioMuted() const { return m_mutedState.contains(WebCore::MediaProducer::MutedState::AudioIsMuted); };
     void setMayStartMediaWhenInWindow(bool);
     bool mayStartMediaWhenInWindow() const { return m_mayStartMediaWhenInWindow; }
-    void setMediaCaptureEnabled(bool);
-    bool mediaCaptureEnabled() const { return m_mediaCaptureEnabled; }
-    void stopMediaCapture(WebCore::MediaProducer::MediaCaptureKind, CompletionHandler<void()>&& = [] { });
 
     void pauseAllMediaPlayback(CompletionHandler<void()>&&);
     void suspendAllMediaPlayback(CompletionHandler<void()>&&);
@@ -1411,15 +1391,10 @@ public:
 
     bool isPlayingAudio() const { return !!(m_mediaState & WebCore::MediaProducer::MediaState::IsPlayingAudio); }
     void isPlayingMediaDidChange(WebCore::MediaProducer::MediaStateFlags);
-    void updateReportedMediaCaptureState();
 
     enum class CanDelayNotification { No, Yes };
     void updatePlayingMediaDidChange(WebCore::MediaProducer::MediaStateFlags, CanDelayNotification = CanDelayNotification::No);
-    bool isCapturingAudio() const { return m_mediaState.containsAny(WebCore::MediaProducer::AudioCaptureMask); }
-    bool isCapturingVideo() const { return m_mediaState.containsAny(WebCore::MediaProducer::VideoCaptureMask); }
-    bool hasActiveAudioStream() const { return m_mediaState.containsAny(WebCore::MediaProducer::MediaState::HasActiveAudioCaptureDevice); }
-    bool hasActiveVideoStream() const { return m_mediaState.containsAny(WebCore::MediaProducer::MediaState::HasActiveVideoCaptureDevice); }
-    WebCore::MediaProducer::MediaStateFlags reportedMediaState() const { return m_reportedMediaCaptureState | (m_mediaState - WebCore::MediaProducer::MediaCaptureMask); }
+    WebCore::MediaProducer::MediaStateFlags reportedMediaState() const { return m_mediaState; }
     WebCore::MediaProducer::MutedStateFlags mutedStateFlags() const { return m_mutedState; }
 
     void handleAutoplayEvent(WebCore::AutoplayEvent, OptionSet<WebCore::AutoplayEventFlags>);
@@ -1521,8 +1496,6 @@ public:
     bool hasHadSelectionChangesFromUserInteraction() const { return m_hasHadSelectionChangesFromUserInteraction; }
 
     void isLoadingChanged() { activityStateDidChange(WebCore::ActivityState::IsLoading); }
-
-    void clearUserMediaState();
 
     void setShouldSkipWaitingForPaintAfterNextViewDidMoveToWindow(bool shouldSkip) { m_shouldSkipWaitingForPaintAfterNextViewDidMoveToWindow = shouldSkip; }
 
@@ -1631,15 +1604,6 @@ public:
     void markPrivateClickMeasurementsAsExpiredForTesting(CompletionHandler<void()>&&);
     void setPCMFraudPreventionValuesForTesting(const String& unlinkableToken, const String& secretToken, const String& signature, const String& keyID, CompletionHandler<void()>&&);
 
-#if ENABLE(SPEECH_SYNTHESIS)
-    void speechSynthesisVoiceList(CompletionHandler<void(Vector<WebSpeechSynthesisVoice>&&)>&&);
-    void speechSynthesisSpeak(const String&, const String&, float volume, float rate, float pitch, MonotonicTime startTime, const String& voiceURI, const String& voiceName, const String& voiceLang, bool localService, bool defaultVoice, CompletionHandler<void()>&&);
-    void speechSynthesisSetFinishedCallback(CompletionHandler<void()>&&);
-    void speechSynthesisCancel();
-    void speechSynthesisPause(CompletionHandler<void()>&&);
-    void speechSynthesisResume(CompletionHandler<void()>&&);
-#endif
-
     void configureLoggingChannel(const String&, WTFLogChannelState, WTFLogLevel);
 
     void addObserver(WebViewDidMoveToWindowObserver&);
@@ -1662,11 +1626,6 @@ public:
 
     URL currentResourceDirectoryURL() const;
 
-#if ENABLE(MEDIA_STREAM)
-    void setMockCaptureDevicesEnabledOverride(std::optional<bool>);
-    void willStartCapture(const UserMediaPermissionRequestProxy&, CompletionHandler<void()>&&);
-#endif
-
     void maybeInitializeSandboxExtensionHandle(WebProcessProxy&, const URL&, const URL& resourceDirectoryURL, SandboxExtension::Handle&, bool checkAssumedReadAccessToResourceURL = true);
 
 #if ENABLE(WEB_AUTHN)
@@ -1685,8 +1644,6 @@ public:
     const Vector<String>& corsDisablingPatterns() const { return m_corsDisablingPatterns; }
 
     void getProcessDisplayName(CompletionHandler<void(String&&)>&&);
-
-    void setOrientationForMediaCapture(uint64_t);
 
     bool isHandlingPreventableTouchStart() const { return m_handlingPreventableTouchStartCount; }
     bool isHandlingPreventableTouchEnd() const { return m_handlingPreventableTouchEndCount; }
@@ -1749,13 +1706,7 @@ public:
     bool canUseCredentialStorage() { return m_canUseCredentialStorage; }
     void setCanUseCredentialStorage(bool);
 
-    Seconds mediaCaptureReportingDelay() const { return m_mediaCaptureReportingDelay; }
-    void setMediaCaptureReportingDelay(Seconds captureReportingDelay) { m_mediaCaptureReportingDelay = captureReportingDelay; }
     size_t suspendMediaPlaybackCounter() { return m_suspendMediaPlaybackCounter; }
-
-    void requestSpeechRecognitionPermission(WebCore::SpeechRecognitionRequest&, SpeechRecognitionPermissionRequestCallback&&);
-    void requestSpeechRecognitionPermissionByDefaultAction(const WebCore::SecurityOriginData&, CompletionHandler<void(bool)>&&);
-    void requestUserMediaPermissionForSpeechRecognition(WebCore::FrameIdentifier, const WebCore::SecurityOrigin&, const WebCore::SecurityOrigin&, CompletionHandler<void(bool)>&&);
 
     void syncIfMockDevicesEnabledChanged();
 
@@ -1766,10 +1717,6 @@ public:
     void setAppHighlightsVisibility(const WebCore::HighlightVisibility);
     bool appHighlightsVisibility();
     CGRect appHighlightsOverlayRect();
-#endif
-
-#if ENABLE(MEDIA_STREAM)
-    WebCore::CaptureSourceOrError createRealtimeMediaSourceForSpeechRecognition();
 #endif
 
 #if PLATFORM(MAC)
@@ -1965,13 +1912,6 @@ private:
     void sendMessageToWebViewWithReply(UserMessage&&, CompletionHandler<void(UserMessage&&)>&&);
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-    UserMediaPermissionRequestManagerProxy& userMediaPermissionRequestManager();
-#endif
-    void requestUserMediaPermissionForFrame(WebCore::UserMediaRequestIdentifier, WebCore::FrameIdentifier, const WebCore::SecurityOriginData& userMediaDocumentOriginIdentifier, const WebCore::SecurityOriginData& topLevelDocumentOriginIdentifier, WebCore::MediaStreamRequest&&);
-    void enumerateMediaDevicesForFrame(WebCore::FrameIdentifier, const WebCore::SecurityOriginData& userMediaDocumentOriginData, const WebCore::SecurityOriginData& topLevelDocumentOriginData, CompletionHandler<void(const Vector<WebCore::CaptureDevice>&, const String&)>&&);
-    void beginMonitoringCaptureDevices();
-
     void runModal();
     void notifyScrollerThumbIsVisibleInRect(const WebCore::IntRect&);
     void recommendedScrollbarStyleDidChange(int32_t newStyle);
@@ -2082,14 +2022,9 @@ private:
     void loadRecentSearches(const String&, CompletionHandler<void(Vector<WebCore::RecentSearch>&&)>&&);
 
 #if PLATFORM(COCOA)
-    // Speech.
-    void getIsSpeaking(CompletionHandler<void(bool)>&&);
-    void speak(const String&);
-    void stopSpeaking();
-
     // Spotlight.
     void searchWithSpotlight(const String&);
-        
+
     void searchTheWeb(const String&);
 
     // Dictionary.
@@ -2249,8 +2184,6 @@ private:
     void handleMessage(IPC::Connection&, const String& messageName, const UserData& messageBody);
     void handleSynchronousMessage(IPC::Connection&, const String& messageName, const UserData& messageBody, CompletionHandler<void(UserData&&)>&&);
 
-    void viewIsBecomingVisible();
-
     void stopAllURLSchemeTasks(WebProcessProxy* = nullptr);
 
 #if ENABLE(ATTACHMENT_ELEMENT)
@@ -2283,20 +2216,6 @@ private:
 
 #if ENABLE(RESOURCE_LOAD_STATISTICS)
     void logFrameNavigation(const WebFrameProxy&, const URL& pageURL, const WebCore::ResourceRequest&, const URL& redirectURL, bool wasPotentiallyInitiatedByUser);
-#endif
-
-#if ENABLE(SPEECH_SYNTHESIS)
-    void didStartSpeaking(WebCore::PlatformSpeechSynthesisUtterance&) final;
-    void didFinishSpeaking(WebCore::PlatformSpeechSynthesisUtterance&) final;
-    void didPauseSpeaking(WebCore::PlatformSpeechSynthesisUtterance&) final;
-    void didResumeSpeaking(WebCore::PlatformSpeechSynthesisUtterance&) final;
-    void speakingErrorOccurred(WebCore::PlatformSpeechSynthesisUtterance&) final;
-    void boundaryEventOccurred(WebCore::PlatformSpeechSynthesisUtterance&, WebCore::SpeechBoundary, unsigned charIndex) final;
-    void voicesDidChange() final;
-
-    struct SpeechSynthesisData;
-    SpeechSynthesisData& speechSynthesisData();
-    void resetSpeechSynthesizer();
 #endif
 
 #if PLATFORM(IOS_FAMILY)
@@ -2426,10 +2345,6 @@ private:
 
     RefPtr<WebOpenPanelResultListenerProxy> m_openPanelResultListener;
 
-#if ENABLE(MEDIA_STREAM)
-    std::unique_ptr<UserMediaPermissionRequestManagerProxy> m_userMediaPermissionRequestManager;
-#endif
-
     OptionSet<WebCore::ActivityState::Flag> m_activityState;
     bool m_viewWasEverInWindow { false };
 #if PLATFORM(MACCATALYST)
@@ -2491,7 +2406,7 @@ private:
     double m_pageLength { 0 };
     double m_gapBetweenPages { 0 };
     bool m_paginationLineGridEnabled { false };
-        
+
     // If the process backing the web page is alive and kicking.
     bool m_hasRunningProcess { false };
 
@@ -2654,7 +2569,6 @@ private:
     WebCore::MediaProducer::MutedStateFlags m_mutedState;
     bool m_mayStartMediaWhenInWindow { true };
     bool m_mediaPlaybackIsSuspended { false };
-    bool m_mediaCaptureEnabled { true };
 
     bool m_waitingForDidUpdateActivityState { false };
 
@@ -2688,12 +2602,6 @@ private:
     Vector<CompletionHandler<void()>> m_nextActivityStateChangeCallbacks;
 
     WebCore::MediaProducer::MediaStateFlags m_mediaState;
-
-    // To make sure capture indicators are visible long enough, m_reportedMediaCaptureState is the same as m_mediaState except that we might delay a bit transition from capturing to not-capturing.
-    WebCore::MediaProducer::MediaStateFlags m_reportedMediaCaptureState;
-    RunLoop::Timer<WebPageProxy> m_updateReportedMediaCaptureStateTimer;
-    static constexpr Seconds DefaultMediaCaptureReportingDelay { 3_s };
-    Seconds m_mediaCaptureReportingDelay { DefaultMediaCaptureReportingDelay };
 
     bool m_hasHadSelectionChangesFromUserInteraction { false };
 
@@ -2765,20 +2673,6 @@ private:
     HashMap<WebViewDidMoveToWindowObserver*, WeakPtr<WebViewDidMoveToWindowObserver>> m_webViewDidMoveToWindowObservers;
 
     mutable RefPtr<Logger> m_logger;
-
-#if ENABLE(SPEECH_SYNTHESIS)
-    struct SpeechSynthesisData {
-        std::unique_ptr<WebCore::PlatformSpeechSynthesizer> synthesizer;
-        RefPtr<WebCore::PlatformSpeechSynthesisUtterance> utterance;
-        CompletionHandler<void()> speakingStartedCompletionHandler;
-        CompletionHandler<void()> speakingFinishedCompletionHandler;
-        CompletionHandler<void()> speakingPausedCompletionHandler;
-        CompletionHandler<void()> speakingResumedCompletionHandler;
-    };
-    std::optional<SpeechSynthesisData> m_speechSynthesisData;
-#endif
-
-    std::unique_ptr<SpeechRecognitionPermissionManager> m_speechRecognitionPermissionManager;
 
 #if ENABLE(MEDIA_SESSION_COORDINATOR)
     RefPtr<RemoteMediaSessionCoordinatorProxy> m_mediaSessionCoordinatorProxy;

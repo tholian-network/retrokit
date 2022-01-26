@@ -130,8 +130,6 @@ public:
     void handleRunOpenPanel(const WebPageProxy&, const WebFrameProxy&, const API::OpenPanelParameters&, WebOpenPanelResultListenerProxy&);
     void willShowJavaScriptDialog(WebPageProxy&);
 
-    bool shouldAllowGetUserMediaForPage(const WebPageProxy&) const;
-
 #if ENABLE(REMOTE_INSPECTOR)
     // Inspector::RemoteAutomationTarget API
     String name() const { return m_sessionIdentifier; }
@@ -328,8 +326,6 @@ private:
 
     RunLoop::Timer<WebAutomationSession> m_loadTimer;
     Vector<String> m_filesToSelectForFileUpload;
-
-    bool m_permissionForGetUserMedia { true };
 
 #if ENABLE(WEBDRIVER_ACTIONS_API)
     // SimulatedInputDispatcher APIs take a set of input sources. We also intern these

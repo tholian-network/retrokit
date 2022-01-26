@@ -389,20 +389,6 @@ webkit_settings_set_enable_write_console_messages_to_stdout    (WebKitSettings *
                                                                 gboolean        enabled);
 
 WEBKIT_API gboolean
-webkit_settings_get_enable_media_stream                        (WebKitSettings *settings);
-
-WEBKIT_API void
-webkit_settings_set_enable_media_stream                        (WebKitSettings *settings,
-                                                                gboolean        enabled);
-
-WEBKIT_API gboolean
-webkit_settings_get_enable_mock_capture_devices                (WebKitSettings *settings);
-
-WEBKIT_API void
-webkit_settings_set_enable_mock_capture_devices                (WebKitSettings *settings,
-                                                                gboolean        enabled);
-
-WEBKIT_API gboolean
 webkit_settings_get_enable_spatial_navigation                  (WebKitSettings *settings);
 
 WEBKIT_API void

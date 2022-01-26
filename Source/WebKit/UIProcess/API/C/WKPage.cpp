@@ -64,7 +64,6 @@
 #include "NotificationPermissionRequest.h"
 #include "PageClient.h"
 #include "PrintInfo.h"
-#include "SpeechRecognitionPermissionRequest.h"
 #include "WKAPICast.h"
 #include "WKPagePolicyClientInternal.h"
 #include "WKPageRenderingProgressEventsInternal.h"
@@ -80,7 +79,6 @@
 #include "WebProcessProxy.h"
 #include "WebProtectionSpace.h"
 #include <WebCore/ContentRuleListResults.h>
-#include <WebCore/MockRealtimeMediaSourceCenter.h>
 #include <WebCore/Page.h>
 #include <WebCore/SSLKeyGenerator.h>
 #include <WebCore/SecurityOriginData.h>
@@ -1907,26 +1905,6 @@ void WKPageSetPageUIClient(WKPageRef pageRef, const WKPageUIClientBase* wkClient
             return true;
         }
 
-        void decidePolicyForUserMediaPermissionRequest(WebPageProxy& page, WebFrameProxy& frame, API::SecurityOrigin& userMediaDocumentOrigin, API::SecurityOrigin& topLevelDocumentOrigin, UserMediaPermissionRequestProxy& permissionRequest) final
-        {
-            if (!m_client.decidePolicyForUserMediaPermissionRequest) {
-                permissionRequest.deny();
-                return;
-            }
-
-            m_client.decidePolicyForUserMediaPermissionRequest(toAPI(&page), toAPI(&frame), toAPI(&userMediaDocumentOrigin), toAPI(&topLevelDocumentOrigin), toAPI(&permissionRequest), m_client.base.clientInfo);
-        }
-
-        void checkUserMediaPermissionForOrigin(WebPageProxy& page, WebFrameProxy& frame, API::SecurityOrigin& userMediaDocumentOrigin, API::SecurityOrigin& topLevelDocumentOrigin, UserMediaPermissionCheckProxy& request) final
-        {
-            if (!m_client.checkUserMediaPermissionForOrigin) {
-                request.deny();
-                return;
-            }
-
-            m_client.checkUserMediaPermissionForOrigin(toAPI(&page), toAPI(&frame), toAPI(&userMediaDocumentOrigin), toAPI(&topLevelDocumentOrigin), toAPI(&request), m_client.base.clientInfo);
-        }
-        
         void decidePolicyForNotificationPermissionRequest(WebPageProxy& page, API::SecurityOrigin& origin, CompletionHandler<void(bool allowed)>&& completionHandler) final
         {
             if (!m_client.decidePolicyForNotificationPermissionRequest)
@@ -2044,7 +2022,7 @@ void WKPageSetPageUIClient(WKPageRef pageRef, const WKPageUIClientBase* wkClient
         {
             if (!m_client.requestPointerLock)
                 return;
-            
+
             m_client.requestPointerLock(toAPI(page), m_client.base.clientInfo);
         }
 
@@ -2121,13 +2099,6 @@ void WKPageSetPageUIClient(WKPageRef pageRef, const WKPageUIClientBase* wkClient
             completionHandler(WebKit::WebAuthenticationPanelResult::Presented);
         }
 #endif
-        void decidePolicyForSpeechRecognitionPermissionRequest(WebPageProxy& page, API::SecurityOrigin& origin, CompletionHandler<void(bool)>&& completionHandler) final
-        {
-            if (!m_client.decidePolicyForSpeechRecognitionPermissionRequest)
-                return;
-
-            m_client.decidePolicyForSpeechRecognitionPermissionRequest(toAPI(&page), toAPI(&origin), toAPI(SpeechRecognitionPermissionCallback::create(WTFMove(completionHandler)).ptr()));
-        }
 
     };
 
@@ -2737,23 +2708,8 @@ void WKPageSetMuted(WKPageRef pageRef, WKMediaMutedState mutedState)
 
     if (mutedState & kWKMediaAudioMuted)
         coreState.add(WebCore::MediaProducer::MutedState::AudioIsMuted);
-    if (mutedState & kWKMediaCaptureDevicesMuted)
-        coreState.add(WebCore::MediaProducer::AudioAndVideoCaptureIsMuted);
-    if (mutedState & kWKMediaScreenCaptureMuted)
-        coreState.add(WebCore::MediaProducer::MutedState::ScreenCaptureIsMuted);
 
     toImpl(pageRef)->setMuted(coreState);
-}
-
-void WKPageSetMediaCaptureEnabled(WKPageRef pageRef, bool enabled)
-{
-    CRASH_IF_SUSPENDED;
-    toImpl(pageRef)->setMediaCaptureEnabled(enabled);
-}
-
-bool WKPageGetMediaCaptureEnabled(WKPageRef page)
-{
-    return toImpl(page)->mediaCaptureEnabled();
 }
 
 void WKPageDidAllowPointerLock(WKPageRef pageRef)
@@ -2761,16 +2717,6 @@ void WKPageDidAllowPointerLock(WKPageRef pageRef)
     CRASH_IF_SUSPENDED;
 #if ENABLE(POINTER_LOCK)
     toImpl(pageRef)->didAllowPointerLock();
-#else
-    UNUSED_PARAM(pageRef);
-#endif
-}
-
-void WKPageClearUserMediaState(WKPageRef pageRef)
-{
-    CRASH_IF_SUSPENDED;
-#if ENABLE(MEDIA_STREAM)
-    toImpl(pageRef)->clearUserMediaState();
 #else
     UNUSED_PARAM(pageRef);
 #endif
@@ -2895,18 +2841,6 @@ WKMediaState WKPageGetMediaState(WKPageRef page)
         state |= kWKMediaIsPlayingAudio;
     if (coreState & WebCore::MediaProducer::MediaState::IsPlayingVideo)
         state |= kWKMediaIsPlayingVideo;
-    if (coreState & WebCore::MediaProducer::MediaState::HasActiveAudioCaptureDevice)
-        state |= kWKMediaHasActiveAudioCaptureDevice;
-    if (coreState & WebCore::MediaProducer::MediaState::HasActiveVideoCaptureDevice)
-        state |= kWKMediaHasActiveVideoCaptureDevice;
-    if (coreState & WebCore::MediaProducer::MediaState::HasMutedAudioCaptureDevice)
-        state |= kWKMediaHasMutedAudioCaptureDevice;
-    if (coreState & WebCore::MediaProducer::MediaState::HasMutedVideoCaptureDevice)
-        state |= kWKMediaHasMutedVideoCaptureDevice;
-    if (coreState & WebCore::MediaProducer::MediaState::HasActiveDisplayCaptureDevice)
-        state |= kWKMediaHasActiveDisplayCaptureDevice;
-    if (coreState & WebCore::MediaProducer::MediaState::HasMutedDisplayCaptureDevice)
-        state |= kWKMediaHasMutedDisplayCaptureDevice;
 
     return state;
 }
@@ -3053,23 +2987,6 @@ void WKPageSetPCMFraudPreventionValuesForTesting(WKPageRef pageRef, WKStringRef 
     });
 }
 
-void WKPageSetMockCameraOrientation(WKPageRef pageRef, uint64_t orientation)
-{
-    CRASH_IF_SUSPENDED;
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-    toImpl(pageRef)->setOrientationForMediaCapture(orientation);
-#endif
-}
-
-WK_EXPORT bool WKPageIsMockRealtimeMediaSourceCenterEnabled(WKPageRef)
-{
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-    return MockRealtimeMediaSourceCenter::mockRealtimeMediaSourceCenterEnabled();
-#else
-    return false;
-#endif
-}
-
 void WKPageLoadedSubresourceDomains(WKPageRef pageRef, WKPageLoadedSubresourceDomainsFunction callback, void* callbackContext)
 {
     CRASH_IF_SUSPENDED;
@@ -3094,12 +3011,6 @@ void WKPageClearLoadedSubresourceDomains(WKPageRef pageRef)
 #else
     UNUSED_PARAM(pageRef);
 #endif
-}
-
-void WKPageSetMediaCaptureReportingDelayForTesting(WKPageRef pageRef, double delay)
-{
-    CRASH_IF_SUSPENDED;
-    toImpl(pageRef)->setMediaCaptureReportingDelay(Seconds(delay));
 }
 
 void WKPageDispatchActivityStateUpdateForTesting(WKPageRef pageRef)

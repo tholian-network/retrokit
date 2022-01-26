@@ -38,14 +38,6 @@
 #include "PlatformMediaSessionManager.h"
 #include <wtf/IsoMallocInlines.h>
 
-#if ENABLE(MEDIA_STREAM)
-#include "MediaStream.h"
-#include "MediaStreamAudioDestinationNode.h"
-#include "MediaStreamAudioSource.h"
-#include "MediaStreamAudioSourceNode.h"
-#include "MediaStreamAudioSourceOptions.h"
-#endif
-
 #if ENABLE(VIDEO)
 #include "HTMLMediaElement.h"
 #include "MediaElementAudioSourceNode.h"
@@ -531,24 +523,6 @@ ExceptionOr<Ref<MediaElementAudioSourceNode>> AudioContext::createMediaElementSo
 
     ASSERT(isMainThread());
     return MediaElementAudioSourceNode::create(*this, { &mediaElement });
-}
-
-#endif
-
-#if ENABLE(MEDIA_STREAM)
-
-ExceptionOr<Ref<MediaStreamAudioSourceNode>> AudioContext::createMediaStreamSource(MediaStream& mediaStream)
-{
-    ALWAYS_LOG(LOGIDENTIFIER);
-
-    ASSERT(isMainThread());
-
-    return MediaStreamAudioSourceNode::create(*this, { &mediaStream });
-}
-
-ExceptionOr<Ref<MediaStreamAudioDestinationNode>> AudioContext::createMediaStreamDestination()
-{
-    return MediaStreamAudioDestinationNode::create(*this);
 }
 
 #endif

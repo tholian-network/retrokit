@@ -266,22 +266,6 @@
             ]
         },
         {
-            "id": "SessionPermission",
-            "type": "string",
-            "description": "Enumerates different permissions that must be obtained in order to use privileged APIs.",
-            "enum": [
-                "GetUserMedia"
-            ]
-        },
-        {
-            "id": "SessionPermissionData",
-            "type": "object",
-            "properties": [
-                { "name": "permission", "$ref": "SessionPermission" },
-                { "name": "value", "type": "boolean" }
-            ]
-        },
-        {
             "id": "InputSourceType",
             "type": "string",
             "description": "The type of an input source. This determines which state properties are applicable to the input source. The 'Null' input source type has no properties, only a duration. This can extend the effective wait for a tick.",

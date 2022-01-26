@@ -58,7 +58,6 @@
 #include "WebErrors.h"
 #include "WebProcessMessages.h"
 #include <WebCore/LogInitialization.h>
-#include <WebCore/MockRealtimeMediaSourceCenter.h>
 #include <WebCore/NowPlayingManager.h>
 #include <wtf/Language.h>
 
@@ -70,13 +69,6 @@
 
 #if ENABLE(WEBGL)
 #include "RemoteGraphicsContextGL.h"
-#endif
-
-// FIXME: <https://bugs.webkit.org/show_bug.cgi?id=211085>
-// UserMediaCaptureManagerProxy should not be platform specific
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-#include "UserMediaCaptureManagerProxy.h"
-#include "UserMediaCaptureManagerProxyMessages.h"
 #endif
 
 #if ENABLE(WEB_AUDIO)
@@ -117,59 +109,8 @@
 #include "LocalAudioSessionRoutingArbitrator.h"
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-#include <WebCore/SecurityOrigin.h>
-#endif
-
 namespace WebKit {
 using namespace WebCore;
-
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-class GPUProxyForCapture final : public UserMediaCaptureManagerProxy::ConnectionProxy {
-    WTF_MAKE_FAST_ALLOCATED;
-public:
-    explicit GPUProxyForCapture(GPUConnectionToWebProcess& process)
-        : m_process(process)
-    {
-    }
-
-private:
-    Logger& logger() final { return m_process.logger(); }
-    void addMessageReceiver(IPC::ReceiverName, IPC::MessageReceiver&) final { }
-    void removeMessageReceiver(IPC::ReceiverName messageReceiverName) final { }
-    IPC::Connection& connection() final { return m_process.connection(); }
-    bool willStartCapture(CaptureDevice::DeviceType type) const final
-    {
-        switch (type) {
-        case CaptureDevice::DeviceType::Unknown:
-        case CaptureDevice::DeviceType::Speaker:
-            return false;
-        case CaptureDevice::DeviceType::Microphone:
-            return m_process.allowsAudioCapture();
-        case CaptureDevice::DeviceType::Camera:
-            if (!m_process.allowsVideoCapture())
-                return false;
-#if PLATFORM(IOS)
-            MediaSessionManageriOS::providePresentingApplicationPID();
-#endif
-            return true;
-            break;
-        case CaptureDevice::DeviceType::Screen:
-            return m_process.allowsDisplayCapture();
-        case CaptureDevice::DeviceType::Window:
-            return m_process.allowsDisplayCapture();
-        }
-    }
-    
-    bool setCaptureAttributionString() final
-    {
-        return m_process.setCaptureAttributionString();
-    }
-
-    GPUConnectionToWebProcess& m_process;
-};
-
-#endif
 
 Ref<GPUConnectionToWebProcess> GPUConnectionToWebProcess::create(GPUProcess& gpuProcess, WebCore::ProcessIdentifier webProcessIdentifier, IPC::Connection::Identifier connectionIdentifier, PAL::SessionID sessionID, GPUProcessConnectionParameters&& parameters)
 {
@@ -185,12 +126,6 @@ GPUConnectionToWebProcess::GPUConnectionToWebProcess(GPUProcess& gpuProcess, Web
 #endif
     , m_remoteMediaPlayerManagerProxy(makeUniqueRef<RemoteMediaPlayerManagerProxy>(*this))
     , m_sessionID(sessionID)
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-    , m_sampleBufferDisplayLayerManager(RemoteSampleBufferDisplayLayerManager::create(*this))
-#endif
-#if ENABLE(MEDIA_STREAM)
-    , m_captureOrigin(SecurityOrigin::createUnique())
-#endif
 #if ENABLE(ROUTING_ARBITRATION) && HAVE(AVAUDIO_ROUTING_ARBITER)
     , m_routingArbitrator(LocalAudioSessionRoutingArbitrator::create(*this))
 #endif
@@ -216,10 +151,6 @@ GPUConnectionToWebProcess::~GPUConnectionToWebProcess()
     RELEASE_ASSERT(RunLoop::isMain());
 
     m_connection->invalidate();
-
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-    m_sampleBufferDisplayLayerManager->close();
-#endif
 }
 
 void GPUConnectionToWebProcess::didClose(IPC::Connection& connection)
@@ -304,14 +235,6 @@ bool GPUConnectionToWebProcess::allowsExitUnderMemoryPressure() const
     if (m_remoteAudioDestinationManager && !m_remoteAudioDestinationManager->allowsExitUnderMemoryPressure())
         return false;
 #endif
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-    if (m_userMediaCaptureManagerProxy && m_userMediaCaptureManagerProxy->hasSourceProxies())
-        return false;
-    if (m_audioMediaStreamTrackRendererInternalUnitManager && m_audioMediaStreamTrackRendererInternalUnitManager->hasUnits())
-        return false;
-    if (!m_sampleBufferDisplayLayerManager->allowsExitUnderMemoryPressure())
-        return false;
-#endif
 #if HAVE(AVASSETREADER)
     if (m_imageDecoderAVFProxy && !m_imageDecoderAVFProxy->allowsExitUnderMemoryPressure())
         return false;
@@ -361,16 +284,6 @@ RemoteMediaResourceManager& GPUConnectionToWebProcess::remoteMediaResourceManage
 
     return *m_remoteMediaResourceManager;
 }
-
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-UserMediaCaptureManagerProxy& GPUConnectionToWebProcess::userMediaCaptureManagerProxy()
-{
-    if (!m_userMediaCaptureManagerProxy)
-        m_userMediaCaptureManagerProxy = makeUnique<UserMediaCaptureManagerProxy>(makeUniqueRef<GPUProxyForCapture>(*this));
-
-    return *m_userMediaCaptureManagerProxy;
-}
-#endif
 
 #if USE(AUDIO_SESSION)
 RemoteAudioSessionProxy& GPUConnectionToWebProcess::audioSessionProxy()
@@ -556,12 +469,6 @@ bool GPUConnectionToWebProcess::dispatchMessage(IPC::Connection& connection, IPC
         remoteMediaResourceManager().didReceiveMessage(connection, decoder);
         return true;
     }
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-    if (decoder.messageReceiverName() == Messages::UserMediaCaptureManagerProxy::messageReceiverName()) {
-        userMediaCaptureManagerProxy().didReceiveMessageFromGPUProcess(connection, decoder);
-        return true;
-    }
-#endif
 #if USE(AUDIO_SESSION)
     if (decoder.messageReceiverName() == Messages::RemoteAudioSessionProxy::messageReceiverName()) {
         audioSessionProxy().didReceiveMessage(connection, decoder);
@@ -640,34 +547,6 @@ const String& GPUConnectionToWebProcess::mediaCacheDirectory() const
 {
     return m_gpuProcess->mediaCacheDirectory(m_sessionID);
 }
-
-#if ENABLE(MEDIA_STREAM)
-void GPUConnectionToWebProcess::setOrientationForMediaCapture(uint64_t orientation)
-{
-// FIXME: <https://bugs.webkit.org/show_bug.cgi?id=211085>
-#if PLATFORM(COCOA)
-    userMediaCaptureManagerProxy().setOrientation(orientation);
-#endif
-}
-
-void GPUConnectionToWebProcess::updateCaptureAccess(bool allowAudioCapture, bool allowVideoCapture, bool allowDisplayCapture)
-{
-    m_allowsAudioCapture |= allowAudioCapture;
-    m_allowsVideoCapture |= allowVideoCapture;
-    m_allowsDisplayCapture |= allowDisplayCapture;
-}
-
-void GPUConnectionToWebProcess::updateCaptureOrigin(const WebCore::SecurityOriginData& originData)
-{
-    m_captureOrigin = originData.securityOrigin();
-}
-
-#if !PLATFORM(COCOA)
-bool GPUConnectionToWebProcess::setCaptureAttributionString() const
-{
-}
-#endif
-#endif // ENABLE(MEDIA_STREAM)
 
 #if PLATFORM(MAC)
 void GPUConnectionToWebProcess::displayConfigurationChanged(CGDirectDisplayID, CGDisplayChangeSummaryFlags flags)

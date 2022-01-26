@@ -84,17 +84,12 @@
 #include "ProvisionalPageProxy.h"
 #include "SafeBrowsingWarning.h"
 #include "SharedBufferDataReference.h"
-#include "SpeechRecognitionPermissionManager.h"
-#include "SpeechRecognitionRemoteRealtimeMediaSource.h"
-#include "SpeechRecognitionRemoteRealtimeMediaSourceManager.h"
 #include "SyntheticEditingCommandType.h"
 #include "TextChecker.h"
 #include "TextCheckerState.h"
 #include "TextRecognitionUpdateResult.h"
 #include "URLSchemeTaskParameters.h"
 #include "UndoOrRedo.h"
-#include "UserMediaPermissionRequestProxy.h"
-#include "UserMediaProcessManager.h"
 #include "WKContextPrivate.h"
 #include "WebAutomationSession.h"
 #include "WebBackForwardCache.h"
@@ -210,7 +205,6 @@
 #include "InsertTextOptions.h"
 #include "RemoteLayerTreeDrawingAreaProxy.h"
 #include "RemoteLayerTreeScrollingPerformanceData.h"
-#include "UserMediaCaptureManagerProxy.h"
 #include <WebCore/AttributedString.h>
 #include <WebCore/RunLoopObserver.h>
 #include <WebCore/SystemBattery.h>
@@ -476,7 +470,6 @@ WebPageProxy::WebPageProxy(PageClient& pageClient, WebProcessProxy& process, Ref
     , m_isSmartInsertDeleteEnabled(TextChecker::isSmartInsertDeleteEnabled())
 #endif
     , m_pageLoadState(*this)
-    , m_updateReportedMediaCaptureStateTimer(RunLoop::main(), this, &WebPageProxy::updateReportedMediaCaptureState)
     , m_inspectorController(makeUnique<WebPageInspectorController>(*this))
 #if ENABLE(REMOTE_INSPECTOR)
     , m_inspectorDebuggable(makeUnique<WebPageDebuggable>(*this))
@@ -1138,7 +1131,6 @@ void WebPageProxy::close()
     // Make sure we don't hold a process assertion after getting closed.
     m_isVisibleActivity = nullptr;
     m_isAudibleActivity = nullptr;
-    m_isCapturingActivity = nullptr;
     m_openingAppLinkActivity = nullptr;
     m_audibleActivityTimer.stop();
 #endif
@@ -1659,7 +1651,7 @@ RefPtr<API::Navigation> WebPageProxy::reload(OptionSet<WebCore::ReloadOption> op
 
     if (!hasRunningProcess())
         return launchProcessForReload();
-    
+
     auto navigation = m_navigationState->createReloadNavigation(m_backForwardList->currentItem());
 
     if (!url.isEmpty()) {
@@ -1674,10 +1666,6 @@ RefPtr<API::Navigation> WebPageProxy::reload(OptionSet<WebCore::ReloadOption> op
 
     send(Messages::WebPage::Reload(navigation->navigationID(), options.toRaw(), sandboxExtensionHandle));
     m_process->startResponsivenessTimer();
-
-#if ENABLE(SPEECH_SYNTHESIS)
-    resetSpeechSynthesizer();
-#endif
 
     return navigation;
 }
@@ -2035,8 +2023,6 @@ void WebPageProxy::updateActivityState(OptionSet<ActivityState::Flag> flagsToUpd
         m_activityState.add(ActivityState::IsAudible);
     if (flagsToUpdate & ActivityState::IsLoading && m_pageLoadState.isLoading())
         m_activityState.add(ActivityState::IsLoading);
-    if (flagsToUpdate & ActivityState::IsCapturingMedia && m_mediaState.containsAny({ MediaProducer::MediaState::HasActiveAudioCaptureDevice,  MediaProducer::MediaState::HasActiveVideoCaptureDevice }))
-        m_activityState.add(ActivityState::IsCapturingMedia);
 }
 
 void WebPageProxy::activityStateDidChange(OptionSet<ActivityState::Flag> mayHaveChanged, ActivityStateChangeDispatchMode dispatchMode, ActivityStateChangeReplyMode replyMode)
@@ -2104,13 +2090,6 @@ void WebPageProxy::dispatchActivityStateChange()
 
     if ((changed & ActivityState::WindowIsActive) && isViewWindowActive())
         updateCurrentModifierState();
-
-    if ((m_potentiallyChangedActivityStateFlags & ActivityState::IsVisible)) {
-        if (isViewVisible())
-            viewIsBecomingVisible();
-        else
-            m_process->pageIsBecomingInvisible(m_webPageID);
-    }
 
     bool isNowInWindow = (changed & ActivityState::IsInWindow) && isInWindow();
     // We always want to wait for the Web process to reply if we've been in-window before and are coming back in-window.
@@ -2215,17 +2194,6 @@ void WebPageProxy::updateThrottleState()
         WEBPAGEPROXY_RELEASE_LOG(ProcessSuspension, "updateThrottleState: UIProcess will release a foreground assertion in %g seconds because we are no longer playing audio", audibleActivityClearDelay.seconds());
         if (!m_audibleActivityTimer.isActive())
             m_audibleActivityTimer.startOneShot(audibleActivityClearDelay);
-    }
-
-    bool isCapturingMedia = m_activityState.contains(ActivityState::IsCapturingMedia);
-    if (isCapturingMedia) {
-        if (!m_isCapturingActivity || !m_isCapturingActivity->isValid()) {
-            WEBPAGEPROXY_RELEASE_LOG(ProcessSuspension, "updateThrottleState: UIProcess is taking a foreground assertion because media capture is active");
-            m_isCapturingActivity = m_process->throttler().foregroundActivity("View is capturing media"_s).moveToUniquePtr();
-        }
-    } else if (m_isCapturingActivity) {
-        WEBPAGEPROXY_RELEASE_LOG(ProcessSuspension, "updateThrottleState: UIProcess is releasing a foreground assertion because media capture is no longer active");
-        m_isCapturingActivity = nullptr;
     }
 #endif
 }
@@ -2474,24 +2442,6 @@ void WebPageProxy::setEditable(bool editable)
         return;
 
     send(Messages::WebPage::SetEditable(editable));
-}
-    
-void WebPageProxy::setMediaStreamCaptureMuted(bool muted)
-{
-    auto state = m_mutedState;
-    if (muted)
-        state.add(WebCore::MediaProducer::MediaStreamCaptureIsMuted);
-    else
-        state.remove(WebCore::MediaProducer::MediaStreamCaptureIsMuted);
-    setMuted(state);
-}
-
-void WebPageProxy::activateMediaStreamCaptureInPage()
-{
-#if ENABLE(MEDIA_STREAM)
-    WebProcessProxy::muteCaptureInPagesExcept(m_webPageID);
-#endif
-    setMediaStreamCaptureMuted(false);
 }
 
 #if !PLATFORM(IOS_FAMILY)
@@ -4984,33 +4934,9 @@ void WebPageProxy::didSameDocumentNavigationForFrame(FrameIdentifier frameID, ui
 
 void WebPageProxy::didChangeMainDocument(FrameIdentifier frameID)
 {
-#if ENABLE(MEDIA_STREAM)
-    if (m_userMediaPermissionRequestManager) {
-        m_userMediaPermissionRequestManager->resetAccess(frameID);
-
-#if ENABLE(GPU_PROCESS)
-        if (auto* gpuProcess = m_process->processPool().gpuProcess()) {
-            if (auto* frame = m_process->webFrame(frameID))
-                gpuProcess->updateCaptureOrigin(SecurityOriginData::fromURL(frame->url()), m_process->coreProcessIdentifier());
-        }
-#endif
-    }
-
-#else
     UNUSED_PARAM(frameID);
-#endif
-    
+
     m_isQuotaIncreaseDenied = false;
-
-    m_speechRecognitionPermissionManager = nullptr;
-}
-
-void WebPageProxy::viewIsBecomingVisible()
-{
-#if ENABLE(MEDIA_STREAM)
-    if (m_userMediaPermissionRequestManager)
-        m_userMediaPermissionRequestManager->viewIsBecomingVisible();
-#endif
 }
 
 void WebPageProxy::didReceiveTitleForFrame(FrameIdentifier frameID, const String& title, const UserData& userData)
@@ -5026,7 +4952,7 @@ void WebPageProxy::didReceiveTitleForFrame(FrameIdentifier frameID, const String
         m_pageLoadState.setTitle(transaction, title);
 
     frame->didChangeTitle(title);
-    
+
     m_pageLoadState.commitChanges();
 
 #if ENABLE(REMOTE_INSPECTOR)
@@ -5993,12 +5919,12 @@ void WebPageProxy::setMediaVolume(float volume)
 {
     if (volume == m_mediaVolume)
         return;
-    
+
     m_mediaVolume = volume;
-    
+
     if (!hasRunningProcess())
         return;
-    
+
     send(Messages::WebPage::SetMediaVolume(volume));
 }
 
@@ -6009,40 +5935,8 @@ void WebPageProxy::setMuted(WebCore::MediaProducer::MutedStateFlags state, Compl
     if (!hasRunningProcess())
         return completionHandler();
 
-#if ENABLE(MEDIA_STREAM)
-    bool hasMutedCaptureStreams = m_mediaState.containsAny(WebCore::MediaProducer::MutedCaptureMask);
-    if (hasMutedCaptureStreams && !(state.containsAny(WebCore::MediaProducer::MediaStreamCaptureIsMuted)))
-        WebProcessProxy::muteCaptureInPagesExcept(m_webPageID);
-#endif
-
-    m_process->pageMutedStateChanged(m_webPageID, state);
-
     sendWithAsyncReply(Messages::WebPage::SetMuted(state), WTFMove(completionHandler));
-    activityStateDidChange({ ActivityState::IsAudible, ActivityState::IsCapturingMedia });
-}
-
-void WebPageProxy::setMediaCaptureEnabled(bool enabled)
-{
-    m_mediaCaptureEnabled = enabled;
-
-    if (!hasRunningProcess())
-        return;
-
-#if ENABLE(MEDIA_STREAM)
-    UserMediaProcessManager::singleton().setCaptureEnabled(enabled);
-#endif
-}
-
-void WebPageProxy::stopMediaCapture(MediaProducer::MediaCaptureKind kind, CompletionHandler<void()>&& completionHandler)
-{
-    if (!hasRunningProcess())
-        return completionHandler();
-
-#if ENABLE(MEDIA_STREAM)
-    if (m_userMediaPermissionRequestManager)
-        m_userMediaPermissionRequestManager->resetAccess();
-    sendWithAsyncReply(Messages::WebPage::StopMediaCapture(kind), WTFMove(completionHandler));
-#endif
+    activityStateDidChange({ ActivityState::IsAudible });
 }
 
 void WebPageProxy::requestMediaPlaybackState(CompletionHandler<void(MediaPlaybackState)>&& completionHandler)
@@ -7557,23 +7451,14 @@ void WebPageProxy::resetState(ResetStateReason resetStateReason)
     m_activePopupMenu = nullptr;
 
     updatePlayingMediaDidChange(MediaProducer::IsNotPlaying);
-#if ENABLE(MEDIA_STREAM)
-    m_userMediaPermissionRequestManager = nullptr;
-#endif
 
 #if ENABLE(POINTER_LOCK)
     requestPointerUnlock();
-#endif
-    
-#if ENABLE(SPEECH_SYNTHESIS)
-    resetSpeechSynthesizer();
 #endif
 
 #if ENABLE(WEB_AUTHN)
     m_websiteDataStore->authenticatorManager().cancelRequest(m_webPageID, std::nullopt);
 #endif
-
-    m_speechRecognitionPermissionManager = nullptr;
 
 }
 
@@ -7594,7 +7479,6 @@ void WebPageProxy::resetStateAfterProcessExited(ProcessTerminationReason termina
     m_waitingForPostLayoutEditorStateUpdateAfterFocusingElement = false;
     m_isVisibleActivity = nullptr;
     m_isAudibleActivity = nullptr;
-    m_isCapturingActivity = nullptr;
     m_openingAppLinkActivity = nullptr;
 #endif
 
@@ -7850,9 +7734,7 @@ WebPageCreationParameters WebPageProxy::creationParameters(WebProcessProxy& proc
     parameters.smartInsertDeleteEnabled = m_isSmartInsertDeleteEnabled;
     parameters.additionalSupportedImageTypes = m_configuration->additionalSupportedImageTypes();
 
-    bool needWebProcessExtensions = !preferences().useGPUProcessForMediaEnabled()
-        || !preferences().captureAudioInGPUProcessEnabled()
-        || !preferences().captureVideoInGPUProcessEnabled();
+    bool needWebProcessExtensions = !preferences().useGPUProcessForMediaEnabled();
 
     if (needWebProcessExtensions) {
         // FIXME(207716): The following should be removed when the GPU process is complete.
@@ -7861,8 +7743,6 @@ WebPageCreationParameters WebPageProxy::creationParameters(WebProcessProxy& proc
     }
 
     if (!preferences().useGPUProcessForMediaEnabled()
-        || (!preferences().captureVideoInGPUProcessEnabled() && !preferences().captureVideoInUIProcessEnabled())
-        || (!preferences().captureAudioInGPUProcessEnabled() && !preferences().captureAudioInUIProcessEnabled())
         || !preferences().useGPUProcessForCanvasRenderingEnabled()
         || !preferences().useGPUProcessForWebGLEnabled()) {
         parameters.gpuIOKitExtensionHandles = SandboxExtension::createHandlesForIOKitClassExtensions(gpuIOKitClasses(), std::nullopt);
@@ -7915,14 +7795,6 @@ WebPageCreationParameters WebPageProxy::creationParameters(WebProcessProxy& proc
     parameters.userContentControllerParameters = userContentController.get().parameters();
 
     // FIXME: This is also being passed over the to WebProcess via the PreferencesStore.
-    parameters.shouldCaptureAudioInUIProcess = preferences().captureAudioInUIProcessEnabled();
-    // FIXME: This is also being passed over the to WebProcess via the PreferencesStore.
-    parameters.shouldCaptureAudioInGPUProcess = preferences().captureAudioInGPUProcessEnabled();
-    // FIXME: This is also being passed over the to WebProcess via the PreferencesStore.
-    parameters.shouldCaptureVideoInUIProcess = preferences().captureVideoInUIProcessEnabled();
-    // FIXME: This is also being passed over the to WebProcess via the PreferencesStore.
-    parameters.shouldCaptureVideoInGPUProcess = preferences().captureVideoInGPUProcessEnabled();
-    // FIXME: This is also being passed over the to WebProcess via the PreferencesStore.
     parameters.shouldRenderCanvasInGPUProcess = preferences().useGPUProcessForCanvasRenderingEnabled();
     // FIXME: This is also being passed over the to WebProcess via the PreferencesStore.
     parameters.shouldRenderDOMInGPUProcess = preferences().useGPUProcessForDOMRenderingEnabled();
@@ -7941,7 +7813,6 @@ WebPageCreationParameters WebPageProxy::creationParameters(WebProcessProxy& proc
     // FIXME: This is also being passed over the to WebProcess via the PreferencesStore.
     parameters.shouldEnableVP9SWDecoder = preferences().vp9DecoderEnabled() && (!WebCore::systemHasBattery() || preferences().vp9SWDecoderEnabledOnBattery());
 #endif
-    parameters.shouldCaptureDisplayInUIProcess = m_process->processPool().configuration().shouldCaptureDisplayInUIProcess();
 #if ENABLE(APP_BOUND_DOMAINS)
     parameters.limitsNavigationsToAppBoundDomains = m_limitsNavigationsToAppBoundDomains;
 #endif
@@ -8101,88 +7972,8 @@ void WebPageProxy::requestPermission(const ClientOrigin&, const PermissionDescri
     completionHandler(PermissionState::Granted);
 }
 
-#if ENABLE(MEDIA_STREAM)
-UserMediaPermissionRequestManagerProxy& WebPageProxy::userMediaPermissionRequestManager()
-{
-    if (m_userMediaPermissionRequestManager)
-        return *m_userMediaPermissionRequestManager;
-
-    m_userMediaPermissionRequestManager = makeUnique<UserMediaPermissionRequestManagerProxy>(*this);
-    return *m_userMediaPermissionRequestManager;
-}
-
-void WebPageProxy::setMockCaptureDevicesEnabledOverride(std::optional<bool> enabled)
-{
-    userMediaPermissionRequestManager().setMockCaptureDevicesEnabledOverride(enabled);
-}
-
-void WebPageProxy::willStartCapture(const UserMediaPermissionRequestProxy& request, CompletionHandler<void()>&& callback)
-{
-#if ENABLE(GPU_PROCESS)
-    if (!preferences().captureVideoInGPUProcessEnabled() && !preferences().captureAudioInGPUProcessEnabled())
-        return callback();
-
-    auto& gpuProcess = process().processPool().ensureGPUProcess();
-    gpuProcess.updateCaptureAccess(request.requiresAudioCapture(), request.requiresVideoCapture(), request.requiresDisplayCapture(), m_process->coreProcessIdentifier(), WTFMove(callback));
-    gpuProcess.updateCaptureOrigin(request.topLevelDocumentSecurityOrigin().data(), m_process->coreProcessIdentifier());
-#else
-    callback();
-#endif
-}
-
-#endif
-
-void WebPageProxy::requestUserMediaPermissionForFrame(UserMediaRequestIdentifier userMediaID, FrameIdentifier frameID, const WebCore::SecurityOriginData& userMediaDocumentOriginData, const WebCore::SecurityOriginData& topLevelDocumentOriginData, WebCore::MediaStreamRequest&& request)
-{
-#if ENABLE(MEDIA_STREAM)
-    MESSAGE_CHECK(m_process, m_process->webFrame(frameID));
-
-    userMediaPermissionRequestManager().requestUserMediaPermissionForFrame(userMediaID, frameID, userMediaDocumentOriginData.securityOrigin(), topLevelDocumentOriginData.securityOrigin(), WTFMove(request));
-#else
-    UNUSED_PARAM(userMediaID);
-    UNUSED_PARAM(frameID);
-    UNUSED_PARAM(userMediaDocumentOriginData);
-    UNUSED_PARAM(topLevelDocumentOriginData);
-    UNUSED_PARAM(request);
-#endif
-}
-
-void WebPageProxy::enumerateMediaDevicesForFrame(FrameIdentifier frameID, const WebCore::SecurityOriginData& userMediaDocumentOriginData, const WebCore::SecurityOriginData& topLevelDocumentOriginData, CompletionHandler<void(const Vector<CaptureDevice>&, const String&)>&& completionHandler)
-{
-#if ENABLE(MEDIA_STREAM)
-    WebFrameProxy* frame = m_process->webFrame(frameID);
-    MESSAGE_CHECK(m_process, frame);
-
-    userMediaPermissionRequestManager().enumerateMediaDevicesForFrame(frameID, userMediaDocumentOriginData.securityOrigin(), topLevelDocumentOriginData.securityOrigin(), WTFMove(completionHandler));
-#else
-    UNUSED_PARAM(frameID);
-    UNUSED_PARAM(userMediaDocumentOriginData);
-    UNUSED_PARAM(topLevelDocumentOriginData);
-    UNUSED_PARAM(completionHandler);
-#endif
-}
-
 void WebPageProxy::syncIfMockDevicesEnabledChanged()
 {
-#if ENABLE(MEDIA_STREAM)
-    userMediaPermissionRequestManager().syncWithWebCorePrefs();
-#endif
-}
-
-void WebPageProxy::beginMonitoringCaptureDevices()
-{
-#if ENABLE(MEDIA_STREAM)
-    userMediaPermissionRequestManager().syncWithWebCorePrefs();
-    UserMediaProcessManager::singleton().beginMonitoringCaptureDevices();
-#endif
-}
-
-void WebPageProxy::clearUserMediaState()
-{
-#if ENABLE(MEDIA_STREAM)
-    if (m_userMediaPermissionRequestManager)
-        m_userMediaPermissionRequestManager->clearCachedState();
-#endif
 }
 
 #if ENABLE(IMAGE_ANALYSIS)
@@ -8982,19 +8773,7 @@ void WebPageProxy::isPlayingMediaDidChange(MediaProducer::MediaStateFlags newSta
 
 void WebPageProxy::updatePlayingMediaDidChange(MediaProducer::MediaStateFlags newState, CanDelayNotification canDelayNotification)
 {
-#if ENABLE(MEDIA_STREAM)
-    auto updateMediaCaptureStateImmediatelyIfNeeded = [&] {
-        if (canDelayNotification == CanDelayNotification::No && m_updateReportedMediaCaptureStateTimer.isActive()) {
-            m_updateReportedMediaCaptureStateTimer.stop();
-            updateReportedMediaCaptureState();
-        }
-    };
-#endif
-
     if (newState == m_mediaState) {
-#if ENABLE(MEDIA_STREAM)
-        updateMediaCaptureStateImmediatelyIfNeeded();
-#endif
         return;
     }
 
@@ -9008,11 +8787,6 @@ void WebPageProxy::updatePlayingMediaDidChange(MediaProducer::MediaStateFlags ne
     }
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-    WebCore::MediaProducer::MediaStateFlags oldMediaCaptureState = m_mediaState & WebCore::MediaProducer::MediaCaptureMask;
-    WebCore::MediaProducer::MediaStateFlags newMediaCaptureState = newState & WebCore::MediaProducer::MediaCaptureMask;
-#endif
-
     MediaProducer::MediaStateFlags playingMediaMask { MediaProducer::MediaState::IsPlayingAudio, MediaProducer::MediaState::IsPlayingVideo };
     MediaProducer::MediaStateFlags oldState = m_mediaState;
 
@@ -9023,20 +8797,8 @@ void WebPageProxy::updatePlayingMediaDidChange(MediaProducer::MediaStateFlags ne
     if (playingAudioChanges)
         pageClient().isPlayingAudioDidChange();
 
-#if ENABLE(MEDIA_STREAM)
-    if (oldMediaCaptureState != newMediaCaptureState) {
-        updateReportedMediaCaptureState();
+    activityStateDidChange({ ActivityState::IsAudible });
 
-        ASSERT(m_userMediaPermissionRequestManager);
-        if (m_userMediaPermissionRequestManager)
-            m_userMediaPermissionRequestManager->captureStateChanged(oldMediaCaptureState, newMediaCaptureState);
-    }
-    updateMediaCaptureStateImmediatelyIfNeeded();
-#endif
-
-    activityStateDidChange({ ActivityState::IsAudible, ActivityState::IsCapturingMedia });
-
-    playingMediaMask.add(WebCore::MediaProducer::MediaCaptureMask);
     if ((oldState & playingMediaMask) != (m_mediaState & playingMediaMask))
         m_uiClient->isPlayingMediaDidChange(*this);
 
@@ -9044,38 +8806,6 @@ void WebPageProxy::updatePlayingMediaDidChange(MediaProducer::MediaStateFlags ne
         videoControlsManagerDidChange();
 
     m_process->updateAudibleMediaAssertions();
-}
-
-void WebPageProxy::updateReportedMediaCaptureState()
-{
-    auto activeCaptureState = m_mediaState & MediaProducer::MediaCaptureMask;
-    if (m_reportedMediaCaptureState == activeCaptureState)
-        return;
-
-    bool haveReportedCapture = m_reportedMediaCaptureState.containsAny(MediaProducer::MediaCaptureMask);
-    bool willReportCapture = !activeCaptureState.isEmpty();
-
-    if (haveReportedCapture && !willReportCapture && m_updateReportedMediaCaptureStateTimer.isActive())
-        return;
-
-    if (!haveReportedCapture && willReportCapture)
-        m_updateReportedMediaCaptureStateTimer.startOneShot(m_mediaCaptureReportingDelay);
-
-    bool microphoneCaptureChanged = (m_reportedMediaCaptureState & MediaProducer::AudioCaptureMask) != (activeCaptureState & MediaProducer::AudioCaptureMask);
-    bool cameraCaptureChanged = (m_reportedMediaCaptureState & MediaProducer::VideoCaptureMask) != (activeCaptureState & MediaProducer::VideoCaptureMask);
-
-    if (microphoneCaptureChanged)
-        pageClient().microphoneCaptureWillChange();
-    if (cameraCaptureChanged)
-        pageClient().cameraCaptureWillChange();
-
-    m_reportedMediaCaptureState = activeCaptureState;
-    m_uiClient->mediaCaptureStateDidChange(m_mediaState);
-
-    if (microphoneCaptureChanged)
-        pageClient().microphoneCaptureChanged();
-    if (cameraCaptureChanged)
-        pageClient().cameraCaptureChanged();
 }
 
 void WebPageProxy::videoControlsManagerDidChange()
@@ -9891,78 +9621,6 @@ void WebPageProxy::setPCMFraudPreventionValuesForTesting(const String& unlinkabl
     websiteDataStore().networkProcess().sendWithAsyncReply(Messages::NetworkProcess::SetPCMFraudPreventionValuesForTesting(m_websiteDataStore->sessionID(), unlinkableToken, secretToken, signature, keyID), WTFMove(completionHandler));
 }
 
-#if ENABLE(SPEECH_SYNTHESIS)
-
-void WebPageProxy::resetSpeechSynthesizer()
-{
-    if (!m_speechSynthesisData)
-        return;
-    
-    auto& synthesisData = speechSynthesisData();
-    synthesisData.speakingFinishedCompletionHandler = nullptr;
-    synthesisData.speakingStartedCompletionHandler = nullptr;
-    synthesisData.speakingPausedCompletionHandler = nullptr;
-    synthesisData.speakingResumedCompletionHandler = nullptr;
-    if (synthesisData.synthesizer)
-        synthesisData.synthesizer->resetState();
-}
-
-WebPageProxy::SpeechSynthesisData& WebPageProxy::speechSynthesisData()
-{
-    if (!m_speechSynthesisData)
-        m_speechSynthesisData = SpeechSynthesisData { makeUnique<PlatformSpeechSynthesizer>(this), nullptr, nullptr, nullptr, nullptr, nullptr };
-    return *m_speechSynthesisData;
-}
-
-void WebPageProxy::speechSynthesisVoiceList(CompletionHandler<void(Vector<WebSpeechSynthesisVoice>&&)>&& completionHandler)
-{
-    auto& voiceList = speechSynthesisData().synthesizer->voiceList();
-    Vector<WebSpeechSynthesisVoice> result;
-    result.reserveInitialCapacity(voiceList.size());
-    for (auto& voice : voiceList)
-        result.uncheckedAppend(WebSpeechSynthesisVoice { voice->voiceURI(), voice->name(), voice->lang(), voice->localService(), voice->isDefault() });
-    completionHandler(WTFMove(result));
-}
-
-void WebPageProxy::speechSynthesisSetFinishedCallback(CompletionHandler<void()>&& completionHandler)
-{
-    speechSynthesisData().speakingFinishedCompletionHandler = WTFMove(completionHandler);
-}
-
-void WebPageProxy::speechSynthesisSpeak(const String& text, const String& lang, float volume, float rate, float pitch, MonotonicTime startTime, const String& voiceURI, const String& voiceName, const String& voiceLang, bool localService, bool defaultVoice, CompletionHandler<void()>&& completionHandler)
-{
-    auto voice = WebCore::PlatformSpeechSynthesisVoice::create(voiceURI, voiceName, voiceLang, localService, defaultVoice);
-    auto utterance = WebCore::PlatformSpeechSynthesisUtterance::create(*this);
-    utterance->setText(text);
-    utterance->setLang(lang);
-    utterance->setVolume(volume);
-    utterance->setRate(rate);
-    utterance->setPitch(pitch);
-    utterance->setVoice(&voice.get());
-
-    speechSynthesisData().speakingStartedCompletionHandler = WTFMove(completionHandler);
-    speechSynthesisData().utterance = WTFMove(utterance);
-    speechSynthesisData().synthesizer->speak(m_speechSynthesisData->utterance.get());
-}
-
-void WebPageProxy::speechSynthesisCancel()
-{
-    speechSynthesisData().synthesizer->cancel();
-}
-
-void WebPageProxy::speechSynthesisPause(CompletionHandler<void()>&& completionHandler)
-{
-    speechSynthesisData().speakingPausedCompletionHandler = WTFMove(completionHandler);
-    speechSynthesisData().synthesizer->pause();
-}
-
-void WebPageProxy::speechSynthesisResume(CompletionHandler<void()>&& completionHandler)
-{
-    speechSynthesisData().speakingResumedCompletionHandler = WTFMove(completionHandler);
-    speechSynthesisData().synthesizer->resume();
-}
-#endif // ENABLE(SPEECH_SYNTHESIS)
-
 #if !PLATFORM(IOS_FAMILY)
 
 WebContentMode WebPageProxy::effectiveContentModeAfterAdjustingPolicies(API::WebsitePolicies&, const WebCore::ResourceRequest&)
@@ -10123,16 +9781,6 @@ void WebPageProxy::gpuProcessExited(GPUProcessTerminationReason)
 #endif
 
     pageClient().gpuProcessDidExit();
-
-#if ENABLE(MEDIA_STREAM)
-    bool activeAudioCapture = isCapturingAudio() && preferences().captureAudioInGPUProcessEnabled();
-    bool activeVideoCapture = isCapturingVideo() && preferences().captureVideoInGPUProcessEnabled();
-    bool activeDisplayCapture = false;
-    if (activeAudioCapture || activeVideoCapture) {
-        auto& gpuProcess = process().processPool().ensureGPUProcess();
-        gpuProcess.updateCaptureAccess(activeAudioCapture, activeVideoCapture, activeDisplayCapture, m_process->coreProcessIdentifier(), [] { });
-    }
-#endif
 }
 #endif
 
@@ -10158,57 +9806,6 @@ void WebPageProxy::dispatchActivityStateUpdateForTesting()
         protectedThis->dispatchActivityStateChange();
     });
 }
-
-void WebPageProxy::requestSpeechRecognitionPermission(WebCore::SpeechRecognitionRequest& request, CompletionHandler<void(std::optional<SpeechRecognitionError>&&)>&& completionHandler)
-{
-    if (!m_speechRecognitionPermissionManager)
-        m_speechRecognitionPermissionManager = makeUnique<SpeechRecognitionPermissionManager>(*this);
-
-    m_speechRecognitionPermissionManager->request(request, WTFMove(completionHandler));
-}
-
-void WebPageProxy::requestSpeechRecognitionPermissionByDefaultAction(const WebCore::SecurityOriginData& origin, CompletionHandler<void(bool)>&& completionHandler)
-{
-    if (!m_speechRecognitionPermissionManager) {
-        completionHandler(false);
-        return;
-    }
-
-    m_speechRecognitionPermissionManager->decideByDefaultAction(origin, WTFMove(completionHandler));
-}
-
-void WebPageProxy::requestUserMediaPermissionForSpeechRecognition(FrameIdentifier frameIdentifier, const WebCore::SecurityOrigin& requestingOrigin, const WebCore::SecurityOrigin& topOrigin, CompletionHandler<void(bool)>&& completionHandler)
-{
-#if ENABLE(MEDIA_STREAM)
-    auto captureDevice = SpeechRecognitionCaptureSource::findCaptureDevice();
-    if (!captureDevice)
-        completionHandler(false);
-
-    userMediaPermissionRequestManager().checkUserMediaPermissionForSpeechRecognition(frameIdentifier, requestingOrigin, topOrigin, *captureDevice, WTFMove(completionHandler));
-#else
-    completionHandler(false);
-#endif
-}
-
-#if ENABLE(MEDIA_STREAM)
-
-WebCore::CaptureSourceOrError WebPageProxy::createRealtimeMediaSourceForSpeechRecognition()
-{
-    auto captureDevice = SpeechRecognitionCaptureSource::findCaptureDevice();
-    if (!captureDevice)
-        return CaptureSourceOrError { "No device is available for capture" };
-
-    if (preferences().captureAudioInGPUProcessEnabled())
-        return CaptureSourceOrError { SpeechRecognitionRemoteRealtimeMediaSource::create(m_process->ensureSpeechRecognitionRemoteRealtimeMediaSourceManager(), *captureDevice) };
-
-#if PLATFORM(IOS_FAMILY)
-    return CaptureSourceOrError { SpeechRecognitionRemoteRealtimeMediaSource::create(m_process->ensureSpeechRecognitionRemoteRealtimeMediaSourceManager(), *captureDevice) };
-#else
-    return SpeechRecognitionCaptureSource::createRealtimeMediaSource(*captureDevice);
-#endif
-}
-
-#endif
 
 #if !PLATFORM(COCOA)
 Vector<SandboxExtension::Handle> WebPageProxy::createNetworkExtensionsSandboxExtensions(WebProcessProxy& process)

@@ -31,13 +31,9 @@ namespace WebCore {
 
 enum class PermissionName : uint8_t {
     BackgroundFetch,
-    Camera,
-    DisplayCapture,
-    Microphone,
     Midi,
     Nfc,
-    Notifications,
-    SpeakerSelection
+    Notifications
 };
 
 } // namespace WebCore
@@ -48,13 +44,9 @@ template<> struct EnumTraits<WebCore::PermissionName> {
     using values = EnumValues<
         WebCore::PermissionName,
         WebCore::PermissionName::BackgroundFetch,
-        WebCore::PermissionName::Camera,
-        WebCore::PermissionName::DisplayCapture,
-        WebCore::PermissionName::Microphone,
         WebCore::PermissionName::Midi,
         WebCore::PermissionName::Nfc,
-        WebCore::PermissionName::Notifications,
-        WebCore::PermissionName::SpeakerSelection
+        WebCore::PermissionName::Notifications
     >;
 };
 

@@ -1459,12 +1459,7 @@ Inspector::Protocol::ErrorStringOr<void> WebAutomationSession::deleteAllCookies(
 Inspector::Protocol::ErrorStringOr<Ref<JSON::ArrayOf<Inspector::Protocol::Automation::SessionPermissionData>>> WebAutomationSession::getSessionPermissions()
 {
     auto permissionsObjectArray = JSON::ArrayOf<Inspector::Protocol::Automation::SessionPermissionData>::create();
-    auto getUserMediaPermissionObject = Inspector::Protocol::Automation::SessionPermissionData::create()
-        .setPermission(Inspector::Protocol::Automation::SessionPermission::GetUserMedia)
-        .setValue(m_permissionForGetUserMedia)
-        .release();
 
-    permissionsObjectArray->addItem(WTFMove(getUserMediaPermissionObject));
     return permissionsObjectArray;
 }
 
@@ -1486,20 +1481,9 @@ Inspector::Protocol::ErrorStringOr<void> WebAutomationSession::setSessionPermiss
         auto permissionValue = permission->getBoolean("value"_s);
         if (!permissionValue)
             SYNC_FAIL_WITH_PREDEFINED_ERROR_AND_DETAILS(InvalidParameter, "The parameter 'value' is missing or invalid.");
-
-        switch (parsedPermissionName.value()) {
-        case Inspector::Protocol::Automation::SessionPermission::GetUserMedia:
-            m_permissionForGetUserMedia = *permissionValue;
-            break;
-        }
     }
 
     return { };
-}
-
-bool WebAutomationSession::shouldAllowGetUserMediaForPage(const WebPageProxy&) const
-{
-    return m_permissionForGetUserMedia;
 }
 
 bool WebAutomationSession::isSimulatingUserInteraction() const

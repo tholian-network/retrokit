@@ -162,13 +162,9 @@ public:
 #if ENABLE(APP_BOUND_DOMAINS)
     bool ignoresAppBoundDomains() const { return m_ignoresAppBoundDomains; }
     void setIgnoresAppBoundDomains(bool shouldIgnore) { m_ignoresAppBoundDomains = shouldIgnore; }
-    
     bool limitsNavigationsToAppBoundDomains() const { return m_limitsNavigationsToAppBoundDomains; }
     void setLimitsNavigationsToAppBoundDomains(bool limits) { m_limitsNavigationsToAppBoundDomains = limits; }
 #endif
-
-    void setMediaCaptureEnabled(bool value) { m_mediaCaptureEnabled = value; }
-    bool mediaCaptureEnabled() const { return m_mediaCaptureEnabled; }
 
     void setHTTPSUpgradeEnabled(bool enabled) { m_httpsUpgradeEnabled = enabled; }
     bool httpsUpgradeEnabled() const { return m_httpsUpgradeEnabled; }
@@ -224,13 +220,12 @@ private:
     WTF::String m_processDisplayName;
     bool m_loadsSubresources { true };
     std::optional<HashSet<WTF::String>> m_allowedNetworkHosts;
-    
+
 #if ENABLE(APP_BOUND_DOMAINS)
     bool m_ignoresAppBoundDomains { false };
     bool m_limitsNavigationsToAppBoundDomains { false };
 #endif
 
-    bool m_mediaCaptureEnabled { false };
     bool m_httpsUpgradeEnabled { true };
 
     WebCore::ShouldRelaxThirdPartyCookieBlocking m_shouldRelaxThirdPartyCookieBlocking { WebCore::ShouldRelaxThirdPartyCookieBlocking::No };

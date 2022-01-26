@@ -23,9 +23,6 @@
 
 Modules/async-clipboard/ios/ClipboardImageReaderIOS.mm
 Modules/async-clipboard/mac/ClipboardImageReaderMac.mm
-Modules/speech/cocoa/SpeechRecognizerCocoa.mm
-Modules/speech/cocoa/WebSpeechRecognizerTask.mm
-Modules/speech/cocoa/WebSpeechRecognizerTaskMock.mm
 Modules/webdatabase/cocoa/DatabaseManagerCocoa.mm
 accessibility/ios/AXObjectCacheIOS.mm
 accessibility/ios/AccessibilityObjectIOS.mm
@@ -324,7 +321,6 @@ platform/ios/PasteboardIOS.mm
 platform/ios/PlatformEventFactoryIOS.mm @no-unify
 platform/ios/PlatformPasteboardIOS.mm
 platform/ios/PlatformScreenIOS.mm
-platform/ios/PlatformSpeechSynthesizerIOS.mm @no-unify
 platform/ios/PlaybackSessionInterfaceAVKit.mm @no-unify
 platform/ios/ScrollAnimatorIOS.mm
 platform/ios/ScrollViewIOS.mm
@@ -366,7 +362,6 @@ platform/mac/PasteboardWriter.mm
 platform/mac/PlatformEventFactoryMac.mm
 platform/mac/PlatformPasteboardMac.mm
 platform/mac/PlatformScreenMac.mm
-platform/mac/PlatformSpeechSynthesizerMac.mm
 platform/mac/PlaybackSessionInterfaceMac.mm @no-unify
 platform/mac/PowerObserverMac.cpp
 platform/mac/PublicSuffixMac.mm
@@ -390,29 +385,6 @@ platform/mac/WebGLBlocklist.mm
 platform/mac/WebNSAttributedStringExtras.mm
 platform/mac/WebPlaybackControlsManager.mm
 platform/mac/WidgetMac.mm
-platform/mediastream/cocoa/AudioMediaStreamTrackRendererCocoa.cpp
-platform/mediastream/cocoa/AudioMediaStreamTrackRendererInternalUnit.cpp
-platform/mediastream/cocoa/AudioMediaStreamTrackRendererUnit.cpp
-platform/mediastream/ios/AVAudioSessionCaptureDevice.mm
-platform/mediastream/ios/AVAudioSessionCaptureDeviceManager.mm @no-unify
-platform/mediastream/ios/CoreAudioCaptureSourceIOS.mm @no-unify
-platform/mediastream/mac/AVCaptureDeviceManager.mm @no-unify
-platform/mediastream/mac/AVVideoCaptureSource.mm @no-unify
-platform/mediastream/mac/BaseAudioSharedUnit.cpp
-platform/mediastream/mac/CoreAudioCaptureDevice.cpp
-platform/mediastream/mac/CoreAudioCaptureDeviceManager.cpp
-platform/mediastream/mac/CoreAudioCaptureSource.cpp
-platform/mediastream/mac/DisplayCaptureManagerCocoa.cpp
-platform/mediastream/mac/DisplayCaptureSourceCocoa.cpp
-platform/mediastream/mac/MediaStreamTrackAudioSourceProviderCocoa.cpp
-platform/mediastream/mac/MockAudioSharedUnit.mm
-platform/mediastream/mac/MockRealtimeVideoSourceMac.mm
-platform/mediastream/mac/RealtimeMediaSourceCenterMac.cpp
-platform/mediastream/mac/RealtimeMediaSourceCenterMac.mm
-platform/mediastream/mac/RealtimeVideoUtilities.mm
-platform/mediastream/mac/ScreenDisplayCapturerMac.mm
-platform/mediastream/mac/WebAudioSourceProviderCocoa.mm
-platform/mediastream/mac/WindowDisplayCapturerMac.mm
 platform/mock/MockAudioDestinationCocoa.cpp
 platform/network/cf/CertificateInfoCFNet.cpp
 platform/network/cf/DNSResolveQueueCFNet.cpp

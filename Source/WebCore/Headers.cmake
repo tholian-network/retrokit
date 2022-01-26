@@ -74,14 +74,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
 
     Modules/mediasource/SampleMap.h
 
-    Modules/mediastream/DoubleRange.h
-    Modules/mediastream/LongRange.h
-    Modules/mediastream/MediaStreamTrack.h
-    Modules/mediastream/MediaTrackConstraints.h
-    Modules/mediastream/UserMediaClient.h
-    Modules/mediastream/UserMediaController.h
-    Modules/mediastream/UserMediaRequest.h
-
     Modules/notifications/Notification.h
     Modules/notifications/NotificationClient.h
     Modules/notifications/NotificationController.h
@@ -94,18 +86,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     Modules/permissions/PermissionName.h
     Modules/permissions/PermissionObserver.h
     Modules/permissions/PermissionState.h
-
-    Modules/speech/SpeechRecognitionCaptureSource.h
-    Modules/speech/SpeechRecognitionCaptureSourceImpl.h
-    Modules/speech/SpeechRecognitionConnection.h
-    Modules/speech/SpeechRecognitionConnectionClient.h
-    Modules/speech/SpeechRecognitionConnectionClientIdentifier.h
-    Modules/speech/SpeechRecognitionError.h
-    Modules/speech/SpeechRecognitionRequest.h
-    Modules/speech/SpeechRecognitionRequestInfo.h
-    Modules/speech/SpeechRecognitionResultData.h
-    Modules/speech/SpeechRecognitionUpdate.h
-    Modules/speech/SpeechRecognizer.h
 
     Modules/streams/ReadableStreamSink.h
     Modules/streams/ReadableStreamSource.h
@@ -837,7 +817,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     page/DragActions.h
     page/DragClient.h
     page/DragController.h
-    page/DummySpeechRecognitionProvider.h
     page/EditorClient.h
     page/EventHandler.h
     page/FocusController.h
@@ -894,8 +873,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     page/SettingsBase.h
     page/ShareData.h
     page/SocketProvider.h
-    page/SpeechRecognitionProvider.h
-    page/SpeechSynthesisClient.h
     page/StorageBlockingPolicy.h
     page/StructuredSerializeOptions.h
     page/SuspendableTimer.h
@@ -907,7 +884,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     page/UserContentTypes.h
     page/UserContentURLPattern.h
     page/UserInterfaceDirectionPolicy.h
-    page/UserMediaRequestIdentifier.h
     page/UserMessageHandler.h
     page/UserMessageHandlerDescriptor.h
     page/UserMessageHandlersNamespace.h
@@ -1030,9 +1006,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/PlatformMouseEvent.h
     platform/PlatformPasteboard.h
     platform/PlatformScreen.h
-    platform/PlatformSpeechSynthesisUtterance.h
-    platform/PlatformSpeechSynthesisVoice.h
-    platform/PlatformSpeechSynthesizer.h
     platform/PlatformStrategies.h
     platform/PlatformTouchEvent.h
     platform/PlatformTouchPoint.h
@@ -1236,7 +1209,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/graphics/PlatformTimeRanges.h
     platform/graphics/Region.h
     platform/graphics/RemoteGraphicsContextGLProxyBase.h
-    platform/graphics/RemoteVideoSample.h
     platform/graphics/RenderingResourceIdentifier.h
     platform/graphics/RenderingMode.h
     platform/graphics/RoundedRect.h
@@ -1318,29 +1290,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/mediacapabilities/MediaEngineConfigurationFactory.h
     platform/mediacapabilities/TransferFunction.h
     platform/mediacapabilities/VideoConfiguration.h
-
-    platform/mediastream/CaptureDevice.h
-    platform/mediastream/CaptureDeviceManager.h
-    platform/mediastream/MediaConstraints.h
-    platform/mediastream/MediaStreamPrivate.h
-    platform/mediastream/MediaStreamRequest.h
-    platform/mediastream/MediaStreamTrackPrivate.h
-    platform/mediastream/RealtimeMediaSource.h
-    platform/mediastream/RealtimeMediaSourceCapabilities.h
-    platform/mediastream/RealtimeMediaSourceCenter.h
-    platform/mediastream/RealtimeMediaSourceFactory.h
-    platform/mediastream/RealtimeMediaSourceIdentifier.h
-    platform/mediastream/RealtimeMediaSourceSettings.h
-    platform/mediastream/RealtimeMediaSourceSupportedConstraints.h
-    platform/mediastream/RealtimeVideoCaptureSource.h
-    platform/mediastream/RealtimeVideoSource.h
-    platform/mediastream/VideoPreset.h
-    platform/mediastream/WebAudioSourceProvider.h
-
-    platform/mock/MockMediaDevice.h
-    platform/mock/MockRealtimeAudioSource.h
-    platform/mock/MockRealtimeMediaSourceCenter.h
-    platform/mock/MockRealtimeVideoSource.h
 
     platform/network/AuthenticationChallengeBase.h
     platform/network/AuthenticationClient.h

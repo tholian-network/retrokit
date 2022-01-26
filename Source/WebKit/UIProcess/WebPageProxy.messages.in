@@ -246,13 +246,6 @@ messages -> WebPageProxy {
     # Application cache messages
     ReachedApplicationCacheOriginQuota(String originIdentifier, uint64_t currentQuota, uint64_t totalBytesNeeded) -> (uint64_t newQuota) Synchronous
 
-#if ENABLE(MEDIA_STREAM)
-    # MediaSteam messages
-    RequestUserMediaPermissionForFrame(WebCore::UserMediaRequestIdentifier userMediaID, WebCore::FrameIdentifier frameID, struct WebCore::SecurityOriginData userMediaDocumentOriginIdentifier, struct WebCore::SecurityOriginData topLevelDocumentOriginIdentifier, struct WebCore::MediaStreamRequest request)
-    EnumerateMediaDevicesForFrame(WebCore::FrameIdentifier frameID, struct WebCore::SecurityOriginData userMediaDocumentOriginIdentifier, struct WebCore::SecurityOriginData topLevelDocumentOriginIdentifier) -> (Vector<WebCore::CaptureDevice> devices, String mediaDeviceIdentifierHashSalt) Async
-    BeginMonitoringCaptureDevices()
-#endif
-
     # Notification messages
     RequestNotificationPermission(String originIdentifier) -> (bool allowed) Async
     ShowNotification(String title, String body, String iconURL, String tag, String lang, enum:uint8_t WebCore::NotificationDirection dir, String originIdentifier, uint64_t notificationID)
@@ -307,11 +300,6 @@ messages -> WebPageProxy {
 
     # Remote accessibility messages
     RegisterWebProcessAccessibilityToken(IPC::DataReference data)
-
-    # Speech messages
-    GetIsSpeaking() -> (bool isSpeaking) Synchronous
-    Speak(String string)
-    StopSpeaking()
 
     MakeFirstResponder()
     AssistiveTechnologyMakeFirstResponder()
@@ -472,15 +460,6 @@ messages -> WebPageProxy {
 #endif
 
     SignedPublicKeyAndChallengeString(unsigned keySizeIndex, String challengeString, URL url) -> (String result) Synchronous
-
-#if ENABLE(SPEECH_SYNTHESIS)
-    SpeechSynthesisVoiceList() -> (Vector<WebKit::WebSpeechSynthesisVoice> voiceList) Synchronous
-    SpeechSynthesisSpeak(String text, String lang, float volume, float rate, float pitch, MonotonicTime startTime, String voiceURI, String voiceName, String voiceLang, bool localService, bool defaultVoice) -> () Async
-    SpeechSynthesisSetFinishedCallback() -> () Async
-    SpeechSynthesisCancel()
-    SpeechSynthesisPause() -> () Async
-    SpeechSynthesisResume() -> () Async
-#endif
 
     ConfigureLoggingChannel(String channelName, enum:uint8_t WTFLogChannelState state, enum:uint8_t WTFLogLevel level)
 

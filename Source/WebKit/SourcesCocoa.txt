@@ -363,7 +363,6 @@ UIProcess/Cocoa/GPUProcessProxyCocoa.mm
 UIProcess/Cocoa/GlobalFindInPageState.mm
 UIProcess/Cocoa/IconLoadingDelegate.mm
 UIProcess/Cocoa/MediaUtilities.mm
-UIProcess/Cocoa/MediaPermissionUtilities.mm
 UIProcess/Cocoa/NavigationState.mm
 UIProcess/Cocoa/PageClientImplCocoa.mm
 UIProcess/Cocoa/PlaybackSessionManagerProxy.mm
@@ -374,8 +373,6 @@ UIProcess/Cocoa/SystemPreviewControllerCocoa.mm
 UIProcess/Cocoa/TextCheckingController.mm
 UIProcess/Cocoa/UIDelegate.mm
 UIProcess/Cocoa/UIRemoteObjectRegistry.cpp
-UIProcess/Cocoa/UserMediaCaptureManagerProxy.cpp
-UIProcess/Cocoa/UserMediaPermissionRequestManagerProxy.mm
 UIProcess/Cocoa/WebPageProxyCocoa.mm
 UIProcess/Cocoa/WebPasteboardProxyCocoa.mm
 UIProcess/Cocoa/WebPreferencesCocoa.mm
@@ -545,7 +542,6 @@ WebProcess/cocoa/RemoteCaptureSampleManager.cpp
 WebProcess/cocoa/RemoteRealtimeAudioSource.cpp
 WebProcess/cocoa/RemoteRealtimeMediaSourceProxy.cpp
 WebProcess/cocoa/RemoteRealtimeVideoSource.cpp
-WebProcess/cocoa/UserMediaCaptureManager.cpp
 WebProcess/cocoa/WebProcessCocoa.mm
 
 WebProcess/EntryPoint/Cocoa/XPCService/WebContentServiceEntryPoint.mm

@@ -38,7 +38,6 @@
 #include "RegistrableDomain.h"
 #include "ScrollTypes.h"
 #include "ShouldRelaxThirdPartyCookieBlocking.h"
-#include "SpeechRecognitionConnection.h"
 #include "Supplementable.h"
 #include "Timer.h"
 #include "UserInterfaceLayoutDirection.h"
@@ -129,10 +128,8 @@ class ScrollingCoordinator;
 class ServicesOverlayController;
 class Settings;
 class SocketProvider;
-class SpeechSynthesisClient;
 class StorageNamespace;
 class StorageNamespaceProvider;
-class SpeechRecognitionProvider;
 class UserContentProvider;
 class UserContentURLPattern;
 class UserInputBridge;
@@ -686,14 +683,11 @@ public:
     void updateIsPlayingMedia();
     MediaProducer::MutedStateFlags mutedState() const { return m_mutedState; }
     bool isAudioMuted() const { return m_mutedState.contains(MediaProducer::MutedState::AudioIsMuted); }
-    bool isMediaCaptureMuted() const { return m_mutedState.containsAny(MediaProducer::MediaStreamCaptureIsMuted); };
     void schedulePlaybackControlsManagerUpdate();
 #if ENABLE(VIDEO)
     void playbackControlsMediaEngineChanged();
 #endif
     WEBCORE_EXPORT void setMuted(MediaProducer::MutedStateFlags);
-
-    WEBCORE_EXPORT void stopMediaCapture(MediaProducer::MediaCaptureKind);
 
     MediaSessionGroupIdentifier mediaSessionGroupIdentifier() const;
     WEBCORE_EXPORT bool mediaPlaybackExists();
@@ -749,12 +743,6 @@ public:
 #if ENABLE(WEBGL)
     WebGLStateTracker* webGLStateTracker() const { return m_webGLStateTracker.get(); }
 #endif
-
-#if ENABLE(SPEECH_SYNTHESIS)
-    SpeechSynthesisClient* speechSynthesisClient() const { return m_speechSynthesisClient.get(); }
-#endif
-
-    WEBCORE_EXPORT SpeechRecognitionConnection& speechRecognitionConnection();
 
     bool isOnlyNonUtilityPage() const;
     bool isUtilityPage() const { return m_isUtilityPage; }
@@ -894,12 +882,6 @@ private:
 #if ENABLE(WEBGL)
     std::unique_ptr<WebGLStateTracker> m_webGLStateTracker;
 #endif
-
-#if ENABLE(SPEECH_SYNTHESIS)
-    std::unique_ptr<SpeechSynthesisClient> m_speechSynthesisClient;
-#endif
-
-    UniqueRef<SpeechRecognitionProvider> m_speechRecognitionProvider;
 
     PlatformDisplayID m_displayID { 0 };
     std::optional<FramesPerSecond> m_displayNominalFramesPerSecond;

@@ -129,11 +129,6 @@ template<typename IDLType> class DOMPromiseDeferred;
 struct MockWebAuthenticationConfiguration;
 
 class Internals final : public RefCounted<Internals>, private ContextDestructionObserver
-#if ENABLE(MEDIA_STREAM)
-    , private RealtimeMediaSource::Observer
-    , private RealtimeMediaSource::AudioSampleObserver
-    , private RealtimeMediaSource::VideoSampleObserver
-#endif
     {
 public:
     static Ref<Internals> create(Document&);
@@ -567,15 +562,6 @@ public:
 
     void enableMockMediaCapabilities();
 
-#if ENABLE(SPEECH_SYNTHESIS)
-    void enableMockSpeechSynthesizer();
-#endif
-
-#if ENABLE(MEDIA_STREAM)
-    void setShouldInterruptAudioOnPageVisibilityChange(bool);
-    void setCustomPrivateRecorderCreator();
-#endif
-
     String getImageSourceURL(Element&);
 
 #if ENABLE(VIDEO)
@@ -745,28 +731,6 @@ public:
     void setPageIsFocusedAndActive(bool);
     void setPageIsInWindow(bool);
     bool isPageActive() const;
-
-#if ENABLE(MEDIA_STREAM)
-    void stopObservingRealtimeMediaSource();
-
-    void setMockAudioTrackChannelNumber(MediaStreamTrack&, unsigned short);
-    void setCameraMediaStreamTrackOrientation(MediaStreamTrack&, int orientation);
-    unsigned long trackAudioSampleCount() const { return m_trackAudioSampleCount; }
-    unsigned long trackVideoSampleCount() const { return m_trackVideoSampleCount; }
-    void observeMediaStreamTrack(MediaStreamTrack&);
-    using TrackFramePromise = DOMPromiseDeferred<IDLInterface<ImageData>>;
-    void grabNextMediaStreamTrackFrame(TrackFramePromise&&);
-    void delayMediaStreamTrackSamples(MediaStreamTrack&, float);
-    void setMediaStreamTrackMuted(MediaStreamTrack&, bool);
-    void removeMediaStreamTrack(MediaStream&, MediaStreamTrack&);
-    void simulateMediaStreamTrackCaptureSourceFailure(MediaStreamTrack&);
-    void setMediaStreamTrackIdentifier(MediaStreamTrack&, String&& id);
-    void setMediaStreamSourceInterrupted(MediaStreamTrack&, bool);
-    bool isMediaStreamSourceInterrupted(MediaStreamTrack&) const;
-    bool isMediaStreamSourceEnded(MediaStreamTrack&) const;
-    bool isMockRealtimeMediaSourceCenterEnabled();
-    bool shouldAudioTrackPlay(const AudioTrack&);
-#endif
 
     bool supportsAudioSession() const;
     String audioSessionCategory() const;
@@ -1085,17 +1049,6 @@ private:
     ExceptionOr<RenderedDocumentMarker*> markerAt(Node&, const String& markerType, unsigned index);
     ExceptionOr<ScrollableArea*> scrollableAreaForNode(Node*) const;
 
-#if ENABLE(MEDIA_STREAM)
-    // RealtimeMediaSource::Observer API
-    void videoSampleAvailable(MediaSample&) final;
-    // RealtimeMediaSource::AudioSampleObserver API
-    void audioSamplesAvailable(const MediaTime&, const PlatformAudioData&, const AudioStreamDescription&, size_t) final { m_trackAudioSampleCount++; }
-
-    unsigned long m_trackVideoSampleCount { 0 };
-    unsigned long m_trackAudioSampleCount { 0 };
-    RefPtr<RealtimeMediaSource> m_trackSource;
-    std::unique_ptr<TrackFramePromise> m_nextTrackFramePromise;
-#endif
 #if ENABLE(MEDIA_SESSION)
     std::unique_ptr<ArtworkImageLoader> m_artworkLoader;
     std::unique_ptr<ArtworkImagePromise> m_artworkImagePromise;

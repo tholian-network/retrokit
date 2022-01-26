@@ -146,19 +146,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/Modules/mediasession/MediaSessionPlaylistMixin.idl \
     $(WebCore)/Modules/mediasession/MediaSessionReadyState.idl \
     $(WebCore)/Modules/mediasession/Navigator+MediaSession.idl \
-    $(WebCore)/Modules/mediastream/CanvasCaptureMediaStreamTrack.idl \
-    $(WebCore)/Modules/mediastream/DoubleRange.idl \
-    $(WebCore)/Modules/mediastream/LongRange.idl \
-    $(WebCore)/Modules/mediastream/MediaDeviceInfo.idl \
-    $(WebCore)/Modules/mediastream/MediaDevices.idl \
-    $(WebCore)/Modules/mediastream/MediaStream.idl \
-    $(WebCore)/Modules/mediastream/MediaStreamTrack.idl \
-    $(WebCore)/Modules/mediastream/MediaStreamTrackEvent.idl \
-    $(WebCore)/Modules/mediastream/MediaTrackConstraints.idl \
-    $(WebCore)/Modules/mediastream/MediaTrackSupportedConstraints.idl \
-    $(WebCore)/Modules/mediastream/Navigator+MediaDevices.idl \
-    $(WebCore)/Modules/mediastream/OverconstrainedError.idl \
-    $(WebCore)/Modules/mediastream/OverconstrainedErrorEvent.idl \
     $(WebCore)/Modules/notifications/Notification.idl \
     $(WebCore)/Modules/notifications/NotificationPermission.idl \
     $(WebCore)/Modules/notifications/NotificationPermissionCallback.idl \
@@ -168,18 +155,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/Modules/permissions/PermissionState.idl \
     $(WebCore)/Modules/permissions/PermissionStatus.idl \
     $(WebCore)/Modules/permissions/Permissions.idl \
-    $(WebCore)/Modules/speech/DOMWindow+SpeechSynthesis.idl \
-    $(WebCore)/Modules/speech/SpeechSynthesis.idl \
-    $(WebCore)/Modules/speech/SpeechSynthesisEvent.idl \
-    $(WebCore)/Modules/speech/SpeechSynthesisUtterance.idl \
-    $(WebCore)/Modules/speech/SpeechSynthesisVoice.idl \
-    $(WebCore)/Modules/speech/SpeechRecognition.idl \
-    $(WebCore)/Modules/speech/SpeechRecognitionAlternative.idl \
-    $(WebCore)/Modules/speech/SpeechRecognitionErrorCode.idl \
-    $(WebCore)/Modules/speech/SpeechRecognitionErrorEvent.idl \
-    $(WebCore)/Modules/speech/SpeechRecognitionEvent.idl \
-    $(WebCore)/Modules/speech/SpeechRecognitionResult.idl \
-    $(WebCore)/Modules/speech/SpeechRecognitionResultList.idl \
     $(WebCore)/Modules/streams/ByteLengthQueuingStrategy.idl \
     $(WebCore)/Modules/streams/CountQueuingStrategy.idl \
     $(WebCore)/Modules/streams/ReadableByteStreamController.idl \
@@ -250,9 +225,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/Modules/webaudio/IIRFilterOptions.idl \
     $(WebCore)/Modules/webaudio/MediaElementAudioSourceNode.idl \
     $(WebCore)/Modules/webaudio/MediaElementAudioSourceOptions.idl \
-    $(WebCore)/Modules/webaudio/MediaStreamAudioDestinationNode.idl \
-    $(WebCore)/Modules/webaudio/MediaStreamAudioSourceNode.idl \
-    $(WebCore)/Modules/webaudio/MediaStreamAudioSourceOptions.idl \
     $(WebCore)/Modules/webaudio/OfflineAudioCompletionEvent.idl \
     $(WebCore)/Modules/webaudio/OfflineAudioCompletionEventInit.idl \
     $(WebCore)/Modules/webaudio/OfflineAudioContext.idl \
@@ -591,7 +563,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/html/HTMLLinkElement.idl \
     $(WebCore)/html/HTMLMapElement.idl \
     $(WebCore)/html/HTMLMarqueeElement.idl \
-    $(WebCore)/html/HTMLMediaElement+AudioOutput.idl \
     $(WebCore)/html/HTMLMediaElement.idl \
     $(WebCore)/html/HTMLMenuElement.idl \
     $(WebCore)/html/HTMLMenuItemElement.idl \

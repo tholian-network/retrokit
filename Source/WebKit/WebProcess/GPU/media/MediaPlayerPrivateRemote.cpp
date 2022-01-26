@@ -752,23 +752,6 @@ void MediaPlayerPrivateRemote::load(const URL& url, const ContentType& contentTy
 }
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-void MediaPlayerPrivateRemote::load(MediaStreamPrivate&)
-{
-    callOnMainRunLoop([weakThis = makeWeakPtr(*this), this] {
-        if (!weakThis)
-            return;
-
-        auto player = makeRefPtr(m_player.get());
-        if (!player)
-            return;
-
-        m_cachedState.networkState = MediaPlayer::NetworkState::FormatError;
-        player->networkStateChanged();
-    });
-}
-#endif
-
 PlatformLayer* MediaPlayerPrivateRemote::platformLayer() const
 {
 #if PLATFORM(COCOA)

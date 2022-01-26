@@ -63,22 +63,6 @@ WKArrayRef WKOpenPanelParametersCopyAllowedMIMETypes(WKOpenPanelParametersRef pa
     return toAPI(&toImpl(parametersRef)->allowedMIMETypes().leakRef());
 }
 
-// Deprecated.
-WKStringRef WKOpenPanelParametersCopyCapture(WKOpenPanelParametersRef)
-{
-    return 0;
-}
-
-bool WKOpenPanelParametersGetMediaCaptureType(WKOpenPanelParametersRef parametersRef)
-{
-#if ENABLE(MEDIA_CAPTURE)
-    return toImpl(parametersRef)->mediaCaptureType();
-#else
-    UNUSED_PARAM(parametersRef);
-    return false;
-#endif
-}
-
 WKArrayRef WKOpenPanelParametersCopySelectedFileNames(WKOpenPanelParametersRef parametersRef)
 {
     return toAPI(&toImpl(parametersRef)->selectedFileNames().leakRef());

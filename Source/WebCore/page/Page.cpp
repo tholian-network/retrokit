@@ -124,7 +124,6 @@
 #include "Settings.h"
 #include "SharedBuffer.h"
 #include "SocketProvider.h"
-#include "SpeechRecognitionProvider.h"
 #include "StorageArea.h"
 #include "StorageNamespace.h"
 #include "StorageNamespaceProvider.h"
@@ -257,10 +256,6 @@ Page::Page(PageConfiguration&& pageConfiguration)
 #if ENABLE(WEBGL)
     , m_webGLStateTracker(WTFMove(pageConfiguration.webGLStateTracker))
 #endif
-#if ENABLE(SPEECH_SYNTHESIS)
-    , m_speechSynthesisClient(WTFMove(pageConfiguration.speechSynthesisClient))
-#endif
-    , m_speechRecognitionProvider((WTFMove(pageConfiguration.speechRecognitionProvider)))
     , m_verticalScrollElasticity(ScrollElasticityAllowed)
     , m_horizontalScrollElasticity(ScrollElasticityAllowed)
     , m_domTimerAlignmentInterval(DOMTimer::defaultAlignmentInterval())
@@ -1974,7 +1969,7 @@ void Page::updateTimerThrottlingState()
     // If the page is visible (but idle), there is any activity (loading, media playing, etc), or per setting,
     // we allow timer throttling, but not increasing timer throttling.
     if (!m_settings->hiddenPageDOMTimerThrottlingAutoIncreases()
-        || m_activityState.containsAny({ActivityState::IsVisible, ActivityState::IsAudible, ActivityState::IsLoading, ActivityState::IsCapturingMedia })) {
+        || m_activityState.containsAny({ActivityState::IsVisible, ActivityState::IsAudible, ActivityState::IsLoading })) {
         setTimerThrottlingState(TimerThrottlingState::Enabled);
         return;
     }
@@ -2127,16 +2122,6 @@ void Page::setMuted(MediaProducer::MutedStateFlags muted)
     });
 }
 
-void Page::stopMediaCapture(MediaProducer::MediaCaptureKind kind)
-{
-    UNUSED_PARAM(kind);
-#if ENABLE(MEDIA_STREAM)
-    forEachDocument([kind] (Document& document) {
-        document.stopMediaCapture(kind);
-    });
-#endif
-}
-
 bool Page::mediaPlaybackExists()
 {
 #if ENABLE(VIDEO)
@@ -2262,7 +2247,7 @@ void Page::setActivityState(OptionSet<ActivityState::Flag> activityState)
             view->updateTiledBackingAdaptiveSizing();
     }
 
-    if (changed.containsAny({ActivityState::IsVisible, ActivityState::IsVisuallyIdle, ActivityState::IsAudible, ActivityState::IsLoading, ActivityState::IsCapturingMedia }))
+    if (changed.containsAny({ActivityState::IsVisible, ActivityState::IsVisuallyIdle, ActivityState::IsAudible, ActivityState::IsLoading }))
         updateTimerThrottlingState();
 
     for (auto& observer : m_activityStateChangeObservers)
@@ -3312,11 +3297,6 @@ void Page::mainFrameDidChangeToNonInitialEmptyDocument()
     for (auto& userStyleSheet : m_userStyleSheetsPendingInjection)
         injectUserStyleSheet(userStyleSheet);
     m_userStyleSheetsPendingInjection.clear();
-}
-
-SpeechRecognitionConnection& Page::speechRecognitionConnection()
-{
-    return m_speechRecognitionProvider->speechRecognitionConnection();
 }
 
 WTF::TextStream& operator<<(WTF::TextStream& ts, RenderingUpdateStep step)

@@ -61,10 +61,6 @@
 #include "RemoteAudioSessionProxyManager.h"
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-#include <WebCore/MockRealtimeMediaSourceCenter.h>
-#endif
-
 #if PLATFORM(COCOA)
 #include <WebCore/VP9UtilitiesCocoa.h>
 #endif
@@ -116,13 +112,6 @@ void GPUProcess::createGPUConnectionToWebProcess(ProcessIdentifier identifier, P
     }
 
     auto newConnection = GPUConnectionToWebProcess::create(*this, identifier, ipcConnection->first, sessionID, WTFMove(parameters));
-
-#if ENABLE(MEDIA_STREAM)
-    // FIXME: We should refactor code to go from WebProcess -> GPUProcess -> UIProcess when getUserMedia is called instead of going from WebProcess -> UIProcess directly.
-    auto access = m_mediaCaptureAccessMap.take(identifier);
-    newConnection->updateCaptureAccess(access.allowAudioCapture, access.allowVideoCapture, access.allowDisplayCapture);
-    newConnection->setOrientationForMediaCapture(m_orientation);
-#endif
 
 #if ENABLE(IPC_TESTING_API)
     if (parameters.ignoreInvalidMessageForTesting)
@@ -221,13 +210,6 @@ void GPUProcess::initializeGPUProcess(GPUProcessCreationParameters&& parameters)
     DeprecatedGlobalSettings::setShouldManageAudioSessionCategory(true);
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-    setMockCaptureDevicesEnabled(parameters.useMockCaptureDevices);
-#if PLATFORM(MAC)
-    SandboxExtension::consumePermanently(parameters.microphoneSandboxExtensionHandle);
-#endif
-#endif // ENABLE(MEDIA_STREAM)
-
 #if USE(SANDBOX_EXTENSIONS_FOR_CACHE_AND_TEMP_DIRECTORY_ACCESS)
     SandboxExtension::consumePermanently(parameters.containerCachesDirectoryExtensionHandle);
     SandboxExtension::consumePermanently(parameters.containerTemporaryDirectoryExtensionHandle);
@@ -282,67 +264,6 @@ GPUConnectionToWebProcess* GPUProcess::webProcessConnection(ProcessIdentifier id
     return m_webProcessConnections.get(identifier);
 }
 
-#if ENABLE(MEDIA_STREAM)
-void GPUProcess::setMockCaptureDevicesEnabled(bool isEnabled)
-{
-    MockRealtimeMediaSourceCenter::setMockRealtimeMediaSourceCenterEnabled(isEnabled);
-}
-
-void GPUProcess::setOrientationForMediaCapture(uint64_t orientation)
-{
-    m_orientation = orientation;
-    for (auto& connection : m_webProcessConnections.values())
-        connection->setOrientationForMediaCapture(orientation);
-}
-
-void GPUProcess::updateCaptureAccess(bool allowAudioCapture, bool allowVideoCapture, bool allowDisplayCapture, ProcessIdentifier processID, CompletionHandler<void()>&& completionHandler)
-{
-    if (auto* connection = webProcessConnection(processID)) {
-        connection->updateCaptureAccess(allowAudioCapture, allowVideoCapture, allowDisplayCapture);
-        return completionHandler();
-    }
-
-    auto& access = m_mediaCaptureAccessMap.add(processID, MediaCaptureAccess { allowAudioCapture, allowVideoCapture, allowDisplayCapture }).iterator->value;
-    access.allowAudioCapture |= allowAudioCapture;
-    access.allowVideoCapture |= allowVideoCapture;
-    access.allowDisplayCapture |= allowDisplayCapture;
-
-    completionHandler();
-}
-
-void GPUProcess::updateCaptureOrigin(const WebCore::SecurityOriginData& originData, ProcessIdentifier processID)
-{
-    if (auto* connection = webProcessConnection(processID))
-        connection->updateCaptureOrigin(originData);
-}
-
-void GPUProcess::updateSandboxAccess(const Vector<SandboxExtension::Handle>& extensions)
-{
-    for (auto& extension : extensions)
-        SandboxExtension::consumePermanently(extension);
-}
-
-void GPUProcess::addMockMediaDevice(const WebCore::MockMediaDevice& device)
-{
-    MockRealtimeMediaSourceCenter::addDevice(device);
-}
-
-void GPUProcess::clearMockMediaDevices()
-{
-    MockRealtimeMediaSourceCenter::setDevices({ });
-}
-
-void GPUProcess::removeMockMediaDevice(const String& persistentId)
-{
-    MockRealtimeMediaSourceCenter::removeDevice(persistentId);
-}
-
-void GPUProcess::resetMockMediaDevices()
-{
-    MockRealtimeMediaSourceCenter::resetDevices();
-}
-#endif
-
 #if PLATFORM(MAC)
 void GPUProcess::displayConfigurationChanged(CGDirectDisplayID displayID, CGDisplayChangeSummaryFlags flags)
 {
@@ -386,15 +307,6 @@ RemoteAudioSessionProxyManager& GPUProcess::audioSessionManager() const
     if (!m_audioSessionManager)
         m_audioSessionManager = WTF::makeUnique<RemoteAudioSessionProxyManager>();
     return *m_audioSessionManager;
-}
-#endif
-
-#if ENABLE(MEDIA_STREAM) && PLATFORM(COCOA)
-WorkQueue& GPUProcess::videoMediaStreamTrackRendererQueue()
-{
-    if (!m_videoMediaStreamTrackRendererQueue)
-        m_videoMediaStreamTrackRendererQueue = WorkQueue::create("RemoteVideoMediaStreamTrackRenderer", WorkQueue::Type::Serial, WorkQueue::QOS::UserInitiated);
-    return *m_videoMediaStreamTrackRendererQueue;
 }
 #endif
 

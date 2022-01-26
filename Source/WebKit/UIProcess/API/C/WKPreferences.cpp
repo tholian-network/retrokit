@@ -1145,26 +1145,6 @@ bool WKPreferencesGetUseGiantTiles(WKPreferencesRef preferencesRef)
     return toImpl(preferencesRef)->useGiantTiles();
 }
 
-void WKPreferencesSetMediaDevicesEnabled(WKPreferencesRef preferencesRef, bool enabled)
-{
-    toImpl(preferencesRef)->setMediaDevicesEnabled(enabled);
-}
-
-bool WKPreferencesGetMediaDevicesEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->mediaDevicesEnabled();
-}
-
-void WKPreferencesSetMediaStreamEnabled(WKPreferencesRef preferencesRef, bool enabled)
-{
-    toImpl(preferencesRef)->setMediaStreamEnabled(enabled);
-}
-
-bool WKPreferencesGetMediaStreamEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->mediaStreamEnabled();
-}
-
 void WKPreferencesSetSpatialNavigationEnabled(WKPreferencesRef preferencesRef, bool enabled)
 {
     toImpl(preferencesRef)->setSpatialNavigationEnabled(enabled);
@@ -1324,36 +1304,6 @@ void WKPreferencesSetResourceUsageOverlayVisible(WKPreferencesRef preferencesRef
 bool WKPreferencesGetResourceUsageOverlayVisible(WKPreferencesRef preferencesRef)
 {
     return toImpl(preferencesRef)->resourceUsageOverlayVisible();
-}
-
-void WKPreferencesSetMockCaptureDevicesEnabled(WKPreferencesRef preferencesRef, bool enabled)
-{
-    toImpl(preferencesRef)->setMockCaptureDevicesEnabled(enabled);
-}
-
-bool WKPreferencesGetMockCaptureDevicesEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->mockCaptureDevicesEnabled();
-}
-
-void WKPreferencesSetMediaCaptureRequiresSecureConnection(WKPreferencesRef preferencesRef, bool enabled)
-{
-    toImpl(preferencesRef)->setMediaCaptureRequiresSecureConnection(enabled);
-}
-
-bool WKPreferencesGetMediaCaptureRequiresSecureConnection(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->mediaCaptureRequiresSecureConnection();
-}
-
-void WKPreferencesSetInactiveMediaCaptureSteamRepromptIntervalInMinutes(WKPreferencesRef preferencesRef, double interval)
-{
-    toImpl(preferencesRef)->setInactiveMediaCaptureSteamRepromptIntervalInMinutes(interval);
-}
-
-double WKPreferencesGetInactiveMediaCaptureSteamRepromptIntervalInMinutes(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->inactiveMediaCaptureSteamRepromptIntervalInMinutes();
 }
 
 void WKPreferencesSetDataTransferItemsEnabled(WKPreferencesRef preferencesRef, bool flag)
@@ -1714,46 +1664,6 @@ void WKPreferencesSetPunchOutWhiteBackgroundsInDarkMode(WKPreferencesRef prefere
 bool WKPreferencesGetPunchOutWhiteBackgroundsInDarkMode(WKPreferencesRef preferencesRef)
 {
     return toImpl(preferencesRef)->punchOutWhiteBackgroundsInDarkMode();
-}
-
-void WKPreferencesSetCaptureAudioInUIProcessEnabled(WKPreferencesRef preferencesRef, bool flag)
-{
-    toImpl(preferencesRef)->setCaptureAudioInUIProcessEnabled(flag);
-}
-
-bool WKPreferencesGetCaptureAudioInUIProcessEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->captureAudioInUIProcessEnabled();
-}
-
-void WKPreferencesSetCaptureAudioInGPUProcessEnabled(WKPreferencesRef preferencesRef, bool flag)
-{
-    toImpl(preferencesRef)->setCaptureAudioInGPUProcessEnabled(flag);
-}
-
-bool WKPreferencesGetCaptureAudioInGPUProcessEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->captureAudioInGPUProcessEnabled();
-}
-
-void WKPreferencesSetCaptureVideoInUIProcessEnabled(WKPreferencesRef preferencesRef, bool flag)
-{
-    toImpl(preferencesRef)->setCaptureVideoInUIProcessEnabled(flag);
-}
-
-bool WKPreferencesGetCaptureVideoInUIProcessEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->captureVideoInUIProcessEnabled();
-}
-
-void WKPreferencesSetCaptureVideoInGPUProcessEnabled(WKPreferencesRef preferencesRef, bool flag)
-{
-    toImpl(preferencesRef)->setCaptureVideoInGPUProcessEnabled(flag);
-}
-
-bool WKPreferencesGetCaptureVideoInGPUProcessEnabled(WKPreferencesRef preferencesRef)
-{
-    return toImpl(preferencesRef)->captureVideoInGPUProcessEnabled();
 }
 
 void WKPreferencesSetVP9DecoderEnabled(WKPreferencesRef preferencesRef, bool flag)

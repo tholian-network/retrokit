@@ -53,11 +53,6 @@
 #include "TextSinkGStreamer.h"
 #include "VideoTrackPrivateGStreamer.h"
 
-#if ENABLE(MEDIA_STREAM)
-#include "GStreamerMediaStreamSource.h"
-#include "MediaStreamPrivate.h"
-#endif
-
 #if ENABLE(MEDIA_SOURCE)
 #include "MediaSource.h"
 #include "WebKitMediaSourceGStreamer.h"
@@ -328,17 +323,6 @@ void MediaPlayerPrivateGStreamer::load(const URL&, const ContentType&, MediaSour
 }
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-void MediaPlayerPrivateGStreamer::load(MediaStreamPrivate& stream)
-{
-    m_streamPrivate = &stream;
-    load(String("mediastream://") + stream.id());
-    syncOnClock(false);
-
-    m_player->play();
-}
-#endif
-
 void MediaPlayerPrivateGStreamer::cancelLoad()
 {
     if (m_networkState < MediaPlayer::NetworkState::Loading || m_networkState == MediaPlayer::NetworkState::Loaded)
@@ -440,11 +424,6 @@ void MediaPlayerPrivateGStreamer::seek(const MediaTime& mediaTime)
     if (!m_pipeline || m_didErrorOccur)
         return;
 
-#if ENABLE(MEDIA_STREAM)
-    if (WEBKIT_IS_MEDIA_STREAM_SRC(m_source.get()))
-        return;
-#endif
-
     GST_INFO_OBJECT(pipeline(), "[Seek] seek attempt to %s", toString(mediaTime).utf8().data());
 
     // Avoid useless seeking.
@@ -498,11 +477,6 @@ void MediaPlayerPrivateGStreamer::seek(const MediaTime& mediaTime)
 
 void MediaPlayerPrivateGStreamer::updatePlaybackRate()
 {
-#if ENABLE(MEDIA_STREAM)
-    if (WEBKIT_IS_MEDIA_STREAM_SRC(m_source.get()))
-        return;
-#endif
-
     if (!m_isChangingRate)
         return;
 
@@ -621,11 +595,6 @@ void MediaPlayerPrivateGStreamer::setPreservesPitch(bool preservesPitch)
 
 void MediaPlayerPrivateGStreamer::setPreload(MediaPlayer::Preload preload)
 {
-#if ENABLE(MEDIA_STREAM)
-    if (WEBKIT_IS_MEDIA_STREAM_SRC(m_source.get()))
-        return;
-#endif
-
     GST_DEBUG_OBJECT(pipeline(), "Setting preload to %s", convertEnumerationToString(preload).utf8().data());
     if (preload == MediaPlayer::Preload::Auto && m_isLiveStream)
         return;
@@ -682,11 +651,6 @@ MediaTime MediaPlayerPrivateGStreamer::maxMediaTimeSeekable() const
 
     if (m_isLiveStream)
         return MediaTime::zeroTime();
-
-#if ENABLE(MEDIA_STREAM)
-    if (WEBKIT_IS_MEDIA_STREAM_SRC(m_source.get()))
-        return MediaTime::zeroTime();
-#endif
 
     MediaTime duration = durationMediaTime();
     GST_DEBUG_OBJECT(pipeline(), "maxMediaTimeSeekable, duration: %s", toString(duration).utf8().data());
@@ -856,12 +820,6 @@ void MediaPlayerPrivateGStreamer::sourceSetup(GstElement* sourceElement)
 
     if (WEBKIT_IS_WEB_SRC(m_source.get())) {
         webKitWebSrcSetMediaPlayer(WEBKIT_WEB_SRC_CAST(m_source.get()), m_player, m_referrer);
-#if ENABLE(MEDIA_STREAM)
-    } else if (WEBKIT_IS_MEDIA_STREAM_SRC(sourceElement)) {
-        auto stream = m_streamPrivate.get();
-        ASSERT(stream);
-        webkitMediaStreamSrcSetStream(WEBKIT_MEDIA_STREAM_SRC(sourceElement), stream, m_player->isVideoPlayer());
-#endif
     }
 }
 
@@ -1262,11 +1220,6 @@ MediaTime MediaPlayerPrivateGStreamer::playbackPosition() const
 {
     GST_TRACE_OBJECT(pipeline(), "isEndReached: %s, seeking: %s, seekTime: %s", boolForPrinting(m_isEndReached), boolForPrinting(m_isSeeking), m_seekTime.toString().utf8().data());
 
-#if ENABLE(MEDIA_STREAM)
-    if (m_streamPrivate && m_player->isVideoPlayer() && !hasFirstVideoSampleReachedSink())
-        return MediaTime::zeroTime();
-#endif
-
     if (m_isSeeking)
         return m_seekTime;
     if (m_isEndReached)
@@ -1441,7 +1394,6 @@ void MediaPlayerPrivateGStreamer::updateTracks(const GRefPtr<GstStreamCollection
 
         if (type & GST_STREAM_TYPE_AUDIO) {
             CREATE_TRACK(audio, Audio);
-            configureMediaStreamAudioTracks();
         } else if (type & GST_STREAM_TYPE_VIDEO && m_player->isVideoPlayer())
             CREATE_TRACK(video, Video);
         else if (type & GST_STREAM_TYPE_TEXT && !useMediaSource) {
@@ -1545,32 +1497,10 @@ FloatSize MediaPlayerPrivateGStreamer::naturalSize() const
     return s_holePunchDefaultFrameSize;
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-    if (!m_isLegacyPlaybin && !m_wantedVideoStreamId.isEmpty()) {
-        RefPtr<VideoTrackPrivateGStreamer> videoTrack = m_videoTracks.get(m_wantedVideoStreamId);
-
-        if (videoTrack) {
-            auto tags = adoptGRef(gst_stream_get_tags(videoTrack->stream()));
-            gint width, height;
-
-            if (tags && gst_tag_list_get_int(tags.get(), WEBKIT_MEDIA_TRACK_TAG_WIDTH, &width) && gst_tag_list_get_int(tags.get(), WEBKIT_MEDIA_TRACK_TAG_HEIGHT, &height))
-                return FloatSize(width, height);
-        }
-    }
-#endif // ENABLE(MEDIA_STREAM)
-
     if (!hasVideo())
         return FloatSize();
 
     return m_videoSize;
-}
-
-void MediaPlayerPrivateGStreamer::configureMediaStreamAudioTracks()
-{
-#if ENABLE(MEDIA_STREAM)
-    if (WEBKIT_IS_MEDIA_STREAM_SRC(m_source.get()))
-        webkitMediaStreamSrcConfigureAudioTracks(WEBKIT_MEDIA_STREAM_SRC(m_source.get()), volume(), isMuted(), !m_isPaused);
-#endif
 }
 
 void MediaPlayerPrivateGStreamer::setVolume(float volume)
@@ -1580,7 +1510,6 @@ void MediaPlayerPrivateGStreamer::setVolume(float volume)
 
     GST_DEBUG_OBJECT(pipeline(), "Setting volume: %f", volume);
     gst_stream_volume_set_volume(m_volumeElement.get(), GST_STREAM_VOLUME_FORMAT_LINEAR, static_cast<double>(volume));
-    configureMediaStreamAudioTracks();
 }
 
 float MediaPlayerPrivateGStreamer::volume() const
@@ -1638,7 +1567,6 @@ void MediaPlayerPrivateGStreamer::setMuted(bool shouldMute)
 
     GST_INFO_OBJECT(pipeline(), "Setting muted state to %s", boolForPrinting(shouldMute));
     g_object_set(m_volumeElement.get(), "mute", shouldMute, nullptr);
-    configureMediaStreamAudioTracks();
 }
 
 void MediaPlayerPrivateGStreamer::notifyPlayerOfMute()
@@ -2332,9 +2260,6 @@ void MediaPlayerPrivateGStreamer::updateStates()
             }
         }
     }
-
-    if (oldIsPaused != m_isPaused)
-        configureMediaStreamAudioTracks();
 }
 
 void MediaPlayerPrivateGStreamer::mediaLocationChanged(GstMessage* message)
@@ -2468,7 +2393,6 @@ void MediaPlayerPrivateGStreamer::didEnd()
         m_isPaused = true;
         changePipelineState(GST_STATE_READY);
         m_didDownloadFinish = false;
-        configureMediaStreamAudioTracks();
 
 #if USE(WPE_VIDEO_PLANE_DISPLAY_DMABUF)
         wpe_video_plane_display_dmabuf_source_end_of_stream(m_wpeVideoPlaneDisplayDmaBuf.get());
@@ -2490,14 +2414,6 @@ MediaPlayer::SupportsType MediaPlayerPrivateGStreamer::supportsType(const MediaE
     if (parameters.isMediaSource)
         return result;
 #endif
-
-    if (parameters.isMediaStream) {
-#if ENABLE(MEDIA_STREAM)
-        return MediaPlayer::SupportsType::IsSupported;
-#else
-        return result;
-#endif
-    }
 
     GST_DEBUG("Checking mime-type \"%s\"", parameters.type.raw().utf8().data());
     if (parameters.type.isEmpty())

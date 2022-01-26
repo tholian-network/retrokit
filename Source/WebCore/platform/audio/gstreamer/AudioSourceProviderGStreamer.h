@@ -29,31 +29,15 @@
 #include <wtf/Lock.h>
 #include <wtf/Noncopyable.h>
 
-#if ENABLE(MEDIA_STREAM)
-#include "GStreamerAudioStreamDescription.h"
-#include "MediaStreamTrackPrivate.h"
-#include "WebAudioSourceProvider.h"
-#endif
-
 typedef struct _GstAdapter GstAdapter;
 typedef struct _GstAppSink GstAppSink;
 
 namespace WebCore {
 
-#if ENABLE(MEDIA_STREAM)
-class AudioSourceProviderGStreamer final : public WebAudioSourceProvider {
-public:
-    static Ref<AudioSourceProviderGStreamer> create(MediaStreamTrackPrivate& source)
-    {
-        return adoptRef(*new AudioSourceProviderGStreamer(source));
-    }
-    AudioSourceProviderGStreamer(MediaStreamTrackPrivate&);
-#else
 class AudioSourceProviderGStreamer : public AudioSourceProvider {
     WTF_MAKE_FAST_ALLOCATED;
     WTF_MAKE_NONCOPYABLE(AudioSourceProviderGStreamer);
 public:
-#endif
 
     AudioSourceProviderGStreamer();
     ~AudioSourceProviderGStreamer();
@@ -72,9 +56,6 @@ public:
     void clearAdapters();
 
 private:
-#if ENABLE(MEDIA_STREAM)
-    GRefPtr<GstElement> m_pipeline;
-#endif
     enum MainThreadNotification {
         DeinterleavePadsConfigured = 1 << 0,
     };

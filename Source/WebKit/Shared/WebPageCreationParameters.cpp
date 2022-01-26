@@ -152,12 +152,6 @@ void WebPageCreationParameters::encode(IPC::Encoder& encoder) const
     encoder << userScriptsShouldWaitUntilNotification;
     encoder << crossOriginAccessControlCheckEnabled;
     encoder << processDisplayName;
-
-    encoder << shouldCaptureAudioInUIProcess;
-    encoder << shouldCaptureAudioInGPUProcess;
-    encoder << shouldCaptureVideoInUIProcess;
-    encoder << shouldCaptureVideoInGPUProcess;
-    encoder << shouldCaptureDisplayInUIProcess;
     encoder << shouldRenderCanvasInGPUProcess;
     encoder << shouldRenderDOMInGPUProcess;
     encoder << shouldPlayMediaInGPUProcess;
@@ -512,33 +506,18 @@ std::optional<WebPageCreationParameters> WebPageCreationParameters::decode(IPC::
     if (!userScriptsShouldWaitUntilNotification)
         return std::nullopt;
     parameters.userScriptsShouldWaitUntilNotification = *userScriptsShouldWaitUntilNotification;
-    
+
     std::optional<bool> crossOriginAccessControlCheckEnabled;
     decoder >> crossOriginAccessControlCheckEnabled;
     if (!crossOriginAccessControlCheckEnabled)
         return std::nullopt;
     parameters.crossOriginAccessControlCheckEnabled = *crossOriginAccessControlCheckEnabled;
-    
+
     std::optional<String> processDisplayName;
     decoder >> processDisplayName;
     if (!processDisplayName)
         return std::nullopt;
     parameters.processDisplayName = WTFMove(*processDisplayName);
-    
-    if (!decoder.decode(parameters.shouldCaptureAudioInUIProcess))
-        return std::nullopt;
-
-    if (!decoder.decode(parameters.shouldCaptureAudioInGPUProcess))
-        return std::nullopt;
-
-    if (!decoder.decode(parameters.shouldCaptureVideoInUIProcess))
-        return std::nullopt;
-
-    if (!decoder.decode(parameters.shouldCaptureVideoInGPUProcess))
-        return std::nullopt;
-
-    if (!decoder.decode(parameters.shouldCaptureDisplayInUIProcess))
-        return std::nullopt;
 
     if (!decoder.decode(parameters.shouldRenderCanvasInGPUProcess))
         return std::nullopt;

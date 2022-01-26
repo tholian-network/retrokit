@@ -135,7 +135,6 @@ namespace WebCore {
     macro(NavigatorCredentials) \
     macro(NavigatorMediaDevices) \
     macro(NavigatorPermissions) \
-    macro(NavigatorUserMedia) \
     macro(OfflineAudioContext) \
     macro(OffscreenCanvas) \
     macro(OffscreenCanvasRenderingContext2D) \
@@ -180,12 +179,6 @@ namespace WebCore {
     macro(ServiceWorkerGlobalScope) \
     macro(ServiceWorkerRegistration) \
     macro(ShadowRoot) \
-    macro(SpeechRecognition) \
-    macro(SpeechRecognitionAlternative) \
-    macro(SpeechRecognitionErrorEvent) \
-    macro(SpeechRecognitionEvent) \
-    macro(SpeechRecognitionResult) \
-    macro(SpeechRecognitionResultList) \
     macro(SourceBuffer) \
     macro(SourceBufferList) \
     macro(StaticRange) \
@@ -287,7 +280,6 @@ namespace WebCore {
     macro(focus) \
     macro(frames) \
     macro(getTracks) \
-    macro(getUserMedia) \
     macro(gpu) \
     macro(header) \
     macro(highWaterMark) \
@@ -404,7 +396,6 @@ namespace WebCore {
     macro(webkitIndexedDB) \
     macro(webkitOfflineAudioContext) \
     macro(webkitOscillatorNode) \
-    macro(webkitSpeechRecognition) \
     macro(whenSignalAborted) \
     macro(window) \
     macro(writable) \

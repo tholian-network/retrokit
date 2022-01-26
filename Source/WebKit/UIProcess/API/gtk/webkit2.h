@@ -39,7 +39,6 @@
 #include <webkit2/WebKitCookieManager.h>
 #include <webkit2/WebKitCredential.h>
 #include <webkit2/WebKitDefines.h>
-#include <webkit2/WebKitDeviceInfoPermissionRequest.h>
 #include <webkit2/WebKitDownload.h>
 #include <webkit2/WebKitEditingCommands.h>
 #include <webkit2/WebKitEditorState.h>
@@ -77,7 +76,6 @@
 #include <webkit2/WebKitUserContent.h>
 #include <webkit2/WebKitUserContentFilterStore.h>
 #include <webkit2/WebKitUserContentManager.h>
-#include <webkit2/WebKitUserMediaPermissionRequest.h>
 #include <webkit2/WebKitUserMessage.h>
 #include <webkit2/WebKitVersion.h>
 #include <webkit2/WebKitWebContext.h>

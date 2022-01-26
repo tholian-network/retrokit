@@ -66,8 +66,7 @@ public:
 
     enum class DeveloperPreference {
         PrivateClickMeasurementDebugModeEnabled,
-        ITPDebugModeEnabled,
-        MockCaptureDevicesEnabled,
+        ITPDebugModeEnabled
     };
     virtual void setDeveloperPreferenceOverride(DeveloperPreference, std::optional<bool>) { }
 
@@ -84,8 +83,7 @@ template<> struct EnumTraits<WebCore::InspectorClient::DeveloperPreference> {
     using values = EnumValues<
         WebCore::InspectorClient::DeveloperPreference,
         WebCore::InspectorClient::DeveloperPreference::PrivateClickMeasurementDebugModeEnabled,
-        WebCore::InspectorClient::DeveloperPreference::ITPDebugModeEnabled,
-        WebCore::InspectorClient::DeveloperPreference::MockCaptureDevicesEnabled
+        WebCore::InspectorClient::DeveloperPreference::ITPDebugModeEnabled
     >;
 };
 

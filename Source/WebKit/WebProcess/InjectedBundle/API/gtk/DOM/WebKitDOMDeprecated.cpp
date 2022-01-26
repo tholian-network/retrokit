@@ -159,21 +159,6 @@ WebKitDOMText* webkit_dom_text_replace_whole_text(WebKitDOMText* self, const gch
     return WebKit::kit(WebKit::core(self)->replaceWholeText(WTF::String::fromUTF8(content)).get());
 }
 
-gboolean webkit_dom_html_input_element_get_capture(WebKitDOMHTMLInputElement* self)
-{
-    g_return_val_if_fail(WEBKIT_DOM_IS_HTML_INPUT_ELEMENT(self), FALSE);
-
-#if ENABLE(MEDIA_CAPTURE)
-    WebCore::JSMainThreadNullState state;
-    WebCore::HTMLInputElement* item = WebKit::core(self);
-    return item->mediaCaptureType() != WebCore::MediaCaptureTypeNone;
-#else
-    UNUSED_PARAM(self);
-    WEBKIT_WARN_FEATURE_NOT_PRESENT("Media Capture")
-    return FALSE;
-#endif /* ENABLE(MEDIA_CAPTURE) */
-}
-
 gchar* webkit_dom_html_document_get_design_mode(WebKitDOMHTMLDocument* self)
 {
     g_return_val_if_fail(WEBKIT_DOM_IS_HTML_DOCUMENT(self), nullptr);

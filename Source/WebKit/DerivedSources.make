@@ -54,12 +54,10 @@ VPATH = \
     $(WebKit2)/WebProcess/Inspector \
     $(WebKit2)/WebProcess/MediaCache \
     $(WebKit2)/WebProcess/MediaSession \
-    $(WebKit2)/WebProcess/MediaStream \
     $(WebKit2)/WebProcess/Network \
     $(WebKit2)/WebProcess/Notifications \
     $(WebKit2)/WebProcess/OriginData \
     $(WebKit2)/WebProcess/ResourceCache \
-	$(WebKit2)/WebProcess/Speech \
     $(WebKit2)/WebProcess/Storage \
     $(WebKit2)/WebProcess/UserContent \
     $(WebKit2)/WebProcess/WebAuthentication \
@@ -81,7 +79,6 @@ VPATH = \
     $(WebKit2)/UIProcess/Inspector/Agents \
     $(WebKit2)/UIProcess/Media \
     $(WebKit2)/UIProcess/Media/cocoa \
-    $(WebKit2)/UIProcess/MediaStream \
     $(WebKit2)/UIProcess/Network \
     $(WebKit2)/UIProcess/Network/CustomProtocols \
     $(WebKit2)/UIProcess/Notifications \
@@ -139,7 +136,6 @@ MESSAGE_RECEIVERS = \
 	UIProcess/ios/SmartMagnificationController \
 	UIProcess/mac/SecItemShimProxy \
 	UIProcess/Cocoa/PlaybackSessionManagerProxy \
-	UIProcess/Cocoa/UserMediaCaptureManagerProxy \
 	UIProcess/WebCookieManagerProxy \
 	UIProcess/ViewGestureController \
 	UIProcess/WebProcessProxy \
@@ -148,8 +144,6 @@ MESSAGE_RECEIVERS = \
 	UIProcess/Downloads/DownloadProxy \
 	UIProcess/Media/AudioSessionRoutingArbitratorProxy \
 	UIProcess/Media/RemoteMediaSessionCoordinatorProxy \
-	UIProcess/SpeechRecognitionRemoteRealtimeMediaSourceManager \
-	UIProcess/SpeechRecognitionServer \
 	WebProcess/Databases/IndexedDB/WebIDBConnectionToServer \
 	WebProcess/GPU/GPUProcessConnection \
 	WebProcess/GPU/graphics/RemoteRenderingBackendProxy \
@@ -176,14 +170,11 @@ MESSAGE_RECEIVERS = \
 	WebProcess/Network/WebSocketStream \
 	WebProcess/Network/WebResourceLoader \
 	WebProcess/WebCoreSupport/WebBroadcastChannelRegistry \
-	WebProcess/WebCoreSupport/WebSpeechRecognitionConnection \
-	WebProcess/Speech/SpeechRecognitionRealtimeMediaSourceManager \
 	WebProcess/Storage/WebSWContextManagerConnection \
 	WebProcess/Storage/WebSWClientConnection \
 	WebProcess/WebProcess \
 	WebProcess/cocoa/PlaybackSessionManager \
 	WebProcess/cocoa/RemoteCaptureSampleManager \
-	WebProcess/cocoa/UserMediaCaptureManager \
 	WebProcess/Automation/WebAutomationSessionProxy \
 	WebProcess/Notifications/WebNotificationManager \
 	WebProcess/WebPage/EventDispatcher \

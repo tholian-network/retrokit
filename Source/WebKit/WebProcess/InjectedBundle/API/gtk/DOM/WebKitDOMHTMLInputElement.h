@@ -548,31 +548,6 @@ WEBKIT_DEPRECATED void
 webkit_dom_html_input_element_set_use_map(WebKitDOMHTMLInputElement* self, const gchar* value);
 
 /**
- * webkit_dom_html_input_element_get_capture_type:
- * @self: A #WebKitDOMHTMLInputElement
- *
- * Returns: A #gchar
- *
- * Since: 2.14
- *
- * Deprecated: 2.22: Use JavaScriptCore API instead
-**/
-WEBKIT_DEPRECATED gchar*
-webkit_dom_html_input_element_get_capture_type(WebKitDOMHTMLInputElement* self);
-
-/**
- * webkit_dom_html_input_element_set_capture_type:
- * @self: A #WebKitDOMHTMLInputElement
- * @value: A #gchar
- *
- * Since: 2.16
- *
- * Deprecated: 2.22: Use JavaScriptCore API instead
-**/
-WEBKIT_DEPRECATED void
-webkit_dom_html_input_element_set_capture_type(WebKitDOMHTMLInputElement* self, const gchar* value);
-
-/**
  * webkit_dom_html_input_element_is_edited:
  * @input: A #WebKitDOMHTMLInputElement
  *

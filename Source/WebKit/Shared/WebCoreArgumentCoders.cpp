@@ -106,11 +106,6 @@
 #include <WebCore/SharedBuffer.h>
 #endif // PLATFORM(IOS_FAMILY)
 
-#if ENABLE(MEDIA_STREAM)
-#include <WebCore/CaptureDevice.h>
-#include <WebCore/MediaConstraints.h>
-#endif
-
 #if ENABLE(IMAGE_ANALYSIS)
 #include <WebCore/TextRecognitionResult.h>
 #endif
@@ -1785,9 +1780,6 @@ void ArgumentCoder<FileChooserSettings>::encode(Encoder& encoder, const FileChoo
     encoder << settings.acceptMIMETypes;
     encoder << settings.acceptFileExtensions;
     encoder << settings.selectedFiles;
-#if ENABLE(MEDIA_CAPTURE)
-    encoder << settings.mediaCaptureType;
-#endif
 }
 
 bool ArgumentCoder<FileChooserSettings>::decode(Decoder& decoder, FileChooserSettings& settings)
@@ -1802,10 +1794,6 @@ bool ArgumentCoder<FileChooserSettings>::decode(Decoder& decoder, FileChooserSet
         return false;
     if (!decoder.decode(settings.selectedFiles))
         return false;
-#if ENABLE(MEDIA_CAPTURE)
-    if (!decoder.decode(settings.mediaCaptureType))
-        return false;
-#endif
 
     return true;
 }
@@ -2622,32 +2610,12 @@ std::optional<ResourceLoadStatistics> ArgumentCoder<ResourceLoadStatistics>::dec
 
     if (!decoder.decode(statistics.isVeryPrevalentResource))
         return std::nullopt;
-    
+
     if (!decoder.decode(statistics.dataRecordsRemoved))
         return std::nullopt;
 
     return statistics;
 }
-
-#if ENABLE(MEDIA_STREAM)
-void ArgumentCoder<MediaConstraints>::encode(Encoder& encoder, const WebCore::MediaConstraints& constraint)
-{
-    encoder << constraint.mandatoryConstraints
-        << constraint.advancedConstraints
-        << constraint.isValid;
-}
-
-bool ArgumentCoder<MediaConstraints>::decode(Decoder& decoder, WebCore::MediaConstraints& constraints)
-{
-    std::optional<WebCore::MediaTrackConstraintSetMap> mandatoryConstraints;
-    decoder >> mandatoryConstraints;
-    if (!mandatoryConstraints)
-        return false;
-    constraints.mandatoryConstraints = WTFMove(*mandatoryConstraints);
-    return decoder.decode(constraints.advancedConstraints)
-        && decoder.decode(constraints.isValid);
-}
-#endif
 
 void ArgumentCoder<IDBKeyPath>::encode(Encoder& encoder, const IDBKeyPath& keyPath)
 {

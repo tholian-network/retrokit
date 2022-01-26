@@ -76,7 +76,6 @@ class MediaError;
 class MediaResourceLoader;
 class MediaSession;
 class MediaSource;
-class MediaStream;
 class RenderMedia;
 class ScriptController;
 class ScriptExecutionContext;
@@ -96,9 +95,6 @@ using CueInterval = PODInterval<MediaTime, TextTrackCue*>;
 using CueList = Vector<CueInterval>;
 
 using MediaProvider = std::optional<Variant<
-#if ENABLE(MEDIA_STREAM)
-    RefPtr<MediaStream>,
-#endif
 #if ENABLE(MEDIA_SOURCE)
     RefPtr<MediaSource>,
 #endif
@@ -238,11 +234,6 @@ public:
     WEBCORE_EXPORT void fastSeek(double);
     double minFastReverseRate() const;
     double maxFastForwardRate() const;
-
-#if ENABLE(MEDIA_STREAM)
-    void setAudioOutputDevice(String&& deviceId, DOMPromiseDeferred<void>&&);
-    String audioOutputHashedDeviceId() const { return m_audioOutputHashedDeviceId; }
-#endif
 
     using HTMLMediaElementEnums::BufferingPolicy;
     void setBufferingPolicy(BufferingPolicy);
@@ -457,11 +448,6 @@ public:
     void updateRateChangeRestrictions();
 
     WEBCORE_EXPORT const MediaResourceLoader* lastMediaResourceLoaderForTesting() const;
-
-#if ENABLE(MEDIA_STREAM)
-    void mediaStreamCaptureStarted();
-    bool hasMediaStreamSrcObject() const { return m_mediaProvider && WTF::holds_alternative<RefPtr<MediaStream>>(*m_mediaProvider); }
-#endif
 
     bool supportsSeeking() const override;
 
@@ -748,7 +734,6 @@ private:
     void mayResumePlayback(bool shouldResume) override;
     bool canReceiveRemoteControlCommands() const override { return true; }
     bool canProduceAudio() const final;
-    bool hasMediaStreamSource() const final;
     void processIsSuspendedChanged() final;
     bool shouldOverridePauseDuringRouteChange() const final;
 
@@ -1013,18 +998,10 @@ private:
     RefPtr<MediaControlsHost> m_mediaControlsHost;
     RefPtr<DOMWrapperWorld> m_isolatedWorld;
 
-#if ENABLE(MEDIA_STREAM)
-    RefPtr<MediaStream> m_mediaStreamSrcObject;
-    bool m_settingMediaStreamSrcObject { false };
-#endif
-
     bool m_playingOnSecondScreen { false };
     bool m_removedBehaviorRestrictionsAfterFirstUserGesture { false };
 
     String m_audioOutputPersistentDeviceId;
-#if ENABLE(MEDIA_STREAM)
-    String m_audioOutputHashedDeviceId;
-#endif
     String m_id;
 };
 

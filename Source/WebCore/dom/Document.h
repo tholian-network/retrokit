@@ -203,7 +203,6 @@ class SelectorQuery;
 class SelectorQueryCache;
 class SerializedScriptValue;
 class Settings;
-class SpeechRecognition;
 class StringCallback;
 class StyleSheet;
 class StyleSheetContents;
@@ -1351,7 +1350,6 @@ public:
 
     WEBCORE_EXPORT void addAudioProducer(MediaProducer&);
     WEBCORE_EXPORT void removeAudioProducer(MediaProducer&);
-    void setActiveSpeechRecognition(SpeechRecognition*);
     MediaProducer::MediaStateFlags mediaState() const { return m_mediaState; }
     void noteUserInteractionWithMediaElement();
     bool isCapturing() const { return MediaProducer::isCapturing(m_mediaState); }
@@ -1388,13 +1386,6 @@ public:
     bool hasSkippedResizeObservations() const;
     void setHasSkippedResizeObservations(bool);
     void updateResizeObservations(Page&);
-#endif
-
-#if ENABLE(MEDIA_STREAM)
-    void setHasCaptureMediaStreamTrack() { m_hasHadCaptureMediaStreamTrack = true; }
-    bool hasHadCaptureMediaStreamTrack() const { return m_hasHadCaptureMediaStreamTrack; }
-    void stopMediaCapture(MediaProducer::MediaCaptureKind);
-    void mediaStreamCaptureStateChanged();
 #endif
 
 // FIXME: Find a better place for this functionality.
@@ -1923,7 +1914,6 @@ private:
     UniqueRef<DocumentFontLoader> m_fontLoader;
 
     WeakHashSet<MediaProducer> m_audioProducers;
-    WeakPtr<SpeechRecognition> m_activeSpeechRecognition;
 
     ListHashSet<ShadowRoot*> m_inDocumentShadowRoots;
 
@@ -2048,11 +2038,6 @@ private:
 
     struct PendingScrollEventTargetList;
     std::unique_ptr<PendingScrollEventTargetList> m_pendingScrollEventTargetList;
-
-#if ENABLE(MEDIA_STREAM)
-    String m_idHashSalt;
-    bool m_hasHadCaptureMediaStreamTrack { false };
-#endif
 
 #if ASSERT_ENABLED
     bool m_didDispatchViewportPropertiesChanged { false };

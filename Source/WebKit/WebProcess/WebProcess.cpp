@@ -46,7 +46,6 @@
 #include "RemoteAudioSession.h"
 #include "RemoteMediaEngineConfigurationFactory.h"
 #include "RemoteRemoteCommandListener.h"
-#include "SpeechRecognitionRealtimeMediaSourceManager.h"
 #include "StorageAreaMap.h"
 #include "UserData.h"
 #include "WebAutomationSessionProxy.h"
@@ -108,7 +107,6 @@
 #include <WebCore/MemoryCache.h>
 #include <WebCore/MemoryRelease.h>
 #include <WebCore/MessagePort.h>
-#include <WebCore/MockRealtimeMediaSourceCenter.h>
 #include <WebCore/NetworkStorageSession.h>
 #include <WebCore/Page.h>
 #include <WebCore/PageGroup.h>
@@ -144,7 +142,6 @@
 
 #if PLATFORM(COCOA)
 #include "ObjCObjectGraph.h"
-#include "UserMediaCaptureManager.h"
 #endif
 
 #if PLATFORM(MAC)
@@ -264,10 +261,6 @@ WebProcess::WebProcess()
 
 #if ENABLE(NOTIFICATIONS)
     addSupplement<WebNotificationManager>();
-#endif
-
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-    addSupplement<UserMediaCaptureManager>();
 #endif
 
 #if ENABLE(GPU_PROCESS)
@@ -1171,7 +1164,7 @@ GPUProcessConnection& WebProcess::ensureGPUProcessConnection()
                 page->gpuProcessConnectionDidBecomeAvailable(*m_gpuProcessConnection);
         }
     }
-    
+
     return *m_gpuProcessConnection;
 }
 
@@ -1182,10 +1175,6 @@ void WebProcess::gpuProcessConnectionClosed(GPUProcessConnection& connection)
 
     m_gpuProcessConnection = nullptr;
 
-#if ENABLE(MEDIA_STREAM) && PLATFORM(COCOA)
-    if (m_audioMediaStreamTrackRendererInternalUnitManager)
-        m_audioMediaStreamTrackRendererInternalUnitManager->gpuProcessConnectionClosed();
-#endif
 }
 
 #endif // ENABLE(GPU_PROCESS)
@@ -1780,71 +1769,6 @@ bool WebProcess::removeServiceWorkerRegistration(WebCore::ServiceWorkerRegistrat
 }
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-void WebProcess::addMockMediaDevice(const WebCore::MockMediaDevice& device)
-{
-    MockRealtimeMediaSourceCenter::addDevice(device);
-}
-
-void WebProcess::clearMockMediaDevices()
-{
-    MockRealtimeMediaSourceCenter::setDevices({ });
-}
-
-void WebProcess::removeMockMediaDevice(const String& persistentId)
-{
-    MockRealtimeMediaSourceCenter::removeDevice(persistentId);
-}
-
-void WebProcess::resetMockMediaDevices()
-{
-    MockRealtimeMediaSourceCenter::resetDevices();
-}
-
-#if ENABLE(SANDBOX_EXTENSIONS)
-void WebProcess::grantUserMediaDeviceSandboxExtensions(MediaDeviceSandboxExtensions&& extensions)
-{
-    for (size_t i = 0; i < extensions.size(); i++) {
-        const auto& extension = extensions[i];
-        extension.second->consume();
-        WEBPROCESS_RELEASE_LOG(Process, "grantUserMediaDeviceSandboxExtensions: granted extension %s", extension.first.utf8().data());
-        m_mediaCaptureSandboxExtensions.add(extension.first, extension.second.copyRef());
-    }
-}
-
-static inline void checkDocumentsCaptureStateConsistency(const Vector<String>& extensionIDs)
-{
-#if ASSERT_ENABLED
-    bool isCapturingAudio = WTF::anyOf(Document::allDocumentsMap().values(), [](auto* document) {
-        return document->mediaState() & MediaProducer::AudioCaptureMask;
-    });
-    bool isCapturingVideo = WTF::anyOf(Document::allDocumentsMap().values(), [](auto* document) {
-        return document->mediaState() & MediaProducer::VideoCaptureMask;
-    });
-
-    if (isCapturingAudio)
-        ASSERT(extensionIDs.findMatching([](auto& id) { return id.contains("microphone"); }) == notFound);
-    if (isCapturingVideo)
-        ASSERT(extensionIDs.findMatching([](auto& id) { return id.contains("camera"); }) == notFound);
-#endif // ASSERT_ENABLED
-}
-
-void WebProcess::revokeUserMediaDeviceSandboxExtensions(const Vector<String>& extensionIDs)
-{
-    checkDocumentsCaptureStateConsistency(extensionIDs);
-
-    for (const auto& extensionID : extensionIDs) {
-        auto extension = m_mediaCaptureSandboxExtensions.take(extensionID);
-        ASSERT(extension || MockRealtimeMediaSourceCenter::mockRealtimeMediaSourceCenterEnabled());
-        if (extension) {
-            extension->revoke();
-            WEBPROCESS_RELEASE_LOG(Process, "revokeUserMediaDeviceSandboxExtensions: revoked extension %s", extensionID.utf8().data());
-        }
-    }
-}
-#endif
-#endif
-
 #if ENABLE(VIDEO)
 void WebProcess::suspendAllMediaBuffering()
 {
@@ -2001,16 +1925,6 @@ bool WebProcess::shouldUseRemoteRenderingForWebGL() const
 
 #endif
 
-#endif
-
-#if ENABLE(MEDIA_STREAM)
-SpeechRecognitionRealtimeMediaSourceManager& WebProcess::ensureSpeechRecognitionRealtimeMediaSourceManager()
-{
-    if (!m_speechRecognitionRealtimeMediaSourceManager)
-        m_speechRecognitionRealtimeMediaSourceManager = makeUnique<SpeechRecognitionRealtimeMediaSourceManager>(makeRef(*parentProcessConnection()));
-
-    return *m_speechRecognitionRealtimeMediaSourceManager;
-}
 #endif
 
 #if ENABLE(GPU_PROCESS)

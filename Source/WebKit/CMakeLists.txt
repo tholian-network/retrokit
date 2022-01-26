@@ -82,7 +82,6 @@ set(WebKit_INCLUDE_DIRECTORIES
     "${WEBKIT_DIR}/WebProcess/Notifications"
     "${WEBKIT_DIR}/WebProcess/OriginData"
     "${WEBKIT_DIR}/WebProcess/ResourceCache"
-    "${WEBKIT_DIR}/WebProcess/Speech"
     "${WEBKIT_DIR}/WebProcess/Storage"
     "${WEBKIT_DIR}/WebProcess/UserContent"
     "${WEBKIT_DIR}/WebProcess/WebCoreSupport"
@@ -145,8 +144,6 @@ set(WebKit_MESSAGES_IN_FILES
 
     UIProcess/Media/RemoteMediaSessionCoordinatorProxy
 
-    UIProcess/SpeechRecognitionRemoteRealtimeMediaSourceManager
-    UIProcess/SpeechRecognitionServer
     UIProcess/VisitedLinkStore
     UIProcess/WebCookieManagerProxy
     UIProcess/WebPageProxy
@@ -200,15 +197,12 @@ set(WebKit_MESSAGES_IN_FILES
 
     WebProcess/Notifications/WebNotificationManager
 
-    WebProcess/Speech/SpeechRecognitionRealtimeMediaSourceManager
-
     WebProcess/Storage/WebSWClientConnection
     WebProcess/Storage/WebSWContextManagerConnection
 
     WebProcess/UserContent/WebUserContentController
 
     WebProcess/WebCoreSupport/WebBroadcastChannelRegistry
-    WebProcess/WebCoreSupport/WebSpeechRecognitionConnection
 
     WebProcess/WebPage/DrawingArea
     WebProcess/WebPage/EventDispatcher

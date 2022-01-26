@@ -75,7 +75,6 @@ class RemoteRemoteCommandListenerProxy;
 class RemoteRenderingBackend;
 class RemoteGraphicsContextGL;
 class RemoteSampleBufferDisplayLayerManager;
-class UserMediaCaptureManagerProxy;
 struct GPUProcessConnectionParameters;
 struct MediaOverridesForTesting;
 struct RemoteAudioSessionConfiguration;
@@ -105,15 +104,6 @@ public:
 
     const String& mediaCacheDirectory() const;
 
-#if ENABLE(MEDIA_STREAM)
-    void setOrientationForMediaCapture(uint64_t orientation);
-    void updateCaptureAccess(bool allowAudioCapture, bool allowVideoCapture, bool allowDisplayCapture);
-    void updateCaptureOrigin(const WebCore::SecurityOriginData&);
-    bool setCaptureAttributionString();
-    bool allowsAudioCapture() const { return m_allowsAudioCapture; }
-    bool allowsVideoCapture() const { return m_allowsVideoCapture; }
-    bool allowsDisplayCapture() const { return m_allowsDisplayCapture; }
-#endif
 #if PLATFORM(MAC)
     void displayConfigurationChanged(CGDirectDisplayID, CGDisplayChangeSummaryFlags);
 #endif
@@ -153,9 +143,6 @@ private:
 
 #if ENABLE(WEB_AUDIO)
     RemoteAudioDestinationManager& remoteAudioDestinationManager();
-#endif
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-    UserMediaCaptureManagerProxy& userMediaCaptureManagerProxy();
 #endif
 
     void createRenderingBackend(RemoteRenderingBackendCreationParameters&&);
@@ -228,16 +215,6 @@ private:
     std::unique_ptr<RemoteMediaResourceManager> m_remoteMediaResourceManager;
     UniqueRef<RemoteMediaPlayerManagerProxy> m_remoteMediaPlayerManagerProxy;
     PAL::SessionID m_sessionID;
-#if PLATFORM(COCOA) && ENABLE(MEDIA_STREAM)
-    std::unique_ptr<UserMediaCaptureManagerProxy> m_userMediaCaptureManagerProxy;
-    Ref<RemoteSampleBufferDisplayLayerManager> m_sampleBufferDisplayLayerManager;
-#endif
-#if ENABLE(MEDIA_STREAM)
-    Ref<WebCore::SecurityOrigin> m_captureOrigin;
-    bool m_allowsAudioCapture { false };
-    bool m_allowsVideoCapture { false };
-    bool m_allowsDisplayCapture { false };
-#endif
 
     RemoteRenderingBackendMap m_remoteRenderingBackendMap;
 #if ENABLE(WEBGL)

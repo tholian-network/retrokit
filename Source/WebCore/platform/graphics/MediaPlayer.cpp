@@ -46,10 +46,6 @@
 #include "MediaSourcePrivateClient.h"
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-#include "MediaStreamPrivate.h"
-#endif
-
 #if USE(GSTREAMER)
 #include "MediaPlayerPrivateGStreamer.h"
 #define PlatformMediaEngineClassName MediaPlayerPrivateGStreamer
@@ -73,10 +69,6 @@
 #include "MediaPlayerPrivateMediaSourceAVFObjC.h"
 #endif
 
-#if ENABLE(MEDIA_STREAM) && USE(AVFOUNDATION)
-#include "MediaPlayerPrivateMediaStreamAVFObjC.h"
-#endif
-
 #endif // PLATFORM(COCOA)
 
 #if PLATFORM(WIN) && USE(AVFOUNDATION) && !USE(GSTREAMER)
@@ -98,9 +90,6 @@ public:
     void load(const String&) final { }
 #if ENABLE(MEDIA_SOURCE)
     void load(const URL&, const ContentType&, MediaSourcePrivateClient*) final { }
-#endif
-#if ENABLE(MEDIA_STREAM)
-    void load(MediaStreamPrivate&) final { }
 #endif
     void cancelLoad() final { }
 
@@ -251,10 +240,6 @@ static void buildMediaEnginesVector() WTF_REQUIRES_LOCK(mediaEngineVectorLock)
             MediaPlayerPrivateMediaSourceAVFObjC::registerMediaEngine(addMediaEngine);
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-        MediaPlayerPrivateMediaStreamAVFObjC::registerMediaEngine(addMediaEngine);
-#endif
-
 #if PLATFORM(WIN)
         MediaPlayerPrivateAVFoundationCF::registerMediaEngine(addMediaEngine);
 #endif
@@ -339,7 +324,7 @@ const MediaPlayerFactory* MediaPlayer::mediaEngine(MediaPlayerEnums::MediaEngine
 
 static const MediaPlayerFactory* bestMediaEngineForSupportParameters(const MediaEngineSupportParameters& parameters, const MediaPlayerFactory* current = nullptr)
 {
-    if (parameters.type.isEmpty() && !parameters.isMediaSource && !parameters.isMediaStream)
+    if (parameters.type.isEmpty() && !parameters.isMediaSource)
         return nullptr;
 
     // 4.8.10.3 MIME types - In the absence of a specification to the contrary, the MIME type "application/octet-stream"
@@ -447,9 +432,6 @@ bool MediaPlayer::load(const URL& url, const ContentType& contentType)
 #if ENABLE(MEDIA_SOURCE)
     m_mediaSource = nullptr;
 #endif
-#if ENABLE(MEDIA_STREAM)
-    m_mediaStream = nullptr;
-#endif
 
     // If the MIME type is missing or is not meaningful, try to figure it out from the URL.
     AtomString containerType = m_contentType.containerType();
@@ -489,19 +471,6 @@ bool MediaPlayer::load(const URL& url, const ContentType& contentType, MediaSour
 }
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-bool MediaPlayer::load(MediaStreamPrivate& mediaStream)
-{
-    ASSERT(!m_reloadTimer.isActive());
-
-    m_mediaStream = &mediaStream;
-    m_contentType = { };
-    m_contentMIMETypeWasInferredFromExtension = false;
-    loadWithNextMediaEngine(nullptr);
-    return m_currentMediaEngine;
-}
-#endif
-
 const MediaPlayerFactory* MediaPlayer::nextBestMediaEngine(const MediaPlayerFactory* current)
 {
     MediaEngineSupportParameters parameters;
@@ -509,9 +478,6 @@ const MediaPlayerFactory* MediaPlayer::nextBestMediaEngine(const MediaPlayerFact
     parameters.url = m_url;
 #if ENABLE(MEDIA_SOURCE)
     parameters.isMediaSource = !!m_mediaSource;
-#endif
-#if ENABLE(MEDIA_STREAM)
-    parameters.isMediaStream = !!m_mediaStream;
 #endif
 
     if (m_activeEngineIdentifier) {
@@ -539,12 +505,6 @@ void MediaPlayer::loadWithNextMediaEngine(const MediaPlayerFactory* current)
 #define MEDIASOURCE m_mediaSource
 #else
 #define MEDIASOURCE 0
-#endif
-
-#if ENABLE(MEDIA_STREAM)
-#define MEDIASTREAM m_mediaStream
-#else
-#define MEDIASTREAM 0
 #endif
 
     ASSERT(!m_initializingMediaEngine);
@@ -582,11 +542,6 @@ void MediaPlayer::loadWithNextMediaEngine(const MediaPlayerFactory* current)
 #if ENABLE(MEDIA_SOURCE)
         if (m_mediaSource)
             m_private->load(m_url, m_contentMIMETypeWasInferredFromExtension ? ContentType() : m_contentType, m_mediaSource.get());
-        else
-#endif
-#if ENABLE(MEDIA_STREAM)
-        if (m_mediaStream)
-            m_private->load(*m_mediaStream);
         else
 #endif
         m_private->load(m_url, m_contentMIMETypeWasInferredFromExtension ? ContentType() : m_contentType);

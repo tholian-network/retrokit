@@ -60,7 +60,6 @@ set(WebKit_PUBLIC_FRAMEWORK_HEADERS
     UIProcess/API/C/WKLayoutMode.h
     UIProcess/API/C/WKMessageListener.h
     UIProcess/API/C/WKMockDisplay.h
-    UIProcess/API/C/WKMockMediaDevice.h
     UIProcess/API/C/WKNativeEvent.h
     UIProcess/API/C/WKNavigationActionRef.h
     UIProcess/API/C/WKNavigationDataRef.h
@@ -95,13 +94,10 @@ set(WebKit_PUBLIC_FRAMEWORK_HEADERS
     UIProcess/API/C/WKProtectionSpaceTypes.h
     UIProcess/API/C/WKResourceCacheManager.h
     UIProcess/API/C/WKSessionStateRef.h
-    UIProcess/API/C/WKSpeechRecognitionPermissionCallback.h
     UIProcess/API/C/WKTestingSupport.h
     UIProcess/API/C/WKTextChecker.h
     UIProcess/API/C/WKUserContentControllerRef.h
     UIProcess/API/C/WKUserContentExtensionStoreRef.h
-    UIProcess/API/C/WKUserMediaPermissionCheck.h
-    UIProcess/API/C/WKUserMediaPermissionRequest.h
     UIProcess/API/C/WKUserScriptRef.h
     UIProcess/API/C/WKViewportAttributes.h
     UIProcess/API/C/WKWebsiteDataStoreConfigurationRef.h

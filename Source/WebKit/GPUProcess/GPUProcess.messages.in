@@ -33,17 +33,6 @@ messages -> GPUProcess LegacyReceiver {
     AddSession(PAL::SessionID sessionID, struct WebKit::GPUProcessSessionParameters parameters)
     RemoveSession(PAL::SessionID sessionID)
 
-#if ENABLE(MEDIA_STREAM)
-    SetMockCaptureDevicesEnabled(bool isEnabled)
-    SetOrientationForMediaCapture(uint64_t orientation);
-    UpdateSandboxAccess(Vector<WebKit::SandboxExtension::Handle> extensions);
-    UpdateCaptureAccess(bool allowAudioCapture, bool allowVideoCapture, bool allowDisplayCapture, WebCore::ProcessIdentifier processID) -> () Async
-    UpdateCaptureOrigin(struct WebCore::SecurityOriginData originData, WebCore::ProcessIdentifier processID)
-    AddMockMediaDevice(struct WebCore::MockMediaDevice device);
-    ClearMockMediaDevices();
-    RemoveMockMediaDevice(String persistentId);
-    ResetMockMediaDevices();
-#endif
 #if PLATFORM(MAC)
     DisplayConfigurationChanged(CGDirectDisplayID displayID, CGDisplayChangeSummaryFlags flags)
 #endif

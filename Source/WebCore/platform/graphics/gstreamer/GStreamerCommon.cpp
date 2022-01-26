@@ -52,10 +52,6 @@
 #include "WebKitMediaSourceGStreamer.h"
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-#include "GStreamerMediaStreamSource.h"
-#endif
-
 #if ENABLE(VIDEO)
 #include "WebKitWebSourceGStreamer.h"
 #endif
@@ -238,10 +234,6 @@ void registerWebKitGStreamerElements()
     std::call_once(onceFlag, [] {
 #if USE(GSTREAMER_FULL)
         gst_init_static_plugins();
-#endif
-
-#if ENABLE(MEDIA_STREAM)
-        gst_element_register(nullptr, "mediastreamsrc", GST_RANK_PRIMARY, WEBKIT_TYPE_MEDIA_STREAM_SRC);
 #endif
 
 #if ENABLE(MEDIA_SOURCE)

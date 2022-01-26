@@ -95,21 +95,18 @@ public:
 
     bool attrStyleEnabled() const { return m_attrStyleEnabled; }
     void setAttrStyleEnabled(bool enabled) { m_attrStyleEnabled = enabled; }
-    
+
     bool shouldThrowExceptionForGlobalConstantRedeclaration() const { return m_shouldThrowExceptionForGlobalConstantRedeclaration; }
     void setShouldThrowExceptionForGlobalConstantRedeclaration(bool shouldThrow) { m_shouldThrowExceptionForGlobalConstantRedeclaration = shouldThrow; }
 
     const Vector<WTF::String>& overrideLanguages() const { return m_overrideLanguages; }
     void setOverrideLanguages(Vector<WTF::String>&& languages) { m_overrideLanguages = WTFMove(languages); }
-    
+
     bool alwaysRunsAtBackgroundPriority() const { return m_alwaysRunsAtBackgroundPriority; }
     void setAlwaysRunsAtBackgroundPriority(bool alwaysRunsAtBackgroundPriority) { m_alwaysRunsAtBackgroundPriority = alwaysRunsAtBackgroundPriority; }
 
     bool shouldTakeUIBackgroundAssertion() const { return m_shouldTakeUIBackgroundAssertion; }
     void setShouldTakeUIBackgroundAssertion(bool shouldTakeUIBackgroundAssertion) { m_shouldTakeUIBackgroundAssertion = shouldTakeUIBackgroundAssertion; }
-
-    bool shouldCaptureDisplayInUIProcess() const { return m_shouldCaptureDisplayInUIProcess; }
-    void setShouldCaptureDisplayInUIProcess(bool shouldCaptureDisplayInUIProcess) { m_shouldCaptureDisplayInUIProcess = shouldCaptureDisplayInUIProcess; }
 
     bool shouldConfigureJSCForTesting() const { return m_shouldConfigureJSCForTesting; }
     void setShouldConfigureJSCForTesting(bool value) { m_shouldConfigureJSCForTesting = value; }
@@ -161,7 +158,6 @@ private:
     Vector<WTF::String> m_overrideLanguages;
     bool m_alwaysRunsAtBackgroundPriority { false };
     bool m_shouldTakeUIBackgroundAssertion { true };
-    bool m_shouldCaptureDisplayInUIProcess { DEFAULT_CAPTURE_DISPLAY_IN_UI_PROCESS };
     ProcessID m_presentingApplicationPID { getCurrentProcessID() };
     std::optional<bool> m_processSwapsOnNavigationFromClient;
     bool m_processSwapsOnNavigationFromExperimentalFeatures { false };

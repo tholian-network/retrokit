@@ -6,7 +6,6 @@ if (ENABLE_VIDEO OR ENABLE_WEB_AUDIO)
     )
 
     list(APPEND WebCore_SOURCES
-        Modules/webaudio/MediaStreamAudioSourceGStreamer.cpp
         platform/graphics/gstreamer/AudioTrackPrivateGStreamer.cpp
         platform/graphics/gstreamer/GLVideoSinkGStreamer.cpp
         platform/graphics/gstreamer/GRefPtrGStreamer.cpp
@@ -38,18 +37,6 @@ if (ENABLE_VIDEO OR ENABLE_WEB_AUDIO)
         platform/graphics/gstreamer/mse/SourceBufferPrivateGStreamer.cpp
         platform/graphics/gstreamer/mse/TrackQueue.cpp
         platform/graphics/gstreamer/mse/WebKitMediaSourceGStreamer.cpp
-
-        platform/mediastream/gstreamer/GStreamerAudioCaptureSource.cpp
-        platform/mediastream/gstreamer/GStreamerAudioCapturer.cpp
-        platform/mediastream/gstreamer/GStreamerCaptureDeviceManager.cpp
-        platform/mediastream/gstreamer/GStreamerCapturer.cpp
-        platform/mediastream/gstreamer/GStreamerDisplayCaptureDeviceManager.cpp
-        platform/mediastream/gstreamer/GStreamerMediaStreamSource.cpp
-        platform/mediastream/gstreamer/GStreamerVideoCaptureSource.cpp
-        platform/mediastream/gstreamer/GStreamerVideoCapturer.cpp
-        platform/mediastream/gstreamer/MockRealtimeAudioSourceGStreamer.cpp
-        platform/mediastream/gstreamer/MockRealtimeVideoSourceGStreamer.cpp
-        platform/mediastream/gstreamer/RealtimeMediaSourceCenterGStreamer.cpp
     )
 
     list(APPEND WebCore_PRIVATE_FRAMEWORK_HEADERS
@@ -122,17 +109,6 @@ if (ENABLE_VIDEO)
             platform/graphics/gstreamer/PlatformDisplayGStreamer.cpp
             platform/graphics/gstreamer/VideoTextureCopierGStreamer.cpp
         )
-    endif ()
-
-    if (ENABLE_MEDIA_STREAM)
-        list(APPEND WebCore_SYSTEM_INCLUDE_DIRECTORIES
-            ${GSTREAMER_CODECPARSERS_INCLUDE_DIRS}
-        )
-        if (NOT USE_GSTREAMER_FULL)
-            list(APPEND WebCore_LIBRARIES
-                ${GSTREAMER_CODECPARSERS_LIBRARIES}
-            )
-        endif ()
     endif ()
 endif ()
 

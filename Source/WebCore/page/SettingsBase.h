@@ -134,9 +134,6 @@ protected:
     void shouldEnableTextAutosizingBoostChanged();
     void textAutosizingUsesIdempotentModeChanged();
 #endif
-#if ENABLE(MEDIA_STREAM)
-    void mockCaptureDevicesEnabledChanged();
-#endif
 
     Page* m_page;
 

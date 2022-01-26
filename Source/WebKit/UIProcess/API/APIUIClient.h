@@ -55,7 +55,6 @@ namespace WebKit {
 enum class TapHandlingResult : uint8_t;
 class NativeWebKeyboardEvent;
 class NativeWebWheelEvent;
-class UserMediaPermissionRequestProxy;
 class WebColorPickerResultListenerProxy;
 class WebFrameProxy;
 class WebOpenPanelResultListenerProxy;
@@ -127,8 +126,6 @@ public:
     virtual void didChangeFontAttributes(const WebCore::FontAttributes&) { }
 
     virtual bool runOpenPanel(WebKit::WebPageProxy&, WebKit::WebFrameProxy*, WebKit::FrameInfoData&&, OpenPanelParameters*, WebKit::WebOpenPanelResultListenerProxy*) { return false; }
-    virtual void decidePolicyForUserMediaPermissionRequest(WebKit::WebPageProxy&, WebKit::WebFrameProxy&, SecurityOrigin&, SecurityOrigin&, WebKit::UserMediaPermissionRequestProxy& request) { request.doDefaultAction(); }
-    virtual void checkUserMediaPermissionForOrigin(WebKit::WebPageProxy&, WebKit::WebFrameProxy&, SecurityOrigin&, SecurityOrigin&, WebKit::UserMediaPermissionCheckProxy& request) { request.deny(); }
     virtual void decidePolicyForNotificationPermissionRequest(WebKit::WebPageProxy&, SecurityOrigin&, CompletionHandler<void(bool allowed)>&& completionHandler) { completionHandler(false); }
     virtual void requestStorageAccessConfirm(WebKit::WebPageProxy&, WebKit::WebFrameProxy*, const WebCore::RegistrableDomain& requestingDomain, const WebCore::RegistrableDomain& currentDomain, CompletionHandler<void(bool)>&& completionHandler) { completionHandler(true); }
 
@@ -191,9 +188,6 @@ public:
     }
     virtual void didEnableInspectorBrowserDomain(WebKit::WebPageProxy&) { }
     virtual void didDisableInspectorBrowserDomain(WebKit::WebPageProxy&) { }
-
-    virtual void decidePolicyForSpeechRecognitionPermissionRequest(WebKit::WebPageProxy& page, API::SecurityOrigin& origin, CompletionHandler<void(bool)>&& completionHandler) { page.requestSpeechRecognitionPermissionByDefaultAction(origin.securityOrigin(), WTFMove(completionHandler)); }
-
 };
 
 } // namespace API

@@ -47,9 +47,6 @@ WheelEvent
 XMLHttpRequestProgressEvent
 AudioProcessingEvent conditional=WEB_AUDIO
 OfflineAudioCompletionEvent conditional=WEB_AUDIO
-SpeechRecognitionErrorEvent
-SpeechRecognitionEvent
-SpeechSynthesisEvent conditional=SPEECH_SYNTHESIS
 WebGLContextEvent conditional=WEBGL
 StorageEvent
 SVGEvents interfaceName=Event

@@ -3933,13 +3933,7 @@ sub GenerateRuntimeEnableConditionalString
     my @conjuncts;
     if ($context->extendedAttributes->{SecureContext}) {
         AddToImplIncludes("ScriptExecutionContext.h");
-
-        if ($context->extendedAttributes->{ContextAllowsMediaDevices}) {
-            push(@conjuncts, "(jsCast<JSDOMGlobalObject*>(" . $globalObjectPtr . ")->scriptExecutionContext()->isSecureContext()"
-                . "|| jsCast<JSDOMGlobalObject*>(" . $globalObjectPtr . ")->scriptExecutionContext()->allowsMediaDevices())");
-        } else {
-            push(@conjuncts, "jsCast<JSDOMGlobalObject*>(globalObject())->scriptExecutionContext()->isSecureContext()");
-        }
+        push(@conjuncts, "jsCast<JSDOMGlobalObject*>(globalObject())->scriptExecutionContext()->isSecureContext()");
     }
 
     if ($context->extendedAttributes->{Exposed}) {
@@ -5137,7 +5131,7 @@ sub GenerateAttributeGetterBodyDefinition
         push(@$outputArray, "    if (!shouldAllowAccess)\n");
         push(@$outputArray, "        return jsUndefined();\n");
     }
-    
+
     if ($hasCustomGetter) {
         my $implGetterFunctionName = $codeGenerator->WK_lcfirst($attribute->extendedAttributes->{ImplementedAs} || $attribute->name);
         push(@$outputArray, "    return thisObject.${implGetterFunctionName}(lexicalGlobalObject);\n");
@@ -7978,7 +7972,7 @@ sub GetSharedSyntheticAttribute
             return $syntheticAttribute;
         }
     }
-    
+
     return undef;
 }
 

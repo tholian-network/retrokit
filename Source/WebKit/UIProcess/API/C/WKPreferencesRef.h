@@ -243,14 +243,6 @@ WK_EXPORT bool WKPreferencesGetQTKitEnabled(WKPreferencesRef preferencesRef);
 WK_EXPORT void WKPreferencesSetAsynchronousSpellCheckingEnabled(WKPreferencesRef preferencesRef, bool enabled);
 WK_EXPORT bool WKPreferencesGetAsynchronousSpellCheckingEnabled(WKPreferencesRef preferencesRef);
 
-// Defaults to true
-WK_EXPORT void WKPreferencesSetMediaStreamEnabled(WKPreferencesRef preferencesRef, bool enabled);
-WK_EXPORT bool WKPreferencesGetMediaStreamEnabled(WKPreferencesRef preferencesRef);
-
-// Defaults to false
-WK_EXPORT void WKPreferencesSetMediaDevicesEnabled(WKPreferencesRef preferencesRef, bool enabled);
-WK_EXPORT bool WKPreferencesGetMediaDevicesEnabled(WKPreferencesRef preferencesRef);
-
 // Defaults to false.
 WK_EXPORT void WKPreferencesSetSpatialNavigationEnabled(WKPreferencesRef preferencesRef, bool enabled);
 WK_EXPORT bool WKPreferencesGetSpatialNavigationEnabled(WKPreferencesRef preferencesRef);
@@ -289,15 +281,6 @@ WK_EXPORT void WKPreferencesSetProcessSwapOnNavigationEnabled(WKPreferencesRef p
 // Obsolete. Always returns true.
 WK_EXPORT bool WKPreferencesGetWebSQLDisabled(WKPreferencesRef preferencesRef);
 WK_EXPORT void WKPreferencesSetWebSQLDisabled(WKPreferencesRef preferencesRef, bool enabled);
-
-WK_EXPORT void WKPreferencesSetCaptureAudioInUIProcessEnabled(WKPreferencesRef preferencesRef, bool flag);
-WK_EXPORT bool WKPreferencesGetCaptureAudioInUIProcessEnabled(WKPreferencesRef preferencesRef);
-WK_EXPORT void WKPreferencesSetCaptureAudioInGPUProcessEnabled(WKPreferencesRef preferencesRef, bool flag);
-WK_EXPORT bool WKPreferencesGetCaptureAudioInGPUProcessEnabled(WKPreferencesRef preferencesRef);
-WK_EXPORT void WKPreferencesSetCaptureVideoInUIProcessEnabled(WKPreferencesRef preferencesRef, bool flag);
-WK_EXPORT bool WKPreferencesGetCaptureVideoInUIProcessEnabled(WKPreferencesRef preferencesRef);
-WK_EXPORT void WKPreferencesSetCaptureVideoInGPUProcessEnabled(WKPreferencesRef preferencesRef, bool flag);
-WK_EXPORT bool WKPreferencesGetCaptureVideoInGPUProcessEnabled(WKPreferencesRef preferencesRef);
 
 WK_EXPORT bool WKPreferencesGetVP9DecoderEnabled(WKPreferencesRef preferencesRef);
 WK_EXPORT void WKPreferencesSetVP9DecoderEnabled(WKPreferencesRef preferencesRef, bool enabled);

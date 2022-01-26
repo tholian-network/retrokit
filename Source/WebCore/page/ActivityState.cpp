@@ -42,7 +42,7 @@ TextStream& operator<<(TextStream& ts, OptionSet<ActivityState::Flag> flags)
         ts << message;
         didAppend = true;
     };
-    
+
     appendIf(ActivityState::WindowIsActive, "active window");
     appendIf(ActivityState::IsFocused, "focused");
     appendIf(ActivityState::IsVisible, "visible");
@@ -51,7 +51,6 @@ TextStream& operator<<(TextStream& ts, OptionSet<ActivityState::Flag> flags)
     appendIf(ActivityState::IsVisuallyIdle, "visually idle");
     appendIf(ActivityState::IsAudible, "audible");
     appendIf(ActivityState::IsLoading, "loading");
-    appendIf(ActivityState::IsCapturingMedia, "capturing media");
 
     return ts;
 }

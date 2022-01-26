@@ -39,11 +39,7 @@ public:
     static FeaturePolicy parse(Document&, const HTMLIFrameElement&, StringView);
 
     enum class Type {
-        Camera,
-        Microphone,
-        SpeakerSelection,
-        DisplayCapture,
-        SyncXHR,
+        SyncXHR
     };
     bool allows(Type, const SecurityOriginData&) const;
 
@@ -54,12 +50,7 @@ public:
     };
 
 private:
-    AllowRule m_cameraRule;
-    AllowRule m_microphoneRule;
-    AllowRule m_speakerSelectionRule;
-    AllowRule m_displayCaptureRule;
     AllowRule m_syncXHRRule;
-    AllowRule m_fullscreenRule;
 };
 
 enum class LogFeaturePolicyFailure { No, Yes };

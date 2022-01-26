@@ -1910,23 +1910,6 @@ bool HTMLInputElement::shouldAppearIndeterminate() const
     return m_inputType->shouldAppearIndeterminate();
 }
 
-#if ENABLE(MEDIA_CAPTURE)
-MediaCaptureType HTMLInputElement::mediaCaptureType() const
-{
-    if (!isFileUpload())
-        return MediaCaptureTypeNone;
-    
-    auto& captureAttribute = attributeWithoutSynchronization(captureAttr);
-    if (captureAttribute.isNull())
-        return MediaCaptureTypeNone;
-    
-    if (equalLettersIgnoringASCIICase(captureAttribute, "user"))
-        return MediaCaptureTypeUser;
-    
-    return MediaCaptureTypeEnvironment;
-}
-#endif
-
 bool HTMLInputElement::isInRequiredRadioButtonGroup()
 {
     ASSERT(isRadioButton());

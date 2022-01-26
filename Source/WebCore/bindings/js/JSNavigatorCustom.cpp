@@ -40,21 +40,4 @@ void JSNavigator::visitAdditionalChildren(Visitor& visitor)
 
 DEFINE_VISIT_ADDITIONAL_CHILDREN(JSNavigator);
 
-#if ENABLE(MEDIA_STREAM)
-JSC::JSValue JSNavigator::getUserMedia(JSC::JSGlobalObject& lexicalGlobalObject, JSC::CallFrame& callFrame)
-{
-    auto* function = globalObject()->builtinInternalFunctions().jsDOMBindingInternals().m_getUserMediaShimFunction.get();
-    ASSERT(function);
-
-    auto callData = JSC::getCallData(lexicalGlobalObject.vm(), function);
-    ASSERT(callData.type != JSC::CallData::Type::None);
-    JSC::MarkedArgumentBuffer arguments;
-    for (size_t cptr = 0; cptr < callFrame.argumentCount(); ++cptr)
-        arguments.append(callFrame.uncheckedArgument(cptr));
-    ASSERT(!arguments.hasOverflowed());
-    JSC::call(&lexicalGlobalObject, function, callData, this, arguments);
-    return JSC::jsUndefined();
-}
-#endif
-
 }

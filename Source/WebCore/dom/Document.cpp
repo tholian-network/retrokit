@@ -141,7 +141,6 @@
 #include "MediaProducer.h"
 #include "MediaQueryList.h"
 #include "MediaQueryMatcher.h"
-#include "MediaStream.h"
 #include "MessageEvent.h"
 #include "MouseEventWithHitTestResults.h"
 #include "MutationEvent.h"
@@ -171,7 +170,6 @@
 #include "PseudoClassChangeInvalidation.h"
 #include "PublicSuffix.h"
 #include "Range.h"
-#include "RealtimeMediaSourceCenter.h"
 #include "RenderChildIterator.h"
 #include "RenderInline.h"
 #include "RenderLayerCompositor.h"
@@ -215,7 +213,6 @@
 #include "Settings.h"
 #include "ShadowRoot.h"
 #include "SocketProvider.h"
-#include "SpeechRecognition.h"
 #include "StorageEvent.h"
 #include "StringCallback.h"
 #include "StyleAdjuster.h"
@@ -1802,13 +1799,6 @@ void Document::visibilityStateChanged()
     queueTaskToDispatchEvent(TaskSource::UserInteraction, Event::create(eventNames().visibilitychangeEvent, Event::CanBubble::Yes, Event::IsCancelable::No));
     for (auto& client : m_visibilityStateCallbackClients)
         client.visibilityStateChanged();
-
-#if ENABLE(MEDIA_STREAM) && PLATFORM(IOS_FAMILY)
-    if (auto mediaSessionManager = PlatformMediaSessionManager::sharedManagerIfExists()) {
-        if (!mediaSessionManager->isInterrupted())
-            MediaStreamTrack::updateCaptureAccordingToMutedState(*this);
-    }
-#endif
 }
 
 VisibilityState Document::visibilityState() const
@@ -4243,15 +4233,6 @@ void Document::removeAudioProducer(MediaProducer& audioProducer)
     updateIsPlayingMedia();
 }
 
-void Document::setActiveSpeechRecognition(SpeechRecognition* speechRecognition)
-{
-    if (m_activeSpeechRecognition == speechRecognition)
-        return;
-
-    m_activeSpeechRecognition = makeWeakPtr(speechRecognition);
-    updateIsPlayingMedia();
-}
-
 void Document::noteUserInteractionWithMediaElement()
 {
     if (m_userHasInteractedWithMediaElement)
@@ -4271,41 +4252,22 @@ void Document::updateIsPlayingMedia()
     for (auto& audioProducer : m_audioProducers)
         state.add(audioProducer.mediaState());
 
-#if ENABLE(MEDIA_STREAM)
-    state.add(MediaStreamTrack::captureState(*this));
-    if (m_activeSpeechRecognition)
-        state.add(MediaProducer::MediaState::HasActiveAudioCaptureDevice);
-#endif
-
     if (m_userHasInteractedWithMediaElement)
         state.add(MediaProducer::MediaState::HasUserInteractedWithMediaElement);
 
     if (state == m_mediaState)
         return;
 
-#if ENABLE(MEDIA_STREAM)
-    bool captureStateChanged = MediaProducer::isCapturing(m_mediaState) != MediaProducer::isCapturing(state);
-#endif
-    
     m_mediaState = state;
 
     if (auto* page = this->page())
         page->updateIsPlayingMedia();
-
-#if ENABLE(MEDIA_STREAM)
-    if (captureStateChanged)
-        mediaStreamCaptureStateChanged();
-#endif
 }
 
 void Document::pageMutedStateDidChange()
 {
     for (auto& audioProducer : m_audioProducers)
         audioProducer.pageMutedStateDidChange();
-
-#if ENABLE(MEDIA_STREAM)
-    MediaStreamTrack::updateCaptureAccordingToMutedState(*this);
-#endif
 }
 
 static bool isNodeInSubtree(Node& node, Node& container, Document::NodeRemoval nodeRemoval)
@@ -7815,25 +7777,6 @@ void Document::didRemoveInDocumentShadowRoot(ShadowRoot& shadowRoot)
     ASSERT(m_inDocumentShadowRoots.contains(&shadowRoot));
     m_inDocumentShadowRoots.remove(&shadowRoot);
 }
-
-#if ENABLE(MEDIA_STREAM)
-
-void Document::stopMediaCapture(MediaProducer::MediaCaptureKind kind)
-{
-    MediaStreamTrack::endCapture(*this, kind);
-}
-
-void Document::mediaStreamCaptureStateChanged()
-{
-    if (!MediaProducer::isCapturing(m_mediaState))
-        return;
-
-    forEachMediaElement([] (HTMLMediaElement& element) {
-        element.mediaStreamCaptureStarted();
-    });
-}
-
-#endif
 
 const AtomString& Document::bgColor() const
 {

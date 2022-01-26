@@ -41,12 +41,6 @@ GPUProcessCreationParameters::GPUProcessCreationParameters() = default;
 
 void GPUProcessCreationParameters::encode(IPC::Encoder& encoder) const
 {
-#if ENABLE(MEDIA_STREAM)
-    encoder << useMockCaptureDevices;
-#if PLATFORM(MAC)
-    encoder << microphoneSandboxExtensionHandle;
-#endif
-#endif
     encoder << parentPID;
 
 #if USE(SANDBOX_EXTENSIONS_FOR_CACHE_AND_TEMP_DIRECTORY_ACCESS)
@@ -66,14 +60,6 @@ void GPUProcessCreationParameters::encode(IPC::Encoder& encoder) const
 
 bool GPUProcessCreationParameters::decode(IPC::Decoder& decoder, GPUProcessCreationParameters& result)
 {
-#if ENABLE(MEDIA_STREAM)
-    if (!decoder.decode(result.useMockCaptureDevices))
-        return false;
-#if PLATFORM(MAC)
-    if (!decoder.decode(result.microphoneSandboxExtensionHandle))
-        return false;
-#endif
-#endif
     if (!decoder.decode(result.parentPID))
         return false;
 

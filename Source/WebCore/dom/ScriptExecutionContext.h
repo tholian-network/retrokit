@@ -264,7 +264,6 @@ public:
     WEBCORE_EXPORT String domainForCachePartition() const;
     void setDomainForCachePartition(String&& domain) { m_domainForCachePartition = WTFMove(domain); }
 
-    bool allowsMediaDevices() const;
 #if ENABLE(SERVICE_WORKER)
     ServiceWorker* activeServiceWorker() const;
     void setActiveServiceWorker(RefPtr<ServiceWorker>&&);

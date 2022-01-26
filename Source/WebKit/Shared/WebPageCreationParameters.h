@@ -224,11 +224,6 @@ struct WebPageCreationParameters {
     bool crossOriginAccessControlCheckEnabled { true };
     String processDisplayName;
 
-    bool shouldCaptureAudioInUIProcess { false };
-    bool shouldCaptureAudioInGPUProcess { false };
-    bool shouldCaptureVideoInUIProcess { false };
-    bool shouldCaptureVideoInGPUProcess { false };
-    bool shouldCaptureDisplayInUIProcess { false };
     bool shouldRenderCanvasInGPUProcess { false };
     bool shouldRenderDOMInGPUProcess { false };
     bool shouldPlayMediaInGPUProcess { false };
@@ -249,13 +244,13 @@ struct WebPageCreationParameters {
 #if PLATFORM(GTK)
     GtkSettingsState gtkSettings;
 #endif
-    
+
     bool httpsUpgradeEnabled { true };
 
 #if PLATFORM(IOS)
     bool allowsDeprecatedSynchronousXMLHttpRequestDuringUnload { false };
 #endif
-    
+
 #if ENABLE(APP_HIGHLIGHTS)
     WebCore::HighlightVisibility appHighlightsVisible { WebCore::HighlightVisibility::Hidden };
 #endif

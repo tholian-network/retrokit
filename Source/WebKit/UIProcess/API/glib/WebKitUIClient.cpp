@@ -23,13 +23,11 @@
 #include "APIUIClient.h"
 #include "DrawingAreaProxy.h"
 #include "NotificationPermissionRequest.h"
-#include "WebKitDeviceInfoPermissionRequestPrivate.h"
 #include "WebKitFileChooserRequestPrivate.h"
 #include "WebKitNavigationActionPrivate.h"
 #include "WebKitNotificationPermissionRequestPrivate.h"
 #include "WebKitPointerLockPermissionRequestPrivate.h"
 #include "WebKitURIRequestPrivate.h"
-#include "WebKitUserMediaPermissionRequestPrivate.h"
 #include "WebKitWebViewPrivate.h"
 #include "WebKitWebsiteDataAccessPermissionRequestPrivate.h"
 #include "WebKitWindowPropertiesPrivate.h"
@@ -280,18 +278,6 @@ private:
         return true;
     }
 
-    void decidePolicyForUserMediaPermissionRequest(WebPageProxy&, WebFrameProxy&, API::SecurityOrigin& userMediaDocumentOrigin, API::SecurityOrigin& topLevelDocumentOrigin, UserMediaPermissionRequestProxy& permissionRequest) final
-    {
-        GRefPtr<WebKitUserMediaPermissionRequest> userMediaPermissionRequest = adoptGRef(webkitUserMediaPermissionRequestCreate(permissionRequest, userMediaDocumentOrigin, topLevelDocumentOrigin));
-        webkitWebViewMakePermissionRequest(m_webView, WEBKIT_PERMISSION_REQUEST(userMediaPermissionRequest.get()));
-    }
-
-    void checkUserMediaPermissionForOrigin(WebPageProxy& page, WebFrameProxy&, API::SecurityOrigin& userMediaDocumentOrigin, API::SecurityOrigin& topLevelDocumentOrigin, UserMediaPermissionCheckProxy& permissionRequest) override
-    {
-        auto deviceInfoPermissionRequest = adoptGRef(webkitDeviceInfoPermissionRequestCreate(permissionRequest, &page.websiteDataStore().deviceIdHashSaltStorage()));
-        webkitWebViewMakePermissionRequest(m_webView, WEBKIT_PERMISSION_REQUEST(deviceInfoPermissionRequest.get()));
-    }
-
     void decidePolicyForNotificationPermissionRequest(WebPageProxy&, API::SecurityOrigin&, CompletionHandler<void(bool allowed)>&& completionHandler) final
     {
         GRefPtr<WebKitNotificationPermissionRequest> notificationPermissionRequest = adoptGRef(webkitNotificationPermissionRequestCreate(NotificationPermissionRequest::create(WTFMove(completionHandler)).ptr()));
@@ -336,11 +322,6 @@ private:
     void isPlayingMediaDidChange(WebPageProxy&) final
     {
         webkitWebViewIsPlayingAudioChanged(m_webView);
-    }
-
-    void mediaCaptureStateDidChange(WebCore::MediaProducer::MediaStateFlags mediaStateFlags) final
-    {
-        webkitWebViewMediaCaptureStateDidChange(m_webView, mediaStateFlags);
     }
 
 #if ENABLE(POINTER_LOCK)

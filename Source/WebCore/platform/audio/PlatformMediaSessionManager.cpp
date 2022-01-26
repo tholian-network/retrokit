@@ -119,9 +119,7 @@ bool PlatformMediaSessionManager::activeAudioSessionRequired() const
     if (anyOfSessions([] (auto& session) { return session.activeAudioSessionRequired(); }))
         return true;
 
-    return WTF::anyOf(m_audioCaptureSources, [](auto& source) {
-        return source.isCapturingAudio();
-    });
+    return false;
 }
 
 bool PlatformMediaSessionManager::canProduceAudio() const
@@ -139,16 +137,6 @@ int PlatformMediaSessionManager::count(PlatformMediaSession::MediaType type) con
             ++count;
     }
 
-    return count;
-}
-
-int PlatformMediaSessionManager::countActiveAudioCaptureSources()
-{
-    int count = 0;
-    for (const auto& source : m_audioCaptureSources) {
-        if (source.isCapturingAudio())
-            ++count;
-    }
     return count;
 }
 
@@ -549,20 +537,6 @@ bool PlatformMediaSessionManager::anyOfSessions(const Function<bool(const Platfo
     return WTF::anyOf(m_sessions, [&predicate](const auto& session) {
         return predicate(*session);
     });
-}
-
-void PlatformMediaSessionManager::addAudioCaptureSource(PlatformMediaSession::AudioCaptureSource& source)
-{
-    ASSERT(!m_audioCaptureSources.contains(source));
-    m_audioCaptureSources.add(source);
-    updateSessionState();
-}
-
-
-void PlatformMediaSessionManager::removeAudioCaptureSource(PlatformMediaSession::AudioCaptureSource& source)
-{
-    m_audioCaptureSources.remove(source);
-    scheduleUpdateSessionState();
 }
 
 void PlatformMediaSessionManager::scheduleUpdateSessionState()

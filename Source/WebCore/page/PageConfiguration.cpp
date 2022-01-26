@@ -41,8 +41,6 @@
 #include "PermissionController.h"
 #include "ProgressTrackerClient.h"
 #include "SocketProvider.h"
-#include "SpeechRecognitionProvider.h"
-#include "SpeechSynthesisClient.h"
 #include "StorageNamespaceProvider.h"
 #include "UserContentController.h"
 #include "UserContentURLPattern.h"
@@ -57,7 +55,7 @@
 
 namespace WebCore {
 
-PageConfiguration::PageConfiguration(PAL::SessionID sessionID, UniqueRef<EditorClient>&& editorClient, Ref<SocketProvider>&& socketProvider, Ref<CacheStorageProvider>&& cacheStorageProvider, Ref<UserContentProvider>&& userContentProvider, Ref<BackForwardClient>&& backForwardClient, Ref<CookieJar>&& cookieJar, UniqueRef<ProgressTrackerClient>&& progressTrackerClient, UniqueRef<FrameLoaderClient>&& loaderClientForMainFrame, UniqueRef<SpeechRecognitionProvider>&& speechRecognitionProvider, Ref<BroadcastChannelRegistry>&& broadcastChannelRegistry, Ref<PermissionController>&& permissionController)
+PageConfiguration::PageConfiguration(PAL::SessionID sessionID, UniqueRef<EditorClient>&& editorClient, Ref<SocketProvider>&& socketProvider, Ref<CacheStorageProvider>&& cacheStorageProvider, Ref<UserContentProvider>&& userContentProvider, Ref<BackForwardClient>&& backForwardClient, Ref<CookieJar>&& cookieJar, UniqueRef<ProgressTrackerClient>&& progressTrackerClient, UniqueRef<FrameLoaderClient>&& loaderClientForMainFrame, Ref<BroadcastChannelRegistry>&& broadcastChannelRegistry, Ref<PermissionController>&& permissionController)
     : sessionID(sessionID)
     , editorClient(WTFMove(editorClient))
     , socketProvider(WTFMove(socketProvider))
@@ -68,7 +66,6 @@ PageConfiguration::PageConfiguration(PAL::SessionID sessionID, UniqueRef<EditorC
     , cacheStorageProvider(WTFMove(cacheStorageProvider))
     , userContentProvider(WTFMove(userContentProvider))
     , broadcastChannelRegistry(WTFMove(broadcastChannelRegistry))
-    , speechRecognitionProvider(WTFMove(speechRecognitionProvider))
     , permissionController(WTFMove(permissionController))
 {
 }

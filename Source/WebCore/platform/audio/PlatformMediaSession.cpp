@@ -373,7 +373,7 @@ bool PlatformMediaSession::canPlayConcurrently(const PlatformMediaSession& other
     if (!groupID || !otherGroupID || groupID != otherGroupID)
         return false;
 
-    return m_client.hasMediaStreamSource() || otherSession.m_client.hasMediaStreamSource();
+    return false;
 }
 
 bool PlatformMediaSession::shouldOverridePauseDuringRouteChange() const

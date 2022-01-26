@@ -24,9 +24,6 @@
  */
 
 typedef (
-#if defined(ENABLE_MEDIA_STREAM) && ENABLE_MEDIA_STREAM
-    MediaStream or
-#endif
 #if defined(ENABLE_MEDIA_SOURCE) && ENABLE_MEDIA_SOURCE
     MediaSource or
 #endif

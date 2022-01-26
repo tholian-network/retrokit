@@ -36,12 +36,6 @@ function mac_process_gpu_entitlements()
 {
     if [[ "${WK_USE_RESTRICTED_ENTITLEMENTS}" == YES ]]
     then
-        if (( "${TARGET_MAC_OS_X_VERSION_MAJOR}" >= 101400 ))
-        then
-            plistbuddy Add :com.apple.tcc.delegated-services array
-            plistbuddy Add :com.apple.tcc.delegated-services:1 string kTCCServiceMicrophone
-            plistbuddy Add :com.apple.tcc.delegated-services:0 string kTCCServiceCamera
-        fi
 
         if (( "${TARGET_MAC_OS_X_VERSION_MAJOR}" >= 110000 ))
         then
@@ -131,13 +125,6 @@ function mac_process_webcontent_or_plugin_entitlements()
 {
     if [[ "${WK_USE_RESTRICTED_ENTITLEMENTS}" == YES ]]
     then
-        if (( "${TARGET_MAC_OS_X_VERSION_MAJOR}" >= 101400 ))
-        then
-            plistbuddy Add :com.apple.tcc.delegated-services array
-            plistbuddy Add :com.apple.tcc.delegated-services:1 string kTCCServiceMicrophone
-            plistbuddy Add :com.apple.tcc.delegated-services:0 string kTCCServiceCamera
-        fi
-
         if (( "${TARGET_MAC_OS_X_VERSION_MAJOR}" >= 110000 ))
         then
             plistbuddy Add :com.apple.security.cs.jit-write-allowlist bool YES
@@ -282,10 +269,6 @@ function ios_family_process_webcontent_entitlements()
     plistbuddy Add :com.apple.runningboard.assertions.webkit bool YES
     plistbuddy Add :dynamic-codesigning bool YES
 
-    plistbuddy Add :com.apple.tcc.delegated-services array
-    plistbuddy Add :com.apple.tcc.delegated-services:0 string kTCCServiceCamera
-    plistbuddy Add :com.apple.tcc.delegated-services:1 string kTCCServiceMicrophone
-
     plistbuddy Add :seatbelt-profiles array
     plistbuddy Add :seatbelt-profiles:0 string com.apple.WebKit.WebContent
 }
@@ -305,10 +288,6 @@ function ios_family_process_gpu_entitlements()
     plistbuddy Add :com.apple.private.memory.ownership_transfer bool YES
     plistbuddy Add :com.apple.private.network.socket-delegate bool YES
     plistbuddy Add :com.apple.runningboard.assertions.webkit bool YES
-
-    plistbuddy Add :com.apple.tcc.delegated-services array
-    plistbuddy Add :com.apple.tcc.delegated-services:0 string kTCCServiceCamera
-    plistbuddy Add :com.apple.tcc.delegated-services:1 string kTCCServiceMicrophone
 
     plistbuddy Add :seatbelt-profiles array
     plistbuddy Add :seatbelt-profiles:0 string com.apple.WebKit.GPU

@@ -564,18 +564,6 @@ String ScriptExecutionContext::domainForCachePartition() const
     return m_domainForCachePartition.isNull() ? topOrigin().domainForCachePartition() : m_domainForCachePartition;
 }
 
-bool ScriptExecutionContext::allowsMediaDevices() const
-{
-#if ENABLE(MEDIA_STREAM)
-    if (!is<Document>(*this))
-        return false;
-    auto page = downcast<Document>(*this).page();
-    return page ? !page->settings().mediaCaptureRequiresSecureConnection() : false;
-#else
-    return false;
-#endif
-}
-
 #if ENABLE(SERVICE_WORKER)
 
 ServiceWorker* ScriptExecutionContext::activeServiceWorker() const

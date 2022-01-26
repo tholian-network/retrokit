@@ -338,18 +338,6 @@ WK_EXPORT bool WKPreferencesGetHTTPEquivEnabled(WKPreferencesRef preferences);
 WK_EXPORT void WKPreferencesSetResourceUsageOverlayVisible(WKPreferencesRef, bool);
 WK_EXPORT bool WKPreferencesGetResourceUsageOverlayVisible(WKPreferencesRef);
 
-// Defaults to false.
-WK_EXPORT void WKPreferencesSetMockCaptureDevicesEnabled(WKPreferencesRef, bool);
-WK_EXPORT bool WKPreferencesGetMockCaptureDevicesEnabled(WKPreferencesRef);
-
-// Defaults to true.
-WK_EXPORT void WKPreferencesSetMediaCaptureRequiresSecureConnection(WKPreferencesRef, bool);
-WK_EXPORT bool WKPreferencesGetMediaCaptureRequiresSecureConnection(WKPreferencesRef);
-
-// Defaults to 1 minute on iOS, 10 minutes elsewhere
-WK_EXPORT void WKPreferencesSetInactiveMediaCaptureSteamRepromptIntervalInMinutes(WKPreferencesRef, double);
-WK_EXPORT double WKPreferencesGetInactiveMediaCaptureSteamRepromptIntervalInMinutes(WKPreferencesRef);
-
 // Defaults to false
 WK_EXPORT void WKPreferencesSetDownloadAttributeEnabled(WKPreferencesRef, bool flag);
 WK_EXPORT bool WKPreferencesGetDownloadAttributeEnabled(WKPreferencesRef);
@@ -369,7 +357,7 @@ WK_EXPORT bool WKPreferencesGetIntersectionObserverEnabled(WKPreferencesRef);
 // Defaults to false
 WK_EXPORT void WKPreferencesSetMenuItemElementEnabled(WKPreferencesRef, bool flag);
 WK_EXPORT bool WKPreferencesGetMenuItemElementEnabled(WKPreferencesRef);
-        
+
 // Defaults to false
 WK_EXPORT void WKPreferencesSetDataTransferItemsEnabled(WKPreferencesRef, bool flag);
 WK_EXPORT bool WKPreferencesGetDataTransferItemsEnabled(WKPreferencesRef);

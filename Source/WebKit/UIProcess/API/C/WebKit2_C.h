@@ -56,7 +56,6 @@
 #include <WebKit/WKURLRequest.h>
 #include <WebKit/WKURLResponse.h>
 #include <WebKit/WKUserContentControllerRef.h>
-#include <WebKit/WKUserMediaPermissionRequest.h>
 #include <WebKit/WKUserScriptRef.h>
 
 #if defined(__OBJC__) && __OBJC__

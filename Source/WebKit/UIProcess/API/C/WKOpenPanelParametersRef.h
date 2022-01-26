@@ -47,11 +47,6 @@ WK_EXPORT WKArrayRef WKOpenPanelParametersCopyAcceptedFileExtensions(WKOpenPanel
 
 WK_EXPORT WKArrayRef WKOpenPanelParametersCopyAllowedMIMETypes(WKOpenPanelParametersRef parameters);
 
-/* DEPRECATED - Please use WKOpenPanelParametersGetCaptureEnabled() instead. */
-WK_EXPORT WKStringRef WKOpenPanelParametersCopyCapture(WKOpenPanelParametersRef parameters);
-
-WK_EXPORT bool WKOpenPanelParametersGetMediaCaptureType(WKOpenPanelParametersRef parametersRef);
-
 WK_EXPORT WKArrayRef WKOpenPanelParametersCopySelectedFileNames(WKOpenPanelParametersRef parametersRef);
 
 #ifdef __cplusplus

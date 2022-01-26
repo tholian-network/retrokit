@@ -305,20 +305,6 @@ set(WebCore_NON_SVG_IDL_FILES
     Modules/mediasource/VideoPlaybackQuality.idl
     Modules/mediasource/VideoTrack+MediaSource.idl
 
-    Modules/mediastream/CanvasCaptureMediaStreamTrack.idl
-    Modules/mediastream/DoubleRange.idl
-    Modules/mediastream/LongRange.idl
-    Modules/mediastream/MediaDeviceInfo.idl
-    Modules/mediastream/MediaDevices.idl
-    Modules/mediastream/MediaStream.idl
-    Modules/mediastream/MediaStreamTrack.idl
-    Modules/mediastream/MediaStreamTrackEvent.idl
-    Modules/mediastream/MediaTrackConstraints.idl
-    Modules/mediastream/MediaTrackSupportedConstraints.idl
-    Modules/mediastream/Navigator+MediaDevices.idl
-    Modules/mediastream/OverconstrainedError.idl
-    Modules/mediastream/OverconstrainedErrorEvent.idl
-
     Modules/notifications/Notification.idl
     Modules/notifications/NotificationPermission.idl
     Modules/notifications/NotificationPermissionCallback.idl
@@ -329,20 +315,6 @@ set(WebCore_NON_SVG_IDL_FILES
     Modules/permissions/PermissionState.idl
     Modules/permissions/PermissionStatus.idl
     Modules/permissions/Permissions.idl
-
-    Modules/speech/SpeechRecognition.idl
-    Modules/speech/SpeechRecognitionAlternative.idl
-    Modules/speech/SpeechRecognitionErrorCode.idl
-    Modules/speech/SpeechRecognitionErrorEvent.idl
-    Modules/speech/SpeechRecognitionEvent.idl
-    Modules/speech/SpeechRecognitionResult.idl
-    Modules/speech/SpeechRecognitionResultList.idl
-
-    Modules/speech/DOMWindow+SpeechSynthesis.idl
-    Modules/speech/SpeechSynthesis.idl
-    Modules/speech/SpeechSynthesisEvent.idl
-    Modules/speech/SpeechSynthesisUtterance.idl
-    Modules/speech/SpeechSynthesisVoice.idl
 
     Modules/streams/ByteLengthQueuingStrategy.idl
     Modules/streams/CountQueuingStrategy.idl
@@ -415,9 +387,6 @@ set(WebCore_NON_SVG_IDL_FILES
     Modules/webaudio/IIRFilterOptions.idl
     Modules/webaudio/MediaElementAudioSourceNode.idl
     Modules/webaudio/MediaElementAudioSourceOptions.idl
-    Modules/webaudio/MediaStreamAudioDestinationNode.idl
-    Modules/webaudio/MediaStreamAudioSourceNode.idl
-    Modules/webaudio/MediaStreamAudioSourceOptions.idl
     Modules/webaudio/OfflineAudioCompletionEvent.idl
     Modules/webaudio/OfflineAudioCompletionEventInit.idl
     Modules/webaudio/OfflineAudioContext.idl
@@ -773,7 +742,6 @@ set(WebCore_NON_SVG_IDL_FILES
     html/HTMLLinkElement.idl
     html/HTMLMapElement.idl
     html/HTMLMarqueeElement.idl
-    html/HTMLMediaElement+AudioOutput.idl
     html/HTMLMediaElement.idl
     html/HTMLMenuElement.idl
     html/HTMLMenuItemElement.idl

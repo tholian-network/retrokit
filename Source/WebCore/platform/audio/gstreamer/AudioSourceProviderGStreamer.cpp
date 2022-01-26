@@ -28,11 +28,6 @@
 #include <gst/audio/audio-info.h>
 #include <gst/base/gstadapter.h>
 
-#if ENABLE(MEDIA_STREAM)
-#include "GStreamerAudioData.h"
-#include "GStreamerMediaStreamSource.h"
-#endif
-
 namespace WebCore {
 
 // For now the provider supports only files at a fixed sample bitrate.
@@ -88,25 +83,6 @@ AudioSourceProviderGStreamer::AudioSourceProviderGStreamer()
     initializeDebugCategory();
 }
 
-#if ENABLE(MEDIA_STREAM)
-AudioSourceProviderGStreamer::AudioSourceProviderGStreamer(MediaStreamTrackPrivate& source)
-    : m_notifier(MainThreadNotifier<MainThreadNotification>::create())
-{
-    initializeDebugCategory();
-    auto pipelineName = makeString("WebAudioProvider_MediaStreamTrack_", source.id());
-    m_pipeline = gst_element_factory_make("pipeline", pipelineName.utf8().data());
-    auto src = webkitMediaStreamSrcNew();
-    webkitMediaStreamSrcAddTrack(WEBKIT_MEDIA_STREAM_SRC(src), &source, true);
-
-    m_audioSinkBin = gst_parse_bin_from_description("tee name=audioTee", true, nullptr);
-
-    gst_bin_add_many(GST_BIN_CAST(m_pipeline.get()), src, m_audioSinkBin.get(), nullptr);
-    gst_element_link(src, m_audioSinkBin.get());
-
-    connectSimpleBusMessageCallback(m_pipeline.get());
-}
-#endif
-
 AudioSourceProviderGStreamer::~AudioSourceProviderGStreamer()
 {
     m_notifier->invalidate();
@@ -119,12 +95,6 @@ AudioSourceProviderGStreamer::~AudioSourceProviderGStreamer()
     }
 
     setClient(nullptr);
-#if ENABLE(MEDIA_STREAM)
-    if (m_pipeline) {
-        disconnectSimpleBusMessageCallback(m_pipeline.get());
-        gst_element_set_state(m_pipeline.get(), GST_STATE_NULL);
-    }
-#endif
 }
 
 void AudioSourceProviderGStreamer::configureAudioBin(GstElement* audioBin, GstElement* audioSink)
@@ -286,10 +256,6 @@ void AudioSourceProviderGStreamer::setClient(AudioSourceProviderClient* newClien
 
     m_deinterleaveSourcePads = 0;
     clearAdapters();
-#if ENABLE(MEDIA_STREAM)
-    if (m_pipeline)
-        gst_element_set_state(m_pipeline.get(), m_client ? GST_STATE_PLAYING : GST_STATE_NULL);
-#endif
 }
 
 void AudioSourceProviderGStreamer::handleNewDeinterleavePad(GstPad* pad)

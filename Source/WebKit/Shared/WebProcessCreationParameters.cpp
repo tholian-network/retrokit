@@ -62,9 +62,6 @@ void WebProcessCreationParameters::encode(IPC::Encoder& encoder) const
     encoder << wtfLoggingChannels;
     encoder << webCoreLoggingChannels;
     encoder << webKitLoggingChannels;
-#if ENABLE(MEDIA_STREAM)
-    encoder << audioCaptureExtensionHandle;
-#endif
     encoder << urlSchemesRegisteredAsEmptyDocument;
     encoder << urlSchemesRegisteredAsSecure;
     encoder << urlSchemesRegisteredAsBypassingContentSecurityPolicy;
@@ -270,14 +267,6 @@ bool WebProcessCreationParameters::decode(IPC::Decoder& decoder, WebProcessCreat
     if (!decoder.decode(parameters.webKitLoggingChannels))
         return false;
 
-#if ENABLE(MEDIA_STREAM)
-
-    std::optional<SandboxExtension::Handle> audioCaptureExtensionHandle;
-    decoder >> audioCaptureExtensionHandle;
-    if (!audioCaptureExtensionHandle)
-        return false;
-    parameters.audioCaptureExtensionHandle = WTFMove(*audioCaptureExtensionHandle);
-#endif
     if (!decoder.decode(parameters.urlSchemesRegisteredAsEmptyDocument))
         return false;
     if (!decoder.decode(parameters.urlSchemesRegisteredAsSecure))

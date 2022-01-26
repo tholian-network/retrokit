@@ -53,8 +53,6 @@ String convertEnumerationToString(AudioNode::NodeType enumerationValue)
         MAKE_STATIC_STRING_IMPL("NodeTypeOscillator"),
         MAKE_STATIC_STRING_IMPL("NodeTypeAudioBufferSource"),
         MAKE_STATIC_STRING_IMPL("NodeTypeMediaElementAudioSource"),
-        MAKE_STATIC_STRING_IMPL("NodeTypeMediaStreamAudioDestination"),
-        MAKE_STATIC_STRING_IMPL("NodeTypeMediaStreamAudioSource"),
         MAKE_STATIC_STRING_IMPL("NodeTypeJavaScript"),
         MAKE_STATIC_STRING_IMPL("NodeTypeBiquadFilter"),
         MAKE_STATIC_STRING_IMPL("NodeTypePanner"),
@@ -75,8 +73,6 @@ String convertEnumerationToString(AudioNode::NodeType enumerationValue)
     static_assert(static_cast<size_t>(AudioNode::NodeTypeOscillator) == 1, "AudioNode::NodeTypeOscillator is not 1 as expected");
     static_assert(static_cast<size_t>(AudioNode::NodeTypeAudioBufferSource) == 2, "AudioNode::NodeTypeAudioBufferSource is not 2 as expected");
     static_assert(static_cast<size_t>(AudioNode::NodeTypeMediaElementAudioSource) == 3, "AudioNode::NodeTypeMediaElementAudioSource is not 3 as expected");
-    static_assert(static_cast<size_t>(AudioNode::NodeTypeMediaStreamAudioDestination) == 4, "AudioNode::NodeTypeMediaStreamAudioDestination is not 4 as expected");
-    static_assert(static_cast<size_t>(AudioNode::NodeTypeMediaStreamAudioSource) == 5, "AudioNode::NodeTypeMediaStreamAudioSource is not 5 as expected");
     static_assert(static_cast<size_t>(AudioNode::NodeTypeJavaScript) == 6, "AudioNode::NodeTypeJavaScript is not 6 as expected");
     static_assert(static_cast<size_t>(AudioNode::NodeTypeBiquadFilter) == 7, "AudioNode::NodeTypeBiquadFilter is not 7 as expected");
     static_assert(static_cast<size_t>(AudioNode::NodeTypePanner) == 8, "AudioNode::NodeTypePanner is not 8 as expected");

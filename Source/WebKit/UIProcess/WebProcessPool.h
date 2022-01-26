@@ -87,7 +87,6 @@ class PageConfiguration;
 
 namespace WebCore {
 class RegistrableDomain;
-struct MockMediaDevice;
 #if PLATFORM(COCOA)
 class PowerSourceNotifier;
 #endif
@@ -427,11 +426,6 @@ public:
 
     void screenPropertiesStateChanged();
 
-    void addMockMediaDevice(const WebCore::MockMediaDevice&);
-    void clearMockMediaDevices();
-    void removeMockMediaDevice(const String& persistentId);
-    void resetMockMediaDevices();
-
     void sendDisplayConfigurationChangedMessageForTesting();
     void clearCurrentModifierStateForTesting();
 
@@ -545,7 +539,7 @@ private:
 #if PLATFORM(MAC)
     static void colorPreferencesDidChangeCallback(CFNotificationCenterRef, void *observer, CFStringRef name, const void *, CFDictionaryRef userInfo);
 #endif
-    
+
 #if ENABLE(CFPREFS_DIRECT_MODE)
     void startObservingPreferenceChanges();
 #endif

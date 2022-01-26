@@ -124,16 +124,10 @@ WK_EXPORT bool WKPageIsPlayingAudio(WKPageRef page);
 
 enum {
     kWKMediaNoneMuted = 0,
-    kWKMediaAudioMuted = 1 << 0,
-    kWKMediaCaptureDevicesMuted = 1 << 1,
-    kWKMediaScreenCaptureMuted = 1 << 2,
+    kWKMediaAudioMuted = 1 << 0
 };
 typedef uint32_t WKMediaMutedState;
 WK_EXPORT void WKPageSetMuted(WKPageRef page, WKMediaMutedState muted);
-
-WK_EXPORT void WKPageClearUserMediaState(WKPageRef page);
-WK_EXPORT void WKPageSetMediaCaptureEnabled(WKPageRef page, bool enabled);
-WK_EXPORT bool WKPageGetMediaCaptureEnabled(WKPageRef page);
 
 WK_EXPORT void WKPageDidAllowPointerLock(WKPageRef page);
 WK_EXPORT void WKPageDidDenyPointerLock(WKPageRef page);
@@ -141,13 +135,7 @@ WK_EXPORT void WKPageDidDenyPointerLock(WKPageRef page);
 enum {
     kWKMediaIsNotPlaying = 0,
     kWKMediaIsPlayingAudio = 1 << 0,
-    kWKMediaIsPlayingVideo = 1 << 1,
-    kWKMediaHasActiveAudioCaptureDevice = 1 << 2,
-    kWKMediaHasActiveVideoCaptureDevice = 1 << 3,
-    kWKMediaHasMutedAudioCaptureDevice = 1 << 4,
-    kWKMediaHasMutedVideoCaptureDevice = 1 << 5,
-    kWKMediaHasActiveDisplayCaptureDevice = 1 << 6,
-    kWKMediaHasMutedDisplayCaptureDevice = 1 << 7,
+    kWKMediaIsPlayingVideo = 1 << 1
 };
 typedef uint32_t WKMediaState;
 
@@ -193,14 +181,9 @@ WK_EXPORT void WKPageMarkPrivateClickMeasurementsAsExpiredForTesting(WKPageRef p
 typedef void (*WKPageSetPCMFraudPreventionValuesForTestingFunction)(void* functionContext);
 WK_EXPORT void WKPageSetPCMFraudPreventionValuesForTesting(WKPageRef page, WKStringRef secretToken, WKStringRef unlinkableToken, WKStringRef signature, WKStringRef keyID, WKPageSetPCMFraudPreventionValuesForTestingFunction callback, void* callbackContext);
 
-WK_EXPORT void WKPageSetMockCameraOrientation(WKPageRef page, uint64_t orientation);
-WK_EXPORT bool WKPageIsMockRealtimeMediaSourceCenterEnabled(WKPageRef page);
-
 typedef void (*WKPageLoadedSubresourceDomainsFunction)(WKArrayRef domains, void* functionContext);
 WK_EXPORT void WKPageLoadedSubresourceDomains(WKPageRef page, WKPageLoadedSubresourceDomainsFunction callback, void* callbackContext);
 WK_EXPORT void WKPageClearLoadedSubresourceDomains(WKPageRef page);
-
-WK_EXPORT void WKPageSetMediaCaptureReportingDelayForTesting(WKPageRef page, double delay);
 
 WK_EXPORT void WKPageDispatchActivityStateUpdateForTesting(WKPageRef page);
 

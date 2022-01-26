@@ -67,12 +67,6 @@ bool defaultUseGPUProcessForMediaEnabled();
 bool defaultUseGPUProcessForWebGLEnabled();
 #endif
 
-#if ENABLE(MEDIA_STREAM)
-bool defaultCaptureAudioInGPUProcessEnabled();
-bool defaultCaptureAudioInUIProcessEnabled();
-bool defaultCaptureVideoInGPUProcessEnabled();
-#endif
-
 #if HAVE(INCREMENTAL_PDF_APIS)
 bool defaultIncrementalPDFEnabled();
 #endif

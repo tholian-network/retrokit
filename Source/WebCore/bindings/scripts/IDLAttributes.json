@@ -85,9 +85,6 @@
             "contextsAllowed": ["interface"],
             "values": ["*"]
         },
-        "ContextAllowsMediaDevices": {
-            "contextsAllowed": ["attribute"]
-        },
         "Custom": {
             "contextsAllowed": ["attribute", "operation"]
         },

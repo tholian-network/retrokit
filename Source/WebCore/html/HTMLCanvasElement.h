@@ -48,7 +48,6 @@ class Image;
 class ImageBuffer;
 class ImageData;
 class MediaSample;
-class MediaStream;
 class OffscreenCanvas;
 class WebGLRenderingContextBase;
 class GPUCanvasContext;
@@ -104,11 +103,6 @@ public:
     void didDraw(const std::optional<FloatRect>&) final;
 
     void paint(GraphicsContext&, const LayoutRect&);
-
-#if ENABLE(MEDIA_STREAM)
-    RefPtr<MediaSample> toMediaSample();
-    ExceptionOr<Ref<MediaStream>> captureStream(Document&, std::optional<double>&& frameRequestRate);
-#endif
 
     Image* copiedImage() const final;
     void clearCopiedImage() const final;

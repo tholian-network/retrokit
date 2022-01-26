@@ -125,7 +125,6 @@ UIProcess/API/glib/WebKitBackForwardListItem.cpp @no-unify
 UIProcess/API/glib/WebKitContextMenuClient.cpp @no-unify
 UIProcess/API/glib/WebKitCookieManager.cpp @no-unify
 UIProcess/API/glib/WebKitCredential.cpp @no-unify
-UIProcess/API/glib/WebKitDeviceInfoPermissionRequest.cpp @no-unify
 UIProcess/API/glib/WebKitDownload.cpp @no-unify
 UIProcess/API/glib/WebKitDownloadClient.cpp @no-unify
 UIProcess/API/glib/WebKitEditorState.cpp @no-unify
@@ -167,7 +166,6 @@ UIProcess/API/glib/WebKitURIUtilities.cpp @no-unify
 UIProcess/API/glib/WebKitUserContent.cpp @no-unify
 UIProcess/API/glib/WebKitUserContentFilterStore.cpp @no-unify
 UIProcess/API/glib/WebKitUserContentManager.cpp @no-unify
-UIProcess/API/glib/WebKitUserMediaPermissionRequest.cpp @no-unify
 UIProcess/API/glib/WebKitVersion.cpp @no-unify
 UIProcess/API/glib/WebKitWebContext.cpp @no-unify
 UIProcess/API/glib/WebKitWebResource.cpp @no-unify

@@ -107,7 +107,6 @@ set(WebKit2GTK_INSTALLED_HEADERS
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitContextMenuActions.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitCookieManager.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitDefines.h
-    ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitDeviceInfoPermissionRequest.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitDownload.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitEditingCommands.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitEditorState.h
@@ -145,7 +144,6 @@ set(WebKit2GTK_INSTALLED_HEADERS
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitUserContent.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitUserContentFilterStore.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitUserContentManager.h
-    ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitUserMediaPermissionRequest.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitUserMessage.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitWebContext.h
     ${WEBKIT_DIR}/UIProcess/API/gtk/WebKitWebInspector.h
@@ -486,17 +484,6 @@ endif ()
 
 if (GTK_UNIX_PRINT_FOUND)
     list(APPEND WebKit_LIBRARIES GTK::UnixPrint)
-endif ()
-
-if (ENABLE_MEDIA_STREAM)
-    list(APPEND WebKit_SOURCES
-        UIProcess/glib/UserMediaPermissionRequestManagerProxyGLib.cpp
-
-        WebProcess/glib/UserMediaCaptureManager.cpp
-    )
-    list(APPEND WebKit_MESSAGES_IN_FILES
-        WebProcess/glib/UserMediaCaptureManager
-    )
 endif ()
 
 # To generate WebKitEnumTypes.h we want to use all installed headers, except WebKitEnumTypes.h itself.

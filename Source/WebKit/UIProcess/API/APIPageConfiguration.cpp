@@ -94,7 +94,6 @@ Ref<PageConfiguration> PageConfiguration::copy() const
     copy->m_limitsNavigationsToAppBoundDomains = this->m_limitsNavigationsToAppBoundDomains;
 #endif
 
-    copy->m_mediaCaptureEnabled = this->m_mediaCaptureEnabled;
     copy->m_httpsUpgradeEnabled = this->m_httpsUpgradeEnabled;
 #if PLATFORM(IOS_FAMILY)
     copy->m_appInitiatedOverrideValueForTesting = this->m_appInitiatedOverrideValueForTesting;

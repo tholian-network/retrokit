@@ -1126,17 +1126,6 @@ WI.NativePrototypeFunctionParameters = {
     },
 
     Navigator: {
-        getUserMedia: "options, successCallback, errorCallback",
-        __proto__: null,
-    },
-
-    NavigatorUserMediaErrorCallback: {
-        handleEvent: "error",
-        __proto__: null,
-    },
-
-    NavigatorUserMediaSuccessCallback: {
-        handleEvent: "stream",
         __proto__: null,
     },
 
@@ -1556,16 +1545,6 @@ WI.NativePrototypeFunctionParameters = {
 
     SourceBufferList: {
         item: "index",
-        __proto__: null,
-    },
-
-    SpeechSynthesis: {
-        speak: "utterance",
-        __proto__: null,
-    },
-
-    SpeechSynthesisUtterance: {
-        /* EventTarget */
         __proto__: null,
     },
 

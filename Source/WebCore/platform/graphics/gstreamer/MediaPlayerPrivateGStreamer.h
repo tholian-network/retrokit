@@ -130,9 +130,6 @@ public:
 #if ENABLE(MEDIA_SOURCE)
     void load(const URL&, const ContentType&, MediaSourcePrivateClient*) override;
 #endif
-#if ENABLE(MEDIA_STREAM)
-    void load(MediaStreamPrivate&) override;
-#endif
     void cancelLoad() final;
     void prepareToPlay() final;
     void play() override;
@@ -445,7 +442,6 @@ private:
     void updateVideoSizeAndOrientationFromCaps(const GstCaps*);
     bool hasFirstVideoSampleReachedSink() const;
 
-    void configureMediaStreamAudioTracks();
     void invalidateCachedPositionOnNextIteration() const;
 
     Atomic<bool> m_isPlayerShuttingDown;
@@ -482,9 +478,6 @@ private:
     URL m_url;
     bool m_shouldPreservePitch { false };
     bool m_isLegacyPlaybin;
-#if ENABLE(MEDIA_STREAM)
-    RefPtr<MediaStreamPrivate> m_streamPrivate;
-#endif
 
     bool m_visible { false };
 

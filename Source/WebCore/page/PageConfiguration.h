@@ -59,19 +59,17 @@ class PerformanceLoggingClient;
 class PermissionController;
 class ProgressTrackerClient;
 class SocketProvider;
-class SpeechRecognitionProvider;
 class StorageNamespaceProvider;
 class UserContentProvider;
 class UserContentURLPattern;
 class ValidationMessageClient;
 class VisitedLinkStore;
 class WebGLStateTracker;
-class SpeechSynthesisClient;
 
 class PageConfiguration {
     WTF_MAKE_NONCOPYABLE(PageConfiguration); WTF_MAKE_FAST_ALLOCATED;
 public:
-    WEBCORE_EXPORT PageConfiguration(PAL::SessionID, UniqueRef<EditorClient>&&, Ref<SocketProvider>&&, Ref<CacheStorageProvider>&&, Ref<UserContentProvider>&&, Ref<BackForwardClient>&&, Ref<CookieJar>&&, UniqueRef<ProgressTrackerClient>&&, UniqueRef<FrameLoaderClient>&&, UniqueRef<SpeechRecognitionProvider>&&, Ref<BroadcastChannelRegistry>&&, Ref<PermissionController>&&);
+    WEBCORE_EXPORT PageConfiguration(PAL::SessionID, UniqueRef<EditorClient>&&, Ref<SocketProvider>&&, Ref<CacheStorageProvider>&&, Ref<UserContentProvider>&&, Ref<BackForwardClient>&&, Ref<CookieJar>&&, UniqueRef<ProgressTrackerClient>&&, UniqueRef<FrameLoaderClient>&&, Ref<BroadcastChannelRegistry>&&, Ref<PermissionController>&&);
     WEBCORE_EXPORT ~PageConfiguration();
     PageConfiguration(PageConfiguration&&);
 
@@ -104,9 +102,6 @@ public:
 #if ENABLE(WEBGL)
     std::unique_ptr<WebGLStateTracker> webGLStateTracker;
 #endif
-#if ENABLE(SPEECH_SYNTHESIS)
-    std::unique_ptr<SpeechSynthesisClient> speechSynthesisClient;
-#endif
 
     RefPtr<ApplicationCacheStorage> applicationCacheStorage;
     RefPtr<DatabaseProvider> databaseProvider;
@@ -117,7 +112,6 @@ public:
     Ref<BroadcastChannelRegistry> broadcastChannelRegistry;
 
     Vector<UserContentURLPattern> corsDisablingPatterns;
-    UniqueRef<SpeechRecognitionProvider> speechRecognitionProvider;
 
     // FIXME: These should be all be Settings.
     bool loadsSubresources { true };

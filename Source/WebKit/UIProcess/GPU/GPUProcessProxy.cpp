@@ -46,7 +46,6 @@
 #include "WebProcessProxy.h"
 #include "WebProcessProxyMessages.h"
 #include <WebCore/LogInitialization.h>
-#include <WebCore/MockRealtimeMediaSourceCenter.h>
 #include <WebCore/RuntimeApplicationChecks.h>
 #include <wtf/CompletionHandler.h>
 #include <wtf/LogInitialization.h>
@@ -66,19 +65,6 @@
 
 namespace WebKit {
 using namespace WebCore;
-
-#if ENABLE(MEDIA_STREAM) && HAVE(AUDIT_TOKEN)
-static bool shouldCreateAppleCameraServiceSandboxExtension()
-{
-#if !PLATFORM(MAC) && !PLATFORM(MACCATALYST)
-    return false;
-#elif CPU(ARM64)
-    return true;
-#else
-    return WTF::isX86BinaryRunningOnARM();
-#endif
-}
-#endif
 
 #if PLATFORM(IOS_FAMILY)
 static const Vector<ASCIILiteral>& nonBrowserServices()
@@ -123,7 +109,7 @@ static String gpuProcessCachesDirectory()
     String path = WebProcessPool::cacheDirectoryInContainerOrHomeDirectory("/Library/Caches/com.apple.WebKit.GPU/"_s);
 
     FileSystem::makeAllDirectories(path);
-    
+
     return path;
 }
 #endif
@@ -131,24 +117,10 @@ static String gpuProcessCachesDirectory()
 GPUProcessProxy::GPUProcessProxy()
     : AuxiliaryProcessProxy()
     , m_throttler(*this, false)
-#if ENABLE(MEDIA_STREAM)
-    , m_useMockCaptureDevices(MockRealtimeMediaSourceCenter::mockRealtimeMediaSourceCenterEnabled())
-#endif
 {
     connect();
 
     GPUProcessCreationParameters parameters;
-#if ENABLE(MEDIA_STREAM)
-    parameters.useMockCaptureDevices = m_useMockCaptureDevices;
-#if PLATFORM(MAC)
-    // FIXME: Remove this and related parameter when <rdar://problem/29448368> is fixed.
-    if (MacApplication::isSafari()) {
-        if (auto handle = SandboxExtension::createHandleForGenericExtension("com.apple.webkit.microphone"_s))
-            parameters.microphoneSandboxExtensionHandle = WTFMove(*handle);
-        m_hasSentMicrophoneSandboxExtension = true;
-    }
-#endif
-#endif // ENABLE(MEDIA_STREAM)
 
     parameters.parentPID = getCurrentProcessID();
 
@@ -184,99 +156,6 @@ GPUProcessProxy::GPUProcessProxy()
 }
 
 GPUProcessProxy::~GPUProcessProxy() = default;
-
-#if ENABLE(MEDIA_STREAM)
-void GPUProcessProxy::setUseMockCaptureDevices(bool value)
-{
-    if (value == m_useMockCaptureDevices)
-        return;
-    m_useMockCaptureDevices = value;
-    send(Messages::GPUProcess::SetMockCaptureDevicesEnabled { m_useMockCaptureDevices }, 0);
-}
-
-void GPUProcessProxy::setOrientationForMediaCapture(uint64_t orientation)
-{
-    if (m_orientation == orientation)
-        return;
-    m_orientation = orientation;
-    send(Messages::GPUProcess::SetOrientationForMediaCapture { orientation }, 0);
-}
-
-static inline bool addCameraSandboxExtensions(Vector<SandboxExtension::Handle>& extensions)
-{
-    extensions.append(WTFMove(*sandboxExtensionHandle));
-    return true;
-}
-
-static inline bool addMicrophoneSandboxExtension(Vector<SandboxExtension::Handle>& extensions)
-{
-    extensions.append(WTFMove(*sandboxExtensionHandle));
-    return true;
-}
-
-#if PLATFORM(IOS)
-static inline bool addTCCDSandboxExtension(Vector<SandboxExtension::Handle>& extensions)
-{
-    extensions.append(WTFMove(*handle));
-    return true;
-}
-#endif
-
-void GPUProcessProxy::updateSandboxAccess(bool allowAudioCapture, bool allowVideoCapture)
-{
-    if (m_useMockCaptureDevices)
-        return;
-
-#if PLATFORM(COCOA)
-    Vector<SandboxExtension::Handle> extensions;
-
-    if (allowVideoCapture && !m_hasSentCameraSandboxExtension && addCameraSandboxExtensions(extensions))
-        m_hasSentCameraSandboxExtension = true;
-
-    if (allowAudioCapture && !m_hasSentMicrophoneSandboxExtension && addMicrophoneSandboxExtension(extensions))
-        m_hasSentMicrophoneSandboxExtension = true;
-
-#if PLATFORM(IOS)
-    if ((allowAudioCapture || allowVideoCapture) && !m_hasSentTCCDSandboxExtension && addTCCDSandboxExtension(extensions))
-        m_hasSentTCCDSandboxExtension = true;
-#endif // PLATFORM(IOS)
-
-    if (!extensions.isEmpty())
-        send(Messages::GPUProcess::UpdateSandboxAccess { extensions }, 0);
-#endif // PLATFORM(COCOA)
-}
-
-void GPUProcessProxy::updateCaptureAccess(bool allowAudioCapture, bool allowVideoCapture, bool allowDisplayCapture, WebCore::ProcessIdentifier processID, CompletionHandler<void()>&& completionHandler)
-{
-    updateSandboxAccess(allowAudioCapture, allowVideoCapture);
-    sendWithAsyncReply(Messages::GPUProcess::UpdateCaptureAccess { allowAudioCapture, allowVideoCapture, allowDisplayCapture, processID }, WTFMove(completionHandler));
-}
-
-void GPUProcessProxy::updateCaptureOrigin(const WebCore::SecurityOriginData& originData, WebCore::ProcessIdentifier processID)
-{
-    send(Messages::GPUProcess::UpdateCaptureOrigin { originData, processID }, 0);
-}
-
-void GPUProcessProxy::addMockMediaDevice(const WebCore::MockMediaDevice& device)
-{
-    send(Messages::GPUProcess::AddMockMediaDevice { device }, 0);
-}
-
-void GPUProcessProxy::clearMockMediaDevices()
-{
-    send(Messages::GPUProcess::ClearMockMediaDevices { }, 0);
-}
-
-void GPUProcessProxy::removeMockMediaDevice(const String& persistentId)
-{
-    send(Messages::GPUProcess::RemoveMockMediaDevice { persistentId }, 0);
-}
-
-void GPUProcessProxy::resetMockMediaDevices()
-{
-    send(Messages::GPUProcess::ResetMockMediaDevices { }, 0);
-}
-#endif
 
 void GPUProcessProxy::getLaunchOptions(ProcessLauncher::LaunchOptions& launchOptions)
 {

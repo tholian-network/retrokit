@@ -79,7 +79,6 @@
 #include <JavaScriptCore/JSCInlines.h>
 #include <WebCore/ApplicationCacheStorage.h>
 #include <WebCore/LogInitialization.h>
-#include <WebCore/MockRealtimeMediaSourceCenter.h>
 #include <WebCore/NetworkStorageSession.h>
 #include <WebCore/PlatformScreen.h>
 #include <WebCore/ProcessIdentifier.h>
@@ -786,7 +785,7 @@ void WebProcessPool::initializeNewWebProcess(WebProcessProxy& process, WebsiteDa
     if (!injectedBundleInitializationUserData)
         injectedBundleInitializationUserData = m_injectedBundleInitializationUserData;
     parameters.initializationUserData = UserData(process.transformObjectsToHandles(injectedBundleInitializationUserData.get()));
-    
+
     if (websiteDataStore)
         parameters.websiteDataStoreParameters = webProcessDataStoreParameters(process, *websiteDataStore);
 
@@ -1733,7 +1732,7 @@ void WebProcessPool::processForNavigationInternal(WebPageProxy& page, const API:
         return completionHandler(WTFMove(sourceProcess), nullptr, "Navigation is same-site"_s);
 
     String reason = "Navigation is cross-site"_s;
-    
+
     if (m_configuration->alwaysKeepAndReuseSwappedProcesses()) {
         LOG(ProcessSwapping, "(ProcessSwapping) Considering re-use of a previously cached process for domain %s", targetRegistrableDomain.string().utf8().data());
 
@@ -1747,50 +1746,6 @@ void WebProcessPool::processForNavigationInternal(WebPageProxy& page, const API:
     }
 
     return completionHandler(createNewProcess(), nullptr, reason);
-}
-
-void WebProcessPool::addMockMediaDevice(const MockMediaDevice& device)
-{
-#if ENABLE(MEDIA_STREAM)
-    MockRealtimeMediaSourceCenter::addDevice(device);
-    sendToAllProcesses(Messages::WebProcess::AddMockMediaDevice { device });
-#if ENABLE(GPU_PROCESS)
-    ensureGPUProcess().addMockMediaDevice(device);
-#endif
-#endif
-}
-
-void WebProcessPool::clearMockMediaDevices()
-{
-#if ENABLE(MEDIA_STREAM)
-    MockRealtimeMediaSourceCenter::setDevices({ });
-    sendToAllProcesses(Messages::WebProcess::ClearMockMediaDevices { });
-#if ENABLE(GPU_PROCESS)
-    ensureGPUProcess().clearMockMediaDevices();
-#endif
-#endif
-}
-
-void WebProcessPool::removeMockMediaDevice(const String& persistentId)
-{
-#if ENABLE(MEDIA_STREAM)
-    MockRealtimeMediaSourceCenter::removeDevice(persistentId);
-    sendToAllProcesses(Messages::WebProcess::RemoveMockMediaDevice { persistentId });
-#if ENABLE(GPU_PROCESS)
-    ensureGPUProcess().removeMockMediaDevice(persistentId);
-#endif
-#endif
-}
-
-void WebProcessPool::resetMockMediaDevices()
-{
-#if ENABLE(MEDIA_STREAM)
-    MockRealtimeMediaSourceCenter::resetDevices();
-    sendToAllProcesses(Messages::WebProcess::ResetMockMediaDevices { });
-#if ENABLE(GPU_PROCESS)
-    ensureGPUProcess().resetMockMediaDevices();
-#endif
-#endif
 }
 
 void WebProcessPool::sendDisplayConfigurationChangedMessageForTesting()

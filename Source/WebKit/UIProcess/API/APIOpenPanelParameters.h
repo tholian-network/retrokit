@@ -45,9 +45,6 @@ public:
     Ref<API::Array> allowedMIMETypes() const;
     Ref<API::Array> allowedFileExtensions() const;
     Ref<API::Array> selectedFileNames() const;
-#if ENABLE(MEDIA_CAPTURE)
-    WebCore::MediaCaptureType mediaCaptureType() const { return m_settings.mediaCaptureType; }
-#endif
 
 private:
     explicit OpenPanelParameters(const WebCore::FileChooserSettings&);

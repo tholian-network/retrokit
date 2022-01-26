@@ -761,15 +761,6 @@ HyperlinkAuditingEnabled:
     WebCore:
       default: false
 
-InactiveMediaCaptureSteamRepromptIntervalInMinutes:
-  type: double
-  webcoreBinding: none
-  exposed: [ WebKit ]
-  defaultValue:
-    WebKit:
-      "PLATFORM(IOS_FAMILY)": 1
-      default: 10
-
 IncompleteImageBorderEnabled:
   type: bool
   defaultValue:
@@ -879,18 +870,6 @@ InteractiveFormValidationEnabled:
       default: true
     WebKitLegacy:
       default: false
-    WebCore:
-      default: false
-
-# FIXME: Is this implemented for WebKitLegacy? If not, this should be excluded from WebKitLegacy entirely (though we should still set the default value to false when initializing settings).
-InterruptAudioOnPageVisibilityChangeEnabled:
-  type: bool
-  condition: ENABLE(MEDIA_STREAM)
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      default: WebCore::RealtimeMediaSourceCenter::shouldInterruptAudioOnPageVisibilityChange()
     WebCore:
       default: false
 
@@ -1102,14 +1081,6 @@ LocalStorageEnabled:
     WebCore:
       default: false
 
-LongRunningMediaCaptureStreamRepromptIntervalInHours:
-  type: double
-  webcoreBinding: none
-  exposed: [ WebKit ]
-  defaultValue:
-    WebKit:
-      default: 24
-
 LowPowerVideoAudioBufferSizeEnabled:
   type: bool
   webcoreBinding: DeprecatedGlobalSettings
@@ -1198,18 +1169,6 @@ MediaDataLoadsAutomatically:
       "PLATFORM(IOS_FAMILY)": false
       default: true
 
-# FIXME: Is this implemented for WebKitLegacy? If not, this should be excluded from WebKitLegacy entirely (though we should still set the default value to false when initializing settings).
-MediaDevicesEnabled:
-  type: bool
-  condition: ENABLE(MEDIA_STREAM)
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      default: false
-    WebCore:
-      default: false
-
 MediaEnabled:
   type: bool
   condition: ENABLE(VIDEO)
@@ -1243,19 +1202,6 @@ MediaSourceEnabled:
     WebCore:
       "PLATFORM(COCOA) && PLATFORM(MAC)": true
       "PLATFORM(COCOA) && !PLATFORM(MAC)": false
-      default: true
-
-# FIXME: Is this implemented for WebKitLegacy? If not, this should be excluded from WebKitLegacy entirely (though we should still set the default value to false when initializing settings).
-# FIXME: Seems to be unused. Remove once verified.
-MediaStreamEnabled:
-  type: bool
-  condition: ENABLE(MEDIA_STREAM)
-  defaultValue:
-    WebKitLegacy:
-      default: false
-    WebKit:
-      default: true
-    WebCore:
       default: true
 
 MediaUserGestureInheritsFromDocument:
@@ -1310,14 +1256,6 @@ MinimumZoomFontSize:
       default: 15
     WebCore:
       default: 15
-
-MockCaptureDevicesPromptEnabled:
-  type: bool
-  webcoreBinding: none
-  exposed: [ WebKit ]
-  defaultValue:
-    WebKit:
-      default: true
 
 MockScrollbarsEnabled:
   type: bool

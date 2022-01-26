@@ -19,12 +19,9 @@ IDBOpenDBRequest
 IDBRequest
 IDBTransaction
 MediaController conditional=VIDEO
-MediaDevices conditional=MEDIA_STREAM
 MediaQueryList
 MediaSessionCoordinator conditional=MEDIA_SESSION_COORDINATOR
 MediaSource conditional=MEDIA_SOURCE
-MediaStream conditional=MEDIA_STREAM
-MediaStreamTrack conditional=MEDIA_STREAM
 MessagePort
 Node
 Notification conditional=NOTIFICATIONS
@@ -37,8 +34,6 @@ ServiceWorkerGlobalScope conditional=SERVICE_WORKER
 ServiceWorkerRegistration conditional=SERVICE_WORKER
 SourceBuffer conditional=MEDIA_SOURCE
 SourceBufferList conditional=MEDIA_SOURCE
-SpeechRecognition
-SpeechSynthesisUtterance conditional=SPEECH_SYNTHESIS
 TextTrack conditional=VIDEO
 TextTrackCue conditional=VIDEO
 TextTrackCueGeneric conditional=VIDEO

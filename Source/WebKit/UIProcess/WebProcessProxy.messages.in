@@ -75,11 +75,8 @@ messages -> WebProcessProxy LegacyReceiver {
     SendMessageToWebContextWithReply(struct WebKit::UserMessage userMessage) -> (struct WebKit::UserMessage replyMessage) Async
 #endif
 
-    CreateSpeechRecognitionServer(WebCore::PageIdentifier identifier)
-    DestroySpeechRecognitionServer(WebCore::PageIdentifier identifier)
-
     SystemBeep()
-    
+
 #if PLATFORM(MAC)
     IsAXAuthenticated(audit_token_t auditToken) -> (bool authenticated) Synchronous
 #endif
