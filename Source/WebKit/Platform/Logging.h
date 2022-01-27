@@ -58,8 +58,6 @@ extern "C" {
     M(ITPDebug) \
     M(IconDatabase) \
     M(Images) \
-    M(IncrementalPDF) \
-    M(IncrementalPDFVerbose) \
     M(IndexedDB) \
     M(Inspector) \
     M(KeyHandling) \

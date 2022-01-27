@@ -97,7 +97,7 @@ surface, that's why they're removed.
 
 - [x] Remove Legacy Netscape Plugin API (`NETSCAPE_PLUGIN_API`, `NPAPI`, `NPIdentifier`, `NPMethod`, `NPObject`, `NPRemote`, `NPRuntimeUtilities`, `NPRuntimeObjectMap`, `NPVariant`, `NetscapeBrowserFuncs`, `NetscapePlugin`, `PlugInData`, `PluginData.h`, `PluginProcess`, `WKContextSetAdditionalPluginsDirectory`, `WKContextRefreshPlugIns`, `canPluginHandleResponse`, `addSupportedPlugin`, `clearSupportedPlugin`)
 - [x] Remove PDFKit Plugin Integration (`PDFKIT_PLUGIN`, `UI_PROCESS_PDF_HUD`, `PDFHUD`)
-- [ ] Remove IncrementalPDF Integration (`INCREMENTAL_PDF_APIS`, `IncrementalPDFLoadingEnabled`)
+- [x] Remove IncrementalPDF Integration (`INCREMENTAL_PDF_APIS`, `IncrementalPDFLoading`)
 - [x] Remove QuickTime Plugin Replacement (`QuickTimePlugin`)
 - [x] Remove YouTube Flash Plugin Replacement (`YouTubePlugin`, `YouTubeEmbedShadowElement`)
 - [x] Remove Java Plugin Support (`enable_java`, `JavaEnabled`)
@@ -259,7 +259,7 @@ list of Web APIs that are removed.
 - [x] Remove Web RTC Sockets Proxying (`WebRTCSocketsProxyingEnabled`)
 - [x] Remove Web RTC VP9 Codec Profiles (`WebRTCVP9Profile0CodecEnabled`, `WebRTCVP9Profile2CodecEnabled`)
 - [x] Remove Web RTC MDNS ICE Candidates Support (`WebRTCMDNSICECandidatesEnabled`, `PeerConnectionEnabled`, `ICECandidateFiltering`)
-- [ ] Remove Display Capture API (`getDisplayMedia`)
+- [ ] Remove Contact Picker API (`ContactPickerAPI`, `ContactInfo`, `ContactProperty`, `ContactsManager`, `ContactsRequestData`, `ContactsSelectOption`, `navigator.contacts`)
 - [ ] Remove Media Session API (`MEDIA_SESSION`)
 - [ ] Remove Media Statistics API (`MEDIA_STATISTICS`)
 - [ ] Remove Media Capabilities API (`MediaCapabilities`)
@@ -292,7 +292,6 @@ list of Web APIs that are removed.
 - [ ] *Undecided* Remove Service Worker API (`SERVICE_WORKER`)
 - [ ] *Undecided* Remove Content Change Observer (`CONTENT_CHANGE_OBSERVER`)
 - [ ] *Undecied* Remove App Bound Domains Support (`APP_BOUND_DOMAINS`)
-- [ ] Remove Contact Picker API (`ContactPickerAPI`, `ContactInfo`, `ContactProperty`, `ContactsManager`, `ContactsRequestData`, `ContactsSelectOption`, `navigator.contacts`)
 - [ ] Remove WebSQL Database API (`WebSQL`)
 
 

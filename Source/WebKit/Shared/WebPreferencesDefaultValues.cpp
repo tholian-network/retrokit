@@ -186,19 +186,6 @@ bool defaultUseGPUProcessForWebGLEnabled()
 
 #endif // ENABLE(GPU_PROCESS)
 
-#if HAVE(INCREMENTAL_PDF_APIS)
-bool defaultIncrementalPDFEnabled()
-{
-#if PLATFORM(MAC)
-    bool defaultValue = true;
-#else
-    bool defaultValue = false;
-#endif
-
-    return isFeatureFlagEnabled("incremental_pdf", defaultValue);
-}
-#endif
-
 #if ENABLE(WEBM_FORMAT_READER)
 
 bool defaultWebMFormatReaderEnabled()
