@@ -246,24 +246,6 @@ void HTMLVideoElement::didMoveToNewDocument(Document& oldDocument, Document& new
     HTMLMediaElement::didMoveToNewDocument(oldDocument, newDocument);
 }
 
-#if ENABLE(MEDIA_STATISTICS)
-unsigned HTMLVideoElement::webkitDecodedFrameCount() const
-{
-    if (!player())
-        return 0;
-
-    return player()->decodedFrameCount();
-}
-
-unsigned HTMLVideoElement::webkitDroppedFrameCount() const
-{
-    if (!player())
-        return 0;
-
-    return player()->droppedFrameCount();
-}
-#endif
-
 URL HTMLVideoElement::posterImageURL() const
 {
     String url = stripLeadingAndTrailingHTMLSpaces(imageSourceURL());

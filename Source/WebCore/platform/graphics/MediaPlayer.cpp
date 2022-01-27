@@ -1001,26 +1001,6 @@ double MediaPlayer::maximumDurationToCacheMediaTime() const
     return m_private->maximumDurationToCacheMediaTime();
 }
 
-unsigned MediaPlayer::decodedFrameCount() const
-{
-    return m_private->decodedFrameCount();
-}
-
-unsigned MediaPlayer::droppedFrameCount() const
-{
-    return m_private->droppedFrameCount();
-}
-
-unsigned MediaPlayer::audioDecodedByteCount() const
-{
-    return m_private->audioDecodedByteCount();
-}
-
-unsigned MediaPlayer::videoDecodedByteCount() const
-{
-    return m_private->videoDecodedByteCount();
-}
-
 void MediaPlayer::reloadTimerFired()
 {
     m_private->cancelLoad();
@@ -1035,7 +1015,7 @@ static void addToHash(HashSet<T>& toHash, HashSet<T>&& fromHash)
     else
         toHash.add(fromHash.begin(), fromHash.end());
 }
-    
+
 HashSet<SecurityOriginData> MediaPlayer::originsInMediaCache(const String& path)
 {
     HashSet<SecurityOriginData> origins;

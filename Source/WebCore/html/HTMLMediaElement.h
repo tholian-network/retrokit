@@ -247,12 +247,6 @@ public:
 
     bool elementIsHidden() const { return m_elementIsHidden; }
 
-#if ENABLE(MEDIA_STATISTICS)
-// Statistics
-    unsigned webkitAudioDecodedByteCount() const;
-    unsigned webkitVideoDecodedByteCount() const;
-#endif
-
 #if ENABLE(MEDIA_SOURCE)
 //  Media Source.
     void detachMediaSource();

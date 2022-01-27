@@ -190,11 +190,6 @@ public:
     // it is OK to calculate movie time before refreshing the cached time.
     virtual double maximumDurationToCacheMediaTime() const { return 0; }
 
-    virtual unsigned decodedFrameCount() const { return 0; }
-    virtual unsigned droppedFrameCount() const { return 0; }
-    virtual unsigned audioDecodedByteCount() const { return 0; }
-    virtual unsigned videoDecodedByteCount() const { return 0; }
-
     HashSet<SecurityOriginData> originsInMediaCache(const String&) { return { }; }
     void clearMediaCache(const String&, WallTime) { }
     void clearMediaCacheForOrigins(const String&, const HashSet<SecurityOriginData>&) { }

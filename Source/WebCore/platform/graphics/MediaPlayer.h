@@ -448,11 +448,6 @@ public:
 
     double maximumDurationToCacheMediaTime() const;
 
-    unsigned decodedFrameCount() const;
-    unsigned droppedFrameCount() const;
-    unsigned audioDecodedByteCount() const;
-    unsigned videoDecodedByteCount() const;
-
     void setPrivateBrowsingMode(bool);
 
 #if ENABLE(WEB_AUDIO)

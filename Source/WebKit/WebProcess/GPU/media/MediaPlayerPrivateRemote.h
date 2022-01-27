@@ -286,11 +286,6 @@ private:
 
     double maximumDurationToCacheMediaTime() const final;
 
-    unsigned decodedFrameCount() const final;
-    unsigned droppedFrameCount() const final;
-    unsigned audioDecodedByteCount() const final;
-    unsigned videoDecodedByteCount() const final;
-
     String engineDescription() const final;
 
 #if ENABLE(WEB_AUDIO)

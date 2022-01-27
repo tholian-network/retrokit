@@ -37,11 +37,5 @@
 
     [CEReactions=NotNeeded, Reflect] attribute boolean playsInline;
 
-    // The number of frames that have been decoded and made available for playback.
-    [Conditional=MEDIA_STATISTICS] readonly attribute unsigned long webkitDecodedFrameCount;
-
-    // The number of decoded frames that have been dropped by the player for performance reasons during playback.
-    [Conditional=MEDIA_STATISTICS] readonly attribute unsigned long webkitDroppedFrameCount;
-
 };
 

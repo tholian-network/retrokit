@@ -50,11 +50,6 @@ public:
     WEBCORE_EXPORT unsigned videoWidth() const;
     WEBCORE_EXPORT unsigned videoHeight() const;
 
-#if ENABLE(MEDIA_STATISTICS)
-    unsigned webkitDecodedFrameCount() const;
-    unsigned webkitDroppedFrameCount() const;
-#endif
-
     RefPtr<ImageBuffer> createBufferForPainting(const FloatSize&, RenderingMode, const DestinationColorSpace&, PixelFormat) const;
 
     // Used by canvas to gain raw pixel access

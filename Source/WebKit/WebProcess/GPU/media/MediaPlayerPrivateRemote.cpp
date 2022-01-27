@@ -943,30 +943,6 @@ double MediaPlayerPrivateRemote::maximumDurationToCacheMediaTime() const
     return m_configuration.maximumDurationToCacheMediaTime;
 }
 
-unsigned MediaPlayerPrivateRemote::decodedFrameCount() const
-{
-    notImplemented();
-    return 0;
-}
-
-unsigned MediaPlayerPrivateRemote::droppedFrameCount() const
-{
-    notImplemented();
-    return 0;
-}
-
-unsigned MediaPlayerPrivateRemote::audioDecodedByteCount() const
-{
-    notImplemented();
-    return 0;
-}
-
-unsigned MediaPlayerPrivateRemote::videoDecodedByteCount() const
-{
-    notImplemented();
-    return 0;
-}
-
 #if ENABLE(WEB_AUDIO)
 AudioSourceProvider* MediaPlayerPrivateRemote::audioSourceProvider()
 {

@@ -95,10 +95,6 @@ typedef (
     readonly attribute boolean webkitHasClosedCaptions;
     attribute boolean webkitClosedCaptionsVisible;
 
-    // The number of bytes consumed by the media decoder.
-    [Conditional=MEDIA_STATISTICS] readonly attribute unsigned long webkitAudioDecodedByteCount;
-    [Conditional=MEDIA_STATISTICS] readonly attribute unsigned long webkitVideoDecodedByteCount;
-
     TextTrack addTextTrack(DOMString kind, optional DOMString label = "", optional DOMString language = "");
     [ImplementedAs=ensureAudioTracks] readonly attribute AudioTrackList audioTracks;
     [ImplementedAs=ensureTextTracks] readonly attribute TextTrackList textTracks;
