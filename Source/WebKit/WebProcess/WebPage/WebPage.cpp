@@ -5402,8 +5402,6 @@ void WebPage::didChangeSelection()
 
 void WebPage::didChangeSelectionOrOverflowScrollPosition()
 {
-    Frame& frame = m_page->focusController().focusedOrMainFrame();
-
     // Similarly, we don't want to propagate changes to the web process when inserting text asynchronously, since we will
     // end up with a range selection very briefly right before inserting the text.
     if (m_isSelectingTextWhileInsertingAsynchronously)
@@ -5421,6 +5419,7 @@ void WebPage::didChangeSelectionOrOverflowScrollPosition()
     // FIXME: This logic should be in WebCore.
     // FIXME: Many changes that affect composition node do not go through didChangeSelection(). We need to do something when DOM manipulation affects the composition, because otherwise input method's idea about it will be different from Editor's.
     // FIXME: We can't cancel composition when selection changes to NoSelection, but we probably should.
+    Frame& frame = m_page->focusController().focusedOrMainFrame();
     if (frame.editor().hasComposition() && !frame.editor().ignoreSelectionChanges() && !frame.selection().isNone()) {
         frame.editor().cancelComposition();
         discardedComposition();

@@ -140,6 +140,7 @@ static inline void updateList(Document& document, FeaturePolicy::AllowRule& rule
 
 FeaturePolicy FeaturePolicy::parse(Document& document, const HTMLIFrameElement& iframe, StringView allowAttributeValue)
 {
+    UNUSED_PARAM(iframe);
     FeaturePolicy policy;
     bool isSyncXHRInitialized = false;
     for (auto allowItem : allowAttributeValue.split(';')) {

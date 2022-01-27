@@ -311,6 +311,7 @@ void MediaElementSession::removeBehaviorRestriction(BehaviorRestrictions restric
 
 Expected<void, MediaPlaybackDenialReason> MediaElementSession::playbackStateChangePermitted(MediaPlaybackState state) const
 {
+    UNUSED_PARAM(state);
     INFO_LOG(LOGIDENTIFIER, "state = ", state);
     if (m_element.isSuspended()) {
         ALWAYS_LOG(LOGIDENTIFIER, "Returning FALSE because element is suspended");

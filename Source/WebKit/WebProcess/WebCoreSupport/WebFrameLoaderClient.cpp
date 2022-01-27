@@ -1691,6 +1691,7 @@ bool WebFrameLoaderClient::allowScript(bool enabledPerSettings)
     if (!enabledPerSettings)
         return false;
 
+    return true;
 }
 
 bool WebFrameLoaderClient::shouldForceUniversalAccessFromLocalURL(const URL& url)
