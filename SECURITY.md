@@ -107,6 +107,7 @@ surface, that's why they're removed.
 - [x] Modify Plugin Content Security Policies (`pluginContentIsAllowed`, `allowPluginContent`, `allowPluginType`)
 - [x] Remove Plugin Document Wrappers (`PluginDocument`, `PluginLoadClientPolicy`, `PluginModuleLoadPolicy`)
 - [x] Remove Plugin Renderer Integration (`RenderEmbeddedObject`)
+- [x] Remove Translation UI Services Support (`TRANSLATION_UI_SERVICES`)
 
 
 ## Legacy Quirks

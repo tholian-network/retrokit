@@ -78,20 +78,6 @@ String localizedString(const char* key)
 
 #endif
 
-#if ENABLE(CONTEXT_MENUS)
-
-static String truncatedStringForMenuItem(const String& original)
-{
-    // Truncate the string if it's too long. This number is roughly the same as the one used by AppKit.
-    unsigned maxNumberOfGraphemeClustersInLookupMenuItem = 24;
-
-    String trimmed = original.stripWhiteSpace();
-    unsigned numberOfCharacters = numCodeUnitsInGraphemeClusters(trimmed, maxNumberOfGraphemeClustersInLookupMenuItem);
-    return numberOfCharacters == trimmed.length() ? trimmed : makeString(trimmed.left(numberOfCharacters), horizontalEllipsis);
-}
-
-#endif
-
 String inputElementAltText()
 {
     return WEB_UI_STRING_KEY("Submit", "Submit (input element)", "alt text for <input> elements with no alt, title, or value");
@@ -228,16 +214,6 @@ String contextMenuItemTagLearnSpelling()
 {
     return WEB_UI_STRING_WITH_MNEMONIC("Learn Spelling", "_Learn Spelling", "Learn Spelling context menu item");
 }
-
-#if HAVE(TRANSLATION_UI_SERVICES)
-
-String contextMenuItemTagTranslate(const String& selectedString)
-{
-    auto selectedCFString = truncatedStringForMenuItem(selectedString).createCFString();
-    return formatLocalizedString(WEB_UI_CFSTRING("Translate “%@”", "Translate context menu item with selected word"), selectedCFString.get());
-}
-
-#endif
 
 String contextMenuItemTagOpenLink()
 {

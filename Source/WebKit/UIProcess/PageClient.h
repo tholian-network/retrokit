@@ -126,9 +126,6 @@ struct DragItem;
 struct PromisedAttachmentInfo;
 #endif
 
-#if HAVE(TRANSLATION_UI_SERVICES) && ENABLE(CONTEXT_MENUS)
-struct TranslationContextMenuInfo;
-#endif
 }
 
 namespace WebKit {
@@ -586,11 +583,6 @@ public:
 #endif
 
     virtual void didChangeWebPageID() const { }
-
-#if HAVE(TRANSLATION_UI_SERVICES) && ENABLE(CONTEXT_MENUS)
-    virtual bool canHandleContextMenuTranslation() const = 0;
-    virtual void handleContextMenuTranslation(const WebCore::TranslationContextMenuInfo&) = 0;
-#endif
 
 #if ENABLE(DATA_DETECTION)
     virtual void handleClickForDataDetectionResult(const WebCore::DataDetectorElementInfo&, const WebCore::IntPoint&) { }

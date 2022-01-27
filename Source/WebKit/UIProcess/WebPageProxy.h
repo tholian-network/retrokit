@@ -99,7 +99,6 @@
 #include <WebCore/TextChecking.h>
 #include <WebCore/TextGranularity.h>
 #include <WebCore/TextManipulationController.h>
-#include <WebCore/TranslationContextMenuInfo.h>
 #include <WebCore/UserInterfaceLayoutDirection.h>
 #include <WebCore/ViewportArguments.h>
 #include <memory>
@@ -1711,11 +1710,6 @@ public:
     void beginPreviewPanelControl(QLPreviewPanel *);
     void endPreviewPanelControl(QLPreviewPanel *);
     void closeSharedPreviewPanelIfNecessary();
-#endif
-
-#if HAVE(TRANSLATION_UI_SERVICES) && ENABLE(CONTEXT_MENUS)
-    bool canHandleContextMenuTranslation() const;
-    void handleContextMenuTranslation(const WebCore::TranslationContextMenuInfo&);
 #endif
 
 #if ENABLE(MEDIA_SESSION_COORDINATOR)

@@ -63,7 +63,6 @@
 #include "ResourceRequest.h"
 #include "Settings.h"
 #include "TextIterator.h"
-#include "TranslationContextMenuInfo.h"
 #include "TypingCommand.h"
 #include "UserTypingGestureIndicator.h"
 #include "WindowFeatures.h"
@@ -490,18 +489,6 @@ void ContextMenuController::contextMenuItemSelected(ContextMenuAction action, co
     case ContextMenuItemTagDictationAlternative:
         frame->editor().applyDictationAlternative(title);
         break;
-    case ContextMenuItemTagTranslate:
-#if HAVE(TRANSLATION_UI_SERVICES)
-        if (auto view = makeRefPtr(frame->view())) {
-            m_client.handleTranslation({
-                m_context.hitTestResult().selectedText(),
-                view->contentsToRootView(enclosingIntRect(frame->selection().selectionBounds())),
-                view->contentsToRootView(m_context.hitTestResult().roundedPointInInnerNodeFrame()),
-                m_context.hitTestResult().isContentEditable() ? TranslationContextMenuMode::Editable : TranslationContextMenuMode::NonEditable,
-            });
-        }
-#endif
-        break;
     default:
         break;
     }
@@ -781,17 +768,6 @@ void ContextMenuController::populate()
         return;
 #endif
 
-    auto addSelectedTextActionsIfNeeded = [&] (const String& selectedText) {
-        if (selectedText.isEmpty())
-            return;
-
-#if HAVE(TRANSLATION_UI_SERVICES)
-        ContextMenuItem translateItem(ActionType, ContextMenuItemTagTranslate, contextMenuItemTagTranslate(selectedText));
-        appendItem(translateItem, m_contextMenu.get());
-#endif
-
-    };
-
     auto selectedText = m_context.hitTestResult().selectedText();
     m_context.setSelectedText(selectedText);
 
@@ -862,8 +838,6 @@ void ContextMenuController::populate()
                 appendItem(*separatorItem(), m_contextMenu.get());
 
             if (m_context.hitTestResult().isSelected()) {
-                addSelectedTextActionsIfNeeded(selectedText);
-
                 appendItem(CopyItem, m_contextMenu.get());
 #if PLATFORM(COCOA)
                 appendItem(*separatorItem(), m_contextMenu.get());
@@ -990,9 +964,6 @@ void ContextMenuController::populate()
             appendItem(CopyLinkItem, m_contextMenu.get());
             appendItem(*separatorItem(), m_contextMenu.get());
         }
-
-        if (m_context.hitTestResult().isSelected() && !inPasswordField)
-            addSelectedTextActionsIfNeeded(selectedText);
 
         appendItem(CutItem, m_contextMenu.get());
         appendItem(CopyItem, m_contextMenu.get());
@@ -1363,8 +1334,6 @@ void ContextMenuController::checkOrEnableIfNeeded(ContextMenuItem& item) const
         case ContextMenuItemTagMediaMute:
             shouldEnable = m_context.hitTestResult().mediaHasAudio();
             shouldCheck = shouldEnable &&  m_context.hitTestResult().mediaMuted();
-            break;
-        case ContextMenuItemTagTranslate:
             break;
     }
 

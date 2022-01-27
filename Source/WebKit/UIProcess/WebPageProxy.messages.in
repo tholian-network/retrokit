@@ -213,10 +213,6 @@ messages -> WebPageProxy {
     RequestTextRecognition(URL imageURL, WebKit::ShareableBitmap::Handle imageData) -> (struct WebCore::TextRecognitionResult result) Async
 #endif
 
-#if HAVE(TRANSLATION_UI_SERVICES) && ENABLE(CONTEXT_MENUS)
-    HandleContextMenuTranslation(struct WebCore::TranslationContextMenuInfo info)
-#endif
-
 #if ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
     ShowMediaControlsContextMenu(WebCore::FloatRect targetFrame, Vector<WebCore::MediaControlsContextMenuItem> items) -> (WebCore::MediaControlsContextMenuItem::ID selectedItemID) Async
 #endif // ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)

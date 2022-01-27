@@ -174,7 +174,6 @@ private:
     {
 #if PLATFORM(GTK)
         GdkRectangle geometry = WebCore::IntRect(frame);
-        GtkWidget* window = gtk_widget_get_toplevel(GTK_WIDGET(m_webView));
         webkitWindowPropertiesSetGeometry(webkit_web_view_get_window_properties(m_webView), &geometry);
 #endif // PLATFORM(GTK)
     }

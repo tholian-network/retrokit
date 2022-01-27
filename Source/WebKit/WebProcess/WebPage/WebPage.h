@@ -234,9 +234,6 @@ struct ViewportArguments;
 class HTMLAttachmentElement;
 #endif
 
-#if HAVE(TRANSLATION_UI_SERVICES) && ENABLE(CONTEXT_MENUS)
-struct TranslationContextMenuInfo;
-#endif
 }
 
 namespace WebKit {
@@ -1269,10 +1266,6 @@ public:
 #if ENABLE(IMAGE_ANALYSIS)
     void requestTextRecognition(WebCore::Element&, CompletionHandler<void(RefPtr<WebCore::Element>&&)>&&);
     void updateWithTextRecognitionResult(const WebCore::TextRecognitionResult&, const WebCore::ElementContext&, const WebCore::FloatPoint& location, CompletionHandler<void(TextRecognitionUpdateResult)>&&);
-#endif
-
-#if HAVE(TRANSLATION_UI_SERVICES) && ENABLE(CONTEXT_MENUS)
-    void handleContextMenuTranslation(const WebCore::TranslationContextMenuInfo&);
 #endif
 
 #if ENABLE(MEDIA_CONTROLS_CONTEXT_MENUS) && USE(UICONTEXTMENU)
