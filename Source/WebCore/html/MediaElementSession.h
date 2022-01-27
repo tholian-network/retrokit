@@ -29,7 +29,6 @@
 
 #include "MediaPlayer.h"
 #include "MediaProducer.h"
-#include "MediaUsageInfo.h"
 #include "PlatformMediaSession.h"
 #include "Timer.h"
 #include <memory>
@@ -144,9 +143,6 @@ public:
 
     std::optional<NowPlayingInfo> nowPlayingInfo() const final;
 
-    WEBCORE_EXPORT void updateMediaUsageIfChanged() final;
-    std::optional<MediaUsageInfo> mediaUsageInfo() const { return m_mediaUsageInfo; }
-
 #if !RELEASE_LOG_DISABLED
     const void* logIdentifier() const final { return m_logIdentifier; }
     const char* logClassName() const final { return "MediaElementSession"; }
@@ -173,12 +169,8 @@ private:
     void clientDataBufferingTimerFired();
     void updateClientDataBuffering();
 
-    void addMediaUsageManagerSessionIfNecessary();
-
     HTMLMediaElement& m_element;
     BehaviorRestrictions m_restrictions;
-
-    std::optional<MediaUsageInfo> m_mediaUsageInfo;
 
     bool m_elementIsHiddenUntilVisibleInViewport { false };
     bool m_elementIsHiddenBecauseItWasRemovedFromDOM { false };
@@ -193,10 +185,6 @@ private:
     const void* m_logIdentifier;
 #endif
 
-#if ENABLE(MEDIA_USAGE)
-    bool m_haveAddedMediaUsageManagerSession { false };
-#endif
-    
 #if ENABLE(MEDIA_SESSION)
     bool m_isScrubbing { false };
     std::unique_ptr<MediaSessionObserver> m_observer;

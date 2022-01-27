@@ -6707,23 +6707,6 @@ void WebPage::isPlayingMediaDidChange(WebCore::MediaProducer::MediaStateFlags st
     send(Messages::WebPageProxy::IsPlayingMediaDidChange(state));
 }
 
-#if ENABLE(MEDIA_USAGE)
-void WebPage::addMediaUsageManagerSession(MediaSessionIdentifier identifier, const String& bundleIdentifier, const URL& pageURL)
-{
-    send(Messages::WebPageProxy::AddMediaUsageManagerSession(identifier, bundleIdentifier, pageURL));
-}
-
-void WebPage::updateMediaUsageManagerSessionState(MediaSessionIdentifier identifier, const MediaUsageInfo& usage)
-{
-    send(Messages::WebPageProxy::UpdateMediaUsageManagerSessionState(identifier, usage));
-}
-
-void WebPage::removeMediaUsageManagerSession(MediaSessionIdentifier identifier)
-{
-    send(Messages::WebPageProxy::RemoveMediaUsageManagerSession(identifier));
-}
-#endif // ENABLE(MEDIA_USAGE)
-
 #if ENABLE(IMAGE_ANALYSIS)
 
 void WebPage::requestTextRecognition(WebCore::Element& element, CompletionHandler<void(RefPtr<WebCore::Element>&&)>&& completion)

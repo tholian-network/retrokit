@@ -260,12 +260,6 @@ private:
     RefPtr<WebCore::ScrollingCoordinator> createScrollingCoordinator(WebCore::Page&) const final;
 #endif
 
-#if ENABLE(MEDIA_USAGE)
-    void addMediaUsageManagerSession(WebCore::MediaSessionIdentifier, const String&, const URL&) final;
-    void updateMediaUsageManagerSessionState(WebCore::MediaSessionIdentifier, const WebCore::MediaUsageInfo&) final;
-    void removeMediaUsageManagerSession(WebCore::MediaSessionIdentifier) final;
-#endif
-
 #if PLATFORM(COCOA)
     void elementDidFocus(WebCore::Element&) final;
     void elementDidBlur(WebCore::Element&) final;

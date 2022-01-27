@@ -41,7 +41,6 @@
 #include "HTMLVideoElement.h"
 #include "HitTestResult.h"
 #include "Logging.h"
-#include "MediaUsageInfo.h"
 #include "NowPlayingInfo.h"
 #include "Page.h"
 #include "PlatformMediaSessionManager.h"
@@ -166,26 +165,6 @@ MediaElementSession::MediaElementSession(HTMLMediaElement& element)
 
 MediaElementSession::~MediaElementSession()
 {
-#if ENABLE(MEDIA_USAGE)
-    auto page = m_element.document().page();
-    if (page && m_haveAddedMediaUsageManagerSession)
-        page->chrome().client().removeMediaUsageManagerSession(mediaSessionIdentifier());
-#endif
-}
-
-void MediaElementSession::addMediaUsageManagerSessionIfNecessary()
-{
-#if ENABLE(MEDIA_USAGE)
-    if (m_haveAddedMediaUsageManagerSession)
-        return;
-
-    auto page = m_element.document().page();
-    if (!page)
-        return;
-
-    m_haveAddedMediaUsageManagerSession = true;
-    page->chrome().client().addMediaUsageManagerSession(mediaSessionIdentifier(), m_element.sourceApplicationIdentifier(), m_element.document().url());
-#endif
 }
 
 void MediaElementSession::registerWithDocument(Document& document)
@@ -899,59 +878,6 @@ std::optional<NowPlayingInfo> MediaElementSession::nowPlayingInfo() const
 #endif
 
     return NowPlayingInfo { m_element.mediaSessionTitle(), emptyString(), emptyString(), m_element.sourceApplicationIdentifier(), duration, currentTime, supportsSeeking, m_element.mediaUniqueIdentifier(), isPlaying, allowsNowPlayingControlsVisibility, { }};
-}
-
-void MediaElementSession::updateMediaUsageIfChanged()
-{
-    auto& document = m_element.document();
-    auto* page = document.page();
-    if (!page || page->sessionID().isEphemeral())
-        return;
-
-    bool isAudio = client().presentationType() == MediaType::Audio;
-    bool isVideo = client().presentationType() == MediaType::Video;
-    bool processingUserGesture = document.processingUserGestureForMedia();
-    bool isPlaying = m_element.isPlaying();
-
-    MediaUsageInfo usage =  {
-        m_element.currentSrc(),
-        state() == PlatformMediaSession::Playing,
-        canShowControlsManager(PlaybackControlsPurpose::ControlsManager),
-        !page->isVisibleAndActive(),
-        m_element.isSuspended(),
-        m_element.inActiveDocument(),
-        m_element.muted(),
-        document.isMediaDocument() && (document.frame() && document.frame()->isMainFrame()),
-        isVideo,
-        isAudio,
-        m_element.hasVideo(),
-        m_element.hasAudio(),
-        m_element.hasRenderer(),
-        isAudio && hasBehaviorRestriction(RequireUserGestureToControlControlsManager) && !processingUserGesture,
-        m_element.hasAudio() && isPlaying && allowsPlaybackControlsForAutoplayingAudio(), // userHasPlayedAudioBefore
-        isElementRectMostlyInMainFrame(m_element),
-        !!playbackStateChangePermitted(MediaPlaybackState::Playing),
-        page->mediaPlaybackIsSuspended(),
-        document.isMediaDocument() && !document.ownerElement(),
-        pageExplicitlyAllowsElementToAutoplayInline(m_element),
-        isVideo && hasBehaviorRestriction(RequireUserGestureForVideoRateChange) && !processingUserGesture,
-        isAudio && hasBehaviorRestriction(RequireUserGestureForAudioRateChange) && !processingUserGesture && !m_element.muted() && m_element.volume(),
-        isVideo && hasBehaviorRestriction(RequireUserGestureForVideoDueToLowPowerMode) && !processingUserGesture,
-        !hasBehaviorRestriction(RequireUserGestureToControlControlsManager) || processingUserGesture,
-        hasBehaviorRestriction(RequirePlaybackToControlControlsManager) && !isPlaying,
-        m_element.hasEverNotifiedAboutPlaying(),
-        isLargeEnoughForMainContent(MediaSessionMainContentPurpose::MediaControls),
-    };
-
-    if (m_mediaUsageInfo && *m_mediaUsageInfo == usage)
-        return;
-
-    m_mediaUsageInfo = WTFMove(usage);
-
-#if ENABLE(MEDIA_USAGE)
-    addMediaUsageManagerSessionIfNecessary();
-    page->chrome().client().updateMediaUsageManagerSessionState(mediaSessionIdentifier(), *m_mediaUsageInfo);
-#endif
 }
 
 String convertEnumerationToString(const MediaPlaybackDenialReason enumerationValue)

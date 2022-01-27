@@ -137,10 +137,6 @@ typedef struct _AtkObject AtkObject;
 #include <WebKitAdditions/PlatformGestureEventMac.h>
 #endif
 
-#if ENABLE(MEDIA_USAGE)
-#include <WebCore/MediaSessionIdentifier.h>
-#endif
-
 #if PLATFORM(COCOA)
 #include "DynamicViewportSizeUpdate.h"
 #include <WebCore/VisibleSelection.h>
@@ -227,7 +223,6 @@ struct ElementContext;
 struct GlobalFrameIdentifier;
 struct GlobalWindowIdentifier;
 struct KeypressCommand;
-struct MediaUsageInfo;
 struct PromisedAttachmentInfo;
 struct RequestStorageAccessResult;
 struct RunJavaScriptParameters;
@@ -1267,12 +1262,6 @@ public:
     void notifyPageOfAppBoundBehavior();
     void setIsNavigatingToAppBoundDomain(std::optional<NavigatingToAppBoundDomain>, WebFrame*);
     bool needsInAppBrowserPrivacyQuirks() { return m_needsInAppBrowserPrivacyQuirks; }
-#endif
-
-#if ENABLE(MEDIA_USAGE)
-    void addMediaUsageManagerSession(WebCore::MediaSessionIdentifier, const String&, const URL&);
-    void updateMediaUsageManagerSessionState(WebCore::MediaSessionIdentifier, const WebCore::MediaUsageInfo&);
-    void removeMediaUsageManagerSession(WebCore::MediaSessionIdentifier);
 #endif
 
     void isPlayingMediaDidChange(WebCore::MediaProducer::MediaStateFlags);

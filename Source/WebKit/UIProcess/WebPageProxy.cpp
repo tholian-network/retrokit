@@ -258,10 +258,6 @@
 #include "DataDetectionResult.h"
 #endif
 
-#if ENABLE(MEDIA_USAGE)
-#include "MediaUsageManager.h"
-#endif
-
 #if PLATFORM(COCOA)
 #include "DefaultWebBrowserChecks.h"
 #endif
@@ -7285,11 +7281,6 @@ void WebPageProxy::resetState(ResetStateReason resetStateReason)
     closeOverlayedViews();
 
     m_inspector->reset();
-
-#if ENABLE(MEDIA_USAGE)
-    if (m_mediaUsageManager)
-        m_mediaUsageManager->reset();
-#endif
 
 #if HAVE(VISIBILITY_PROPAGATION_VIEW)
     if (resetStateReason != ResetStateReason::NavigationSwap)

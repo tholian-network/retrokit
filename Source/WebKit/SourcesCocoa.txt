@@ -477,7 +477,6 @@ UIProcess/mac/WKTextInputWindowController.mm
 UIProcess/mac/WKViewLayoutStrategy.mm
 
 UIProcess/Media/cocoa/AudioSessionRoutingArbitratorProxyCocoa.mm
-UIProcess/Media/cocoa/MediaUsageManagerCocoa.mm
 
 UIProcess/RemoteLayerTree/cocoa/RemoteLayerTreeLayers.mm
 

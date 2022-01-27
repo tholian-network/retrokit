@@ -130,7 +130,6 @@
 #include "MediaResourceLoader.h"
 #include "MediaSession.h"
 #include "MediaSessionActionDetails.h"
-#include "MediaUsageInfo.h"
 #include "MemoryCache.h"
 #include "MemoryInfo.h"
 #include "MockAudioDestinationCocoa.h"
@@ -4052,50 +4051,6 @@ Internals::MediaSessionState Internals::mediaSessionState(HTMLMediaElement& elem
     return element.mediaSession().state();
 }
 #endif
-
-ExceptionOr<Internals::MediaUsageState> Internals::mediaUsageState(HTMLMediaElement& element) const
-{
-#if ENABLE(VIDEO)
-    element.mediaSession().updateMediaUsageIfChanged();
-    auto info = element.mediaSession().mediaUsageInfo();
-    if (!info)
-        return Exception { NotSupportedError };
-
-    return { {
-        info.value().mediaURL.string(),
-        info.value().isPlaying,
-        info.value().canShowControlsManager,
-        info.value().canShowNowPlayingControls,
-        info.value().isSuspended,
-        info.value().isInActiveDocument,
-        info.value().isMuted,
-        info.value().isMediaDocumentInMainFrame,
-        info.value().isVideo,
-        info.value().isAudio,
-        info.value().hasVideo,
-        info.value().hasAudio,
-        info.value().hasRenderer,
-        info.value().audioElementWithUserGesture,
-        info.value().userHasPlayedAudioBefore,
-        info.value().isElementRectMostlyInMainFrame,
-        info.value().playbackPermitted,
-        info.value().pageMediaPlaybackSuspended,
-        info.value().isMediaDocumentAndNotOwnerElement,
-        info.value().pageExplicitlyAllowsElementToAutoplayInline,
-        info.value().isVideoAndRequiresUserGestureForVideoRateChange,
-        info.value().isAudioAndRequiresUserGestureForAudioRateChange,
-        info.value().isVideoAndRequiresUserGestureForVideoDueToLowPowerMode,
-        info.value().noUserGestureRequired,
-        info.value().requiresPlaybackAndIsNotPlaying,
-        info.value().hasEverNotifiedAboutPlaying,
-        info.value().isLargeEnoughForMainContent,
-    } };
-
-#else
-    UNUSED_PARAM(element);
-    return Exception { InvalidAccessError };
-#endif
-}
 
 ExceptionOr<bool> Internals::elementShouldDisplayPosterImage(HTMLVideoElement& element) const
 {

@@ -800,38 +800,6 @@ public:
     };
     ExceptionOr<NowPlayingState> nowPlayingState() const;
 
-    struct MediaUsageState {
-        String mediaURL;
-        bool isPlaying;
-        bool canShowControlsManager;
-        bool canShowNowPlayingControls;
-        bool isSuspended;
-        bool isInActiveDocument;
-        bool isMuted;
-        bool isMediaDocumentInMainFrame;
-        bool isVideo;
-        bool isAudio;
-        bool hasVideo;
-        bool hasAudio;
-        bool hasRenderer;
-        bool audioElementWithUserGesture;
-        bool userHasPlayedAudioBefore;
-        bool isElementRectMostlyInMainFrame;
-        bool playbackPermitted;
-        bool pageMediaPlaybackSuspended;
-        bool isMediaDocumentAndNotOwnerElement;
-        bool pageExplicitlyAllowsElementToAutoplayInline;
-        bool hasHadUserInteractionAndQuirksContainsShouldAutoplayForArbitraryUserGesture;
-        bool isVideoAndRequiresUserGestureForVideoRateChange;
-        bool isAudioAndRequiresUserGestureForAudioRateChange;
-        bool isVideoAndRequiresUserGestureForVideoDueToLowPowerMode;
-        bool noUserGestureRequired;
-        bool requiresPlaybackAndIsNotPlaying;
-        bool hasEverNotifiedAboutPlaying;
-        bool isLargeEnoughForMainContent;
-    };
-    ExceptionOr<MediaUsageState> mediaUsageState(HTMLMediaElement&) const;
-
     ExceptionOr<bool> elementShouldDisplayPosterImage(HTMLVideoElement&) const;
 
 #if ENABLE(VIDEO)
@@ -858,7 +826,7 @@ public:
     unsigned primaryScreenDisplayID();
 
     bool capsLockIsOn();
-        
+
     using HEVCParameterSet = WebCore::HEVCParameters;
     std::optional<HEVCParameterSet> parseHEVCCodecParameters(StringView);
 

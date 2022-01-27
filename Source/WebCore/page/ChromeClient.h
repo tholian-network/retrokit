@@ -67,11 +67,6 @@ class WAKResponder;
 #endif
 #endif
 
-#if ENABLE(MEDIA_USAGE)
-#include "MediaSessionIdentifier.h"
-#include "MediaUsageInfo.h"
-#endif
-
 OBJC_CLASS NSResponder;
 
 namespace WebCore {
@@ -379,12 +374,6 @@ public:
     virtual void setUpPlaybackControlsManager(HTMLMediaElement&) { }
     virtual void clearPlaybackControlsManager() { }
     virtual void playbackControlsMediaEngineChanged() { }
-#endif
-
-#if ENABLE(MEDIA_USAGE)
-    virtual void addMediaUsageManagerSession(MediaSessionIdentifier, const String&, const URL&) { }
-    virtual void updateMediaUsageManagerSessionState(MediaSessionIdentifier, const MediaUsageInfo&) { }
-    virtual void removeMediaUsageManagerSession(MediaSessionIdentifier) { }
 #endif
 
 #if USE(COORDINATED_GRAPHICS)

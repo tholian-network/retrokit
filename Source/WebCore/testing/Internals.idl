@@ -134,41 +134,6 @@ enum AutoplayPolicy {
 
 [
     ExportMacro=WEBCORE_TESTSUPPORT_EXPORT,
-    Conditional=VIDEO,
-    JSGenerateToJSObject,
-] dictionary MediaUsageState {
-    DOMString mediaURL;
-    boolean isPlaying;
-    boolean canShowControlsManager;
-    boolean canShowNowPlayingControls;
-    boolean isSuspended;
-    boolean isInActiveDocument;
-    boolean isMuted;
-    boolean isMediaDocumentInMainFrame;
-    boolean isVideo;
-    boolean isAudio;
-    boolean hasVideo;
-    boolean hasAudio;
-    boolean hasRenderer;
-    boolean audioElementWithUserGesture;
-    boolean userHasPlayedAudioBefore;
-    boolean isElementRectMostlyInMainFrame;
-    boolean playbackPermitted;
-    boolean pageMediaPlaybackSuspended;
-    boolean isMediaDocumentAndNotOwnerElement;
-    boolean pageExplicitlyAllowsElementToAutoplayInline;
-    boolean hasHadUserInteractionAndQuirksContainsShouldAutoplayForArbitraryUserGesture;
-    boolean isVideoAndRequiresUserGestureForVideoRateChange;
-    boolean isAudioAndRequiresUserGestureForAudioRateChange;
-    boolean isVideoAndRequiresUserGestureForVideoDueToLowPowerMode;
-    boolean noUserGestureRequired;
-    boolean requiresPlaybackAndIsNotPlaying;
-    boolean hasEverNotifiedAboutPlaying;
-    boolean isLargeEnoughForMainContent;
-};
-
-[
-    ExportMacro=WEBCORE_TESTSUPPORT_EXPORT,
     JSGenerateToJSObject,
 ] dictionary HEVCParameterSet {
     unsigned short generalProfileSpace;
@@ -869,7 +834,6 @@ enum AutoplayPolicy {
     [Conditional=VIDEO] HTMLMediaElement bestMediaElementForRemoteControls(PlaybackControlsPurpose purpose);
     [Conditional=VIDEO] MediaSessionState mediaSessionState(HTMLMediaElement element);
 
-    [Conditional=VIDEO] MediaUsageState mediaUsageState(HTMLMediaElement element);
     [Conditional=VIDEO] boolean elementShouldDisplayPosterImage(HTMLVideoElement element);
     [Conditional=VIDEO] readonly attribute unsigned long mediaElementCount;
     [Conditional=VIDEO] undefined setMediaElementVolumeLocked(HTMLMediaElement element, boolean volumeLocked);

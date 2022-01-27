@@ -159,10 +159,6 @@
 interface ID3D11Device1;
 #endif
 
-#if ENABLE(MEDIA_USAGE)
-#include <WebCore/MediaSessionIdentifier.h>
-#endif
-
 namespace API {
 class Attachment;
 class ContentWorld;
@@ -255,7 +251,6 @@ struct ExceptionDetails;
 struct FileChooserSettings;
 struct GlobalWindowIdentifier;
 struct LinkIcon;
-struct MediaUsageInfo;
 struct MockWebAuthenticationConfiguration;
 struct PermissionDescriptor;
 struct PrewarmInformation;
@@ -296,7 +291,6 @@ namespace WebKit {
 
 class AudioSessionRoutingArbitratorProxy;
 class DrawingAreaProxy;
-class MediaUsageManager;
 class NativeWebGestureEvent;
 class NativeWebKeyboardEvent;
 class NativeWebMouseEvent;
@@ -1666,7 +1660,7 @@ public:
 
     void disableServiceWorkerEntitlementInNetworkProcess();
     void clearServiceWorkerEntitlementOverride(CompletionHandler<void()>&&);
-        
+
 #if PLATFORM(COCOA)
     void grantAccessToCurrentPasteboardData(const String& pasteboardName);
 #endif
@@ -1677,13 +1671,6 @@ public:
 
 #if ENABLE(CONTEXT_MENUS)
     void platformDidSelectItemFromActiveContextMenu(const WebContextMenuItemData&);
-#endif
-
-#if ENABLE(MEDIA_USAGE)
-    MediaUsageManager& mediaUsageManager();
-    void addMediaUsageManagerSession(WebCore::MediaSessionIdentifier, const String&, const URL&);
-    void updateMediaUsageManagerSessionState(WebCore::MediaSessionIdentifier, const WebCore::MediaUsageInfo&);
-    void removeMediaUsageManagerSession(WebCore::MediaSessionIdentifier);
 #endif
 
     void setHasExecutedAppBoundBehaviorBeforeNavigation() { m_hasExecutedAppBoundBehaviorBeforeNavigation = true; }
@@ -2277,10 +2264,6 @@ private:
 
 #if PLATFORM(COCOA)
     WeakObjCPtr<WKWebView> m_cocoaView;
-#endif
-
-#if ENABLE(MEDIA_USAGE)
-    std::unique_ptr<MediaUsageManager> m_mediaUsageManager;
 #endif
 
 #if PLATFORM(IOS_FAMILY)
