@@ -24,15 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-typedef (
-#if defined(ENABLE_WEBGL) && ENABLE_WEBGL
-    WebGLRenderingContext or
-#endif
-#if defined(ENABLE_WEBGL2) && ENABLE_WEBGL2
-    WebGL2RenderingContext or
-#endif
-    ImageBitmapRenderingContext or 
-    CanvasRenderingContext2D) RenderingContext;
+typedef (ImageBitmapRenderingContext or CanvasRenderingContext2D) RenderingContext;
 
 [
     ActiveDOMObject,

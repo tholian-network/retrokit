@@ -158,10 +158,6 @@
 #include "ServicesOverlayController.h"
 #endif
 
-#if ENABLE(WEBGL)
-#include "WebGLStateTracker.h"
-#endif
-
 #if ENABLE(LAYOUT_FORMATTING_CONTEXT)
 #include "DisplayView.h"
 #endif
@@ -253,9 +249,6 @@ Page::Page(PageConfiguration&& pageConfiguration)
     , m_validationMessageClient(WTFMove(pageConfiguration.validationMessageClient))
     , m_diagnosticLoggingClient(WTFMove(pageConfiguration.diagnosticLoggingClient))
     , m_performanceLoggingClient(WTFMove(pageConfiguration.performanceLoggingClient))
-#if ENABLE(WEBGL)
-    , m_webGLStateTracker(WTFMove(pageConfiguration.webGLStateTracker))
-#endif
     , m_verticalScrollElasticity(ScrollElasticityAllowed)
     , m_horizontalScrollElasticity(ScrollElasticityAllowed)
     , m_domTimerAlignmentInterval(DOMTimer::defaultAlignmentInterval())

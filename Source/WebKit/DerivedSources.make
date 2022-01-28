@@ -144,7 +144,6 @@ MESSAGE_RECEIVERS = \
 	WebProcess/Databases/IndexedDB/WebIDBConnectionToServer \
 	WebProcess/GPU/GPUProcessConnection \
 	WebProcess/GPU/graphics/RemoteRenderingBackendProxy \
-	WebProcess/GPU/graphics/RemoteGraphicsContextGLProxy \
 	WebProcess/GPU/media/MediaPlayerPrivateRemote \
 	WebProcess/GPU/media/MediaSourcePrivateRemote \
 	WebProcess/GPU/media/RemoteAudioHardwareListener \
@@ -184,7 +183,6 @@ MESSAGE_RECEIVERS = \
 	WebProcess/WebAuthentication/WebAuthnProcessConnection \
 	GPUProcess/GPUConnectionToWebProcess \
 	GPUProcess/graphics/RemoteRenderingBackend \
-	GPUProcess/graphics/RemoteGraphicsContextGL \
 	GPUProcess/GPUProcess \
 	GPUProcess/media/RemoteImageDecoderAVFProxy \
 	GPUProcess/media/RemoteAudioSessionProxy \

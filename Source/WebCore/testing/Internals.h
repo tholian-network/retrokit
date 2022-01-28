@@ -100,7 +100,6 @@ class TypeConversions;
 class UnsuspendableActiveDOMObject;
 class VoidCallback;
 class WebAnimation;
-class WebGLRenderingContext;
 class WindowProxy;
 class XMLHttpRequest;
 
@@ -703,25 +702,6 @@ public:
     Vector<String> accessKeyModifiers() const;
 
     void setAsRunningUserScripts(Document&);
-
-#if ENABLE(WEBGL)
-    enum class SimulatedWebGLContextEvent {
-        ContextChange,
-        GPUStatusFailure,
-        Timeout
-    };
-    void simulateEventForWebGLContext(SimulatedWebGLContextEvent, WebGLRenderingContext&);
-    bool hasLowAndHighPowerGPUs();
-
-    enum class RequestedGPU {
-        Default,
-        LowPower,
-        HighPerformance
-    };
-    RequestedGPU requestedGPU(WebGLRenderingContext&);
-    bool requestedMetal(WebGLRenderingContext&);
-    bool platformSupportsMetal(bool isWebGL2);
-#endif
 
     void setPageVisibility(bool isVisible);
     void setPageIsFocusedAndActive(bool);

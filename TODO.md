@@ -1,4 +1,20 @@
 
+# TODO
+
+- [ ] `GSTREAMER_GL`
+- [ ] GraphicsContextGL
+- [ ] Nicosia:GCGLLayer
+- [ ] GraphicsContextGLTextureMapper
+- [ ] TextureMapperGCGLPlatformLayer
+
+# UNSURE
+
+- [ ] `USE_ANGLE` compiler flag
+- [ ] `USE_ANGLE_EGL` compiler flag
+- [ ] OpenGLShims
+- [ ] TemporaryOpenGLSetting
+- [ ] NicosiaGCGLANGLELayer
+
 # Legacy
 
 - [ ] InstallMissingMediaPluginsPermissionRequest
@@ -18,8 +34,9 @@
 - [ ] omitPDFSupport
 - [ ] UseImageDocumentForSubframePDF
 
-# TODO
+# Other
 
 - [ ] Revert Source/WebCore/mediacontrols, because they are not loading correctly
 - [ ] Revert WebInspectorUI, because it's broken, too
+- [ ] Remove three.js from WebInspectorUI
 

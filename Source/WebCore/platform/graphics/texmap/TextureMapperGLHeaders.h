@@ -25,9 +25,7 @@
 
 #pragma once
 
-#if USE(LIBEPOXY)
-#include <epoxy/gl.h>
-#elif USE(OPENGL_ES)
+#if USE(OPENGL_ES)
 #include <GLES2/gl2.h>
 #else
 #include "OpenGLShims.h"

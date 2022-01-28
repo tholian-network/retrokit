@@ -74,12 +74,6 @@ WI.Recording = class Recording extends WI.Object
         case InspectorBackend.Enum.Recording.Type.CanvasBitmapRenderer:
             type = WI.Recording.Type.CanvasBitmapRenderer;
             break;
-        case InspectorBackend.Enum.Recording.Type.CanvasWebGL:
-            type = WI.Recording.Type.CanvasWebGL;
-            break;
-        case InspectorBackend.Enum.Recording.Type.CanvasWebGL2:
-            type = WI.Recording.Type.CanvasWebGL2;
-            break;
         default:
             WI.Recording.synthesizeWarning(WI.UIString("unknown %s \u0022%s\u0022").format(WI.unlocalizedString("type"), payload.type));
             type = String(payload.type);
@@ -155,10 +149,6 @@ WI.Recording = class Recording extends WI.Object
             return WI.UIString("2D");
         case Recording.Type.CanvasBitmapRenderer:
             return WI.UIString("Bitmap Renderer", "Recording Type Canvas Bitmap Renderer", "A type of canvas recording in the Graphics Tab");
-        case Recording.Type.CanvasWebGL:
-            return WI.unlocalizedString("WebGL");
-        case Recording.Type.CanvasWebGL2:
-            return WI.unlocalizedString("WebGL2");
         }
 
         console.assert(false, "Unknown recording type", recordingType);
@@ -192,32 +182,8 @@ WI.Recording = class Recording extends WI.Object
             return WI.unlocalizedString("CanvasGradient");
         case WI.Recording.Swizzle.CanvasPattern:
             return WI.unlocalizedString("CanvasPattern");
-        case WI.Recording.Swizzle.WebGLBuffer:
-            return WI.unlocalizedString("WebGLBuffer");
-        case WI.Recording.Swizzle.WebGLFramebuffer:
-            return WI.unlocalizedString("WebGLFramebuffer");
-        case WI.Recording.Swizzle.WebGLRenderbuffer:
-            return WI.unlocalizedString("WebGLRenderbuffer");
-        case WI.Recording.Swizzle.WebGLTexture:
-            return WI.unlocalizedString("WebGLTexture");
-        case WI.Recording.Swizzle.WebGLShader:
-            return WI.unlocalizedString("WebGLShader");
-        case WI.Recording.Swizzle.WebGLProgram:
-            return WI.unlocalizedString("WebGLProgram");
-        case WI.Recording.Swizzle.WebGLUniformLocation:
-            return WI.unlocalizedString("WebGLUniformLocation");
         case WI.Recording.Swizzle.ImageBitmap:
             return WI.unlocalizedString("ImageBitmap");
-        case WI.Recording.Swizzle.WebGLQuery:
-            return WI.unlocalizedString("WebGLQuery");
-        case WI.Recording.Swizzle.WebGLSampler:
-            return WI.unlocalizedString("WebGLSampler");
-        case WI.Recording.Swizzle.WebGLSync:
-            return WI.unlocalizedString("WebGLSync");
-        case WI.Recording.Swizzle.WebGLTransformFeedback:
-            return WI.unlocalizedString("WebGLTransformFeedback");
-        case WI.Recording.Swizzle.WebGLVertexArrayObject:
-            return WI.unlocalizedString("WebGLVertexArrayObject");
         default:
             console.error("Unknown swizzle type", swizzleType);
             return null;
@@ -343,20 +309,7 @@ WI.Recording = class Recording extends WI.Object
         if (type === WI.Recording.Swizzle.DOMMatrix)
             return new DOMMatrix(index);
 
-        // FIXME: <https://webkit.org/b/176009> Web Inspector: send data for WebGL objects during a recording instead of a placeholder string
-        if (type === WI.Recording.Swizzle.TypedArray
-            || type === WI.Recording.Swizzle.WebGLBuffer
-            || type === WI.Recording.Swizzle.WebGLFramebuffer
-            || type === WI.Recording.Swizzle.WebGLRenderbuffer
-            || type === WI.Recording.Swizzle.WebGLTexture
-            || type === WI.Recording.Swizzle.WebGLShader
-            || type === WI.Recording.Swizzle.WebGLProgram
-            || type === WI.Recording.Swizzle.WebGLUniformLocation
-            || type === WI.Recording.Swizzle.WebGLQuery
-            || type === WI.Recording.Swizzle.WebGLSampler
-            || type === WI.Recording.Swizzle.WebGLSync
-            || type === WI.Recording.Swizzle.WebGLTransformFeedback
-            || type === WI.Recording.Swizzle.WebGLVertexArrayObject) {
+        if (type === WI.Recording.Swizzle.TypedArray) {
             return index;
         }
 
@@ -496,12 +449,6 @@ WI.Recording = class Recording extends WI.Object
 
         if (this._type === WI.Recording.Type.CanvasBitmapRenderer)
             return createCanvasContext("bitmaprenderer");
-
-        if (this._type === WI.Recording.Type.CanvasWebGL)
-            return createCanvasContext("webgl");
-
-        if (this._type === WI.Recording.Type.CanvasWebGL2)
-            return createCanvasContext("webgl2");
 
         console.error("Unknown recording type", this._type);
         return null;
@@ -900,9 +847,7 @@ WI.Recording.CanvasRecordingNamesSymbol = Symbol("canvas-recording-names");
 
 WI.Recording.Type = {
     Canvas2D: "canvas-2d",
-    CanvasBitmapRenderer: "canvas-bitmaprenderer",
-    CanvasWebGL: "canvas-webgl",
-    CanvasWebGL2: "canvas-webgl2",
+    CanvasBitmapRenderer: "canvas-bitmaprenderer"
 };
 
 // Keep this in sync with WebCore::RecordingSwizzleType.
@@ -919,19 +864,7 @@ WI.Recording.Swizzle = {
     Path2D: 9,
     CanvasGradient: 10,
     CanvasPattern: 11,
-    WebGLBuffer: 12,
-    WebGLFramebuffer: 13,
-    WebGLRenderbuffer: 14,
-    WebGLTexture: 15,
-    WebGLShader: 16,
-    WebGLProgram: 17,
-    WebGLUniformLocation: 18,
     ImageBitmap: 19,
-    WebGLQuery: 20,
-    WebGLSampler: 21,
-    WebGLSync: 22,
-    WebGLTransformFeedback: 23,
-    WebGLVertexArrayObject: 24,
 
     // Special frontend-only swizzle types.
     CallStack: Symbol("CallStack"),

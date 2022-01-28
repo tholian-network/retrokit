@@ -138,7 +138,6 @@ class UserStyleSheet;
 class ValidationMessageClient;
 class VisibleSelection;
 class VisitedLinkStore;
-class WebGLStateTracker;
 class WheelEventDeltaFilter;
 class WheelEventTestMonitor;
 
@@ -735,10 +734,6 @@ public:
     std::optional<CompositingPolicy> compositingPolicyOverride() const { return m_compositingPolicyOverride; }
     void setCompositingPolicyOverride(std::optional<CompositingPolicy> policy) { m_compositingPolicyOverride = policy; }
 
-#if ENABLE(WEBGL)
-    WebGLStateTracker* webGLStateTracker() const { return m_webGLStateTracker.get(); }
-#endif
-
     bool isOnlyNonUtilityPage() const;
     bool isUtilityPage() const { return m_isUtilityPage; }
 
@@ -873,10 +868,6 @@ private:
     std::unique_ptr<ValidationMessageClient> m_validationMessageClient;
     std::unique_ptr<DiagnosticLoggingClient> m_diagnosticLoggingClient;
     std::unique_ptr<PerformanceLoggingClient> m_performanceLoggingClient;
-
-#if ENABLE(WEBGL)
-    std::unique_ptr<WebGLStateTracker> m_webGLStateTracker;
-#endif
 
     PlatformDisplayID m_displayID { 0 };
     std::optional<FramesPerSecond> m_displayNominalFramesPerSecond;

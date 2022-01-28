@@ -179,11 +179,6 @@ bool defaultUseGPUProcessForMediaEnabled()
     return isFeatureFlagEnabled("gpu_process_media", defaultValue);
 }
 
-bool defaultUseGPUProcessForWebGLEnabled()
-{
-    return isFeatureFlagEnabled("gpu_process_webgl", false);
-}
-
 #endif // ENABLE(GPU_PROCESS)
 
 #if ENABLE(WEBM_FORMAT_READER)

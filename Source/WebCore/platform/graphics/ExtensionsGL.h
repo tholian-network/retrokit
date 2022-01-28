@@ -273,12 +273,6 @@ public:
     // WebGL functions.
 
     // GL_ARB_robustness
-    // Note: This method's behavior differs from the GL_ARB_robustness
-    // specification in the following way:
-    // The implementation must not reset the error state during this call.
-    // If getGraphicsResetStatusARB returns an error, it should continue
-    // returning the same error. Restoring the GraphicsContextGLOpenGL is handled
-    // externally.
     virtual GCGLint getGraphicsResetStatusARB() = 0;
 
     // GL_ANGLE_translated_shader_source

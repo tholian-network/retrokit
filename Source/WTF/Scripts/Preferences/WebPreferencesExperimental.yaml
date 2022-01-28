@@ -661,19 +661,6 @@ LinkSanitizerEnabled:
     WebCore:
       default: false
 
-MaskWebGLStringsEnabled:
-  type: bool
-  humanReadableName: "Mask WebGL Strings"
-  humanReadableDescription: "Mask WebGL Vendor, Renderer, Shader Language Strings"
-  condition: ENABLE(WEBGL) || ENABLE(WEBGL2)
-  defaultValue:
-    WebKitLegacy:
-      default: true
-    WebKit:
-      default: true
-    WebCore:
-      default: true
-
 # FIXME: This is on by default in WebKit2. Perhaps we should consider turning it on for WebKitLegacy as well.
 MediaCapabilitiesExtensionsEnabled:
   type: bool
@@ -1026,17 +1013,6 @@ UseGPUProcessForMediaEnabled:
     WebKit:
       default: WebKit::defaultUseGPUProcessForMediaEnabled()
 
-UseGPUProcessForWebGLEnabled:
-  type: bool
-  humanReadableName: "GPU Process: WebGL"
-  humanReadableDescription: "Process all WebGL operations in GPU Process"
-  webcoreBinding: none
-  condition: ENABLE(GPU_PROCESS) && ENABLE(WEBGL) && !(PLATFORM(GTK) || PLATFORM(WPE))
-  exposed: [ WebKit ]
-  defaultValue:
-    WebKit:
-      default: defaultUseGPUProcessForWebGLEnabled()
-
 UserGesturePromisePropagationEnabled:
   type: bool
   humanReadableName: "UserGesture Promise Propagation"
@@ -1167,35 +1143,6 @@ WebAuthenticationModernEnabled:
       "PLATFORM(IOS)" : true
       default: false
     WebCore:
-      default: false
-
-WebGL2Enabled:
-  type: bool
-  humanReadableName: "WebGL 2.0"
-  humanReadableDescription: "WebGL 2 prototype"
-  condition: ENABLE(WEBGL2)
-  defaultValue:
-    WebKitLegacy:
-      default: true
-    WebKit:
-      default: true
-    WebCore:
-      default: true
-
-WebGLUsingMetal:
-  type: bool
-  humanReadableName: "WebGL via Metal"
-  humanReadableDescription: "Use the Metal backend for ANGLE"
-  condition: ENABLE(WEBGL) && PLATFORM(COCOA)
-  defaultValue:
-    WebKitLegacy:
-      "HAVE(WEBGL_COMPATIBLE_METAL)": true
-      default: false
-    WebKit:
-      "HAVE(WEBGL_COMPATIBLE_METAL)": true
-      default: false
-    WebCore:
-      "HAVE(WEBGL_COMPATIBLE_METAL)": true
       default: false
 
 WebMFormatReaderEnabled:

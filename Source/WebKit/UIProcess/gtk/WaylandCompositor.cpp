@@ -42,9 +42,7 @@
 #if USE(OPENGL_ES)
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
-#include <WebCore/ExtensionsGLOpenGLES.h>
 #else
-#include <WebCore/ExtensionsGLOpenGL.h>
 #include <WebCore/OpenGLShims.h>
 #endif
 
@@ -427,13 +425,7 @@ bool WaylandCompositor::initializeEGL()
     if (!eglContext->makeContextCurrent())
         return false;
 
-#if USE(OPENGL_ES)
-    std::unique_ptr<ExtensionsGLOpenGLES> glExtensions = makeUnique<ExtensionsGLOpenGLES>(nullptr,  false);
-#else
-    std::unique_ptr<ExtensionsGLOpenGL> glExtensions = makeUnique<ExtensionsGLOpenGL>(nullptr, GLContext::current()->version() >= 320);
-#endif
-    if (glExtensions->supports("GL_OES_EGL_image") || glExtensions->supports("GL_OES_EGL_image_external"))
-        glImageTargetTexture2D = reinterpret_cast<PFNGLEGLIMAGETARGETTEXTURE2DOESPROC>(eglGetProcAddress("glEGLImageTargetTexture2DOES"));
+    glImageTargetTexture2D = reinterpret_cast<PFNGLEGLIMAGETARGETTEXTURE2DOESPROC>(eglGetProcAddress("glEGLImageTargetTexture2DOES"));
 
     if (!glImageTargetTexture2D) {
         WTFLogAlways("WaylandCompositor requires glEGLImageTargetTexture2D.");

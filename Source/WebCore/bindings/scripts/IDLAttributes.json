@@ -208,7 +208,7 @@
         },
         "GenerateIsReachable": {
             "contextsAllowed": ["interface"],
-            "values": ["", "Impl", "ImplWebGLRenderingContext", "ImplCanvasBase", "ImplDocument", "ImplElementRoot", "ImplOwnerNodeRoot", "ImplScriptExecutionContext", "ReachableFromDOMWindow", "ReachableFromNavigator"]
+            "values": ["", "Impl", "ImplCanvasBase", "ImplDocument", "ImplElementRoot", "ImplOwnerNodeRoot", "ImplScriptExecutionContext", "ReachableFromDOMWindow", "ReachableFromNavigator"]
         },
         "GenerateAddOpaqueRoot": {
             "contextsAllowed": ["interface"],

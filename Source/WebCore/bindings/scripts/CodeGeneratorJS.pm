@@ -565,11 +565,6 @@ sub AddToIncludesForIDLType
             AddToIncludes("JSDOMConvertIndexedDB.h", $includesRef, $conditional);
             return;
         }
-
-        if ($overrideTypeName eq "IDLWebGLAny" || $overrideTypeName eq "IDLWebGLExtension") {
-            AddToIncludes("JSDOMConvertWebGL.h", $includesRef, $conditional);
-            return;
-        }
     }
 
     if ($type->name eq "undefined") {
@@ -4918,10 +4913,6 @@ sub GenerateImplementation
                 $rootString  = "    ${implType}* root = &js${interfaceName}->wrapped();\n";
                 $rootString .= "    if (UNLIKELY(reason))\n";
                 $rootString .= "        *reason = \"Reachable from ${interfaceName}\";\n";
-            } elsif (GetGenerateIsReachable($interface) eq "ImplWebGLRenderingContext") {
-                $rootString  = "    WebGLRenderingContextBase* root = WTF::getPtr(js${interfaceName}->wrapped().context());\n";
-                $rootString .= "    if (UNLIKELY(reason))\n";
-                $rootString .= "        *reason = \"Reachable from ${interfaceName}\";\n";
             } elsif (GetGenerateIsReachable($interface) eq "ReachableFromDOMWindow") {
                 $rootString  = "    auto* root = WTF::getPtr(js${interfaceName}->wrapped().window());\n";
                 $rootString .= "    if (!root)\n";
@@ -6966,8 +6957,6 @@ sub NativeToJSValueDOMConvertNeedsState
     if ($type->extendedAttributes->{OverrideIDLType}) {
         my $overrideTypeName = $type->extendedAttributes->{OverrideIDLType};
         return 1 if $overrideTypeName eq "IDLIDBKey";
-        return 1 if $overrideTypeName eq "IDLWebGLAny";
-        return 1 if $overrideTypeName eq "IDLWebGLExtension";
 
         return 0;
     }
@@ -6985,22 +6974,20 @@ sub NativeToJSValueDOMConvertNeedsState
     return 1 if $type->name eq "Date";
     return 1 if $type->name eq "JSON";
     return 1 if $type->name eq "SerializedScriptValue";
-    
+
     return 0;
 }
 
 sub NativeToJSValueDOMConvertNeedsGlobalObject
 {
     my ($type) = @_;
-    
+
     # FIXME: We need a more robust way to specify this requirement so as not
     # to require specializing each type. Perhaps just requiring all override
     # types to take both lexicalGlobalObject and the global object would work?
     if ($type->extendedAttributes->{OverrideIDLType}) {
         my $overrideTypeName = $type->extendedAttributes->{OverrideIDLType};
         return 1 if $overrideTypeName eq "IDLIDBKey";
-        return 1 if $overrideTypeName eq "IDLWebGLAny";
-        return 1 if $overrideTypeName eq "IDLWebGLExtension";
 
         return 0;
     }
@@ -7036,7 +7023,7 @@ sub NativeToJSValueUsingPointers
 sub IsValidContextForNativeToJSValue
 {
     my $context = shift;
-    
+
     return ref($context) eq "IDLAttribute" || ref($context) eq "IDLArgument" || ref($context) eq "IDLDictionaryMember" || ref($context) eq "IDLOperation";
 }
 

@@ -68,7 +68,6 @@
 #include "ScriptExecutionContext.h"
 #include "WebConsoleAgent.h"
 #include "WebDebuggerAgent.h"
-#include "WebGLRenderingContextBase.h"
 #include "WebSocketFrame.h"
 #include "WorkerInspectorController.h"
 #include "WorkerOrWorkletGlobalScope.h"
@@ -1082,40 +1081,6 @@ void InspectorInstrumentation::didFinishRecordingCanvasFrameImpl(InstrumentingAg
     if (auto* canvasAgent = instrumentingAgents.enabledCanvasAgent())
         canvasAgent->didFinishRecordingCanvasFrame(context, forceDispatch);
 }
-
-#if ENABLE(WEBGL)
-void InspectorInstrumentation::didEnableExtensionImpl(InstrumentingAgents& instrumentingAgents, WebGLRenderingContextBase& contextWebGLBase, const String& extension)
-{
-    if (auto* canvasAgent = instrumentingAgents.enabledCanvasAgent())
-        canvasAgent->didEnableExtension(contextWebGLBase, extension);
-}
-
-void InspectorInstrumentation::didCreateWebGLProgramImpl(InstrumentingAgents& instrumentingAgents, WebGLRenderingContextBase& contextWebGLBase, WebGLProgram& program)
-{
-    if (auto* canvasAgent = instrumentingAgents.enabledCanvasAgent())
-        canvasAgent->didCreateWebGLProgram(contextWebGLBase, program);
-}
-
-void InspectorInstrumentation::willDestroyWebGLProgramImpl(InstrumentingAgents& instrumentingAgents, WebGLProgram& program)
-{
-    if (auto* canvasAgent = instrumentingAgents.enabledCanvasAgent())
-        canvasAgent->willDestroyWebGLProgram(program);
-}
-
-bool InspectorInstrumentation::isWebGLProgramDisabledImpl(InstrumentingAgents& instrumentingAgents, WebGLProgram& program)
-{
-    if (auto* canvasAgent = instrumentingAgents.enabledCanvasAgent())
-        return canvasAgent->isWebGLProgramDisabled(program);
-    return false;
-}
-
-bool InspectorInstrumentation::isWebGLProgramHighlightedImpl(InstrumentingAgents& instrumentingAgents, WebGLProgram& program)
-{
-    if (auto* canvasAgent = instrumentingAgents.enabledCanvasAgent())
-        return canvasAgent->isWebGLProgramHighlighted(program);
-    return false;
-}
-#endif
 
 void InspectorInstrumentation::willApplyKeyframeEffectImpl(InstrumentingAgents& instrumentingAgents, Element& target, KeyframeEffect& effect, ComputedEffectTiming computedTiming)
 {

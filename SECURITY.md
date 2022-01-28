@@ -252,6 +252,9 @@ list of Web APIs that are removed.
 - [x] Remove Media Usage API (`MEDIA_USAGE`, `MediaUsageManager`)
 - [x] Remove Speech Recognition API (`SPEECHRECOGNIZER`, `SpeechRecognizer`, `SpeechRecognition`, `SpeechSynthesizer`)
 - [x] Remove Speech Synthesis API (`SPEECH_SYNTHESIS`, `SpeechSynthesis`)
+- [x] Remove WebGL API (`WEBGL`, `WebGL`, `GraphicsContextGL`)
+- [x] Remove WebGL2 API (`WEBGL2`, `WebGLTransformFeedback`, `WebGLVertexArrayObject`)
+- [x] Remove WebGL via Metal API (`WEBGL_COMPATIBLE_METAL`)
 - [x] Remove Web RTC API (`WEB_RTC`, `RTC`, `PeerConnectionState`, `PeerMediaDescription`, `RTCBundle`, `RTCDataChannel`, `RTCPeer`, `RTCIce`, `createRTCProvider`)
 - [x] Remove Web RTC H264 Codec (`WebRTCH264LowLatencyCoderEnabled`, `WebRTCH264HardwareEncoderEnabled`, `WebRTCH264SimulcastEnabled`)
 - [x] Remove Web RTC H265 Codec (`WebRTCH256CodecEnabled`)
@@ -273,10 +276,6 @@ list of Web APIs that are removed.
 - [ ] Remove Web Storage API
 - [ ] Remove Indexed Database API (`IDBFactory`, `IDBOpenDBRequest`, `IDBDatabase`, `IDBTransaction`, `IDBRequest`, `IDBObjectStore`, `IDBIndex`, `IDBCursor`, `IDBKeyRange`, `IDBLocaleAwareKeyRange`, `IDBVersionChangeEvent`, `IDBDatabaseException`, `IDBTransactionSync`, `IDBObjectStoreSync`, `IDBIndexSync`, `IDBFactorySync`, `IDBEnvironmentSync`, `IDBDatabaseSync`, `IDBCursorSync`)
 - [ ] Remove Canvas API (`OFFSCREEN_CANVAS`, `Canvas`, `DOMConvertWebGL`, `JSANGLEInstancedArray`, `CanvasActivityRecord`)
-- [ ] Remove WebGL API (`WEBGL`, `WebGL`, `JSANGLEInstancedArray`, `GraphicsContextGL`, `HighPerformanceGraphicsUsageSampler`)
-- [ ] Remove WebGL2 API (`WEBGL2`)
-- [ ] Remove GPU Process for WebGL (`GPU_PROCESS`)
-- [ ] Remove WebGL via Metal (`WEBGL_COMPATIBLE_METAL`)
 - [ ] Remove WebGPU API
 - [ ] Remove Page Visibility API
 - [ ] Remove Pointer Lock API (`POINTER_LOCK`)
@@ -292,7 +291,7 @@ list of Web APIs that are removed.
 - [ ] *Undecided* Remove Web Workers API
 - [ ] *Undecided* Remove Service Worker API (`SERVICE_WORKER`)
 - [ ] *Undecided* Remove Content Change Observer (`CONTENT_CHANGE_OBSERVER`)
-- [ ] *Undecied* Remove App Bound Domains Support (`APP_BOUND_DOMAINS`)
+- [ ] *Undecided* Remove App Bound Domains Support (`APP_BOUND_DOMAINS`)
 - [ ] Remove WebSQL Database API (`WebSQL`)
 
 

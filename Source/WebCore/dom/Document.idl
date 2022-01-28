@@ -19,13 +19,7 @@
  */
 
 typedef (
-#if defined(ENABLE_WEBGL) && ENABLE_WEBGL
-    WebGLRenderingContext or
-#endif
-#if defined(ENABLE_WEBGL2) && ENABLE_WEBGL2
-    WebGL2RenderingContext or
-#endif
-    ImageBitmapRenderingContext or 
+    ImageBitmapRenderingContext or
     CanvasRenderingContext2D) RenderingContext;
 
 typedef (HTMLScriptElement or SVGScriptElement) HTMLOrSVGScriptElement;

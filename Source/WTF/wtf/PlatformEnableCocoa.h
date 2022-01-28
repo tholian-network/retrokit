@@ -478,14 +478,6 @@
 #define ENABLE_VP9 1
 #endif
 
-#if !defined(ENABLE_WEBGL)
-#define ENABLE_WEBGL 1
-#endif
-
-#if !defined(ENABLE_WEBGL2)
-#define ENABLE_WEBGL2 1
-#endif
-
 #if !defined(ENABLE_WEBPROCESS_NSRUNLOOP) && PLATFORM(MAC)
 #define ENABLE_WEBPROCESS_NSRUNLOOP 1
 #endif

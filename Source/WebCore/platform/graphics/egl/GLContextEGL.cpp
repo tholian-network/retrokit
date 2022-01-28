@@ -25,20 +25,14 @@
 #include "Logging.h"
 #include "PlatformDisplay.h"
 
-#if USE(LIBEPOXY)
-#include "EpoxyEGL.h"
-#else
 #include <EGL/egl.h>
 #include <EGL/eglext.h>
-#endif
 
 #if USE(CAIRO)
 #include <cairo.h>
 #endif
 
-#if USE(LIBEPOXY)
-#include <epoxy/gl.h>
-#elif USE(OPENGL_ES)
+#if USE(OPENGL_ES)
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 #else

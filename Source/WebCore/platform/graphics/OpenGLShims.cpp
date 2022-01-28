@@ -17,7 +17,6 @@
  */
 
 #include "config.h"
-#if ENABLE(WEBGL)
 
 #define DISABLE_SHIMS
 #include "OpenGLShims.h"
@@ -230,4 +229,3 @@ bool initializeOpenGLShims()
 
 } // namespace WebCore
 
-#endif // ENABLE(WEBGL)

@@ -34,10 +34,6 @@
 #include <memory>
 #include <wtf/Forward.h>
 
-#if ENABLE(WEBGL)
-#include "WebGLContextAttributes.h"
-#endif
-
 namespace WebCore {
 
 class BlobCallback;
@@ -49,7 +45,6 @@ class ImageBuffer;
 class ImageData;
 class MediaSample;
 class OffscreenCanvas;
-class WebGLRenderingContextBase;
 class GPUCanvasContext;
 struct CanvasRenderingContext2DSettings;
 struct ImageBitmapRenderingContextSettings;
@@ -79,14 +74,6 @@ public:
     static bool is2dType(const String&);
     CanvasRenderingContext2D* createContext2d(const String&, CanvasRenderingContext2DSettings&&);
     CanvasRenderingContext2D* getContext2d(const String&, CanvasRenderingContext2DSettings&&);
-
-#if ENABLE(WEBGL)
-    using WebGLVersion = GraphicsContextGLWebGLVersion;
-    static bool isWebGLType(const String&);
-    static WebGLVersion toWebGLVersion(const String&);
-    WebGLRenderingContextBase* createContextWebGL(WebGLVersion type, WebGLContextAttributes&& = { });
-    WebGLRenderingContextBase* getContextWebGL(WebGLVersion type, WebGLContextAttributes&& = { });
-#endif
 
     static bool isBitmapRendererType(const String&);
     ImageBitmapRenderingContext* createContextBitmapRenderer(const String&, ImageBitmapRenderingContextSettings&&);
@@ -183,9 +170,6 @@ private:
     // m_hasCreatedImageBuffer means we tried to malloc the buffer. We didn't necessarily get it.
     mutable bool m_hasCreatedImageBuffer { false };
     mutable bool m_didClearImageBuffer { false };
-#if ENABLE(WEBGL)
-    bool m_hasRelevantWebGLEventListener { false };
-#endif
     bool m_isSnapshotting { false };
 };
 

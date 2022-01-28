@@ -1145,7 +1145,7 @@ void WKPageSetPageLoaderClient(WKPageRef pageRef, const WKPageLoaderClientBase* 
         explicit LoaderClient(const WKPageLoaderClientBase* client)
         {
             initialize(client);
-            
+
 #if !PLATFORM(MAC) || __MAC_OS_X_VERSION_MIN_REQUIRED > 101400
             // WKPageSetPageLoaderClient is deprecated. Use WKPageSetPageNavigationClient instead.
             RELEASE_ASSERT(!m_client.didFinishDocumentLoadForFrame);
@@ -1169,8 +1169,6 @@ void WKPageSetPageLoaderClient(WKPageRef pageRef, const WKPageLoaderClientBase* 
             RELEASE_ASSERT(!m_client.interactionOccurredWhileProcessUnresponsive);
             RELEASE_ASSERT(!m_client.didReceiveIntentForFrame_unavailable);
             RELEASE_ASSERT(!m_client.registerIntentServiceForFrame_unavailable);
-            RELEASE_ASSERT(!m_client.webGLLoadPolicy);
-            RELEASE_ASSERT(!m_client.resolveWebGLLoadPolicy);
             RELEASE_ASSERT(!m_client.navigationGestureDidBegin);
             RELEASE_ASSERT(!m_client.navigationGestureWillEnd);
             RELEASE_ASSERT(!m_client.navigationGestureDidEnd);
@@ -1178,7 +1176,7 @@ void WKPageSetPageLoaderClient(WKPageRef pageRef, const WKPageLoaderClientBase* 
         }
 
     private:
-        
+
         void didCommitLoadForFrame(WebPageProxy& page, WebFrameProxy& frame, API::Navigation*, API::Object* userData) override
         {
             if (!m_client.didCommitLoadForFrame)
@@ -1186,7 +1184,7 @@ void WKPageSetPageLoaderClient(WKPageRef pageRef, const WKPageLoaderClientBase* 
 
             m_client.didCommitLoadForFrame(toAPI(&page), toAPI(&frame), toAPI(userData), m_client.base.clientInfo);
         }
-        
+
         void didStartProvisionalLoadForFrame(WebPageProxy& page, WebFrameProxy& frame, API::Navigation*, API::Object* userData) override
         {
             if (!m_client.didStartProvisionalLoadForFrame)
@@ -1269,7 +1267,7 @@ void WKPageSetPageLoaderClient(WKPageRef pageRef, const WKPageLoaderClientBase* 
 
             m_client.didChangeBackForwardList(toAPI(&page), toAPI(addedItem), toAPI(removedItemsArray.get()), m_client.base.clientInfo);
         }
-        
+
         bool shouldKeepCurrentBackForwardListItemInList(WebKit::WebPageProxy& page, WebKit::WebBackForwardListItem& item) override
         {
             if (!m_client.shouldKeepCurrentBackForwardListItemInList)

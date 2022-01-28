@@ -30,20 +30,13 @@
 
 #include "GLContextEGL.h"
 
-#if USE(LIBEPOXY)
-// FIXME: For now default to the GBM EGL platform, but this should really be
-// somehow deducible from the build configuration.
-#define __GBM__ 1
-#include "EpoxyEGL.h"
-#else
 #if PLATFORM(WAYLAND)
 // These includes need to be in this order because wayland-egl.h defines WL_EGL_PLATFORM
 // and eglplatform.h, included by egl.h, checks that to decide whether it's Wayland platform.
 #include <wayland-egl.h>
 #endif
-#include <EGL/egl.h>
-#endif
 
+#include <EGL/egl.h>
 #include <wpe/wpe-egl.h>
 
 #ifndef EGL_EXT_platform_base

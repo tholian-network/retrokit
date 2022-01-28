@@ -204,7 +204,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     bindings/js/JSDOMConvertSerializedScriptValue.h
     bindings/js/JSDOMConvertStrings.h
     bindings/js/JSDOMConvertUnion.h
-    bindings/js/JSDOMConvertWebGL.h
     bindings/js/JSDOMConvertXPathNSResolver.h
     bindings/js/JSDOMExceptionHandling.h
     bindings/js/JSDOMGlobalObject.h
@@ -652,8 +651,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     html/VoidCallback.h
 
     html/canvas/ImageBitmapRenderingContextSettings.h
-    html/canvas/WebGLAny.h
-    html/canvas/WebGLContextAttributes.h
 
     html/forms/FileIconLoader.h
 
@@ -1049,7 +1046,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/UserAgent.h
     platform/UserInterfaceLayoutDirection.h
     platform/ValidationBubble.h
-    platform/WebGLStateTracker.h
     platform/Widget.h
     platform/WindowsKeyboardCodes.h
 
@@ -1081,7 +1077,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/calc/CalculationValue.h
 
     platform/graphics/AlphaPremultiplication.h
-    platform/graphics/ANGLEWebKitBridge.h
     platform/graphics/AnimationFrameRate.h
     platform/graphics/AudioTrackPrivate.h
     platform/graphics/BifurcatedGraphicsContext.h
@@ -1205,7 +1200,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/graphics/PlatformTextTrack.h
     platform/graphics/PlatformTimeRanges.h
     platform/graphics/Region.h
-    platform/graphics/RemoteGraphicsContextGLProxyBase.h
     platform/graphics/RenderingResourceIdentifier.h
     platform/graphics/RenderingMode.h
     platform/graphics/RoundedRect.h
@@ -1226,8 +1220,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/graphics/WindRule.h
 
     platform/graphics/angle/ANGLEHeaders.h
-    platform/graphics/angle/ExtensionsGLANGLE.h
-    platform/graphics/angle/GraphicsContextGLANGLEUtilities.h
 
     platform/graphics/displaylists/DisplayList.h
     platform/graphics/displaylists/DisplayListDrawGlyphsRecorder.h
@@ -1258,11 +1250,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
 
     platform/graphics/libwpe/PlatformDisplayLibWPE.h
 
-    platform/graphics/opengl/ExtensionsGLOpenGL.h
-    platform/graphics/opengl/ExtensionsGLOpenGLCommon.h
-    platform/graphics/opengl/ExtensionsGLOpenGLES.h
-    platform/graphics/opengl/GraphicsContextGLOpenGL.h
-    platform/graphics/opengl/GraphicsContextGLOpenGLManager.h
     platform/graphics/opengl/TemporaryOpenGLSetting.h
 
     platform/graphics/opentype/OpenTypeMathData.h

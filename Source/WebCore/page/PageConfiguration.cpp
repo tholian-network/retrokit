@@ -46,9 +46,6 @@
 #include "UserContentURLPattern.h"
 #include "ValidationMessageClient.h"
 #include "VisitedLinkStore.h"
-#if ENABLE(WEBGL)
-#include "WebGLStateTracker.h"
-#endif
 #if ENABLE(WEB_AUTHN)
 #include "AuthenticatorCoordinatorClient.h"
 #endif

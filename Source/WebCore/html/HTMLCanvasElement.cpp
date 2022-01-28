@@ -67,15 +67,6 @@
 #include <wtf/RAMSize.h>
 #include <wtf/text/StringBuilder.h>
 
-#if ENABLE(WEBGL)
-#include "WebGLContextAttributes.h"
-#include "WebGLRenderingContext.h"
-#endif
-
-#if ENABLE(WEBGL2)
-#include "WebGL2RenderingContext.h"
-#endif
-
 #if USE(CG)
 #include "ImageBufferUtilitiesCG.h"
 #endif
@@ -250,22 +241,6 @@ ExceptionOr<std::optional<RenderingContext>> HTMLCanvasElement::getContext(JSC::
             return std::optional<RenderingContext> { RefPtr<ImageBitmapRenderingContext> { &downcast<ImageBitmapRenderingContext>(*m_context) } };
         }
 
-#if ENABLE(WEBGL)
-        if (m_context->isWebGL()) {
-            if (!isWebGLType(contextId))
-                return std::optional<RenderingContext> { std::nullopt };
-            auto version = toWebGLVersion(contextId);
-            if ((version == WebGLVersion::WebGL1) != m_context->isWebGL1())
-                return std::optional<RenderingContext> { std::nullopt };
-            if (is<WebGLRenderingContext>(*m_context))
-                return std::optional<RenderingContext> { RefPtr<WebGLRenderingContext> { &downcast<WebGLRenderingContext>(*m_context) } };
-#if ENABLE(WEBGL2)
-            ASSERT(is<WebGL2RenderingContext>(*m_context));
-            return std::optional<RenderingContext> { RefPtr<WebGL2RenderingContext> { &downcast<WebGL2RenderingContext>(*m_context) } };
-#endif
-        }
-#endif
-
         ASSERT_NOT_REACHED();
         return std::optional<RenderingContext> { std::nullopt };
     }
@@ -292,25 +267,6 @@ ExceptionOr<std::optional<RenderingContext>> HTMLCanvasElement::getContext(JSC::
         return std::optional<RenderingContext> { RefPtr<ImageBitmapRenderingContext> { context } };
     }
 
-#if ENABLE(WEBGL)
-    if (isWebGLType(contextId)) {
-        auto scope = DECLARE_THROW_SCOPE(state.vm());
-        auto attributes = convert<IDLDictionary<WebGLContextAttributes>>(state, arguments.isEmpty() ? JSC::jsUndefined() : (arguments[0].isObject() ? arguments[0].get() : JSC::jsNull()));
-        RETURN_IF_EXCEPTION(scope, Exception { ExistingExceptionError });
-
-        auto context = createContextWebGL(toWebGLVersion(contextId), WTFMove(attributes));
-        if (!context)
-            return std::optional<RenderingContext> { std::nullopt };
-
-        if (is<WebGLRenderingContext>(*context))
-            return std::optional<RenderingContext> { RefPtr<WebGLRenderingContext> { &downcast<WebGLRenderingContext>(*context) } };
-#if ENABLE(WEBGL2)
-        ASSERT(is<WebGL2RenderingContext>(*context));
-        return std::optional<RenderingContext> { RefPtr<WebGL2RenderingContext> { &downcast<WebGL2RenderingContext>(*context) } };
-#endif
-    }
-#endif
-
     return std::optional<RenderingContext> { std::nullopt };
 }
 
@@ -321,11 +277,6 @@ CanvasRenderingContext* HTMLCanvasElement::getContext(const String& type)
 
     if (HTMLCanvasElement::isBitmapRendererType(type))
         return getContextBitmapRenderer(type, { });
-
-#if ENABLE(WEBGL)
-    if (HTMLCanvasElement::isWebGLType(type))
-        return getContextWebGL(HTMLCanvasElement::toWebGLVersion(type));
-#endif
 
     return nullptr;
 }
@@ -369,90 +320,6 @@ CanvasRenderingContext2D* HTMLCanvasElement::getContext2d(const String& type, Ca
         return createContext2d(type, WTFMove(settings));
     return static_cast<CanvasRenderingContext2D*>(m_context.get());
 }
-
-#if ENABLE(WEBGL)
-
-static bool requiresAcceleratedCompositingForWebGL()
-{
-#if PLATFORM(GTK) || PLATFORM(WIN_CAIRO)
-    return false;
-#else
-    return true;
-#endif
-
-}
-static bool shouldEnableWebGL(const Settings& settings)
-{
-    if (!settings.webGLEnabled())
-        return false;
-
-    if (!requiresAcceleratedCompositingForWebGL())
-        return true;
-
-    return settings.acceleratedCompositingEnabled();
-}
-
-bool HTMLCanvasElement::isWebGLType(const String& type)
-{
-    // Retain support for the legacy "webkit-3d" name.
-    return type == "webgl" || type == "experimental-webgl"
-#if ENABLE(WEBGL2)
-        || type == "webgl2"
-#endif
-        || type == "webkit-3d";
-}
-
-GraphicsContextGLWebGLVersion HTMLCanvasElement::toWebGLVersion(const String& type)
-{
-    ASSERT(isWebGLType(type));
-#if ENABLE(WEBGL2)
-    if (type == "webgl2")
-        return WebGLVersion::WebGL2;
-#else
-    UNUSED_PARAM(type);
-#endif
-    return WebGLVersion::WebGL1;
-}
-
-WebGLRenderingContextBase* HTMLCanvasElement::createContextWebGL(WebGLVersion type, WebGLContextAttributes&& attrs)
-{
-    ASSERT(!m_context);
-
-    if (!shouldEnableWebGL(document().settings()))
-        return nullptr;
-
-    m_context = WebGLRenderingContextBase::create(*this, attrs, type);
-    if (m_context) {
-        // This new context needs to be observed by the Document, in order
-        // for it to be correctly preparedForRendering before it is composited.
-        addObserver(document());
-
-        // Need to make sure a RenderLayer and compositing layer get created for the Canvas.
-        invalidateStyleAndLayerComposition();
-    }
-
-    return downcast<WebGLRenderingContextBase>(m_context.get());
-}
-
-WebGLRenderingContextBase* HTMLCanvasElement::getContextWebGL(WebGLVersion type, WebGLContextAttributes&& attrs)
-{
-    if (!shouldEnableWebGL(document().settings()))
-        return nullptr;
-
-    if (m_context) {
-        if (!m_context->isWebGL())
-            return nullptr;
-
-        if ((type == WebGLVersion::WebGL1) != m_context->isWebGL1())
-            return nullptr;
-    }
-
-    if (!m_context)
-        return createContextWebGL(type, WTFMove(attrs));
-    return &downcast<WebGLRenderingContextBase>(*m_context);
-}
-
-#endif // ENABLE(WEBGL)
 
 bool HTMLCanvasElement::isBitmapRendererType(const String& type)
 {
@@ -716,13 +583,6 @@ ExceptionOr<Ref<OffscreenCanvas>> HTMLCanvasElement::transferControlToOffscreen(
 
 RefPtr<ImageData> HTMLCanvasElement::getImageData()
 {
-#if ENABLE(WEBGL)
-    if (is<WebGLRenderingContextBase>(m_context.get())) {
-        if (RuntimeEnabledFeatures::sharedFeatures().webAPIStatisticsEnabled())
-            ResourceLoadObserver::shared().logCanvasRead(document());
-        return ImageData::create(downcast<WebGLRenderingContextBase>(*m_context).paintRenderingResultsToPixelBuffer());
-    }
-#endif
     return nullptr;
 }
 
@@ -910,23 +770,11 @@ const char* HTMLCanvasElement::activeDOMObjectName() const
 
 bool HTMLCanvasElement::virtualHasPendingActivity() const
 {
-#if ENABLE(WEBGL)
-    if (is<WebGLRenderingContextBase>(m_context.get())) {
-        // WebGL rendering context may fire contextlost / contextchange / contextrestored events at any point.
-        return m_hasRelevantWebGLEventListener && !downcast<WebGLRenderingContextBase>(*m_context).isContextUnrecoverablyLost();
-    }
-#endif
-
     return false;
 }
 
 void HTMLCanvasElement::eventListenersDidChange()
 {
-#if ENABLE(WEBGL)
-    m_hasRelevantWebGLEventListener = hasEventListeners(eventNames().webglcontextchangedEvent)
-        || hasEventListeners(eventNames().webglcontextlostEvent)
-        || hasEventListeners(eventNames().webglcontextrestoredEvent);
-#endif
 }
 
 void HTMLCanvasElement::didMoveToNewDocument(Document& oldDocument, Document& newDocument)

@@ -64,7 +64,6 @@ bool defaultOfflineWebApplicationCacheEnabled();
 bool defaultUseGPUProcessForCanvasRenderingEnabled();
 bool defaultUseGPUProcessForDOMRenderingEnabled();
 bool defaultUseGPUProcessForMediaEnabled();
-bool defaultUseGPUProcessForWebGLEnabled();
 #endif
 
 #if ENABLE(WEBM_FORMAT_READER)

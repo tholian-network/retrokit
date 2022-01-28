@@ -153,9 +153,6 @@ void WebPageCreationParameters::encode(IPC::Encoder& encoder) const
     encoder << shouldRenderCanvasInGPUProcess;
     encoder << shouldRenderDOMInGPUProcess;
     encoder << shouldPlayMediaInGPUProcess;
-#if ENABLE(WEBGL)
-    encoder << shouldRenderWebGLInGPUProcess;
-#endif
     encoder << shouldEnableVP8Decoder;
     encoder << shouldEnableVP9Decoder;
     encoder << shouldEnableVP9SWDecoder;
@@ -169,7 +166,7 @@ void WebPageCreationParameters::encode(IPC::Encoder& encoder) const
 #if PLATFORM(GTK)
     encoder << gtkSettings;
 #endif
-    
+
     encoder << httpsUpgradeEnabled;
 #if PLATFORM(IOS)
     encoder << allowsDeprecatedSynchronousXMLHttpRequestDuringUnload;
@@ -521,10 +518,6 @@ std::optional<WebPageCreationParameters> WebPageCreationParameters::decode(IPC::
 
     if (!decoder.decode(parameters.shouldPlayMediaInGPUProcess))
         return std::nullopt;
-#if ENABLE(WEBGL)
-    if (!decoder.decode(parameters.shouldRenderWebGLInGPUProcess))
-        return std::nullopt;
-#endif
 
     if (!decoder.decode(parameters.shouldEnableVP8Decoder))
         return std::nullopt;

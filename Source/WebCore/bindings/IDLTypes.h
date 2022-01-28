@@ -32,10 +32,6 @@
 #include <wtf/StdLibExtras.h>
 #include <wtf/URL.h>
 
-#if ENABLE(WEBGL)
-#include "WebGLAny.h"
-#endif
-
 namespace JSC {
 class ArrayBuffer;
 class ArrayBufferView;
@@ -52,10 +48,6 @@ class IDBValue;
 class JSWindowProxy;
 class DOMPromise;
 class ScheduledAction;
-
-#if ENABLE(WEBGL)
-class WebGLExtension;
-#endif
 
 template<typename T>
 struct IDLType {
@@ -282,11 +274,6 @@ template<typename T> struct IDLEventListener : IDLWrapper<T> { };
 struct IDLIDBKey : IDLWrapper<IDBKey> { };
 struct IDLIDBKeyData : IDLWrapper<IDBKeyData> { };
 struct IDLIDBValue : IDLWrapper<IDBValue> { };
-
-#if ENABLE(WEBGL)
-struct IDLWebGLAny : IDLType<WebGLAny> { };
-struct IDLWebGLExtension : IDLWrapper<WebGLExtension> { };
-#endif
 
 // Helper predicates
 

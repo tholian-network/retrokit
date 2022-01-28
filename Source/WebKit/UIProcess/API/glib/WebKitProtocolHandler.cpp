@@ -55,16 +55,8 @@
 #include <WebCore/PlatformDisplayX11.h>
 #endif
 
-#if USE(LIBEPOXY)
-#include <epoxy/gl.h>
-#endif
-
 #if USE(EGL)
-#if USE(LIBEPOXY)
-#include <epoxy/egl.h>
-#else
 #include <EGL/egl.h>
-#endif
 #endif
 
 #if USE(GLX)
@@ -141,11 +133,6 @@ static bool webGLEnabled(WebKitURISchemeRequest* request)
 
 static const char* openGLAPI()
 {
-#if USE(LIBEPOXY)
-    if (epoxy_is_desktop_gl())
-        return "OpenGL (libepoxy)";
-    return "OpenGL ES 2 (libepoxy)";
-#else
 #if USE(GLX)
     if (PlatformDisplay::sharedDisplay().type() == PlatformDisplay::Type::X11)
         return "OpenGL";
@@ -155,7 +142,6 @@ static const char* openGLAPI()
     return "OpenGL ES 2";
 #else
     return "OpenGL";
-#endif
 #endif
 #endif
     RELEASE_ASSERT_NOT_REACHED();
@@ -360,142 +346,6 @@ void WebKitProtocolHandler::handleGPU(WebKitURISchemeRequest* request)
         "  <td>%s</td>"
         " </tbody></tr>",
         hardwareAccelerationPolicy(request));
-
-#if ENABLE(WEBGL)
-    g_string_append_printf(html,
-        " <tbody><tr>"
-        "  <td><div class=\"titlename\">WebGL enabled</div></td>"
-        "  <td>%s</td>"
-        " </tbody></tr>",
-        webGLEnabled(request) ? "Yes" : "No");
-
-    auto glContext = GLContext::createOffscreenContext();
-    glContext->makeContextCurrent();
-
-    g_string_append_printf(html,
-        " <tbody><tr>"
-        "  <td><div class=\"titlename\">API</div></td>"
-        "  <td>%s</td>"
-        " </tbody></tr>",
-        openGLAPI());
-
-    g_string_append_printf(html,
-        " <tbody><tr>"
-        "  <td><div class=\"titlename\">Native interface</div></td>"
-        "  <td>%s</td>"
-        " </tbody></tr>",
-        nativeInterface());
-
-    g_string_append_printf(html,
-        " <tbody><tr>"
-        "  <td><div class=\"titlename\">GL_RENDERER</div></td>"
-        "  <td>%s</td>"
-        " </tbody></tr>",
-        reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
-
-    g_string_append_printf(html,
-        " <tbody><tr>"
-        "  <td><div class=\"titlename\">GL_VENDOR</div></td>"
-        "  <td>%s</td>"
-        " </tbody></tr>",
-        reinterpret_cast<const char*>(glGetString(GL_VENDOR)));
-
-    g_string_append_printf(html,
-        " <tbody><tr>"
-        "  <td><div class=\"titlename\">GL_VERSION</div></td>"
-        "  <td>%s</td>"
-        " </tbody></tr>",
-        reinterpret_cast<const char*>(glGetString(GL_VERSION)));
-
-    g_string_append_printf(html,
-        " <tbody><tr>"
-        "  <td><div class=\"titlename\">GL_SHADING_LANGUAGE_VERSION</div></td>"
-        "  <td>%s</td>"
-        " </tbody></tr>",
-        reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION)));
-
-#if USE(OPENGL_ES)
-    g_string_append_printf(html,
-        " <tbody><tr>"
-        "  <td><div class=\"titlename\">GL_EXTENSIONS</div></td>"
-        "  <td>%s</td>"
-        " </tbody></tr>",
-        reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS)));
-#else
-    GString* extensions = g_string_new(nullptr);
-    GLint numExtensions = 0;
-    glGetIntegerv(GL_NUM_EXTENSIONS, &numExtensions);
-    for (GLint i = 0; i < numExtensions; ++i) {
-        if (i)
-            g_string_append_c(extensions, ' ');
-        g_string_append(extensions, reinterpret_cast<const char*>(glGetStringi(GL_EXTENSIONS, i)));
-    }
-    g_string_append_printf(html,
-        " <tbody><tr>"
-        "  <td><div class=\"titlename\">GL_EXTENSIONS</div></td>"
-        "  <td>%s</td>"
-        " </tbody></tr>",
-        extensions->str);
-    g_string_free(extensions, TRUE);
-#endif
-
-    bool isGLX = false;
-#if USE(GLX)
-    if (PlatformDisplay::sharedDisplay().type() == PlatformDisplay::Type::X11) {
-        isGLX = true;
-        auto* x11Display = downcast<PlatformDisplayX11>(PlatformDisplay::sharedDisplay()).native();
-
-        g_string_append_printf(html,
-            " <tbody><tr>"
-            "  <td><div class=\"titlename\">GLX_VERSION</div></td>"
-            "  <td>%s</td>"
-            " </tbody></tr>",
-            glXGetClientString(x11Display, GLX_VERSION));
-
-        g_string_append_printf(html,
-            " <tbody><tr>"
-            "  <td><div class=\"titlename\">GLX_VENDOR</div></td>"
-            "  <td>%s</td>"
-            " </tbody></tr>",
-            glXGetClientString(x11Display, GLX_VENDOR));
-
-        g_string_append_printf(html,
-            " <tbody><tr>"
-            "  <td><div class=\"titlename\">GLX_EXTENSIONS</div></td>"
-            "  <td>%s</td>"
-            " </tbody></tr>",
-            glXGetClientString(x11Display, GLX_EXTENSIONS));
-    }
-#endif
-
-#if USE(EGL)
-    if (!isGLX) {
-        auto eglDisplay = PlatformDisplay::sharedDisplay().eglDisplay();
-
-        g_string_append_printf(html,
-            " <tbody><tr>"
-            "  <td><div class=\"titlename\">EGL_VERSION</div></td>"
-            "  <td>%s</td>"
-            " </tbody></tr>",
-            eglQueryString(eglDisplay, EGL_VERSION));
-
-        g_string_append_printf(html,
-            " <tbody><tr>"
-            "  <td><div class=\"titlename\">EGL_VENDOR</div></td>"
-            "  <td>%s</td>"
-            " </tbody></tr>",
-            eglQueryString(eglDisplay, EGL_VENDOR));
-
-        g_string_append_printf(html,
-            " <tbody><tr>"
-            "  <td><div class=\"titlename\">EGL_EXTENSIONS</div></td>"
-            "  <td>%s %s</td>"
-            " </tbody></tr>",
-            eglQueryString(nullptr, EGL_EXTENSIONS),
-            eglQueryString(eglDisplay, EGL_EXTENSIONS));
-    }
-#endif
-#endif // ENABLE(WEBGL)
 
     g_string_append(html, "<table>");
 

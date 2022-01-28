@@ -47,7 +47,6 @@ WheelEvent
 XMLHttpRequestProgressEvent
 AudioProcessingEvent conditional=WEB_AUDIO
 OfflineAudioCompletionEvent conditional=WEB_AUDIO
-WebGLContextEvent conditional=WEBGL
 StorageEvent
 SVGEvents interfaceName=Event
 SVGZoomEvent

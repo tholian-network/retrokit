@@ -1559,26 +1559,6 @@ RefPtr<Frame> WebFrameLoaderClient::createFrame(const String& name, HTMLFrameOwn
     return coreSubframe;
 }
 
-#if ENABLE(WEBGL)
-
-WebCore::WebGLLoadPolicy WebFrameLoaderClient::webGLPolicyForURL(const URL& url) const
-{
-    if (auto* webPage = m_frame->page())
-        return webPage->webGLPolicyForURL(m_frame.ptr(), url);
-
-    return WebGLLoadPolicy::WebGLAllowCreation;
-}
-
-WebCore::WebGLLoadPolicy WebFrameLoaderClient::resolveWebGLPolicyForURL(const URL& url) const
-{
-    if (auto* webPage = m_frame->page())
-        return webPage->resolveWebGLPolicyForURL(m_frame.ptr(), url);
-
-    return WebGLLoadPolicy::WebGLAllowCreation;
-}
-
-#endif
-
 String WebFrameLoaderClient::overrideMediaType() const
 {
     if (auto* page = m_frame->page())

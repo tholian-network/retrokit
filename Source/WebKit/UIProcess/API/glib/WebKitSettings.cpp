@@ -139,7 +139,6 @@ enum {
     PROP_ENABLE_CARET_BROWSING,
     PROP_PRINT_BACKGROUNDS,
     PROP_ENABLE_WEBAUDIO,
-    PROP_ENABLE_WEBGL,
     PROP_ALLOW_MODAL_DIALOGS,
     PROP_ZOOM_TEXT_ONLY,
     PROP_JAVASCRIPT_CAN_ACCESS_CLIPBOARD,
@@ -279,9 +278,6 @@ static void webKitSettingsSetProperty(GObject* object, guint propId, const GValu
         break;
     case PROP_ENABLE_WEBAUDIO:
         webkit_settings_set_enable_webaudio(settings, g_value_get_boolean(value));
-        break;
-    case PROP_ENABLE_WEBGL:
-        webkit_settings_set_enable_webgl(settings, g_value_get_boolean(value));
         break;
     case PROP_ALLOW_MODAL_DIALOGS:
         webkit_settings_set_allow_modal_dialogs(settings, g_value_get_boolean(value));
@@ -460,9 +456,6 @@ static void webKitSettingsGetProperty(GObject* object, guint propId, GValue* val
         break;
     case PROP_ENABLE_WEBAUDIO:
         g_value_set_boolean(value, webkit_settings_get_enable_webaudio(settings));
-        break;
-    case PROP_ENABLE_WEBGL:
-        g_value_set_boolean(value, webkit_settings_get_enable_webgl(settings));
         break;
     case PROP_ALLOW_MODAL_DIALOGS:
         g_value_set_boolean(value, webkit_settings_get_allow_modal_dialogs(settings));
@@ -963,20 +956,6 @@ static void webkit_settings_class_init(WebKitSettingsClass* klass)
             "enable-webaudio",
             _("Enable WebAudio"),
             _("Whether WebAudio content should be handled"),
-            TRUE,
-            readWriteConstructParamFlags);
-
-    /**
-    * WebKitSettings:enable-webgl:
-    *
-    * Enable or disable support for WebGL on pages. WebGL enables web
-    * content to use an API based on OpenGL ES 2.0.
-    */
-    sObjProperties[PROP_ENABLE_WEBGL] =
-        g_param_spec_boolean(
-            "enable-webgl",
-            _("Enable WebGL"),
-            _("Whether WebGL content should be rendered"),
             TRUE,
             readWriteConstructParamFlags);
 
@@ -2448,41 +2427,6 @@ void webkit_settings_set_enable_webaudio(WebKitSettings* settings, gboolean enab
 
     priv->preferences->setWebAudioEnabled(enabled);
     g_object_notify_by_pspec(G_OBJECT(settings), sObjProperties[PROP_ENABLE_WEBAUDIO]);
-}
-
-/**
- * webkit_settings_get_enable_webgl:
- * @settings: a #WebKitSettings
- *
- * Get the #WebKitSettings:enable-webgl property.
- *
- * Returns: %TRUE If WebGL support is enabled or %FALSE otherwise.
- */
-gboolean webkit_settings_get_enable_webgl(WebKitSettings* settings)
-{
-    g_return_val_if_fail(WEBKIT_IS_SETTINGS(settings), FALSE);
-
-    return settings->priv->preferences->webGLEnabled();
-}
-
-/**
- * webkit_settings_set_enable_webgl:
- * @settings: a #WebKitSettings
- * @enabled: Value to be set
- *
- * Set the #WebKitSettings:enable-webgl property.
- */
-void webkit_settings_set_enable_webgl(WebKitSettings* settings, gboolean enabled)
-{
-    g_return_if_fail(WEBKIT_IS_SETTINGS(settings));
-
-    WebKitSettingsPrivate* priv = settings->priv;
-    bool currentValue = priv->preferences->webGLEnabled();
-    if (currentValue == enabled)
-        return;
-
-    priv->preferences->setWebGLEnabled(enabled);
-    g_object_notify_by_pspec(G_OBJECT(settings), sObjProperties[PROP_ENABLE_WEBGL]);
 }
 
 /**

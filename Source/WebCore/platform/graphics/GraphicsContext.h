@@ -92,7 +92,6 @@ class ImageBuffer;
 class IntRect;
 class MediaPlayer;
 class RoundedRect;
-class GraphicsContextGL;
 class Path;
 class TextRun;
 class TransformationMatrix;

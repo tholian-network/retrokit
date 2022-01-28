@@ -43,7 +43,6 @@ class HTMLImageElement;
 class HTMLVideoElement;
 class ImageBitmap;
 class CSSStyleImageValue;
-class WebGLObject;
 enum class PixelFormat : uint8_t;
 
 class CanvasRenderingContext : public ScriptWrappable {
@@ -61,9 +60,7 @@ public:
     CanvasBase& canvasBase() const { return m_canvas; }
 
     virtual bool is2d() const { return false; }
-    virtual bool isWebGL1() const { return false; }
-    virtual bool isWebGL2() const { return false; }
-    bool isWebGL() const { return isWebGL1() || isWebGL2(); }
+    virtual bool isWebGL() const { return false; }
     virtual bool isGPUBased() const { return false; }
     virtual bool isAccelerated() const { return false; }
     virtual bool isBitmapRenderer() const { return false; }

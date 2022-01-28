@@ -43,11 +43,6 @@
 #include <wtf/MachSendRight.h>
 #include <wtf/ThreadSafeRefCounted.h>
 
-#if ENABLE(WEBGL)
-#include "GraphicsContextGLIdentifier.h"
-#include <WebCore/GraphicsContextGLAttributes.h>
-#endif
-
 #if PLATFORM(MAC)
 #include <CoreGraphics/CGDisplayConfiguration.h>
 #endif
@@ -73,7 +68,6 @@ class RemoteMediaResourceManager;
 class RemoteMediaSessionHelperProxy;
 class RemoteRemoteCommandListenerProxy;
 class RemoteRenderingBackend;
-class RemoteGraphicsContextGL;
 class RemoteSampleBufferDisplayLayerManager;
 struct GPUProcessConnectionParameters;
 struct MediaOverridesForTesting;
@@ -107,9 +101,6 @@ public:
 #if PLATFORM(MAC)
     void displayConfigurationChanged(CGDirectDisplayID, CGDisplayChangeSummaryFlags);
 #endif
-#if PLATFORM(MAC) && ENABLE(WEBGL)
-    void dispatchDisplayWasReconfiguredForTesting() { dispatchDisplayWasReconfigured(); };
-#endif
 
 #if HAVE(TASK_IDENTITY_TOKEN)
     task_id_token_t webProcessIdentityToken() const { return static_cast<task_id_token_t>(m_webProcessIdentityToken.sendRight()); }
@@ -131,9 +122,6 @@ public:
     bool allowsExitUnderMemoryPressure() const;
 
     void terminateWebProcess();
-#if ENABLE(WEBGL)
-    void releaseGraphicsContextGLForTesting(GraphicsContextGLIdentifier);
-#endif
 
     using RemoteRenderingBackendMap = HashMap<RenderingBackendIdentifier, IPC::ScopedActiveMessageReceiveQueue<RemoteRenderingBackend>>;
     const RemoteRenderingBackendMap& remoteRenderingBackendMap() const { return m_remoteRenderingBackendMap; }
@@ -147,11 +135,6 @@ private:
 
     void createRenderingBackend(RemoteRenderingBackendCreationParameters&&);
     void releaseRenderingBackend(RenderingBackendIdentifier);
-
-#if ENABLE(WEBGL)
-    void createGraphicsContextGL(WebCore::GraphicsContextGLAttributes, GraphicsContextGLIdentifier, RenderingBackendIdentifier, IPC::StreamConnectionBuffer&&);
-    void releaseGraphicsContextGL(GraphicsContextGLIdentifier);
-#endif
 
     void clearNowPlayingInfo();
     void setNowPlayingInfo(WebCore::NowPlayingInfo&&);
@@ -196,10 +179,6 @@ private:
     // NowPlayingManager::Client
     void didReceiveRemoteControlCommand(WebCore::PlatformMediaSession::RemoteControlCommandType, const WebCore::PlatformMediaSession::RemoteCommandArgument&) final;
 
-#if PLATFORM(MAC) && ENABLE(WEBGL)
-    void dispatchDisplayWasReconfigured();
-#endif
-
     RefPtr<Logger> m_logger;
 
     Ref<IPC::Connection> m_connection;
@@ -217,10 +196,6 @@ private:
     PAL::SessionID m_sessionID;
 
     RemoteRenderingBackendMap m_remoteRenderingBackendMap;
-#if ENABLE(WEBGL)
-    using RemoteGraphicsContextGLMap = HashMap<GraphicsContextGLIdentifier, IPC::ScopedActiveMessageReceiveQueue<RemoteGraphicsContextGL>>;
-    RemoteGraphicsContextGLMap m_remoteGraphicsContextGLMap;
-#endif
 #if USE(AUDIO_SESSION)
     std::unique_ptr<RemoteAudioSessionProxy> m_audioSessionProxy;
 #endif

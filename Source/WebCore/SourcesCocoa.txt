@@ -256,13 +256,11 @@ platform/graphics/cocoa/FontFamilySpecificationCoreText.cpp
 platform/graphics/cocoa/FontPlatformDataCocoa.mm
 platform/graphics/cocoa/GraphicsContextCocoa.mm
 platform/graphics/cocoa/GraphicsContextGLIOSurfaceSwapChain.cpp
-platform/graphics/cocoa/GraphicsContextGLOpenGLCocoa.mm
 platform/graphics/cocoa/HEVCUtilitiesCocoa.mm
 platform/graphics/cocoa/IOSurface.mm
 platform/graphics/cocoa/IOSurfacePoolCocoa.mm
 platform/graphics/cocoa/IntRectCocoa.mm
 platform/graphics/cocoa/MediaEngineConfigurationFactoryCocoa.cpp
-platform/graphics/cocoa/RemoteGraphicsContextGLProxyBaseCocoa.mm
 platform/graphics/cocoa/SourceBufferParser.cpp
 platform/graphics/cocoa/SourceBufferParserWebM.cpp
 platform/graphics/cocoa/SystemFontDatabaseCoreText.cpp
@@ -427,10 +425,3 @@ rendering/RenderThemeMac.mm
 rendering/TextAutoSizing.cpp
 testing/cocoa/WebViewVisualIdentificationOverlay.mm
 
-// The following files aren't unified with others to prevent them from being merged
-// with files that use the system OpenGL.
-
-platform/graphics/angle/ExtensionsGLANGLE.cpp @no-unify
-platform/graphics/angle/GraphicsContextGLANGLE.cpp @no-unify
-platform/graphics/angle/GraphicsContextGLANGLEEGLUtilities.cpp @no-unify
-platform/graphics/angle/TemporaryANGLESetting.cpp @no-unify

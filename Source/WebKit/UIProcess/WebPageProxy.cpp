@@ -5647,18 +5647,6 @@ void WebPageProxy::mouseDidMoveOverElement(WebHitTestResultData&& hitTestResultD
     setToolTip(hitTestResultData.toolTipText);
 }
 
-#if ENABLE(WEBGL)
-void WebPageProxy::webGLPolicyForURL(URL&& url, Messages::WebPageProxy::WebGLPolicyForURL::DelayedReply&& reply)
-{
-    m_navigationClient->webGLLoadPolicy(*this, url, WTFMove(reply));
-}
-
-void WebPageProxy::resolveWebGLPolicyForURL(URL&& url, Messages::WebPageProxy::ResolveWebGLPolicyForURL::DelayedReply&& reply)
-{
-    m_navigationClient->resolveWebGLLoadPolicy(*this, url, WTFMove(reply));
-}
-#endif // ENABLE(WEBGL)
-
 void WebPageProxy::setToolbarsAreVisible(bool toolbarsAreVisible)
 {
     m_uiClient->setToolbarsAreVisible(*this, toolbarsAreVisible);
@@ -7621,9 +7609,7 @@ WebPageCreationParameters WebPageProxy::creationParameters(WebProcessProxy& proc
         parameters.mediaIOKitExtensionHandles = SandboxExtension::createHandlesForIOKitClassExtensions(mediaRelatedIOKitClasses(), std::nullopt);
     }
 
-    if (!preferences().useGPUProcessForMediaEnabled()
-        || !preferences().useGPUProcessForCanvasRenderingEnabled()
-        || !preferences().useGPUProcessForWebGLEnabled()) {
+    if (!preferences().useGPUProcessForMediaEnabled() || !preferences().useGPUProcessForCanvasRenderingEnabled()) {
         parameters.gpuIOKitExtensionHandles = SandboxExtension::createHandlesForIOKitClassExtensions(gpuIOKitClasses(), std::nullopt);
         parameters.gpuMachExtensionHandles = SandboxExtension::createHandlesForMachLookup(gpuMachServices(), std::nullopt);
     }
@@ -7679,10 +7665,6 @@ WebPageCreationParameters WebPageProxy::creationParameters(WebProcessProxy& proc
     parameters.shouldRenderDOMInGPUProcess = preferences().useGPUProcessForDOMRenderingEnabled();
     // FIXME: This is also being passed over the to WebProcess via the PreferencesStore.
     parameters.shouldPlayMediaInGPUProcess = preferences().useGPUProcessForMediaEnabled();
-#if ENABLE(WEBGL)
-    // FIXME: This is also being passed over the to WebProcess via the PreferencesStore.
-    parameters.shouldRenderWebGLInGPUProcess = preferences().useGPUProcessForWebGLEnabled();
-#endif
 
     // FIXME: This is also being passed over the to WebProcess via the PreferencesStore.
     parameters.shouldEnableVP9Decoder = preferences().vp9DecoderEnabled();

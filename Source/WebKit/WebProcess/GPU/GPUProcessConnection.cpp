@@ -61,10 +61,6 @@
 #include "RemoteMediaSessionHelperMessages.h"
 #endif
 
-#if ENABLE(WEBGL)
-#include "RemoteGraphicsContextGLProxyMessages.h"
-#endif
-
 #if PLATFORM(COCOA)
 #include <WebCore/SystemBattery.h>
 #endif
@@ -151,14 +147,6 @@ bool GPUProcessConnection::dispatchMessage(IPC::Connection& connection, IPC::Dec
 
     if (messageReceiverMap().dispatchMessage(connection, decoder))
         return true;
-
-    // Skip messages intended for already removed messageReceiverMap() destinations.
-#if ENABLE(WEBGL)
-    if (decoder.messageReceiverName() == Messages::RemoteGraphicsContextGLProxy::messageReceiverName()) {
-        RELEASE_LOG_ERROR(WebGL, "The RemoteGraphicsContextGLProxy object has beed destroyed");
-        return true;
-    }
-#endif
 
 #if USE(AUDIO_SESSION)
     if (decoder.messageReceiverName() == Messages::RemoteAudioSession::messageReceiverName()) {

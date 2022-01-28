@@ -240,10 +240,6 @@
 #include "TimeRanges.h"
 #endif
 
-#if ENABLE(WEBGL)
-#include "WebGLRenderingContext.h"
-#endif
-
 #if ENABLE(MEDIA_SOURCE)
 #include "MockMediaPlayerMediaSource.h"
 #endif
@@ -4656,71 +4652,6 @@ void Internals::setAsRunningUserScripts(Document& document)
     document.setAsRunningUserScripts();
 }
 
-#if ENABLE(WEBGL)
-void Internals::simulateEventForWebGLContext(SimulatedWebGLContextEvent event, WebGLRenderingContext& context)
-{
-    WebGLRenderingContext::SimulatedEventForTesting contextEvent;
-    switch (event) {
-    case SimulatedWebGLContextEvent::ContextChange:
-        contextEvent = WebGLRenderingContext::SimulatedEventForTesting::ContextChange;
-        break;
-    case SimulatedWebGLContextEvent::GPUStatusFailure:
-        contextEvent = WebGLRenderingContext::SimulatedEventForTesting::GPUStatusFailure;
-        break;
-    case SimulatedWebGLContextEvent::Timeout:
-        contextEvent = WebGLRenderingContext::SimulatedEventForTesting::Timeout;
-        break;
-    default:
-        ASSERT_NOT_REACHED();
-        return;
-    }
-    context.simulateEventForTesting(contextEvent);
-}
-
-bool Internals::hasLowAndHighPowerGPUs()
-{
-#if PLATFORM(MAC)
-    return WebCore::hasLowAndHighPowerGPUs();
-#else
-    return false;
-#endif
-}
-
-Internals::RequestedGPU Internals::requestedGPU(WebGLRenderingContext& context)
-{
-    UNUSED_PARAM(context);
-    if (auto optionalAttributes = context.getContextAttributes()) {
-        auto attributes = *optionalAttributes;
-        if (attributes.forceRequestForHighPerformanceGPU)
-            return RequestedGPU::HighPerformance;
-        switch (attributes.powerPreference) {
-        case GraphicsContextGLPowerPreference::Default:
-            return RequestedGPU::Default;
-        case GraphicsContextGLPowerPreference::LowPower:
-            return RequestedGPU::LowPower;
-        case GraphicsContextGLPowerPreference::HighPerformance:
-            return RequestedGPU::HighPerformance;
-        }
-    }
-
-    return RequestedGPU::Default;
-}
-
-bool Internals::requestedMetal(WebGLRenderingContext& context)
-{
-    UNUSED_PARAM(context);
-#if PLATFORM(COCOA)
-    if (auto optionalAttributes = context.getContextAttributes()) {
-        auto attributes = *optionalAttributes;
-
-        return attributes.useMetal;
-    }
-#endif
-
-    return false;
-}
-#endif
-
 void Internals::setPageVisibility(bool isVisible)
 {
     auto* document = contextDocument();
@@ -5700,12 +5631,5 @@ ExceptionOr<void> Internals::setDocumentAutoplayPolicy(Document& document, Inter
 
     return { };
 }
-
-#if ENABLE(WEBGL) && !PLATFORM(COCOA)
-bool Internals::platformSupportsMetal(bool)
-{
-    return false;
-}
-#endif
 
 } // namespace WebCore

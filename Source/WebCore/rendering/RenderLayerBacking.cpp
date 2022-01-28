@@ -1033,7 +1033,7 @@ bool RenderLayerBacking::updateConfiguration(const RenderLayer* compositingAnces
         updateContentsRects();
     }
 #endif
-#if ENABLE(WEBGL) || ENABLE(OFFSCREEN_CANVAS)
+#if ENABLE(OFFSCREEN_CANVAS)
     else if (renderer().isCanvas() && canvasCompositingStrategy(renderer()) == CanvasAsLayerContents) {
         const HTMLCanvasElement* canvas = downcast<HTMLCanvasElement>(renderer().element());
         if (auto* context = canvas->renderingContext())
@@ -2759,7 +2759,7 @@ bool RenderLayerBacking::containsPaintedContent(PaintedContentsInfo& contentsInf
         return m_owningLayer.hasVisibleBoxDecorationsOrBackground() || (!(downcast<RenderVideo>(renderer()).supportsAcceleratedRendering()) && m_requiresOwnBackingStore);
 #endif
 
-#if ENABLE(WEBGL) || ENABLE(OFFSCREEN_CANVAS)
+#if ENABLE(OFFSCREEN_CANVAS)
     if (is<RenderHTMLCanvas>(renderer()) && canvasCompositingStrategy(renderer()) == CanvasAsLayerContents)
         return m_owningLayer.hasVisibleBoxDecorationsOrBackground();
 #endif
@@ -2824,7 +2824,7 @@ void RenderLayerBacking::contentChanged(ContentChangeType changeType)
     if ((changeType == MaskImageChanged) && m_maskLayer)
         m_owningLayer.setNeedsCompositingConfigurationUpdate();
 
-#if ENABLE(WEBGL) || ENABLE(OFFSCREEN_CANVAS)
+#if ENABLE(OFFSCREEN_CANVAS)
     if ((changeType == CanvasChanged || changeType == CanvasPixelsChanged) && renderer().isCanvas() && canvasCompositingStrategy(renderer()) == CanvasAsLayerContents) {
         if (changeType == CanvasChanged)
             compositor().scheduleCompositingLayerUpdate();

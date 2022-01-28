@@ -13,10 +13,6 @@ endif ()
 
 add_subdirectory(JavaScriptCore)
 
-if (ENABLE_WEBGL OR USE_ANGLE_EGL)
-    add_subdirectory(ThirdParty/ANGLE)
-endif ()
-
 if (ENABLE_API_TESTS)
     add_subdirectory(ThirdParty/gtest)
 endif ()

@@ -177,13 +177,6 @@ ForceCompositingMode:
     WebCore:
       default: false
 
-ForcePendingWebGLPolicy:
-  type: bool
-  webcoreGetter: isForcePendingWebGLPolicy
-  defaultValue:
-    WebCore:
-      default: false
-
 ForcedPrefersContrastAccessibilityValue:
   type: uint32_t
   refinedType: ForcedAccessibilityValue
@@ -585,12 +578,6 @@ VideoPlaybackRequiresUserGesture:
     WebCore:
       PLATFORM(IOS_FAMILY): true
       default: false
-
-WebGLErrorsToConsoleEnabled:
-  type: bool
-  defaultValue:
-    WebCore:
-      default: true
 
 WebkitImageReadyEventEnabled:
   type: bool

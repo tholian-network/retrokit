@@ -97,7 +97,6 @@ set(WebKit_MESSAGES_IN_FILES
     GPUProcess/GPUConnectionToWebProcess
     GPUProcess/GPUProcess
 
-    GPUProcess/graphics/RemoteGraphicsContextGL
     GPUProcess/graphics/RemoteRenderingBackend
 
     GPUProcess/media/RemoteAudioDestinationManager
@@ -163,7 +162,6 @@ set(WebKit_MESSAGES_IN_FILES
 
     WebProcess/GPU/GPUProcessConnection
 
-    WebProcess/GPU/graphics/RemoteGraphicsContextGLProxy
     WebProcess/GPU/graphics/RemoteRenderingBackendProxy
 
     WebProcess/GPU/media/RemoteAudioHardwareListener
@@ -221,15 +219,7 @@ set(GPUProcess_LIBRARIES WebKit)
 # For platforms that want to use system-provided OpenGL (ES) / EGL headers,
 # these include directories, libraries or definitions need to be
 # added before the ANGLE directories.
-if (USE_LIBEPOXY)
-    list(APPEND WebKit_SYSTEM_INCLUDE_DIRECTORIES
-        ${LIBEPOXY_INCLUDE_DIRS}
-    )
-    list(APPEND WebKit_PRIVATE_LIBRARIES
-        ${LIBEPOXY_LIBRARIES}
-    )
-    add_definitions(${LIBEPOXY_DEFINITIONS})
-elseif (USE_ANGLE_EGL)
+if (USE_ANGLE_EGL)
     # Prepend to make sure the ANGLE headers are found before system headers
     list(PREPEND WebKit_PRIVATE_LIBRARIES
         ANGLE::GLES

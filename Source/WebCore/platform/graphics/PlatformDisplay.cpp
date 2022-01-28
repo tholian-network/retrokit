@@ -70,11 +70,7 @@
 #endif
 
 #if USE(EGL)
-#if USE(LIBEPOXY)
-#include "EpoxyEGL.h"
-#else
 #include <EGL/egl.h>
-#endif
 #include "GLContextEGL.h"
 #include <wtf/HashSet.h>
 #include <wtf/NeverDestroyed.h>

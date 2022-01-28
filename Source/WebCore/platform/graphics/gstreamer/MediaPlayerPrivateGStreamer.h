@@ -49,10 +49,6 @@
 typedef struct _GstMpegtsSection GstMpegtsSection;
 
 #if USE(GSTREAMER_GL)
-#if USE(LIBEPOXY)
-// Include the <epoxy/gl.h> header before <gst/gl/gl.h>.
-#include <epoxy/gl.h>
-#endif // USE(LIBEPOXY)
 
 #define GST_USE_UNSTABLE_API
 #include <gst/gl/gl.h>

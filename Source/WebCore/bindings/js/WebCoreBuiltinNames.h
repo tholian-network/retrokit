@@ -193,9 +193,6 @@ namespace WebCore {
     macro(UndoItem) \
     macro(UndoManager) \
     macro(VisualViewport) \
-    macro(WebGL2RenderingContext) \
-    macro(WebGLVertexArrayObject) \
-    macro(WebGLTransformFeedback) \
     macro(WebSocket) \
     macro(WindowClient) \
     macro(Worklet) \
@@ -204,27 +201,6 @@ namespace WebCore {
     macro(WritableStreamDefaultController) \
     macro(WritableStreamDefaultWriter) \
     macro(XMLHttpRequest) \
-    macro(XRBoundedReferenceSpace) \
-    macro(XRFrame) \
-    macro(XRInputSource) \
-    macro(XRInputSourceArray) \
-    macro(XRInputSourceEvent) \
-    macro(XRInputSourcesChangeEvent) \
-    macro(XRLayer) \
-    macro(XRPose) \
-    macro(XRReferenceSpace) \
-    macro(XRReferenceSpaceEvent) \
-    macro(XRRenderState) \
-    macro(XRRigidTransform) \
-    macro(XRSession) \
-    macro(XRSessionEvent) \
-    macro(XRSpace) \
-    macro(XRSystem) \
-    macro(XRTest) \
-    macro(XRView) \
-    macro(XRViewerPose) \
-    macro(XRViewport) \
-    macro(XRWebGLLayer) \
     macro(abortAlgorithm) \
     macro(abortSteps) \
     macro(appendFromJS) \

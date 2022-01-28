@@ -614,7 +614,6 @@ JS_BINDING_IDLS := \
     $(WebCore)/html/URLSearchParams.idl \
     $(WebCore)/html/ValidityState.idl \
     $(WebCore)/html/VoidCallback.idl \
-    $(WebCore)/html/canvas/ANGLEInstancedArrays.idl \
     $(WebCore)/html/canvas/CanvasCompositing.idl \
     $(WebCore)/html/canvas/CanvasDirection.idl \
     $(WebCore)/html/canvas/CanvasDrawImage.idl \
@@ -641,65 +640,13 @@ JS_BINDING_IDLS := \
     $(WebCore)/html/canvas/CanvasTextDrawingStyles.idl \
     $(WebCore)/html/canvas/CanvasTransform.idl \
     $(WebCore)/html/canvas/CanvasUserInterface.idl \
-    $(WebCore)/html/canvas/EXTBlendMinMax.idl \
-    $(WebCore)/html/canvas/EXTColorBufferFloat.idl \
-    $(WebCore)/html/canvas/EXTColorBufferHalfFloat.idl \
-    $(WebCore)/html/canvas/EXTFloatBlend.idl \
-    $(WebCore)/html/canvas/EXTFragDepth.idl \
-    $(WebCore)/html/canvas/EXTShaderTextureLOD.idl \
-    $(WebCore)/html/canvas/EXTTextureCompressionRGTC.idl \
-    $(WebCore)/html/canvas/EXTTextureFilterAnisotropic.idl \
-    $(WebCore)/html/canvas/EXTsRGB.idl \
     $(WebCore)/html/canvas/ImageBitmapRenderingContext.idl \
     $(WebCore)/html/canvas/ImageBitmapRenderingContextSettings.idl \
     $(WebCore)/html/canvas/ImageSmoothingQuality.idl \
-    $(WebCore)/html/canvas/KHRParallelShaderCompile.idl \
-    $(WebCore)/html/canvas/OESElementIndexUint.idl \
-    $(WebCore)/html/canvas/OESFBORenderMipmap.idl \
-    $(WebCore)/html/canvas/OESStandardDerivatives.idl \
-    $(WebCore)/html/canvas/OESTextureFloat.idl \
-    $(WebCore)/html/canvas/OESTextureFloatLinear.idl \
-    $(WebCore)/html/canvas/OESTextureHalfFloat.idl \
-    $(WebCore)/html/canvas/OESTextureHalfFloatLinear.idl \
-    $(WebCore)/html/canvas/OESVertexArrayObject.idl \
     $(WebCore)/html/canvas/OffscreenCanvasRenderingContext2D.idl \
     $(WebCore)/html/canvas/PaintRenderingContext2D.idl \
     $(WebCore)/html/canvas/Path2D.idl \
     $(WebCore)/html/canvas/PredefinedColorSpace.idl \
-    $(WebCore)/html/canvas/WebGL2RenderingContext.idl \
-    $(WebCore)/html/canvas/WebGLActiveInfo.idl \
-    $(WebCore)/html/canvas/WebGLBuffer.idl \
-    $(WebCore)/html/canvas/WebGLColorBufferFloat.idl \
-    $(WebCore)/html/canvas/WebGLCompressedTextureASTC.idl \
-    $(WebCore)/html/canvas/WebGLCompressedTextureATC.idl \
-    $(WebCore)/html/canvas/WebGLCompressedTextureETC.idl \
-    $(WebCore)/html/canvas/WebGLCompressedTextureETC1.idl \
-    $(WebCore)/html/canvas/WebGLCompressedTexturePVRTC.idl \
-    $(WebCore)/html/canvas/WebGLCompressedTextureS3TC.idl \
-    $(WebCore)/html/canvas/WebGLCompressedTextureS3TCsRGB.idl \
-    $(WebCore)/html/canvas/WebGLContextAttributes.idl \
-    $(WebCore)/html/canvas/WebGLContextEvent.idl \
-    $(WebCore)/html/canvas/WebGLDebugRendererInfo.idl \
-    $(WebCore)/html/canvas/WebGLDebugShaders.idl \
-    $(WebCore)/html/canvas/WebGLDepthTexture.idl \
-    $(WebCore)/html/canvas/WebGLDrawBuffers.idl \
-    $(WebCore)/html/canvas/WebGLFramebuffer.idl \
-    $(WebCore)/html/canvas/WebGLLoseContext.idl \
-    $(WebCore)/html/canvas/WebGLMultiDraw.idl \
-    $(WebCore)/html/canvas/WebGLProgram.idl \
-    $(WebCore)/html/canvas/WebGLQuery.idl \
-    $(WebCore)/html/canvas/WebGLRenderbuffer.idl \
-    $(WebCore)/html/canvas/WebGLRenderingContext.idl \
-    $(WebCore)/html/canvas/WebGLRenderingContextBase.idl \
-    $(WebCore)/html/canvas/WebGLSampler.idl \
-    $(WebCore)/html/canvas/WebGLShader.idl \
-    $(WebCore)/html/canvas/WebGLShaderPrecisionFormat.idl \
-    $(WebCore)/html/canvas/WebGLSync.idl \
-    $(WebCore)/html/canvas/WebGLTexture.idl \
-    $(WebCore)/html/canvas/WebGLTransformFeedback.idl \
-    $(WebCore)/html/canvas/WebGLUniformLocation.idl \
-    $(WebCore)/html/canvas/WebGLVertexArrayObject.idl \
-    $(WebCore)/html/canvas/WebGLVertexArrayObjectOES.idl \
     $(WebCore)/html/track/AudioTrack.idl \
     $(WebCore)/html/track/AudioTrackList.idl \
     $(WebCore)/html/track/DataCue.idl \

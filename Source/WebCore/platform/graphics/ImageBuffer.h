@@ -117,7 +117,7 @@ public:
 
     WEBCORE_EXPORT static RefPtr<Image> sinkIntoImage(RefPtr<ImageBuffer>, PreserveResolution = PreserveResolution::No);
     static void drawConsuming(RefPtr<ImageBuffer>, GraphicsContext&, const FloatRect& destRect, const FloatRect& srcRect = FloatRect(0, 0, -1, -1), const ImagePaintingOptions& = { });
-    
+
     virtual void clipToMask(GraphicsContext&, const FloatRect& destRect) = 0;
 
     virtual void convertToLuminanceMask() = 0;
@@ -129,9 +129,6 @@ public:
     virtual std::optional<PixelBuffer> getPixelBuffer(const PixelBufferFormat& outputFormat, const IntRect& srcRect) const = 0;
     virtual void putPixelBuffer(const PixelBuffer&, const IntRect& srcRect, const IntPoint& destPoint = { }, AlphaPremultiplication destFormat = AlphaPremultiplication::Premultiplied) = 0;
 
-    // FIXME: current implementations of this method have the restriction that they only work
-    // with textures that are RGB or RGBA format, and UNSIGNED_BYTE type.
-    virtual bool copyToPlatformTexture(GraphicsContextGL&, GCGLenum, PlatformGLObject, GCGLenum, bool, bool) const = 0;
     virtual PlatformLayer* platformLayer() const = 0;
 
 protected:

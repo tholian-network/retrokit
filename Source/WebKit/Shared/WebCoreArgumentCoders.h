@@ -56,13 +56,6 @@
 #include "ArgumentCodersGtk.h"
 #endif
 
-#if ENABLE(GPU_PROCESS) && ENABLE(WEBGL)
-#include "ArrayReference.h"
-#include <WebCore/GraphicsContextGL.h>
-#include <WebCore/GraphicsContextGLAttributes.h>
-#include <WebCore/GraphicsTypesGL.h>
-#endif
-
 #if PLATFORM(COCOA)
 #include "ArgumentCodersCF.h"
 
@@ -186,10 +179,6 @@ class ContentFilterUnblockHandler;
 
 #if ENABLE(ATTACHMENT_ELEMENT)
 struct SerializedAttachmentData;
-#endif
-
-#if ENABLE(GPU_PROCESS) && ENABLE(WEBGL)
-struct GraphicsContextGLAttributes;
 #endif
 
 namespace DOMCacheEngine {
@@ -706,20 +695,6 @@ template<> struct ArgumentCoder<WebCore::DataDetectorElementInfo> {
 
 #endif
 
-#if ENABLE(GPU_PROCESS) && ENABLE(WEBGL)
-
-template<> struct ArgumentCoder<WebCore::GraphicsContextGLAttributes> {
-    static void encode(Encoder&, const WebCore::GraphicsContextGLAttributes&);
-    static std::optional<WebCore::GraphicsContextGLAttributes> decode(Decoder&);
-};
-
-template<> struct ArgumentCoder<WebCore::GraphicsContextGL::ActiveInfo> {
-    template<typename Encoder>
-    static void encode(Encoder&, const WebCore::GraphicsContextGL::ActiveInfo&);
-    static std::optional<WebCore::GraphicsContextGL::ActiveInfo> decode(Decoder&);
-};
-#endif
-
 #if ENABLE(IMAGE_ANALYSIS) && ENABLE(DATA_DETECTION)
 
 template<> struct ArgumentCoder<WebCore::TextRecognitionDataDetector> {
@@ -861,37 +836,6 @@ template<> struct EnumTraits<WTFLogLevel> {
     WTFLogLevel::Debug
     >;
 };
-
-#if ENABLE(GPU_PROCESS) && ENABLE(WEBGL)
-
-template <> struct EnumTraits<WebCore::GraphicsContextGLPowerPreference> {
-    using values = EnumValues <
-    WebCore::GraphicsContextGLPowerPreference,
-    WebCore::GraphicsContextGLPowerPreference::Default,
-    WebCore::GraphicsContextGLPowerPreference::LowPower,
-    WebCore::GraphicsContextGLPowerPreference::HighPerformance
-    >;
-};
-
-template <> struct EnumTraits<WebCore::GraphicsContextGLWebGLVersion> {
-    using values = EnumValues <
-    WebCore::GraphicsContextGLWebGLVersion,
-    WebCore::GraphicsContextGLWebGLVersion::WebGL1
-#if ENABLE(WEBGL2)
-    , WebCore::GraphicsContextGLWebGLVersion::WebGL2
-#endif
-    >;
-};
-
-template <> struct EnumTraits<WebCore::GraphicsContextGL::SimulatedEventForTesting> {
-    using values = EnumValues<
-    WebCore::GraphicsContextGL::SimulatedEventForTesting,
-    WebCore::GraphicsContextGL::SimulatedEventForTesting::ContextChange,
-    WebCore::GraphicsContextGL::SimulatedEventForTesting::GPUStatusFailure,
-    WebCore::GraphicsContextGL::SimulatedEventForTesting::Timeout
-    >;
-};
-#endif
 
 template<> struct EnumTraits<WebCore::ScrollSnapStrictness> {
     using values = EnumValues<

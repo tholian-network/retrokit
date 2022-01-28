@@ -225,9 +225,6 @@ struct WebPageCreationParameters {
     bool shouldRenderCanvasInGPUProcess { false };
     bool shouldRenderDOMInGPUProcess { false };
     bool shouldPlayMediaInGPUProcess { false };
-#if ENABLE(WEBGL)
-    bool shouldRenderWebGLInGPUProcess { false };
-#endif
     bool shouldEnableVP8Decoder { false };
     bool shouldEnableVP9Decoder { false };
     bool shouldEnableVP9SWDecoder { false };
@@ -252,7 +249,7 @@ struct WebPageCreationParameters {
 #if ENABLE(APP_HIGHLIGHTS)
     WebCore::HighlightVisibility appHighlightsVisible { WebCore::HighlightVisibility::Hidden };
 #endif
-    
+
 };
 
 } // namespace WebKit

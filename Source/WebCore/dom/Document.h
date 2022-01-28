@@ -217,8 +217,6 @@ class UndoManager;
 class VisibilityChangeClient;
 class VisitedLinkState;
 class WebAnimation;
-class WebGL2RenderingContext;
-class WebGLRenderingContext;
 class WhitespaceCache;
 class WindowEventLoop;
 class WindowProxy;
@@ -305,12 +303,6 @@ enum class CustomElementNameValidationStatus {
 };
 
 using RenderingContext = Variant<
-#if ENABLE(WEBGL)
-    RefPtr<WebGLRenderingContext>,
-#endif
-#if ENABLE(WEBGL2)
-    RefPtr<WebGL2RenderingContext>,
-#endif
     RefPtr<ImageBitmapRenderingContext>,
     RefPtr<CanvasRenderingContext2D>
 >;

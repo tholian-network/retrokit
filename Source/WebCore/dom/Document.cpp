@@ -301,13 +301,6 @@
 #include "XSLTProcessor.h"
 #endif
 
-#if ENABLE(WEBGL)
-#include "WebGLRenderingContext.h"
-#endif
-#if ENABLE(WEBGL2)
-#include "WebGL2RenderingContext.h"
-#endif
-
 #define DOCUMENT_RELEASE_LOG(channel, fmt, ...) RELEASE_LOG(channel, "%p - [pageID=%" PRIu64 ", frameID=%" PRIu64 ", main=%d] Document::" fmt, this, pageID().value_or(PageIdentifier { }).toUInt64(), frameID().value_or(FrameIdentifier { }).toUInt64(), this == &topDocument(), ##__VA_ARGS__)
 #define DOCUMENT_RELEASE_LOG_ERROR(channel, fmt, ...) RELEASE_LOG_ERROR(channel, "%p - [pageID=%" PRIu64 ", frameID=%" PRIu64 ", main=%d] Document::" fmt, this, pageID().value_or(PageIdentifier { }).toUInt64(), frameID().value_or(FrameIdentifier { }).toUInt64(), this == &topDocument(), ##__VA_ARGS__)
 
@@ -6220,15 +6213,6 @@ std::optional<RenderingContext> Document::getCSSCanvasContext(const String& type
     auto context = element->getContext(type);
     if (!context)
         return std::nullopt;
-
-#if ENABLE(WEBGL)
-    if (is<WebGLRenderingContext>(*context))
-        return RenderingContext { RefPtr<WebGLRenderingContext> { &downcast<WebGLRenderingContext>(*context) } };
-#endif
-#if ENABLE(WEBGL2)
-    if (is<WebGL2RenderingContext>(*context))
-        return RenderingContext { RefPtr<WebGL2RenderingContext> { &downcast<WebGL2RenderingContext>(*context) } };
-#endif
 
     return RenderingContext { RefPtr<CanvasRenderingContext2D> { &downcast<CanvasRenderingContext2D>(*context) } };
 }

@@ -29,10 +29,7 @@
 #if USE(OPENGL) || USE(OPENGL_ES)
 #include "TemporaryOpenGLSetting.h"
 
-#if USE(LIBEPOXY)
-#include "EpoxyShims.h"
-
-#elif PLATFORM(COCOA)
+#if PLATFORM(COCOA)
 
 #if USE(OPENGL_ES)
 #include <OpenGLES/ES2/gl.h>

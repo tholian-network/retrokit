@@ -479,11 +479,6 @@ public:
 
     std::optional<WebCore::SimpleRange> currentSelectionAsRange();
 
-#if ENABLE(WEBGL)
-    WebCore::WebGLLoadPolicy webGLPolicyForURL(WebFrame*, const URL&);
-    WebCore::WebGLLoadPolicy resolveWebGLPolicyForURL(WebFrame*, const URL&);
-#endif
-    
     enum class ShouldPerformLayout : bool { Default, Yes };
     EditorState editorState(ShouldPerformLayout = ShouldPerformLayout::Default) const;
     void updateEditorStateAfterLayoutIfEditabilityChanged();
@@ -1733,9 +1728,7 @@ private:
     bool m_shouldRenderCanvasInGPUProcess { false };
     bool m_shouldRenderDOMInGPUProcess { false };
     bool m_shouldPlayMediaInGPUProcess { false };
-#if ENABLE(WEBGL)
-    bool m_shouldRenderWebGLInGPUProcess { false };
-#endif
+
 #if ENABLE(APP_BOUND_DOMAINS)
     bool m_needsInAppBrowserPrivacyQuirks { false };
 #endif
@@ -1762,7 +1755,7 @@ private:
 
     // The accessibility position of the view.
     WebCore::FloatPoint m_accessibilityPosition;
-    
+
     RetainPtr<WKAccessibilityWebPageObject> m_mockAccessibilityElement;
 #endif
 

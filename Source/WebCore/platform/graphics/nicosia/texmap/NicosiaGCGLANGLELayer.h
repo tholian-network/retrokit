@@ -61,9 +61,6 @@ public:
         virtual ~ANGLEContext();
 
         bool makeContextCurrent();
-#if ENABLE(WEBGL)
-        PlatformGraphicsContextGL platformContext() const;
-#endif
 
     private:
         ANGLEContext(EGLDisplay, EGLContext, EGLSurface);

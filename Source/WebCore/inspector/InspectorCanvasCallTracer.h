@@ -26,8 +26,6 @@
 #pragma once
 
 #include "CanvasRenderingContext2DBase.h"
-#include "WebGL2RenderingContext.h"
-#include "WebGLRenderingContextBase.h"
 #include <JavaScriptCore/TypedArrays.h>
 #include <initializer_list>
 #include <wtf/JSONValues.h>
@@ -56,18 +54,6 @@ class ImageData;
 class OffscreenCanvas;
 class Path2D;
 class CSSStyleImageValue;
-class WebGLBuffer;
-class WebGLFramebuffer;
-class WebGLProgram;
-class WebGLQuery;
-class WebGLRenderbuffer;
-class WebGLSampler;
-class WebGLShader;
-class WebGLSync;
-class WebGLTexture;
-class WebGLTransformFeedback;
-class WebGLUniformLocation;
-class WebGLVertexArrayObject;
 struct DOMMatrix2DInit;
 struct ImageDataSettings;
 enum class RecordingSwizzleType : int;
@@ -102,39 +88,6 @@ enum ImageSmoothingQuality;
 #else
 #define FOR_EACH_INSPECTOR_CANVAS_CALL_TRACER_VIDEO_ARGUMENT(macro)
 #endif // ENABLE(VIDEO)
-
-#if ENABLE(WEBGL)
-#define FOR_EACH_INSPECTOR_CANVAS_CALL_TRACER_WEBGL_ARGUMENT(macro) \
-    macro(std::optional<WebGLRenderingContextBase::BufferDataSource>&) \
-    macro(std::optional<WebGLRenderingContextBase::TexImageSource>&) \
-    macro(WebGLBuffer*) \
-    macro(WebGLFramebuffer*) \
-    macro(WebGLProgram*) \
-    macro(WebGLQuery*) \
-    macro(WebGLRenderbuffer*) \
-    macro(WebGLRenderingContextBase::BufferDataSource&) \
-    macro(WebGLRenderingContextBase::Float32List::VariantType&) \
-    macro(WebGLRenderingContextBase::Int32List::VariantType&) \
-    macro(WebGLRenderingContextBase::TexImageSource&) \
-    macro(WebGLSampler*) \
-    macro(WebGLShader*) \
-    macro(WebGLSync*) \
-    macro(WebGLTexture*) \
-    macro(WebGLUniformLocation*) \
-    macro(WebGLVertexArrayObject*) \
-// end of FOR_EACH_INSPECTOR_CANVAS_CALL_TRACER_WEBGL_ARGUMENT
-#else
-#define FOR_EACH_INSPECTOR_CANVAS_CALL_TRACER_WEBGL_ARGUMENT(macro)
-#endif // ENABLE(WEBGL)
-
-#if ENABLE(WEBGL2)
-#define FOR_EACH_INSPECTOR_CANVAS_CALL_TRACER_WEBGL2_ARGUMENT(macro) \
-    macro(WebGLTransformFeedback*) \
-    macro(WebGL2RenderingContext::Uint32List::VariantType&) \
-// end of FOR_EACH_INSPECTOR_CANVAS_CALL_TRACER_WEBGL2_ARGUMENT
-#else
-#define FOR_EACH_INSPECTOR_CANVAS_CALL_TRACER_WEBGL2_ARGUMENT(macro)
-#endif // ENABLE(WEBGL2)
 
 #define FOR_EACH_INSPECTOR_CANVAS_CALL_TRACER_ARGUMENT(macro) \
     macro(CanvasDirection) \
@@ -183,8 +136,6 @@ enum ImageSmoothingQuality;
     FOR_EACH_INSPECTOR_CANVAS_CALL_TRACER_CSS_TYPED_OM_ARGUMENT(macro) \
     FOR_EACH_INSPECTOR_CANVAS_CALL_TRACER_OFFSCREEN_CANVAS_ARGUMENT(macro) \
     FOR_EACH_INSPECTOR_CANVAS_CALL_TRACER_VIDEO_ARGUMENT(macro) \
-    FOR_EACH_INSPECTOR_CANVAS_CALL_TRACER_WEBGL_ARGUMENT(macro) \
-    FOR_EACH_INSPECTOR_CANVAS_CALL_TRACER_WEBGL2_ARGUMENT(macro) \
 // end of FOR_EACH_INSPECTOR_CANVAS_CALL_TRACER_ARGUMENT
 
 class InspectorCanvasCallTracer {

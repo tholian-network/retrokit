@@ -43,15 +43,6 @@
 #include "WorkerGlobalScope.h"
 #include <wtf/IsoMallocInlines.h>
 
-#if ENABLE(WEBGL)
-#include "Settings.h"
-#include "WebGLRenderingContext.h"
-
-#if ENABLE(WEBGL2)
-#include "WebGL2RenderingContext.h"
-#endif
-#endif // ENABLE(WEBGL)
-
 namespace WebCore {
 
 WTF_MAKE_ISO_ALLOCATED_IMPL(OffscreenCanvas);
@@ -166,53 +157,6 @@ void OffscreenCanvas::setSize(const IntSize& newSize)
     reset();
 }
 
-#if ENABLE(WEBGL)
-static bool requiresAcceleratedCompositingForWebGL()
-{
-#if PLATFORM(GTK) || PLATFORM(WIN_CAIRO)
-    return false;
-#else
-    return true;
-#endif
-}
-
-static bool shouldEnableWebGL(bool webGLEnabled, bool acceleratedCompositingEnabled)
-{
-    if (!webGLEnabled)
-        return false;
-
-    if (!requiresAcceleratedCompositingForWebGL())
-        return true;
-
-    return acceleratedCompositingEnabled;
-}
-
-void OffscreenCanvas::createContextWebGL(RenderingContextType contextType, WebGLContextAttributes&& attrs)
-{
-    ASSERT(!m_context);
-
-    auto scriptExecutionContext = this->scriptExecutionContext();
-    if (scriptExecutionContext->isWorkerGlobalScope()) {
-        WorkerGlobalScope& workerGlobalScope = downcast<WorkerGlobalScope>(*scriptExecutionContext);
-        if (!shouldEnableWebGL(workerGlobalScope.settingsValues().webGLEnabled, workerGlobalScope.settingsValues().acceleratedCompositingEnabled))
-            return;
-    } else if (scriptExecutionContext->isDocument()) {
-        auto& settings = downcast<Document>(*scriptExecutionContext).settings();
-        if (!shouldEnableWebGL(settings.webGLEnabled(), settings.acceleratedCompositingEnabled()))
-            return;
-    } else
-        return;
-    GraphicsContextGLWebGLVersion webGLVersion = GraphicsContextGLWebGLVersion::WebGL1;
-#if ENABLE(WEBGL2)
-    webGLVersion = (contextType == RenderingContextType::Webgl) ? GraphicsContextGLWebGLVersion::WebGL1 : GraphicsContextGLWebGLVersion::WebGL2;
-#else
-    UNUSED_PARAM(contextType);
-#endif
-    m_context = WebGLRenderingContextBase::create(*this, attrs, webGLVersion);
-}
-
-#endif // ENABLE(WEBGL)
-
 ExceptionOr<std::optional<OffscreenRenderingContext>> OffscreenCanvas::getContext(JSC::JSGlobalObject& state, RenderingContextType contextType, Vector<JSC::Strong<JSC::Unknown>>&& arguments)
 {
     if (m_detached)
@@ -235,33 +179,6 @@ ExceptionOr<std::optional<OffscreenRenderingContext>> OffscreenCanvas::getContex
 
         return { { RefPtr<OffscreenCanvasRenderingContext2D> { &downcast<OffscreenCanvasRenderingContext2D>(*m_context) } } };
     }
-#if ENABLE(WEBGL)
-    else {
-        if (m_context) {
-            if (is<WebGLRenderingContext>(*m_context))
-                return { { RefPtr<WebGLRenderingContext> { &downcast<WebGLRenderingContext>(*m_context) } } };
-#if ENABLE(WEBGL2)
-            if (is<WebGL2RenderingContext>(*m_context))
-                return { { RefPtr<WebGL2RenderingContext> { &downcast<WebGL2RenderingContext>(*m_context) } } };
-#endif
-            return { { std::nullopt } };
-        }
-
-        auto scope = DECLARE_THROW_SCOPE(state.vm());
-        auto attributes = convert<IDLDictionary<WebGLContextAttributes>>(state, arguments.isEmpty() ? JSC::jsUndefined() : (arguments[0].isObject() ? arguments[0].get() : JSC::jsNull()));
-        RETURN_IF_EXCEPTION(scope, Exception { ExistingExceptionError });
-
-        createContextWebGL(contextType, WTFMove(attributes));
-        if (!m_context)
-            return { { std::nullopt } };
-
-#if ENABLE(WEBGL2)
-        if (is<WebGL2RenderingContext>(*m_context))
-            return { { RefPtr<WebGL2RenderingContext> { &downcast<WebGL2RenderingContext>(*m_context) } } };
-#endif
-        return { { RefPtr<WebGLRenderingContext> { &downcast<WebGLRenderingContext>(*m_context) } } };
-    }
-#endif
 
     return Exception { TypeError };
 }
@@ -289,35 +206,6 @@ ExceptionOr<RefPtr<ImageBitmap>> OffscreenCanvas::transferToImageBitmap()
 
         return { ImageBitmap::create(ImageBitmapBacking(WTFMove(bufferCopy), originClean() ? SerializationState::OriginClean : SerializationState())) };
     }
-
-#if ENABLE(WEBGL)
-    if (is<WebGLRenderingContext>(*m_context)) {
-        auto webGLContext = &downcast<WebGLRenderingContext>(*m_context);
-
-        // FIXME: We're supposed to create an ImageBitmap using the backing
-        // store from this canvas (or its context), but for now we'll just
-        // create a new bitmap and paint into it.
-
-        auto imageBitmap = ImageBitmap::create(*canvasBaseScriptExecutionContext(), size());
-        if (!imageBitmap->buffer())
-            return { RefPtr<ImageBitmap> { nullptr } };
-
-        auto* gc3d = webGLContext->graphicsContextGL();
-        gc3d->paintRenderingResultsToCanvas(*imageBitmap->buffer());
-
-        // FIXME: The transfer algorithm requires that the canvas effectively
-        // creates a new backing store. Since we're not doing that yet, we
-        // need to erase what's there.
-
-        GCGLfloat clearColor[4] { };
-        gc3d->getFloatv(GraphicsContextGL::COLOR_CLEAR_VALUE, clearColor);
-        gc3d->clearColor(0, 0, 0, 0);
-        gc3d->clear(GraphicsContextGL::COLOR_BUFFER_BIT | GraphicsContextGL::DEPTH_BUFFER_BIT | GraphicsContextGL::STENCIL_BUFFER_BIT);
-        gc3d->clearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
-
-        return { WTFMove(imageBitmap) };
-    }
-#endif
 
     return Exception { NotSupportedError };
 }
@@ -447,7 +335,7 @@ void OffscreenCanvas::commitToPlaceholderCanvas()
         return;
 
     // FIXME: Transfer texture over if we're using accelerated compositing
-    if (m_context && (m_context->isWebGL() || m_context->isAccelerated()))
+    if (m_context && m_context->isAccelerated())
         m_context->paintRenderingResultsToCanvas();
 
     if (m_placeholderData->bufferPipeSource) {

@@ -39,7 +39,6 @@
 namespace WebCore {
 
 class GraphicsContext;
-class GraphicsContextGL;
 class HostWindow;
 class Image;
 class NativeImage;
@@ -111,7 +110,6 @@ public:
     virtual void putPixelBuffer(const PixelBuffer&, const IntRect& srcRect, const IntPoint& destPoint, AlphaPremultiplication destFormat) = 0;
 
     virtual PlatformLayer* platformLayer() const { return nullptr; }
-    virtual bool copyToPlatformTexture(GraphicsContextGL&, GCGLenum, PlatformGLObject, GCGLenum, bool, bool) const { return false; }
 
     virtual bool isInUse() const { return false; }
     virtual void releaseGraphicsContext() { ASSERT_NOT_REACHED(); }

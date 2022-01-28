@@ -66,13 +66,9 @@ public:
 
     virtual RefPtr<ImageBuffer> createImageBuffer(const FloatSize&, RenderingMode, RenderingPurpose, float resolutionScale, const DestinationColorSpace&, PixelFormat) const = 0;
 
-#if ENABLE(WEBGL)
-    virtual RefPtr<GraphicsContextGL> createGraphicsContextGL(const GraphicsContextGLAttributes&) const = 0;
-#endif
-
     // Method for retrieving the native client of the page.
     virtual PlatformPageClient platformPageClient() const = 0;
-    
+
     // Request that the cursor change.
     virtual void setCursor(const Cursor&) = 0;
 

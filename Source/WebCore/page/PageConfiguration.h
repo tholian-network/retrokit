@@ -64,7 +64,6 @@ class UserContentProvider;
 class UserContentURLPattern;
 class ValidationMessageClient;
 class VisitedLinkStore;
-class WebGLStateTracker;
 
 class PageConfiguration {
     WTF_MAKE_NONCOPYABLE(PageConfiguration); WTF_MAKE_FAST_ALLOCATED;
@@ -99,9 +98,6 @@ public:
     UniqueRef<FrameLoaderClient> loaderClientForMainFrame;
     std::unique_ptr<DiagnosticLoggingClient> diagnosticLoggingClient;
     std::unique_ptr<PerformanceLoggingClient> performanceLoggingClient;
-#if ENABLE(WEBGL)
-    std::unique_ptr<WebGLStateTracker> webGLStateTracker;
-#endif
 
     RefPtr<ApplicationCacheStorage> applicationCacheStorage;
     RefPtr<DatabaseProvider> databaseProvider;

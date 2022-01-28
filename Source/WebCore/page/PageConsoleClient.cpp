@@ -73,16 +73,6 @@
 #include "OffscreenCanvas.h"
 #endif
 
-#if ENABLE(WEBGL)
-#include "JSWebGLRenderingContext.h"
-#include "WebGLRenderingContext.h"
-#endif
-
-#if ENABLE(WEBGL2)
-#include "JSWebGL2RenderingContext.h"
-#include "WebGL2RenderingContext.h"
-#endif
-
 namespace WebCore {
 using namespace Inspector;
 
@@ -259,14 +249,7 @@ static CanvasRenderingContext* canvasRenderingContext(JSC::VM& vm, JSC::JSValue 
         return context;
     if (auto* context = JSImageBitmapRenderingContext::toWrapped(vm, target))
         return context;
-#if ENABLE(WEBGL)
-    if (auto* context = JSWebGLRenderingContext::toWrapped(vm, target))
-        return context;
-#endif
-#if ENABLE(WEBGL2)
-    if (auto* context = JSWebGL2RenderingContext::toWrapped(vm, target))
-        return context;
-#endif
+
     return nullptr;
 }
 
@@ -294,19 +277,9 @@ void PageConsoleClient::recordEnd(JSC::JSGlobalObject* lexicalGlobalObject, Ref<
 
 static std::optional<String> snapshotCanvas(HTMLCanvasElement& canvasElement, CanvasRenderingContext& canvasRenderingContext)
 {
-#if ENABLE(WEBGL)
-    if (is<WebGLRenderingContextBase>(canvasRenderingContext))
-        downcast<WebGLRenderingContextBase>(canvasRenderingContext).setPreventBufferClearForInspector(true);
-#else
     UNUSED_PARAM(canvasRenderingContext);
-#endif
 
     auto result = canvasElement.toDataURL("image/png"_s);
-
-#if ENABLE(WEBGL)
-    if (is<WebGLRenderingContextBase>(canvasRenderingContext))
-        downcast<WebGLRenderingContextBase>(canvasRenderingContext).setPreventBufferClearForInspector(false);
-#endif
 
     if (!result.hasException())
         return result.releaseReturnValue().string;

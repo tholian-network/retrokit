@@ -42,9 +42,6 @@
 #include <wtf/ThreadSafeRefCounted.h>
 #include <wtf/WeakPtr.h>
 #include <wtf/text/WTFString.h>
-#if ENABLE(WEBGL)
-#include "WebGLContextAttributes.h"
-#endif
 
 
 namespace WebCore {
@@ -56,17 +53,8 @@ class HTMLCanvasElement;
 class ImageBitmap;
 class ImageData;
 class OffscreenCanvasRenderingContext2D;
-class WebGL2RenderingContext;
-class WebGLRenderingContext;
-class WebGLRenderingContextBase;
 
 using OffscreenRenderingContext = Variant<
-#if ENABLE(WEBGL)
-    RefPtr<WebGLRenderingContext>,
-#endif
-#if ENABLE(WEBGL2)
-    RefPtr<WebGL2RenderingContext>,
-#endif
     RefPtr<OffscreenCanvasRenderingContext2D>
 >;
 
@@ -166,10 +154,6 @@ private:
     void derefCanvasBase() final { deref(); }
 
     void setSize(const IntSize&) final;
-
-#if ENABLE(WEBGL)
-    void createContextWebGL(RenderingContextType, WebGLContextAttributes&& = { });
-#endif
 
     void createImageBuffer() const final;
     RefPtr<ImageBuffer> takeImageBuffer() const;

@@ -41,10 +41,6 @@ HardwareAccelerationManager::HardwareAccelerationManager()
     : m_canUseHardwareAcceleration(true)
     , m_forceHardwareAcceleration(false)
 {
-#if !ENABLE(WEBGL)
-    m_canUseHardwareAcceleration = false;
-    return;
-#endif
 
 #if USE(GTK4)
     RELEASE_ASSERT(AcceleratedBackingStore::checkRequirements());

@@ -324,10 +324,6 @@ public:
 
     virtual RefPtr<ImageBuffer> createImageBuffer(const FloatSize&, RenderingMode, RenderingPurpose, float, const DestinationColorSpace&, PixelFormat) const { return nullptr; }
 
-#if ENABLE(WEBGL)
-    virtual RefPtr<GraphicsContextGL> createGraphicsContextGL(const GraphicsContextGLAttributes&, WebCore::PlatformDisplayID) const { return nullptr; }
-#endif
-
     // Pass nullptr as the GraphicsLayer to detatch the root layer.
     virtual void attachRootGraphicsLayer(Frame&, GraphicsLayer*) = 0;
     virtual void attachViewOverlayGraphicsLayer(GraphicsLayer*) = 0;

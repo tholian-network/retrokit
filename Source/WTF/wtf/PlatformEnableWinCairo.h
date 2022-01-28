@@ -47,7 +47,3 @@
 #define ENABLE_WEB_ARCHIVE 1
 #endif
 
-#if !defined(ENABLE_WEBGL)
-#define ENABLE_WEBGL 1
-#endif
-

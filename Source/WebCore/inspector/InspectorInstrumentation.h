@@ -55,10 +55,6 @@
 #include <wtf/MemoryPressureHandler.h>
 #include <wtf/RefPtr.h>
 
-#if ENABLE(WEBGL)
-#include "WebGLRenderingContextBase.h"
-#endif
-
 namespace Inspector {
 class ConsoleMessage;
 class ScriptArguments;
@@ -94,10 +90,6 @@ class SharedBuffer;
 class TimerBase;
 class WebKitNamedFlow;
 class WorkerOrWorkletGlobalScope;
-
-#if ENABLE(WEBGL)
-class WebGLProgram;
-#endif
 
 enum class StorageType : uint8_t;
 
@@ -286,13 +278,6 @@ public:
     static void didCreateCanvasRenderingContext(CanvasRenderingContext&);
     static void didChangeCanvasMemory(CanvasRenderingContext&);
     static void didFinishRecordingCanvasFrame(CanvasRenderingContext&, bool forceDispatch = false);
-#if ENABLE(WEBGL)
-    static void didEnableExtension(WebGLRenderingContextBase&, const String&);
-    static void didCreateWebGLProgram(WebGLRenderingContextBase&, WebGLProgram&);
-    static void willDestroyWebGLProgram(WebGLProgram&);
-    static bool isWebGLProgramDisabled(WebGLRenderingContextBase&, WebGLProgram&);
-    static bool isWebGLProgramHighlighted(WebGLRenderingContextBase&, WebGLProgram&);
-#endif
 
     static void willApplyKeyframeEffect(Element&, KeyframeEffect&, ComputedEffectTiming);
     static void didChangeWebAnimationName(WebAnimation&);
@@ -489,13 +474,6 @@ private:
     static void didCreateCanvasRenderingContextImpl(InstrumentingAgents&, CanvasRenderingContext&);
     static void didChangeCanvasMemoryImpl(InstrumentingAgents&, CanvasRenderingContext&);
     static void didFinishRecordingCanvasFrameImpl(InstrumentingAgents&, CanvasRenderingContext&, bool forceDispatch = false);
-#if ENABLE(WEBGL)
-    static void didEnableExtensionImpl(InstrumentingAgents&, WebGLRenderingContextBase&, const String&);
-    static void didCreateWebGLProgramImpl(InstrumentingAgents&, WebGLRenderingContextBase&, WebGLProgram&);
-    static void willDestroyWebGLProgramImpl(InstrumentingAgents&, WebGLProgram&);
-    static bool isWebGLProgramDisabledImpl(InstrumentingAgents&, WebGLProgram&);
-    static bool isWebGLProgramHighlightedImpl(InstrumentingAgents&, WebGLProgram&);
-#endif
 
     static void willApplyKeyframeEffectImpl(InstrumentingAgents&, Element&, KeyframeEffect&, ComputedEffectTiming);
     static void didChangeWebAnimationNameImpl(InstrumentingAgents&, WebAnimation&);
@@ -1410,45 +1388,6 @@ inline void InspectorInstrumentation::didFinishRecordingCanvasFrame(CanvasRender
     if (auto* agents = instrumentingAgents(context.canvasBase().scriptExecutionContext()))
         didFinishRecordingCanvasFrameImpl(*agents, context, forceDispatch);
 }
-
-#if ENABLE(WEBGL)
-inline void InspectorInstrumentation::didEnableExtension(WebGLRenderingContextBase& contextWebGLBase, const String& extension)
-{
-    FAST_RETURN_IF_NO_FRONTENDS(void());
-    if (auto* agents = instrumentingAgents(contextWebGLBase.canvasBase().scriptExecutionContext()))
-        didEnableExtensionImpl(*agents, contextWebGLBase, extension);
-}
-
-inline void InspectorInstrumentation::didCreateWebGLProgram(WebGLRenderingContextBase& contextWebGLBase, WebGLProgram& program)
-{
-    FAST_RETURN_IF_NO_FRONTENDS(void());
-    if (auto* agents = instrumentingAgents(contextWebGLBase.canvasBase().scriptExecutionContext()))
-        didCreateWebGLProgramImpl(*agents, contextWebGLBase, program);
-}
-
-inline void InspectorInstrumentation::willDestroyWebGLProgram(WebGLProgram& program)
-{
-    FAST_RETURN_IF_NO_FRONTENDS(void());
-    if (auto* agents = instrumentingAgents(program.scriptExecutionContext()))
-        willDestroyWebGLProgramImpl(*agents, program);
-}
-
-inline bool InspectorInstrumentation::isWebGLProgramDisabled(WebGLRenderingContextBase& contextWebGLBase, WebGLProgram& program)
-{
-    FAST_RETURN_IF_NO_FRONTENDS(false);
-    if (auto* agents = instrumentingAgents(contextWebGLBase.canvasBase().scriptExecutionContext()))
-        return isWebGLProgramDisabledImpl(*agents, program);
-    return false;
-}
-
-inline bool InspectorInstrumentation::isWebGLProgramHighlighted(WebGLRenderingContextBase& contextWebGLBase, WebGLProgram& program)
-{
-    FAST_RETURN_IF_NO_FRONTENDS(false);
-    if (auto* agents = instrumentingAgents(contextWebGLBase.canvasBase().scriptExecutionContext()))
-        return isWebGLProgramHighlightedImpl(*agents, program);
-    return false;
-}
-#endif
 
 inline void InspectorInstrumentation::willApplyKeyframeEffect(Element& target, KeyframeEffect& effect, ComputedEffectTiming computedTiming)
 {

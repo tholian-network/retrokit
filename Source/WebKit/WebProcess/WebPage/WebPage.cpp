@@ -232,7 +232,6 @@
 #include <WebCore/UserTypingGestureIndicator.h>
 #include <WebCore/VisiblePosition.h>
 #include <WebCore/VisibleUnits.h>
-#include <WebCore/WebGLStateTracker.h>
 #include <WebCore/WritingDirection.h>
 #include <WebCore/markup.h>
 #include <pal/SessionID.h>
@@ -427,9 +426,6 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
     , m_shouldRenderCanvasInGPUProcess { parameters.shouldRenderCanvasInGPUProcess }
     , m_shouldRenderDOMInGPUProcess { parameters.shouldRenderDOMInGPUProcess }
     , m_shouldPlayMediaInGPUProcess { parameters.shouldPlayMediaInGPUProcess }
-#if ENABLE(WEBGL)
-    , m_shouldRenderWebGLInGPUProcess { parameters.shouldRenderWebGLInGPUProcess}
-#endif
     , m_layerHostingMode(parameters.layerHostingMode)
 #if ENABLE(PLATFORM_DRIVEN_TEXT_CHECKING)
     , m_textCheckingControllerProxy(makeUniqueRef<TextCheckingControllerProxy>(*this))
@@ -522,12 +518,6 @@ WebPage::WebPage(PageIdentifier pageID, WebPageCreationParameters&& parameters)
 
     pageConfiguration.diagnosticLoggingClient = makeUnique<WebDiagnosticLoggingClient>(*this);
     pageConfiguration.performanceLoggingClient = makeUnique<WebPerformanceLoggingClient>(*this);
-
-#if ENABLE(WEBGL)
-    pageConfiguration.webGLStateTracker = makeUnique<WebGLStateTracker>([this](bool isUsingHighPerformanceWebGL) {
-        send(Messages::WebPageProxy::SetIsUsingHighPerformanceWebGL(isUsingHighPerformanceWebGL));
-    });
-#endif
 
 #if PLATFORM(COCOA)
     pageConfiguration.validationMessageClient = makeUnique<WebValidationMessageClient>(*this);
@@ -1027,18 +1017,6 @@ void WebPage::setInjectedBundleUIClient(std::unique_ptr<API::InjectedBundle::Pag
 
     m_uiClient = WTFMove(uiClient);
 }
-
-#if ENABLE(WEBGL) && !PLATFORM(MAC)
-WebCore::WebGLLoadPolicy WebPage::webGLPolicyForURL(WebFrame*, const URL&)
-{
-    return WebGLLoadPolicy::WebGLAllowCreation;
-}
-
-WebCore::WebGLLoadPolicy WebPage::resolveWebGLPolicyForURL(WebFrame*, const URL&)
-{
-    return WebGLLoadPolicy::WebGLAllowCreation;
-}
-#endif
 
 bool WebPage::hasPendingEditorStateUpdate() const
 {
@@ -3663,9 +3641,6 @@ void WebPage::updatePreferences(const WebPreferencesStore& store)
     bool usingGPUProcessForDOMRendering = m_shouldRenderDOMInGPUProcess && DrawingArea::supportsGPUProcessRendering(m_drawingAreaType);
     WebProcess::singleton().setUseGPUProcessForDOMRendering(usingGPUProcessForDOMRendering);
     WebProcess::singleton().setUseGPUProcessForMedia(m_shouldPlayMediaInGPUProcess);
-#if ENABLE(WEBGL)
-    WebProcess::singleton().setUseGPUProcessForWebGL(m_shouldRenderWebGLInGPUProcess);
-#endif
 #endif // ENABLE(GPU_PROCESS)
 
 #if ENABLE(IPC_TESTING_API)

@@ -181,12 +181,6 @@ enum ShouldReplaceDocumentIfJavaScriptURL {
     DoNotReplaceDocumentIfJavaScriptURL
 };
 
-enum class WebGLLoadPolicy : uint8_t {
-    WebGLBlockCreation,
-    WebGLAllowCreation,
-    WebGLPendingCreation
-};
-
 enum class LockHistory : bool { No, Yes };
 enum class LockBackForwardList : bool { No, Yes };
 enum class AllowNavigationToInvalidURL : bool { No, Yes };
@@ -296,15 +290,6 @@ template<> struct EnumTraits<WebCore::ShouldOpenExternalURLsPolicy> {
         WebCore::ShouldOpenExternalURLsPolicy::ShouldNotAllow,
         WebCore::ShouldOpenExternalURLsPolicy::ShouldAllowExternalSchemesButNotAppLinks,
         WebCore::ShouldOpenExternalURLsPolicy::ShouldAllow
-    >;
-};
-
-template<> struct EnumTraits<WebCore::WebGLLoadPolicy> {
-    using values = EnumValues<
-        WebCore::WebGLLoadPolicy,
-        WebCore::WebGLLoadPolicy::WebGLBlockCreation,
-        WebCore::WebGLLoadPolicy::WebGLAllowCreation,
-        WebCore::WebGLLoadPolicy::WebGLPendingCreation
     >;
 };
 

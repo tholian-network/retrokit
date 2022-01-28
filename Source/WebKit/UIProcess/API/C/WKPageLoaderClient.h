@@ -34,13 +34,6 @@
 extern "C" {
 #endif
 
-enum {
-    kWKWebGLLoadPolicyBlocked = 0,
-    kWKWebGLLoadPolicyLoadNormally,
-    kWKWebGLLoadPolicyPending
-};
-typedef uint32_t WKWebGLLoadPolicy;
-
 typedef void (*WKPageLoaderClientCallback)(WKPageRef page, const void* clientInfo);
 typedef void (*WKPageDidStartProvisionalLoadForFrameCallback)(WKPageRef page, WKFrameRef frame, WKTypeRef userData, const void *clientInfo);
 typedef void (*WKPageDidReceiveServerRedirectForProvisionalLoadForFrameCallback)(WKPageRef page, WKFrameRef frame, WKTypeRef userData, const void *clientInfo);
@@ -64,7 +57,6 @@ typedef bool (*WKPageShouldGoToBackForwardListItemCallback)(WKPageRef page, WKBa
 typedef bool (*WKPageShouldKeepCurrentBackForwardListItemInListCallback)(WKPageRef page, WKBackForwardListItemRef item, const void *clientInfo);
 typedef void (*WKPageWillGoToBackForwardListItemCallback)(WKPageRef page, WKBackForwardListItemRef item, WKTypeRef userData, const void *clientInfo);
 typedef void (*WKPageDidLayoutCallback)(WKPageRef page, WKLayoutMilestones milestones, WKTypeRef userData, const void *clientInfo);
-typedef WKWebGLLoadPolicy (*WKPageWebGLLoadPolicyCallback)(WKPageRef page, WKStringRef url, const void* clientInfo);
 typedef void (*WKPageNavigationGestureDidBeginCallback)(WKPageRef page, const void* clientInfo);
 typedef void (*WKPageNavigationGestureWillEndCallback)(WKPageRef page, bool willNavigate, WKBackForwardListItemRef item, const void* clientInfo);
 typedef void (*WKPageNavigationGestureDidEndCallback)(WKPageRef page, bool willNavigate, WKBackForwardListItemRef item, const void* clientInfo);
@@ -252,7 +244,7 @@ typedef struct WKPageLoaderClientV3 {
 
 typedef struct WKPageLoaderClientV4 {
     WKPageLoaderClientBase                                              base;
-    
+
     // Version 0.
     WKPageDidStartProvisionalLoadForFrameCallback                       didStartProvisionalLoadForFrame;
     WKPageDidReceiveServerRedirectForProvisionalLoadForFrameCallback    didReceiveServerRedirectForProvisionalLoadForFrame;
@@ -270,39 +262,34 @@ typedef struct WKPageLoaderClientV4 {
     WKPageDidRunInsecureContentForFrameCallback                         didRunInsecureContentForFrame;
     WKPageCanAuthenticateAgainstProtectionSpaceInFrameCallback          canAuthenticateAgainstProtectionSpaceInFrame;
     WKPageDidReceiveAuthenticationChallengeInFrameCallback              didReceiveAuthenticationChallengeInFrame;
-    
+
     // FIXME: Move to progress client.
     WKPageLoaderClientCallback                                          didStartProgress;
     WKPageLoaderClientCallback                                          didChangeProgress;
     WKPageLoaderClientCallback                                          didFinishProgress;
-    
+
     // FIXME: These three functions should not be part of this client.
     WKPageLoaderClientCallback                                          processDidBecomeUnresponsive;
     WKPageLoaderClientCallback                                          processDidBecomeResponsive;
     WKPageLoaderClientCallback                                          processDidCrash;
     WKPageDidChangeBackForwardListCallback                              didChangeBackForwardList;
     WKPageShouldGoToBackForwardListItemCallback                         shouldGoToBackForwardListItem;
-    
+
     // Version 1.
     WKPageDidDetectXSSForFrameCallback                                  didDetectXSSForFrame;
-    
+
     void*                                                               didNewFirstVisuallyNonEmptyLayout_unavailable;
-    
+
     WKPageWillGoToBackForwardListItemCallback                           willGoToBackForwardListItem;
-    
+
     WKPageLoaderClientCallback                                          interactionOccurredWhileProcessUnresponsive;
-    
+
     // Version 2.
     void                                                                (*didReceiveIntentForFrame_unavailable)(void);
     void                                                                (*registerIntentServiceForFrame_unavailable)(void);
-    
+
     WKPageDidLayoutCallback                                             didLayout;
-    
-    // Version 3.
-    
-    // Version 4
-    WKPageWebGLLoadPolicyCallback                                       webGLLoadPolicy;
-    WKPageWebGLLoadPolicyCallback                                       resolveWebGLLoadPolicy;
+
 } WKPageLoaderClientV4;
 
 typedef struct WKPageLoaderClientV5 {
@@ -352,12 +339,6 @@ typedef struct WKPageLoaderClientV5 {
     void                                                                (*registerIntentServiceForFrame_unavailable)(void);
 
     WKPageDidLayoutCallback                                             didLayout;
-
-    // Version 3.
-
-    // Version 4.
-    WKPageWebGLLoadPolicyCallback                                       webGLLoadPolicy;
-    WKPageWebGLLoadPolicyCallback                                       resolveWebGLLoadPolicy;
 
     // Version 5.
     WKPageShouldKeepCurrentBackForwardListItemInListCallback            shouldKeepCurrentBackForwardListItemInList;
@@ -411,12 +392,6 @@ typedef struct WKPageLoaderClientV6 {
 
     WKPageDidLayoutCallback                                             didLayout;
 
-    // Version 3.
-
-    // Version 4.
-    WKPageWebGLLoadPolicyCallback                                       webGLLoadPolicy;
-    WKPageWebGLLoadPolicyCallback                                       resolveWebGLLoadPolicy;
-    
     // Version 5.
     WKPageShouldKeepCurrentBackForwardListItemInListCallback            shouldKeepCurrentBackForwardListItemInList;
 

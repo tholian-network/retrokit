@@ -213,11 +213,6 @@ private:
 
     RefPtr<WebCore::Frame> createFrame(const String& name, WebCore::HTMLFrameOwnerElement&) final;
 
-#if ENABLE(WEBGL)
-    WebCore::WebGLLoadPolicy webGLPolicyForURL(const URL&) const final;
-    WebCore::WebGLLoadPolicy resolveWebGLPolicyForURL(const URL&) const final;
-#endif // ENABLE(WEBGL)
-
     String overrideMediaType() const final;
 
     void dispatchDidClearWindowObjectInWorld(WebCore::DOMWrapperWorld&) final;

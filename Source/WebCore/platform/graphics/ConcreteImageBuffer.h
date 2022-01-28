@@ -247,13 +247,6 @@ protected:
         return nullptr;
     }
 
-    bool copyToPlatformTexture(GraphicsContextGL& context, GCGLenum target, PlatformGLObject destinationTexture, GCGLenum internalformat, bool premultiplyAlpha, bool flipY) const override
-    {
-        if (auto* backend = ensureBackendCreated())
-            return backend->copyToPlatformTexture(context, target, destinationTexture, internalformat, premultiplyAlpha, flipY);
-        return false;
-    }
-
     bool isInUse() const override
     {
         if (auto* backend = ensureBackendCreated())
