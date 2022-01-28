@@ -592,6 +592,8 @@ void JSFunction::reifyName(VM& vm, JSGlobalObject* globalObject)
 
 void JSFunction::reifyName(VM& vm, JSGlobalObject* globalObject, String name)
 {
+    UNUSED_PARAM(globalObject);
+
     FunctionRareData* rareData = this->ensureRareData(vm);
 
     ASSERT(!hasReifiedName());

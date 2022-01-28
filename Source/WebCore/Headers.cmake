@@ -1137,8 +1137,6 @@ set(WebCore_PRIVATE_FRAMEWORK_HEADERS
     platform/graphics/GlyphPage.h
     platform/graphics/Gradient.h
     platform/graphics/GraphicsContext.h
-    platform/graphics/GraphicsContextGL.h
-    platform/graphics/GraphicsContextGLAttributes.h
     platform/graphics/GraphicsLayer.h
     platform/graphics/GraphicsLayerClient.h
     platform/graphics/GraphicsLayerFactory.h

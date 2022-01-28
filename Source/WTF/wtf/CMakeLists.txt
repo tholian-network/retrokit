@@ -3,6 +3,7 @@ set(WTF_PUBLIC_HEADERS
     AggregateLogger.h
     Algorithms.h
     AnsiColors.h
+    ApproximateTime.h
     Assertions.h
     Atomics.h
     AutodrainedPool.h
@@ -61,6 +62,7 @@ set(WTF_PUBLIC_HEADERS
     DisallowCType.h
     Dominators.h
     DoublyLinkedList.h
+    EmbeddedFixedVector.h
     EnumClassOperatorOverloads.h
     EnumTraits.h
     Expected.h
@@ -78,6 +80,7 @@ set(WTF_PUBLIC_HEADERS
     Function.h
     FunctionDispatcher.h
     FunctionTraits.h
+    GenericTimeMixin.h
     GetPtr.h
     Gigacage.h
     GlobalVersion.h
@@ -103,6 +106,7 @@ set(WTF_PUBLIC_HEADERS
     InlineASM.h
     Insertion.h
     InstanceCounted.h
+    Int128.h
     InterferenceGraph.h
     IsoMalloc.h
     IsoMallocInlines.h
@@ -214,7 +218,7 @@ set(WTF_PUBLIC_HEADERS
     RedBlackTree.h
     Ref.h
     RefCounted.h
-    RefCountedArray.h
+    RefCountedFixedVector.h
     RefCountedLeakCounter.h
     RefCounter.h
     RefPtr.h
@@ -284,6 +288,7 @@ set(WTF_PUBLIC_HEADERS
     TimingScope.h
     TinyLRUCache.h
     TinyPtrSet.h
+    TrailingArray.h
     TranslatedProcess.h
     TriState.h
     TypeCasts.h
@@ -301,7 +306,6 @@ set(WTF_PUBLIC_HEADERS
     UnsafePointer.h
     VMTags.h
     ValueCheck.h
-    Variant.h
     Vector.h
     VectorHash.h
     VectorTraits.h
@@ -391,6 +395,7 @@ set(WTF_PUBLIC_HEADERS
 
 set(WTF_SOURCES
     ASCIICType.cpp
+    ApproximateTime.cpp
     Assertions.cpp
     AutomaticThread.cpp
     Bag.cpp
@@ -419,6 +424,7 @@ set(WTF_SOURCES
     GregorianDateTime.cpp
     HashTable.cpp
     HexNumber.cpp
+    Int128.cpp
     JSONValues.cpp
     JSValueMalloc.cpp
     Language.cpp
@@ -449,7 +455,6 @@ set(WTF_SOURCES
     RandomNumber.cpp
     ReadWriteLock.cpp
     RefCounted.cpp
-    RefCountedArray.cpp
     RefCountedLeakCounter.cpp
     RunLoop.cpp
     SHA1.cpp

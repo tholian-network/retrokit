@@ -39,7 +39,7 @@ class StyleSheetContents;
 namespace Style {
 class BuilderState;
 }
-    
+
 // Inputs: PropertyID, isImportant bool, CSSParserTokenRange.
 // Outputs: Vector of CSSProperties
 

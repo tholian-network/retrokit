@@ -695,7 +695,7 @@ void FrameLoader::clear(Document* newDocument, bool clearWindowProperties, bool 
 void FrameLoader::receivedFirstData()
 {
     auto protectedFrame = makeRef(m_frame);
-    
+
     dispatchDidCommitLoad(std::nullopt, std::nullopt);
     dispatchDidClearWindowObjectsInAllWorlds();
     dispatchGlobalObjectAvailableInAllWorlds();
@@ -3157,6 +3157,8 @@ unsigned long FrameLoader::loadResourceSynchronously(const ResourceRequest& requ
 
 void FrameLoader::receivedMainResourceError(const ResourceError& error)
 {
+    UNUSED_PARAM(error);
+
     // Retain because the stop may release the last reference to it.
     Ref<Frame> protect(m_frame);
 

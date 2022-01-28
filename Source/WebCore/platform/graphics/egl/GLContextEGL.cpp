@@ -21,7 +21,6 @@
 
 #if USE(EGL)
 
-#include "GraphicsContextGL.h"
 #include "Logging.h"
 #include "PlatformDisplay.h"
 

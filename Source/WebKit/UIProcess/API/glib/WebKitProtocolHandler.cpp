@@ -124,44 +124,6 @@ static const char* hardwareAccelerationPolicy(WebKitURISchemeRequest* request)
     RELEASE_ASSERT_NOT_REACHED();
 }
 
-static bool webGLEnabled(WebKitURISchemeRequest* request)
-{
-    auto* webView = webkit_uri_scheme_request_get_web_view(request);
-    ASSERT(webView);
-    return webkit_settings_get_enable_webgl(webkit_web_view_get_settings(webView));
-}
-
-static const char* openGLAPI()
-{
-#if USE(GLX)
-    if (PlatformDisplay::sharedDisplay().type() == PlatformDisplay::Type::X11)
-        return "OpenGL";
-#endif
-#if USE(EGL)
-#if USE(OPENGL_ES)
-    return "OpenGL ES 2";
-#else
-    return "OpenGL";
-#endif
-#endif
-    RELEASE_ASSERT_NOT_REACHED();
-}
-
-static const char* nativeInterface()
-{
-#if PLATFORM(GTK)
-#if USE(GLX)
-    if (PlatformDisplay::sharedDisplay().type() == PlatformDisplay::Type::X11)
-        return "GLX";
-#endif
-#endif
-
-#if USE(EGL)
-    return "EGL";
-#endif
-    RELEASE_ASSERT_NOT_REACHED();
-}
-
 void WebKitProtocolHandler::handleGPU(WebKitURISchemeRequest* request)
 {
     GString* html = g_string_new(

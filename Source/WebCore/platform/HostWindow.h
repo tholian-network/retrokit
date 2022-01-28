@@ -25,7 +25,6 @@
 
 #pragma once
 
-#include "GraphicsContextGL.h"
 #include "Widget.h"
 
 namespace WebCore {

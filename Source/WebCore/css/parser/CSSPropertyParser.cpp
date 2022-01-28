@@ -84,17 +84,6 @@ bool isCustomPropertyName(const String& propertyName)
     return propertyName.length() > 2 && propertyName.characterAt(0) == '-' && propertyName.characterAt(1) == '-';
 }
 
-static bool hasPrefix(const char* string, unsigned length, const char* prefix)
-{
-    for (unsigned i = 0; i < length; ++i) {
-        if (!prefix[i])
-            return true;
-        if (string[i] != prefix[i])
-            return false;
-    }
-    return false;
-}
-
 template <typename CharacterType>
 static CSSPropertyID cssPropertyID(const CharacterType* propertyName, unsigned length)
 {

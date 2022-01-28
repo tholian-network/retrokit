@@ -132,6 +132,7 @@ String standardUserAgent(const String& applicationName, const String& applicatio
 
 String standardUserAgentForURL(const URL& url)
 {
+    UNUSED_PARAM(url);
     String userAgent(buildUserAgentString());
     ASSERT(isValidUserAgentHeaderValue(userAgent));
     return userAgent;

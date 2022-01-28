@@ -372,6 +372,8 @@ static ShouldIgnoreMouseEvent dispatchPointerEventIfNeeded(Element& element, con
 
 bool Element::dispatchMouseEvent(const PlatformMouseEvent& platformEvent, const AtomString& eventType, int detail, Element* relatedTarget, IsSyntheticClick isSyntheticClick)
 {
+    UNUSED_PARAM(isSyntheticClick);
+
     if (isDisabledFormControl())
         return false;
 
